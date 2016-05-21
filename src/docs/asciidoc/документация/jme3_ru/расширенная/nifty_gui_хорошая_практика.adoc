@@ -1,0 +1,82 @@
+
+
+= Nifty GUI - Хорошая практика
+
+Английская версия: <<jme3/advanced/nifty_gui_best_practices#,Nifty GUI - Best Practices>>
+
+
+Эта страница список хороших практик для использования Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++. Эти JME3 учебники позволят сосредоточиться на интеграции JME3-Nifty. Больше возможностей здесь link:http://sourceforge.net/projects/nifty-gui/files/nifty-gui/nifty-gui-the-manual-v1.0.pdf/download[Nifty GUI Manual].
+
+
+.  <<документация/jme3_ru/расширенная/nifty_gui_ru#,Nifty GUI Concepts>>
+.  *Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++ Best Practices*
+.  <<jme3/advanced/nifty_gui_xml_layout_ru#,Nifty GUI XML Layout_ru>> или <<jme3/advanced/nifty_gui_java_layout_ru#,Nifty GUI Java Layout_ru>>
+.  <<jme3/advanced/nifty_gui_overlay_ru#,Nifty GUI Overlay_ru>> или <<jme3/advanced/nifty_gui_projection_ru#,Nifty GUI Projection_ru>>
+.  <<jme3/advanced/nifty_gui_java_interaction_ru#,Nifty GUI Java Interaction_ru>>
+
+
+== XML или Java?
+
+Вы можете строить Nifty GUIs используя XML или Java синтаксис. Так какой же выбрать? Синтаксис XML и Java эквивалентны, значит нет разницы? Не совсем так. Обычно используется XML и Java вместе.
+
+
+*  Создайте статический макет UI с помощью XML - его намного легче писать читать. 
+*  Используйте Java для управоления вашим +++<abbr title="Graphical User Interface">GUI</abbr>+++ во время выполнения - так легче взаимодействовать с ООП кодом.
+*  *Пример:* Вы создаете два UI интерфейса с немного различным XML шаблоном для мобильного и настольного приложения. Если вы используете те же идендификторы для эквивалентных элементов то ваш код Java работает независимо от того какой из двух макетов XML вы используете. Это позволяет переключиться между мобильной и десктопной версией простой заменой XML файла. 
+
+
+== Редактирование и просмотр XML в SDK
+
+*  Используйте <<sdk#,jMonkeyEngine SDK>> что бы создать новый XML файл (из категории +++<abbr title="Graphical User Interface">GUI</abbr>+++, “Empty Nifty File). 
+*  <<sdk#,jMonkeyEngine SDK>> включает в себя XML редактор и специальный просмоторщик Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++ файлов. 
+*  При открытии XML-файла вы можете переключаться между XML Editor и +++<abbr title="Graphical User Interface">GUI</abbr>+++ режимом предварительного просмотра.
+
+Совет: При создании +++<abbr title="Graphical User Interface">GUI</abbr>+++ через мастера то файл будет содержать пример кода XML.
+
+
+
+== Функция автозавершения кода
+
+*  Включите следующюю XML схему в первые строки вашего NiftyGUI XML файла.
+
+[source,xml]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<nifty xmlns="http://nifty-gui.sourceforge.net/nifty-1.3.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://nifty-gui.sourceforge.net/nifty-1.3.xsd http://nifty-gui.sourceforge.net/nifty-1.3.xsd">
+     <!-- Your IDE now tells you that one <screen></screen> element is expected here, etc. -->
+</nifty>
+----
+*  Теперь ваш IDE (включая jMonkeyEngine SDK) будет отображать дополнительную информацию и дополнять код автоматически для Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++ +++<abbr title="Application Programming Interface">API</abbr>+++.
+
+
+== Используйте правую строку идентификатора
+
+*  Если вы хотите взаимодействовать с элементами то необходимо присвоить им ID (строка). 
+*  При использовании прозрачных ID - панели становяться анонимными.
+
+
+== Размер слоя и панели
+
+*  Указание ширины и высоты в процентах позволяет масштабировать +++<abbr title="Graphical User Interface">GUI</abbr>+++.
+*  Используйте “* вместо фиксированного значения, чтобы сделать элемент автоматически заполняющий оставшееся пространство.
+*  Будьте осторожны при указании фиксированных размеров и проверяйте результат в различных разрешениях.
+
+
+== Цветовой код для наглядности
+
+Экраны, слои, панели…
+
+
+*  … могут иметь цвет фона RGBA. +
+Вы можете использовать временные цвета на этапе проектирования, что бы контроллировать расположение контейнеров.
+*  … могут быть прозрачными. +
+В готовом графическом интерфейсе экраны, слои и панели как правило прозрачные, видимы только элементы изображения, текстовые поля и элементы управления внутри панелей.
+
+
+
+
+[source,java]
+----nifty.setDebugOptionPanelColors(true);----
+
+

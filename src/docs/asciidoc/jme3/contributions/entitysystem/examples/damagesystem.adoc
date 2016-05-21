@@ -1,0 +1,139 @@
+
+
+= Damage Systems Example
+
+As written in the Entity System Advanced article, there should only be one class which changes one special Component.
+This makes the code easy to debug and prevents component changes from being skipped.
+
+
+
+== The Components
+
+
+=== The HealthComponent
+
+[source,java]
+----
+public class HealthComponent extends Component {
+    
+    public float health;
+    
+    public HealthComponent(float health)
+    {
+        this.health = health;
+    }
+    
+    public float getHealth()
+    {
+        return health;
+    }
+    
+}
+----
+
+=== The DamageComponent
+
+[source,java]
+----
+    private float damage;
+    private EntityId target;
+    
+    public DamageComponent(EntityId target, float damage)
+    {
+        this.damage=damage;
+        this.target=target;
+    }
+    
+    public float getDamage()
+    {
+        return damage;
+    }
+    
+    public EntityId getTarget()
+    {
+        return target;
+    }
+----
+
+== The AppState
+
+[source,java]
+----
+public class DamageAppState extends AbstractAppState {
+    
+    EntitySet damageSet;
+    EntitySet healthSet;
+    
+   public void initialize(AppStateManager stateManager, Application app) {
+        EntitySystem entitySystem = ((Main)app).getEntitySystem();
+        damageSet = entitySystem.getEntitySet(DamageComponent.class);
+        healthSet = entitySystem.getEntitySet(HealthComponent.class);
+    }
+    
+   @Override
+   public void update(float tpf) {
+       
+       Map<EntityId,Float> damageSummary = new HashMap();
+       
+       damageSet.applyChanges();
+       healthSet.applyChanges();
+       
+       Iterator<Entity> iterator = damageSet.getIterator();
+       while(iterator.hasNext())
+       {
+           Entity entity = iterator.next();
+           DamageComponent dc = entity.getComponent(DamageComponent.class);
+           
+           float f = 0;
+           if(damageSummary.containsKey(dc.getTarget()))
+           {
+               f = damageSummary.get(dc.getTarget());
+           }
+           
+           f += dc.getDamage();
+           damageSummary.put(dc.getTarget(),f);
+           
+           entity.destroy();
+       }
+       
+       Iterator<EntityId> keyIterator = damageSummary.keySet().iterator();
+       while(keyIterator.hasNext())
+       {
+           EntityId entityId = keyIterator.next();
+           float damage = damageSummary.get(entityId);
+           
+           Entity entity = healthSet.getEntity(entityId);
+           if(entity != null)
+           {
+               HealthComponent hc = entity.getComponent(HealthComponent.class);
+               float newLife = hc.getHealth()-damage;
+               
+               if(newLife < 0)
+               {
+                   entity.removeComponent(HealthComponent.class);
+               }else{
+                   entity.setComponent(new HealthComponent(newLife));
+               }
+           }
+       }
+   }
+    
+}
+----
+
+== Usage
+
+[source,java]
+----
+//Create a new Entity System
+entitySystem = new EntitySystem(new MapEntityData());
+        
+//Add the DamageAppState to the Application
+stateManager.attach(new DamageAppState());
+        
+//Create a new Entity with 100 HP
+EntityId healthEntity = entitySystem.newEntity(new HealthComponent(100));
+        
+//Create a new Damage Entity who deals 5 damage to the health entity
+entitySystem.newEntity(new DamageComponent(healthEntity,5));
+----

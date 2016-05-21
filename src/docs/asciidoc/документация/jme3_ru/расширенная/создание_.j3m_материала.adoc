@@ -1,0 +1,327 @@
+
+
+= Saving and Loading Materials with .j3m Files
+
+В <<material_definitions#,Material Definitions>> статьи вы узнали, как настроить <<materials_overview#,Materials>> программно в Java-код. If you have certain commonly used Materials that never change, you can clean up the amount of Java-код that clutters your init method, by moving material settings into .j3m files. Затем в коде, вам всего лишь нужно вызывать один setter вместо нескольких, чтобы применить материал.
+
+
+Если вы хотите, раскрасить простую фигуру (одна текстура всей вокруг), то .j3m является наиболее легко настраиваемым решением. J3m файлы могут содержать текстуру отображаются материалом, но, как обычно, вы должны создать текстуру во внешнем редакторе, особенно если вы используете текстуру UV-развертки. 
+
+
+
+== Написание .j3m файла
+
+.  Для каждого материала, создать файл и дать ему имя, которое описывает его: например `SimpleBump.j3m`
+.  Поместите файл в ваш проект в папку `assets/Materials/` например `MyGame/src/assets/Materials/SimpleBump.j3m`
+.  Отредактируйте файл и добавте content используя следующий Синтаксис, например:
+[source]
+----
+Material shiny bumpy rock : Common/MatDefs/Light/Lighting.j3md {
+     MaterialParameters {
+         Shininess: 8.0
+         NormalMap: Textures/bump_rock_normal.png
+         UseMaterialColors : true
+         Ambient  : 0.0 0.0 0.0 1.0
+         Diffuse  : 1.0 1.0 1.0 1.0
+         Specular : 0.0 0.0 0.0 1.0
+     }
+}
+----
+
+Какую структуру имеет этот файл:
+
+
+.  Заголовок
+..  `Material` является фиксированное ключевое слово, сохранить его.
+..  `shiny bumpy rock` is a descriptive string that you can make up. Choose a name to help you remember for what you intend to use this material.
+..  После двоеточия указать <<materials_overview#,Material>> definition you base this Material.
+
+.  Now look up the choosen Material Definition's parameters and their parameter types from the <<materials_overview#,Material>> table. Add one line for each parameter.
+**  Например: серия из четырех чисел в примере выше, представляют значения RGBA-цвета.
+
+.  Проверьте сведения о синтаксисе ссылку ниже, если вы не уверены.
+
+→→→
+
+
+
+== Как Использовать .j3m Материалы
+
+Это, как вы используете готовый .j3m материал на Spatial. Поскольку вы сохранили .j3m файл в вашем проекте в папке Assets .j3m расположен относительный путь `MyGame/src/assets/…`.
+
+
+[source,java]
+----myGeometry.setMaterial(assetManager.loadMaterial("Materials/SimpleBump.j3m"));----
+*Совет:* В jMonkeyEngine SDK, откройте Windows&gt;Palette и перетащите `JME Material: Set J3M` фрагмент в код.
+
+
+
+== Syntax Reference for .j3m Files
+
+
+=== Пути
+
+Make sure to get the paths to the textures (.png, .jpg) and material definitions (.j3md) right. 
+
+
+*  The paths to the built-in .j3md files are relative to jME3's Core Data directory. Just copy the path stated in the <<materials_overview#,Material>> table. +
+`Common/MatDefs/Misc/Unshaded.j3md` is resolved to `jme3/src/src/core-data/Common/MatDefs/Misc/Unshaded.j3md`.
+*  The paths to your textures are relative to your project's assets directory. +
+`Textures/bump_rock_normal.png` is resolved to `MyGame/src/assets/Textures/bump_rock_normal.png`
+
+
+=== Типы Данных
+
+All data types (except Color) are specified in com.jme3.shader.VarType.
+“Color is specified as Vector4 in J3MLoader.java.
+
+[cols="3", options="header"]
+|===
+
+a|Название
+a|jME Java класс
+a|Синтаксис .j3m файла
+
+a| Float
+a| (basic Java type) 
+a| a float (e.g. 0.72) , no comma or parentheses 
+
+a| Vector2
+a| `com.jme3.math.Vector2f`
+a| Two floats, no comma or parentheses 
+
+a| Vector3 
+a| `com.jme3.math.Vector3f` 
+a| Three floats, no comma or parentheses 
+
+a| Vector4
+a| `com.jme3.math.Vector4f` 
+a| Four floats, no comma or parentheses 
+
+a| Texture2D 
+a| `com.jme3.texture.Texture2D` 
+a| Path to texture in `assets` directory, no quotation marks 
+
+a| Texture3D
+a| `com.jme3.texture.Texture3D` 
+a| Same as texture 2D except it is interpreted as a 3D texture 
+
+a| TextureCubeMap
+a| `com.jme3.texture.TextureCubeMap` 
+a| Same as texture 2D except it is interpreted as a cubemap texture 
+
+a| Boolean
+a| (basic Java type) 
+a| `true` or `false` 
+
+a| Int
+a| (basic Java type) 
+a| Integer number, no comma or parentheses 
+
+a| Color 
+a| `com.jme3.math.ColorRGBA` 
+a| Four floats, no comma or parentheses 
+
+a| FloatArray
+a| 
+a| (Currently not supported in J3M) 
+
+a| Vector2Array
+a| 
+a| (Currently not supported in J3M) 
+
+a| Vector3Array
+a| 
+a| (Currently not supported in J3M) 
+
+a| Vector4Array
+a| 
+a| (Currently not supported in J3M) 
+
+a| Matrix3
+a| 
+a| (Currently not supported in J3M) 
+
+a| Matrix4
+a| 
+a| (Currently not supported in J3M) 
+
+a| Matrix3Array
+a| 
+a| (Currently not supported in J3M) 
+
+a| Matrix4Array
+a| 
+a| (Currently not supported in J3M) 
+
+a| TextureBuffer
+a| 
+a| (Currently not supported in J3M) 
+
+a| TextureArray
+a| 
+a| (Currently not supported in J3M) 
+
+|===
+
+
+=== Flip and Repeat Syntax
+
+*  A texture can be flipped using the following syntax `NormalMap: Flip Textures/bump_rock_normal.png`
+*  A texture can be set to repeat using the following syntax `NormalMap: Repeat Textures/bump_rock_normal.png`
+*  If a texture is set to both being flipped and repeated, Flip must come before Repeat
+
+
+=== Syntax for Additional Render States
+
+*  A Boolean can be “On or “Off
+*  Float is “123.0 etc
+*  Enum - values depend on the enum
+
+См. link:http://jmonkeyengine.org/javadoc/com/jme3/material/RenderState.html[RenderState] javadoc для детального объяснения render states.
+
+[cols="3", options="header"]
+|===
+
+a|Название
+a|Тип
+a|Назначение
+
+a| link:http://jmonkeyengine.org/javadoc/com/jme3/material/RenderState.html#setWireframe(boolean)[Wireframe] 
+a|(Boolean)
+a| Enable wireframe rendering mode 
+
+a| link:http://jmonkeyengine.org/javadoc/com/jme3/material/RenderState.html#setFaceCullMode(com.jme3.material.RenderState.FaceCullMode)[FaceCull] 
+a|(Enum: FaceCullMode)
+a| Set face culling mode (Off, Front, Back, FrontAndBack) 
+
+a| link:http://jmonkeyengine.org/javadoc/com/jme3/material/RenderState.html#setDepthWrite(boolean)[DepthWrite] 
+a|(Boolean)
+a| Enable writing depth to the depth buffer 
+
+a| link:http://jmonkeyengine.org/javadoc/com/jme3/material/RenderState.html#setDepthTest(boolean)[DepthTest] 
+a|(Boolean)
+a| Enable depth testing 
+
+a| link:http://jmonkeyengine.org/javadoc/com/jme3/material/RenderState.html#setBlendMode(com.jme3.material.RenderState.BlendMode)[Blend] 
+a|(Enum: BlendMode)
+a| Set the blending mode 
+
+a| link:http://jmonkeyengine.org/javadoc/com/jme3/material/RenderState.html#setAlphaFallOff(float)[AlphaTestFalloff] 
+a|(Float)
+a| Set the alpha testing alpha falloff value (if set, it will enable alpha testing) 
+
+a| link:http://jmonkeyengine.org/javadoc/com/jme3/material/RenderState.html#setPolyOffset(float, float)[PolyOffset] 
+a|(Float, Float)
+a| Set the polygon offset factor and units 
+
+a| link:http://jmonkeyengine.org/javadoc/com/jme3/material/RenderState.html#setColorWrite(boolean)[ColorWrite] 
+a|(Boolean)
+a| Enable color writing
+
+a| link:http://jmonkeyengine.org/javadoc/com/jme3/material/RenderState.html#setPointSprite(boolean)[PointSprite] 
+a|(Boolean)
+a| Enable point sprite rendering for point meshes 
+
+|===
+
+
+== Примеры
+
+
+=== Пример 1: Блестящие
+
+[source,java]
+----
+Spatial signpost = (Spatial) assetManager.loadAsset(
+    new OgreMeshKey("Models/Sign Post/Sign Post.mesh.xml", null));
+signpost.setMaterial( assetManager.loadMaterial(
+    new AssetKey("Models/Sign Post/Sign Post.j3m")));
+TangentBinormalGenerator.generate(signpost);
+rootNode.attachChild(signpost);
+----
+Файл `assets/Models/Sign Post/Sign Post.j3m` содержит:
+
+
+[source]
+----
+Material Signpost : Common/MatDefs/Light/Lighting.j3md {
+    MaterialParameters {
+         Shininess: 4.0
+         DiffuseMap:  Models/Sign Post/Sign Post.jpg
+         NormalMap:   Models/Sign Post/Sign Post_normal.jpg
+         SpecularMap: Models/Sign Post/Sign Post_specular.jpg
+         UseMaterialColors : true
+         Ambient  : 0.5 0.5 0.5 1.0
+         Diffuse  : 1.0 1.0 1.0 1.0
+         Specular : 1.0 1.0 1.0 1.0
+    }
+}
+----
+JPG файл находится в той же папке, `assets/Models/Sign Post/…`.
+
+
+
+=== Пример 2: Повторение Текстуры
+
+[source,java]
+----
+Material mat = assetManager.loadMaterial(
+    "Textures/Terrain/Pond/Pond.j3m");
+mat.setColor("Ambient", ColorRGBA.DarkGray);
+mat.setColor("Diffuse", ColorRGBA.White);
+mat.setBoolean("UseMaterialColors", true);
+----
+Файл `assets/Textures/Terrain/Pond/Pond.j3m` содержит:
+
+
+[source]
+----
+Material Pong Rock : Common/MatDefs/Light/Lighting.j3md {
+     MaterialParameters {
+         Shininess: 8.0
+         DiffuseMap: Repeat Textures/Terrain/Pond/Pond.png
+         NormalMap:  Repeat Textures/Terrain/Pond/Pond_normal.png
+     }
+}
+----
+PNG файл находится в той же папке, `assets/Textures/Terrain/Pond/`
+
+
+
+=== Пример 3: Transparent
+
+Файл `assets/Models/Tree/Leaves.j3m` содержит:
+
+
+[source]
+----
+Material Leaves : Common/MatDefs/Light/Lighting.j3md {
+
+    Transparent On
+
+    MaterialParameters {
+        DiffuseMap : Models/Tree/Leaves.png
+        UseAlpha : true
+        AlphaDiscardThreshold : 0.5
+        UseMaterialColors : true
+        Ambient : .5 .5 .5 .5
+        Diffuse : 0.7 0.7 0.7 1
+        Specular : 0 0 0 1
+        Shininess : 16
+    }
+    AdditionalRenderState {
+        Blend Alpha
+        AlphaTestFalloff 0.50
+        FaceCull Off
+    }
+}
+----
+PNG файл находится в той же папке, `assets/Models/Tree/…`
+
+
+
+== Ссылки По Теме
+
+*  <<jme3/advanced/material_specification#,Developer specification of the jME3 material system (.j3md,.j3m)>>
+<tags><tag target="material" /><tag target="texture" /><tag target="file" /><tag target="sdk" /><tag target="wireframe" /><tag target="documentation" /></tags>

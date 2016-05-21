@@ -1,0 +1,186 @@
+
+
+=== Using XML to Define Layouts
+
+XML Screens leverage the AbstractAppState class for managing your grouped UI components.
+
+
+AppState example:
+
+
+[source,java]
+----
+public class XMLScreenSample extends AbstractAppState {
+    Screen screen;
+    Window inventory;
+    
+    public XMLScreenSample(Screen screen) {
+        // Store a pointer to the screen
+        this.screen = screen;
+        // Call the xml parser to load your new components
+        screen.parseLayout("Interface/Inventory.xml", this);
+        
+        // Here we can grab pointers to the loaded elements
+        inventory = (Window)screen.getElementById("InventoryWindowID");
+        // We'll hide the window initially so we can use an
+        // effect to show it from the initialize method
+        inventory.hide();
+        // grab more pointers to other elements / child elements
+    }
+    
+    @Override
+    public void initialize(AppStateManager stateManager, Application app) {
+        super.initialize(stateManager, app);
+        
+        // Useful place for running load effects
+        inventory.showWithEffect();
+    }
+
+    @Override
+    public void update(float tpf) {
+        //TODO: implement behavior during runtime
+    }
+	
+    @Override
+    public void cleanup() {
+        super.cleanup();
+        
+        // We can alter the effect to destroy our inventory window
+        // when we unload the AppState
+        Effect hide = new Effect(Effect.EffectType.FadeOut, Effect.EffectEvent.Hide, 0.25f);
+        hide.setDestroyOnHide(true);
+        
+        if (inventory.getIsVisible()) {
+            inventory.setEffect(hide);
+            inventory.hideWithEffect();
+        } else {
+            screen.removeElement(inventory);
+        }
+        
+        // Now our UI component scene fades out when the AppState in unloaded.
+    }
+}
+----
+
+==== A Look at the XML Layout
+
+Below is a rather large XML layout with a bunch of different components, method calls, event methods, etc.  It is relative nonsense and just there to show the basic structure.
+
+
+[source,xml]
+----
+<root>
+    <screen>
+        <component type="Window" id="InventoryWindowID" position="15%,15%" dimensions="70%,70%">
+            <method name="setWindowTitle" param0="Inventory" />
+            <component type="Label" position="10,40" dimensions="20%,20" >
+                <method name="setText" param0="First Name:" />
+                <method name="setTextAlign" param0="Right" />
+                <method name="setTextVAlign" param0="Center" />
+            </component>
+            <component type="Label" position="10,65" dimensions="20%,20" >
+                <method name="setText" param0="Last Name:" />
+                <method name="setTextAlign" param0="Right" />
+                <method name="setTextVAlign" param0="Center" />
+            </component>
+            <component type="Label" position="10,90" dimensions="20%,20" >
+                <method name="setText" param0="Address:" />
+                <method name="setTextAlign" param0="Right" />
+                <method name="setTextVAlign" param0="Center" />
+            </component>
+            <component type="Label" position="10,140" dimensions="20%,20" >
+            <method name="setText" param0="City:" />
+                <method name="setTextAlign" param0="Right" />
+                <method name="setTextVAlign" param0="Center" />
+            </component>
+            <component type="Label" position="10,165" dimensions="20%,20" >
+                <method name="setText" param0="State:" />
+                <method name="setTextAlign" param0="Right" />
+                <method name="setTextVAlign" param0="Center" />
+            </component>
+            <component type="Label" position="10,190" dimensions="20%,20" >
+                <method name="setText" param0="Postal Code:" />
+                <method name="setTextAlign" param0="Right" />
+                <method name="setTextVAlign" param0="Center" />
+            </component>
+            <component type="TextField" id="FirstName" position="25%,40" >
+                <method name="setType" param0="EXCLUDE_CUSTOM" />
+                <method name="setCustomValidation" param0="!@#$%^*()" />
+            </component>
+            <component type="TextField" id="LastName" position="25%,65" />
+            <component type="TextField" id="Address1" position="25%,90" />
+            <component type="TextField" id="Address2" position="25%,115" />
+            <component type="TextField" id="City" position="25%,140" />
+            <component type="Indicator" id="Indicator1" position="25%,225" orientation="HORIZONTAL" >
+                <method name="setAlphaMap" param0="tonegod/gui/style/def/Common/Extras/indicator_am_x.png" />
+                <method name="setIndicatorColor" param0="0,0.65f,0,1" />
+                <method name="setMaxValue" param0="100" />
+                <method name="setCurrentValue" param0="50" />
+                <method name="setDisplayValues" />
+            </component>
+            <component type="ComboBox" id="State" position="25%,165" >
+                <method name="addListItem" param0="Alaska" param1="Alaska" />
+                <method name="addListItem" param0="Alabama" param1="Alabama" />
+                <method name="addListItem" param0="Arkansas" param1="Arkansas" />
+                <method name="addListItem" param0="Connecticut" param1="Connecticut" />
+                <method name="addListItem" param0="Deleware" param1="Deleware" />
+                <method name="addListItem" param0="Dakota, North" param1="North Dakota" />
+                <method name="addListItem" param0="Dakota, South" param1="South Dakota" />
+                <method name="addListItem" param0="Georgia" param1="Georgia" />
+                <method name="addListItem" param0="Kentucky" param1="Kentucky" />
+                <method name="addListItem" param0="Maine" param1="Maine" />
+                <method name="addListItem" param0="New Jersey" param1="New Jersey" />
+                <method name="addListItem" param0="New York" param1="New York" />
+                <method name="addListItem" param0="Nevada" param1="Nevada" />
+            </component>
+            <component type="TextField" id="PostalCode" position="25%,190" >
+                <method name="setType" param0="INCLUDE_CUSTOM" />
+                <method name="setCustomValidation" param0="1234567890-" />
+                <method name="setMaxLength" param0="10" />
+            </component>
+            <component type="Button" id="SubmitButton" position="75%,87%" dimensions="23%,10%" >
+                <method name="setText" param0="Submit" />
+                <eventMethod name="onButtonMouseLeftUp" stateMethodName="invSubmitButtonClick" />
+            </component>
+        </component>
+        <component type="Menu" id="SubMenu1" position="0,0">
+            <method name="addMenuItem" param0="Menu Item 1" param1="1" param2="null" />
+            <method name="addMenuItem" param0="Menu Item 2" param1="2" param2="null" param3="true" />
+            <method name="addMenuItem" param0="Menu Item 3" param1="3" param2="null" param3="true" param4="true" />
+            <method name="addMenuItem" param0="Menu Item 4" param1="4" param2="null" param3="true" param4="true" />
+            <eventMethod name="onMenuItemClicked" stateMethodName="menu1click" />
+        </component>
+        <component type="Menu" id="Menu1" position="0,0">
+            <method name="addMenuItem" param0="Item 1" param1="1" param2="SubMenu1" />
+            <method name="addMenuItem" param0="Item 2" param1="2" param2="null" param3="true" />
+            <eventMethod name="onMenuItemClicked" stateMethodName="menu1click" />
+        </component>
+        <component type="AlertBox" id="Alert1" position="0,0">
+            <method name="setWindowTitle" param0="Hey you!" />
+            <method name="centerToParent" />
+            <eventMethod name="onButtonOkPressed" stateMethodName="alertOkClick" />
+            <effect type="SlideIn" event="Show" duration=".25f" direction="Left" audioFile="fade" volume="1" />
+            <effect type="SlideOut" event="Hide" duration=".25f" direction="Left" audioFile="fade" />
+        </component>
+    </screen>
+</root>
+----
+In the above example, you'll see that many components have defined an eventMethod tag.  The eventMethod tag defines the AppState method that will be used as a passthrough from the defined control event method.  There is no need to define parameters for these methods, as they simply forward the event methods parameters directly to the defined app state method.  Like so:
+
+
+[source,xml]
+----
+<eventMethod name="onButtonMouseLeftUp" stateMethodName="invSubmitButtonClick" />
+----
+Now we'll need to add the invSubmitButtonClick method to the AbstractAppState that called the parseLayout method, like so:
+
+
+[source,java]
+----
+public void invSubmitButtonClick(MouseButtonEvent evt, boolean isToggled) {
+    // We'll show the AlertBox we defined in the layout when this button is clicked
+    ((AlertBox)screen.getElementById("Alert1")).showWithEffect();
+}
+----
+The quickest way of getting the definition of the event method you are creating, is to create a new instance of the class the event is being passed from, implementing it's abstract methods &amp; cutt/paste the needed method.  Then you simply rename it.
+

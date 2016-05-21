@@ -1,0 +1,256 @@
+
+
+= Blender importer for jMonkeyEngine 3
+
+
+== Introduction
+
+Importing models to any game engine is as important as using them. The quality of the models depends on the abilities of the people who create it and on the tools they use.
+Blender is one of the best free tools for creating 3D enviroments. Its high amount of features attract many model designers.
+So far jMonkeyEngine used Ogre mesh files to import 3D data. These files were created by the python script that exported data from blender.
+It was important to have always the lates version of the script that is compatible with the version of blender and to use it before importing data to jme.
+Now we have an opportunity to simplify the import process by loading data directly from blender binary files: *.blend.
+
+
+<<jme3/external/blender#,created them properly>>
+
+
+
+== Usage
+
+To use it in your game or the SDK you should follow the standard asset loading instructions.
+By default a BlenderModelLoader is registered with your assetManager to load blend files. This means you can load and convert .blend model files to .j3o format, just like any other supported model format.
+
+
+
+== Currently supported features
+
+.  Loading scene (only the current scene is loaded and imported as a node)
+.  Loading mesh objects.
+**  Meshes are split into several geometries when they have several materials applied.
+**  All faces are stored as triangles (even if blender uses quads).
+**  The mesh is 'Smooth' aware.
+**  User defined UV coordinates are read.
+**  Loading BMesh is supported.
+
+.  Loading textures.
+**  Both image and generated textures are imported.
+**  Textures influence is supported ('Influence' tab in blender 2.5+ and 'Map to' in 2.49).
+**  Map input is not yet fully supported (currently working on it ;) ) so please use UV-mapping for all kinds of textures.
+
+.  Image textures.
+**  Textures can be loaded from: png, jpg, bmp, dds and tga.
+**  Both textures stored in the blender file and the outside are loaded (the outside textures need a valid path).
+**  Image textures are stored as Texture2D.
+
+.  Generated textures.
+**  All generated textures can be loaded except: VoxelData, EnviromentMap and PointDensity.
+**  Feel free to use colorbands.
+**  Generated textures are 'baked' into 2D textures and merged to create one flat texture. They can be freely merged with image textures.
+**  Generated textures can be used as normal maps (but this looks poor when large amount of small triangles is used; incleasing generated texture ppu in blender key might help a little)
+
+.  Loading materials.
+**  Materials are loaded and attached to geometries.
+**  Because jMonkeyEngine supports only one material for each Mesh, if you apply several materials to one object – it will be split into several meshes (but still in one node).
+**  Several kinds of input mapping is supported: UV maps, Orco and Nor; all projection types for 2D textures, XYZ coordinates mapping.
+
+.  Loading animations.
+**  Bone animations and object animations are supported.
+**  Armatures are imported as Skeleton. Constraint loading is not fully supported so use it carefully.
+**  Only assigning vertices to bones is at the moment supported so do not use bones' envelopes.
+
+.  Loading modifiers.
+..  Array modifier
+..  Mirror modifier
+..  Armature modifier (see loading animations)
+..  Particles modifier (see loading particles)
+
+**  More will come with time.
+
+.  Constraints loading
+**  Constraints are basicly supported but they do not work the way I'd like it. So feel free to experiment with it. I will create another post when I get it to work properly.
+
+.  Particles loading.
+**  Some features of particles loading is supported. You can use only particle emitters at the moment.
+**  You can choose to emit particles from vertices, faces or the geometry's convex hull (instead of volume).
+**  Currently Newtonian Physics is only supported.
+**  It was mostly tested for blender 2.49 (so I'm not 100% sure about its use in blender 2.5+).
+
+.  Using sculpting.
+**  This should work quite well for now :).
+
+.  Importing curves.
+**  Both bezier and NURBS curves are supproted.
+**  Feel free to use bevel and taper objects as well ;)
+
+.  Importing surfaces
+**  NURBS surface and sphere can be imported.
+
+.  Importing sky
+**  loading world's horizon color as a background color if no sky type is used
+**  loading sky without the texture
+**  loading textured sky (including both generated and normal textures)
+
+
+
+== Planned features.
+
+.  Full support for scale and offset in texture input mapping.
+.  Full support for bone and object constraints.
+.  More modifiers loaded.
+.  Loading texts.
+.  Loading meta objects (if jme will support it ;) ).
+
+
+== Known bugs/problems.
+
+.  RGB10 and RGB9E5 texture types are not supported in texture merging operations (which means that you can use this as a single texture on the model, but you should not combine it with other images or generated textures).
+.  If an armature is attached to a mesh that has more than one material the vertices of the mesh might be strongly displaced. Hope to fix that soon.
+
+
+== Using BlenderLoader instead of BlenderModelLoader
+
+You have two loaders available.
+
+
+*  BlenderLoader that loads the whole scene. It returns an instance of  LoadingResults that contains all the data loaded from the scene.
+
+[source,java]
+----
+public static class LoadingResults extends Spatial {
+        /** Bitwise mask of features that are to be loaded. */
+        private final int featuresToLoad;
+        /** The scenes from the file. */
+        private List<Node> scenes;
+        /** Objects from all scenes. */
+        private List<Node> objects;
+        /** Materials from all objects. */
+        private List<Material> materials;
+        /** Textures from all objects. */
+        private List<Texture> textures;
+        /** Animations of all objects. */
+        private List<AnimData> animations;
+        /** All cameras from the file. */
+        private List<Camera> cameras;
+        /** All lights from the file. */
+        private List<Light> lights;
+	/** Access Methods goes here. */
+}
+----
+*  BlenderModelLoader loads only the model node and should be used if you have a single model in a file.
+
+To register the model do the following:
+
+
+[source,java]
+----
+assetManager.registerLoader(BlenderLoader.class, "blend");
+----
+or
+
+
+[source,java]
+----
+assetManager.registerLoader(BlenderModelLoader.class, "blend");
+----
+*  The last thing to do is to create a proper key.
+
+You can use com.jme3.asset.BlenderKey for that.
+The simplest use is to create the key with the asset's name.
+It has many differens settings descibing the blender file more precisely, but all of them have default values so you do not need to worry about it at the beggining.
+You can use ModelKey as well. This will give the same result as using default BlenderKey.
+
+
+
+== How does it work?
+
+BlenderLoader (as well as BlenderModelLoader) is looking for all kinds of known assets to load.
+It's primary use is of course to load the models withon the files.
+Each blender object is imported as scene Node. The node should have applied textures and materials as well.
+If you define animations in your BlenderKey the animations will as well be imported and attached to the model.
+
+
+Here is the list of how blender features are mapped into jme.
+
+[cols="3", options="header"]
+|===
+
+a|Blender
+a|jMonkeyEngine3
+a|Note
+
+<a|Scene		
+a|Node
+a| 
+
+<a|Object		
+a|Node
+a| 
+
+<a|Mesh		
+a|List&lt;Geometry&gt; 
+a|One mesh can have several materials so that is why a list is needed here.
+
+<a|Lamp		
+a|Light
+a| 
+
+<a|Camera		
+a|Camera
+a| 
+
+<a|Material	
+a|Material
+a| 
+
+<a|Texture	
+a|Texture
+a| 
+
+<a|Curve		
+a|Node 
+a|Node with Curve as its mesh
+
+<a|Surface	
+a|Node 
+a|The surface is transformed to the proper mesh
+
+|===
+
+Using BlenderLoader can allow you to use blend file as your local assets repository.
+You can store your textures, materials or meshes there and simply import it when needed.
+Currently blender 2.49 and 2.5+ are supported (only the stable versions).
+Probably versions before 2.49 will work pretty well too, but I never checked that :)
+
+
+
+== Notes
+
+I know that the current version of loader is not yet fully functional, but belive me – Blender is a very large issue ;)
+Hope I will meet your expectations.
+
+
+Be mindful of the result model vertices amount. The best results are achieved when the model is smooth and has no texture. Then the vertex amount is equal to the vertex amount in blender. If the model is not smooth or has a generated texture applied then the amount of vertices is 3 times larger than mesh's triangles amount. If a 2d texture is applied with UV mapping then the vertex count will vary depending on how much the UV map is fragmented.
+
+
+When using polygon meshes in blender 2.5 and newer, better add and apply the triangulation modifier (if available in your version) or save the file with convertion from polygons to triangles.
+Even though the importer supports loading of polygons as the mesh faces, if your face isn't convex, the results might contain errors.
+
+
+Not all modifiers are supported. If your model has modifiers and looks not the way you want in the jme scene - try to apply them and load again.
+
+
+Cheers,
+Marcin Roguski (Kaelthas)
+
+
+P.S.
+This text might be edited in a meantime if I forgot about something ;)
+
+'''
+
+See also:
+
+
+*  <<sdk/3ds_to_blender_to_jmp#,3DS to Blender to j3o>>
+<tags><tag target="documentation" /><tag target="sdk" /><tag target="tool" /><tag target="asset" /></tags>

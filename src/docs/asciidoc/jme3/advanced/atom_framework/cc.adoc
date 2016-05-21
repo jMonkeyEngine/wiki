@@ -1,0 +1,166 @@
+
+
+== Character customization Introduction
+
+This is an introduction of Character customization tool of Atom framework
+
+
+<<quickstart#,quickstart>>
+
+
+
+=== Ideas & Features
+
+
+==== Ideas
+
+The initial idea of Character customization is: We (human) are soooo *similiar*!! 
+
+
+The second idea: *resuable* and *composable*!
+
+
+.  Cloths, skins, 3dmodels, animation.. are components of a whole, which made up character
+.  The same ideas with component oriented architecture
+
+So to reduce a very big workload of data and assets need for a game with vast data of character (football players, etc…) More over we can support and encourage gamer to “build their own character! This is how we handle the situations, similiar scenario can happen in a MMOs.
+
+
+
+==== Features
+
+*  Customize parts of characters (body, face, weapon) in gender | race (male - female, human - animal…), various height, weight!
+*  Customize cloths ( shirt, skirt) and their appearance (color, decal) . The cloth will fit its wearers!
+*  Customize the face with animation, emotions ( eyes, nose, mouth ) with (smile, angry …) goto <<facial#,facial>>
+*  As close as seen in current AAA games, open to MMORPG and social games.
+
+
+
+
+<<jme3/atomixtuts/kickgame/cc#,cc>>
+
+
+
+== AtomFacial framework - First look
+
+
+=== Features
+
+.  Template: Slot, Part are “place and “item just like textbox, choicebox in a form.
+.  Composing: Provide Node base way to define Customable parts, material and assets for CC. A mesh can be stiched together again after composing.
+.  Optimization : Compress texture space, mesh verticles
+.  Transformation: Provide way to include mesh morph or bone transformation can be describle in Blender, Free form deformation to make fitable clothes.
+.  Paint and Projection: support layered paint and decal projection (box, cylinder, sphere) in mesh surface, can be baked afterward.
+
+
+=== Screenshots & Video
+
+image:youtube_fcf6grenolg[youtube_fcf6grenolg,with="",height=""]
+
+
+
+=== Techniques
+
+*1) Blend shape* : 
+
+
+*2) Bone* : 
+
+
+*3) Free form deformation*: 
+
+
+
+=== Problems
+
+*1) Blend shape* : 
+
+
+I saw that going to be added into the core soon. So exciting, that will help a tons, as soon as finish, I will make a patch to help import blend shape from blender too. One thing I still have to consider is: Can we make a type of Mesh that save a whole topology from Blender or other CAD and then become the base mesh for futher manipulate?
+
+
+*2) Bone* : 
+
+
+I saw the current behavior of Bone, SkeletonControl are quite limited. I remember once @nehon explain that we don’t save the Length of the bone, but the trans/rot/scale just like a mat4… In fact, we can save more information in a Bone, and it will help tons when it come to a situation that someone want to manipulate the bone his self.
+
+
+_setUserControl_ didn’t sastify me cause I force me to patch the whole animation system just because I want to scale a bone up and down (ex: bigger nose for a character), and sync that with the existed animation. You can say it’s just my very own problem but …
+
+
+*3) Free form deformation*: 
+
+
+For the need of cloth customization, I made my self a quick FFD system, in fact, it works extactly like a set of bones still have lengths and envelops on them. But in the end, once again I have to hack into the Mesh class and other things, just because a lot of private and final methods… It’s kind of sad that it should not be that hard for the engine users to add more features to the engine if the user want to.
+
+
+At the end, I just want what I want, that mean I just want things work if it’s really easy, silly me. So is there another way around to make those 2 simple things?
+
+
+1) Scale/Translate/Rotate a bonebut preseved the current animation. ⇒ If yes, go for Characer custumization and facial…
+
+
+2) The mesh class is the center of the system, we should provide a way for people to build in from scratch or preseved topology. May be another type of Mesh, like HalfEdge mesh. If the answer it’s No need for now just consider it once in the future (We are not just making game for the moment)!
+
+
+
+=== Architecture
+
+
+=== Components
+
+
+== Manuals
+
+Go Quick 
+
+
+Go in depth
+
+
+
+=== Basic video tutorials
+
+
+=== In depth
+
+
+==== Quickstart
+
+
+==== Asset making
+
+
+==== Programming
+
+
+== Researches & Papers
+
+This is a short list of Researches &amp; Papers
+
+
+I have a Character customization system which i've plan to be quite complete. I reviewed a fews character system including:
+link:http://www.youtube.com/watch?v=RO8GIoRLGa0[http://www.youtube.com/watch?v=RO8GIoRLGa0]
+
+
+*  Perfect World
+*  APB: Reloaded
+*  Aion
+*  Star Trek Online
+*  Champions Online
+
+Some technical articles:
+
+
+* link:http://www.heroengine.com/heroengine/dynamic-character-systems/[http://www.heroengine.com/heroengine/dynamic-character-systems/]
+* link:http://hewiki.heroengine.com/wiki/Character_Design_and_Development[http://hewiki.heroengine.com/wiki/Character_Design_and_Development]
+* link:http://anticto.com/[http://anticto.com/]
+
+
+== Alternatives
+
+
+=== Opensource
+
+
+=== Commercial

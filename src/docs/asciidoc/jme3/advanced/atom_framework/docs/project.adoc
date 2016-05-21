@@ -1,0 +1,57 @@
+
+
+=== The structure
+
+
+==== Videogame structure
+
+I have a strong conceptual POV about video game, which affected by cinematography a lot. Because English is not my native language I can misunderstood the real meaning of the noun but I’ve tried to find the right words in decade.
+
+
+This one is mine, maybe only me but noone else :p :
+
+
+So consider this 5 level of separation:
+
+
+.  Main : The main entry, have everything only relate to this single game, single application. Also game specific Configs should be here
+.  Core : The shared part can be used in almost every application share the same base
+.  Stage : The ‘Stage’ is the base of entities, activites and events… It’s not nessesary care about the gameplay but the World, Camera, Light and Effects, Cinematic. Stage contain most of the underlying logic, and the actors.
+.  GamePlay: The part care about the routine of the game, the player, characters, stories, items, gameactions, techtree… it’s make the game look more like a game than an normal software or a movie. Gameplay contain most of the interactive part.
+.  State : Even your game routine can be modeled by something else not States, I introduced State to be more friendly with JME3′s AppState concept. I ultilized it and leveraged it, and you should also.
+
+Others optional:
+
+
+.  *Network : For network game, blending between state, sub-routine and arbitrary events is difficult and may require other kind of paradigm, that’s why is not in Stage, but elsewhere outside.
+.  *Services: If your game use external services such as Web or IAP or something like that.
+.  *UI: UI stand for user interface, almost everygame have user interfaces but not all, so it’s also optional
+.  *Script: For scripting, in my application, I embed Groovy everywhere, but I also preseved a place to hold “tranditional” run-time script that only be awared and executed when the game is already running.
+.  *Model: If you are in a company or from a strong “standard lized” Java workflow, it’s nearly you’ll come up with some Bean like this, but it’s kind of for normal software not a game.
+.  *Generated: Also if you have to embed some XML or some generated sources
+.  *DB: Of course Database and persistent solution can be here( if not better be in the Service section)
+
+…
+
+
+
+==== Project source structure
+
+The directory :
+ * src
+
+
+* my.game.name
+** main
+** core
+** state
+** gameplay
+** (*)network
+** (*)services
+** (*)ui
+** (*)others
+
+
+More detailed, You can find a better example here in my game examples:
+<<jme3/atomixtuts#,atomixtuts>>
+

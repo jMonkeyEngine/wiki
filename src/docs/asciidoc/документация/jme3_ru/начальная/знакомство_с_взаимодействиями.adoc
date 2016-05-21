@@ -1,0 +1,417 @@
+
+
+= jMonkeyEngine 3 Урок (8) - Знакомство с Взаимодействиями
+
+Предыдущий: <<документация/jme3_ru/начальная/знакомство_с_анимацией#,Знакомство с Анимацией>>,
+Следующий: <<документация/jme3_ru/начальная/знакомство_с_столкновениями#,Знакомство с Столкновениями>>,
+Английская версия: <<jme3/beginner/hello_picking#,Hello Picking>>
+
+
+Обычные взаимодействия в играх это включить свет, подобрать предмет или открыть дверь. С практической точки зрения, эти различные взаимодействия на удивление похожими: Сначала пользователь целится и выбирает цель в 3D-сцене, а затем инициируется действие. Мы называем этот процесс взаимодействие(picking).
+
+
+Вы можете выбрать что-либо нажатием клавиш на клавиатуре или щелчком мыши. В любом случае, вы определите цель, направляя луч(прямую линию) на объекты сцены. Этот метод для осуществления выбора называется _ray casting_ (которая не совпадает с _ray tracing_).
+
+
+Этот урок основан на том, что вы узнали в уроке <<документация/jme3_ru/начальная/знакомство_с_системой_ввода#,Знакомство с Системой ввода>>. Вы найдете дополнительные примеры кода в <<jme3/advanced/mouse_picking#,Mouse Picking>> и <<jme3/advanced/collision_and_intersection#,Collision and Intersection>>.
+
+
+
+image::jme3/beginner/beginner-picking.png[beginner-picking.png,with="",height="",align="center"]
+
+
+
+
+== Пример кода
+
+[source,java]
+----package jme3test.helloworld;
+
+import com.jme3.app.SimpleApplication;
+import com.jme3.collision.CollisionResult;
+import com.jme3.collision.CollisionResults;
+import com.jme3.font.BitmapText;
+import com.jme3.input.KeyInput;
+import com.jme3.input.MouseInput;
+import com.jme3.input.controls.ActionListener;
+import com.jme3.input.controls.KeyTrigger;
+import com.jme3.input.controls.MouseButtonTrigger;
+import com.jme3.light.DirectionalLight;
+import com.jme3.material.Material;
+import com.jme3.math.ColorRGBA;
+import com.jme3.math.Ray;
+import com.jme3.math.Vector3f;
+import com.jme3.scene.Geometry;
+import com.jme3.scene.Node;
+import com.jme3.scene.Spatial;
+import com.jme3.scene.shape.Box;
+import com.jme3.scene.shape.Sphere;
+
+/** Образец 8 - Как позволить пользователю взаимодействие(выбрать) с объектами в сцене
+ * с помощью мыши или нажатием клавиш. Может использоваться для стрельбы, открытия дверей и.т.п. */
+public class HelloPicking extends SimpleApplication {
+
+  public static void main(String[] args) {
+    HelloPicking app = new HelloPicking();
+    app.start();
+  }
+  private Node shootables;
+  private Geometry mark;
+
+  @Override
+  public void simpleInitApp() {
+    initCrossHairs(); //"+" в середине экрана, чтобы помочь прицеливатся
+    initKeys();       // загрузить пользовательские привязки клавиш 
+    initMark();       // красный шар, чтобы отметить попадание
+
+    /** создать четыре цветные коробки и пол, чтобы стрелять по ним: */
+    shootables = new Node("Shootables");
+    rootNode.attachChild(shootables);
+    shootables.attachChild(makeCube("a Dragon", -2f, 0f, 1f));
+    shootables.attachChild(makeCube("a tin can", 1f, -2f, 0f));
+    shootables.attachChild(makeCube("the Sheriff", 0f, 1f, -2f));
+    shootables.attachChild(makeCube("the Deputy", 1f, 0f, -4f));
+    shootables.attachChild(makeFloor());
+    shootables.attachChild(makeCharacter());
+  }
+
+  /** Объявление привязки "Shoot" и сопоставление её триггеру. */
+  private void initKeys() {
+    inputManager.addMapping("Shoot",
+      new KeyTrigger(KeyInput.KEY_SPACE),              // триггер 1: пробел
+      new MouseButtonTrigger(MouseInput.BUTTON_LEFT)); // триггер 2: левая кнопка мыши
+    inputManager.addListener(actionListener, "Shoot");
+  }
+  /** Объявление привязки "Shoot": Зададим попадание и как на него реагировать. */
+  private ActionListener actionListener = new ActionListener() {
+
+    public void onAction(String name, boolean keyPressed, float tpf) {
+      if (name.equals("Shoot") && !keyPressed) {
+        // 1. Сброс списка результатов.
+        CollisionResults results = new CollisionResults();
+        // 2. Направим луч от cam loc в направление cam direction.
+        Ray ray = new Ray(cam.getLocation(), cam.getDirection());
+        // 3. Собираем пересечения между Ray и Shootables в список результатов.
+        shootables.collideWith(ray, results);
+        // 4.Печать результата
+        System.out.println("----- Столкновение? " + results.size() + "-----");
+        for (int i = 0; i < results.size(); i++) {
+          // При каждом попадании, мы узнаем расстояние, точку воздействия, имя геометрии.
+          float dist = results.getCollision(i).getDistance();
+          Vector3f pt = results.getCollision(i).getContactPoint();
+          String hit = results.getCollision(i).getGeometry().getName();
+          System.out.println("* Столкновения #" + i);
+          System.out.println("  Вы стреляли " + hit + " at " + pt + ", " + dist + " wu от вас.");
+        }
+        // 5. Использование результатов (мы отмечаем объект попадания)
+        if (results.size() > 0) {
+          // Ближайшая точка столкновения, по которой было попадание:
+          CollisionResult closest = results.getClosestCollision();
+          // Осуществим взаимодействие - мы отмечаем попадание красной точкой.
+          mark.setLocalTranslation(closest.getContactPoint());
+          rootNode.attachChild(mark);
+        } else {
+          // Нет попаданий? Убрать красный след.
+          rootNode.detachChild(mark);
+        }
+      }
+    }
+  };
+
+  /** Объект куб для стрельбы */
+  protected Geometry makeCube(String name, float x, float y, float z) {
+    Box box = new Box(1, 1, 1);
+    Geometry cube = new Geometry(name, box);
+    cube.setLocalTranslation(x, y, z);
+    Material mat1 = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+    mat1.setColor("Color", ColorRGBA.randomColor());
+    cube.setMaterial(mat1);
+    return cube;
+  }
+
+  /** Пол чтобы показать, что "выстрел" может пройти несколько объектов. */
+  protected Geometry makeFloor() {
+    Box box = new Box(15, .2f, 15);
+    Geometry floor = new Geometry("the Floor", box);
+    floor.setLocalTranslation(0, -4, -5);
+    Material mat1 = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+    mat1.setColor("Color", ColorRGBA.Gray);
+    floor.setMaterial(mat1);
+    return floor;
+  }
+
+  /** Красный шар, который появится на последнем участке, в который было "попадание" при "выстреле". */
+  protected void initMark() {
+    Sphere sphere = new Sphere(30, 30, 0.2f);
+    mark = new Geometry("BOOM!", sphere);
+    Material mark_mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+    mark_mat.setColor("Color", ColorRGBA.Red);
+    mark.setMaterial(mark_mat);
+  }
+
+  /** Центрированной плюс", чтобы помочь игроку целится. */
+  protected void initCrossHairs() {
+    setDisplayStatView(false);
+    guiFont = assetManager.loadFont("Interface/Fonts/Default.fnt");
+    BitmapText ch = new BitmapText(guiFont, false);
+    ch.setSize(guiFont.getCharSet().getRenderedSize() * 2);
+    ch.setText("+"); // прицел
+    ch.setLocalTranslation( // центр
+      settings.getWidth() / 2 - ch.getLineWidth()/2, settings.getHeight() / 2 + ch.getLineHeight()/2, 0);
+    guiNode.attachChild(ch);
+  }
+
+  protected Spatial makeCharacter() {
+    // загрузим персонажа из jme3test-test-data
+    Spatial golem = assetManager.loadModel("Models/Oto/Oto.mesh.xml");
+    golem.scale(0.5f);
+    golem.setLocalTranslation(-1.0f, -1.5f, -0.6f);
+
+    //Мы должны добавить свет, чтобы сделать модель видимой
+    DirectionalLight sun = new DirectionalLight();
+    sun.setDirection(new Vector3f(-0.1f, -0.7f, -1.0f));
+    golem.addLight(sun);
+    return golem;
+  }
+}----
+Вы должны увидеть четыре цветных кубика зависшими над серым полом, и перекрестие. Цельтесь перекрестием и нажмите кнопку мыши или нажмите пробел, чтобы стрелять. Место попадания помечается красной точкой.
+
+
+Следите за потоком вывода приложения, это даст вам более подробную информацию: Имя сетки, что была поражена, координаты попадания, и расстояние.
+
+
+
+== Понимание Вспомогательных Методов
+
+Методы `makeCube()`,  `makeFloor()`, `initMark()`, и `initCrossHairs` это пользовательские вспомогательные методы. Мы вызываем их в `simpleInitApp()` для инициализации сцены с демо-контентом.
+
+
+.  `makeCube()` создает простые цветные коробки(Box-кубы) для “target practice.
+.  `makeFloor()` создает серый пол “target practice.
+.  `initMark()` создает красный шар(“mark). Мы будем использовать его позже, чтобы отметить точку попадания.
+**  Обратите внимание, что шар не подключен и поэтому не виден на старте!
+
+.  `initCrossHairs()` создает простое перекрестие “+ в середине экране.
+**  Обратите внимание, что перекрестие прикреплены к `guiNode`, а не к `rootNode`.
+
+
+В этом примере мы прикрепили все объекты “для демонстрации к одному пользовательскому узлу `Shootables`. Это оптимизирует движок для расчета пересечений только с теми объектами которые нас действительно интересуют. Узел `Shootables` прикреплен к `rootNode` как обычно.
+
+
+
+== Понимание Ray Casting для Проверки Попадания
+
+Наша цель-определить, в какой box пользователь “shot(выстрелил) (взял). В общем, мы хотим определить, какая сетка, выбрана пользователем, при наведении перекрестия на нее. Математически, мы рисуем линию от камеры что бы посмотреть, будет ли она пересекается с объектами в 3D-сцене. Эта линия называется ray.
+
+
+Вот наш простой ray casting алгоритм для взаимодействий с объектом:
+
+
+.  Сброс списка результатов.
+.  Направим луч от камеры в направление взгляда камеры.
+.  Соберем все пересечения между лучом и узлом `Shootable` в список`results`.
+.  Используем список результатов, чтобы определить, во что было попадание:
+..  При каждом попадании, JME, сообщает о расстоянии от камеры, месте попадания, и имя сетки.
+..  Отсортируем результаты по расстоянию.
+..  Возьмем ближайший результат, это сетка, которая была поражена.
+
+
+
+== Осуществление Проверки Попадания
+
+
+=== Загрузки сцены
+
+Сначала инициализируем некоторые shootable узлы и прикрепим их на сцену. Вы будете использовать объект `mark` позже.
+
+
+[source,java]
+----
+  Node shootables;
+  Geometry mark;
+  
+  @Override
+  public void simpleInitApp() {
+    initCrossHairs();
+    initKeys();
+    initMark();
+    
+    shootables = new Node("Shootables");
+    rootNode.attachChild(shootables);
+    shootables.attachChild(makeCube("a Dragon",    -2f, 0f, 1f));
+    shootables.attachChild(makeCube("a tin can",    1f,-2f, 0f));
+    shootables.attachChild(makeCube("the Sheriff",  0f, 1f,-2f));
+    shootables.attachChild(makeCube("the Deputy",   1f, 0f, -4));
+    shootables.attachChild(makeFloor());
+  }----
+
+=== Setting Up the Input Listener
+
+Далее вы объявите вызов действия стрельба (shooting). Оно может быть вызвано либо щелчком мыши или нажатием клавиши пробела. Метод `initKeys()` вызывается из `simpleInitApp()` чтобы задать эти клавиши ввода.
+
+
+[source,java]
+----
+  /** Объявление действия "Shoot" и triggers. */
+  private void initKeys() {
+    inputManager.addMapping("Shoot",                   // Объявить...
+      new KeyTrigger(KeyInput.KEY_SPACE),              // триггер 1: пробел, или
+      new MouseButtonTrigger(MouseInput.BUTTON_LEFT)); // триггер 2: нажатие левой кнопки мыши
+    inputManager.addListener(actionListener, "Shoot"); // ... и добавить.
+  }
+----
+
+=== Picking Action Using Crosshairs
+
+Далее мы реализуем ActionListener, который отвечает за связь между триггером стрелять и действием. За действием следует алгоритмом ray casting, описанный выше:
+
+
+.  При каждом клике или нажатие на пробел срабатывает действие `Shoot`.
+.  Действие бросает луч вперед и определяет пересечения с входящими в shootable объектами (= ray casting).
+.  Для любой цели, в которую было попадание, он выводит имя, расстояние и координаты попадания.
+.  Наконец он придает красный след ближайшему результату, выделив место, в которое было на самом деле попадание.
+.  Когда нет попаданий, список результатов пуст, и красная метка удаляется.
+
+Обратите внимание, как он печатает много выходных данных, чтобы показать вам, какие попадания были зарегистрированы.
+
+
+[source,java]
+----  /** Реализация действия "Shoot": определить, что было попадание и как реагировать. */
+  private ActionListener actionListener = new ActionListener() {
+    @Override
+    public void onAction(String name, boolean keyPressed, float tpf) {
+      if (name.equals("Shoot") && !keyPressed) {
+        // 1.Сброс списка результатов.
+        CollisionResults results = new CollisionResults();
+        // 2. Направим луч от cam loc в направление cam direction.
+        Ray ray = new Ray(cam.getLocation(), cam.getDirection());
+        // 3. Собирать пересечений между Ray и Shootables в списке результатов.
+        shootables.collideWith(ray, results);
+        // 4. Печать результата.
+        System.out.println("----- Collisions? " + results.size() + "-----");
+        for (int i = 0; i < results.size(); i++) {
+          // При каждом попадании, мы узнаем расстояние, точку воздействия, имя геометрии.
+          float dist = results.getCollision(i).getDistance();
+          Vector3f pt = results.getCollision(i).getContactPoint();
+          String hit = results.getCollision(i).getGeometry().getName();
+          System.out.println("* Collision #" + i);
+          System.out.println("  You shot " + hit + " at " + pt + ", " + dist + " wu away.");
+        }
+        // 5. Использование результатов (мы отмечаем объект попадания)
+        if (results.size() > 0){
+          // Ближайшая точка столкновения, в которую действительно попали:
+          CollisionResult closest = results.getClosestCollision();
+          mark.setLocalTranslation(closest.getContactPoint());
+          // Осуществим взаимодействие - мы отмечаем попадание красной точкой.
+          rootNode.attachChild(mark);
+        } else {
+        // Нет попаданий? Убрать красный след.
+          rootNode.detachChild(mark);
+        }
+      }
+    }
+  };----
+*Совет:* Обратите внимание, как вы используете предоставленный метод `results.getClosestCollision().getContactPoint()` для определения местоположения _ближайших_ попаданий. Если ваша игра включает “weapon(оружие) или “spell(заклинание) которое может попасть в несколько целей, вы можете также перебирать по списку результатов, и взаимодействовать с каждым из них.
+
+
+
+=== Выбор Действия При Помощи Указателя Мыши
+
+Приведенный выше пример предполагает, что игрок нацеливает перекрестие (прикрепленное к центру экрана) на цель. Но вы можете изменить код взаимодействия, что позволить вам свободно выбирать объекты в сцене с использованием видимого указателя мыши. Для того, чтобы сделать это, вам придется конвертировать 2D-экранные координаты мыши в 3D координаты, чтобы получить начальную точку взаимодействия луча.
+
+
+.  Сбросим список результатов.
+.  Получим 2D координаты клика.
+.  Преобразуем 2D координаты экрана в 3D эквивалент.
+.  Направьте луч при клике от 3D положения вперед на сцену.
+.  Сбор пересечений между ray и всеми узлами в списке результатов.
+
+[source,java]
+----...
+CollisionResults results = new CollisionResults();
+Vector2f click2d = inputManager.getCursorPosition();
+Vector3f click3d = cam.getWorldCoordinates(
+    new Vector2f(click2d.x, click2d.y), 0f).clone();
+Vector3f dir = cam.getWorldCoordinates(
+    new Vector2f(click2d.x, click2d.y), 1f).subtractLocal(click3d).normalizeLocal();
+Ray ray = new Ray(click3d, dir);
+shootables.collideWith(ray, results);
+...----
+Используйте вместе с `inputManager.setCursorVisible(true)` чтобы убедиться, что курсор будет виден.
+
+
+Обратите внимание, что поскольку вы теперь используйте мышь для выбора, вы больше не можете использовать её, чтобы вращать камеру. Если вы хотите иметь видимый указатель мыши для выбора в вашей игрe, вы должны будете заново переопределять привязки для вращение камеры.
+
+
+
+== Упражнения
+
+После попадания регистрируется, ближайший объект и идентифицируется в качестве мишени, и помечается красной точкой.
+Измените пример кода, чтобы решить эти упражнения:
+
+
+
+=== Упражнение 1: Магическое Заклинание
+
+Измените цвет ближайшей пораженной цели! +
+Вот некоторые советы:
+
+
+.  Перейдите к строке, где идентифицируется ближайшая цель, и добавить изменения после этого.
+.  Для изменения цвета объекта, необходимо в первую очередь знать его Геометрию. Определить узел путем выявления имени цели.
+**  Используйте `Geometry g = closest.getGeometry();`
+
+.  Создайте Материал с новым цветом, и установите объекту этот Материал.
+**  Загляните внутрь метода `makeCube()` для примера того, как можно установить случайные цвета.
+
+
+
+=== Упражнение 2: Стреляющий персонаж
+
+Стрельба по коробкам(кубам) это не очень интересно – вы можете добавить код, который загрузит модели в сцену, и вы сможете стрелять по ним.
+
+
+*  Совет: Вы можете использовать `Spatial golem = assetManager.loadModel(“Models/Oto/Oto.mesh.xml);` от движка jme3-test-data.jar.
+*  Совет: Модели находятся в тени! Для них вам необходимо устанавливать какое-то освещение!
+
+
+=== Упражнение 3: Забрать в инвентарь
+
+Измените код следующим образом, чтобы имитировать собор игроком предметов в инвентарь: При нажатии один раз, ближайшая цель идентифицируется и отделяется от сцены. При нажатии во второй раз, цель присоединяется в месте, которое вы выбрали. Вот некоторые советы:
+
+
+.  Создавайте узел инвентаря для временного хранения отдельных узлов(объектов).
+.  Узел инвентаря не присоединяйте к rootNode.
+.  Вы можете сделать инвентарь видимым путем присоединения инвентарного узла к guiNode (который прикрепляет его к HUD). Обратите внимание на следующие предостережения:
+**  Если узлы используют зажженную материал (не “Unshaded.j3md),  также добавить свет guiNode.
+**  Единицы размер в HUD пиксели,  поэтому для 2-wu куба отображается только 2 пикселя в HUD. – Масштаб его больше!
+**  Положение узлов: в левом нижнем углу  HUD будет (0f,0f), а в верхнем правом углу (settings.getWidth(),settings.getHeight()).
+
+
+<<документация/jme3_ru/решения#,Решения>>
++++<u>Будьте уверены в себе, и попытайтесь решить их в первую очередь для себя!</u>+++
+
+
+
+== Вывод
+
+Вы узнали, как использовать ray casting решили задачу определения того, какой объект на экране пользователь выбрал. Вы узнали, что это может быть использовано для различных действий, таких как стрельба, открытие дверей, собирание и удаление элементов, при нажатии на кнопку или рычаг и др.
+
+
+Используйте свое воображение, сюда:
+
+
+*  В вашей игре, клик мыши может вызвать какие-либо действия в отношении выявленных Геометрии: Взять её и положить её в инвентарь, приложите что-то к ней, вызвать анимацию или эффект, открытия двери или ящика – и.т.д.
+*  В вашей игре, вы можете заменить красную метку на имитацию частиц, добавить эффект взрыва, проиграть звук, вычислить новый счет после каждого попадания в зависимости от того, что был поражено – и.т.д.
+
+Теперь, было бы неплохо, если бы эти мишени и пол были твердыми предметами, и вы могли бы ходить между ними? Давайте изучим <<документация/jme3_ru/начальная/знакомство_с_столкновениями#,Обнаружение Столкновений>>.
+
+'''
+
+Смотрите также:
+
+
+*  <<документация/jme3_ru/начальная/знакомство_с_системой_ввода#,Знакомство с Системой ввода>>
+*  <<jme3/advanced/mouse_picking#,Выбор Мышью>>
+*  <<jme3/advanced/collision_and_intersection#,Столкновения и Intersectio>>
+<tags><tag target="beginner" /><tag target="documentation" /><tag target="intro" /><tag target="node" /><tag target="ray" /><tag target="click" /><tag target="collision" /><tag target="keyinput" /><tag target="input" /></tags>

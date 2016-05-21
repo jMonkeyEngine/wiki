@@ -1,0 +1,150 @@
+
+
+= jMonkeyEngine SDK -- The Scene
+
+To reduce system overhead the jMonkeyEngine SDK Core supplies one scene/jme3 application that is shared between plugins. Furthermore there's the “SceneExplorer that shows a visual representation of the scenegraph and its objects properties across plugins.
+
+
+
+== How to access the Scene
+
+There are several ways for your plugin to interact with the Scene:
+
+
+*  It listens for selected spatials / objects and offers options for those
+*  It requests the whole scene for itself and loads/arranges the content in it (e.g. a terrain editor or model animation plugin).
+
+
+== Listening for Node selection
+
+In the jMonkeyEngine SDK, all objects are wrapped into NetBeans “Nodes (different thing than jme Nodes!). Such nodes can have properties and icons and can be displayed and selected in the jMonkeyEngine SDK UI. The SceneExplorer shows a tree of Nodes that wrap the Spatials of the current scene and allows manipulating their properties on selection. A jME “Spatial is wrapped by a “JmeSpatial node, for example. One advantage of these Nodes is that one can manipulate properties of Spatials directly from the AWT thread.
+
+
+To listen to the current selection, implement org.openide.util.LookupListener and register like this:
+
+
+[source,java]
+----
+private final Result<JmeSpatial> result;
+
+//method to register the listener;
+private void registerListener(){
+    result = Utilities.actionsGlobalContext().lookupResult(JmeSpatial.class);
+    result.addLookupListener(this);
+}
+
+//implements org.openide.util.LookupListener (called from AWT thread)
+public void resultChanged(LookupEvent ev) {
+    Collection<JmeSpatial> items = (Collection<JmeSpatial>) result.allInstances();
+    for (JmeSpatial jmeSpatial : items) {
+        //Using the JmeSpatials properties you can modify the spatial directly from the AWT thread:
+        jmeSpatial.getPropertySets()[0].setValue("Local Translation", Vector3f.ZERO);
+        return;
+    }
+}
+
+----
+You can also access the “real spatial but since its part of the scenegraph you will have to modify it on that thread:
+
+
+[source,java]
+----
+//retrieve the "real" spatial class from the JmeNode
+for (JmeSpatial jmeSpatial : items) {
+    //the spatial is stored inside the JmeSpatials "Lookup", a general container for Objects
+    final Spatial realSpatial = jmeSpatial.getLookup().lookup(Spatial.class);
+    //use a Callable to execute on the render thread:
+    SceneApplication.getApplication().enqueue(new Callable() {
+        public Object call() throws Exception {
+            realSpatial.setLocalTranslation(Vector3f.ZERO);
+            return null;
+        }
+    });
+    return;
+}
+----
+
+== Requesting the Scene
+
+If your plugin wants to use the scene by itself, it first has to implement SceneListener and register at the scene and then send a SceneRequest to the SceneApplication. When the SceneRequest has been approved and the current Scene has been closed, the SceneListener (your class) is called with its own SceneRequest as a parameter. When another plugin sends a SceneRequest it is also reported to you and its a hint that your RootNode has been removed from the Scene and you are no longer in control of it. You could also hook into the SceneRequests of other plugins to see if/when they are activated to display add-on plugins for that plugin.
+
+
++
+
+The SceneRequest object has to contain several things. A thing that you must supply is a jme “Node wrapped into a “JmeNode object. This is your rootNode that you use to display and build your scene. As soon as you control the scene, you will have to control the camera etc. yourself.
+
+
+[source,java]
+----
+com.jme3.scene.Node rootNode = new com.jme3.scene.Node("MyRootNode");
+
+private void registerSceneListener(){
+    SceneApplication.getApplication().addSceneListener(this);
+}
+
+private void requestScene(){
+    //create a jmeNode from the rootNode using the NodeUtility
+    JmeNode jmeNode = NodeUtility.createNode(rootNode);
+    //create the scene request
+    SceneRequest request=new SceneRequest(this, jmeNode, assetManager);
+    //request the scene
+    SceneApplication.getApplication().openScene(request);
+}
+
+//implements SceneListener (called from AWT thread)
+public void sceneOpened(SceneRequest request){
+    //check if its our request
+    if (request.getRequester() == this) {
+        //we now own the scene, any operations on the scene have to be done via Callables
+    }
+}
+
+public void sceneClosed(SceneRequest request) {
+    if (request.getRequester() == this) {
+        //we have to close the scene,  any operations on the scene have to be done via Callables
+    }
+}
+----
+
+== Undo/Redo support
+
+The jMonkeyEngine SDK has a global undo/redo queue that activates the undo/redo buttons. To use it in your TopComponent, add the following method:
+
+
+[source,java]
+----
+@Override 
+public UndoRedo getUndoRedo() { 
+return Lookup.getDefault().lookup(SceneUndoRedoManager.class); 
+} 
+----
+To add a undo/redo event that modifies objects on the Scenegraph, theres a special version of AbstractUndoableEdit which executes the undo/redo calls on the scene thread. Simply implement that class and add it to the queue like this:
+
+
+[source,java]
+----
+Lookup.getDefault().lookup(SceneUndoRedoManager.class).addEdit(this, new AbstractUndoableSceneEdit() { 
+
+@Override 
+public void sceneUndo() { 
+    //undo stuff in scene here
+} 
+
+@Override 
+public void sceneRedo() { 
+    //redo stuff in scene here
+} 
+
+@Override 
+public void awtUndo() { 
+    //undo stuff on awt thread here (updating of visual nodes etc, called post scene edit)
+} 
+
+@Override 
+public void awtRedo() { 
+    //redo stuff on awt thread here
+} 
+});
+----
+Note: Its important that you use the method addEdit(Object source, UndoableEdit edit);
+

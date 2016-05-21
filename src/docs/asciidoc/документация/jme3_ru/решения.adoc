@@ -1,0 +1,449 @@
+
+
+= Некоторые предложенные решения
+
+Это предлагаемые пользовательские решения для некоторых, или всех упражнений, представленных в учебнике для начинающих (link:http://jmonkeyengine.org/wiki/doku.php/jme3#tutorials_for_beginners[http://jmonkeyengine.org/wiki/doku.php/jme3#tutorials_for_beginners]). 
+Есть несколько способов, сделать их, так что относитесь к тому что вы видите с недоверием, и лучше постарайтесь сделать их самостоятельно вместо того, чтобы прыгать к решению, ибо это лучший способ узнать!
+
+
+
+== Здравствуйте, Цикл Обновления
+
+
+=== Упражнение 1
+
+Он будет вращаться в другую сторону.
+
+
+
+=== Упражнение 2
+
+Во-первых, нужно объявить другую геометрию, например, “ красный куб:
+
+
+[source,java]
+----
+protected Geometry redCube;
+
+public void simpleInitApp() {
+    ...
+    
+    // Создадим новый куб
+    Box b2 = new Box(Vector3f.ZERO, 1, 1, 1);
+    redCube = new Geometry("red cube", b2);
+    
+    // Новый куб сделаем красного цвета
+    Material mat2 = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+    mat2.setColor("Color", ColorRGBA.Red);
+    redCube.setMaterial(mat2);
+    
+    // Расположим красный куб рядом с другим кубом
+    redCube.move(2, 0, 0);
+    
+    // Добавим красный куб на экран
+    rootNode.attachChild(redCube);
+}
+----
+Чтобы красный куб вращался в два раза быстрее, чем другой куба, просто сделайте его вращаться на той же оси, но с удвоенным значением:
+
+
+[source,java]
+----
+public void simpleUpdate(float tpf) {
+    // делает поворот player 
+    player.rotate(0, 2*tpf, 0);
+    
+    // делает поворот redCub в два раза быстрее игрока
+    redCube.rotate(0, 4*tpf, 0);
+}
+----
+
+=== Упражнение 3
+
+Одним из возможных способов решений является сжиматься или расширяться в зависимости от текущего размера. Куб будет начинать либо рост либо уменьшение. Если куб растет, то он начнет сжиматься только тогда, когда он достигает достаточно большого объема. Если куб уменьшается, то он снова начнет расти, только если размер достаточно мал. Короче, куб должен переключаться между расширением и сжатием при достижении заданного максимального и минимального размеров. Следующий код является примером такого решения:
+
+
+[source,java]
+----
+private boolean grow = true;
+...
+public void simpleUpdate(float tpf) {
+        if (grow) {
+                player.scale(1 + (3f * tpf));
+        } else {
+                player.scale(1 - (3f * tpf));
+        }
+
+        Vector3f s = player.getLocalScale();
+        if (s.getX() > 1.2f) {
+                grow = false;
+        } else if (s.getX() < 0.8f) {
+                grow = true;
+        }
+}
+----
+Куб начинается с роста, и когда он достигает размер больше, чем 120% от исходного размера, он начинает сжиматься. Куб будет сжиматься, пока он не достигнет размера меньше, чем 80% от исходного размера, и тогда снова запустится рост, и так далее.
+
+
+Другой подход заключается в том, чтобы переключением между уменьшением и ростом за выбранную единицу времени. tpf переменная хранит время как кадр для просмотра, так что, если вы суммируете каждый tpf в методе simpleUpdate, вы получаете сколько прошло времени с момента начала игры. Используя время как секундомер, можно вырасти куб в течение некоторого времени, а затем сжать кубик за тот же период времени, и начать все заново. Следующий код показывает пример такого решения:
+
+
+[source,java]
+----
+// Прошло время
+private float timeVar = 0;
+...
+public void simpleUpdate(float tpf) {
+    timeVar += tpf;
+    if (timeVar < 2) {
+        player.scale(1 + tpf * 0.4f);
+    } else if (timeVar < 4) {
+        player.scale(1 - tpf * 0.4f);
+    } else {
+        timeVar = 0;
+    }
+}
+----
+Куба растет 2  секунды, затем уменьшается еще 2 секунды, и повторяется бесконечно.
+
+
+Другой подход заключается в том, чтобы установить куб масштаб, как результат синусоиды. Результатом этого является гладкий повторяющихся колебательный масштаба. Заметим, однако, что этот подход вычислительной дорого из-за использования функции синус. Можно создать волны синуса путем вычисления синуса как функция времени. Таким образом, для каждой итерации метода simpleUpdate, масштаб установлен результатом синуса как функция времени, плюс оригинальный масштаб куба. Следующий код показывает пример такого подхода:
+
+
+[source,java]
+----
+public void simpleUpdate(float tpf) {
+    float timeInSec = timer.getTimeInSeconds();
+    float initScale = 1;
+    float amplitude = 0.5f;
+    float angularFrequency = 1;
+    float scale = initScale + amplitude * FastMath.sin(timeInSec * angularFrequency);
+    player.setLocalScale(scale);
+}
+----
+Куба неоднократно и плавно растут и уменьшаются, а имеют максимальный и минимальный масштаб 0,5 и 1,5 исходного размера. Следующие переменные могут изменять масштаб поведения:
+
+
+*  initScale - Устанавливает начальный масштаб Куба
+*  amplitude - Увеличивает минимальный и максимальный масштаб
+*  angularFrequency - Увеличивает масштаб скорости
+
+
+=== Упражнение 4
+
+Same logic! Use a timeVar, and make the Material declaration + initialization line we had @ simpleInitApp() into only the initialization, with the Material mat; going as a global variable, so we can access it on the simpleUpdate()! Like so:
+
+
+[source,java]
+----
+protected Material mat;
+----
+As global var, then the initialization cuts off the Material bit:
+
+
+[source,java]
+----
+mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+----
+И тогда simpleUpdate()
+
+
+[source,java]
+----
+public void simpleUpdate(float tpf) {
+    timeVar += tpf;
+    if (timeVar > 1) {
+        mat.setColor("Color", ColorRGBA.randomColor());
+        timeVar= 0;
+    }
+}
+----
+
+=== Упражнение 5
+
+Возможным решением является изменение оси вращения игрока от Y к X, и заставить его двигаться вдоль оси Z:
+
+
+[source,java]
+----
+public void simpleUpdate(float tpf) {
+    // player сделает поворот
+    player.rotate(2*tpf, 0, 0);
+    player.move(0, 0, 2*tpf);
+}
+----
+Приведенный выше код должен сделать крен player в сторону камеры.
+
+
+
+== Hello Input
+
+
+=== Упражнение 1
+
+Во-первых, добавите привязку к триггерам для действий Up и Down в методе initKeys():
+
+
+[source,java]
+----
+private void initKeys() {
+    ...
+    inputManager.addMapping("Up", new KeyTrigger(KeyInput.KEY_H));
+    inputManager.addMapping("Down", new KeyTrigger(KeyInput.KEY_L));
+    ...
+    inputManager.addListener(combinedListener, new String[]{"Left", "Right", "Up", "Down", "Rotate"});
+}
+----
+Затем реализуйте действия в методе onAnalog():
+
+
+[source,java]
+----
+public void onAnalog(String name, float value, float tpf) {
+    if (isRunning) {
+        ...
+        if (name.equals("Up")) {
+            Vector3f v = player.getLocalTranslation();
+            player.setLocalTranslation(v.x, v.y + value * speed, v.z);
+        }
+        if (name.equals("Down")) {
+            Vector3f v = player.getLocalTranslation();
+            player.setLocalTranslation(v.x, v.y - value * speed, v.z);
+        }
+    } else {
+        ...
+    }
+}
+----
+Это должно позволить кубу двигаться вверх, если нажата клавиша H, и вниз если нажата клавиша L.
+
+
+
+=== Упражнение 3
+
+Следуя решению предложенному для 1, добавить новые привязки для колеса мыши в метод initKeys():
+
+
+[source,java]
+----
+private void initKeys() {
+    ...
+    inputManager.addMapping("Up", new KeyTrigger(KeyInput.KEY_H),
+                                  new MouseAxisTrigger(MouseInput.AXIS_WHEEL, true));
+    inputManager.addMapping("Down", new KeyTrigger(KeyInput.KEY_L),
+                                    new MouseAxisTrigger(MouseInput.AXIS_WHEEL, false));
+    ...
+}
+----
+Теперь вы сможете переместить куба вверх или вниз с помощью прокрутки колесика мыши.
+
+
+
+=== Упражнение 4
+
+Когда делаешь элементы управления, настраеваемыми пользователем.
+
+
+
+== Hello Picking
+
+
+=== Упражнение 1
+
+You can jump right off and obtain the hit object's material, by acessing the “closest object we previously acquired, obtain it's geometry through .getGeometry(), and then get the Geometry's material through .getMaterial(), like so: 
+
+
+[source,java]
+----
+Material g = closest.getGeometry().getMaterial();
+----
+It's the same as going through the two steps hinted in the tips: `Geometry g = closest.getGeometry(); Material material = g.getMaterial();`
+Finally, you need only add this line: `material.setColor(“Color, ColorRGBA.randomColor())` , which will change the material from the hit object to a random color!
+
+
+The lines can be added anywhere within the `if (results.size() &gt; 0)` block, after declaring the closest object. End result is as so:
+
+
+[source,java]
+----
+Material material = closest.getGeometry().getMaterial();
+material.setColor("Color", ColorRGBA.randomColor());
+----
+
+=== Упражнение 2
+
+First of all, we need some light shed to make the model visible! Add a simple DirectionalLight like previously showed.
+Then, declare a `Spatial golem` variable outside of methods. Then initialize golem to load his model: 
+
+
+[source,java]
+----
+golem = assetManager.loadModel("Models/Oto/Oto.mesh.xml");
+----
+Now we need him to show up! So we need to attach him: but the rootNode won't do, because we're checking collision with it's child, the shootables node! So we attach it to shootables!
+
+
+[source,java]
+----
+shootables.attachChild(golem);
+----
+
+=== Упражнение 3
+
+Here is my code, it works and it is well commented.
+
+
+[source,java]
+----
+package jme3test.helloworld;
+
+import com.jme3.app.SimpleApplication;
+import com.jme3.collision.CollisionResult;
+import com.jme3.collision.CollisionResults;
+import com.jme3.font.BitmapText;
+import com.jme3.input.KeyInput;
+import com.jme3.input.MouseInput;
+import com.jme3.input.controls.ActionListener;
+import com.jme3.input.controls.KeyTrigger;
+import com.jme3.input.controls.MouseButtonTrigger;
+import com.jme3.light.DirectionalLight;
+import com.jme3.material.MatParam;
+import com.jme3.material.Material;
+import com.jme3.math.ColorRGBA;
+import com.jme3.math.Ray;
+import com.jme3.math.Vector3f;
+import com.jme3.scene.Geometry;
+import com.jme3.scene.Node;
+import com.jme3.scene.Spatial;
+import com.jme3.scene.shape.Box;
+import com.jme3.scene.shape.Sphere;
+import com.jme3.system.SystemListener;
+
+public class HelloPicking extends SimpleApplication
+{
+
+    public static void main(String[] args)
+    {
+	HelloPicking app = new HelloPicking();
+	app.start();
+    }
+    private Node shootables;
+    private Node inventory;
+    private Vector3f oldPosition;
+
+    @Override
+    public void simpleInitApp()
+    {
+	initCrossHairs();
+	initKeys();
+	shootables = new Node("Shootables");
+	inventory = new Node("Inventory");
+	guiNode.attachChild(inventory);
+	// add a light to the HUD so we can see the robot
+	DirectionalLight sun = new DirectionalLight();
+	sun.setDirection(new Vector3f(0, 0, -1.0f));
+	guiNode.addLight(sun);
+	rootNode.attachChild(shootables);
+	shootables.attachChild(makeCube("a Dragon", -2f, 0f, 1f));
+	shootables.attachChild(makeCube("a tin can", 1f, -2f, 0f));
+	shootables.attachChild(makeCube("the Sheriff", 0f, 1f, -2f));
+	shootables.attachChild(makeCube("the Deputy", 1f, 0f, -4f));
+	shootables.attachChild(makeFloor());
+	shootables.attachChild(makeCharacter());
+    }
+    private ActionListener actionListener = new ActionListener()
+    {
+	public void onAction(String name, boolean keyPressed, float tpf)
+	{
+	    if (name.equals("Shoot") && !keyPressed)
+	    {
+		if (!inventory.getChildren().isEmpty())
+		{
+		    Spatial s1 = inventory.getChild(0);
+		    // scale back
+		    s1.scale(.02f);
+		    s1.setLocalTranslation(oldPosition);
+		    inventory.detachAllChildren();
+		    shootables.attachChild(s1);
+		}
+		else
+		{
+		    CollisionResults results = new CollisionResults();
+		    Ray ray = new Ray(cam.getLocation(), cam.getDirection());
+		    shootables.collideWith(ray, results);
+
+		    if (results.size() > 0)
+		    {
+			CollisionResult closest = results.getClosestCollision();
+			Spatial s = closest.getGeometry();
+			// we cheat Model differently with simple Geometry
+			// s.parent is Oto-ogremesh when s is Oto_geom-1 and that is what we need
+			if (s.getName().equals("Oto-geom-1"))
+			{
+			    s = s.getParent();
+			}
+			// It's important to get a clone or otherwise it will behave weird
+			oldPosition = s.getLocalTranslation().clone();
+			shootables.detachChild(s);
+			inventory.attachChild(s);
+			// make it bigger to see on the HUD
+			s.scale(50f);
+			// make it on the HUD center
+			s.setLocalTranslation(settings.getWidth() / 2, settings.getHeight() / 2, 0);
+		    }
+		}
+	    }
+	}
+    };
+
+    private void initKeys()
+    {
+	inputManager.addMapping("Shoot",
+				new KeyTrigger(KeyInput.KEY_SPACE),
+				new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
+	inputManager.addListener(actionListener, "Shoot");
+    }
+    protected Geometry makeCube(String name, float x, float y, float z)
+    {
+	Box box = new Box(1, 1, 1);
+	Geometry cube = new Geometry(name, box);
+	cube.setLocalTranslation(x, y, z);
+	Material mat1 = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+	mat1.setColor("Color", ColorRGBA.randomColor());
+	cube.setMaterial(mat1);
+	return cube;
+    }
+    protected Geometry makeFloor()
+    {
+	Box box = new Box(15, .2f, 15);
+	Geometry floor = new Geometry("the Floor", box);
+	floor.setLocalTranslation(0, -4, -5);
+	Material mat1 = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+	mat1.setColor("Color", ColorRGBA.Gray);
+	floor.setMaterial(mat1);
+	return floor;
+    }
+    protected void initCrossHairs()
+    {
+	setDisplayStatView(false);
+	guiFont = assetManager.loadFont("Interface/Fonts/Default.fnt");
+	BitmapText ch = new BitmapText(guiFont, false);
+	ch.setSize(guiFont.getCharSet().getRenderedSize() * 2);
+	ch.setText("+");
+	ch.setLocalTranslation(
+		settings.getWidth() / 2 - ch.getLineWidth() / 2, settings.getHeight() / 2 + ch.getLineHeight() / 2, 0);
+	guiNode.attachChild(ch);
+    }
+    protected Spatial makeCharacter()
+    {
+	Spatial golem = assetManager.loadModel("Models/Oto/Oto.mesh.xml");
+	golem.scale(0.5f);
+	golem.setLocalTranslation(-1.0f, -1.5f, -0.6f);
+	System.out.println("golem.locaoTranslation:" + golem.getLocalTranslation());
+	DirectionalLight sun = new DirectionalLight();
+	sun.setDirection(new Vector3f(0, 0, -1.0f));
+	golem.addLight(sun);
+	return golem;
+    }
+}
+----

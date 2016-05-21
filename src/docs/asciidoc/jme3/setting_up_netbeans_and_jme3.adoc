@@ -1,0 +1,95 @@
+
+
+= Setting up JME3 in Netbeans 6.x
+
+For development with the jMonkeyEngine 3, we recommend to use the jMonkeyEngine <<sdk#,SDK>>.
+
+
+Alternatively, you can use your favorite IDE: In this tutorial we show how to download and set up the latest nightly build of the jMonkeyEngine 3 for use with the NetBeans IDE. Instructions for <<jme3/setting_up_jme3_in_eclipse#,Eclipse>> are also available.
+
+
+–
+
+
+
+== Downloading jME3
+
+The currently available JAR binaries are the nightly builds. 
+
+
+.  Download the most recent zipped build from link:http://nightly.jmonkeyengine.org/[http://nightly.jmonkeyengine.org/]
+.  Unzip the file and save it as `jME3_xx-xx-2010` in your NetBeansProjects directory. You should see the following files and directories:
+..  `lib/` – The jMonkeyEngine binaries and libraries. (Don't remove.)
+..  `TestChooser.exe` – Run this file to see various feature demos. (optional)
+..  `javadoc/` – jME3 +++<abbr title="Application Programming Interface">API</abbr>+++ documentation. (optional)
+
+
+
+== Creating a Project
+
+In NetBeans, choose File &gt; New Project, select Java &gt; Java Application, click Next.
+
+
+*  Project Name: HelloJME3
+*  Project Location: ~/NetBeansProjects
+*  Create main() Class: No
+*  Set as Main Project: Yes.
+*  Click Finish
+
+The new project appears in the Projects window.
+
+
+
+== Setting up Dependencies
+
+Your project depends on the jMonkeyEngine libraries and needs to know where they are.
+
+
+.  In the Projects window, right-click the project's Libraries node and choose “Add JAR/Folder.
+.  In the “Add JAR/Folder dialog, browse to the `NetBeansProjects/jME3_xx-xx-2010` directory.
+.  Select all JARs in `lib/` and click Select.
+
+The necessary libraries are now on the classpath and should appear in the Libraries list.
+
+
+
+== Optional: Configuring the JavaDoc Popups in NetBeans
+
+Configuring Javadoc popups for jme3 classes in NetBeans can be very helpful during the development phase of your game. 
+
+
+.  In the HelloJME3 project
+..  Right-click the Libraries node and choose Properties from the context menu
+..  Select the jMonkeyEngine3.jar library entry from the list and click Edit.
+...  Javadoc: Browse to JME3's `javadoc` directory and click select.
+...  Sources: Browse to JME3's `src`directory and click select.
+
+..  Click OK.
+
+
+Open a class of your HelloJME3 project, place the caret into a jme3 class, and press ctrl-space to see the javadoc popup, as well as code-completion.
+
+
+
+== Build & Run Tips in NetBeans
+
+How to build and run in NetBeans:
+
+
+*  Clean and build the whole project by pressing Shift-F11.
+*  Run any file that is open in the editor and has a main() class by pressing Shift-F6.
+*  Run the Main class of the project by pressing F6.
+
+Tips for configuring the main class in NetBeans:
+
+
+*  Right-click the HelloJME3 project and choose “Set as main project. Now you can use the toolbar buttons (clean&amp;build, run, debug, etc) to control this project.
+*  Right-click the HelloJME3 project and choose Properties. Go to the Run section. 
+*  Under Main Class, specify the class that will be executed when you run the whole project. For now, enter `hello.HelloJME3`.
+
+
+== Writing a SimpleApplication
+
+You can now continue to write <<jme3/beginner/hello_simpleapplication#,your first jme3 application>>!
+
+<tags><tag target="documentation" /><tag target="install" /></tags>

@@ -1,0 +1,375 @@
+
+
+= jMonkeyEngine 3 Урок (6) - Знакомство с материалом
+
+Предыдущий: <<документация/jme3_ru/начальная/знакомство_с_системой_ввода#,Знакомство с Системой ввода>>,
+Следующий: <<документация/jme3_ru/начальная/знакомство_с_анимацией#,Знакомство с Анимацией>>,
+Английская версия: <<jme3/beginner/hello_material#,Hello Material>>
+
+
+Термин Материал включает в себя все, что влияет на то, что на поверхности 3D-модель выглядит как: цвет, текстура, блеск и непрозрачность/прозрачность. Обычная окраска рассматривается в <<документация/jme3_ru/начальная/знакомство_с_узлами#,Знакомство с Узлами>>. Загрузка модели, вместе с материалами рассматривается в <<документация/jme3_ru/начальная/знакомство_с_ресурсами#,Знакомство с Ресурсами>>. В этом уроке вы научитесь создавать и использовать собственные JME3 Описанные Материал.
+
+image::jme3/beginner/beginner-materials.png[beginner-materials.png,with="320",height="240",align="center"]
+
+
+
+““““
+
+
+
+== Пример кода
+
+[source,java]
+----package jme3test.helloworld;
+
+import com.jme3.app.SimpleApplication;
+import com.jme3.light.DirectionalLight;
+import com.jme3.material.Material;
+import com.jme3.material.RenderState.BlendMode;
+import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector3f;
+import com.jme3.renderer.queue.RenderQueue.Bucket;
+import com.jme3.scene.Geometry;
+import com.jme3.scene.shape.Box;
+import com.jme3.scene.shape.Sphere;
+import com.jme3.texture.Texture;
+import com.jme3.util.TangentBinormalGenerator;
+
+/** Образец 6 - как дать поверхности объекта материал и текстуру.
+ * Как делать объекты прозрачными. Как сделать поверхностей неровной или блестящих.  */
+public class HelloMaterial extends SimpleApplication {
+
+  public static void main(String[] args) {
+    HelloMaterial app = new HelloMaterial();
+    app.start();
+  }
+
+  @Override
+  public void simpleInitApp() {
+
+    /** Простой текстурированный куб -- в хорошем MIP map качества. */
+    Box cube1Mesh = new Box( 1f,1f,1f);
+    Geometry cube1Geo = new Geometry("My Textured Box", cube1Mesh);
+    cube1Geo.setLocalTranslation(new Vector3f(-3f,1.1f,0f));
+    Material cube1Mat = new Material(assetManager, 
+        "Common/MatDefs/Misc/Unshaded.j3md");
+    Texture cube1Tex = assetManager.loadTexture(
+        "Interface/Logo/Monkey.jpg");
+    cube1Mat.setTexture("ColorMap", cube1Tex);
+    cube1Geo.setMaterial(cube1Mat);
+    rootNode.attachChild(cube1Geo);
+
+    /** Полупрозрачные / прозрачные текстуры, похожий на оконную раму. */
+    Box cube2Mesh = new Box( 1f,1f,0.01f);
+    Geometry cube2Geo = new Geometry("window frame", cube2Mesh);
+    Material cube2Mat = new Material(assetManager, 
+        "Common/MatDefs/Misc/Unshaded.j3md");
+    cube2Mat.setTexture("ColorMap", 
+        assetManager.loadTexture("Textures/ColoredTex/Monkey.png"));
+    cube2Mat.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
+    cube2Geo.setQueueBucket(Bucket.Transparent);
+    cube2Geo.setMaterial(cube2Mat);
+    rootNode.attachChild(cube2Geo);
+
+    /** Камень с неровный поверхность и с блестящим световым эффектом.*/
+    Sphere sphereMesh = new Sphere(32,32, 2f);
+    Geometry sphereGeo = new Geometry("Shiny rock", sphereMesh);
+    sphereMesh.setTextureMode(Sphere.TextureMode.Projected); // улучшим качество сферы
+    TangentBinormalGenerator.generate(sphereMesh);           // для эффекта освещения
+    Material sphereMat = new Material(assetManager, 
+        "Common/MatDefs/Light/Lighting.j3md");
+    sphereMat.setTexture("DiffuseMap", 
+        assetManager.loadTexture("Textures/Terrain/Pond/Pond.jpg"));
+    sphereMat.setTexture("NormalMap", 
+        assetManager.loadTexture("Textures/Terrain/Pond/Pond_normal.png"));
+    sphereMat.setBoolean("UseMaterialColors",true);    
+    sphereMat.setColor("Diffuse",ColorRGBA.White);
+    sphereMat.setColor("Specular",ColorRGBA.White);
+    sphereMat.setFloat("Shininess", 64f);  // [0,128]
+    sphereGeo.setMaterial(sphereMat);
+    sphereGeo.setLocalTranslation(0,2,-2); // Переместим её немного
+    sphereGeo.rotate(1.6f, 0, 0);          // Повернём её немного
+    rootNode.attachChild(sphereGeo);
+    
+    /** Нужно добавить света, чтобы сделать объект освещенным и видимым! */
+    DirectionalLight sun = new DirectionalLight();
+    sun.setDirection(new Vector3f(1,0,-2).normalizeLocal());
+    sun.setColor(ColorRGBA.White);
+    rootNode.addLight(sun);
+
+  }
+}
+----
+Вы должны увидеть
+
+
+*  Слева – куб с коричневой обезьяной на текстуре.
+*  Право – полупрозрачный обезьяна на картинке перед блестящим неровным камнем.
+
+Двигаться клавишами WASD, чтобы ближе взглянуть на полупрозрачности, и раздолбанности камня.
+
+
+
+== Простые Незатененные Текстуры
+
+Как правило, вы хотите, чтобы в сцене были объекты с текстурой: это может быть камень, трава, кирпич, дерево, вода, металл, бумага… Текстура-это обычный файл изображения в JPG или PNG формате. В этом примере создается окно с простой незатененной текстурой с обезьяной, как материал.
+
+
+[source,java]
+----
+    /** Простой текстурированный куб -- в хорошем MIP map качества. */
+    Box cube1Mesh = new Box( 1f,1f,1f);
+    Geometry cube1Geo = new Geometry("My Textured Box", cube1Mesh);
+    cube1Geo.setLocalTranslation(new Vector3f(-3f,1.1f,0f));
+    Material cube1Mat = new Material(assetManager, 
+        "Common/MatDefs/Misc/Unshaded.j3md");
+    Texture cube1Tex = assetManager.loadTexture(
+        "Interface/Logo/Monkey.jpg");
+    cube1Mat.setTexture("ColorMap", cube1Tex);
+    cube1Geo.setMaterial(cube1Mat);
+    rootNode.attachChild(cube1Geo);
+----
+Вот что мы сделали: для создания текстурированной box
+
+
+.  Создали Геометрию `cube1Geo` из Box сетки `cube1Mesh`. 
+.  Создали Материал `cube1Mat` на основе по умолчанию заданного jME3 материала `Unshaded.j3md`.
+.  Создали Текстуру `cube1Tex` из `Monkey.jpg` файла `assets/Interface/Logo/` в папке проекта. 
+.  Загрузили текстуру `cube1Tex` в `ColorMap` слой материала `cube1Mat`. 
+.  Применили материал к куб, и присоединили Куб к rootNode.
+
+
+== Незатененные Прозрачные Текстуры
+
+`Monkey.png` это такая же текстура, как и `Monkey.jpg`, но с дополнительным альфа-каналом. Альфа-канал позволяет Вам указать, какие области текстуры вы хотите сделать непрозрачным или прозрачным: Черные области альфа канала остаются непрозрачными, серых зон становятся полупрозрачными, и белые области становятся прозрачными.
+
+
+Для частично полупрозрачных/прозрачных текстур, вам необходимо:
+
+
+*  Текстуры с альфа-каналом
+*  Текстуры с режимом blend`BlendMode.Alpha`
+*  Геометрия в `Bucket.Transparent` рендер bucket.  +
+Этот рендер bucket гарантирует что объекты стоящие за прозрачным объектом, нарисуются правильно.
+
+[source,java]
+----
+    /** Полупрозрачные/прозрачные текстуры, похожими на оконное стекло. */
+    Box cube2Mesh = new Box( 1f,1f,0.01f);
+    Geometry cube2Geo = new Geometry("window frame", cube2Mesh);
+    Material cube2Mat = new Material(assetManager, 
+    "Common/MatDefs/Misc/Unshaded.j3md");
+    cube2Mat.setTexture("ColorMap", 
+        assetManager.loadTexture("Textures/ColoredTex/Monkey.png"));
+    cube2Mat.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);  // !
+    cube2Geo.setQueueBucket(Bucket.Transparent);                        // !
+    cube2Geo.setMaterial(cube2Mat);
+    rootNode.attachChild(cube2Geo);
+----
+Для непрозрачных объектов, порядок прорисовки не так важно, потому что z-буфер уже отслеживает, является ли пиксель за чем-то еще или нет, и цвет непрозрачного пикселя не зависит от пикселей под ним, поэтому непрозрачные Геометрии могут быть нарисованы в любом порядке.
+
+
+То, что вы делаете для задания прозрачной текстуры то же, что и раньше, только добавляется один доополнительный шага для прозрачности.
+
+
+.  Создадим геометрию `cube2Geo` из сетки Box `cube2Mesh`. Эта Box Геометрия вертикально плоский box (потому что z=0.01f).
+.  Создадим Материал `cube2Mat` на основе по умолчанию заданного jME3 материала `Unshaded.j3md`
+.  Создадим текстуру `cube2Tex` из `Monkey.png` файл в папке `assets/Textures/ColoredTex/` в папке проекта. Этот PNG-файл у него есть альфа-слой.
+.  *Включить прозрачность в материале, установив режим наложения Альфа.*
+.  *Установить в QueueBucket Геометрии `Bucket.Transparent`.*
+.  Загрузите текстуру `Monkey.png` в `ColorMap` слой материала `cube2Mat`.
+.  Примените материал к кубу, и присоедините куб к rootNode.
+
+*Совет:* Более подробно о создании PNG изображения с альфа-слоем в справочной системе вашего графического редактора.
+
+
+
+== Блеск и Раздолбанности
+
+Но с текстурами это еще не все. Внимательно посмотреть на блестящую сферу – вы не можете получить такой хороший неровный материал простой текстурой. Для этого JME3 поддерживает так называемую Phong-illuminated материала:
+
+
+В освещенном материала, стандартные слой текстуры называется _DiffuseMap_, любой материал может использовать этот слой. Горящий материал может иметь дополнительные световые эффекты, такие как _Блеск(Shininess)_ используется вместе с _SpecularMap_ слоем и _Отрожающий(Specular)_ цвет. И вы можете даже получить реально неровную поверхность или трещины на поверхности с помощью _NormalMap_ слоя.
+
+
+Давайте посмотрим на пример кода, в котором вами создается блестящий неровный камень.
+
+
+.  Создаем Геометрию от Сферической формы. Обратите внимание, что эта форма является обычной гладкой сеткой сферы. 
+[source,java]
+----
+    Sphere sphereMesh = new Sphere(32,32, 2f);
+    Geometry sphereGeo = new Geometry("Shiny rock", sphereMesh);----
+..  (Только для сфер) Измените TextureMode сферы что бы сделать квадратные текстуры проекта лучше выглядящими на сфере.
+[source,java]
+----
+    sphereMesh.setTextureMode(Sphere.TextureMode.Projected);----
+..  Необходимо создать TangentBinormals для сетки, что бы вы могли использовать NormalMap слой текстуры.
+[source,java]
+----
+    TangentBinormalGenerator.generate(sphereMesh);----
+
+.  Создадим материал, основанный на `Lighting.j3md` материале по умолчанию.
+[source,java]
+----
+    Material sphereMat = new Material(assetManager, 
+        "Common/MatDefs/Light/Lighting.j3md");----
+..  Возьмем стандартную каменистую текстур для `DiffuseMap` слоя. +
+
+image::http///jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Textures/Terrain/Pond/Pond.jpg[Pond.jpg,with="64",height="64",align="right"]
+
+[source,java]
+----
+    sphereMat.setTexture("DiffuseMap", 
+        assetManager.loadTexture("Textures/Terrain/Pond/Pond.jpg"));
+----
+..  Возьмем для “NormalMap, слой содержащий раздолбанности. NormalMap был создан для конкретно этой DiffuseMap с помощью специального инструмента (например Blender). 
+image::http///jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Textures/Terrain/Pond/Pond_normal.png[Pond_normal.png,with="64",height="64",align="right"]
+ 
+[source,java]
+----
+    sphereMat.setTexture("NormalMap", 
+        assetManager.loadTexture("Textures/Terrain/Pond/Pond_normal.png"));----
+..  Установите блеск материала в диапазоне от 1 до 128. Для камня подходит, низкий нечетких блеска. Используйте цвет материала, что бы задать блестящий зеркальный цвет. 
+[source,java]
+----
+    sphereMat.setBoolean("UseMaterialColors",true);    
+    sphereMat.setColor("Diffuse",ColorRGBA.White);  // минимальный цвет материал 
+    sphereMat.setColor("Specular",ColorRGBA.White); // для блеска
+    sphereMat.setFloat("Shininess", 64f); // [1,128] для блеска----
+
+.  Присвоим созданный материал Геометрии.
+[source,java]
+----
+    sphereGeo.setMaterial(sphereMat);----
+.  Немного переместим и повернем геометрию, чтобы расположить её лучше. 
+[source,java]
+----
+    sphereGeo.setLocalTranslation(0,2,-2); // Переместите её немного
+    sphereGeo.rotate(1.6f, 0, 0);          // Поверните её немного
+    rootNode.attachChild(sphereGeo);----
+
+Запомните, что любой материала на основе Lighting.j3md требует источника света, как показано в полном примере кода выше.
+
+
+*Совет:* Для отключения блеск, не устанавливайте ` Блеск(Shininess) ` 0, вместо этого установите ` зеркальный(Specular) ` цвет на `ColorRGBA.Black`.
+
+
+
+== Заданные по умолчанию Материалы
+
+Как вы уже видели, вы можете найти следующие материалы по умолчанию в `jme/core-data/Common/…`.
+
+[cols="3", options="header"]
+|===
+
+a| Материал Задан По Умолчанию
+a| Использование 
+<a| Параметры  
+
+a| `Common/MatDefs/Misc/Unshaded.j3md` 
+a| Цветные: использовать с mat.setColor() и ColorRGBA. +
+Текстурированные: использовать с mat.setTexture() и Texture. 
+a| Color  : Color +
+ColorMap : Texture2D 
+
+<a| `Common/MatDefs/Light/Lighting.j3md`      
+a| Использовать с блестящей, Bump- и NormalMaps текстуры. +
+Требует источник света. 
+a| Ambient, Diffuse, Specular : Color +
+DiffuseMap, NormalMap, SpecularMap : Texture2D +
+Shininess : Float 
+
+|===
+
+Для игры можно создавать пользовательские материалы на основе существующих MaterialDefintions – как вы только что видели в примере с блестящим материалом камня.
+
+
+
+== Упражнения
+
+
+=== Упражнение 1: Пользовательские .j3m Material
+
+Посмотрите еще раз на блестящую каменистую сферу. Требуется всего несколько строк, чтобы создать и настроить Материал.
+
+
+*  Обратите внимание, как загружается `Lighting.j3md` для определенного материала.
+*  Обратите внимание, как устанавливается путь к текстуре в `DiffuseMap` и `NormalMap`.
+*  Обратите внимание, как активируется  `UseMaterialColors` и наборы `Specular` и `Diffuse` четырьмя float значениями (RGBA цвета).
+*  Обратите внимание, как устанавливается `Shininess` 64.
+
+Если вы хотите использовать один пользовательский материал для нескольких моделей, вы можете сохранить его в .j3m файл и сэкономить пару строк кода каждый раз когда его используете. 
+
+
+Вы создаете j3m файл следующим образом:
+
+
+.  Создайте простой текстовый файл в папке проекта `assets/Materials/MyCustomMaterial.j3m` со следующим содержимым:
+[source]
+----Material My shiny custom material : Common/MatDefs/Light/Lighting.j3md {
+     MaterialParameters {
+        DiffuseMap : Textures/Terrain/Pond/Pond.jpg
+        NormalMap : Textures/Terrain/Pond/Pond_normal.png
+        UseMaterialColors : true
+        Specular : 1.0 1.0 1.0 1.0
+        Diffuse : 1.0 1.0 1.0 1.0
+        Shininess : 64.0
+     }
+}
+----
+**  Обратите внимание, что `Material`  это фиксированное ключевое слово.
+**  Обратите внимание, что `My shiny custom material`  это строка, которую вы можете использовать, чтобы описать материал.
+**  Обратите внимание, как код задает все те же свойства, что мы задавали ранее!
+
+.  В примере кода, закомментируйте восемь строк, которые содержат `sphereMat`.
+.  Ниже этой строке, добавьте следующую строку: 
+[source,java]
+----sphereGeo.setMaterial((Material) assetManager.loadMaterial( 
+    "Materials/MyCustomMaterial.j3m"));
+----
+.  Запустите приложение. Результат будет один и тот же.
+
+С этот новый пользовательский материал `MyCustomMaterial.j3m` занимает всего одну строку. Вы заменили восемь строк задающих материал на одну строку, которой загружается пользовательский материал из файла. Использовать .j3m файлы очень удобно, если вы используете один и тот же материал часто.
+
+
+
+=== Упражнение 2: Раздолбанности и блеска
+
+Вернёмся к неровному камню из примере выше:
+
+
+.  Закоментируйте DiffuseMap строку, и запустить приложение. (Раскомментируйте ее снова.)
+**  Какое свойство камня теряется?
+
+.  Закоментируйте NormalMap строку, и запустить приложение. (Раскомментируйте ее снова.)
+**  Какое свойство камня теряется?
+
+.  Измените значение Shininess до значений, таких как 0, 63, 127.
+**  Что изменяется в блеска?
+
+
+
+== Вывод
+
+Вы узнали, как создать Материал, изменить его свойства, и использовать его на Геометрии. Вы знаете, как загружать файлы изображения (.png, .jpg) как текстуру в Материал. Вы знаете, как сохранить файлы текстур в папке вашего проекта `assets/Textures/` папка.
+
+
+Вы также узнали, что материал может храниться в .j3m file. Ссылки на встроенные файлы MaterialDefinition и указать значение свойств MaterialDefinition. Вы умеете, сохранять ваши пользовательские .j3m файлы вашего проект в `assets/Materials/` папку.
+
+
+Теперь, когда вы знаете, как загрузить модели и, как назначить симпатичные материалы к ним, давайте посмотрим на то, как оживить моделей в следующем уроке, <<документация/jme3_ru/начальная/знакомство_с_анимацией#,Знакомство с Анимацией>>.
+
+'''
+
+См. также
+
+
+*  <<документация/jme3_ru/промежуточная/как_использовать_материал#,Использование материалов>>
+*  <<sdk/material_editing#,Material Editing>>
+*  link:http://www.jmonkeyengine.com/forum/index.php?topic=14179.0[Materials] ветка форума
+*  link:http://jmonkeyengine.googlecode.com/files/jME3_materials.pdf[jME3 Materials documentation] (PDF)
+*  link:http://www.youtube.com/watch?v=Feu3-mrpolc[Video Tutorial: Editing and Assigning Materials to Models in jMonkeyEngine SDK (from 2010, is there a newer one?]
+*  link:http://www.blender.org/education-help/tutorials/materials/[Creating textures in Blender]
+*  link:http://www.shaders.org/ifw2_textures/whatsin10.htm[Various Material screenshots] (Не сделано с JME3, это просто, чтобы показать фантастический выбор параметров материала в руках эксперта, до тех пор, пока у нас есть демо-версию для этого JME3.)
+<tags><tag target="documentation" /><tag target="beginner" /><tag target="intro" /><tag target="model" /><tag target="material" /><tag target="color" /><tag target="texture" /><tag target="transparency" /></tags>

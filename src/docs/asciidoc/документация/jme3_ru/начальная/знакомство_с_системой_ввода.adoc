@@ -1,0 +1,339 @@
+
+
+= jMonkeyEngine 3 Урок (5) - Знакомство Системой Ввода
+
+Предыдущий: <<документация/jme3_ru/начальная/знакомство_с_основным_циклом_обработки_событий#,Знакомство с Основным циклом обработки событий>>,
+Следующий: <<документация/jme3_ru/начальная/знакомство_с_материалом#,Знакомство с Материалом>>
+Английская версия: <<jme3/beginner/hello_input_system#,Hello Input System>>
+
+
+По умолчанию, в созданном приложении устанавливает управление камерой, с помощью клавиш WASD и мышью. Вы можете использовать камеру в качестве летающего первого лица изначально. Но что, если вам нужны камеры от третьего лица, или вы хотите переназначить клавиши для вызова специальных игровых действий?
+
+
+Каждая игра имеет свои настраиваемые сочетания клавиш, и в этом уроке объясняется, как их задать. Сначала определим нажатия клавиш и событие мыши, а затем мы определяем действия, которые они должны вызвать.
+
+
+
+== Пример Кода
+
+[source,java]
+----
+package jme3test.helloworld;
+
+import com.jme3.app.SimpleApplication;
+import com.jme3.material.Material;
+import com.jme3.math.Vector3f;
+import com.jme3.scene.Geometry;
+import com.jme3.scene.shape.Box;
+import com.jme3.math.ColorRGBA;
+import com.jme3.input.KeyInput;
+import com.jme3.input.MouseInput;
+import com.jme3.input.controls.ActionListener;
+import com.jme3.input.controls.AnalogListener;
+import com.jme3.input.controls.KeyTrigger;
+import com.jme3.input.controls.MouseButtonTrigger;
+
+/** Пример 5 - Как привязать клавиши и кнопки мыши к действиям */
+public class HelloInput extends SimpleApplication {
+
+  public static void main(String[] args) {
+    HelloInput app = new HelloInput();
+    app.start();
+  }
+  protected Geometry player;
+  Boolean isRunning=true;
+
+  @Override
+  public void simpleInitApp() {
+    Box b = new Box(1, 1, 1);
+    player = new Geometry("Player", b);
+    Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+    mat.setColor("Color", ColorRGBA.Blue);
+    player.setMaterial(mat);
+    rootNode.attachChild(player);
+    initKeys(); // загрузить мои пользовательские сочетание клавиш
+  }
+
+  /** Настройка сочетания клавиш: привязать имена действий(привязки), к триггерам. */
+  private void initKeys() {
+    // Можно привязать один или несколько триггеров для одного имени действия(привязки)
+    inputManager.addMapping("Pause",  new KeyTrigger(KeyInput.KEY_P));
+    inputManager.addMapping("Left",   new KeyTrigger(KeyInput.KEY_J));
+    inputManager.addMapping("Right",  new KeyTrigger(KeyInput.KEY_K));
+    inputManager.addMapping("Rotate", new KeyTrigger(KeyInput.KEY_SPACE),
+                                      new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
+    // Добавить имена привязок к listener.
+    inputManager.addListener(actionListener,"Pause");
+    inputManager.addListener(analogListener,"Left", "Right", "Rotate");
+    
+  }
+
+  private ActionListener actionListener = new ActionListener() {
+    public void onAction(String name, boolean keyPressed, float tpf) {
+      if (name.equals("Pause") && !keyPressed) {
+        isRunning = !isRunning;
+      }
+    }
+  };
+
+  private AnalogListener analogListener = new AnalogListener() {
+    public void onAnalog(String name, float value, float tpf) {
+      if (isRunning) {
+        if (name.equals("Rotate")) {
+          player.rotate(0, value*speed, 0);
+        }
+        if (name.equals("Right")) {
+          Vector3f v = player.getLocalTranslation();
+          player.setLocalTranslation(v.x + value*speed, v.y, v.z);
+        }
+        if (name.equals("Left")) {
+          Vector3f v = player.getLocalTranslation();
+          player.setLocalTranslation(v.x - value*speed, v.y, v.z);
+        }
+      } else {
+        System.out.println("Press P to unpause.");
+      }
+    }
+  };
+}
+----
+Откомпилировать и запустить пример.
+
+
+*  Нажмите клавишу пробела или нажмите кнопку мыши, чтобы повернуть куб.
+*  Нажмите кнопки J и K, чтобы переместить куб.
+*  Нажмите P, чтобы приостановить и возобновить игру.  Во время паузы, игра не должна реагировать на любой ввод, кроме ` P `.
+
+
+== Определение(Defining) Привязки(Mappings) и Триггеры(Triggers)
+
+Сначала вы регистрируете соспоставление имени каждой привязки с триггером(ами). Запомните следующее:
+
+
+*  Триггер ввода может быть нажатие клавиши или действия мыши. +
+Например движения мыши, нажатие кнопки мыши, или нажатие клавиши  “P.
+*  Имя привязки представляет из себя текст набранный по вашему усмотрению. +
+Имя должно описывать действие (например, “Rotate(Поверните)), а не триггер. Потому что триггер может быть изменен.
+*  Одно название привязки может иметь несколько триггеров.  +
+Например, привязка “Rotate может быть вызвано и мышью и нажатием клавиши “ пробел.
+
+Посмотрите на код:
+
+
+.  Вы зарегистрировали привязку  с именем “Rotate на триггер клавиши “Пробел. +
+`new KeyTrigger(KeyInput.KEY_SPACE)`). 
+.  В той же строке, вы также зарегистрировали для “Rotate альтернативу, триггер кнопку мыши. +
+`new MouseButtonTrigger(MouseInput.BUTTON_LEFT)`
+.  Вы сопоставите привязки `Pause`, `Left`, `Right`  соответственно клавишам P, J, K. 
+
+[source,java]
+----
+    // Можно сопоставить одну или несколько клавиш для одного имени привязки
+    inputManager.addMapping("Pause",  new KeyTrigger(KeyInput.KEY_P));
+    inputManager.addMapping("Left",   new KeyTrigger(KeyInput.KEY_J));
+    inputManager.addMapping("Right",  new KeyTrigger(KeyInput.KEY_K));
+    inputManager.addMapping("Rotate", new KeyTrigger(KeyInput.KEY_SPACE),
+                                      new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
+----
+Теперь вам нужно зарегистрировать свои триггеры с привязками.
+
+
+.  Регистрируем привязку “Pause с ActionListener,  потому что это “on/off действие.
+.  Регистрируем привязки движения с AnalogListener, потому что это поэтапные действия.
+
+[source,java]
+----
+    // Добавим имена привязок в listener.
+    inputManager.addListener(actionListener,"Pause");
+    inputManager.addListener(analogListener,"Left", "Right", "Rotate");
+----
+Этот код входит в метод `simpleInitApp()`. Но так как мы, скорее всего, добавим много комбинаций клавиш, мы извлечем эти строки и сделаем вспомогательного метод `initKeys()`  с ними. Метод `initKeys()`  не является частью  Input Controls interface – Вы можете назвать его как угодно. Только не забудьте указать свой метод в методе “initSimpleApp().
+
+
+
+== Реализация действия
+
+Названия действий сопоставлены с триггерами ввода. Теперь вы можете задать сами действия.
+
+
+Есть два важных метода `ActionListener` с его методом `onAction()` и `AnalogListener`  с его методом `onAnalog()`. Протестируйте эти два метода  для каждого имени привязки, вызывая действия в игре. 
+
+
+В этом примере мы инициируем следующие действия: 
+
+
+.  _Rotate_ выполняющий действие `player.rotate(0, value, 0)`. 
+.  _Left_ и _Right_ выполняющие увеличение и уменьшения значение координаты x для player.
+.  _Pause_ меняющее boolean значение `isRunning`. 
+.  Мы также хотим проверить рабату логической `isRunning` для любых действий (кроме отключения паузу).
+
+[source,java]
+----
+  private ActionListener actionListener = new ActionListener() {
+    public void onAction(String name, boolean keyPressed, float tpf) {
+      if (name.equals("Pause") && !keyPressed) {
+        isRunning = !isRunning;
+      }
+    }
+  };
+
+  private AnalogListener analogListener = new AnalogListener() {
+    public void onAnalog(String name, float value, float tpf) {
+      if (isRunning) {
+        if (name.equals("Rotate")) {
+          player.rotate(0, value*speed, 0);
+        }
+        if (name.equals("Right")) {
+          Vector3f v = player.getLocalTranslation();
+          player.setLocalTranslation(v.x + value*speed, v.y, v.z);
+        }
+        if (name.equals("Left")) {
+          Vector3f v = player.getLocalTranslation();
+          player.setLocalTranslation(v.x - value*speed, v.y, v.z);
+        }
+      } else {
+        System.out.println("Press P to unpause.");
+      }
+    }
+  };----
+Вы также можете комбинировать оба listeners в один. Движок будет отправлять соответствующие события для каждого метода (onAction или onAnalog). Например:
+
+
+[source,java]
+----
+  private MyCombinedListener combinedListener = new MyCombinedListener();
+
+  private static class MyCombinedListener implements AnalogListener, ActionListener {
+    public void onAction(String name, boolean keyPressed, float tpf) {
+      if (name.equals("Pause") && !keyPressed) {
+        isRunning = !isRunning;
+      }
+    }
+    
+    public void onAnalog(String name, float value, float tpf) {
+      if (isRunning) {
+        if (name.equals("Rotate")) {
+          player.rotate(0, value*speed, 0);
+        }
+        if (name.equals("Right")) {
+          Vector3f v = player.getLocalTranslation();
+          player.setLocalTranslation(v.x + value*speed, v.y, v.z);
+        }
+        if (name.equals("Left")) {
+          Vector3f v = player.getLocalTranslation();
+          player.setLocalTranslation(v.x - value*speed, v.y, v.z);
+        }
+      } else {
+        System.out.println("Press P to unpause.");
+      }
+    }
+  }
+// ...
+inputManager.addListener(combinedListener, new String[]{"Pause", "Left", "Right", "Rotate"});
+  ----
+Это нормально, использовать только один из двух listeners, и не реализовывать другой, если вы не используете этот тип привязок. Далее мы научим определять, какой из двух listeners лучше всего подходит для какой ситуации.
+
+
+
+== Analog, Нажать, или Отпустить?
+
+Технически, каждый ввод действий может быть либо “analog(аналоговый) либо “digital(цифровой). Вот так вы узнаете, что listener является правильным для типа ввода.
+
+
+Привязки зарегистрированные в *AnalogListener* срабатывают повторно и постепенно.
+
+
+*  Параметры: 
+..  JME дает вам доступ к имени действия триггера.
+..  JME дает вам доступ к переменной величине, показывающей силу данного ввода. В случае нажатия клавиши, это будет  tpf значение, для которого она была нажата с момента последнего кадра. Для других способов ввода таких как джойстик, который дают analogue управление, значение будет также указывать силу ввода предварительно умноженное на tpf. Для примера перейдите <<документация/jme3_ru/начальная/знакомство_с_системой_ввода/время_нажатия_клавиши#,jMonkeyEngine 3 Урок (5) - Знакомство Системой Ввода - Изменения значения с течением времени когда нажата клавиша>>
+
+
+Для того, чтобы увидеть общее время, которое клавиша была нажата, значение ввода может быть накоплено. Analogue listener  может также сочетаться с действием listener так, что вы будете уведомлены, когда клавиша отпущена.
+
+
+*  Пример: Навигационные события (например Left(влево), Right(вправо), Rotate(поворот), Run(запуск), Strafe(атака)), в ситуациях, когда вы действуете постоянно.
+
+Привязки зарегистрированные в *ActionListener* являются мелкими действиями – “Нажата или отпущена? On или off?
+
+
+*  Параметры: 
+..  JME дает вам доступ к имени действия триггера.
+..  JME дает вам доступ к логическому значению, нажата ли клавиша или нет.
+
+*  Пример: Pause button(Пауза), shooting(стрельба), selecting(выбор), jumping(прыгать), один раз нажимаете кнопку действия.
+
+*Совет:* Очень часто, вы хотите, чтобы действие срабатывает только один раз, в момент, когда клавиша _отпущена_. Например, при открытии двери, переворачивании страницы, или собирание предметов. Чтобы добиться этого, можно использовать `ActionListener` и тест `… &amp;&amp; !keyPressed`. Для примера, посмотрите на код кнопки Pause (пауза):
+
+
+[source,java]
+----      if (name.equals("Pause") && !keyPressed) {
+        isRunning = !isRunning;
+      }----
+
+== Таблица триггеров
+
+Вы можете найти список констант ввода в файлах `src/core/com/jme3/input/KeyInput.java`, `JoyInput.java`, и `MouseInput.java`. Ниже приведен обзор наиболее распространенных констант триггеров:
+
+[cols="2", options="header"]
+|===
+
+a| Триггер 
+a| Код 
+
+a| Кнопка мыши: Щелкните Левой Кнопкой 
+a| MouseButtonTrigger(MouseInput.BUTTON_LEFT) 
+
+a| Кнопка мыши: Щелкните Правой Кнопкой 
+a| MouseButtonTrigger(MouseInput.BUTTON_RIGHT) 
+
+a| Клавиатура: Символы и цифры 
+a| KeyTrigger(KeyInput.KEY_X) 
+
+<a| Клавиатура: Пробел  
+a| KeyTrigger(KeyInput.KEY_SPACE) 
+
+a| Клавиатура: Return, Enter 
+<a| KeyTrigger(KeyInput.KEY_RETURN), KeyTrigger(KeyInput.KEY_NUMPADENTER)  
+
+a| Клавиатура: Escape 
+a| KeyTrigger(KeyInput.KEY_ESCAPE) 
+
+a| Клавиатура: Стрелки 
+a| KeyTrigger(KeyInput.KEY_UP), KeyTrigger(KeyInput.KEY_DOWN) +
+KeyTrigger(KeyInput.KEY_LEFT), KeyTrigger(KeyInput.KEY_RIGHT) 
+
+|===
+
+*Совет:* Если вы не можете вспомнить константу ввода вовремя разработки, вам может помочь функция IDE дописывать код: Поместите курсор после например `KeyInput.|` и появится список всевозможных триггеров, в котором вы сможете найти нужный вам.
+
+
+
+== Упражнения
+
+.  Добавить действия перемещение player (box) вверх и вниз клавишами H и L!
+.  Выключите flyCam  и переопределите на клавиши WASD.
+**  Совет: Используйте <<jme3/faq#how_do_i_switch_between_third-person_and_first-person_view,flyCam.setEnabled(false);>> 
+
+.  Измените взаимодействия так чтобы вы могли совершать движения вверх вниз прокруткой колеса мыши!
+**  Совет: Используйте `new MouseAxisTrigger(MouseInput.AXIS_WHEEL, true)`
+
+.  В какой ситуации лучше использовать переменные вместо литералов для определения MouseInput/KeyInput ? 
+[source,java]
+----int usersPauseKey = KeyInput.KEY_P; 
+...
+inputManager.addMapping("Pause",  new KeyTrigger(usersPauseKey));
+----
+
+<<документация/jme3_ru/решения#,Решения>>
++++<u>Будьте уверены в себе, и попытайтесь решить их в первую очередь для себя!</u>+++
+
+
+
+== Вывод
+
+Теперь вы можете добавлять пользовательские действия в вашу игру: Вы знаете, что вы сначала должны использовать привязки к клавишам, а затем задать действия для каждой привязки. Вы научились реагировать на события мыши и клавиатуры. Вы понимаете разницу между “аналоговым(analog) (постепенно повторяющееся) и “цифровым(digital) (on/off) вводом.
+
+
+Теперь вы уже можете написать небольшую интерактивную игру! Но разве не было бы круче вложить в этих старые коробки(box) немного больше фантазии? Давайте продолжим знакомство с <<документация/jme3_ru/начальная/знакомство_с_материалом#,Материалом>>.
+
+<tags><tag target="input" /><tag target="intro" /><tag target="beginner" /><tag target="documentation" /><tag target="keyinput" /><tag target="click" /></tags>

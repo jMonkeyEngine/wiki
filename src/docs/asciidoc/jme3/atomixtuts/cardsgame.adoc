@@ -1,0 +1,284 @@
+
+
+== CARD GAME
+
+*Hi Monkeys,*
+
+
+This is the first Chapter of the Game making tutorial series and named “The card game”.
+
+
+My intention is to make a “clone” Card game as Yugi Oh card game (similar to Collectable Magic Cards game). 
+
+
+emoji:emoji:+
+
+<<jme3/atomixtuts/cardsgame#Why_clone?, More about Concept and Game Design...>>
+
+
+
+== INTRODUCTION
+
+
+=== Basic idea:
+
+Clone Yugioh – the card game. In the game, two players use magic card with attack and defend to play with each other
+
+
+Short : <<jme3/atomixtuts/cardsgame/gameplay#,gameplay>>
+
+
+Detailed game rule can be viewed here: link:http://yugioh.wikia.com/wiki/Master_Rules[http://yugioh.wikia.com/wiki/Master_Rules]
+
+
+
+=== Why clone?
+
+In fact, the idea and game design phase is very important for game industry! emoji:confused
+
+
+*But because audiences can also be newbie and non-pro, for them, this process are NOT necessary a MUST  emoji:wink!!!! *
+
+
+Because of this gameplay and also the games -Yugi Cards and Collectiable Magic Cards are pretty popular, I decided to skip Game Design and Concept phase,  hoping you guys already know what the game should look like and play like. ! I will also to Asset making videos but keep them short as possible.
+
+
+
+=== Techniques shown
+
+Skills will be used, GOOD things that you should CATCH:
+
+
+.  Modeling| Import 3D, animations
+.  Atom framework
+.  Picking
+.  Scripting with Groovy
+.  Basic animation, effects
+
+
+=== Advanced
+
+Advanced features/potentials of the game:
+
+
+.  AI, rule base
+.  Web harvest for data
+.  Tournament ( multiplayer)
+.  *Script and advanced rule parsing (with ANTRL and OpenNLP) *
+
+<<jme3/advanced/atom_framework/ai#,ai>>
+
+
+
+== Quick start
+
+Source code: link:https://code.google.com/p/magic-card-game-jme3/[https://code.google.com/p/magic-card-game-jme3/]
+
+
+Forum link: link:http://hub.jmonkeyengine.org/forum/topic/atomix-tutorial-series-chapter-1-the-card-game/[http://hub.jmonkeyengine.org/forum/topic/atomix-tutorial-series-chapter-1-the-card-game/]
+
+
+Design:
+
+
+Issues:
+
+
+
+== Screenshot
+
+Here is some more screen shots
+
+image::http///farm9.staticflickr.com/8546/8616981856_4d9755f034_z.jpg[8616981856_4d9755f034_z.jpg,with="300",height="",align="center"]
+
+
+
+Preview Video:
+[video]link:http://youtu.be/H3JSPOqeKSE[/video][http://youtu.be/H3JSPOqeKSE[/video]]
+
+
+
+== FIRST RUN
+
+
+==== STEP 1) Download and Setup:
+
+Full complete project download: Download from SVN
+Starter project (with assets) download: Download from SVN
+
+
+
+==== STEP 2) Atom framework:
+
+<<jme3/advanced/atom_framework#, Atom Framework>>
+Click to this topic to learn how to setup Atom, AtomAI, Groovy and stuffs…
+
+
+
+==== STEP 3) First run:
+
+Copy the complete working code and run the game, enjoy it for a while!
+Now go back and make another project with the base starter code.
+After refactoring, you should have the game runing succesfully and just show up the main menu.
+
+
+<<jme3/advanced/atom_framework/docs#,docs>>
+
+
+
+== Asset making
+
+In asset making phase, we will make 3D Models of the card, table in Blender. With appropriate textures in PTS and Shader in JME3.
+
+
+After that we will make| import a few very famous Card character model and skills to make the exceed the gameplay's fun!
+<<jme3/atomixtuts/cardsgame/assets#, Detailed Assets Making process>>
+
+
+
+== Programming
+
+
+=== Java & Groovy
+
+Now the prepare steps are almost complete, we start coding our game!
+
+
+
+
+
+Groovy syntax is very similar to java, in fact you can use all java syntax in groovy plus almost time, it’s much more shorter than writing code in a Java version.
+
+[quote]
+____
+I can present my self almost an artist (60% vs 40% of a programmer :p ).. So, i prefer doing cool stuffs instead of hard stuffs. That’s why i played with both Java and Groovy. In this section, from time to time, you will find how Groovy save your life with clean and bright syntax instead of verbose big bad Java here and there.
+____
+
+You can get started with groovy in just few hours here. I also will explain a little bit of Groovy in the way. 
+
+
+<<jme3/scripting#, Read more about Groovy Scripting>>
+
+
+
+==== Setup Atom framework
+
+
+
+
+
+==== Detailed Implementation
+
+Checklist of what we going to implementation in this tutorial:
+
+
+*  GameStage and Gameplay
+**  Card gameplay elements (Game, Turn, Phase,..)
+**  GameWorld
+**  Select/Picking
+**  Start/pause
+**  Save/load game states
+
+*  Entities
+**  Card
+**  More
+
+*  States
+**  Menu
+**  InGame
+**  Loading
+
+*  Managers
+**  StageManager
+**  GUIManager
+**  GamePlayManager
+
+*  Controls
+**  SelectControl
+**  CardEntityControl
+
+
+Detailed <<jme3/atomixtuts/cardsgame/programming#,programming>>
+
+
+
+== Scripting
+
+<<jme3/scripting#,scripting>>
+In this game, Groovy script will envolved in:
+
+
+*  Rule
+*  EffectText
+*  In-house card editor
+
+More insights, 
+Rule are implemented with groovy script 
+Card's Effect are implemented with groovy script. You can procedure the script 2 two ways:
+
+
+.  parse from original EffectText ripped from the internet, via OpenNLP
+.  Write it your self with the help of the Editor
+
+I always make a small in-house editor for every of my small games (before I integrate it into the SDK for larger project with tedious tasks with standardlized-professional workflow).
+
+
+Detailed <<jme3/atomixtuts/cardsgame/scripting#, Card games Scripting>>
+
+
+
+== AI
+
+AI (aka Artifact Intelligent):
+
+
+In this section I want to introduce the AtomAI library. It named after Atom project but in fact it’s just a bunch of wrapper for existed contributed and open-source libraries in various aspects of AI area: FSM, Behavior Tree, Decision Tree, Learning machine…
+
+
+
+
+
+Futher more, I added a lot of +++<abbr title="Graphical User Interface">GUI</abbr>+++ tools to deal with creating and combining sophisticated AI.
+
+
+....
+  For this Magic cardgame, I only use two simplest AI technique : Behavior/Decision Tree and Minimax, as simple as shorter than 500 lines of code. But the resulted Card AI can play with human newbie opponent and even can win sometimes. Our implementation in java or groovy already have Data Model supported by AtomAI library.
+....
+
+Detailed AI implementation <<jme3/atomixtuts/cardsgame/ai#,ai>>
+
+
+
+== Advanced techniques
+
+
+
+
+*  Use Webharvest to collect useful data for your game. 
+*  And Groovy to config instead of XML or plain-text
+*  Groovy to make an in-house cards editor
+*  OpenNLP to process EffectText of the orginal card
+*  ANTRL to build an DSL language suite to descible effect chain
+
+Detailed introduction <<jme3/atomixtuts/cardsgame/adtechs#,adtechs>>
+
+
+
+== Conclusion
+
+After a few thousands LoC game, I hope you guys find something useful to start working with our powerful engine JME3. In this first tutorial, I don’t want to go too much and too soon into technical problems. That’s not the way to go! ;-P
+
+
+....
+  In the next tutorial of the series, you will go straight in a bigger challenge with I think will give you more inspirations: “A Medieval RPG game” -  with story telling and cinematic. That’s it, a real game template which you can expand to make a full blown game. 
+....
+
+<<jme3/atomixtuts/bladegame#, Blade of the Immortals>>
+But that’s enough for this month. I planed to stop a little bit to listen to feedbacks from you guys in how i can improve the tutorials or what I should go more into detail.
+
+
+Big Thanks,
+
+
+Atomix
+

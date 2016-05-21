@@ -1,0 +1,40 @@
+
+
+= EntitySets
+
+
+= Introduction
+
+One difference between Zay-ES and other Entity Systems is that you are allowed to access the system from various threads. This can give your game a huge performance boost because costly tasks can easily be separated out into their own thread.
+This leads to a unique design of the components and the introduction to Entity Sets.
+
+
+
+= Why EntitySets?
+
+One huge benefit of Zay-ES is that you are able to create a separate class for each job.
+This leads to clean code and you always know which class is responsible for bugs.
+For example you can have a class for Collision, Movement, Enemies, PlayerInput,….
+All of these classes are only interested in entities which have special components.
+
+
+
+= How to use them
+
+
+== Create an EntitySet
+
+[source,java]
+----//This set is interested in entities with a TestComponent
+EntitySet entitySet = entityData.getEntities(TestComponent.class);----
+
+== Update an EntitySet
+
+[source,java]
+---- //Apply all new changes to the EntitySet and return false if nothing changed
+if(entitySet.applyChanges())
+{
+    entitySet.getAddedEntities();
+    entitySet.getChangedEntities();
+    entitySet.getRemovedEntities();        
+}----

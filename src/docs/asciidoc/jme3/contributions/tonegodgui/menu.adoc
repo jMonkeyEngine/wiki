@@ -1,0 +1,126 @@
+
+
+=== Menu Class
+
+The Menu class extends ScrollArea as Menu’s can be resizable and scrollable if the behaviors are enabled.+
+
++
+
+Menus contain a list of MenuItems, which provide mapping for sub-menus. This implementation of menu’s negates the need for any form of Menu Manager as the Screen, by default, handles delegating Mouse Events and therefore is (in a sense) a Menu Manager. Menus utilize a single text element with separate highlight element, to keep the rendered meshes to count of 3 for any length menu.+
+
++
+
+Features:
+
+
+*  Unlimited menu item list
+*  Unlimited sub-menu mapping
+*  MenuItem toggle states (semi-work-in-progress here)
+
+Menu utilizes the standard 3 constructors as shown in the link:http://jmonkeyengine.org/wiki/doku.php/jme3:contributions:tonegodgui:quickstart[Quick Start Guide] with the addition of a single boolean:
+
+
+*  isScrollable – appended to the end of the parameter list in each constructor
+
+
+==== Abstract Event Methods:
+
+[source,java]
+----
+public void onMenuItemClicked(int index, Object value);
+----
+
+==== Methods specific to the Menu Class:
+
+[source,java]
+----
+// Menu manipulation
+menu.addMenuItem(String caption, Object value, Menu subMenu); // null if no sub-menu
+menu.addMenuItem(String caption, Object value, Menu subMenu, boolean isToggleItem);
+menu.addMenuItem(String caption, Object value, Menu subMenu, boolean isToggleItem, boolean isToggled);
+menu.insertMenuItem(int index, String caption, Object value, Menu subMenu); // null if no sub-menu
+menu.insertMenuItem(int index, String caption, Object value, Menu subMenu, boolean isToggleItem)
+menu.insertMenuItem(int index, String caption, Object value, Menu subMenu, boolean isToggleItem, boolean isToggled)
+menu.removeMenuItem(int index);
+menu.removeMenuItem(String caption);
+menu.removeMenuItem(Object value);
+menu.removeFirstMenuItem();
+menu.removeLastMenuItem();
+ 
+// Configuration related methods
+menu.setMenuOverhang(float menuOverhang);
+menu.getMenuOverhang();
+menu.getMenuItemHeight();
+menu.getMenuPadding();
+menu.setPreferredSize(Vector2f preferredSize)
+
+//Menu item related methods
+menu.getMenuItems(); // point to menu item list
+menu.getMenuItem(int index);
+ 
+// Hide/show methods
+menu.showMenu(Menu caller, float x, float y); // Caller is null if not show by another menu
+menu.hideMenu();
+
+// Setting & retrieving an external caller element
+menu.setCallerElement(Element el);
+menu.getCallerElement();
+----
+
+==== Hooks
+
+[source,java]
+----
+public void controlHideHook() {  }
+----
+
+=== Menu Examples:
+
+Cut &amp; Paste the code below into the simpleInitApp() method of a new JME project to try it out.
+
+
+[source,java]
+----
+flyCam.setDragToRotate(true);
+inputManager.setCursorVisible(true);
+ 
+screen = new Screen(this);
+guiNode.addControl(screen);
+
+Menu subMenu = new Menu(
+    screen,
+    new Vector2f(0,0),
+    false
+) {
+    @Override
+    public void onMenuItemClicked(int index, Object value, boolean isToggled) {  }
+};
+// Add a menu item
+subMenu.addMenuItem("Some string caption 1", null, null);
+// Add a toggle-able menu item (checkbox)
+subMenu.addMenuItem("Some string caption 2", null, null, true);
+// Add a toggle-able menu item and set the default state of the checkbox to checked
+subMenu.addMenuItem("Some string caption 3", null, null, true, true);
+screen.addElement(subMenu);
+ 
+final Menu menu = new Menu(
+    screen,
+    new Vector2f(0,0),
+    false
+) {
+    @Override
+    public void onMenuItemClicked(int index, Object value, boolean isToggled) {  }
+};
+// Add subMenu as a sub-menu to this menu item
+menu.addMenuItem("Some caption", null, subMenu);
+screen.addElement(menu);
+
+ButtonAdapter b = new ButtonAdapter(screen, new Vector2f(50,50)) {
+    @Override
+    public void onButtonMouseLeftUp(MouseButtonEvent evt, boolean isToggled) {
+        menu.showMenu(null, getAbsoluteX(), getAbsoluteY()-menu.getHeight());
+    }
+};
+b.setText("Show Menu");
+screen.addElement(b);
+----

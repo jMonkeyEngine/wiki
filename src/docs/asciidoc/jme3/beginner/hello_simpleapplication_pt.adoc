@@ -1,0 +1,249 @@
+
+
+= jMonkeyEngine 3 Tutorial (1) - Hello SimpleApplication
+
+Previous: <<jme3#installing_jmonkeyengine_3,Instalando JME3>>,
+Next: <<hello_node_pt#,Hello Node pt>>
+
+
+*Pré-requisitos:* Este tutorial assume que você já tenha link:http://jmonkeyengine.org/wiki/doku.php/[baixado o SDK da jMonkeyEngine].
+
+
+Nesta série de tutoriais, nós assumimos que você usa o <<sdk#,SDK>> da jMonkeyEngine. Como um desenvolvedor Java intermediário ou avançado, você rapidamente verá que, em geral, você pode desenvolver código da jMonkeyEngine em qualquer ambiente de desenvolvimento integrado (NetBeans IDE, Eclipse, IntelliJ) ou mesmo da linha de comando.
+
+
+OK, Vamos nos aprontar para criar nossa primeira aplicação jMonkeyEngine3.
+
+
+
+== Crie um Projeto
+
+Na SDK da jMonkeyEngine:
+
+
+.  Escolha Arquivo (File)→Novo Projeto (New Project)… do menu principal.
+.  No assistente de Novo Projeto, selecione o modelo JME3→Jogo Básico (Basic Game). Clique em prosseguir (Next). 
+..  Especifique um nome de projeto, e.g. “HelloWorldTutorial
+..  Especifique um caminho para armazenar seu novo projeto, e.g. um diretório projetosjMonkey no seu diretório de usuário.
+
+.  Clique em terminar (Finish). 
+
+Se você tem perguntas, leia mais sobre Criação de Projeto aqui.
+
+
+<<sdk/sample_code#,JmeTests>>
+
+
+
+== Escreva uma aplicação de amostra
+
+Para este tutorial, você deseja criar um pacote `jme3test.helloworld` no seu projeto, e criar um arquivo `HelloJME3.java` nele. 
+
+
+No SDK da jMonkeyEngine:
+
+
+.  Dê um clique com o botão direito no nó pacotes de código-fonte (Source Packages) de seu projeto.
+.  Escolha Novo (New)… →Classe Java (Java Class) para criar um novo arquivo.
+.  Digite o nome da classe: `HelloJME3`
+.  Digite o nome do pacote: `jme3test.helloworld`.
+.  Clique em Finalizar (Finish).
+
+O SDK cria o arquivo HelloJME3.java para você.
+
+
+
+== Código de Amostra
+
+Substitua os conteúdos do arquivo HelloJME3.java com o seguinte código:
+
+
+[source,java]
+----
+package jme3test.helloworld;
+
+import com.jme3.app.SimpleApplication;
+import com.jme3.material.Material;
+import com.jme3.math.Vector3f;
+import com.jme3.scene.Geometry;
+import com.jme3.scene.shape.Box;
+import com.jme3.math.ColorRGBA;
+
+/** Sample 1 - começando com a mais simples aplicação JME 3.
+ * Mostra um cubo 3D azul e veja todos os seus lados 
+ * movendo o mouse e pressionando as teclas WASD. */
+public class HelloJME3 extends SimpleApplication {
+
+    public static void main(String[] args){
+        HelloJME3 app = new HelloJME3();
+        app.start(); // start the game
+    }
+    
+    @Override
+    public void simpleInitApp() {
+        Box b = new Box(Vector3f.ZERO, 1, 1, 1); // cria a forma do cubo na origem
+        Geometry geom = new Geometry("Box", b);  // cria a geometria do cubo a partir da sua forma
+        Material mat = new Material(assetManager,
+          "Common/MatDefs/Misc/Unshaded.j3md");  // cria um material simples
+        mat.setColor("Color", ColorRGBA.Blue);   // determina a cor do material para azul
+        geom.setMaterial(mat);                   // determina o material do cubo
+        rootNode.attachChild(geom);              // faz o cubo aparecer na cena
+    }
+}----
+Dê um clique com o botão direito na classe HelloJME3 class e escolha Executar (Run). Se um diálogo de configurações da jME3 aparecer, confirme as configurações padrão.
+
+
+.  Você deveria ver uma janela simples exibindo um cubo 3D.
+.  Pressione as teclas WASD keys e mova para navegar ao redor.
+.  Olhe no texto do FPS e na informação de contagem de objeto na esquerda-fundo. Você usará esta informação durante o desenvolvimento, e você removerá ela para a liberação. (Para ler os números corretamente, considere que as 14 linhas de texto contam como 14 objetos com 914 vértices.)
+.  Pressione Escape (Esc) para fechar a aplicação.
+
+Parabéns! Agora camos decobrir como isso funciona!
+
+
+
+== Compreendendo o código
+
+O código acima tem inicializado a cena, e iniciado a aplicação.
+
+
+
+=== Inicie a SimpleApplication
+
+Olhe na primeira linha. A classe HelloJME3.java estende `com.jme3.app.SimpleApplication`. 
+
+
+[source,java]
+----
+public class HelloJME3 extends SimpleApplication {
+  // seu código...
+}
+----
+Todo jogo JME3 é uma instância de `com.jme3.app.SimpleApplication`. A classe SimpleApplication gerencia seu grafo de cena 3D e automaticamente desenha ele para a tela – isto é, em breve, o que uma engine de jogo faz para você! 
+
+
+Você inicia todo jogo JME3 do método main(), como toda aplicação Java padrão::
+
+
+.  Instancie sua classe baseada em `SimpleApplication`
+.  Chame o método `start()` da aplicação para iniciar a engine de jogo. 
+
+[source,java]
+----
+    public static void main(String[] args){
+        HelloJME3 app = new HelloJME3(); // instanciar o jogo
+        app.start();                     // iniciar o jogo!
+    }
+----
+Este código abre sua janela de aplicação. Vamos aprender a por alguma coisa para a janela em seguinda.
+
+
+
+=== Entendendo a Terminologia
+[cols="2", options="header"]
+|===
+
+a|O que você quer fazer
+a|Como você diz isso na terminologia JME3
+
+a|Você quer criar um cubo.
+a|Eu crio uma geometria (Geometry) com uma forma de caixa (Box) 1x1x1
+
+a|Você quer usar uma cor azul.
+a|Eu crio um Material com uma propriedade cor (Color) azul
+
+a|Você quer colorir o cubo azul.
+a|Eu coloco o Material da geometria caixa (Box Geometry)
+
+a|Você quer adicionar o cubo para a cena.
+a|Eu anexo a geometria caixa (Box Geometry) para o nó raíz (rootNode)
+
+a|Você quer que o cubo apareça no centro.
+a|Eu crio a caixa (Box) na origem = em `Vector3f.ZERO`.
+
+|===
+
+Se você não esta familiar com o vocabulário, leia mais sobre o <<jme3/the_scene_graph#, Grafo de Cema>> aqui.
+
+
+
+=== Inicialize a Cena
+
+Olhe no resto da amostra de código. O método `simpleInitApp()` é automaticamente chamado uma vez no início quando a aplicação inicia. Todo jogo JME3 deve ter este método. No mpetodo `simpleInitApp()`, você carrega objetos do jogo antes que o jogo inicie.
+
+
+[source,java]
+----
+    public void simpleInitApp() {
+       // seu código de inicialização...
+    }
+----
+O código de inicialização de um cubo azul parece como se segue:
+
+
+[source,java]
+----
+    public void simpleInitApp() {
+        Box b = new Box(Vector3f.ZERO, 1, 1, 1); // cria uma forma cúbica de 2x2x2 na origem
+        Geometry geom = new Geometry("Box", b);  // cria a geometria do cubo a partir da sua forma
+        Material mat = new Material(assetManager,
+          "Common/MatDefs/Misc/Unshaded.j3md");  // cria um material simples
+        mat.setColor("Color", ColorRGBA.Blue);   // determina a cor do material para azul
+        geom.setMaterial(mat);                   // determina o material da geometria do cubo
+        rootNode.attachChild(geom);              // faz a geometria do cubo aparecer na cena
+    }
+----
+Um jogo JME típico tem o seguinte processo de inicialização:
+
+
+.  Você inicializa os objetos do jogo: :
+**  Você cria ou carrega objetos e posiciona eles.
+**  Você faz objetos aparecerem na cena por anexá-los ao  `nó raiz (rootNode)`.
+**  *Exemplos:* Carregar o jogador, terreno, céu, inimigos, obstáculos, …, e colocá-los nas suas posições de início.
+
+.  Você inicializa variáveis
+**  Você cria variáveis para rastrear o estado de jogo.
+**  Você configura as variáveis para os valores de início delas.
+**  *Exemplos:* Coloque a `pontuação` para 0, coloque a `saúde` para 100%, …
+
+.  Você inicializa as teclas e ações do mouse.
+**  As seguintes ligações de entrada já estão pré-configuradas:
+***  W,A,S,D keys – Mova ao redir da cena
+***  Movimento do mouse e teclas seta - Vire a câmera
+***  Escape (Esc) - Sai do jogo
+
+**  Defina suas próprias teclas adicionais e ações de clique do mouse
+**  *Exemplos:* Clique para atirar, pressione a Barra de Espaço para pular, …
+
+
+
+== Conclusão
+
+Você têm aprendido que uma SimpleApplication é um bom ponto de início porque ela fornece você com:
+
+
+*  Um método `simpleInitApp()` onde você cria objetos.
+*  Um `nó raiz (rootNode)` onde você anexa objetos para fazê-los aparecer na cena.
+*  Configurações de entrada padrão úteis que você pode usar para navegação na cena.
+
+Quando desenvolvendo uma aplicação de jogo, você irá querer:
+
+
+.  Inicializar a cena de jogo
+.  Disparar ações de jogo
+.  Responder à entrada do usuário.
+
+Agora os próximos tutoriais lhe ensinarão a como realizar estas tarefas com a jMonkeyEngine 3.
+
+
+Continue com o tutorial <<jme3/beginner/hello_node_pt#,Hello Node pt>>, onde você aprende mais detalhes sobre como inicializar o mundo do jogo, também conhecido como o grafo de cena.
+
+'''
+
+Veja também:
+
+
+*  link:http://jmonkeyengine.org/wiki/doku.php/[ Instalar a JMoneyEngine]
+*  <<jme3/simpleapplication_from_the_commandline#, SimpleApplication da Linha de comando>>
+*  <<sdk/project_creation#,Criar um projeto JME3>>.
+<tags><tag target="beginner" /><tag target="intro" /><tag target="documentation" /><tag target="init" /><tag target="simpleapplication" /><tag target="basegame" /></tags>

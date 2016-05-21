@@ -1,0 +1,72 @@
+
+
+= Your Own Logic Thread
+
+You can add AppStates to the SimpleApplication and your whole program will run on a single thread.
+This can have benefits, but this Entity System is optimized to run on several Threads.
+Because of this, it is recommended that you run the game logic in a separate thread and independent from the framerate.
+In this example, we will say that we want to run the game logic every 20 milliseconds. This means 50 updates per second and a tpf value of 0.2f   .
+
+
+
+== GameLogic class
+
+[source,java]
+----
+public class GameLogicThread implements Runnable {
+
+    private final float tpf = 0.02f;
+    private AppStateManager stateManager;
+
+    public GameLogicThread(Application app) {
+        stateManager = new AppStateManager(app);
+
+        //add the logic AppStates to this thread
+        stateManager.attach(new MovementAppState());
+        stateManager.attach(new ExpiresAppState());
+        stateManager.attach(new CollisionAppState());
+        stateManager.attach(new EnemyAppState());
+    }
+
+    public void run() {
+        stateManager.update(tpf);
+    }
+}
+----
+
+== Application
+
+[source,java]
+----
+public class Example extends SimpleApplication {
+
+    private EntitySystem entitySystem;
+    private ScheduledExecutorService exec;
+
+    @Override
+    public void simpleInitApp() {
+
+        //Init the Entity System
+        entitySystem = new EntitySystem(new MapEntityData());
+
+        //Init the Game Systems for the visualisation
+        stateManager.attach(new EntityDisplayAppState(rootNode));
+        stateManager.attach(new PlayerInputAppState());
+
+        //create the Thread for the game logic
+        exec = Executors.newSingleThreadScheduledExecutor();
+        exec.scheduleAtFixedRate(new GameLogicThread(this), 0, 20, TimeUnit.MILLISECONDS);
+    }
+
+    public EntitySystem getEntitySystem() {
+        return entitySystem;
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        //Shutdown the thread when the game is closed
+        exec.shutdown();
+    }
+}
+----

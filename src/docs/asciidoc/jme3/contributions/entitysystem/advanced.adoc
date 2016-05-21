@@ -1,0 +1,107 @@
+
+
+= JMonkey Entity System Advanced
+
+In this article we explain how the JMonkey Entity System looks like and why.
+
+
+If you are new to this subject please read the <<jme3/contributions/entitysystem/introduction#,Entity System Introduction>> first.
+
+
+
+= Multithreading
+
+One difference between the JMonkey Entity System and other Entity Systems is that you are allowed to access the system from various threads. This can give your game a huge performance boost because costly task can easily separated in an own thread.
+This leads to an unique design of the components and the introduction to Entity Sets.
+
+
+
+=== Entity Sets
+
+One part of this special approach are the Entity Sets. Most of the time you want to work with Entities you create an Entity Set and add the class names of the components you are interested in to the constructor.
+In the background the Entity Set now creates Entity objects for all entities that contain the passed component classes.
+This Entities *only* hold the the components the Set is interested in.
+This means different Entity Sets have two different Entity objects for the same entity.
+Therefore changes of one entity must be synchronized with the other entity sets.
+This works with events created for every change and passed to the other entity sets.
+With the method applyChanges() this entity Set will update all of their entities or remove/add new ones.
+Besides after this method call you have a direct access to all added,changed and removed entities separately and there is no need to loop through all entities.
+
+
+
+=== Components
+
+Because components have no other methods except the getter, changes are made by replacing the component of an entity with a new one. Therefore an entity can only have one component of the same class. If a component would have a setter no event would fired and parallel processing would not be possible anymore. 
+It is important that you only store pure data in the components because otherwise you would no longer know where you can find the logic and the approach of a clear software design would get lost.
+
+
+
+
+
+
+
+
+
+
+
+
+=== What are Systems?
+
+Simply all objects that use entities/components can be called a system.
+For example <<jme3/advanced/application_states#,AppStates>> can deal with different components and can easily be added to the Application.
+
+
+
+If two systems are modifying the same components then there is a design flaw. 
+This is a sign that there is a missing component or system.
+
+
+
+= The Back End
+
+There are two different ways of storing the information:
+
+
+
+=== Hashmaps
+
+For every component class a new Hashmap is created which contains the entityId as a key and the component as a value. Therefore if you need to get to know all entities which owns components of a 
+certain type the system will search in these Hashmaps for same entityIds.
+
+
+
+=== SQL
+
+All information of the components are stored in an SQL Database, this is done via reflection.
+Therefore all Components need an empty constructor when they are stored in a database.
+Otherwise it is not possible to load the Component.
+
+
+Because SQL librarys can be different this Entity System only concentrate on working with hsqldb.
+link:http://hsqldb.org/[http://hsqldb.org/]
+
+
+
+=== Hybrid
+
+Because saving/loading the component objects from a SQL Database is slow this does not work for components who are changed recently. (PositionComponent)
+On the other hand checking weather an entity owns a special component ist faster in a SQL database.
+To keep both benefits there is the Hybrid approach:
+
+
+*  Components are put into a Hashmap.
+
+*  Persistent Components are stored in the SQL database.
+
+
+=== Id Generation
+
+Every entity has a unique id which is a long.
+Ids are not reused because afterward they would not be unique anymore which would cause a huge penalty.
+
+
+
+
+
+
+

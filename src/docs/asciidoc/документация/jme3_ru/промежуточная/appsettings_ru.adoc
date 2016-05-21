@@ -1,0 +1,212 @@
+
+
+= jME3 Application Display Settings
+
+Английская версия: <<jme3/intermediate/appsettings#,AppSettings>>
+
+
+Каждый класс, который наследует jme3.app.SimpleApplication имеет свойства, которые можно сконфигурировать, с помощью настройки объекта `com.jme3.system.AppSettings`. 
+
+
+`main()``app.start()``simpleInitApp()``app.restart()`
+
+
+*Примечание:* Другие параметры среды выполнения рассматриваются в<<jme3/intermediate/simpleapplication#,SimpleApplication>>.
+
+
+
+== Пример Кода
+
+Укажите параметры для игры (здесь под названием `MyGame`, или как вы назвали ваш экземпляр SimpleApplication) в методе `main()` до начала игры:
+
+
+[source,java]
+----public static void main(String[] args) {
+  AppSettings settings = new AppSettings(true);
+  settings.setResolution(640,480);
+  // ... другие свойства, см. ниже
+  MyGame app = new MyGame(); 
+  app.setSettings(settings);
+  app.start();
+}----
+Установите в AppSettings contructor логическое значение true, если вы хотите сохранить параметры по умолчанию для значений, которые вы не указываете. Установите для этого параметра значение false, если вы хотите, чтобы приложение, загружало пользовательские параметры из предыдущих запусков. В любом случае вы все еще сможете настроить индивидуальные параметры.
+
+
+В этом примере настройки переключают в полноэкранный режим, когда игра уже запущена. Потом игра перезапускается контекст (не всю игру), которая применяет измененные настройки.
+
+
+[source,java]
+----public void toggleToFullscreen() {
+  GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+  DisplayMode[] modes = device.getDisplayModes();
+  int i=0; // Примечание: существует обычно несколько, давайте выберем первый
+  settings.setResolution(modes[i].getWidth(),modes[i].getHeight());
+  settings.setFrequency(modes[i].getRefreshRate());
+  settings.setBitsPerPixel(modes[i].getBitDepth());
+  settings.setFullscreen(device.isFullScreenSupported());
+  app.setSettings(settings);
+  app.restart(); // перезагрузите контексте, чтобы применить изменения
+}----
+
+== Свойства
+[cols="3", options="header"]
+|===
+
+a|Свойства параметров (Video)
+a|Описание
+a|По умолчанию
+
+a|setRenderer(AppSettings.LWJGL_OPENGL1) +
+setRenderer(AppSettings.LWJGL_OPENGL2) +
+setRenderer(AppSettings.LWJGL_OPENGL3)
+a|Переключатель Video Renderer на OpenGL 1.1, OpenGL 2, или OpenGL 3.3. Если ваша графическая карта не поддерживает все OpenGL2 features (`UnsupportedOperationException: GLSL и OpenGL2 требуется для LWJGL renderer`), то вы можете заставить ваш SimpleApplication to использовать OpenGL1 совместимости. (Тогда вы все еще не сможете использовать возможности  OpenGL2, но, по крайней мере, ошибка исчезнет, и вы можете продолжать с остальным.) 
+a| OpenGL 2 
+
+a|setBitsPerPixel(32)
+a|Установить глубину цвета. +
+1 bpp = black и white, 2 bpp = gray, +
+4 bpp = 16 colors, 8 bpp = 256 colors, 24 или 32 bpp = “truecolor(полноцветный).
+a|24
+
+a|setFramerate(60)
+a|Как часто в секунду движок должен попытаться обновить фрейм. Для релиза, как правило, 60 fps. Может быть ниже (30) если вам нужно освободить ресурсы процессора для других приложений. Не используйте его установки с более высокими значениями, чем частота экрана! Если частота кадров падает ниже 30 кадров в секунду, зрители начинают замечать, волны или мерцания.
+a|-1 (unlimited)
+
+a|setFullscreen(true)
+a|Установите значение true, чтобы запустить игру в полноэкранном режиме; Вам необходимо привязать клавишу, которая будет вызывать app.stop() чтобы выйти из полноэкранного режима изящно (по умолчанию: escape). +
+Установите в false, чтобы играть в игру в оконном режиме.
+a|False (windowed)
+
+a|setHeight(480), setWidth(640) +
+setResolution(640,480)
+a|Два эквивалентных способа установки разрешения экрана.
+a|640x480 pixels
+
+a|setSamples(4)
+a|Установите multisampling на 0 что бы переключения сглаживание на off (более жесткие края, быстрее.) +
+Установите multisampling на 2 или 4, чтобы активировать сглаживание (мягкие края, может быть медленнее.) +
+В зависимости от вашей видеокарты, вы можете установить более высокие значение multisampling  такие как 8, 16 или 32 например.
+a|0
+
+a|setVSync(true) +
+setFrequency(60)
+a|Установите вертикальную синхронизацию true чтобы время в буфере кадров совпадало с частотой обновления экрана. VSync предотвращает уродование страницы tearing artefacts, но немного медленнее; рекомендован для сборки релиза. +
+Установите VSync значение false чтобы отключить вертикальную синхронизацию (быстрее, но возможно на странице tearing artifacts); может оставаться выключенным во время разработки или для медленных PC.
+a|false +
+60 fps
+
+|===
+[cols="3", options="header"]
+|===
+
+a|Свойства параметров (Input)
+a|Описание
+a|По умолчанию
+
+a|setUseInput(false)
+a|Реагировать на пользовательский ввод с помощью мыши и клавиатуры. Может быть деактивирована для использования в тех случаях, когда вы только отображения 3D-сцены на canvas без каких-либо взаимодействий.
+a|true
+
+a|setUseJoysticks(true)
+a|Активируйте дополнительную поддержку джойстика
+a|false
+
+a|setEmulateMouse(true)
+a|Включить или отключить эмуляцию мыши для сенсорных устройств. Установить этот параметр в значение true что бы преобразовывались нажатия на сенсорный экран в клики и жесты пальцев на сенсорном экране в события мыши в данных координатах.
+a|false
+
+a|setEmulateMouseFlipAxis(true,true)
+a|Зеркальное X или Y (или оба) осей для сэмулированной мыши. Установите первый параметр true для зеркалинья по оси x, и второй, чтобы зеркалить по оси y.
+a|false,false
+
+|===
+[cols="3", options="header"]
+|===
+
+a|Свойства параметров (Audio)
+a|Описание
+a|По умолчанию
+
+a|setAudioRenderer(AppSettings.LWJGL_OPENAL)
+a|Переключатель Audio Renderer. В настоящее время существует только один вариант. 
+a|OpenAL
+
+a|setStereo3D(true)
+a|Включить 3D-стерео. Эта функция требует аппаратной поддержки от драйвера видеокарты. См.link:http://en.wikipedia.org/wiki/Quad_buffering[Quad Buffering]. Currently, your everday user's hardware does not support this, so you can ignore it for now.
+a|false
+
+|===
+[cols="3", options="header"]
+|===
+
+a|Свойства параметров (Branding)
+a|Описание
+a|По умолчанию
+
+a|setTitle(“My Game)
+a|Эта строка будет отображаться в заголовке окна, если окно занимает весь экран.
+a|“jMonkey Engine 3.0
+
+a|setIcons(new BufferedImage[]{ +
+ImageIO.read(new File(“)), …});
+a|Это указывает маленький значок приложения в заголовке окна приложения (не используется в MacOS?). Вы должны указать иконку в различных размерах (256,128,32,16) чтобы хорошо выглядела на различных операционных системах. Примечание: это не значок приложения, на рабочем столе.
+a|null
+
+a|setSettingsDialogImage(“Interface/mysplashscreen.png)
+a|Пользовательские splashscreen изображения в папке `assets/Interface`, отображаются в диалоговом окне когда заданы параметры отображается.
+a|“/com/jme3/app/Monkey.png
+
+|===
+
+`app.setShowSettings(true);``setSettingsDialogImage(“Interface/mysplashscreen.png)``app.setShowSettings(false);``app.start()`
+
+
+
+== Toggling and Activating Settings
+[cols="2", options="header"]
+|===
+
+a|Методы SimpleApplication
+a|Описание
+
+a|app.setShowSettings(boolean)
+a|Включить или отключить окно настроек по умолчанию перед началом игры. Если разрешить пользователям использовать это окно, вам не нужно модифицировать объект настроек. Примечание: большинство разработчиков реализуют свои собственные пользовательские настройки, но настройки по умолчанию полезны в Альфа стадии.
+
+a|app.setSettings(settings)
+a|После изменения свойств объекта настроек, вы примените их для вашего приложения. Обратите внимание, что настройки не загружаются автоматически во время игры.
+
+a|app.start()
+a|Каждая игра вызывает метод start() в начале что бы инициализировать игру и применить настройки. Изменяйте и настраивайте ваши параметры игры перед вызовом start().
+
+a|app.restart()
+a|Restart() во время работы игры перезапускает игру в контекст и применяет обновленные параметры объекта настроек. (Это не перезагрузка или повторная инициализация всей игры.)
+
+|===
+
+
+== Сохранение и Загрузка Настроек
+
+Объект AppSettings также поддерживает следующие методы, чтобы сохранить настройки под уникальным ключом (в данном примере “com.foo.MyCoolGame3):
+
+
+*  Используйте `settings.save(“com.foo.MyCoolGame3)` чтобы сохранить настройки через стандартные java.io сериализации.
+*  Используйте `settings.load(“com.foo.MyCoolGame3)` для загрузки настроек.
+*  Используйте `settings2.copyFrom(settings)` чтобы скопировать параметры объекта.
+
+Использование: 
+
+
+Используйте уникальное имя вашего jME3 приложения в качестве Строкового параметра. Например `com.foo.MyCoolGame3`.
+
+
+[source,java]
+----
+    try { settings.save("com.foo.MyCoolGame3"); } 
+    catch (BackingStoreException ex) { /** не удалось сохранить параметры */ }
+----
+*  На Windows, настройки сохраняются в следующем разделе реестра: +
+`HKEY_CURRENT_USER\Software\JavaSoft\Prefs\com\foo\MyCoolGame3`
+*  На Linux, настройки сохраняются в XML-файл в соответствии с: +
+`$HOME/.java/.userPrefs/com/foo/MyCoolGame3`
+*  На Mac +++<abbr title="Operating System">OS</abbr>+++ X, настройки сохраняются в виде XML-файла в соответствии с: +
+`$HOME/Library/Preferences/com.foo.MyCoolGame3.plist`

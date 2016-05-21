@@ -1,0 +1,448 @@
+
+
+== Atom Framework Design
+
+This is the repository resulted of the design phase of Atom framework over years.
+
+
+
+=== Motivation
+
+It born to helps JME3 focus in *game/simulation development*, push futher in lastest/future Java technologies toward to enterpise/AAA game dev as its final goal, but compromise/ compatible with existing insfracture of JME3 and OpenGL.
+
+
+Its concept, design and archictecture inspired by AAA game engine and Enterprise Java solution.
+
+
+
+=== Overview
+
+In this page:
+
+
+.  Goal of Atom framework - which tend to expand JME3 and Java language to suite more for game dev.
+.  Problems of realtime applications (especially games).
+.  Solutions and those base platforms, frameworks that we going to use to approach those goals.
+.  Remain works and future vision
+
+
+== Design goals
+
+
+==== Overal goals
+
+*  Flexible: Game | simulations centric but not forced!
+*  Modular: Dependency injection along with Component injection
+*  Parallel: Embrace parallel computing
+*  Next gen: Come with Bleeding edge technologies and powers of Java languages
+*  Cloud ready: Scale to web and distributed computing
+*  With ease: +++<abbr title="Graphical User Interface">GUI</abbr>+++ Tools everywhere, almost zero config need
+*  Cross devices: Can run wide range of devices PC-mobile-TV.. any one that has java!
+
+
+==== Additional sub goals
+
+*  Minimum dependencies and their overlap
+*  Small footprint &amp; Efficient
+
+
+=== Slides
+
+You can view slides and download papers about the design of Atom framework here.
+
+
+
+== Real time applications
+
+Atom is designed to *MAKE* concurrent, real-time, embedded systems and *GAMES*
+
+
+
+=== Atom VS ptolemy
+
+As mentioned in the Atom framwork's introduction, Atom is actually inspired by Plotemy project link:http://ptolemy.eecs.berkeley.edu/index.htm[http://ptolemy.eecs.berkeley.edu/index.htm]
+
+
+ but it actually tend to has various different goals, techniques, mindset and approaches. The comparasion in constrast with Ptolemy will reveal a lot of Atom characteristics.
+
+
+....
+ The Ptolemy project studies modeling, simulation, and design of concurrent, real-time, embedded systems. The focus is on assembly of concurrent components. The key underlying principle in the project is the use of well-defined models of computation that govern the interaction between components.A major problem area being addressed is the use of heterogeneous mixtures of models of computation.
+....
+
+*VS*
+
+
+....
+ Atom is designed to **MAKE** concurrent, real-time, embedded systems and **GAMES**. So it focus more in code generation, profile, monitoring; focus more in graphics, physics, **player experience**... etc.   Underlying, it borrow quite a bunch of concepts that built in Ptolemy (not codes!).
+....
+
+
+==== Goals
+
+So the two projects' *goals* are quite overlapped but have different focus points and mindset!
+
+
+*  Atom has no or less concern/ interests about mathematic/ physics correctioness ( so simmulations) but the graphics side and overal behaviors.
+*  Atom has open-source spirit… but not academic!! You can see Plotemy is quite “complicated and not very popular as it provided for academic first; in constrast, Atom is broadcasted for every one to use and to make games as kids in sandboxes. 
+
+
+==== Techniques differencies:
+
+*  Atom not “just depend on well-defined models!
+*  Atom use simplier models, …but sometime simplier is better! 
+**  Simplier Entity model (not abstract out of Java object)
+**  Actor model is not as abstrat also actually from threaded enviroment
+**  No contract in Systems, the study of Systems conections and interactivities are though data-driven analysising only, that's it, a dataflow monitoring system over working system.
+**  Timming: Because of the lack of interests in math/ phycics, time model and precision model is undefined but also from Java platform.
+
+*  Those above and its core techniques that you can find below, lead Atom to be less independent from Java but also has well embeding characteristics of Java languages and run-time enviroments. So can say Atom is built directly on top of Java with no hesitate!
+
+
+=== Atom VS JScience
+
+Atom also depends in Javolution and has some parts from JScience code base but once again the purpose, Atom focus in Games and simulations… Also a lot of techniques Atom is different from one used in JScience.
+
+
+One can also see that Atom fullfill the lack of JScience's experimental Game package. :)
+
+
+
+=== Target Devices & Platforms
+
+
+==== PC
+
+
+==== Mobile
+
+
+===== Android
+
+
+==== Web
+
+
+===== HTML5 and WebGL
+
+
+== Problems
+
+
+== Solutions & Frameworks & Platforms
+
+In Java, a lot good opensource projects are already provide solutions for various challanges in software developments. The problem is how to glue those gems together in appropriate way and result in efficient, good quality product - Saving time and efforts.
+
+
+
+
+
+For example, AtomCore module depends in these high quality libraries:
+
+
+*  JME3
+*  Common Java JSR annotations:
+*  Apache commons 
+**  Lang
+**  Configurations
+**  BeanUtils
+**  Collections
+
+*  Google's 
+**  Guava:
+**  Guice: Dependency injection
+**  Snappy:
+**  LevelDB
+**  Auto
+
+*  
+
+Other require pieces are write from sk
+
+
+
+== Atom framework Design course
+
+This section is dedicated to explain some idioms, patterns, and long term solutions for problems and each design goals, structures.
+
+
+
+=== Game and real-time application
+
+
+==== Cross game-genre elements
+
+From an abstraction level, a Game- a special kind of software (almost always):
+
+
+*  composed by Entities, and their Stage; 
+*  where Actions happen in a Cycle, procedure Events;
+
+A little bit more detailed, Gameplay is the way player play the Game, has:
+
+
+*  Logic:
+**  Trigger: in which Conditions, active some appropriate Action, as primitive brick.
+**  Rule: the laws, restrictions form the game rule which player, entities obey.
+
+*  Routines: Situations/ Events/ Actions that happen in the game Cycle.
+**  Story/Cinematic mode: When player just watch the game like a movie.
+**  Interactive mode: When player interact with the game world
+
+*  Control: The way player handle their entities
+*  League: 
+**  Single: Infos, score, rewards stick to an individual 
+**  Multi: The way players join, left, make friend and interactive and play together…
+
+*  Status: Way to pause/continue , save/load current game
+
+The game “software should be published in specific enviroment, it then has:
+
+
+*  Configurations : appropriate settings for specific enviroment, device.
+*  Data : appropriate size and format
+
+
+==== CPU-GPU interactions
+
+
+==== Java-Native interactions
+
+
+==== Timing
+
+
+==== Cycle
+
+
+=== AtomCore Architecture
+
+The Core is the part that focus in *Game and real-time application*. It declare
+
+
+You can read more about the Core architecture here.
+<<jme3/advanced/atom_framework/atomcore#,atomcore>>
+
+
+
+=== Design patterns & Programming paradigms
+
+Consider research through this trusted resources before we go deeper into Atom architecture and where/why/how it apply each Design patterns:
+
+
+<<jme3/advanced/atom_framework/design/patterns#,patterns>>
+
+
+
+=== Programming aspects
+
+
+==== Java, but not just Java
+
+The most “Java things in AtomCore is Bean and Properties. Two pure Java data type which are very useful in Game world. Bean is for game object modeling and Properties for configuration.
+
+
+Of course, other Java technologies are also used but not mentioned because it's not nessesary. But Bean and Properties are the two techs that heavily used!
+
+
+“Good Java extensions used in AtomCore 0.2+ is:
+Guava:
+
+
+*  Bring Eventbus, network in a snap
+*  Collection, Fluent, functional syntax and flavour to Java.
+*  Guava also support Cache, reflection and more low level operations
+
+Guice: bring Dependency injection, better unit test, refactoring in a lightweight manner.
+
+
+Groovy is a JVM language and intergrated deeply with AtomCore, most appreal as Scripting language but remember it also can replace Java, or seen as Java. Groovy also offer much more of superb things.
+
+
+
+==== Code vs Data
+
+For big game, the amount of Data required can be so much. Mean while the complexity of code also rise fast, as the result of data increasing!
+
+
+At some point, we have to find a solution to reduce “manual Data + code making and maintaining. That where “generative code also can be seen as a kind of Data was born. This called Data-driven architecture (solution). In AtomCore 0.2, it have features to support this trend.
+
+
+
+==== Around Bean
+
+
+For example:
+
+
+*  AtomEX : the bridge to AKKA Actor model also use POJO as its candidate
+*  EJB leverage…
+*  Fx: use POJO as its effect elements
+
+Here is a brief explaination why Bean/ POJO is choosed to be the Core of Atom framework?
+
+
+....
+As built in Java technologies, Bean/ POJO is the only "consider good" solution as:
+**"the bridge"** **from Java OOP to COP**, **from Java OOP to AOP**
+....
+
+....
+also can be seen as 
+**from Object oriented programming to Data oriented programming**
+**from Object oriented programming to Aspect oriented programming**
+....
+
+....
+or **Code but also Data**...
+....
+
+
+=== Polygot programming
+
+....
+ I want Best of both worlds!!
+ (.. if it's possible?)
+....
+
+Atom in its core try to be polymorphism (polygot programming), to suite with OOP, COP, AOP or functional … Yeah, it's java after all but good kind of Java.
+
+
+Because AtomScripting and others use Groovy, so it inherit (a lot of) polygot capacity from Groovy.
+
+
+Read: link:http://groovy.codehaus.org/Polyglot+Programming+with+Groovy[http://groovy.codehaus.org/Polyglot+Programming+with+Groovy]
+
+
+
+==== Functional reactive programming
+
+
+==== Flow based programming
+
+
+==== Component based programming
+
+
+==== Composite based programming
+
+
+==== Data-driven & Model-driven & Domain-driven
+
+
+=== Modular architecture
+
+....
+ I want to reuse (or DRY)!!
+....
+
+Take a look at a JME3 game, Manager for example, what if you want the two manager's work together but loosely depend on each other, or what if you want the State to direct the Manager to do something but have minimal informations about them…
+
+
+More abstract, whenever you have some kind of Service, which is loosely depend on each other, you should try Dependency Injection link:http://martinfowler.com/articles/injection.html[http://martinfowler.com/articles/injection.html] .
+
+
+That's where Guice help in the big picture.
+
+
+
+==== Dependency injection
+
+link:https://code.google.com/p/google-guice/[https://code.google.com/p/google-guice/]
+
+
+
+==== Component Injection
+
+link:http://wiki.apidesign.org/wiki/Component_Injection[http://wiki.apidesign.org/wiki/Component_Injection]
+
+
+
+==== Dependency injection VS Component Injection
+
+link:http://code.imagej.net/gbh/lookup/DependencyInjectionandLookup.html[http://code.imagej.net/gbh/lookup/DependencyInjectionandLookup.html]
+
+
+
+==== Dependency management coolness
+
+So what's cool about dependency in real-time application and game that Atom included…
+A lot of things, but let me point out fews: 
+
+
+*Real-time dependency* is a new feature for game developing…
+Imagine that even the game just can load part of assets, with the other are delayed or missing, the dependency graph can help the game cycle continue to run, part of it in the mean time. 
+
+
+In fact the dependency graph can be considered the topo structure of JME assets dependency graph before it built, means hard links via references. Now even when the assets graph are just partly loaded, the game can run because it know a resolution to safety resolve the assets graph and scene graph afterward.
+
+
+*Enterprise features*
+You can imagine how Atom framework tend to bridge JME game and the Web universal. It's not so hard in fact. Cause Java enterprise technologies are already there to use. Lot of them are built on the top of Dependency injection and Inversion of control (or else)… I really like dependency injection but I can not agree that i should always couple with IoC per se. This will be discuss later in this documentation
+
+
+
+== Enterprise facilities
+
+
+==== Services, Dependency and Decoupling
+
+The world of enteprise evolve Modular paradigm a lot to link services (database, configurations, network protocols, web…) and help they work together in one application. 
+
+
+
+=== Available Services
+
+Try AtomEx
+
+
+
+==== To Database
+
+
+==== To other repository
+
+
+==== To configurations
+
+
+==== To web
+
+
+== Monitoring and development workflow
+
+
+== Future vision
+
+
+== References and Inspiration
+
+Atom framework's design is inspried by:
+
+
+*  Game Engine Architcture book
+*  Game Programming gems serires
+*  AI Game Engine book
+*  AI Game Wisdom book
+
+other GameEngine that I did use:
+
+
+*  UDK
+*  Unity
+*  CryEngineSDK
+*  JavaScript game engines : CraftyJs, GameQuery ..
+*  Flash game engines : Starling ,
+*  … dozen of close-source engine.
+
+other Java techs:
+
+
+*  EJB
+*  Spring
+*  Groovy
+*  Netbean
+*  … hunread of open-source projects
+
+Full researched papers list are comming.
+

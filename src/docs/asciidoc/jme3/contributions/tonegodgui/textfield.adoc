@@ -1,0 +1,161 @@
+
+
+=== TextField Class
+
+Textfields are single line text input fields, that provide the following functionality:
+
+
+*  Caret &amp; Text Range
+*  Mouse select
+*  Keyboard nav using:
+**  arrows (nav by letter)
+**  SHIFT+arrows (text range by latter)
+**  CTRL+arrows (nav by word)
+**  SHIFT+CTRL+arrows (text range by word)
+**  etc.
+
+*  Cut &amp; Paste
+
+*NOTE:*+
+
+This control is still a work in progress and will be updated as either time permits or issues arise.  There is a known issue with the Cut &amp; Paste function as of right now and it has been disabled.+
+
++
+
+TextFields provide the standard 3 constructors as shown in the link:http://jmonkeyengine.org/wiki/doku.php/jme3:contributions:tonegodgui:quickstart[Quick Start Guide].+
+
++
+
+*Constructor 1:*+
+
+
+
+[source,java]
+----
+/** Parameters:
+  * Screen screen,
+  * String UID,
+  * Vector2f position
+  */
+ 
+TextField text = new TextField(screen, “text”, new Vector2f(15, 15));
+----
+*Constructor 2:*+
+
+
+
+[source,java]
+----
+/** Additional Parameter:
+  * Vector2f dimensions  */
+ 
+TextField text = new TextField(screen, “text”, new Vector2f(15, 15),
+    new Vector2f(150, 25)
+);
+----
+*Constructor 3:*+
+
+
+
+[source,java]
+----
+/** Additional Parameters:
+  * Vector4f resizeBorders,
+  * String defaultImg
+  */
+ 
+TextField text = new TextField(screen, “text”, new Vector2f(15, 15), new Vector2f(150, 25),
+    new Vector4f(3,3,3,3),
+    “tonegod/gui/style/def/TextField/text_field_x.png”
+);
+----
+
+==== Validations & Rules
+
+TextFields can be set to a specific Type using:
+
+
+[source,java]
+----
+text.setType(TextField.Type type);
+----[cols="2", options="header"]
+|===
+
+a| Rule 
+a| Description 
+
+a| Type.DEFAULT 
+a| Accept all characters 
+
+a| Type.ALPHA 
+a| Accept only lower case, uppercase alpha character + spacebar 
+
+a| Type.ALPHA_NOSPACE 
+a| Accept only lower case, uppercase alpha character - no spacebar 
+
+a| Type.NUMERIC 
+a| Accept only numeric values + decimal 
+
+a| Type.ALPHANUMERIC 
+a| Apply both ALPHA and NUMERIC rules 
+
+a| Type.ALPHANUMERIC_NOSPACE 
+a| Apply both ALPHA_NOSPACE and NUMERIC rules 
+
+a| Type.EXCLUDE_SPECIAL 
+a| Exclude all spacial characters 
+
+a| Type.EXCLUDE_CUSTOM 
+a| Exclude all user defined character (see below) 
+
+a| Type.INCLUDE_CUSTOM 
+a| Accept only user defined characters (see below) 
+
+|===
+
+To define a custom validation for Type.EXCLUDE_CUSTOM or Type.INCLUDE_CUSTOM, use the following method:
+
+
+[source,java]
+----
+text.setCustomValidation("Character List to include/exclude");
+----
+You can also limit the number of characters the TextField will accept using:
+
+
+[source,java]
+----
+text.setMaxLimit(int maxLimit);
+----
+You can force upper and lower case by using:
+
+
+[source,java]
+----
+text.setForceUpperCase(boolean forceUpperCase);
+text.setForceLowerCase(boolean forceLowerCase);
+----
+
+==== Methods specific to the TextField class:
+
+[source,java]
+----
+// Get the TextField text
+text.getText();
+// Set the TextField text !IMPORTANT! setTextFieldText is now @Deprecated, use the following instead:
+text.setText(String s);
+
+// Retrieve numeric values (all numeric parsers throw NumberFormatException
+text.parseInt();
+text.parseFloat();
+text.parseShort();
+text.parseDouble();
+text.parseLong();
+----
+
+==== Hooks:
+
+[source,java]
+----
+public void controlKeyPressHook(KeyInputEvent evt, String text) {  }
+----

@@ -1,0 +1,83 @@
+
+
+= The grass system
+
+Here you will learn how to use the grass system. The test project available on the project page contains enough well-commented examples to get you going, but there are some more information available here.
+
+
+
+== SimpleGrassTest.java
+
+The demo project contains an example named SimpleGrassTest.java. That class has a method named setupForester().
+It is well commented, and can be used as a primer on how to set up a simple grass system. The basic approach is this:
+
+
+1) Create a Forester object, and initialize it.
+
+
+2) Use it to create a grass-loader.
+
+
+3) Use the grassloader to create a map-provider. The map-provider is used to feed the grass-loader with densitymaps.
+
+
+4) Use the grassloader to create one grass-layer for each type of grass. Each type of grass has its own grasslayer object which contains the material settings, the actual grass texture, and lots of other settings. Each layer also has their own instance of the planting algorithm, so that each type of grass can be planted in it's own way.
+
+
+5) Tweak everything until you're happy with the way it looks/runs.
+
+
+6) Make sure you call forester.update() each frame.
+
+
+
+== Rendering vegetation (Basic)
+
+Here is some basic information and tips here on how to make a vegetation system more efficient and/or better looking. There are also links to more in-depth jME tutorials on each subject, where there are any.
+
+
+
+=== Alpha textures
+
+Grass and foliage often use alpha textures. Alpha textures are partially (or fully) transparent. A standard alpha texture contains the RGB channels, but also an additional alpha channel where the transparency values are stored.
+
+
+There is a tutorial on how to work with alpha textures and transparency here: link:http://jmonkeyengine.org/wiki/doku.php/jme3:beginner:hello_material[http://jmonkeyengine.org/wiki/doku.php/jme3:beginner:hello_material]
+
+
+
+=== Coloring & Depth
+
+Materials have something called additional renderstate options. They can be found in the material editor. When rendering grass, you usually want to look at these settings:
+
+
+*FaceCull:* When using fixed quads it should be set to “Off. This means both sides of the quads will be rendered. When using billboarded grass, you can cull the back side, because it never faces the camera.
+
+
+*Blending mode:* With grass you'd normally be using *Alpha*. The *AlphaTestFallof* parameter should also be set, but the value to use depends a lot on the texture. It may be worth trying a few different values.
+
+
+*DepthWrite/DepthCheck:* Both of those should normally be checked.
+
+
+*ColorWrite:* This should always be on.
+
+
+
+=== Alpha to coverage
+
+Alpha to coverage (AtoC) is a method used to smooth out the edges of grass and such. It is an alternative to regular alpha blending. In jME you enable it through the rendermanager, or renderer:
+
+
+[source,java]
+----
+renderer.setAlphaToCoverage(true);
+----
+There's an example in the Forester test project that shows how you enable it, and how you use it in Forester.
+
+
+Alpha to coverage works through multi-sampling, and you have to use 4xMSAA in order for it to work. It is a fairly new technique and may not be supported on older graphics-cards. It is also implemented differently by different vendors, and while some cards “technically support it, it may not work as intended. This means it's always a good idea to provide an alternative to AtoC in your apps/games.
+
+
+link:http://en.wikipedia.org/wiki/Alpha_to_coverage[http://en.wikipedia.org/wiki/Alpha_to_coverage]
+

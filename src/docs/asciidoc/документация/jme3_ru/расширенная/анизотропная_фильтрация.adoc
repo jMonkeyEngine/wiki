@@ -1,0 +1,42 @@
+
+
+== Анизотропная Фильтрация текстур
+
+Анизотропная Фильтрация-это очень важно для настольных игр и их текстуры. В большинстве игр используется AnisotropicFiltering = 4/8/16. Это придает четкость текстур под другим углом зрения.
+Анизотропия делает производительность ниже на 10-40 кадров в секунду, но результат выглядит гораздо лучше.
+
+
+См. Пример: link:http://i.imgur.com/0yiv9.jpg[http://i.imgur.com/0yiv9.jpg]
+
+image::jme3/advanced/anisotropy_example_mifth_01.jpg[anisotropy_example_mifth_01.jpg,with="360",height="900",align="right"]
+
+
+
+JME по УМОЛЧАНИЮ AnisotropicFiltering = 0. So, if если вы делаете игру для Windows/Linux/Mac.. необходимо установить анизотропной фильтрации больше, чем 0.
+
+
+Пример как установить AnisotropicFiltering = 4 для всех текстур::
+
+
+[source,java]
+----
+AssetEventListener asl = new AssetEventListener() {
+    public void assetLoaded(AssetKey key) {
+// throw new UnsupportedOperationException("Not supported yet.");
+            }
+
+    public void assetRequested(AssetKey key) {
+       if (key.getExtension().equals("png") || key.getExtension().equals("jpg") || key.getExtension().equals("dds")) {
+            System.out.println(key.getExtension());
+            TextureKey tkey = (TextureKey) key;
+            tkey.setAnisotropy(8);
+                }
+            }
+
+    public void assetDependencyNotFound(AssetKey parentKey, AssetKey dependentAssetKey) {
+// throw new UnsupportedOperationException("Not supported yet.");
+            }
+        };
+        
+        assetManager.addAssetEventListener(asl);
+----

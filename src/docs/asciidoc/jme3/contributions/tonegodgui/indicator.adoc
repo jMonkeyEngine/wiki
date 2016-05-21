@@ -1,0 +1,130 @@
+
+
+=== Indicator Class
+
+An indicator is a highly customizable progress bar, which can be used showing/displaying player stats, etc
+
+
+The Indicator uses the 3 standard constructors as shown in the link:http://jmonkeyengine.org/wiki/doku.php/jme3:contributions:tonegodgui:quickstart[Quick Start Guide] with the addition of one extra parameter:
+
+
+*  Orientation appended to the end of the param list for each
+
+*Features include:*+
+
+
+
+*  Clipping + an alpha mask to create any shaped indicator you would like
+*  Display the indicator in any color you choose.
+*  Image based indicators in place of color+clipping
+*  An overlay image for transparent indicator containers
+
+
+==== Constructor example:
+
+[source,java]
+----
+/**
+  * Parameters:
+  * Screen screen
+  * String UID
+  * Vector2f position
+  * Orientation orientation
+  */
+Indicator ind = new Indicator(
+    screen,
+    “SomeID”,
+    new Vector2f(10,10),
+   Orientation.VERTICAL
+);
+----
+
+==== Changing & Reshaping the Indicator
+
+[source,java]
+----
+// Using an image in place of a colored indicator
+ind.setBaseImage(String imgPath);
+
+// Use a clipped image for the indicator
+ind.setIndicatorImage(String imgPath);
+
+// Changing the color of the indicator or colorize the image-based indicator
+ind.setIndicatorColor(ColorRGBA indicatorColor);
+
+// Add padding (margins) to the indicator portion of the indicator
+ind.setIndicatorPadding(Vector4f padding);
+
+// Reshape the indicator !IMPORTANT! setIndicatorAlphaMap is now @Deprecated, use this instead:
+ind.setAlphaMap(String alphaMapPath);
+----
+
+==== Methods specific to the Indicator class
+
+[source,java]
+----
+// Get the indicators oritentation
+ind.getOrientation();
+ 
+// Adjust value ranges
+ind.setMaxValue(float maxValue);
+ind.setCurrentValue(float currentValue);
+ 
+// Get current info
+ind.getCurrentPercentage();
+ind.getCurrentValue();
+ind.getMaxValue();
+ind.getTextDisplayElement(); // Return the text element for formatting purposes
+ind.setDisplayValues(); // Display value in format:  current/max or 10/100
+ind.setDisplayPercentage(); // Displays percentage:  82% etc
+ind.setHideText(); // removes display text (default)
+----
+
+=== Indicator Examples
+
+Cut &amp; Paste the following code into the simpleInitApp method of a new JME project.  Use the slider to adjust the indicator.
+
+
+[source,java]
+----
+flyCam.setDragToRotate(true);
+inputManager.setCursorVisible(true);
+ 
+screen = new Screen(this);
+guiNode.addControl(screen);
+
+final ColorRGBA color = new ColorRGBA();
+
+final Indicator ind = new Indicator(
+    screen,
+    new Vector2f(50,50),
+    new Vector2f(300,30),
+    Orientation.HORIZONTAL
+) {
+    @Override
+    public void onChange(float currentValue, float currentPercentage) {  }
+};
+ind.setBaseImage(screen.getStyle("Window").getString("defaultImg"));
+//ind.setIndicatorImage(screen.getStyle("Window").getString("defaultImg"));
+ind.setIndicatorColor(ColorRGBA.randomColor());
+ind.setAlphaMap(screen.getStyle("Indicator").getString("alphaImg"));
+ind.setIndicatorPadding(new Vector4f(7,7,7,7));
+ind.setMaxValue(100);
+ind.setDisplayPercentage();
+ 
+screen.addElement(ind);
+ 
+Slider slider = new Slider(screen, new Vector2f(100,100), Orientation.HORIZONTAL, true) {
+    @Override
+    public void onChange(int selectedIndex, Object value) {
+        float blend = selectedIndex*0.01f;
+        color.interpolate(ColorRGBA.Red, ColorRGBA.Green, blend);
+        ind.setIndicatorColor(color);
+        ind.setCurrentValue((Integer)value);
+    }
+};
+ 
+screen.addElement(slider);
+----
+image:jme3/contributions/tonegodgui/indicatorexample.png[indicatorexample.png,with="",height=""]
+

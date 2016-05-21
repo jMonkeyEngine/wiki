@@ -1,0 +1,493 @@
+
+
+= jMonkeyEngine 3 Tutorial (9) - Hello Collision
+
+Предыдущий: <<документация/jme3_ru/начальная/знакомство_с_взаимодействиями#,Знакомство с Взаимодействиями>>,
+Следующий:  <<документация/jme3_ru/начальная/знакомство_с_местностью#,Знакомство с Местностью>>
+Английская версия: <<jme3/beginner/hello_collision#,Hello Collision>>
+
+
+В этом уроке показан способ как загрузите модель сцены и дать ей твердые стены и полы что бы персонаж мог ходить.
+Вы используете `RigidBodyControl` для static collidable сцены, и `CharacterControl` для перемещения персонажем от первого лица.  Вы также узнаете, как настроить камеру от первого лица по умолчанию для перемещения при наличии физике.
+Вы можете использовать решение, показанное здесь для шутеров от первого лица, бродилок, и подобных игр.
+
+
+
+image::jme3/beginner/beginner-scene.png[beginner-scene.png,with="360",height="281",align="center"]
+
+
+
+
+== Пример Кода
+
+Если у вас её еще нет, то загрузите пример сцены link:http://jmonkeyengine.googlecode.com/svn/trunk/engine/town.zip[town.zip]
+
+
+[source]
+----jMonkeyProjects$ ls -1 BasicGame
+assets/
+build.xml
+town.zip
+src/----
+Поместите town.zip в корневую папку вашего JME3 проекта. Вот код:
+
+
+[source,java]
+----
+package jme3test.helloworld;
+
+import com.jme3.app.SimpleApplication;
+import com.jme3.asset.plugins.ZipLocator;
+import com.jme3.bullet.BulletAppState;
+import com.jme3.bullet.collision.shapes.CapsuleCollisionShape;
+import com.jme3.bullet.collision.shapes.CollisionShape;
+import com.jme3.bullet.control.CharacterControl;
+import com.jme3.bullet.control.RigidBodyControl;
+import com.jme3.bullet.util.CollisionShapeFactory;
+import com.jme3.input.KeyInput;
+import com.jme3.input.controls.ActionListener;
+import com.jme3.input.controls.KeyTrigger;
+import com.jme3.light.AmbientLight;
+import com.jme3.light.DirectionalLight;
+import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector3f;
+import com.jme3.scene.Node;
+import com.jme3.scene.Spatial;
+
+/**
+ * Пример 9 - Как сделать стены и полы твердыми.
+ * В этом коде для столкновений использует физику и пользовательские Action Listener.
+ * @author normen, with edits by Zathras
+ */
+public class HelloCollision extends SimpleApplication
+        implements ActionListener {
+
+  private Spatial sceneModel;
+  private BulletAppState bulletAppState;
+  private RigidBodyControl landscape;
+  private CharacterControl player;
+  private Vector3f walkDirection = new Vector3f();
+  private boolean left = false, right = false, up = false, down = false;
+  
+  //Временные векторы, используемые на каждом кадре.
+  //Они здесь, чтобы избежать instanciating новых векторов на каждом кадре
+  private Vector3f camDir = new Vector3f();
+  private Vector3f camLeft = new Vector3f();
+
+  public static void main(String[] args) {
+    HelloCollision app = new HelloCollision();
+    app.start();
+  }
+
+  public void simpleInitApp() {
+    /** Настройка физики*/
+    bulletAppState = new BulletAppState();
+    stateManager.attach(bulletAppState);
+    //bulletAppState.getPhysicsSpace().enableDebug(assetManager);
+
+    // Мы как и раньше используем летающую камеру для поворотов,
+    // но теперь местоположение будет зависеть от физике
+    viewPort.setBackgroundColor(new ColorRGBA(0.7f, 0.8f, 1f, 1f));
+    flyCam.setMoveSpeed(100);
+    setUpKeys();
+    setUpLight();
+
+    // Загрузим сцену из zip файла и отрегулируем её размер.
+    assetManager.registerLocator("town.zip", ZipLocator.class);
+    sceneModel = assetManager.loadModel("main.scene");
+    sceneModel.setLocalScale(2f);
+
+    // Создадим обнаружение столкновений для сцены, путем создания
+    // составной collision shape и static RigidBodyControl с массой zero(ноль).
+    CollisionShape sceneShape =
+            CollisionShapeFactory.createMeshShape((Node) sceneModel);
+    landscape = new RigidBodyControl(sceneShape, 0);
+    sceneModel.addControl(landscape);
+
+    // Создадим обнаружение столкновений для игрока, путем создания
+    // капсулы collision shape и CharacterControl.
+    // CharacterControl предлагает дополнительные настройки для
+    // размера, высоты шага, прыжка, падения и силы тяжести.
+    // Мы также поставим игрока в исходное положение.
+    CapsuleCollisionShape capsuleShape = new CapsuleCollisionShape(1.5f, 6f, 1);
+    player = new CharacterControl(capsuleShape, 0.05f);
+    player.setJumpSpeed(20);
+    player.setFallSpeed(30);
+    player.setGravity(30);
+    player.setPhysicsLocation(new Vector3f(0, 10, 0));
+
+    // Мы придаем сцене и игроку в RootNode физику пространства,
+    // чтобы она появились в игровом мире.
+    rootNode.attachChild(sceneModel);
+    bulletAppState.getPhysicsSpace().add(landscape);
+    bulletAppState.getPhysicsSpace().add(player);
+  }
+
+  private void setUpLight() {
+    // Мы добавим свет, что бы мы могли видеть сцену
+    AmbientLight al = new AmbientLight();
+    al.setColor(ColorRGBA.White.mult(1.3f));
+    rootNode.addLight(al);
+
+    DirectionalLight dl = new DirectionalLight();
+    dl.setColor(ColorRGBA.White);
+    dl.setDirection(new Vector3f(2.8f, -2.8f, -2.8f).normalizeLocal());
+    rootNode.addLight(dl);
+  }
+
+  /** Мы напишем навигационные клавиши здесь, что бы мы могли
+   * иметь возможность управлять ходьбой и прыжками в игре: */
+  private void setUpKeys() {
+    inputManager.addMapping("Left", new KeyTrigger(KeyInput.KEY_A));
+    inputManager.addMapping("Right", new KeyTrigger(KeyInput.KEY_D));
+    inputManager.addMapping("Up", new KeyTrigger(KeyInput.KEY_W));
+    inputManager.addMapping("Down", new KeyTrigger(KeyInput.KEY_S));
+    inputManager.addMapping("Jump", new KeyTrigger(KeyInput.KEY_SPACE));
+    inputManager.addListener(this, "Left");
+    inputManager.addListener(this, "Right");
+    inputManager.addListener(this, "Up");
+    inputManager.addListener(this, "Down");
+    inputManager.addListener(this, "Jump");
+  }
+
+  /** Здесь наши пользовательские действия вызываются нажатием клавиш.
+   * Мы еще не научились ходить, мы просто отслеживать направление, соответствующее
+   * нажатой пользователем клавиши. */
+  public void onAction(String binding, boolean isPressed, float tpf) {
+    if (binding.equals("Left")) {
+      left = isPressed;
+    } else if (binding.equals("Right")) {
+      right= isPressed;
+    } else if (binding.equals("Up")) {
+      up = isPressed;
+    } else if (binding.equals("Down")) {
+      down = isPressed;
+    } else if (binding.equals("Jump")) {
+      if (isPressed) { player.jump(); }
+    }
+  }
+
+  /**
+   * Это главный цикл обработки событий -- ходьба происходит здесь.
+   * Мы проверяем, в каком направлении игрок идет путем интерпретации
+   * направления камеры вперед (camDir) и в сторону (camLeft).
+   * Команда setWalkDirection () это то, что позволяет физический управлять ходьбой игрока.
+   * Также мы можем убедится здесь, что камера перемещается вместе с игроком.
+   */
+  @Override
+    public void simpleUpdate(float tpf) {
+        camDir.set(cam.getDirection()).multLocal(0.6f);
+        camLeft.set(cam.getLeft()).multLocal(0.4f);
+        walkDirection.set(0, 0, 0);
+        if (left) {
+            walkDirection.addLocal(camLeft);
+        }
+        if (right) {
+            walkDirection.addLocal(camLeft.negate());
+        }
+        if (up) {
+            walkDirection.addLocal(camDir);
+        }
+        if (down) {
+            walkDirection.addLocal(camDir.negate());
+        }
+        player.setWalkDirection(walkDirection);
+        cam.setLocation(player.getPhysicsLocation());
+    }
+}
+----
+Запустить пример. Вы должны увидеть городскую площадь с домами и памятник. Используйте клавиши WASD и мышь, чтобы перемещаться с видом от первого лица. Бегите вперед и прыгайте с помощью клавиши W и Пробел. Обратите внимание, как вы ступаете над тротуаром, и вверх по ступенькам к памятнику. Вы можете ходить в переулках между домами, и стены являются твердыми. Не заходите за край мира! emoji:smiley
+
+
+
+== Понимание Кода
+
+Начнем с объявления класса:
+
+
+[source,java]
+----public class HelloCollision extends SimpleApplication
+        implements ActionListener { ... }----
+Вы уже знаете, что SimpleApplication является базовым классом для всех jME3 игр. Вы реализуете в этом классе интерфейс ` ActionListener ` потому что вам нужно будет в дальнейшем настроить клавиши управления.
+
+
+[source,java]
+----
+  private Spatial sceneModel;
+  private BulletAppState bulletAppState;
+  private RigidBodyControl landscape;
+  private CharacterControl player;
+  private Vector3f walkDirection = new Vector3f();
+  private boolean left = false, right = false, up = false, down = false;
+
+  //Временные векторы, используемые на каждом кадре.
+  //Они здесь для того, чтобы избежать instanciating новых векторов на каждый кадр
+  private Vector3f camDir = new Vector3f();
+  private Vector3f camLeft = new Vector3f();
+----
+Вы инициализировали несколько private полей:
+
+
+*  BulletAppState дает SimpleApplication доступ к функциям физики (например, для определения столкновений), поставляемой по jME3, jBullet интеграции
+*  Spatial sceneModel предназначен для загрузке OgreXML модель города.
+*  Вам нужен RigidBodyControl, чтобы придать модели города свойства твердого тела.
+*  (Невидимый) от первого лица игрок представлен CharacterControl объектом.
+*  Поле “walkDirection и четырех Booleans используются для управления движением.
+*  camDir и camLeft временные векторы, используемые впоследствии при расчете walkingDirection для положения камеры(cam) и поворотов.
+
+Давайте посмотрим на все детали:
+
+
+
+== Инициализация игры
+
+Как обычно, вы инициализируете игру в методе `simpleInitApp()`.
+
+
+[source,java]
+----
+    viewPort.setBackgroundColor(new ColorRGBA(0.7f,0.8f,1f,1f));
+    flyCam.setMoveSpeed(100);
+    setUpKeys();
+    setUpLight();
+----
+.  Вы можете установить цвет фона светло-голубым, так как это сцена с небом.
+.  Вы переназначите управление камерой по умолчанию на “flyCam, камера от первого лица, и установить её скорость.
+.  Вспомогательный метод `setUpLights()` добавляет источники света.
+.  Вспомогательный метод `setUpKeys()` настраивает привязки ввода–мы рассмотрим его позже.
+
+
+=== The Physics-Controlled Scene
+
+Первое, что вы создаете для каждый игровой физики является объект BulletAppState. Это дает вам доступ к jME3, jBullet интеграции, которая обрабатывает физические силы и столкновения.
+
+
+[source,java]
+----
+    bulletAppState = new BulletAppState();
+    stateManager.attach(bulletAppState);
+----
+Для сцены, вы загрузить “sceneModel из zip-файл, и измените Размер.
+
+
+[source,java]
+----
+    assetManager.registerLocator("town.zip", ZipLocator.class);
+    sceneModel = assetManager.loadModel("main.scene");
+    sceneModel.setLocalScale(2f);
+----
+Файл “town.zip входит в качестве образца модели в JME3 ресурс-вы можетеlink:http://jmonkeyengine.googlecode.com/svn/trunk/engine/town.zip[загрузить отсюда]. (При желании, можно использовать любую OgreXML сцену из ваших собственных.) Для этого примера, поместите zip файл, в папку верхнего уровня приложения (то есть рядом src/, assets/, build.xml).
+
+
+[source,java]
+----
+    CollisionShape sceneShape =
+      CollisionShapeFactory.createMeshShape((Node) sceneModel);
+    landscape = new RigidBodyControl(sceneShape, 0);
+    sceneModel.addControl(landscape);
+    rootNode.attachChild(sceneModel);
+----
+Чтобы использовать обнаружение столкновений, вы добавляете RigidBodyControl к Spatial `sceneModel`. RigidBodyControl для комплексной модели принимает два аргумента: Столкновение(Collision) форма(Shape), и масса объекта.
+
+
+*  JME3 предлагает `CollisionShapeFactory` что precalculates сеточно-точные столкновения формы для Spatial. Вы можете выбрать для создания `CompoundCollisionShape` (который имеет MeshCollisionShapes как его потомок) потому что этот тип столкновения форм является оптимальным для неподвижных объектов, таких как рельеф местности, дома, и целых уровней шутеров.
+*  Набор массы до нуля, поскольку сцена статична, и ее масса irrevelant.
+*  Добавить элемент управления в Spatial это даст ему физические свойства.
+*  Как всегда, прикрепите sceneModel к rootNode, чтобы сделать его видимым.
+
+*Совет:* Помните, что нужно добавить источник света, чтобы видеть сцену.
+
+
+
+=== The Physics-Controlled Player
+
+От первого лица игрок, как правило, невидим. При использовании по умолчанию flyCam от первого лица, камера даже не проверится на столкновения она свободно проходит сквозь стены. Это потому, что flyCam не назначена никакая физическая форма. В этом примере кода, вы представляете игрока от первого лица как(невидимую) физическую форму. Вы можете использовать клавиши WASD, чтобы управлять этой физической формы, в то время как физический движок управляет для вас, как она ходит вдоль сплошной стены и твердых полов и перепрыгивает через твердые препятствия. Тогда вам просто остатся заставить камеру следовать за Ходячие фигурой – и вы получите иллюзию твердого физического тела видящего через камеру.
+
+
+Давайте создадим обнаружение столкновений для игрока от первого лица.
+
+
+[source,java]
+----
+    CapsuleCollisionShape capsuleShape = new CapsuleCollisionShape(1.5f, 6f, 1);
+----
+Опять же, вы создаете CollisionShape: На этот раз вы выбираете CapsuleCollisionShape, цилиндр закругленный сверху и снизу. Эта форма является оптимальной для человека: Она высокая и округлая помогает реже застрять на препятствиях.
+
+
+*  Поставьте CapsuleCollisionShape конструктор с желаемым радиусом и высотой ограничивающей капсулу, чтобы соответствовать форме вашего персонажа. В этом примере персоонаж 2*1.5 f единиц в ширину, и 6f единиц в высоту.
+*  Окончательный целочисленный аргумент задает ориентацию цилиндра: 1 - ось Y, которая подходит для порядочного человека. Для животных, которые являются более высокими можно использовать 0 или 2 (в зависимости от того, как она поворачивается).
+
+[source,java]
+----
+    player = new CharacterControl(capsuleShape, 0.05f);
+----
+“
+
+
+[source,java]
+----bulletAppState.getPhysicsSpace().enableDebug(assetManager);----
+
+
+
+Теперь вы используете CollisionShape создать `CharacterControl` который представляет игрока от первого лица. Последний аргумент конструктора CharacterControl (здесь ` .05f `) является размер шага, который персонаж должен сделать.
+
+
+[source,java]
+----
+    player.setJumpSpeed(20);
+    player.setFallSpeed(30);
+    player.setGravity(30);
+----
+Помимо высоты шага и размера персонажа, `CharacterControl` позволяет настроить прыжки, падения и скорости гравитации. Отрегулируйте значения, чтобы соответствовать вашему игровой ситуации.
+
+
+[source,java]
+----
+    player.setPhysicsLocation(new Vector3f(0, 10, 0));
+----
+Наконец мы ставим игрока в исходное положение и обновить его состояние – не забывайте использовать `setPhysicsLocation()` теперь вместо `setLocalTranslation()`, поскольку вы имеете дело с физическим объектом. 
+
+
+
+=== PhysicsSpace
+
+Помните, для физики игры, вы должны зарегистрироваться все твердые предметы (как правило, персонажи и сцены) PhysicsSpace!
+
+
+[source,java]
+----
+    bulletAppState.getPhysicsSpace().add(landscape);
+    bulletAppState.getPhysicsSpace().add(player);
+----
+Невидимым тело персонажа просто сидит там на физическом полу. Оно еще не может ходить – вы будете иметь дело с этим в далее.
+
+
+
+== Navigation
+
+По умолчанию camera controller `cam` от третьего лица. JME3 также предлагает first-person controller, `flyCam`, который мы используем здесь, чтобы обрабатывать вращение камеры. На `flyCam` управления перемещает камеру с помощью метода `setLocation()`.
+
+
+Однако, вы должны заново определить, как ходьба (движение камеры) обрабатывается по physics-controlled объектов:  При переходе в не-физическом узле (например, по умолчанию flyCam), вы просто укажите _target location_. Не существует тестов, которые непозволят flyCam от застрять в стене!  При перемещении необходимо указать PhysicsControl, вместо _walk direction_ . Затем можно вычислить PhysicsSpace насколько ваш персонаж может фактически двигаться в нужном направлении – или мешает ли ему препятствие двигаться дальше.
+
+
+Короче говоря, вы должны заново определить flyCam navigational key mappings для использования `setWalkDirection()` вместо `setLocalTranslation()`. Вот шаги:
+
+
+
+=== 1. inputManager
+
+В методе `simpleInitApp()` вы заново настроить привычные WASD входы для прогулок, и пробел для прыжков.
+
+
+[source,java]
+----private void setUpKeys() {
+    inputManager.addMapping("Left", new KeyTrigger(KeyInput.KEY_A));
+    inputManager.addMapping("Right", new KeyTrigger(KeyInput.KEY_D));
+    inputManager.addMapping("Up", new KeyTrigger(KeyInput.KEY_W));
+    inputManager.addMapping("Down", new KeyTrigger(KeyInput.KEY_S));
+    inputManager.addMapping("Jump", new KeyTrigger(KeyInput.KEY_SPACE));
+    inputManager.addListener(this, "Left");
+    inputManager.addListener(this, "Right");
+    inputManager.addListener(this, "Up");
+    inputManager.addListener(this, "Down");
+    inputManager.addListener(this, "Jump");
+}
+----
+Вы можете переместить этот блок кода в созданный вспомогательный метод `setupKeys()` и вызывать этот метод из `simpleInitApp()`– чтобы код был более читабельный.
+
+
+
+=== 2. onAction()
+
+Помните, что этот класс реализует интерфейс `ActionListener` так что вы можете настроить входы flyCam. Интерфейс `ActionListener` необходимо реализовать  в методе `onAction()`: Вы повторно определить действия, запускаемые навигационными клавишами для работы с физикой.
+
+
+[source,java]
+----
+  public void onAction(String binding, boolean value, float tpf) {
+    if (binding.equals("Left")) {
+      if (value) { left = true; } else { left = false; }
+    } else if (binding.equals("Right")) {
+      if (value) { right = true; } else { right = false; }
+    } else if (binding.equals("Up")) {
+      if (value) { up = true; } else { up = false; }
+    } else if (binding.equals("Down")) {
+      if (value) { down = true; } else { down = false; }
+    } else if (binding.equals("Jump")) {
+      player.jump();
+    }
+  }----
+Единственное движение, которое вы не должны выполнять сами это действие прыжок. Вызов `player.jump()` это специальный метод, который обрабатывает правильно движения прыгать для `PhysicsCharacterNode`.
+
+
+На все другие направления: каждый раз, когда пользователь нажимает одну из клавиш WASD, вы _отслеживаете_  направление, в котором пользователь хочет идти, храня эту информацию в четырех directional Booleans. Нет фактическая ходьба здесь не происходит пока. Цикл обновления это то, что выполняет действие из информации направления хранимой в booleans переменных, и заставляет игрока двигаться, как показано в следующем фрагменте кода:
+
+
+
+=== 3. setWalkDirection()
+
+Ранее в методе `onAction()` вы собрали информацию, в какую сторону пользователь хочет зайти в терминах “forward или “left.  В цикл обновления, вы неоднократно определяли текущий угол поворота камеры. Вы рассчитать фактические векторы, которые “forward или “left соответствует системе координат.
+
+
+Этот последний и самый важный фрагмент кода переходит в метод `simpleUpdate()`.
+
+
+[source,java]
+----
+ public void simpleUpdate(float tpf) {
+        camDir.set(cam.getDirection()).multLocal(0.6f);
+        camLeft.set(cam.getLeft()).multLocal(0.4f);
+        walkDirection.set(0, 0, 0);
+        if (left) {
+            walkDirection.addLocal(camLeft);
+        }
+        if (right) {
+            walkDirection.addLocal(camLeft.negate());
+        }
+        if (up) {
+            walkDirection.addLocal(camDir);
+        }
+        if (down) {
+            walkDirection.addLocal(camDir.negate());
+        }
+        player.setWalkDirection(walkDirection);
+        cam.setLocation(player.getPhysicsLocation());
+    }----
+Это, как ходьба срабатывает:
+
+
+.  Инициализировать вектор `walkDirection` к нулю. Это-то, где вы хотите хранить вычисляемые  направления ходьбы.
+.  Добавить `walkDirection` последние векторы движения, которые вами определены из камеры. Таким образом, для персонажа, стало возможным  например двигаться вперед и влево одновременно!
+.  Это одна последняя строка означает “магия ходьбы : 
+[source,java]
+----player.setWalkDirection(walkDirection);----
+ Всегда используйте `setWalkDirection()` что бы сделать объект physics-controlled что бы двигаться непрерывно, и физический движок обрабатывал обнаружение столкновений для вас.
+
+
+.  Сделайте так что бы  объект camera от первого лица, следовала вместе с physics-controlled игрока:
+[source,java]
+----cam.setLocation(player.getPhysicsLocation());----
+
+*Важно:* Опять же, не используйте `setLocalTranslation()` что бы ходить вокруг игрока. Вы получите что его заклините в преграждающих других физических объектах. Вы можете поставить игрока в исходное положение с `setPhysicalLocation()` если вы убедитесь что поместили его чуть выше пола и на удалении от препятствий.
+
+
+
+== Вывод
+
+Вы узнали, как загрузить “твердых физическая модель сцены и ходить в них от первого лица.
+Вы узнали как ускорять физических вычислений с помощью CollisionShapeFactory для создания эффективной CollisionShapes для сложных Геометрий. Вы знаете, как добавить PhysicsControls вашему collidable geometries геометрии и регистрации их в PhysicsSpace. Вы также научились использовать `player.setWalkDirection(walkDirection)` to move collision-aware characters around, and not `setLocalTranslation()`.
+
+
+Ландшафт это другой тип сцены, в которой вам тоже нужно будет ходить. Давайте продолжать обучение <<документация/jme3_ru/начальная/знакомство_с_местностью#,Как создавать холмистый пейзаж>> сейчас. 
+
+'''
+
+Связанная информация:
+
+
+*  Как загружать модели и сцены: <<документация/jme3_ru/начальная/знакомство_с_ресурсами#,Знакомство с Ресурсами>>, <<sdk/scene_explorer#,Scene Explorer>>, <<sdk/scene_composer#,Scene Composer>>
+*  <<jme3/advanced/terrain_collision#,Terrain Collision>>
+* Чтобы узнать больше о сложных физических сценах, где несколько мобильных физических объектов сталкиваются друг с другом, читать <<jme3/beginner/hello_physics#,Hello Physics>>.
+*  FYI, есть более простые решения обнаружения столкновений тоже без физики. Посмотрите на link:http://code.google.com/p/jmonkeyengine/source/browse/trunk/engine/src/test/jme3test/collision/TestTriangleCollision.java[jme3test.collision.TestTriangleCollision.java].
+<tags><tag target="beginner" /><tag target="collision" /><tag target="control" /><tag target="intro" /><tag target="documentation" /><tag target="model" /><tag target="physics" /></tags>

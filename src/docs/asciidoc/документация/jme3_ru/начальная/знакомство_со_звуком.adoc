@@ -1,0 +1,336 @@
+
+
+= jMonkeyEngine 3 Урок (11) - Знакомство со Звуком
+
+Предыдущий: <<документация/jme3_ru/начальная/знакомство_с_местностью#,Знакомство с Местностью>>, 
+Следующий: <<документация/jme3_ru/начальная/знакомство_с_эффектами#,Знакомство с Эффектами>>
+Английская версия: <<jme3/beginner/hello_audio#,Hello Audio>>
+
+
+В этом уроке объясняется, как добавить 3D-звук в игру, и как сделать вместе с событиями проигрыш звука, такого как щелчок. Вы узнаете, как использовать Audio Listener и Audio Nodes. Вы также сделаете использование Action Listener и MouseButtonTrigger из предыдущего урока <<документация/jme3_ru/начальная/знакомство_с_системой_ввода#,знакомство с вводом>>, чтобы сделать мыши нажатие курка пистолета,со звуком выстрела.
+
+
+““““
+
+
+
+== Пример кода
+
+[source,java]
+----package jme3test.helloworld;
+
+import com.jme3.app.SimpleApplication;
+import com.jme3.audio.AudioNode;
+import com.jme3.input.MouseInput;
+import com.jme3.input.controls.ActionListener;
+import com.jme3.input.controls.MouseButtonTrigger;
+import com.jme3.material.Material;
+import com.jme3.math.ColorRGBA;
+import com.jme3.scene.Geometry;
+import com.jme3.scene.shape.Box;
+
+/** Пример 11 - проиграть 3D звук. */
+public class HelloAudio extends SimpleApplication {
+
+  private AudioNode audio_gun;
+  private AudioNode audio_nature;
+  private Geometry player;
+
+  public static void main(String[] args) {
+    HelloAudio app = new HelloAudio();
+    app.start();
+  }
+
+  @Override
+  public void simpleInitApp() {
+    flyCam.setMoveSpeed(40);
+    
+    /** просто синий ящик, плавающий в пространстве */
+    Box box1 = new Box(1, 1, 1);
+    player = new Geometry("Player", box1);
+    Material mat1 = new Material(assetManager,"Common/MatDefs/Misc/Unshaded.j3md");
+    mat1.setColor("Color", ColorRGBA.Blue);
+    player.setMaterial(mat1);
+    rootNode.attachChild(player);
+
+    /** пользовательская инициализация методов, смотрите ниже */
+    initKeys();
+    initAudio();
+  }
+
+  /** Мы создаем два аудио узла. */
+  private void initAudio() {
+    /* звук выстрела должен быть инициирован с помощью мыши. */
+    audio_gun = new AudioNode(assetManager, "Sound/Effects/Gun.wav", false);
+    audio_gun.setPositional(false);
+    audio_gun.setLooping(false);
+    audio_gun.setVolume(2);
+    rootNode.attachChild(audio_gun);
+
+    /* характер звука - продолжает проигрываться в цикле. */
+    audio_nature = new AudioNode(assetManager, "Sound/Environment/Ocean Waves.ogg", true);
+    audio_nature.setLooping(true);  // включение непрерывного воспроизведения
+    audio_nature.setPositional(true);   
+    audio_nature.setVolume(3);
+    rootNode.attachChild(audio_nature);
+    audio_nature.play(); // играть постоянно!
+  }
+
+  /** Объявление действия "стрелять" , сопоставление его с триггером (левый щелчок мыши). */
+  private void initKeys() {
+    inputManager.addMapping("Shoot", new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
+    inputManager.addListener(actionListener, "Shoot");
+  }
+
+  /**Определение действия "стрелять": проиграть звук пистолета. */
+  private ActionListener actionListener = new ActionListener() {
+    @Override
+    public void onAction(String name, boolean keyPressed, float tpf) {
+      if (name.equals("Shoot") && !keyPressed) {
+        audio_gun.playInstance(); //играть каждый экземпляр один раз!
+      }
+    }
+  };
+
+  /** Перемещение слушателя с камерой - для 3D звука. */
+  @Override
+  public void simpleUpdate(float tpf) {
+    listener.setLocation(cam.getLocation());
+    listener.setRotation(cam.getRotation());
+  }
+
+}
+----
+При запуске примера, вы должны увидеть синий куб. Вы должны услышать как природный, окружающий звук. При нажатии кнопки мыши, вы слышите громкий выстрел.
+
+
+
+== Понимание  Примера Кода
+
+В методе `initSimpleApp()` можно создать простой геометрию синий куб и называть `player` и прикрепить его на сцену – это просто произвольные выборки пример, так что бы вы видели что-то при запуске аудио образца.
+
+
+Давайте взглянем на `initAudio()`  чтобы узнать, как использовать `AudioNode`.
+
+
+
+== AudioNodes
+
+Добавить звук в игру довольно просто: для этого сохраните ваши аудио файлы в свою `assets/Sound` папку. JME3 поддерживает Ogg Vorbis (.ogg) и Wave (.wav) форматы файлов.
+
+
+Для каждого звука, создается AudioNode.  Вы можете использовать AudioNode как и любой узел в графа сцены в JME, графа сцены, например, прикрепить его к другим Узлам. Вы можете создать один узел для звука выстрела, и один узел для природных звуков.
+
+
+[source,java]
+----
+  private AudioNode audio_gun;
+  private AudioNode audio_nature;
+----
+Для каждого звука, создается метод `initAudio()`: Здесь вы инициализировать звуковые объекты и установить их параметры.
+
+
+[source,Java]
+----
+audio_gun = new AudioNode(assetManager, "Sound/Effects/Gun.wav", false);
+    ...
+audio_nature = new AudioNode(assetManager, "Sound/Environment/Nature.ogg", false);
+----
+Эти две строки создают новые звуковые узлы из данного аудио файла в AssetManager. Значение “false  означает, что вы хотите, чтобы  эти звуки помещались в буфер, прежде чем проигрываться. (Если вы установите этот флаг в true, то звук будет передаваться в потоковом режиме, который нужен для достаточно длинных звуков.)
+
+
+Вам нужно чтобы звуком выстрела играл _один раз_ (вам не нужен цикл). Вы также указываете его значение коэффициент усиления (на 0, звук отключен, на 2, это в два раза громче и др.)..
+
+
+[source,java]
+----
+    audio_gun.setPositional(false);
+    audio_gun.setLooping(false);
+    audio_gun.setVolume(2);
+    rootNode.attachChild(audio_gun);
+----
+
+
+
+Природные звуки отличаются: Вы хотите, чтобы они играли в цикле _постоянно_ в качестве звукового фона. Вот почему ваш цикл задан true,  и сразу же вызывается метод play() на узле. Вы также можете установить его значение на 3.
+
+
+[source,java]
+----
+    audio_nature.setLooping(true); // включение непрерывного воспроизведения
+    ...
+    audio_nature.setVolume(3);
+    rootNode.attachChild(audio_nature);
+    audio_nature.play(); // играть постоянно!
+  }----
+Здесь вы делаете audio_nature позиционный звук, который исходит из определенного места. Для этого вы задаете узлу конкретное место, в нашем примере, вы выбираете Vector3f.ZERO (что расшифровывается как координаты `0.0f,0.0f,0.0f`, центр сцены.) Так как jME, Поддержка 3D звука, теперь вы сможете услышать этот звук, исходящий из конкретного места. Делая звук позиционным необязательно. Если вы не используете эти строки, окружающий звук будет приходить со всех сторон.
+
+
+[source,java]
+----
+    ...
+    audio_nature.setPositional(true);
+    audio_nature.setLocalTranslation(Vector3f.ZERO.clone());
+    ...
+----
+*Совет:* Прикрепить AudioNodes в граф сцены, как и все узлы, чтобы сделать некоторые перемещения узлов stay up-to-date. Если вы их не присоедините они все равно будут слышны, и вы не получите сообщение об ошибке, но 3D-звук не будет работать, как ожидалось. AudioNodes могут быть прикреплены непосредственно к корневому узлу или они могут быть прикреплены внутри узла который движется через сцену  и как AudioNode и 3d-позиционированный звук, он будут порождаться и двигаться соответственно.
+
+
+*Совет:* playInstance всегда воспроизводит звук с позиции AudioNode так несколько выстрелов из одного пистолета (к примеру) могут быть созданы этим путем, однако, если несколько пушек стреляют сразу, то AudioNode необходимо для каждого из них.
+
+
+
+== Triggering Sound
+
+Давайте взглянем на “initKeys(): Как вы узнали в предыдущих уроков, можно использовать “inputManager реагировать на ввод пользователя. Здесь вы добавите сопоставление для левой клавишей мыши, и имя этого нового действия “Shoot(стрелять).
+
+
+[source,java]
+----
+  /** Объявление  действия "Shoot(стрелять)", сопоставление его триггеру (левый щелчок мыши). */
+  private void initKeys() {
+    inputManager.addMapping("Shoot", new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
+    inputManager.addListener(actionListener, "Shoot");
+  }
+----
+Настройка ActionListener также должны быть знакомы из предыдущих уроков. Вы задаете, что, когда триггер (кнопка) нажата и отпущена, вы хотите проиграть звук пистолета.
+
+
+[source,java]
+----
+  /** Задать действие "стрелять": играть звук оружия. */
+  private ActionListener actionListener = new ActionListener() {
+    @Override
+    public void onAction(String name, boolean keyPressed, float tpf) {
+      if (name.equals("Shoot") && !keyPressed) {
+        audio_gun.playInstance(); // играть каждый экземпляр один раз!
+      }
+    }
+  };----
+Так как необходимо стрелять быстро несколько раз подряд, и вы не можете подождать, пока предыдущая звуком выстрела дойдет до конца, для следующего запуска. Вот этому вы проигрываете этот звук с помощью метода“playInstance(). Это означает, что каждый клик запускает новый экземпляр звука, поэтому два экземпляра могут перекрываться. Вы задайте этот звук не циклом, так что каждый экземпляр играет только один раз. Как и следует ожидать это от выстрела.
+
+
+
+== Ambient или ситуационный?
+
+Два звука в двух разных случаях:
+
+
+* Огнестрельное является ситуативным. Вы хотите проиграть в его только один раз, когда он срабатывает.
+**  Вот почему вы `setLooping(false)`.
+
+*  Природные звуки окружающей среды, фоновый шум. Вы хотите, чтобы начинал играть с самого начала, до тех пор, как игра работает.
+**  Вот почему вы `setLooping(true)`.
+
+
+Теперь о каждом звуке вы знает, должен ли он быть циклом или нет. 
+
+
+Помимо looping boolean, другое отличие состоит в том где `play().playInstance()` вызывается на этих узлах:
+
+
+*  Вы начнете играть в фоне природы звука сразу после того, как вы ее создали, в методе initAudio().
+[source,java]
+----    audio_nature.play(); // играть постоянно!
+----
+*  Звук выстрела, однако, срабатывает ситуационно, один раз, только как часть `Shoot` входного действия, определенного в ActionListener.
+[source,java]
+----
+  /** Задать действие "стрелять": играть звук оружия. */
+  private ActionListener actionListener = new ActionListener() {
+    @Override
+    public void onAction(String name, boolean keyPressed, float tpf) {
+      if (name.equals("Shoot") && !keyPressed) {
+        audio_gun.playInstance(); // играть каждый экземпляр один раз!
+      }
+    }
+  };----
+
+
+== Buffered или Streaming?
+
+Boolean в AudioNode конструкторе определяет, является ли аудио buffered (false) или streamed (true). Например:
+
+
+[source,java]
+----audio_gunshot = new AudioNode(assetManager, "Sound/Effects/Gun.wav", false); // buffered
+...
+audio_nature = new AudioNode(assetManager, "Sound/Environment/Nature.ogg", true); // streamed ----
+Как правило, stream длинные звуки, и buffer короткие звуки.
+
+
+Обратите внимание, что streamed  звуки не могут loop (т.е. setLooping не будет работать, как вы ожидаете). Проверьте getStatus на узле, и если он был остановлен воссоздайте узел.
+
+
+
+== Play() или PlayInstance()?
+[cols="2", options="header"]
+|===
+
+a|audio.play()
+a|audio.playInstance()
+
+a|Играет buffered звук.
+a|Играет buffered звук. 
+
+a|Играет streamed звук.
+a|Не может воспроизводить streamed звуки.
+
+a|Один и тот же звук не может играть два раза в то же время.
+a|Те же звуки могут играть несколько раз и перекрываться.
+
+|===
+
+
+== Ваше ухо в сцене
+
+Для создания 3D аудио эффект, JME3 необходимо знать положение источника звука, и положение ушей игрока. Уши представляют собой 3D Audio объект слушателя. Объект `listener(слушатель)` этот объект по умолчанию в SimpleApplication.
+
+
+Для того, чтобы сделать большинство 3D аудио эффект, вы должны использовать метод `simpleUpdate()` перемещать и вращать слушателя (уши игрока) вместе с камерой (глазами игрока).
+
+
+[source,java]
+----
+  public void simpleUpdate(float tpf) {
+    listener.setLocation(cam.getLocation());
+    listener.setRotation(cam.getRotation());
+  }
+----
+Если вы не делаете этого, то результаты 3D-звука будет совершенно случайными.
+
+
+
+== Global, Directional, Positional?
+
+В этом примере вы определили природу звука, как исходящий из определенной позиции, но не звук выстрела. Это означает, что огнестрельные звук является глобальным и может быть слышен повсюду с одинаковой громкостью. JME3 также поддерживает направленный звуки, которые можно услышать только от определенного направления. 
+
+
+Это же смысл сделать огнестрельных позиционные, и окружающие звуки, приходят со всех сторон. Как вам решать, какой тип 3D звук для использовать от случая к случаю?
+
+
+*  В игре с перемещением врагов, вы, возможно, захотите, сделать выстрел, или шаг позиционными звуками. В этом случаях необходимо переместить AudioNode в расположение врага, перед “playInstance(). Таким образом, игрок с стерео динамиками слышит, с какой стороны враг идет.
+*  Аналогичным образом, вы можете иметь уровни игры, где требуется одно фоновое воспроизведение звука во всем мире. В этом случае, вы бы с делали AudioNode ни позиционным, ни направленным (установлен как false).
+*  Если вы хотите, чтобы звук “поглощался стенами или распространялся только в одном направлении, вы можете сделать направленности AudioNode. В этом уроке не рассматриваются направленные звуки, вы можете прочитать <<jme3/advanced/audio#,Advanced Audio>> здесь.
+
+Короче говоря, вы должны выбрать в каждой ситуации есть смысл сделать звук глобально направленный или позиционным.
+
+
+
+== Вывод
+
+Теперь вы знаете, как добавить два наиболее распространенных типа звука в игры: Глобальные звуки и позиционные звуки. Вы можете воспроизводить звуки двумя способами: Непрерывно в цикле, или ситуационно только один раз. Вы знаете разницу между буферизацией коротких звуков и потоковых длинных звуков. Вы знаете разницу между игрой экземпляров overlapping звуков, и игрой unique звуков которые не могут overlap с themselves. Вы также научились использовать звуковые файлы .ogg и .wav формата.
+
+
+*Совет:* JME Аудио реализация также поддерживает более продвинутые эффекты, такие как реверберация и эффект Доплера. Используйте эти “pro функции, чтобы сделать аудио звучание по-разному в зависимости от того, происходит ли это в коридоре, в пещере, на открытом воздухе, или в помещении с ковровым покрытием. Узнать больше об экологических эффектов от образец кода, включенного в jme3test папку и с расширенной <<jme3/advanced/audio#,Audio>> документацией.
+
+
+Хочешь что бы пожары и взрывы, происходили в месте с вашими звуками? Читайте дальше, чтобы узнать больше о <<документация/jme3_ru/начальная/знакомство_с_эффектами#,effects>>.
+
+'''
+
+См. также:
+
+
+*   <<jme3/advanced/audio#,Audio>>
+<tags><tag target="sound" /><tag target="documentation" /><tag target="beginner" /><tag target="intro" /></tags>

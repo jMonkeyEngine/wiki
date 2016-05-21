@@ -1,0 +1,328 @@
+
+
+= jMonkeyEngine 3 Урок (12) - Знакомство с Эффектами
+
+Предыдущий: <<документация/jme3_ru/начальная/знакомство_со_звуком#,Знакомство со Звуком>>,
+Следующий: <<документация/jme3_ru/начальная/знакомство_с_физикой#,Знакомство с Физикой>>
+Английская версия: <<jme3/beginner/hello_effects#,Hello Effects>>
+
+
+
+image::jme3/beginner/beginner-effect-fire.png[beginner-effect-fire.png,with="150",height="165",align="right"]
+
+
+
+Когда вы видите одно из следующих действий в игре, то система частиц, скорее всего, позади него:
+
+
+*  Огонь, пламя, искры;
+*  Дождь, снег, водопады, листья;
+*  Взрывы, обломки, ударная волна;
+*  Пыль, туман, облака, дым;
+*  Стаи насекомых, метеорных потоков;
+*  Магические заклинания.
+
+Эти элементы сцены не могут быть смоделированы с помощью сеток. В очень простых терминах:
+
+
+*  Разница между взрыва и пылевого облака является скорость эффекта частиц. 
+*  Разница между пламенем и водопад-это направление и цвет эффекта частиц.
+
+Эффекты частиц могут быть анимированные (например, искры, капли) и статические (пучки травы, волос). Non-particle effects есть bloom/glow, и движения blur/afterimage. В этом уроке Вы узнаете, как сделать анимированные частицы (com.jme3.effect). 
+
+
+““““
+
+
+
+== Пример кода
+
+[source,java]
+----package jme3test.helloworld;
+
+import com.jme3.app.SimpleApplication;
+import com.jme3.effect.ParticleEmitter;
+import com.jme3.effect.ParticleMesh;
+import com.jme3.material.Material;
+import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector3f;
+
+/** Пример 11 - Как создать огонь, воду и эффекты взрывов. */
+public class HelloEffects extends SimpleApplication {
+
+  public static void main(String[] args) {
+    HelloEffects app = new HelloEffects();
+    app.start();
+  }
+
+  @Override
+  public void simpleInitApp() {
+
+    ParticleEmitter fire = 
+            new ParticleEmitter("Emitter", ParticleMesh.Type.Triangle, 30);
+    Material mat_red = new Material(assetManager, 
+            "Common/MatDefs/Misc/Particle.j3md");
+    mat_red.setTexture("Texture", assetManager.loadTexture(
+            "Effects/Explosion/flame.png"));
+    fire.setMaterial(mat_red);
+    fire.setImagesX(2); 
+    fire.setImagesY(2); // 2x2 текстура анимации
+    fire.setEndColor(  new ColorRGBA(1f, 0f, 0f, 1f));   // red
+    fire.setStartColor(new ColorRGBA(1f, 1f, 0f, 0.5f)); // yellow
+    fire.getParticleInfluencer().setInitialVelocity(new Vector3f(0, 2, 0));
+    fire.setStartSize(1.5f);
+    fire.setEndSize(0.1f);
+    fire.setGravity(0, 0, 0);
+    fire.setLowLife(1f);
+    fire.setHighLife(3f);
+    fire.getParticleInfluencer().setVelocityVariation(0.3f);
+    rootNode.attachChild(fire);
+
+    ParticleEmitter debris = 
+            new ParticleEmitter("Debris", ParticleMesh.Type.Triangle, 10);
+    Material debris_mat = new Material(assetManager, 
+            "Common/MatDefs/Misc/Particle.j3md");
+    debris_mat.setTexture("Texture", assetManager.loadTexture(
+            "Effects/Explosion/Debris.png"));
+    debris.setMaterial(debris_mat);
+    debris.setImagesX(3); 
+    debris.setImagesY(3); // 3x3 текстура анимации
+    debris.setRotateSpeed(4);
+    debris.setSelectRandomImage(true);
+    debris.getParticleInfluencer().setInitialVelocity(new Vector3f(0, 4, 0));
+    debris.setStartColor(ColorRGBA.White);
+    debris.setGravity(0, 6, 0);
+    debris.getParticleInfluencer().setVelocityVariation(.60f);
+    rootNode.attachChild(debris);
+    debris.emitAllParticles();
+  }
+}----
+Вы должны увидеть взрыв, от которого разлетается мусора, и огонь.
+link:http://jmonkeyengine.googlecode.com/svn/trunk/engine/src/test/jme3test/effect/[More example code is here.]
+
+
+
+=== Текстуры, Анимация и Вариации
+
+
+image::http///jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Effects/Explosion/Debris.png[Debris.png,with="96",height="96",align="right"]
+
+
+
+Начните с выбора материала текстуры для эффекта. Если вы укажите излучатель с набором текстур (см. рис.), он может использовать их либо для variation (произвольный порядок), или в виде анимации действия (фиксированного порядка).
+
+
+Установка излучателя текстур работает так, как вы уже узнали из предыдущих главах. На этот раз основой вашего материал будет определения материала  `Particle.j3md`. Давайте внимательнее посмотрим на материал для мусора эффекта.
+
+
+[source,java]
+----
+    ParticleEmitter debris = 
+            new ParticleEmitter("Debris", ParticleMesh.Type.Triangle, 10);
+    Material debris_mat = new Material(assetManager, 
+            "Common/MatDefs/Misc/Particle.j3md");
+    debris_mat.setTexture("Texture", assetManager.loadTexture(
+            "Effects/Explosion/Debris.png"));
+    debris.setMaterial(debris_mat);
+    debris.setImagesX(3); 
+    debris.setImagesY(3); // 3x3 текстура анимации
+    debris.setSelectRandomImage(true);
+        ...
+----
+.  Создайте материал и загрузите текстуру.
+.  Сообщите излучателю, на сколько шагов анимация (х * у) текстура разделилась. +
+Текстуры мусора 3x3 кадров.
+.  Дополнительно можно сообщите излучателю, шаги анимация должны быть в случайном порядке, или по порядку. +
+Для мусора, кадры, проигрываются в случайном порядке.
+
+Как вы видите в примере с мусором, текстуры, анимации улучшат эффекты потому что каждое “пламя или “кусок мусора теперь выглядит по-разному. Также думаю, электрические или магические эффекты, в которых можно создавать очень интересные анимации, используя упорядоченный  morphing серии молний; или летающие листья или снег хлопьями, например.
+
+
+Материал огня создается тем же способом, только с помощью “Effects/Explosion/flame.png текстура с 2x2 упорядоченным шагом анимации.
+
+
+
+=== По умолчанию Текстуры Частиц
+
+Следующие текстуры частиц, включенные в `test-data.jar`. Вы можете копировать и использовать их в ваших собственных эффектах.
+
+[cols="3", options="header"]
+|===
+
+<a| Путь к Текстуре                     
+a| Размер 
+a| Просмотр 
+
+<a| Effects/Explosion/Debris.png     
+<a| 3*3  
+a| image:http///jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Effects/Explosion/Debris.png[Debris.png,with="32",height="32"] 
+
+<a| Effects/Explosion/flame.png      
+<a| 2*2  
+a| image:http///jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Effects/Explosion/flame.png[flame.png,with="32",height="32"] 
+
+<a| Effects/Explosion/shockwave.png  
+<a| 1*1  
+a| image:http///jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Effects/Explosion/shockwave.png[shockwave.png,with="32",height="32"] 
+
+a| Effects/Explosion/smoketrail.png 
+<a| 1*3  
+a| image:http///jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Effects/Explosion/smoketrail.png[smoketrail.png,with="32",height="32"] 
+
+<a| Effects/Smoke/Smoke.png          
+a| 1*15 
+a| image:http///jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Effects/Smoke/Smoke.png[Smoke.png,with="96",height="32"] 
+
+|===
+
+Скопируйте их в свою `assets/Effects` папку, чтобы использовать их.
+
+
+
+== Создание Пользовательских Текстур
+
+Для вашей игры, вы, вероятно, будите создавать пользовательские текстуры частиц. Посмотрите на примере пожара снова.
+
+
+[source,java]
+----
+    ParticleEmitter fire = 
+            new ParticleEmitter("Emitter", ParticleMesh.Type.Triangle, 30);
+    Material mat_red = new Material(assetManager, 
+            "Common/MatDefs/Misc/Particle.j3md");
+    mat_red.setTexture("Texture", assetManager.loadTexture(
+            "Effects/Explosion/flame.png"));
+    fire.setMaterial(mat_red);
+    fire.setImagesX(2); 
+    fire.setImagesY(2); // 2x2 текстура анимации
+    fire.setEndColor(  new ColorRGBA(1f, 0f, 0f, 1f));   // red
+    fire.setStartColor(new ColorRGBA(1f, 1f, 0f, 0.5f)); // yellow
+    ----
+
+image::http///jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Effects/Explosion/flame.png[flame.png,with="96",height="96",align="right"]
+
+
+
+Сравните текстуру с полученным эффектом.
+
+
+*  Черные участки изображения становятся полностью прозрачными.
+*  Белые/серые части изображения являются прозрачными и получаются раскрашенными.
+*  Вы можете установить цвет, используя `setStartColor()` и `setEndColor()`. +
+Для огня, - это градиент от желтого до красного.
+*  По умолчанию анимация воспроизводятся в порядке и цикла.
+
+Создаем черно-белую текстуру в графическом редакторе, и сохранить её в папку`assets/Effects`. Если разделить один файл изображения в x*y шаг анимации, убедитесь, что каждый квадрат одинакового размера–так же, как вы видите в примерах здесь.
+
+
+
+=== Параметры Излучателя(Emitter)
+
+Система частиц находится всегда по центру вокруг излучателя. 
+
+
+Используйте метод `setShape()` чтобы изменить EmitterShape:
+
+
+*  EmitterPointShape(Vector3f.ZERO) –  частицы испускаются из точки (по умолчанию)
+*  EmitterSphereShape(Vector3f.ZERO,2f) – частицы испускают из сферы размером области
+*  EmitterBoxShape(new Vector3f(-1f,-1f,-1f),new Vector3f(1f,1f,1f)) – частицы выделяют из box размером области
+
+Пример: 
+
+
+[source,java]
+----emitter.setShape(new EmitterPointShape(Vector3f.ZERO));----
+Создания различных эффектов путем изменения параметров излучателя:
+
+[cols="4", options="header"]
+|===
+
+<a| Параметр          
+a| Метод 
+a| По умолчанию 
+a| Описание 
+
+<a| количество              
+a| `setNumParticles()` 
+a| N/A 
+a| Максимальное число частиц, видимых одновременно. Значение задается пользователем в конструкторе. Это влияет на плотность и длину “след(trail). 
+
+<a| скорость           
+<a| `getParticleInfluencer(). setInitialVelocity()`  
+a| Vector3f.ZERO 
+a| Укажите вектор, как быстро частиц двигаться и в каком направлении начало. 
+
+<a| направление           
+a| `getParticleInfluencer(). setVelocityVariation()` +
+`setFacingVelocity()` +
+`setRandomAngle()` +
+`setFaceNormal()` +
+`setRotateSpeed()` 
+a| 0.2f +
+false +
+false +
+Vector3f.NAN +
+0.0f 
+a| Дополнительные средства доступа, которые контролируют направление, в котором частицы сталкиваются во время полета. 
+
+<a| время существования          
+a| `setLowLife()` +
+`setHighLife()` 
+<a| 3f  +
+7f  
+a| Минимальный и максимальный период времени до угасания частиц. 
+
+<a| интенсивность выбросов       
+a| `setParticlesPerSec()` 
+a| 20 
+a| Сколько новых частиц, испускается в секунду. 
+
+<a| цвет               
+a| `setStartColor()` +
+`setEndColor()` 
+a| gray 
+a| Установите одинаковы цвета, или два разных цвета для эффект градиента. 
+
+<a| Размер             
+a| `setStartSize()` +
+`setEndSize()` 
+a| 0.2f +
+2f 
+a| Установите два различных значений сжатия/расти эффекта, или же размера для постоянного эффекта. 
+
+<a| гравитация             
+a| `setGravity()` 
+a| 0,1,0 
+a| Будут ли частицы падают вниз (положительный) или лететь вверх (отрицательный). Установите 0f для zero-g эффект, где частицы летать. 
+
+|===
+
+Вы можете найти сведения об <<jme3/advanced/particle_emitters#configure_parameters,параметрах эффектов>> здесь.
+Добавляйте и изменяйте по одному параметру, и попробуйте разные значения, пока вы не получите эффекта, которого вы хотите.
+
+
+*Совет:*
+
+
+
+== Упражнение
+
+Можно “инвертировать огонь эффект в небольшой водопад? Вот некоторые советы:
+
+
+*  Поменять красный и желтый цвета на голубой и синий
+*  Инвертировать вектор скорости (направление) с помощью отрицательного числа
+*  Поменять местами размер начала и конца
+*  Активировать гравитацию, установив её 0,1,0
+
+
+== Вывод
+
+Вы узнали, что много разных эффектов могут быть созданы путем изменения параметров и текстур одним общим объектом излучателем.
+
+
+Теперь вы переходите на другую захватывающую главу – моделирование <<документация/jme3_ru/начальная/знакомство_с_физикой#,физика  объектов>>. Давайте постреляем пушечными ядрами по кирпичной стене!
+
+'''
+<tags><tag target="beginner" /><tag target="documentation" /><tag target="intro" /><tag target="transparency" /><tag target="effect" /></tags>

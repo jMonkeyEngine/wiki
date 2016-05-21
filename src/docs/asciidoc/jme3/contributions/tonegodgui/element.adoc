@@ -1,0 +1,200 @@
+
+
+=== The Element Class
+
+All controls are extensions of the Element class and thus, provide common methods for handling common features.  Before getting to specific controls, I thought it might be a good idea to cover some of the common methods for changing basic properties… such as: text, etc.+
+
++
+
+
+
+
+==== Constructors
+
+The Element class only provides a single constructor using all 6 of the common parameters:+
+
+
+
+[source,java]
+----
+/**
+  * Parameters:
+  * Screen screen
+  * String UID
+  * Vector2f position
+  * Vector2f dimensions
+  *  Vector4f resizeBorders
+  * String defaultImgPath
+  */
+Element el = new Element(
+    screen,
+    “SomeID”,
+    new Vector2f(5,5),
+    new Vector2f(100,100),
+    new Vector4f(5,5,5,5),
+    “someImgPath.png”
+);
+----
+*Note:*+
+
+All setter provide getters.
+
+
+
+==== Text/Font Related Methods
+
+[source,java]
+----
+element.setFont(String font path)
+element.setFontSize(float fontSize);
+element.setFontColor(ColorRGBA fontColor);
+element.setTextAlign(BitmapFont.Align textAlign);
+element.setTextVAlign(BitmapFont.VAlign textVAlign);
+element.setTextWrap(LineWrapMode textWrap);
+element.setTextPosition(float x, float y);
+element.setTextPadding(float textPadding);
+element.setText(String text);
+----
+
+==== Element Positions/Dimensions Related Methods
+
+[source,java]
+----
+element.setPosition(Vector2f position);
+element.setPosition(float x, float y);
+element.setX(float x);
+element.setY(float y);
+element.setDimensions(Vector2f dimensions);
+element.setDimensions(float w, float h);
+element.setWidth(float width);
+element.setHeight(float height);
+element.setMinDimensions(new Vector2f(float x, float y));
+----
+
+==== Other Positions/Dimensions Related Methods
+
+Since position and dimensions are relative to the Element’s parent Element, there are additional getters provided for retrieving absolute X, Y, Width &amp; Height (absolute positions start from screen coords 0, 0)
+
+
+[source,java]
+----
+element.getAbsoluteX();
+element.getAbsoluteY();
+element.getAbsoluteWidth();
+element.getAbsoluteHeight();
+----
+
+==== Child Elements
+
+There are additional methods that provide recursive updates to child Elements:
+
+
+[source,java]
+----
+element.moveTo(float x, float y);
+element.resize(float diffX, floar diffY, Element.Borders dir);
+----
+
+==== Element Display Methods
+
+[source,java]
+----
+el.show();
+el.showWithEffect();
+el.hide();
+el.hideWithEffect();
+----
+
+==== Hooks
+
+Overridable hooks are provided for default behavoirs:
+
+
+[source,java]
+----
+public void controlResizeHook() {  }
+public void controlMoveHook() {  }
+public void controlCleanupHook() {  }
+----
+
+==== Clipping
+
+To have the element be clipped by another element's bounds, use:
+
+
+[source,java]
+----
+el.setClippingLayer(Element element);
+----
+To set the clipping layer of the Element and propagate clipping to all children of the Element, use:
+
+
+[source,java]
+----
+el.setControlClippingLayer(Element element);
+----
+
+==== Accessing the Element's Components
+
+[source,java]
+----
+el.getGeometry(); // The element's Geometry
+el.getModel(); // The element's mesh
+el.getTextElement(); // BitmapText (null if setText() has not been previously called)
+----
+
+==== Modifying the Material
+
+There are plenty of methods that allow for modifying the look &amp; feel of the Element:
+
+
+[source,java]
+----
+// Accessing the element's material
+el.getElementMaterial();
+
+// Updating the texture:
+el.setColorMap(String imgPath); // To modify the element's base texture
+el.setAlphaMap(String imgPath); // To set the element's alphamap
+
+// Using gradient fills:
+el.getModel().setGradientFillHorizontal(ColorRGBA start, ColorRGBA end);
+el.getModel().setGradientFillVertical(ColorRGBA start, ColorRGBA end);
+
+// Defining each vertex color
+el.getModel().setColorBuffer(FloatBuffer colors);
+
+// Adjusting the element's alpha
+el.setGlobalAlpha(float alpha);
+----
+
+==== Effect Related Methods
+
+[source,java]
+----
+el.addEffect(Effect effect);
+el.removeEffect(Effect.EffectEvent effectEvent);
+el.populateEffects(String styleName); // Loads all effects associated with a Style
+----
+
+==== Drag & Drop Related Methods
+
+[source,java]
+----
+el.setIsDragDropDragElement(boolean isDragElement);
+el.setIsDragDropDropElement(boolean isDropElement);
+
+// for retrieving the current drop object under the element, use:
+screen.getDropObject();
+----
+
+
+
+
+==== Storing & Retrieving  Custom Data
+
+[source,java]
+----
+el.setElementUserData(Object data);
+el.getElementUserData();
+----

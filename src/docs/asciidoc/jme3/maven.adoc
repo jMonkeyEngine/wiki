@@ -1,0 +1,96 @@
+
+
+= jME3 with Maven
+
+You can use jME3 with maven compatible build systems, the official maven repository for jME3 is at
+link:http://updates.jmonkeyengine.org/maven/[http://updates.jmonkeyengine.org/maven/]
+
+
+The group id for all jME3 libraries is com.jme3, the following artifacts are currently available (version 3.0.10):
+
+
+*  jme3-core - Core libraries needed for all jME3 projects
+*  jme3-effects - Effects libraries for water and other post filters
+*  jme3-networking - jME3 networking libraries (aka spidermonkey)
+*  jme3-plugins - Loader plugins for OgreXML and jME-XML
+*  jme3-jogg - Loader for jogg audio files
+*  jme3-terrain - Terrain generation +++<abbr title="Application Programming Interface">API</abbr>+++
+*  jme3-blender - Blender file loader, only works on desktop renderers
+*  jme3-jbullet - Physics support using jbullet (desktop only) *Only jme3-jbullet OR jme3-bullet can be used*
+*  jme3-bullet - Physics support using native bullet, needs jme3-bullet-natives or jme3-bullet-natives-android (alpha)
+*  jme3-bullet-natives - Native libraries needed for bullet (not jbullet) on desktop (alpha)
+*  jme3-bullet-natives-android - Native libraries needed for bullet (not jbullet) on android (alpha)
+*  jme3-niftygui - NiftyGUI support for jME3
+*  jme3-desktop - Parts of the jME3 +++<abbr title="Application Programming Interface">API</abbr>+++ that are only compatible with desktop renderers, needed for image loading on desktop
+*  jme3-lwjgl - Desktop renderer for jME3
+*  jme3-android - Android renderer for jME3
+*  jme3-ios - iOS renderer for jME3
+
+For a basic desktop application to work you need to import at least
+
+
+*  jme3-core
+*  jme3-desktop
+*  jme3-lwjgl
+
+For a basic android application to work you need to import at least
+
+
+*  jme3-core
+*  jme3-android
+
+
+== Gradle
+
+If you happen to be using Gradle, you'll first need to add the repository, perhaps so it looks like this:
+
+
+[source]
+----
+repositories {
+    mavenCentral()
+    maven {
+        url 'http://updates.jmonkeyengine.org/maven'
+    }
+}
+----
+Next you'll need to add dependencies on all the JARs – here's what it looks like for all desktop-related JARs, selecting the latest patch version:
+
+
+[source]
+----
+dependencies {
+    compile 'com.jme3:jme3-core:3.0.+'
+    compile 'com.jme3:jme3-effects:3.0.+'
+    compile 'com.jme3:jme3-networking:3.0.+'
+    compile 'com.jme3:jme3-plugins:3.0.+'
+    compile 'com.jme3:jme3-jogg:3.0.+'
+    compile 'com.jme3:jme3-terrain:3.0.+'
+    compile 'com.jme3:jme3-blender:3.0.+'
+    compile 'com.jme3:jme3-jbullet:3.0.+'
+    compile 'com.jme3:jme3-niftygui:3.0.+'
+    compile 'com.jme3:jme3-desktop:3.0.+'
+    compile 'com.jme3:jme3-lwjgl:3.0.+'
+}
+----
+If you'd rather factor out the “3.0 bit, you can also do this:
+
+
+[source]
+----
+def jmonkeyengine_version = '3.0'
+
+dependencies {
+    compile "com.jme3:jme3-core:$jmonkeyengine_version.+"
+    compile "com.jme3:jme3-effects:$jmonkeyengine_version.+"
+    compile "com.jme3:jme3-networking:$jmonkeyengine_version.+"
+    compile "com.jme3:jme3-plugins:$jmonkeyengine_version.+"
+    compile "com.jme3:jme3-jogg:$jmonkeyengine_version.+"
+    compile "com.jme3:jme3-terrain:$jmonkeyengine_version.+"
+    compile "com.jme3:jme3-blender:$jmonkeyengine_version.+"
+    compile "com.jme3:jme3-jbullet:$jmonkeyengine_version.+"
+    compile "com.jme3:jme3-niftygui:$jmonkeyengine_version.+"
+    compile "com.jme3:jme3-desktop:$jmonkeyengine_version.+"
+    compile "com.jme3:jme3-lwjgl:$jmonkeyengine_version.+"
+}
+----

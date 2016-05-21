@@ -1,0 +1,318 @@
+
+
+= SimpleApplication
+
+Английская версия: <<jme3/intermediate/simpleapplication#,SimpleApplication>>
+
+
+Базовый класс jMonkeyEngine3 это `com.jme3.app.SimpleApplication`. В вашей первой игре Main класс наследует SimpleApplication напрямую. Когда вы чувствуете себя уверенней, вы понимаете что вы наследуете SimpleApplication создавая специальный базовый класс для игры, которые в дальнейшем вы развиваете.
+
+
+SimpleApplication дает вам доступ к стандартным особенностям игры, таким как граф сцены (rootNode), asset manager, интерфейс пользователя (guiNode), input manager, audio manager, симуляция физики, и fly-by camera. Вы вызываете app.start() и app.stop() для вашего экземпляра игры , чтобы начать или завершить работу приложения.
+
+
+<<jme3/advanced/application_states#,AbstractAppState>>
+
+
+В следующем примере кода показана типичная базовая структура jME3 игры:
+
+
+[source,java]
+----
+import com.jme3.app.SimpleApplication;
+
+public class MyBaseGame extends SimpleApplication {
+
+    public static void main(String[] args){
+        MyBaseGame app = new MyBaseGame();
+        app.start();
+    }
+
+    @Override
+    public void simpleInitApp() {
+       /* Инициализировать сцену игры здесь */
+    }
+
+    @Override
+    public void simpleUpdate(float tpf) {
+       /* Взаимодействовать с событиями в игре в главном цикле */
+    }
+
+    @Override
+    public void simpleRender(RenderManager rm) {
+       /* (необязательно) сделать дополнительные изменения в frameBuffer и граф сцены. */
+    }
+}----
+Давайте посмотрим на +++<abbr title="Application Programming Interface">API</abbr>+++ базового класса.
+
+
+
+== Класс Application
+
+Внутренне, com.jme3.app.SimpleApplication наследует com.jme3.app.Application. Application класс представляет универсальный в реальном времени 3D-рендеринга jME3 приложения (то есть, не обязательно игры). Как правило, вы не наследуете com.jme3.app.Application непосредственно для создания игры.
+
+[cols="2", options="header"]
+|===
+
+a|Поля класса Application
+a|Предназначено
+
+a|viewPort +
+getViewPort()
+a|Вид объекта камеры по умолчанию. Вы можете зарегистрировать advanced <<jme3/advanced/effects_overview#,post-processor filters>> здесь.
+
+a|settings +
+setSettings()
+a|Используйте этот  <<appsettings#,AppSettings>> объект чтобы задать значение ширины и высоты (по умолчанию 640x480), color bit depth, z-buffer bits,  образцы сглаживание, и частота обновления, видео-и аудио-рендерер, asset manager. См.: <<appsettings#,AppSettings>>.
+
+a|cam +
+getCamera()
+a|По умолчанию <<jme3/advanced/camera#,camera>> обеспечивает перспективной проекции, 45° поля зрения вблизи плоскости = 1 wu, в дали от плоскости = 1000 wu.
+
+a|assetManager +
+getAssetManager()
+a|Объект, который управляет путями для загрузка моделей, текстур, материалов, звуков и т.д. По умолчанию <<jme3/advanced/asset_manager#,Asset Manager>> это пути относительно корневой директории вашего проекта. 
+
+a|audioRenderer +
+getAudioRenderer()
+a|Этот объект предоставляет доступ к jME3 <<jme3/advanced/audio#,audio>> системе. 
+
+a|listener +
+getListener()
+a|Этот объект представляет уха пользователя для jME3 <<jme3/advanced/audio#,audio>> системы. 
+
+a|inputManager +
+getInputManager()
+a|Используйте <<jme3/advanced/input_handling#,inputManager>> чтобы настроить пользовательские ввод (движения мыши, клики, нажатия клавиш и т.д.) и установить указатель мыши видимым.
+
+a|stateManager +
+getStateManager()
+a|Вы используете Application's state manager для активации <<jme3/advanced/application_states#,AppStates>>, таких как <<jme3/advanced/physics#,Physics>>.
+
+|===
+[cols="2", options="header"]
+|===
+
+a|Методы Application
+a|Предназначено
+
+a|setPauseOnLostFocus(true)
+a|Set this boolean whether the game loop should stop running when ever the window loses focus (typical for single-player game). Set this to false for real-time and multi-player games that keep running. 
+
+a|start()
+a|Call this method to start a jME3 game. By default this opens a new jME3 window, initializes the scene, and starts the event loop. 
+
+a|restart()
+a|Loads modified <<appsettings#,AppSettings>> into the current application context.
+
+a|stop()
+a|Stops the running jME3 game and closes the jME3 window.
+
+a|start(Type.Headless) etc
+a|Switch Context com.​jme3.​system.​JmeContext.Type when starting the application: +
+Type.Display – jME application runs in a window of its own. (This is the default.)+
+Type.Canvas – jME application is embedded in a <<jme3/advanced/swing_canvas#,Swing Canvas>>. +
+Type.Headless – jME application runs its event loop without calculating any view and without opening any window. Can be used for a <<jme3/advanced/headless_server#,Headless Server>> application.+
+Type.OffscreenSurface – jME application view is not shown and no window opens, but everything calculated and cached as bitmap (back buffer) for use by other applications.
+
+|===
+[cols="2", options="header"]
+|===
+
+a|Internal class field/method
+a|Purpose
+
+a|context +
+getContext()
+a|The application context contains the renderer, <<appsettings#,AppSettings>>, timer, etc. Typically, you do not directly access the context object.
+
+a|inputEnabled
+a|this internal boolean is true if you want the system to listen for user inputs, and false if you just want to play a non-interactive scene. You change the boolean using <<appsettings#,AppSettings>>.
+
+a|keyInput, mouseInput +
+joyInput, touchInput
+a|Default input contexts for keyboard, mouse, and joystick. Internally used to enable handling of joysticks or touch devices. The base classes contain key and mouse button enums.
+
+a|renderManager +
+getRenderManager() +
+renderer +
+getRenderer();
+a|Low-level and high-level rendering interface. Mostly used internally.
+
+a|guiViewPort +
+getGuiViewPort()
+a|The view object for the orthogonal +++<abbr title="Graphical User Interface">GUI</abbr>+++ view. Only used internally for <<jme3/advanced/hud#,HUD>>s. 
+
+a|timer
+a|An internal update loop timer, don't use. See `tpf` in `simpleUpdate()` below to learn about timers.
+
+a|paused
+a|Boolean is used only internally during runtime to pause/unpause a game. (You need to implement your own isRunning boolean or so.)
+
+|===
+
+
+== Класс SimpleApplication
+
+Класс com.jme3.app.SimpleApplication наследует общий класс com.jme3.app.Application. SimpleApplication позволяет легко начать писать игру, потому что он добавляет стандартный функционал:
+
+
+*  Камера от первого лица (fly-by)
+*  Граф сцены, который управляет вашими моделями в 3D-сцене.
+*  Полезные ввода по умолчанию mappings (подробности ниже). 
+
+Дополнительную функциональности приложению приносит, SimpleApplication редлагает следующие методы и поля, которые могут быть использованы, например, внутри метода`simpleInitApp()`:
+
+[cols="2", options="header"]
+|===
+
+a|SimpleApplication Class Field
+a|Предназначено
+
+a|rootNode +
+getRootNode()
+a|The root node of the scene graph. Attach a <<jme3/advanced/spatial#,Spatial>> to the rootNode and it appears in the 3D scene.
+
+a|guiNode +
+getGuiNode()
+a|Attach flat +++<abbr title="Graphical User Interface">GUI</abbr>+++ elements (such as <<jme3/advanced/hud#,HUD>> images and text) to this orthogonal +++<abbr title="Graphical User Interface">GUI</abbr>+++ node to make them appear on the screen.
+
+a|flyCam +
+getFlyByCamera()
+a|The default first-person fly-by camera control. This default camera control lets you navigate the 3D scene using the preconfigured WASD and arrow keys and the mouse.
+
+|===
+[cols="2", options="header"]
+|===
+
+a|SimpleApplication Method
+a|Цель
+
+a|loadStatsView();
+a|Call this method to print live statistic information to the screen, such as current frames-per-second and triangles/vertices counts. You use this info typically only during development or debugging.
+
+a|loadFPSText();
+a|Call this method to print the current framerate (frames per second) to the screen.
+
+a|setDisplayFps(false);
+a|A default SimpleApplication displays the framerate (frames per second) on the screen. You can choose to deactivate the FPS display using this command.
+
+a|setDisplayStatView(false);
+a|A default SimpleApplication displays mesh statistics on the screen using the com.jme3.app.StatsView class. The information is valuable during the development and debugging phase, but for the release, you should hide the statistics HUD.
+
+|===
+[cols="2", options="header"]
+|===
+
+a|SimpleApplication Interface
+a|Цель
+
+a|public void simpleInitApp()
+a|Override this method to initialize the game scene. Here you load and create objects, attach Spatials to the rootNode, and bring everything in its starts position. See also <<jme3/advanced/application_states#,Application States>> for best practices.
+
+a|public void simpleUpdate(float tpf)
+a|Override this method to hook into the <<jme3/advanced/update_loop#,update loop>>, all code you put here is repeated in a loop. Use this loop to poll the current game state and respond to changes, or to let the game mechanics generate encounters and initiate state changes. Use the float `tpf` as a factor to time actions relative to the _time per frame_ in seconds: `tpf` is large on slow PCs, and small on fast PCs. +
+For more info on how to hook into the <<jme3/advanced/update_loop#,update loop>>, see <<jme3/advanced/application_states#,Application States>> and <<jme3/advanced/custom_controls#,Custom Controls>>. 
+
+a|public void simpleRender(RenderManager rm)
+a|*Optional:* Advanced developers can override this method if the need to modify the frameBuffer and scene graph directly.
+
+|===
+
+`app.setShowSettings(true);``app.setShowSettings(false);``app.start()``main()`<<appsettings#,AppSettings>>
+
+
+
+== По умолчанию Input Mappings
+
+The following default navigational input actions are mapped by the default `flyCam` control in a SimpleApplication: You can use these mappings for debugging and testing until you implement custom <<jme3/advanced/input_handling#,input handling>>.
+
+[cols="2", options="header"]
+|===
+
+a|Key
+a|Action
+
+a|KEY_ESCAPE
+a|Прекращает игру по вызову `app.stop()`
+
+a|KEY_C
+a|Клавиша Отладки: Выводит положение камеры, вращения и направление в выходного потока.
+
+a|KEY_M
+a|Клавиша Отладки: Выводит статистику использования памяти вне потока.
+
+a|F5
+a|Скрывает или показывает статистику внизу слева.
+
+|===
+
+Пока `flyCam` включен, доступны следующие ввод так называемые “WASD, включая MouseLook:
+
+[cols="2", options="header"]
+|===
+
+a|Camera Motion
+a|Key or Mouse Input
+
+a|Move Forward
+a|KEY_W
+
+a|Move Left (Strafe)
+a|KEY_A
+
+a|Move Backward
+a|KEY_S
+
+a|Move Right (Strafe)
+a|KEY_D
+
+a|Move Vertical Upward
+a|KEY_Q
+
+a|Move Vertical Downward
+a|KEY_Z
+
+a|Rotate Left
+a|KEY_LEFT, или перемещать мышь по горизонтали влево (-x)
+
+a|Rotate Right
+a|KEY_RIGHT, или перемещайте мышь по горизонтали вправо (+x)
+
+a|Rotate Up
+a|KEY_UP, или перемещение мыши по вертикали вперед (+y)
+
+a|Rotate Down
+a|KEY_DOWN, или перемещение мыши по вертикали назад (-y)
+
+a|Rotate
+a|BUTTON_LEFT, или удерживайте левую кнопку мыши и перетащите, чтобы повернуть
+
+a|Zoom In
+a|AXIS_WHEEL, или прокрутите колесико мыши назад
+
+a|Zoom Out
+a|AXIS_WHEEL, или прокрутите колесико мыши вперед
+
+|===
+
+
+== По умолчанию и Настройки
+
+По умолчанию SimpleApplication отображает Статистику (`new StatsAppState()`), has debug output keys configured (`new DebugKeysAppState()`), and enables the flyCam (`new FlyCamAppState()`). You can customize which you want to reuse in your SimpleApplication.
+
+
+В следующем примере показано, как можно удалить одну из стандартных AppStates, в этом случае FlyCamAppState:
+
+
+*  Либо, приложения contructor, создания SimpleApplication только AppStates вы хотите сохранить: 
+[source,java]
+----public MyAppliction() {
+  super( new StatsAppState(), new DebugKeysAppState() );
+}----
+*  Или, в методе `simpleInitApp()` вы удалите те, которые вы не хотите держать: 
+[source,java]
+----  public void simpleInitApp() {
+    stateManager.detach( stateManager.getState(FlyCamAppState.class));
+    ...----
+<tags><tag target="display" /><tag target="basegame" /><tag target="documentation" /><tag target="intro" /><tag target="intermediate" /><tag target="init" /><tag target="input" /><tag target="game" /><tag target="loop" /><tag target="rootnode" /><tag target="application" /><tag target="simpleapplication" /></tags>

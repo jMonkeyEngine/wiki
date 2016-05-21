@@ -1,0 +1,113 @@
+
+
+= Создание в JME3 пользовательского интерфейса посредством Nifty GUI
+
+Английская версия: <<jme3/advanced/nifty_gui#,Nifty GUI - JME3 Integration Tutorial>>
+
+
+
+image::jme3/advanced/nifty-gui-13.png[nifty-gui-13.png,with="276",height="217",align="left"]
+
+
+
+Вы хотите чтобы ваши игроки сохраняли игру нажимая на нужную кнопку, вы хотите что бы текстовое поле с рекордами прокручивалось, чтобы отображались очки, раскрывающиеся списки, выбирать раскладку предпочтений чтобы задать мультимедийные опции. Обычно это можно решить с помощью Swing. Хотя можно построить все и на <<jme3/advanced/swing_canvas#,jME3 canvas>> в Swing +++<abbr title="Graphical User Interface">GUI</abbr>+++, 3D игры обычно работают в полный экран либо в окне. 
+
+
+Этот документ ознакомит вас с link:http://nifty-gui.lessvoid.com/[Nifty GUI], библиотекой Java для создания интерактивных пользовательских интерфейсов (+++<abbr title="Graphical User Interface">GUI</abbr>+++) для игр и похожих приложений. Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++ (“de.lessvoid.nifty пакет) хорошо интегрирован в jME3 через “com.jme3.niftygui пакет. Вы создаете расположение элемнтов +++<abbr title="Graphical User Interface">GUI</abbr>+++ в XML, а контролируете из Java кода. Все необходимые JAR библиотеки включены в ваш jME3 проект по умолчанию при создании, вам не нужно ничего устанавливать дополнительно. (Просто убедитесь что пути к класампрописаны верно.)
+
+
+*  link:http://vimeo.com/25637085[Video demo of Nifty GUI 1.3] 
+
+
+== Обзор учебников
+
+Научитесь добавлять Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++ для вашей jME3 игры изучая эти учебники:
+
+
+.  <<документация/jme3_ru/расширенная/nifty_gui_ru#,Принцип построения Nifty GUI>> описание на этой странице.
+.  <<документация/jme3_ru/расширенная/nifty_gui_хорошая_практика#,Просмотрите краткий список хорошей практики>>
+.  Составте свой графический интерфейс:
+**  <<jme3/advanced/nifty_gui_xml_layout_ru#,Составте свой GUI в XML>> – или –
+**  <<jme3/advanced/nifty_gui_java_layout_ru#,Составте свой GUI в Java>>
+
+.  Интеграция +++<abbr title="Graphical User Interface">GUI</abbr>+++ в игру:
+**  <<jme3/advanced/nifty_gui_overlay_ru#,Наложение пользовательского интерфейса на экран>>  – или –
+**  <<jme3/advanced/nifty_gui_projection_ru#,Наложение интерфейса на текстуру>>
+
+.  <<jme3/advanced/nifty_gui_java_interaction_ru#,Составление GUI на Java>>
+
+
+== Это надо знать: Понятия Nifty GUI
+
+image:jme3/advanced/nifty-screen-layer-panel.png[nifty-screen-layer-panel.png,with="",height=""]
+
+
+Nifty GUIs состоит из следующих *элементов*:
+
+
+*  Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++ содержит один или несколько *screen* - это экраны.
+**  Только один экран может отображатся в одно время.
+**  Назовите первый экран, например, “start. Называйте их как хотите.
+**  Экран <<jme3/advanced/nifty_gui_java_interaction#,контролируется Java Controller классом>>.
+
+*  Каждый экран содержит один или несколько *layers* - это слои.
+**  Слои предстовляют собой контейнеры в которых выравнивается содержимое (по вертикали, горизонтали или по центру)
+**  Слои могут перекрываться (z-order) но не могут быть вложнными.
+
+*  Слои содержат *panels* - это панели.
+**  Панели представляют собой контейнеры в которых выравнивается их содержимое (по вертикали, горизонтали или по центру)
+**  Панели могут быть вложенными но не могут перекрываться.
+
+*  Панели содержат *изображения, текст, или контролы (кнопки и т.д.)*.
+
+
+== Ресурсы
+
+*  <<jme3/advanced/nifty_gui_best_practices_ru#,Просмотрите этот короткий список рекомендаций прежде чем начать>>
+
+
+=== JME-Nifty пример кода
+
+*  XML пример
+**  link:http://code.google.com/p/jmonkeyengine/source/browse/trunk/engine/test-data/Interface/Nifty/HelloJme.xml[HelloJme.xml]
+
+*  Java пример
+**  link:http://code.google.com/p/jmonkeyengine/source/browse/trunk/engine/src/test/jme3test/niftygui/TestNiftyGui.java[TestNiftyGui.java]
+**  link:http://code.google.com/p/jmonkeyengine/source/browse/trunk/engine/src/test/jme3test/niftygui/TestNiftyToMesh.java[TestNiftyToMesh.java]
+
+*  jME3-текущая версия Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++ 1.3.2 demo (sample code, Java)
+**  link:http://files.seapegasus.org/NiftyGuiDemo.zip[NiftyGuiDemo.zip]
+
+*  Больше примера кода link:http://nifty-gui.svn.sourceforge.net/viewvc/nifty-gui/nifty-default-controls-examples/trunk/[Nifty GUI source repository]
+
+
+=== Прочие документы
+
+Узнайте больше на странице NiftyGUI:
+
+
+*  link:http://sourceforge.net/projects/nifty-gui/files/nifty-gui/1.3.2/nifty-gui-the-manual-1.3.2.pdf/download[Nifty GUI - the Manual]
+*  link:http://nifty-gui.sourceforge.net/projects/1.3-SNAPSHOT/nifty/apidocs/index.html[Nifty 1.3 JavaDoc]
+*  link:http://nifty-gui.sourceforge.net/projects/1.3-SNAPSHOT/nifty-default-controls/apidocs/[Nifty 1.3 Controls JavaDoc]
+*  link:http://jmonkeyengine.org/groups/gui/forum/topic/anyone-succeeded-in-changing-text-in-nifty-programatically/#post-109510[Forum post: Changing Text in Nifty GUIs programmatically]
+
+
+== Следующий шаг
+
+Теперь вы знаете где найти более подробную информацию, знаете как выложить простой графический интерфейс пользователя. Как правило вы начинаете делать свои интерфейс в XML.
+
+
+*  <<jme3/advanced/nifty_gui_xml_layout_ru#,Разработка GUI в XML>> (рекомендуется)
+*  <<jme3/advanced/nifty_gui_java_layout_ru#,Разработка GUI в Java>> (необязательно)
+
+
+== Nifty Logging (Nifty 1.3.1)
+
+Если вы хотите отключить лог журнал то используйте этот код:
+
+
+[source]
+----
+Logger.getLogger("de.lessvoid.nifty").setLevel(Level.SEVERE); 
+Logger.getLogger("NiftyInputEventHandlingLog").setLevel(Level.SEVERE); 
+----<tags><tag target="gui" /><tag target="documentation" /><tag target="nifty" /><tag target="hud" /></tags>

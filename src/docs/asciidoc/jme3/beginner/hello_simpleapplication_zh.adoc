@@ -1,0 +1,197 @@
+
+
+= jMonkeyEngine 3 第一课 (1) - Hello SimpleApplication
+
+*我的中文不是呢么好，请你们帮我改这课,谢谢*
+
+
+先看: <<jme3#installing_jmonkeyengine_3,下载 JME3>>,
+在看: <<hello_node#,Hello Node>>
+
+
+*第一课前先要* link:http://jmonkeyengine.org/wiki/doku.php/[下载jMonkeyEngine SDK]。
+
+
+在这几个教程我们以为 jMonkeyEngine SDK 是你的 IDE 还有，你已经知道 Java 了。 虽然这几个教程是用 jMonkeyEngine SDK，可是你还可以用link:http://jmonkeyengine.org/wiki/doku.php/jme3:setting_up_jme3_in_eclipse[EclipseIDE]，link:http://jmonkeyengine.org/wiki/doku.php/jme3:setting_up_netbeans_and-JME[NetBeans]，<<jme3/simpleapplication_from_the_commandline#,Command Line>>， IntelliJ， 或别的IDE去写jMonkey程序。
+
+
+
+== 开始
+
+在jMonkeyEngine SDK 里：
+
+
+.  按 Choose File→New Project…
+.  找 JME3→Basic Game，按 Next。
+..  在 Project Name 里，方静你游戏的名字。 
+..  按 Project Location 右边 Browse 找你要放游戏的地方。
+
+.  按Finnish。
+
+如果你有别的问题的话，请你读<<sdk/project_creation#,Project Creation>>。
+
+
+
+== 写一个程序
+
+在jMonkeyEngine SDK 里:
+
+
+.  右按你的 Source Packages
+.  按 New…→Java Class
+.  在 Class Name 里放: `HelloJME3`
+.  在 Package 里放: `jme3test.helloworld`. 
+.  按 Finish.
+
+
+== 例子
+
+在HelloJME3.java里面，方静下面的Java：
+
+
+[source,java]
+----
+package jme3test.helloworld;
+
+import com.jme3.app.SimpleApplication;
+import com.jme3.material.Material;
+import com.jme3.math.Vector3f;
+import com.jme3.scene.Geometry;
+import com.jme3.scene.shape.Box;
+import com.jme3.math.ColorRGBA;
+
+/** Sample 1 - 怎么写一个很简单的程序。
+ * 放一个蓝色的立方体在 scene graph 上。
+ * 用 WASD 去动 */
+public class HelloJME3 extends SimpleApplication {
+
+    public static void main(String[] args){
+        HelloJME3 app = new HelloJME3();
+        app.start(); // 开始！
+    }
+    
+    @Override
+    public void simpleInitApp() {
+        Box b = new Box(Vector3f.ZERO, 1, 1, 1); // 盖一个立方体在（0,0,0）
+        Geometry geom = new Geometry("Box", b);  // 用立方体盖一个 Geometry。
+        Material mat = new Material(assetManager,
+          "Common/MatDefs/Misc/Unshaded.j3md");  // 图一个 Material。
+        mat.setColor("Color", ColorRGBA.Blue);   // 图蓝色在 Material 上。
+        geom.setMaterial(mat);                   // 方 Material 在立方体上。
+        rootNode.attachChild(geom);              // 放 Geometry 在 Root Node 上。（让大家看到那个 Geometry）
+    }
+}----
+按 HelloJME3，找 Run. 如果 SDK 问你要用什么 Settings，按 Default Settings。
+
+
+.  你会看到一个蓝色的立方体。
+.  按 WASD 去动来动去。
+.  如果你要关 HelloJME 就按 ESC。
+
+
+== 软件做了什么
+
+我写了一个很简单的程序。它会盖一个蓝色的立方体.
+
+
+
+=== 开始 SimpleApplication
+
+看第一行。HelloJME3 extends `com.jme3.app.SimpleApplication`。 
+
+
+[source,java]
+----
+public class HelloJME3 extends SimpleApplication {
+  // ...
+}
+----
+每一个 JME3 游戏 是一个 `com.jme3.app.SimpleApplication` instance。 SimpleApplication 会帮你图上屏幕和你的3D Scene。
+
+
+JME3 从 `main()` 来开始。在 `main()` 里面，你要:
+
+
+.  盖一个 `SimpleAppliction` instance。（instantiate）
+.  叫它的 `start()` 去开始你的程序。
+
+[source,java]
+----
+    public static void main(String[] args){
+        HelloJME3 app = new HelloJME3(); // instantiate 你的游戏。
+        app.start();                     // 开始！
+    }
+----
+
+=== 口语到 JME 语
+[cols="2", options="header"]
+|===
+
+a|你要做什么
+a|怎么说在JME语言
+
+a|你要盖一个立方体。
+a|我盖一个用 1x1x1 Box 的 Geometry。
+
+a|你要用蓝色。
+a|我图一个资料，就放蓝色在资料上面。
+
+a|你要一个蓝色的立方体。
+a|我图蓝色的资料在立方体上。
+
+a|你要看到你的 Geometry
+a|我放 Geometry 在 Root Node 上。
+
+a|我要我的立方体在中间
+a|我放立方体在（0,0,0）`Vector3f.ZERO`。
+
+|===
+
+如果你还是有问题，请你看<<jme3/the_scene_graph#,the Scene Graph>>。
+
+
+
+=== Initialize the Scene
+
+你的程序一开始后，就会自动叫`simpleInitApp()`。 每一个 JME3 游戏要有它。`simpleInitApp()`要方一开始要看到／做到的东西
+
+
+[source,java]
+----
+    public void simpleInitApp() {
+       ／／先看到／做到的东西...
+    }
+----
+[source,java]
+----
+    public void simpleInitApp() {
+        Box b = new Box(Vector3f.ZERO, 1, 1, 1); // 盖一个立方体在（0,0,0）
+        Geometry geom = new Geometry("Box", b);  // 用立方体盖一个 Geometry。
+        Material mat = new Material(assetManager,
+          "Common/MatDefs/Misc/Unshaded.j3md");  // 图一个资料。
+        mat.setColor("Color", ColorRGBA.Blue);   // 方蓝色在资料上。
+        geom.setMaterial(mat);                   // 图资料到立方体上。
+        rootNode.attachChild(geom);              // 放 Geometry 在 Root Node 上。（让大家看到你的 Geometry）
+    }
+----
+
+== 最后
+
+你学了 SimpleApplication 的作用：
+
+
+*  `simpleInitApp()` 里面放开始要看或做的东西。
+*  要是你要看到 东西，你就要放它在 `rootNode` 上。
+*  用 WASD 去动。
+
+继续去 <<jme3/beginner/hello_node#,Hello Node>> 你会学什么是，和你真么用 Scene Graph。
+
+'''
+
+还看:
+
+
+*  link:http://jmonkeyengine.org/wiki/doku.php/[下载JME3SDK]
+*  <<jme3/simpleapplication_from_the_commandline#,SimpleApplication From the Commandline>>
+*  <<sdk/project_creation#,写一个JME3 Project>>.
+<tags><tag target="beginner" /><tag target="intro" /><tag target="documentation" /><tag target="init" /><tag target="simpleapplication" /><tag target="basegame" /></tags>

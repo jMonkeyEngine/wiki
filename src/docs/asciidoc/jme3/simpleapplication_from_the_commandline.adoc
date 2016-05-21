@@ -1,0 +1,180 @@
+
+
+= Starting a JME3 application from the Commandline
+
+Although we recommend the jMonkeyEngine <<sdk#,SDK>> for developing JME3 games, you can use any IDE (integrated development environment) such as <<jme3/setting_up_netbeans_and_jme3#,NetBeans>> or <<jme3/setting_up_jme3_in_eclipse#,Eclipse>>, and even work freely from the commandline. Here is a generic IDE-independent “getting started tutorial. 
+
+
+This example shows how to set up and run a simple application (HelloJME3) that depends on the jMonkeyEngine3 libraries. 
+
+
+The directory structure will look as follows:
+
+
+[source]
+----
+jme3/
+jme3/lib
+jme3/src
+...
+HelloJME3/
+HelloJME3/lib
+HelloJME3/assets
+HelloJME3/src
+...----
+
+== Installing the JME3 Framework
+
+To install the development version of jme3, link:http://updates.jmonkeyengine.org/stable/3.0/engine[download the nightly build], unzip the folder into a directory named `jme3`. The filenames here are just an example, but they will always be something like `jME3_xx-xx-2011`. 
+
+
+[source]
+----
+mkdir jme3
+cd jme3
+unzip jME3_01-18-2011.zip
+----
+Alternatively, you can build JME3 from the sources. (Recommended for JME3 developers.)
+
+
+[source]
+----
+svn checkout https://jmonkeyengine.googlecode.com/svn/branches/3.0final/engine jme3
+cd jme3
+ant run
+cd ..
+----
+If you see a Test Chooser application open now, the build was successful. *Tip:* Use just `ant` instead of `ant run` to build the libraries without running the demos.
+
+
+
+== Sample Project Directory Structure
+
+First we set up the directory and source package structure for your game project. Note that the game project directory `HelloJME3` is on the same level as your `jme3` checkout. In this example, we create a Java package that we call `hello` in the source directory.
+
+
+[source]
+----
+mkdir HelloJME3
+mkdir HelloJME3/src
+mkdir HelloJME3/src/hello
+----
+
+== Libraries
+
+Next you copy the necessary JAR libraries from the download to your project. You only have to do this set of steps once every time you download a new JME3 build. For a detailed description of the separate jar files see <<jme3/jme3_source_structure#structure_of_jmonkeyengine3_jars,this list>>.
+
+
+[source]
+----
+mkdir HelloJME3/build 
+mkdir HelloJME3/lib
+cp jme3/lib/*.* HelloJME3/lib
+----
+If you have built JME3 from the sources, then the copy paths are different:
+
+
+[source]
+----
+mkdir HelloJME3/build 
+mkdir HelloJME3/lib
+cp jme3/dist/*.* HelloJME3/lib
+----
+
+=== Sample Code
+
+To test your setup, create the file `HelloJME3/src/hello/HelloJME3.java` with any text editor, paste the following sample code, and save.
+
+
+[source,java]
+----
+package hello;
+
+import com.jme3.app.SimpleApplication;
+import com.jme3.material.Material;
+import com.jme3.math.Vector3f;
+import com.jme3.scene.Geometry;
+import com.jme3.scene.shape.Box;
+import com.jme3.math.ColorRGBA;
+
+public class HelloJME3 extends SimpleApplication {
+
+    public static void main(String[] args){
+        HelloJME3 app = new HelloJME3();
+        app.start();
+    }
+
+    @Override
+    public void simpleInitApp() {
+        Box b = new Box(Vector3f.ZERO, 1, 1, 1);
+        Geometry geom = new Geometry("Box", b);
+        Material mat = new Material(assetManager, 
+          "Common/MatDefs/Misc/Unshaded.j3md");
+        mat.setColor("Color", ColorRGBA.Blue);
+        geom.setMaterial(mat);
+        rootNode.attachChild(geom);
+    }
+}----
+
+== Build and Run
+
+We build the sample application into the build directory…
+
+
+[source]
+----
+cd HelloJME3
+javac -d build -cp "lib/eventbus-1.4.jar:lib/j-ogg-oggd.jar:lib/j-ogg-vorbisd.jar:lib/jME3-lwjgl-natives.jar:lib/jbullet.jar:lib/jinput.jar:lib/lwjgl.jar:lib/stack-alloc.jar:lib/vecmath.jar:lib/xmlpull-xpp3-1.1.4c.jar:lib/jME3-blender.jar:lib/jME3-core.jar:lib/jME3-desktop.jar:lib/jME3-jogg.jar:lib/jME3-plugins.jar:lib/jME3-terrain.jar:lib/jME3-testdata.jar:lib/jME3-niftygui.jar:lib/nifty-default-controls.jar:lib/nifty-examples.jar:lib/nifty-style-black.jar:lib/nifty.jar:." src/hello/HelloJME3.java 
+----
+… and run it.
+
+
+[source]
+----
+cd build
+java -cp "../lib/eventbus-1.4.jar:../lib/j-ogg-oggd.jar:../lib/j-ogg-vorbisd.jar:../lib/jME3-lwjgl-natives.jar:../lib/jbullet.jar:../lib/jinput.jar:../lib/lwjgl.jar:../lib/stack-alloc.jar:../lib/vecmath.jar:../lib/xmlpull-xpp3-1.1.4c.jar:../lib/jME3-blender.jar:../lib/jME3-core.jar:../lib/jME3-desktop.jar:../lib/jME3-jogg.jar:../lib/jME3-plugins.jar:../lib/jME3-terrain.jar:../lib/jME3-testdata.jar:../lib/jME3-niftygui.jar:../lib/nifty-default-controls.jar:../lib/nifty-examples.jar:../lib/nifty-style-black.jar:../lib/nifty.jar:." hello/HelloJME3----
+Note: If you use Windows, the classpath separator is “; instead of “:.
+
+
+If a settings dialog pops up, confirm the default settings. You should now see a simple window with a 3-D cube. Use the mouse and the WASD keys to move. It works! 
+
+
+
+== Recommended Asset Directory Structure
+
+For <<jme3/intermediate/multi-media_asset_pipeline#,multi-media files, models, and other assets>>, we recommend creating the following project structure:
+
+
+[source]
+----
+cd HelloJME3
+mkdir assets
+mkdir assets/Interface
+mkdir assets/Materials
+mkdir assets/MatDefs
+mkdir assets/Models
+mkdir assets/Scenes
+mkdir assets/Shaders
+mkdir assets/Sounds
+mkdir assets/Textures
+----
+This directory structure will allow <<jme3/intermediate/simpleapplication#,SimpleApplication>>'s default <<jme3/advanced/asset_manager#,AssetManager>> to load media files from your `assets` directory, like in this example:
+
+
+[source]
+----
+import com.jme3.scene.Spatial;
+...
+  Spatial elephant = assetManager.loadModel("Models/Elephant/Elephant.meshxml");
+  rootNode.attachChild(elephant);
+...
+----
+You will learn more about the asset manager and how to customize it later. For now feel free to structure your assets (images, textures, models) into further sub-directories, like in this example the `assets/models/Elephant` directory that contains the `elephant.meshxml` model and its materials.
+
+
+
+== Next Steps
+
+Now follow the <<jme3#,tutorials>> and write your first jMonkeyEngine game.
+
+<tags><tag target="documentation" /><tag target="install" /></tags>

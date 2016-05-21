@@ -1,0 +1,111 @@
+
+
+= jMonkeyEngine SDK: Importing and Viewing Models
+
+The jMonkeyEngine SDK imports models from your project and stores them in the assets folder. The imported models are converted to a jME3 compatible binary format called .j3o. Double-click .j3o files in the jMonkeyEngine SDK to display them in the SceneViewer, or load them in-game using the AssetManager.
+
+
+Presently, link:http://www.blender.org/[Blender 3D] is the preferred modelling tool for jME3 as it is also Open-Source Software and an exporter for OgreXML files exists. There is a direct .blend file importer available in the SDK and you can directly import or store blend files in your project to convert them. If for some reason your version of blender is not compatible, you can use the default OgreXML format. Note that the OgreXML exporter is not compatible with Blender 2.49 or before!
+
+
+Also, see this link:http://www.youtube.com/watch?v=nL7woH40i5c[demo video] on importing models.
+
+
+
+=== Installing the OgreXML Exporter in Blender
+
+The jMonkeyEngine SDK includes a tool to install the correct exporter tools in Blender to export OgreXML files. To install the exporter, do the following:
+
+
+.  Select “Tools→“OgreXML→“Install Blender OgreXML in the jMonkeyEngine SDK Menu
+.  If you are presented a filechooser, select the folder where your blender scripts reside
+.  Press “Install in the window that opens
+
+Also check out <<jme3/external/blender#,how to create compatible models in blender>> and <<jme3/intermediate/multi-media_asset_pipeline#,how to organize your assets>>.
+
+
+
+== Importing and Viewing a Model
+
+
+=== Using the Model Importer Tool
+
+jMonkeyEngine SDK includes a model importer tool that allows you to preview and import supported models into your jMonkeyEngine3 project.
+
+
+image:wp-uploads/2010/11/jmonkeyplatform003-300x117.jpg[jmonkeyplatform003-300x117.jpg,with="",height=""]
+
+image::wp-uploads/2010/11/jmonkeyplatform002-300x218.jpg[jmonkeyplatform002-300x218.jpg,with="",height="",align="right"]
+
+
+
+.  Select the project you want to import your model to
+.  Click the “Import Model button in the toolbar
+.  Click “open model.. and select the main model file
+.  Check the preview and file list and press “Next
+.  Check and change the import path if necessary
+.  If you want to copy the original model files as well, check the checkbox
+.  Press “finish
+
+The model is converted to j3o and all necessary files are copied to the project assets folder. If you have specified the corresponding option, all original model files will also be copied to your assets folder.
+
+
+
+=== Using the model files directly
+
+
+image::sdk/jmonkeyplatform-docu-2.png[jmonkeyplatform-docu-2.png,with="421",height="298",align="right"]
+
+
+
+.  Create a separate folder for each model in the `assets` folder of your project.
+.  Save the model created in Blender (.blend) *in the `asset` folder of your project*, 
+.  Make sure that no textures are packed in the .blend file.
+.  Make sure all textures used in the .blend file are in the assets folder of the project.
+.  In the Projects Explorer Assets node, select the model that you want to import.
+.  Double-click the model or right-click and select “Convert to JME binary from the context-menu.
+.  In the Projects Explorer Assets node you should see your model j3o file.
+.  Double-click it to view it in the SceneViewer.
+.  Click on the lightbulb to turn on the light if you cannot see your model.
+
+Note: It is important that you copy the model file and its textures to the correct assets folder before creating the j3o file because the paths for textures (and possibly other things) will be stored as absolute (to the assets folder root) when you convert that model. This means the texture location should not change after the import.
+
+
+Note: If the SceneViewer doesn't work refer to <<sdk/troubleshooting#,Troubleshooting jMonkeyEngine3 SDK>>.
+
+
+
+== Working With a Model
+
+*  Open Windows&gt;SceneExplorer to view sub-nodes of the model
+*  Open Windows&gt;Properties to view the properties of the model's nodes.
+*  Click the cube button in the SceneViewer to toggle between Wireframe mode and Textured mode.
+*  Click the lightbulb to view Materials that require a light source
+
+
+== Notes About Model Assets
+
+The original OgreXML `.mesh.xml`, `.scene`, `.material`, `.skeleton.xml` and `.blend` model files *will not be included* in the distribution `assets.jar` file of your distributed game, they are only available in the assets folder so you are able to recreate the `.j3o` file from the original if you ever come to change it in blender and have to export it again.
+
+
+
+== About the SceneViewer and SceneExplorer window
+
+The SceneViewer and SceneExplorer windows are shared among plugins to save system resources. This means that you will have to keep an eye on what plugin is using the scene right now and what you are actually modifying in these windows.
+
+
+Most plugins will deliver their own UI elements to modify the scene so the SceneExplorer is more of a global tool. The simple SceneComposer however heavily relies on its functions as other plugins might too in the future.
+
+
+
+=== About the projects AssetManager
+
+Each jMonkeyEngine SDK project has its own internal AssetManager that has the projects assets folder registered as a FileLocator. When the project is run, the assets folder is compressed into a jar file and added to the projects main jar classpath. This way the editors in jMonkeyEngine SDK and the running game have the same asset folder structure.
+
+
+You might wonder why jMonkeyEngine SDK requires you to copy the model that is to be converted to j3o into the assets folder before. The Model Import Tool also copies the model and associated files to the project directory before converting. To load the model it needs to be in a folder (or jar etc..) that belongs to the projects AssetManager root. To load a model from some other folder of the filesystem, that folder would have to be added to the AssetManager root. If every folder that contains a model was in the root of the AssetManager, all textures named “hull.jpg for example would be the same for the AssetManager and it would only deliver the texture of the first model folder that was added.
+
+
+To have a valid jME3 object, the paths to textures and other assets belonging to the model have to be read with the correct, final path that can then be stored in the j3o object. The j3o object will use those paths when it is loaded with the AssetManager and it requires the AssetManager to deliver the assets on those paths, this is why the folder structure while converting has to be the same as when loading.
+
+<tags><tag target="documentation" /><tag target="sdk" /><tag target="tool" /><tag target="asset" /><tag target="scene" /></tags>

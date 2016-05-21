@@ -1,0 +1,387 @@
+
+
+= The SceneExplorer
+
+
+== Adding Node types to SceneExplorer
+
+If your plugin brings in its own SceneGraph objects you can still have them work like any other SceneExplorer item, including its special properties.
+
+
+If you want to support special properties of your objects that are not exposed by the SDK automatically, you will have to create your own class that extends org.openide.nodes.Node and implement the interface com.jme3.gde.core.sceneexplorer.nodes.AbstractSceneExplorerNode. Then you register that class by adding 
+
+
+[source]
+----@org.openide.util.lookup.ServiceProvider(service=SceneExplorerNode.class)----
+ above the body of your class. Thats all, your Spatial type will automatically be used and displayed in the SceneExplorer. Make sure you register a jar with the used classes in the plugin preferences under “wrapped libraries, otherwise the IDE cannot access those classes.
+
+
+AbstractSceneExplorerNode brings some other useful features you might want to include like automatic creation of properly threaded properties etc. JmeSpatial for example bases on it. A simple SceneExplorerNode example for an object extending Spatial would be JmeGeometry (see below). Editors for special variable types can be added using the SceneExplorerPropertyEditor interface, which can be registered as a ServiceProvider as well.
+
+
+The SceneExplorerNode can be used for Spatial and Control type objects.
+
+
+* _Add the “Nodes +++<abbr title="Application Programming Interface">API</abbr>+++ and “Lookup +++<abbr title="Application Programming Interface">API</abbr>+++ libraries to your project when you want to use this_
+
+
+=== Spatial Example
+
+[source,java]
+----
+@org.openide.util.lookup.ServiceProvider(service=SceneExplorerNode.class)
+public class JmeGeometry extends JmeSpatial {
+
+    private static Image smallImage =
+            ImageUtilities.loadImage("com/jme3/gde/core/sceneexplorer/nodes/icons/geometry.gif");
+    private Geometry geom;
+
+    public JmeGeometry() {
+    }
+
+    public JmeGeometry(Geometry spatial, SceneExplorerChildren children) {
+        super(spatial, children);
+        getLookupContents().add(spatial);
+        this.geom = spatial;
+        setName(spatial.getName());
+    }
+
+    @Override
+    public Image getIcon(int type) {
+        return smallImage;
+    }
+
+    @Override
+    public Image getOpenedIcon(int type) {
+        return smallImage;
+    }
+
+    @Override
+    protected Sheet createSheet() {
+        Sheet sheet = super.createSheet();
+        Sheet.Set set = Sheet.createPropertiesSet();
+        set.setDisplayName("Geometry");
+        set.setName(Geometry.class.getName());
+        Geometry obj = geom;//getLookup().lookup(Geometry.class);
+        if (obj == null) {
+            return sheet;
+        }
+
+        set.put(makeProperty(obj, int.class, "getLodLevel", "setLodLevel", "Lod Level"));
+        set.put(makeProperty(obj, Material.class, "getMaterial", "setMaterial", "Material"));
+        set.put(makeProperty(obj, Mesh.class, "getMesh", "Mesh"));
+
+        sheet.put(set);
+        return sheet;
+
+    }
+
+    public Class getExplorerObjectClass() {
+        return Geometry.class;
+    }
+
+    public Class getExplorerNodeClass() {
+        return JmeGeometry.class;
+    }
+
+    public org.openide.nodes.Node[] createNodes(Object key, Object key2, boolean readOnly) {
+        SceneExplorerChildren children=new SceneExplorerChildren((com.jme3.scene.Spatial)key);
+        children.setReadOnly(readOnly);
+        return new org.openide.nodes.Node[]{new JmeGeometry((Geometry) key, children).setReadOnly(readOnly)};
+    }
+}
+----
+
+=== Control Example
+
+[source,java]
+----
+@org.openide.util.lookup.ServiceProvider(service=SceneExplorerNode.class)
+public class JmeGhostControl extends AbstractSceneExplorerNode {
+
+    private static Image smallImage =
+            ImageUtilities.loadImage("com/jme3/gde/core/sceneexplorer/nodes/icons/ghostcontrol.gif");
+    private GhostControl control;
+
+    public JmeGhostControl() {
+    }
+
+    public JmeGhostControl(GhostControl control, DataObject dataObject) {
+        super(dataObject);
+        getLookupContents().add(this);
+        getLookupContents().add(control);
+        this.control = control;
+        setName("GhostControl");
+    }
+
+    @Override
+    public Image getIcon(int type) {
+        return smallImage;
+    }
+
+    @Override
+    public Image getOpenedIcon(int type) {
+        return smallImage;
+    }
+
+    protected SystemAction[] createActions() {
+        return new SystemAction[]{
+                    //                    SystemAction.get(CopyAction.class),
+                    //                    SystemAction.get(CutAction.class),
+                    //                    SystemAction.get(PasteAction.class),
+                    SystemAction.get(DeleteAction.class)
+                };
+    }
+
+    @Override
+    public boolean canDestroy() {
+        return !readOnly;
+    }
+
+    @Override
+    public void destroy() throws IOException {
+        super.destroy();
+        final Spatial spat=getParentNode().getLookup().lookup(Spatial.class);
+        try {
+            SceneApplication.getApplication().enqueue(new Callable<Void>() {
+
+                public Void call() throws Exception {
+                    spat.removeControl(control);
+                    return null;
+                }
+            }).get();
+            ((AbstractSceneExplorerNode)getParentNode()).refresh(true);
+        } catch (InterruptedException ex) {
+            Exceptions.printStackTrace(ex);
+        } catch (ExecutionException ex) {
+            Exceptions.printStackTrace(ex);
+        }
+    }
+
+    @Override
+    protected Sheet createSheet() {
+        Sheet sheet = super.createSheet();
+        Sheet.Set set = Sheet.createPropertiesSet();
+        set.setDisplayName("GhostControl");
+        set.setName(GhostControl.class.getName());
+        GhostControl obj = control;//getLookup().lookup(Spatial.class);
+        if (obj == null) {
+            return sheet;
+        }
+
+        set.put(makeProperty(obj, Vector3f.class, "getPhysicsLocation", "setPhysicsLocation", "Physics Location"));
+        set.put(makeProperty(obj, Quaternion.class, "getPhysicsRotation", "setPhysicsRotation", "Physics Rotation"));
+        
+        set.put(makeProperty(obj, CollisionShape.class, "getCollisionShape", "setCollisionShape", "Collision Shape"));
+        set.put(makeProperty(obj, int.class, "getCollisionGroup", "setCollisionGroup", "Collision Group"));
+        set.put(makeProperty(obj, int.class, "getCollideWithGroups", "setCollideWithGroups", "Collide With Groups"));
+
+        sheet.put(set);
+        return sheet;
+
+    }
+
+    public Class getExplorerObjectClass() {
+        return GhostControl.class;
+    }
+
+    public Class getExplorerNodeClass() {
+        return JmeGhostControl.class;
+    }
+
+    public org.openide.nodes.Node[] createNodes(Object key, DataObject key2, boolean cookie) {
+        return new org.openide.nodes.Node[]{new JmeGhostControl((GhostControl) key, key2).setReadOnly(cookie)};
+    }
+}----
+
+== Adding items to the add and tools menus
+
+For adding Spatials, Contols and for general tools theres premade abstract classes that you can use to extend the options. Undo/Redo is handled by the abstract class. AbstractNewSpatial*Wizard*Action allows you to show an AWT wizard before creating the Spatial. You can also just implement the base ServiceProvider class and return any kind of action (such as a wizard), in this case you have to handle the threading yourself!
+
+
+
+
+
+To add a new Tool, create a new AbstractToolAction:
+
+
+[source,java]
+----
+@org.openide.util.lookup.ServiceProvider(service = ToolAction.class)
+public class GenerateTangentsTool extends AbstractToolAction {
+
+    public GenerateTangentsTool() {
+        name = "Generate Tangents";
+    }
+
+    @Override
+    protected Object doApplyTool(AbstractSceneExplorerNode rootNode) {
+        Geometry geom = rootNode.getLookup().lookup(Geometry.class);
+        Mesh mesh = geom.getMesh();
+        if (mesh != null) {
+            TangentBinormalGenerator.generate(mesh);
+        }
+        return geom;
+    }
+
+    @Override
+    protected void doUndoTool(AbstractSceneExplorerNode rootNode, Object undoObject) {
+        Geometry geom = rootNode.getLookup().lookup(Geometry.class);
+        Mesh mesh = geom.getMesh();
+        if (mesh != null) {
+            mesh.clearBuffer(Type.Tangent);
+        }
+    }
+
+    public Class<?> getNodeClass() {
+        return JmeGeometry.class;
+    }
+
+}----
+For a new Spatial or Control, use AbstractNewSpatialAction
+
+
+[source,java]
+----
+@org.openide.util.lookup.ServiceProvider(service = NewSpatialAction.class)
+public class NewSpecialSpatialAction extends AbstractNewSpatialAction {
+
+    public NewSpecialSpatialAction() {
+        name = "Spatial";
+    }
+
+    @Override
+    protected Spatial doCreateSpatial(Node parent) {
+        Spatial spatial=new Node();
+        return spatial;
+    }
+}
+----
+or AbstractNewControlAction:
+
+
+[source,java]
+----
+@org.openide.util.lookup.ServiceProvider(service = NewControlAction.class)
+public class NewRigidBodyAction extends AbstractNewControlAction {
+
+    public NewRigidBodyAction() {
+        name = "Static RigidBody";
+    }
+
+    @Override
+    protected Control doCreateControl(Spatial spatial) {
+        RigidBodyControl control = spatial.getControl(RigidBodyControl.class);
+        if (control != null) {
+            spatial.removeControl(control);
+        }
+        Node parent = spatial.getParent();
+        spatial.removeFromParent();
+        control = new RigidBodyControl(0);
+        if (parent != null) {
+            parent.attachChild(spatial);
+        }
+        return control;
+    }
+}
+----
+
+==== Adding using a Wizard
+
+You can create a new wizard using the wizard template in the SDK (New File→Module Development→Wizard). The Action that the template creates can easily be changed to one for adding a Control or Spatial or for applying a Tool. Note that we extend AbstractNewSpatial*Wizard*Action here.
+
+
+A good example is the “Add SkyBox Wizard:
+
+
+[source,java]
+----
+@org.openide.util.lookup.ServiceProvider(service = NewSpatialAction.class)
+public class AddSkyboxAction extends AbstractNewSpatialWizardAction {
+
+    private WizardDescriptor.Panel[] panels;
+
+    public AddSkyboxAction() {
+        name = "Skybox..";
+    }
+
+    @Override
+    protected Object showWizard(org.openide.nodes.Node node) {
+        WizardDescriptor wizardDescriptor = new WizardDescriptor(getPanels());
+        wizardDescriptor.setTitleFormat(new MessageFormat("{0}"));
+        wizardDescriptor.setTitle("Skybox Wizard");
+        Dialog dialog = DialogDisplayer.getDefault().createDialog(wizardDescriptor);
+        dialog.setVisible(true);
+        dialog.toFront();
+        boolean cancelled = wizardDescriptor.getValue() != WizardDescriptor.FINISH_OPTION;
+        if (!cancelled) {
+            return wizardDescriptor;
+        }
+        return null;
+    }
+
+    @Override
+    protected Spatial doCreateSpatial(Node parent, Object properties) {
+        if (properties != null) {
+            return generateSkybox((WizardDescriptor) properties);
+        }
+        return null;
+    }
+
+    private Spatial generateSkybox(WizardDescriptor wiz) {
+        if ((Boolean) wiz.getProperty("multipleTextures")) {
+            Texture south = (Texture) wiz.getProperty("textureSouth");
+            Texture north = (Texture) wiz.getProperty("textureNorth");
+            Texture east = (Texture) wiz.getProperty("textureEast");
+            Texture west = (Texture) wiz.getProperty("textureWest");
+            Texture top = (Texture) wiz.getProperty("textureTop");
+            Texture bottom = (Texture) wiz.getProperty("textureBottom");
+            Vector3f normalScale = (Vector3f) wiz.getProperty("normalScale");
+            return SkyFactory.createSky(pm, west, east, north, south, top, bottom, normalScale);
+        } else {
+            Texture textureSingle = (Texture) wiz.getProperty("textureSingle");
+            Vector3f normalScale = (Vector3f) wiz.getProperty("normalScale");
+            boolean useSpheremap = (Boolean) wiz.getProperty("useSpheremap");
+            return SkyFactory.createSky(pm, textureSingle, normalScale, useSpheremap);
+        }
+    }
+
+    /**
+     * Initialize panels representing individual wizard's steps and sets
+     * various properties for them influencing wizard appearance.
+     */
+    private WizardDescriptor.Panel[] getPanels() {
+        if (panels == null) {
+            panels = new WizardDescriptor.Panel[]{
+                        new SkyboxWizardPanel1(),
+                        new SkyboxWizardPanel2()
+                    };
+            String[] steps = new String[panels.length];
+            for (int i = 0; i < panels.length; i++) {
+                Component c = panels[i].getComponent();
+                // Default step name to component name of panel. Mainly useful
+                // for getting the name of the target chooser to appear in the
+                // list of steps.
+                steps[i] = c.getName();
+                if (c instanceof JComponent) { // assume Swing components
+                    JComponent jc = (JComponent) c;
+                    // Sets step number of a component
+                    // TODO if using org.openide.dialogs >= 7.8, can use WizardDescriptor.PROP_*:
+                    jc.putClientProperty("WizardPanel_contentSelectedIndex", new Integer(i));
+                    // Sets steps names for a panel
+                    jc.putClientProperty("WizardPanel_contentData", steps);
+                    // Turn on subtitle creation on each step
+                    jc.putClientProperty("WizardPanel_autoWizardStyle", Boolean.TRUE);
+                    // Show steps on the left side with the image on the background
+                    jc.putClientProperty("WizardPanel_contentDisplayed", Boolean.TRUE);
+                    // Turn on numbering of all steps
+                    jc.putClientProperty("WizardPanel_contentNumbered", Boolean.TRUE);
+                }
+            }
+        }
+        return panels;
+    }
+}
+----
+
+
