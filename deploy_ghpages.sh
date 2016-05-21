@@ -25,7 +25,7 @@ rm -Rf gh-pages
 git clone -b gh-pages --single-branch https://${GH_TOKEN}@github.com/${repo} gh-pages
 cd gh-pages
 
-rsync -avz --stats ../asciidoc/html5 .
+rsync -avz --stats ../build/asciidoc/html5 .
 
 git config --local user.email "travis@travis-ci.org"
 git config --local user.name "Travis"
