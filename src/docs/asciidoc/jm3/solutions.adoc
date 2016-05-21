@@ -22,7 +22,9 @@ First, one must declare another Geometry, for example, a red cube:
 
 
 [source,java]
+
 ----
+
 protected Geometry redCube;
 
 public void simpleInitApp() {
@@ -43,12 +45,16 @@ public void simpleInitApp() {
     // Makes the red cube appear on screen
     rootNode.attachChild(redCube);
 }
+
 ----
+
 To have the red cube spin twice as fast as the other cube, simply make it rotate on the same axis but with double the value:
 
 
 [source,java]
+
 ----
+
 public void simpleUpdate(float tpf) {
     // make the player rotate
     player.rotate(0, 2*tpf, 0);
@@ -56,7 +62,9 @@ public void simpleUpdate(float tpf) {
     // make the red cube rotate twice as fast the player
     redCube.rotate(0, 4*tpf, 0);
 }
+
 ----
+
 
 === Exercise 3
 
@@ -64,7 +72,9 @@ One possible solution is to shrink or grow depending on current size. The cube m
 
 
 [source,java]
+
 ----
+
 private boolean grow = true;
 ...
 public void simpleUpdate(float tpf) {
@@ -81,7 +91,9 @@ public void simpleUpdate(float tpf) {
                 grow = true;
         }
 }
+
 ----
+
 The cube starts by growing, and when it reaches a size larger than 120% its original size, it starts shrinking instead. The cube will then keep shrinking, until it reaches a size smaller than 80% its original size, which will make it start growing again, and so on.
 
 
@@ -89,7 +101,9 @@ Another approach is to switch between shrinking and growing every chosen unit of
 
 
 [source,java]
+
 ----
+
 // Time passed
 private float timeVar = 0;
 ...
@@ -103,7 +117,9 @@ public void simpleUpdate(float tpf) {
         timeVar = 0;
     }
 }
+
 ----
+
 The cube grows for 2 two seconds, then shrinks for another 2 seconds, and repeats indefinitely.
 
 
@@ -111,7 +127,9 @@ Another approach is to set the cube scale as the result of a sine wave. This res
 
 
 [source,java]
+
 ----
+
 public void simpleUpdate(float tpf) {
     float timeInSec = timer.getTimeInSeconds();
     float initScale = 1;
@@ -120,7 +138,9 @@ public void simpleUpdate(float tpf) {
     float scale = initScale + amplitude * FastMath.sin(timeInSec * angularFrequency);
     player.setLocalScale(scale);
 }
+
 ----
+
 The cube should repeatedly and smoothly grow and shrink and have maximum and minimum scale of 0.5 and 1.5 its original size. The following variables can change the scale behavior:
 
 
@@ -135,21 +155,31 @@ Same logic! Use a timeVar, and make the Material declaration + initialization li
 
 
 [source,java]
+
 ----
+
 protected Material mat;
+
 ----
+
 As global var, then the initialization cuts off the Material bit:
 
 
 [source,java]
+
 ----
+
 mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+
 ----
+
 And then the simpleUpdate()
 
 
 [source,java]
+
 ----
+
 public void simpleUpdate(float tpf) {
     timeVar += tpf;
     if (timeVar > 1) {
@@ -157,7 +187,9 @@ public void simpleUpdate(float tpf) {
         timeVar= 0;
     }
 }
+
 ----
+
 
 === Exercise 5
 
@@ -165,13 +197,17 @@ A possible solution is to change the rotation axis of player from y to x, and ma
 
 
 [source,java]
+
 ----
+
 public void simpleUpdate(float tpf) {
     // make the player rotate
     player.rotate(2*tpf, 0, 0);
     player.move(0, 0, 2*tpf);
 }
+
 ----
+
 The above code should make the player roll towards the camera.
 
 
@@ -185,7 +221,9 @@ First, add the mappings for the Up and Down actions to the initKeys() method:
 
 
 [source,java]
+
 ----
+
 private void initKeys() {
     ...
     inputManager.addMapping("Up", new KeyTrigger(KeyInput.KEY_H));
@@ -193,12 +231,16 @@ private void initKeys() {
     ...
     inputManager.addListener(combinedListener, new String[]{"Left", "Right", "Up", "Down", "Rotate"});
 }
+
 ----
+
 Then implement the actions in the onAnalog() method:
 
 
 [source,java]
+
 ----
+
 public void onAnalog(String name, float value, float tpf) {
     if (isRunning) {
         ...
@@ -214,7 +256,9 @@ public void onAnalog(String name, float value, float tpf) {
         ...
     }
 }
+
 ----
+
 This should enable cube to move upwards, if the H key is pressed, and downwards, if the L key is pressed.
 
 
@@ -225,7 +269,9 @@ Following the proposed solution 1, add new mappings for the mouse wheel in the i
 
 
 [source,java]
+
 ----
+
 private void initKeys() {
     ...
     inputManager.addMapping("Up", new KeyTrigger(KeyInput.KEY_H),
@@ -234,7 +280,9 @@ private void initKeys() {
                                     new MouseAxisTrigger(MouseInput.AXIS_WHEEL, false));
     ...
 }
+
 ----
+
 Now you should be able to scroll the cube up or down with the mouse wheel.
 
 
@@ -254,9 +302,13 @@ You can jump right off and obtain the hit object's material, by acessing the “
 
 
 [source,java]
+
 ----
+
 Material g = closest.getGeometry().getMaterial();
+
 ----
+
 It's the same as going through the two steps hinted in the tips: `Geometry g = closest.getGeometry(); Material material = g.getMaterial();`
 Finally, you need only add this line: `material.setColor(“Color, ColorRGBA.randomColor())` , which will change the material from the hit object to a random color!
 
@@ -265,10 +317,14 @@ The lines can be added anywhere within the `if (results.size() &gt; 0)` block, a
 
 
 [source,java]
+
 ----
+
 Material material = closest.getGeometry().getMaterial();
 material.setColor("Color", ColorRGBA.randomColor());
+
 ----
+
 
 === Exercise 2
 
@@ -277,16 +333,24 @@ Then, declare a `Spatial golem` variable outside of methods. Then initialize gol
 
 
 [source,java]
+
 ----
+
 golem = assetManager.loadModel("Models/Oto/Oto.mesh.xml");
+
 ----
+
 Now we need him to show up! So we need to attach him: but the rootNode won't do, because we're checking collision with it's child, the shootables node! So we attach it to shootables!
 
 
 [source,java]
+
 ----
+
 shootables.attachChild(golem);
+
 ----
+
 
 === Exercise 3
 
@@ -294,7 +358,9 @@ Here is my code, it works and it is well commented.
 
 
 [source,java]
+
 ----
+
 package jme3test.helloworld;
 
 import com.jme3.app.SimpleApplication;
@@ -446,4 +512,5 @@ public class HelloPicking extends SimpleApplication
 	return golem;
     }
 }
+
 ----

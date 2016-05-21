@@ -24,7 +24,9 @@ First, we'll set up the class and add the three standard constructors.  We'll be
 
 
 [source,java]
+
 ----
+
 public abstract class ContextualMenu extends Menu {
     public ContextualMenu(Screen screen, String UID, Vector2f position, boolean isScrollable) {
         this(screen, UID, position,
@@ -50,7 +52,9 @@ public abstract class ContextualMenu extends Menu {
         super(screen, UID, position, dimensions, resizeBorders, defaultImg, false);
     }
 }
+
 ----
+
 
 ===== STEP 2: Adding a public method for building standard options
 
@@ -58,7 +62,9 @@ This method will be used by calling windows to ensure the menu starts with only 
 
 
 [source,java]
+
 ----
+
 public void resetMenuOptions() {
     // First, clear the current menuItems
     getMenuItems().clear();
@@ -73,12 +79,16 @@ public void resetMenuOptions() {
     addMenuItem("Lock window size", "dimensions", null, true);
     addMenuItem("Lock current alpha setting", "alpha", null, true);
 }
+
 ----
+
 
 ==== Adding Our New Control to the Screen
 
 [source,java]
+
 ----
+
 // Create a single instance of the reusable contextual menu
 ContextualMenu rcMenu = new ContextualMenu(screen, "rcMenu", Vector2f.ZERO) {
     // Override the abstract event method
@@ -90,7 +100,9 @@ ContextualMenu rcMenu = new ContextualMenu(screen, "rcMenu", Vector2f.ZERO) {
 };
 rcMenu.resetMenuOptions();
 screen.add(rcMenu);
+
 ----
+
 
 ==== Extending the Window Class to Utilize Our Control
 
@@ -104,7 +116,9 @@ We need to entend the window class in order to add right-click event handling an
 
 
 [source,java]
+
 ----
+
 public abstract class ContextualWindow extends Window implements MouseButtonListener {
     // Add the 3 standard contructors from the Window class and rename them
     
@@ -131,4 +145,5 @@ public abstract class ContextualWindow extends Window implements MouseButtonList
         }
     }
 }
+
 ----

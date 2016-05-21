@@ -15,7 +15,11 @@ So, how do we convert a complete block world to bytes?
 
 
 [source,java]
-----byte[] serializedTerrainData = CubesSerializer.writeToBytes(blockTerrain);----
+
+----
+byte[] serializedTerrainData = CubesSerializer.writeToBytes(blockTerrain);
+----
+
 Well… That was pretty easy, or? You don't have to worry, _how_ your terrain is magically pressed in the data, the framework directly offers you the bytes, that you need to reconstruct the whole thing.
 
 
@@ -32,10 +36,14 @@ At this point, you have successfully received the bytes and want to recreate you
 
 
 [source,java]
-----//The old blockTerrain will be completely replaced!
+
+----
+//The old blockTerrain will be completely replaced!
 //(Even the chunks count will be adjusted)
 BlockTerrainControl blockTerrainClone = new BlockTerrainControl(new Vector3Int());
-CubesSerializer.readFromBytes(blockTerrain, serializedTerrainData);----
+CubesSerializer.readFromBytes(blockTerrain, serializedTerrainData);
+----
+
 This screenshot shows a terrain and it's unserialized clone - Note, that the blocks have to be registered in the *same order* on both sides in order to reproduce the same terrain!
 
 

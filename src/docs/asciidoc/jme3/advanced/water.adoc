@@ -81,7 +81,9 @@ Here is the most important part of the code:
 
 
 [source,java]
+
 ----
+
 // we create a water processor
 SimpleWaterProcessor waterProcessor = new SimpleWaterProcessor(assetManager);
 waterProcessor.setReflectionScene(mainScene);
@@ -107,7 +109,9 @@ water.setLocalTranslation(-200, -6, 250);
 water.setShadowMode(ShadowMode.Receive);
 water.setMaterial(waterProcessor.getMaterial());
 rootNode.attachChild(water);
+
 ----
+
 
 == Settings
 
@@ -115,34 +119,58 @@ You can lower the render size to gain higher performance:
 
 
 [source,java]
-----waterProcessor.setRenderSize(128,128);----
+
+----
+waterProcessor.setRenderSize(128,128);
+----
+
 The deeper the water, the more transparent. (?) 
 
 
 [source,java]
-----waterProcessor.setWaterDepth(40);----
+
+----
+waterProcessor.setWaterDepth(40);
+----
+
 A higher distortion scale makes bigger waves.
 
 
 [source,java]
-----waterProcessor.setDistortionScale(0.05f);----
+
+----
+waterProcessor.setDistortionScale(0.05f);
+----
+
 A lower wave speed makes calmer water.
 
 
 [source,java]
-----waterProcessor.setWaveSpeed(0.05f);----
+
+----
+waterProcessor.setWaveSpeed(0.05f);
+----
+
 If your scene does not have a lightsource, you can set the light direction for the water:
 
 
 [source,java]
-----waterProcessor.setLightDirection( new Vector3f(0.55f, -0.82f, 0.15f));----
+
+----
+waterProcessor.setLightDirection( new Vector3f(0.55f, -0.82f, 0.15f));
+----
+
 Instead of creating a quad and specifying a plane, you can get a default waterplane from the processor:
 
 
 [source,java]
-----Geometry waterPlane = waterProcessor.createWaterGeometry(10, 10);
+
+----
+Geometry waterPlane = waterProcessor.createWaterGeometry(10, 10);
 waterPlane.setLocalTranslation(-5, 0, 5);
 waterPlane.setMaterial(waterProcessor.getMaterial());
+
 ----
+
 You can offer a switch to set the water Material to a static texture – for users with slow PCs.
 

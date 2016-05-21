@@ -30,7 +30,9 @@ Continue with adding:
 
 
 [source,java]
+
 ----
+
 import de.lessvoid.nifty.screen.Screen;
     
 ...
@@ -46,9 +48,13 @@ public void onStartScreen() {
 public void onEndScreen() {
     throw new UnsupportedOperationException("Not supported yet.");
 }
+
 ----
+
 [source,java]
-----/*
+
+----
+/*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -95,26 +101,36 @@ public class MyStartScreen extends AbstractAppState implements ScreenController 
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }
+
 ----
+
 The name and package of your custom ScreenController class (here `mygame.MyStartScreen`) goes into the controller parameter of the respective XML screen it belongs to. For example:
 
 
 [source,xml]
+
 ----
+
 <nifty>
   <screen id="start" controller="mygame.MyStartScreen">
       <!-- layer and panel code ... -->
   </screen>
 </nifty>
+
 ----
+
 Or the same in a Java syntax, respectively:
 
 
 [source,java]
+
 ----
+
   nifty.addScreen("start", new ScreenBuilder("start") {{
       controller(new mygame.MyStartScreen())}});
+
 ----
+
 Now the Java class `MyStartScreen` and this +++<abbr title="Graphical User Interface">GUI</abbr>+++ screen (`start`) are connected. For this example you can also connect the `hud` screen to MyStartScreen.
 
 
@@ -150,7 +166,9 @@ In the following example, we call the `startGame()` method when the player click
 
 
 [source,xml]
+
 ----
+
         <panel id="panel_bottom_left" height="50%" width="50%" valign="center" childLayout="center">  
           <control name="button" label="Start" id="StartButton" align="center" valign="center" 
           visibleToMouse="true" > 
@@ -164,12 +182,16 @@ In the following example, we call the `startGame()` method when the player click
             <interact onClick="quitGame()"/>
           </control>
         </panel>
+
 ----
+
 Or the same in a Java syntax, respectively:
 
 
 [source,java]
+
 ----
+
 control(new ButtonBuilder("StartButton", "Start") {{
   alignCenter();
   valignCenter();
@@ -188,12 +210,16 @@ control(new ButtonBuilder("QuitButton", "Quit") {{
   visibleToMouse(true);
   interactOnClick("quitGame()");
 }});
+
 ----
+
 Back in the MyStartScreen class, you specify what the `startGame()` and `quitGame()` methods do. As you see, you can pass String arguments (here `hud`) in the method call. You also see that you have access to the app object.
 
 
 [source,java]
+
 ----
+
 public class MyStartScreen implements ScreenController {
   ...
 
@@ -209,7 +235,9 @@ public class MyStartScreen implements ScreenController {
   
   ...
 }
+
 ----
+
 The startGame() example simply switches the +++<abbr title="Graphical User Interface">GUI</abbr>+++ to the `hud` screen when the user clicks Start. Of course, in a real game, you would perform more steps here: Load the game level, switch to in-game input and navigation handling, set a custom `running` boolean to true, attach custom in-game AppStates – and lots more.
 
 
@@ -226,32 +254,44 @@ First define a Java method in the screen controller, in this example, `getPlayer
 
 
 [source,java]
+
 ----
+
 public class MySettingsScreen implements ScreenController {
   ...
   public String getPlayerName(){
     return System.getProperty("user.name");
   }
 }
+
 ----
+
 Nifty uses `${CALL.getPlayerName()}` to get the return value of the getPlayerName() method from your ScreenController Java class.
 
 
 [source,xml]
+
 ----
+
 <text text="${CALL.getPlayerName()}'s Cool Game" font="Interface/Fonts/Default.fnt" width="100%" height="100%" />
+
 ----
+
 Or the same in a Java syntax, respectively:
 
 
 [source,java]
-----text(new TextBuilder() {{
+
+----
+text(new TextBuilder() {{
   text("${CALL.getPlayerName()}'s Cool Game");
   font("Interface/Fonts/Default.fnt");
   height("100%");
   width("100%");
 }});
+
 ----
+
 You can use this for Strings and numeric values (e.g. when you read settings from a file, you display the results in the +++<abbr title="Graphical User Interface">GUI</abbr>+++) and also for methods with side effects.
 
 
@@ -265,37 +305,53 @@ Here's an example of how to change an image called `playerhealth`:
 
 
 [source,java]
+
 ----
+
 // load or create new image
 NiftyImage img = nifty.getRenderEngine().createImage("Interface/Images/face2.png", false);
 // find old image
 Element niftyElement = nifty.getCurrentScreen().findElementByName("playerhealth");
 // swap old with new image
 niftyElement.getRenderer(ImageRenderer.class).setImage(img);
+
 ----
+
 The same is valid for other elements, for example a text label “score:
 
 
 [source,java]
+
 ----
+
 // find old text
 Element niftyElement = nifty.getCurrentScreen().findElementByName("score");
 // swap old with new text
 niftyElement.getRenderer(TextRenderer.class).setText("124");
+
 ----
+
 Similarly, to change the onClick() event of an element, create an `ElementInteraction` object:
 
 
 [source,java]
+
 ----
+
 Element niftyElement = nifty.getCurrentScreen().findElementByName("myElement");
 niftyElement.getElementInteraction().getPrimary().setOnMouseOver(new NiftyMethodInvoker(nifty, "myCustomMethod()", this));
+
 ----
+
 For this to work, there already needs to be a (possibly inactive) `&lt;interact /&gt;` tag inside your xml element:
 
 
 [source,xml]
-----<interact onClick="doNothing()"/>----
+
+----
+<interact onClick="doNothing()"/>
+----
+
 
 == Next Steps
 

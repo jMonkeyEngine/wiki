@@ -55,12 +55,16 @@ Create one `com.jme3.animation.AnimControl` object in your JME3 application for 
 
 
 [source,java]
+
 ----
+
   AnimControl playerControl; // you need one Control per model
   Node player = (Node) assetManager.loadModel("Models/Oto/Oto.mesh.xml"); // load a model
   playerControl = player.getControl(AnimControl.class); // get control over this model
   playerControl.addListener(this); // add listener
+
 ----
+
 
 === Animation Channels
 
@@ -71,11 +75,15 @@ There often are situations where you want to run several animation sequences at 
 
 
 [source,java]
+
 ----
+
   AnimChannel channel_walk = playerControl.createChannel();
   AnimChannel channel_jump = playerControl.createChannel();
   ...
+
 ----
+
 To reset a Control, call `control.clearChannels();`
 
 
@@ -253,7 +261,9 @@ In this short example, we define the space key to trigger playing the “Walk an
 
 
 [source,java]
+
 ----
+
   public void simpleInitApp() {
     ...
     inputManager.addMapping("Walk", new KeyTrigger(KeyInput.KEY_SPACE));
@@ -271,7 +281,9 @@ In this short example, we define the space key to trigger playing the “Walk an
       }
     }
   };
+
 ----
+
 
 == Animation Event Listener
 
@@ -279,8 +291,12 @@ A jME3 application that contains animations can implement the `com.jme3.animatio
 
 
 [source,java]
-----public class HelloAnimation extends SimpleApplication
-                     implements AnimEventListener { ... }----
+
+----
+public class HelloAnimation extends SimpleApplication
+                     implements AnimEventListener { ... }
+----
+
 This optional Listener enables you to respond to animation start and end events, onAnimChange() and onAnimCycleDone().
 
 
@@ -298,7 +314,9 @@ You have access to the following objects:
 *  The name of the animation that has just finished playing.
 
 [source,java]
+
 ----
+
   public void onAnimCycleDone(AnimControl control, AnimChannel channel, String animName) {
     // test for a condition you are interested in, e.g. ...
     if (animName.equals("Walk")) {
@@ -306,7 +324,9 @@ You have access to the following objects:
       channel.setAnim("Stand", 0.50f);
     }
   }
+
 ----
+
 
 === Responding to Animation Start
 
@@ -321,7 +341,9 @@ You have access to the following objects
 *  The name of the animation that will start playing.
 
 [source,java]
+
 ----
+
   public void onAnimChange(AnimControl control, AnimChannel channel, String animName) {
     // test for a condition you are interested in, e.g. ...
     if (animName.equals("Walk")) {
@@ -329,4 +351,5 @@ You have access to the following objects
       channel.setAnim("Reset", 0.50f);
     }
   }
+
 ----

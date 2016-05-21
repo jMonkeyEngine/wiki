@@ -86,18 +86,30 @@ Do the following once per application to gain access to the `physicsSpace` objec
 .  Make your application extend `com.jme3.app.SimpleApplication`.
 .  Create a BulletAppState field: 
 [source,java]
-----private BulletAppState bulletAppState;----
+
+----
+private BulletAppState bulletAppState;
+----
+
 .  Initialize your bulletAppState and attach it to the state manager: 
 [source,java]
-----public void simpleInitApp() {
+
+----
+public void simpleInitApp() {
     bulletAppState = new BulletAppState();
-    stateManager.attach(bulletAppState);----
+    stateManager.attach(bulletAppState);
+----
+
 
 `BulletAppState`
 
 
 [source,java]
-----BulletAppState bas = app.getStateManager().getState(BulletAppState.class);----
+
+----
+BulletAppState bas = app.getStateManager().getState(BulletAppState.class);
+----
+
 
 
 
@@ -214,7 +226,11 @@ The mesh-accurate shapes can use a CollisionShapeFactory as constructor (code sa
 
 
 [source,java]
-----bulletAppState.getPhysicsSpace().enableDebug(assetManager);----
+
+----
+bulletAppState.getPhysicsSpace().enableDebug(assetManager);
+----
+
 
 
 
@@ -223,28 +239,52 @@ The mesh-accurate shapes can use a CollisionShapeFactory as constructor (code sa
 
 *  One way of using a constructor and a Geometry's mesh for static Spatials:
 [source,java]
-----MeshCollisionShape level_shape = 
-    new MeshCollisionShape(level_geo.getMesh());----
+
+----
+MeshCollisionShape level_shape = 
+    new MeshCollisionShape(level_geo.getMesh());
+----
+
 *  One way of using a constructor and a Geometry's mesh for dynamic Spatials:
 [source,java]
-----HullCollisionShape shape = 
-    new HullCollisionShape(katamari_geo.getMesh());----
+
+----
+HullCollisionShape shape = 
+    new HullCollisionShape(katamari_geo.getMesh());
+----
+
 *  Creating a dynamic compound shape for a whole Node and subnodes:
 [source,java]
-----CompoundCollisionShape myComplexShape =
-    CollisionShapeFactory.createMeshShape((Node) myComplexGeometry );----
+
+----
+CompoundCollisionShape myComplexShape =
+    CollisionShapeFactory.createMeshShape((Node) myComplexGeometry );
+----
+
 *  Creating a dynamic HullCollisionShape shape (or CompoundCollisionShape with HullCollisionShapes as children) for a Geometry:
 [source,java]
-----CollisionShape shape = 
-    CollisionShapeFactory.createDynamicMeshShape(spaceCraft);----
+
+----
+CollisionShape shape = 
+    CollisionShapeFactory.createDynamicMeshShape(spaceCraft);
+----
+
 *  An angular, non-mesh-accurate compound shape:
 [source,java]
-----CompoundCollisionShape boxShape =
-    CollisionShapeFactory.createBoxShape((Node) crate_geo);----
+
+----
+CompoundCollisionShape boxShape =
+    CollisionShapeFactory.createBoxShape((Node) crate_geo);
+----
+
 *  A round, non-mesh-accurate compound shape: 
 [source,java]
-----SphereCollisionShape sphereShape =
-    new SphereCollisionShape(1.0f);----
+
+----
+SphereCollisionShape sphereShape =
+    new SphereCollisionShape(1.0f);
+----
+
 
 
 == Create PhysicsControl
@@ -300,11 +340,19 @@ The most commonly used physics control is RigidBodyControl.  The RigidBodyContro
 
 
 [source,java]
-----RigidBodyControl myThing_phys = 
-    new RigidBodyControl( myThing_shape , 123.0f ); // dynamic----
+
+----
+RigidBodyControl myThing_phys = 
+    new RigidBodyControl( myThing_shape , 123.0f ); // dynamic
+----
+
 [source,java]
-----RigidBodyControl myDungeon_phys = 
-    new RigidBodyControl( myDungeon_shape , 0.0f ); // static ----
+
+----
+RigidBodyControl myDungeon_phys = 
+    new RigidBodyControl( myDungeon_shape , 0.0f ); // static 
+----
+
 
 
 
@@ -312,16 +360,24 @@ The following creates a box Geometry with the correct default BoxCollisionShape:
 
 
 [source,java]
+
 ----
+
 Box b = new Box(1,1,1);
 Geometry box_geo = new Geometry("Box", b);
-box_geo.addControl(new RigidBodyControl( 1.0f )); // explicit non-zero mass, implicit BoxCollisionShape----
+box_geo.addControl(new RigidBodyControl( 1.0f )); // explicit non-zero mass, implicit BoxCollisionShape
+----
+
 The following creates a MeshCollisionShape for a whole loaded (static) scene:
 
 
 [source,java]
-----...
-gameLevel.addControl(new RigidBodyControl(0.0f)); // explicit zero mass, implicit MeshCollisionShape----
+
+----
+...
+gameLevel.addControl(new RigidBodyControl(0.0f)); // explicit zero mass, implicit MeshCollisionShape
+----
+
 
 
 
@@ -333,7 +389,11 @@ For each physical Spatial in the scene:
 
 .  Add a PhysicsControl to a Spatial. 
 [source,java]
-----myThing_geo.addControl(myThing_phys);----
+
+----
+myThing_geo.addControl(myThing_phys);
+----
+
 .  Remember to also attach the Spatial to the rootNode, as always!
 
 
@@ -344,12 +404,20 @@ The PhysicsSpace is an object in BulletAppState that is like a rootNode for Phys
 
 *  Just like you add the Geometry to the rootNode, you add its PhysicsControl to the PhysicsSpace. 
 [source,java]
-----bulletAppState.getPhysicsSpace().add(myThing_phys); 
-rootNode.attachChild(myThing_geo); ----
+
+----
+bulletAppState.getPhysicsSpace().add(myThing_phys); 
+rootNode.attachChild(myThing_geo); 
+----
+
 *  When you remove a Geometry from the scene and detach it from the rootNode, also remove the PhysicsControl from the PhysicsSpace: 
 [source,java]
-----bulletAppState.getPhysicsSpace().remove(myThing_phys);
-myThing_geo.removeFromParent();----
+
+----
+bulletAppState.getPhysicsSpace().remove(myThing_phys);
+myThing_geo.removeFromParent();
+----
+
 
 _PhysicsControl__Geometry_
 
@@ -367,7 +435,9 @@ When you import a model from blender, it often comes as a Node (even if it only 
 
 
 [source,java]
+
 ----
+
 // Doesn't scale
 // This modified version contains Node -> Geometry (name = "MonkeyHeadGeom")
 Spatial model = assetManager.loadModel("Models/MonkeyHead.j3o"); model.addControl(new RigidBodyControl(0));
@@ -383,7 +453,9 @@ geom.addControl(new RigidBodyControl(0));
 // Works great (scaling of a MeshCollisionShape)	
 geom.getControl(RigidBodyControl.class).getCollisionShape().setScale(new Vector3f(2, 2, 2));
 bulletAppState.getPhysicsSpace().add(geom);
+
 ----
+
 With the corresponding output below:
 link:http://i.imgur.com/fAXlF.png[External Link]
 link:http://i.imgur.com/Josua.png[External Link]
@@ -644,7 +716,11 @@ a|Bullet does not use the full collision shape for continuous collision detectio
 *  *Eject?* If you have physical nodes jittering wildy and being ejected “for no apparent reason, it means you have created an impossible state – solid objects overlapping. This can happen when you position solid spatials too close to other solid spatials, e.g. when moving them with setLocalTranslation(). +
 *Solution:* Use the debug mode to make CollisionShapes visible and verify that CollisionShapes do not overlap. 
 [source,java]
-----bulletAppState.getPhysicsSpace().enableDebug(assetManager);----
+
+----
+bulletAppState.getPhysicsSpace().enableDebug(assetManager);
+----
+
 
 *  *Buggy?* If you get weird behaviour, such as physical nodes passing through one another, or getting stuck for no reason. +
 *Solution:* Look at the physics space accessors and change the acuracy and other parameters.

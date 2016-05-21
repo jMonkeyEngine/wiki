@@ -23,16 +23,22 @@ If you don't have it yet, link:http://jmonkeyengine.googlecode.com/svn/trunk/eng
 
 
 [source]
-----jMonkeyProjects$ ls -1 BasicGame
+
+----
+jMonkeyProjects$ ls -1 BasicGame
 assets/
 build.xml
 town.zip
-src/----
+src/
+----
+
 Place town.zip in the root directory of your JME3 project. Here is the code:
 
 
 [source,java]
+
 ----
+
 package jme3test.helloworld;
 
 import com.jme3.app.SimpleApplication;
@@ -192,7 +198,9 @@ public class HelloCollision extends SimpleApplication
         cam.setLocation(player.getPhysicsLocation());
     }
 }
+
 ----
+
 Run the sample. You should see a town square with houses and a monument. Use the WASD keys and the mouse to navigate around with a first-person perspective. Run forward and jump by pressing W and Space. Note how you step over the sidewalk, and up the steps to the monument. You can walk in the alleys between the houses, but the walls are solid. Don't walk over the edge of the world! emoji:smiley
 
 
@@ -203,13 +211,19 @@ Let's start with the class declaration:
 
 
 [source,java]
-----public class HelloCollision extends SimpleApplication
-        implements ActionListener { ... }----
+
+----
+public class HelloCollision extends SimpleApplication
+        implements ActionListener { ... }
+----
+
 You already know that SimpleApplication is the base class for all jME3 games. You make this class implement the `ActionListener` interface because you want to customize the navigational inputs later.
 
 
 [source,java]
+
 ----
+
   private Spatial sceneModel;
   private BulletAppState bulletAppState;
   private RigidBodyControl landscape;
@@ -221,7 +235,9 @@ You already know that SimpleApplication is the base class for all jME3 games. Yo
   //They here to avoid instanciating new vectors on each frame
   private Vector3f camDir = new Vector3f();
   private Vector3f camLeft = new Vector3f();
+
 ----
+
 You initialize a few private fields:
 
 
@@ -242,12 +258,16 @@ As usual, you initialize the game in the `simpleInitApp()` method.
 
 
 [source,java]
+
 ----
+
     viewPort.setBackgroundColor(new ColorRGBA(0.7f,0.8f,1f,1f));
     flyCam.setMoveSpeed(100);
     setUpKeys();
     setUpLight();
+
 ----
+
 .  You set the background color to light blue, since this is a scene with a sky.
 .  You repurpose the default camera control “flyCam as first-person camera and set its speed.
 .  The auxiliary method `setUpLights()` adds your light sources.
@@ -260,30 +280,42 @@ The first thing you do in every physics game is create a BulletAppState object. 
 
 
 [source,java]
+
 ----
+
     bulletAppState = new BulletAppState();
     stateManager.attach(bulletAppState);
+
 ----
+
 For the scene, you load the `sceneModel` from a zip file, and adjust the size.
 
 
 [source,java]
+
 ----
+
     assetManager.registerLocator("town.zip", ZipLocator.class);
     sceneModel = assetManager.loadModel("main.scene");
     sceneModel.setLocalScale(2f);
+
 ----
+
 The file `town.zip` is included as a sample model in the JME3 sources – you can link:http://jmonkeyengine.googlecode.com/svn/trunk/engine/town.zip[download it here]. (Optionally, use any OgreXML scene of your own.) For this sample, place the zip file in the application's top level directory (that is, next to src/, assets/, build.xml).
 
 
 [source,java]
+
 ----
+
     CollisionShape sceneShape =
       CollisionShapeFactory.createMeshShape((Node) sceneModel);
     landscape = new RigidBodyControl(sceneShape, 0);
     sceneModel.addControl(landscape);
     rootNode.attachChild(sceneModel);
+
 ----
+
 To use collision detection, you add a RigidBodyControl to the `sceneModel` Spatial. The RigidBodyControl for a complex model takes two arguments: A Collision Shape, and the object's mass.
 
 
@@ -305,9 +337,13 @@ So let's set up collision detection for the first-person player.
 
 
 [source,java]
+
 ----
+
     CapsuleCollisionShape capsuleShape = new CapsuleCollisionShape(1.5f, 6f, 1);
+
 ----
+
 Again, you create a CollisionShape: This time you choose a CapsuleCollisionShape, a cylinder with a rounded top and bottom. This shape is optimal for a person: It's tall and the roundness helps to get stuck less often on obstacles.
 
 
@@ -315,14 +351,22 @@ Again, you create a CollisionShape: This time you choose a CapsuleCollisionShape
 *  The final integer argument specifies the orientation of the cylinder: 1 is the Y-axis, which fits an upright person. For animals which are longer than high you would use 0 or 2 (depending on how it is rotated).
 
 [source,java]
+
 ----
+
     player = new CharacterControl(capsuleShape, 0.05f);
+
 ----
+
 “
 
 
 [source,java]
-----bulletAppState.getPhysicsSpace().enableDebug(assetManager);----
+
+----
+bulletAppState.getPhysicsSpace().enableDebug(assetManager);
+----
+
 
 
 
@@ -330,18 +374,26 @@ Now you use the CollisionShape to create a `CharacterControl` that represents th
 
 
 [source,java]
+
 ----
+
     player.setJumpSpeed(20);
     player.setFallSpeed(30);
     player.setGravity(30);
+
 ----
+
 Apart from step height and character size, the `CharacterControl` lets you configure jumping, falling, and gravity speeds. Adjust the values to fit your game situation.
 
 
 [source,java]
+
 ----
+
     player.setPhysicsLocation(new Vector3f(0, 10, 0));
+
 ----
+
 Finally we put the player in its starting position and update its state – remember to use `setPhysicsLocation()` instead of `setLocalTranslation()` now, since you are dealing with a physical object. 
 
 
@@ -352,10 +404,14 @@ Remember, in physical games, you must register all solid objects (usually the ch
 
 
 [source,java]
+
 ----
+
     bulletAppState.getPhysicsSpace().add(landscape);
     bulletAppState.getPhysicsSpace().add(player);
+
 ----
+
 The invisible body of the character just sits there on the physical floor. It cannot walk yet – you will deal with that next.
 
 
@@ -378,7 +434,9 @@ In the `simpleInitApp()` method, you re-configure the familiar WASD inputs for w
 
 
 [source,java]
-----private void setUpKeys() {
+
+----
+private void setUpKeys() {
     inputManager.addMapping("Left", new KeyTrigger(KeyInput.KEY_A));
     inputManager.addMapping("Right", new KeyTrigger(KeyInput.KEY_D));
     inputManager.addMapping("Up", new KeyTrigger(KeyInput.KEY_W));
@@ -390,7 +448,9 @@ In the `simpleInitApp()` method, you re-configure the familiar WASD inputs for w
     inputManager.addListener(this, "Down");
     inputManager.addListener(this, "Jump");
 }
+
 ----
+
 You can move this block of code into an auxiliary method `setupKeys()` and call this method from `simpleInitApp()`– to keep the code more readable.
 
 
@@ -401,7 +461,9 @@ Remember that this class implements the `ActionListener` interface, so you can c
 
 
 [source,java]
+
 ----
+
   public void onAction(String binding, boolean value, float tpf) {
     if (binding.equals("Left")) {
       if (value) { left = true; } else { left = false; }
@@ -414,7 +476,9 @@ Remember that this class implements the `ActionListener` interface, so you can c
     } else if (binding.equals("Jump")) {
       player.jump();
     }
-  }----
+  }
+----
+
 The only movement that you do not have to implement yourself is the jumping action. The call `player.jump()` is a special method that handles a correct jumping motion for your `PhysicsCharacterNode`.
 
 
@@ -431,7 +495,9 @@ This last and most important code snippet goes into the `simpleUpdate()` method.
 
 
 [source,java]
+
 ----
+
  public void simpleUpdate(float tpf) {
         camDir.set(cam.getDirection()).multLocal(0.6f);
         camLeft.set(cam.getLeft()).multLocal(0.4f);
@@ -450,7 +516,9 @@ This last and most important code snippet goes into the `simpleUpdate()` method.
         }
         player.setWalkDirection(walkDirection);
         cam.setLocation(player.getPhysicsLocation());
-    }----
+    }
+----
+
 This is how the walking is triggered:
 
 
@@ -458,13 +526,21 @@ This is how the walking is triggered:
 ..  Add to `walkDirection` the recent motion vectors that you polled from the camera. This way it is posible for a character to move forward and to the left simultaneously, for example! 
 ..  This one last line does the “walking magic: 
 [source,java]
-----player.setWalkDirection(walkDirection);----
+
+----
+player.setWalkDirection(walkDirection);
+----
+
  Always use `setWalkDirection()` to make a physics-controlled object move continuously, and the physics engine handles collision detection for you.
 
 
 ..  Make the first-person camera object follow along with the physics-controlled player:
 [source,java]
-----cam.setLocation(player.getPhysicsLocation());----
+
+----
+cam.setLocation(player.getPhysicsLocation());
+----
+
 
 *Important:* Again, do not use `setLocalTranslation()` to walk the player around. You will get it stuck by overlapping with another physical object. You can put the player in a start position with `setPhysicalLocation()` if you make sure to place it a bit above the floor and away from obstacles.
 

@@ -50,14 +50,18 @@ The game server is a “headless com.jme3.app.SimpleApplication:
 
 
 [source,java]
+
 ----
+
 public class ServerMain extends SimpleApplication {
   public static void main(String[] args) {
     ServerMain app = new ServerMain();
     app.start(JmeContext.Type.Headless); // headless type for servers!
   }
 }
+
 ----
+
 `Headless`
 
 
@@ -65,14 +69,18 @@ Create a com.jme3.network.Server in the `simpleInitApp()` method and specify a c
 
 
 [source,java]
+
 ----
+
   public void simpleInitApp() {
     ...
     Server myServer = Network.createServer(6143);
     myServer.start();
     ...
   }
+
 ----
+
 When you run this app on a host, the server is ready to accept clients. Let's create a client next.
 
 
@@ -83,14 +91,18 @@ A game client is a standard com.jme3.app.SimpleApplication.
 
 
 [source,java]
+
 ----
+
 public class ClientMain extends SimpleApplication {
   public static void main(String[] args) {
     ClientMain app = new ClientMain();
     app.start(JmeContext.Type.Display); // standard display type
   }
 }
+
 ----
+
 `Display`
 
 
@@ -98,13 +110,17 @@ Create a com.jme3.network.Client in the `simpleInitApp()` method and specify the
 
 
 [source,java]
+
 ----
+
 public void simpleInitApp() {
    ...
    Client myClient = Network.connectToServer("localhost", 6143);
    myClient.start();
    ...
+
 ----
+
 The server address can be in the format “localhost or “127.0.0.1 (for local testing), or an IP address of a remote host in the format “123.456.78.9”. In this example, we assume the server is running on the localhost.
 
 
@@ -159,19 +175,27 @@ Each message represents data that you want to transmit between client and server
 
 
 [source,java]
+
 ----
+
 @Serializable
 public class HelloMessage extends AbstractMessage {
   private String hello;       // custom message data
   public HelloMessage() {}    // empty constructor
   public HelloMessage(String s) { hello = s; } // custom constructor
 }
+
 ----
+
 You must register each message type to the com.jme3.network.serializing.Serializer, in both server and client!
 
 
 [source,java]
-----Serializer.registerClass(HelloMessage.class);----
+
+----
+Serializer.registerClass(HelloMessage.class);
+----
+
 
 === Responding to Messages
 
@@ -185,19 +209,27 @@ Create one ClientListener.java and make it extend `com.jme3.network.MessageListe
 
 
 [source,java]
-----public class ClientListener implements MessageListener<Client> {
+
+----
+public class ClientListener implements MessageListener<Client> {
   public void messageReceived(Client source, Message message) {
     if (message instanceof HelloMessage) {
       // do something with the message
       HelloMessage helloMessage = (HelloMessage) message;
       System.out.println("Client #"+source.getId()+" received: '"+helloMessage.getSomething()+"'");
     } // else...
-  }----
+  }
+----
+
 For each message type, register a client listener to the client.
 
 
 [source,java]
-----myClient.addMessageListener(new ClientListener(), HelloMessage.class);----
+
+----
+myClient.addMessageListener(new ClientListener(), HelloMessage.class);
+----
+
 
 ==== ServerListener.java
 
@@ -205,19 +237,27 @@ Create one ServerListener.java and make it extend `com.jme3.network.MessageListe
 
 
 [source,java]
-----public class ServerListener implements MessageListener<HostedConnection> {
+
+----
+public class ServerListener implements MessageListener<HostedConnection> {
   public void messageReceived(HostedConnection source, Message message) {
     if (message instanceof HelloMessage) {
       // do something with the message
       HelloMessage helloMessage = (HelloMessage) message;
       System.out.println("Server received '" +helloMessage.getSomething() +"' from client #"+source.getId() );
     } // else....
-  }----
+  }
+----
+
 For each message type, register a server listener to the server:
 
 
 [source,java]
-----myServer.addMessageListener(new ServerListener(), HelloMessage.class);----
+
+----
+myServer.addMessageListener(new ServerListener(), HelloMessage.class);
+----
+
 
 === Creating and Sending Messages
 
@@ -225,28 +265,48 @@ Let's create a new message of type HelloMessage:
 
 
 [source,java]
-----Message message = new HelloMessage("Hello World!");----
+
+----
+Message message = new HelloMessage("Hello World!");
+----
+
 Now the client can send this message to the server:
 
 
 [source,java]
-----myClient.send(message);----
+
+----
+myClient.send(message);
+----
+
 Or the server can broadcast this message to all HostedConnection (clients):
 
 
 [source,java]
-----Message message = new HelloMessage("Welcome!");
-myServer.broadcast(message);----
+
+----
+Message message = new HelloMessage("Welcome!");
+myServer.broadcast(message);
+----
+
 Or the server can send the message to a specific subset of clients (e.g. to HostedConnection conn1, conn2, and conn3): 
 
 
 [source,java]
-----myServer.broadcast( Filters.in( conn1, conn2, conn3 ), message );----
+
+----
+myServer.broadcast( Filters.in( conn1, conn2, conn3 ), message );
+----
+
 Or the server can send the message to all but a few selected clients (e.g. to all HostedConnections but conn4):
 
 
 [source,java]
-----myServer.broadcast( Filters.notEqualTo( conn4 ), message );----
+
+----
+myServer.broadcast( Filters.notEqualTo( conn4 ), message );
+----
+
 The last two broadcasting methods use com.jme3.network.Filters to select a subset of recipients. If you know the exact list of recipients, always send the messages directly to them using the Filters; avoid flooding the network with unnecessary broadcasts to all.
 
 
@@ -257,7 +317,11 @@ The ID of the Client and HostedConnection are the same at both ends of a connect
 
 
 [source,java]
-----... myClient.getId() ...----
+
+----
+... myClient.getId() ...
+----
+
 A server has a game version and game name property. Each client expects to communicate with a server with a certain game name and version. Test first whether the game name matches, and then whether game version matches, before sending any messages! If they do not match, SpiderMoney will reject it for you, you have no choice in the mater. This is so the client and server can avoid miscommunication.
 
 
@@ -274,13 +338,17 @@ You must override the client's destroy() method to close the connection cleanly 
 
 
 [source,java]
+
 ----
+
   @Override
   public void destroy() {
       ... // custom code
       myClient.close();
       super.destroy();
-  }----
+  }
+----
+
 
 === Closing a Server
 
@@ -288,13 +356,17 @@ You must override the server's destroy() method to close the connection when the
 
 
 [source,java]
+
 ----
+
   @Override
   public void destroy() {
       ... // custom code
       myServer.close();
       super.destroy();
-  }----
+  }
+----
+
 
 === Kicking a Client
 
@@ -302,7 +374,11 @@ The server can kick a HostedConnection to make it disconnect. You should provide
 
 
 [source,java]
-----conn.close("We kick cheaters.");----
+
+----
+conn.close("We kick cheaters.");
+----
+
 
 == Listening to Connection Notification
 
@@ -335,7 +411,11 @@ First implement the ClientStateListener interface in the Client class. Then regi
 
 
 [source,java]
-----myClient.addClientStateListener(this);----
+
+----
+myClient.addClientStateListener(this);
+----
+
 
 === ConnectionListener
 
@@ -359,7 +439,11 @@ First implement the ConnectionListener interface in the Server class. Then regis
 
 
 [source,java]
-----myServer.addConnectionListener(this);----
+
+----
+myServer.addConnectionListener(this);
+----
+
 
 === ErrorListener
 
@@ -387,14 +471,22 @@ First implement the ErrorListener interface in the client class. Then you need t
 
 
 [source,java]
-----myClient.addErrorListener(this);----
+
+----
+myClient.addErrorListener(this);
+----
+
 In the class that implements the ErrorListener, a method would of been added call handleError(Client s, Throwable t). Inside this method to get you started, you going to want to listen for an error. To do this you're going to want a bit of code like this.
 
 
 [source,java]
-----if(t instanceof exception) {
+
+----
+if(t instanceof exception) {
      //Add your own code here
-}----
+}
+----
+
 Replace *exception* part in the *if* statement for the type of exception that you would like it to handle.
 
 
@@ -405,8 +497,12 @@ SpiderMonkey supports both UDP (unreliable, fast) and TCP (reliable, slow) trans
 
 
 [source,java]
-----message1.setReliable(true); // TCP
-message2.setReliable(false); // UDP----
+
+----
+message1.setReliable(true); // TCP
+message2.setReliable(false); // UDP
+----
+
 *  Choose reliable and slow transport for messages, if you want to make certain the message is delivered (resent) when lost, and if the order of a series of messages is relevant. E.g. game actions such as “1. wield weapon, 2. attack, 3. dodge.
 *  Choose unreliable and fast transport for messages if the next message makes any previously delayed or lost message obsolete and synchronizes the state again. E.g. a series of new locations while walking.
 
@@ -420,7 +516,11 @@ Multithreading means that you create a Callable. A Callable is a Java class repr
 
 
 [source,java]
-----app.enqueue(callable);----
+
+----
+app.enqueue(callable);
+----
+
 Learn more about using <<jme3/advanced/multithreading#,multithreading>> in jME3 here.
 
 

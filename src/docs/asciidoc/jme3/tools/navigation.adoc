@@ -98,22 +98,30 @@ The following converts a latitude/longitude coordinate pair into a JME world-uni
 
 
 [source,java]
-----try {
+
+----
+try {
     int worldWidth = 800;
     MapModel3D m = new MapModel3D(worldWidth);
     Vector3f v = m.toWorldUnit(new Position(-53, 8.0));
-} catch (InvalidPositionException e) { e.printStackTrace(); }----
+} catch (InvalidPositionException e) { e.printStackTrace(); }
+----
+
 To convert world units into latitude/longitude coordinates, use the map model’s toPosition method:
 
 
 [source,java]
-----try { 
+
+----
+try { 
      int worldWidth = 800; MapModel3D m = new MapModel3D(worldWidth); 
      Position pos = m.toPosition(new Vector3f(10, 10, 10)); 
      System.out.println("Latitude: " + pos.getLatitude() + " Longitude: " + pos.getLongitude());
 } catch (InvalidPositionException e) { 
      e.printStackTrace(); 
-}----
+}
+----
+
 Navigational calculations are performed inside the `NavCalculator` class.
 
 
@@ -138,7 +146,9 @@ This is implemented as follows where `RLSailing` and `Position` are wrapper clas
 
 
 [source,java]
-----public RLSailing mercatorSailing(Position p1, Position p2) { 
+
+----
+public RLSailing mercatorSailing(Position p1, Position p2) { 
      double dLat = computeDLat(p1.getLatitude(), p2.getLatitude());
      if (dLat == 0) { 
           RLSailing rl = planeSailing(p1, p2); return rl;
@@ -152,7 +162,9 @@ This is implemented as follows where `RLSailing` and `Position` are wrapper clas
      RLSailing rl = new RLSailing(degCrs, (float) distance);
      trueCourse = rl.getCourse(); 
      return rl;
-}----
+}
+----
+
 where _dmp_ refers to the difference in meridional parts.
 
 
@@ -169,7 +181,9 @@ Where m1 and m2 refer to the meridional parts of the offset and destination poin
 
 
 [source,java]
-----public static double computeDMPClarkeSpheroid(double lat1, double lat2) { 
+
+----
+public static double computeDMPClarkeSpheroid(double lat1, double lat2) { 
      double absLat1 = Math.abs(lat1); double absLat2 = Math.abs(lat2);
      double m1 = (7915.704468 * (Math.log(Math.tan(Math.toRadians(45 + (absLat1 / 2)))) / Math.log(10)) - 23.268932 * Math.sin(Math.toRadians(absLat1)) - 0.052500 * Math.pow(Math.sin(Math.toRadians(absLat1)), 3) - 0.000213 * Math.pow(Math.sin(Math.toRadians(absLat1)), 5));
 double m2 = (7915.704468 * (Math.log(Math.tan(Math.toRadians(45 + (absLat2 / 2)))) / Math.log(10))
@@ -179,7 +193,9 @@ double m2 = (7915.704468 * (Math.log(Math.tan(Math.toRadians(45 + (absLat2 / 2))
      } else { 
           return m1 + m2;
      }
-}----
+}
+----
+
 *Course Conversion*
 The conversion of a true course to its equivalent compass course (i.e. con- version of true course to the targets course over ground (COG) where ’true course’ is defined as the course to be steered from true north3) as used by the `mercatorSailing` method is achieved by subtracting the course variation from the true course, where variation is the angular difference between true north and the direction of the Earth’s magnetic field (consequently variation is termed East or West depending on the target’s position relative to true north).
 Given the true course between two positions, the COG is calculated by calling NavCalculator.convertCourse(tc, p1, p2)
@@ -210,11 +226,15 @@ Which can be determined as follows:
 
 
 [source,java]
-----try { 
+
+----
+try { 
      double bearing = NavCalculator.computeBearing(new Position(-53.6, 8.1), new Position(-53, 8. 
   } catch (InvalidPositionException e) {
      e.printStackTrace();
-  }----
+  }
+----
+
 [1] Nathaniel Bowditch (1995), The American Practical Navigator,. United States Government, National Ocean Service Publishing.
 [2] Gebruers C., “JMarine
 

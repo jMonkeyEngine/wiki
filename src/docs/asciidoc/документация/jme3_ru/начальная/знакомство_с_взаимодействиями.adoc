@@ -25,7 +25,9 @@ image::jme3/beginner/beginner-picking.png[beginner-picking.png,with="",height=""
 == Пример кода
 
 [source,java]
-----package jme3test.helloworld;
+
+----
+package jme3test.helloworld;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.collision.CollisionResult;
@@ -173,7 +175,9 @@ public class HelloPicking extends SimpleApplication {
     golem.addLight(sun);
     return golem;
   }
-}----
+}
+----
+
 Вы должны увидеть четыре цветных кубика зависшими над серым полом, и перекрестие. Цельтесь перекрестием и нажмите кнопку мыши или нажмите пробел, чтобы стрелять. Место попадания помечается красной точкой.
 
 
@@ -226,7 +230,9 @@ public class HelloPicking extends SimpleApplication {
 
 
 [source,java]
+
 ----
+
   Node shootables;
   Geometry mark;
   
@@ -243,7 +249,9 @@ public class HelloPicking extends SimpleApplication {
     shootables.attachChild(makeCube("the Sheriff",  0f, 1f,-2f));
     shootables.attachChild(makeCube("the Deputy",   1f, 0f, -4));
     shootables.attachChild(makeFloor());
-  }----
+  }
+----
+
 
 === Setting Up the Input Listener
 
@@ -251,7 +259,9 @@ public class HelloPicking extends SimpleApplication {
 
 
 [source,java]
+
 ----
+
   /** Объявление действия "Shoot" и triggers. */
   private void initKeys() {
     inputManager.addMapping("Shoot",                   // Объявить...
@@ -259,7 +269,9 @@ public class HelloPicking extends SimpleApplication {
       new MouseButtonTrigger(MouseInput.BUTTON_LEFT)); // триггер 2: нажатие левой кнопки мыши
     inputManager.addListener(actionListener, "Shoot"); // ... и добавить.
   }
+
 ----
+
 
 === Picking Action Using Crosshairs
 
@@ -276,7 +288,9 @@ public class HelloPicking extends SimpleApplication {
 
 
 [source,java]
-----  /** Реализация действия "Shoot": определить, что было попадание и как реагировать. */
+
+----
+  /** Реализация действия "Shoot": определить, что было попадание и как реагировать. */
   private ActionListener actionListener = new ActionListener() {
     @Override
     public void onAction(String name, boolean keyPressed, float tpf) {
@@ -310,7 +324,9 @@ public class HelloPicking extends SimpleApplication {
         }
       }
     }
-  };----
+  };
+----
+
 *Совет:* Обратите внимание, как вы используете предоставленный метод `results.getClosestCollision().getContactPoint()` для определения местоположения _ближайших_ попаданий. Если ваша игра включает “weapon(оружие) или “spell(заклинание) которое может попасть в несколько целей, вы можете также перебирать по списку результатов, и взаимодействовать с каждым из них.
 
 
@@ -327,7 +343,9 @@ public class HelloPicking extends SimpleApplication {
 .  Сбор пересечений между ray и всеми узлами в списке результатов.
 
 [source,java]
-----...
+
+----
+...
 CollisionResults results = new CollisionResults();
 Vector2f click2d = inputManager.getCursorPosition();
 Vector3f click3d = cam.getWorldCoordinates(
@@ -336,7 +354,9 @@ Vector3f dir = cam.getWorldCoordinates(
     new Vector2f(click2d.x, click2d.y), 1f).subtractLocal(click3d).normalizeLocal();
 Ray ray = new Ray(click3d, dir);
 shootables.collideWith(ray, results);
-...----
+...
+----
+
 Используйте вместе с `inputManager.setCursorVisible(true)` чтобы убедиться, что курсор будет виден.
 
 

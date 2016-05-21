@@ -30,13 +30,17 @@ A Cinematic is like a movie script for a node.
 
 
 [source,java]
-----Cinematic cinematic = new Cinematic(sceneNode, duration);
+
+----
+Cinematic cinematic = new Cinematic(sceneNode, duration);
 cinematic.addCinematicEvent(starttime1, event1);
 cinematic.addCinematicEvent(starttime2, event2);
 cinematic.addCinematicEvent(starttime2, event3);
 ...
 stateManager.attach(cinematic);
+
 ----
+
 .  Create one Cinematic per scripted scene.
 **  `sceneNode` is the node containing the scene (can be the rootNode).
 **  `duration` is the duration of the whole scene in seconds.
@@ -103,7 +107,11 @@ A MotionEvent moves a Spatial along a complex path.
 
 
 [source,java]
-----MotionEvent events= new MotionEvent (thingNode, path);----
+
+----
+MotionEvent events= new MotionEvent (thingNode, path);
+----
+
 Details of the constructor:
 
 
@@ -159,7 +167,11 @@ A SoundEventplays a sound as part of the cinematic.
 
 
 [source,java]
-----SoundEvent( audioPath, isStream, duration, loopMode )----
+
+----
+SoundEvent( audioPath, isStream, duration, loopMode )
+----
+
 Details of the constructor:
 
 
@@ -175,12 +187,20 @@ A GuiEventshows or hide a NiftyGUI as part of a cinematic.
 
 
 [source,java]
-----GuiEvent( screen, duration, loopMode )----
+
+----
+GuiEvent( screen, duration, loopMode )
+----
+
 You must use this together with bindUI() to specify the Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++ XML file that you want to load:
 
 
 [source,java]
-----cinematic.bindUi("Interface/subtitle.xml");----
+
+----
+cinematic.bindUi("Interface/subtitle.xml");
+----
+
 Details of the constructor:
 
 
@@ -195,7 +215,11 @@ An AnimationEvent triggers an animation as part of a cinematic.
 
 
 [source,java]
-----AnimationEvent( thingNode, animationName, duration, loopMode )----
+
+----
+AnimationEvent( thingNode, animationName, duration, loopMode )
+----
+
 Details of the constructor:
 
 
@@ -214,27 +238,39 @@ First you have to bind a camera to the cinematic with a unique name. You'll be p
 
 
 [source,java]
+
 ----
+
  CameraNode camNode = cinematic.bindCamera("topView", cam);
+
 ----
+
 then you can do whatever you want with this camera node : place it so that you have a the camera angle you'd like, attach it to a motion event to have some camera scrolling, attach control of your own that give it whatever behavior you'd like.
 In the above example, I want it to be a top view of the scene looking at the world origin.
 
 
 [source,java]
+
 ----
+
  //set its position
  camNode.setLocalTranslation(new Vector3f(0, 50, 0));
  // set it to look at the world origin
  camNode.lookAt(Vector3F.ZERO, Vector3f.UNIT_Y);
+
 ----
+
 Then i just have to schedule its activation in the cinematic. I want it to get activated 3 seconds after the start of the cinematic so I just have to do 
 
 
 [source,java]
+
 ----
+
  cinematic.activateCamera(3,”topView”);
+
 ----
+
 
 === Customizations
 
@@ -251,7 +287,9 @@ You can also create new CinematicEvent by extending link:https://github.com/jMon
 === CinematicEventListener
 
 [source,java]
-----CinematicEventListener cel = new CinematicEventListener() {
+
+----
+CinematicEventListener cel = new CinematicEventListener() {
   public void onPlay(CinematicEvent cinematic) {
     chaseCam.setEnabled(false);
     System.out.println("play");
@@ -267,7 +305,9 @@ You can also create new CinematicEvent by extending link:https://github.com/jMon
     System.out.println("stop");
   }
 }
-cinematic.addListener(cel);----
+cinematic.addListener(cel);
+----
+
 
 === Physics Interaction
 

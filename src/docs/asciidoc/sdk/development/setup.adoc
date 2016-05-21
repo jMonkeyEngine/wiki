@@ -79,7 +79,9 @@ As normally only the module project is being built on the server, any projects t
 
 
 [source,xml]
+
 ----
+
 <target name="init" depends="basic-init,files-init,build-init,-javac-init,-build-subproject"/>
 <target name="-build-subproject">
     <ant dir="./AI" inheritall="false" inheritrefs="false" target="clean"/>
@@ -89,6 +91,8 @@ As normally only the module project is being built on the server, any projects t
     <zip basedir="./AI/src" file="release/libs/jME3-ai-sources.zip"/>
     <copy file="./AI/dist/jME3-ai.jar" todir="release/libs"/>
 </target>
+
 ----
+
 *Note that for the module version number to increase automatically on a commit to the library project, the library project has to be a subfolder of the main module project.*
 

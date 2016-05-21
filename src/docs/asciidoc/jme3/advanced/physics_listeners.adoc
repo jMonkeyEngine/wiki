@@ -25,7 +25,9 @@ The shape of the ghost depends on the CollisionShape that you gave the GhostCont
 
 
 [source,java]
+
 ----
+
 GhostControl ghost = new GhostControl(
   new BoxCollisionShape(new Vector3f(1,1,1)));  // a box-shaped ghost
 Node node = new Node("a ghost-controlled thing");
@@ -35,7 +37,9 @@ node.addControl(ghost);                         // the ghost follows this node
 // attach everything to activate it
 rootNode.attachChild(node);
 getPhysicsSpace().add(ghost);
-----[cols="2", options="header"]
+
+----
+[cols="2", options="header"]
 |===
 
 a|Ghost methods
@@ -78,8 +82,12 @@ Here's is the declaration of an examplary Physics Control that listens to ticks.
 
 
 [source,java]
-----public class MyCustomControl
-    extends RigidBodyControl implements PhysicsTickListener { ... }----
+
+----
+public class MyCustomControl
+    extends RigidBodyControl implements PhysicsTickListener { ... }
+----
+
 When you implement the interface, you have to implement `physicsTick()` and `preTick()` methods.
 
 
@@ -90,7 +98,9 @@ The tpf value is time per frame in seconds. You can use it as a factor to time a
 
 
 [source,java]
+
 ----
+
 @override
 public void prePhysicsTick(PhysicsSpace space, float tpf){
   // apply state changes ...
@@ -99,7 +109,9 @@ public void prePhysicsTick(PhysicsSpace space, float tpf){
 public void physicsTick(PhysicsSpace space, float tpf){
   // poll game state ...
 }
+
 ----
+
 
 == Physics Collision Listener
 
@@ -125,12 +137,16 @@ You need to add the PhysicsCollisionListener to the physics space before collisi
 
 
 [source,java]
-----public class MyCustomControl extends RigidBodyControl
+
+----
+public class MyCustomControl extends RigidBodyControl
     implements PhysicsCollisionListener {
     public MyCustomControl() {
         bulletAppState.getPhysicsSpace().addCollisionListener(this);
         ...
-    }----
+    }
+----
+
 To respond to the PhysicsCollisionEvent you now have to override the `collision()` method in MyCustomControl. This gives you access to the `event` object. Mostly you will be interested in the identity of any two nodes that collided: `event.getNodeA()` and `event.getNodeB()`.
 
 
@@ -138,7 +154,9 @@ After you identify the colliding nodes, specify the action to trigger when this 
 
 
 [source,java]
+
 ----
+
     public void collision(PhysicsCollisionEvent event) {
         if ( event.getNodeA().getName().equals("player") ) {
             final Node node = event.getNodeA();
@@ -147,7 +165,9 @@ After you identify the colliding nodes, specify the action to trigger when this 
             final Node node = event.getNodeB();
             /** ... do something with the node ... */
         }
-    }----
+    }
+----
+
 
 
 
@@ -196,5 +216,9 @@ For example, for a click-to-select, you only care if the selection ray collides 
 
 
 [source,java]
-----myNode.getControl(RigidBodyControl.class).setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_02);
-myNode.getControl(RigidBodyControl.class).setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_02);----<tags><tag target="documentation" /><tag target="physics" /><tag target="collision" /><tag target="forces" /><tag target="interaction" /></tags>
+
+----
+myNode.getControl(RigidBodyControl.class).setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_02);
+myNode.getControl(RigidBodyControl.class).setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_02);
+----
+<tags><tag target="documentation" /><tag target="physics" /><tag target="collision" /><tag target="forces" /><tag target="interaction" /></tags>

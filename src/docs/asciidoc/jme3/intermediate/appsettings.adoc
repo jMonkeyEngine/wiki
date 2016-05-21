@@ -18,14 +18,18 @@ Specify settings for a game (here called `MyGame`, or whatever you called your S
 
 
 [source,java]
-----public static void main(String[] args) {
+
+----
+public static void main(String[] args) {
   AppSettings settings = new AppSettings(true);
   settings.setResolution(640,480);
   // ... other properties, see below
   MyGame app = new MyGame(); 
   app.setSettings(settings);
   app.start();
-}----
+}
+----
+
 Set the boolean in the AppSettings contructor to true if you want to keep the default settings for values that you do not specify. Set this parameter to false if you want the application to load user settings from previous launches. In either case you can still customize individual settings.
 
 
@@ -33,7 +37,9 @@ This example toggles the settings to fullscreen while the game is already runnin
 
 
 [source,java]
-----public void toggleToFullscreen() {
+
+----
+public void toggleToFullscreen() {
   GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
   DisplayMode[] modes = device.getDisplayModes();
   int i=0; // note: there are usually several, let's pick the first
@@ -43,7 +49,9 @@ This example toggles the settings to fullscreen while the game is already runnin
   settings.setFullscreen(device.isFullScreenSupported());
   app.setSettings(settings);
   app.restart(); // restart the context to apply changes
-}----
+}
+----
+
 
 == Properties
 [cols="3", options="header"]
@@ -207,10 +215,14 @@ Provide the unique name of your jME3 application as the String argument. For exa
 
 
 [source,java]
+
 ----
+
     try { settings.save("com.foo.MyCoolGame3"); } 
     catch (BackingStoreException ex) { /** could not save settings */ }
+
 ----
+
 *  On Windows, the preferences are saved under the following registry key: +
 `HKEY_CURRENT_USER\Software\JavaSoft\Prefs\com\foo\MyCoolGame3`
 *  On Linux, the preferences are saved in an XML file under: +

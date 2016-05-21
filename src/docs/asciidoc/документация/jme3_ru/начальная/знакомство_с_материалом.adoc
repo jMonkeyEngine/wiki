@@ -20,7 +20,9 @@ image::jme3/beginner/beginner-materials.png[beginner-materials.png,with="320",he
 == Пример кода
 
 [source,java]
-----package jme3test.helloworld;
+
+----
+package jme3test.helloworld;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.light.DirectionalLight;
@@ -99,7 +101,9 @@ public class HelloMaterial extends SimpleApplication {
 
   }
 }
+
 ----
+
 Вы должны увидеть
 
 
@@ -116,7 +120,9 @@ public class HelloMaterial extends SimpleApplication {
 
 
 [source,java]
+
 ----
+
     /** Простой текстурированный куб -- в хорошем MIP map качества. */
     Box cube1Mesh = new Box( 1f,1f,1f);
     Geometry cube1Geo = new Geometry("My Textured Box", cube1Mesh);
@@ -128,7 +134,9 @@ public class HelloMaterial extends SimpleApplication {
     cube1Mat.setTexture("ColorMap", cube1Tex);
     cube1Geo.setMaterial(cube1Mat);
     rootNode.attachChild(cube1Geo);
+
 ----
+
 Вот что мы сделали: для создания текстурированной box
 
 
@@ -153,7 +161,9 @@ public class HelloMaterial extends SimpleApplication {
 Этот рендер bucket гарантирует что объекты стоящие за прозрачным объектом, нарисуются правильно.
 
 [source,java]
+
 ----
+
     /** Полупрозрачные/прозрачные текстуры, похожими на оконное стекло. */
     Box cube2Mesh = new Box( 1f,1f,0.01f);
     Geometry cube2Geo = new Geometry("window frame", cube2Mesh);
@@ -165,7 +175,9 @@ public class HelloMaterial extends SimpleApplication {
     cube2Geo.setQueueBucket(Bucket.Transparent);                        // !
     cube2Geo.setMaterial(cube2Mat);
     rootNode.attachChild(cube2Geo);
+
 ----
+
 Для непрозрачных объектов, порядок прорисовки не так важно, потому что z-буфер уже отслеживает, является ли пиксель за чем-то еще или нет, и цвет непрозрачного пикселя не зависит от пикселей под ним, поэтому непрозрачные Геометрии могут быть нарисованы в любом порядке.
 
 
@@ -197,57 +209,93 @@ public class HelloMaterial extends SimpleApplication {
 
 .  Создаем Геометрию от Сферической формы. Обратите внимание, что эта форма является обычной гладкой сеткой сферы. 
 [source,java]
+
 ----
+
     Sphere sphereMesh = new Sphere(32,32, 2f);
-    Geometry sphereGeo = new Geometry("Shiny rock", sphereMesh);----
+    Geometry sphereGeo = new Geometry("Shiny rock", sphereMesh);
+----
+
 ..  (Только для сфер) Измените TextureMode сферы что бы сделать квадратные текстуры проекта лучше выглядящими на сфере.
 [source,java]
+
 ----
-    sphereMesh.setTextureMode(Sphere.TextureMode.Projected);----
+
+    sphereMesh.setTextureMode(Sphere.TextureMode.Projected);
+----
+
 ..  Необходимо создать TangentBinormals для сетки, что бы вы могли использовать NormalMap слой текстуры.
 [source,java]
+
 ----
-    TangentBinormalGenerator.generate(sphereMesh);----
+
+    TangentBinormalGenerator.generate(sphereMesh);
+----
+
 
 .  Создадим материал, основанный на `Lighting.j3md` материале по умолчанию.
 [source,java]
+
 ----
+
     Material sphereMat = new Material(assetManager, 
-        "Common/MatDefs/Light/Lighting.j3md");----
+        "Common/MatDefs/Light/Lighting.j3md");
+----
+
 ..  Возьмем стандартную каменистую текстур для `DiffuseMap` слоя. +
 
 image::http///jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Textures/Terrain/Pond/Pond.jpg[Pond.jpg,with="64",height="64",align="right"]
 
 [source,java]
+
 ----
+
     sphereMat.setTexture("DiffuseMap", 
         assetManager.loadTexture("Textures/Terrain/Pond/Pond.jpg"));
+
 ----
+
 ..  Возьмем для “NormalMap, слой содержащий раздолбанности. NormalMap был создан для конкретно этой DiffuseMap с помощью специального инструмента (например Blender). 
 image::http///jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Textures/Terrain/Pond/Pond_normal.png[Pond_normal.png,with="64",height="64",align="right"]
  
 [source,java]
+
 ----
+
     sphereMat.setTexture("NormalMap", 
-        assetManager.loadTexture("Textures/Terrain/Pond/Pond_normal.png"));----
+        assetManager.loadTexture("Textures/Terrain/Pond/Pond_normal.png"));
+----
+
 ..  Установите блеск материала в диапазоне от 1 до 128. Для камня подходит, низкий нечетких блеска. Используйте цвет материала, что бы задать блестящий зеркальный цвет. 
 [source,java]
+
 ----
+
     sphereMat.setBoolean("UseMaterialColors",true);    
     sphereMat.setColor("Diffuse",ColorRGBA.White);  // минимальный цвет материал 
     sphereMat.setColor("Specular",ColorRGBA.White); // для блеска
-    sphereMat.setFloat("Shininess", 64f); // [1,128] для блеска----
+    sphereMat.setFloat("Shininess", 64f); // [1,128] для блеска
+----
+
 
 .  Присвоим созданный материал Геометрии.
 [source,java]
+
 ----
-    sphereGeo.setMaterial(sphereMat);----
+
+    sphereGeo.setMaterial(sphereMat);
+----
+
 .  Немного переместим и повернем геометрию, чтобы расположить её лучше. 
 [source,java]
+
 ----
+
     sphereGeo.setLocalTranslation(0,2,-2); // Переместите её немного
     sphereGeo.rotate(1.6f, 0, 0);          // Поверните её немного
-    rootNode.attachChild(sphereGeo);----
+    rootNode.attachChild(sphereGeo);
+----
+
 
 Запомните, что любой материала на основе Lighting.j3md требует источника света, как показано в полном примере кода выше.
 
@@ -307,7 +355,9 @@ Shininess : Float
 
 .  Создайте простой текстовый файл в папке проекта `assets/Materials/MyCustomMaterial.j3m` со следующим содержимым:
 [source]
-----Material My shiny custom material : Common/MatDefs/Light/Lighting.j3md {
+
+----
+Material My shiny custom material : Common/MatDefs/Light/Lighting.j3md {
      MaterialParameters {
         DiffuseMap : Textures/Terrain/Pond/Pond.jpg
         NormalMap : Textures/Terrain/Pond/Pond_normal.png
@@ -317,7 +367,9 @@ Shininess : Float
         Shininess : 64.0
      }
 }
+
 ----
+
 **  Обратите внимание, что `Material`  это фиксированное ключевое слово.
 **  Обратите внимание, что `My shiny custom material`  это строка, которую вы можете использовать, чтобы описать материал.
 **  Обратите внимание, как код задает все те же свойства, что мы задавали ранее!
@@ -325,9 +377,13 @@ Shininess : Float
 .  В примере кода, закомментируйте восемь строк, которые содержат `sphereMat`.
 .  Ниже этой строке, добавьте следующую строку: 
 [source,java]
-----sphereGeo.setMaterial((Material) assetManager.loadMaterial( 
-    "Materials/MyCustomMaterial.j3m"));
+
 ----
+sphereGeo.setMaterial((Material) assetManager.loadMaterial( 
+    "Materials/MyCustomMaterial.j3m"));
+
+----
+
 .  Запустите приложение. Результат будет один и тот же.
 
 С этот новый пользовательский материал `MyCustomMaterial.j3m` занимает всего одну строку. Вы заменили восемь строк задающих материал на одну строку, которой загружается пользовательский материал из файла. Использовать .j3m файлы очень удобно, если вы используете один и тот же материал часто.

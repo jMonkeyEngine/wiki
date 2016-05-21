@@ -12,7 +12,9 @@ The directory structure will look as follows:
 
 
 [source]
+
 ----
+
 jme3/
 jme3/lib
 jme3/src
@@ -21,7 +23,9 @@ HelloJME3/
 HelloJME3/lib
 HelloJME3/assets
 HelloJME3/src
-...----
+...
+----
+
 
 == Installing the JME3 Framework
 
@@ -29,21 +33,29 @@ To install the development version of jme3, link:http://updates.jmonkeyengine.or
 
 
 [source]
+
 ----
+
 mkdir jme3
 cd jme3
 unzip jME3_01-18-2011.zip
+
 ----
+
 Alternatively, you can build JME3 from the sources. (Recommended for JME3 developers.)
 
 
 [source]
+
 ----
+
 svn checkout https://jmonkeyengine.googlecode.com/svn/branches/3.0final/engine jme3
 cd jme3
 ant run
 cd ..
+
 ----
+
 If you see a Test Chooser application open now, the build was successful. *Tip:* Use just `ant` instead of `ant run` to build the libraries without running the demos.
 
 
@@ -54,11 +66,15 @@ First we set up the directory and source package structure for your game project
 
 
 [source]
+
 ----
+
 mkdir HelloJME3
 mkdir HelloJME3/src
 mkdir HelloJME3/src/hello
+
 ----
+
 
 == Libraries
 
@@ -66,20 +82,28 @@ Next you copy the necessary JAR libraries from the download to your project. You
 
 
 [source]
+
 ----
+
 mkdir HelloJME3/build 
 mkdir HelloJME3/lib
 cp jme3/lib/*.* HelloJME3/lib
+
 ----
+
 If you have built JME3 from the sources, then the copy paths are different:
 
 
 [source]
+
 ----
+
 mkdir HelloJME3/build 
 mkdir HelloJME3/lib
 cp jme3/dist/*.* HelloJME3/lib
+
 ----
+
 
 === Sample Code
 
@@ -87,7 +111,9 @@ To test your setup, create the file `HelloJME3/src/hello/HelloJME3.java` with an
 
 
 [source,java]
+
 ----
+
 package hello;
 
 import com.jme3.app.SimpleApplication;
@@ -114,7 +140,9 @@ public class HelloJME3 extends SimpleApplication {
         geom.setMaterial(mat);
         rootNode.attachChild(geom);
     }
-}----
+}
+----
+
 
 == Build and Run
 
@@ -122,17 +150,25 @@ We build the sample application into the build directory…
 
 
 [source]
+
 ----
+
 cd HelloJME3
 javac -d build -cp "lib/eventbus-1.4.jar:lib/j-ogg-oggd.jar:lib/j-ogg-vorbisd.jar:lib/jME3-lwjgl-natives.jar:lib/jbullet.jar:lib/jinput.jar:lib/lwjgl.jar:lib/stack-alloc.jar:lib/vecmath.jar:lib/xmlpull-xpp3-1.1.4c.jar:lib/jME3-blender.jar:lib/jME3-core.jar:lib/jME3-desktop.jar:lib/jME3-jogg.jar:lib/jME3-plugins.jar:lib/jME3-terrain.jar:lib/jME3-testdata.jar:lib/jME3-niftygui.jar:lib/nifty-default-controls.jar:lib/nifty-examples.jar:lib/nifty-style-black.jar:lib/nifty.jar:." src/hello/HelloJME3.java 
+
 ----
+
 … and run it.
 
 
 [source]
+
 ----
+
 cd build
-java -cp "../lib/eventbus-1.4.jar:../lib/j-ogg-oggd.jar:../lib/j-ogg-vorbisd.jar:../lib/jME3-lwjgl-natives.jar:../lib/jbullet.jar:../lib/jinput.jar:../lib/lwjgl.jar:../lib/stack-alloc.jar:../lib/vecmath.jar:../lib/xmlpull-xpp3-1.1.4c.jar:../lib/jME3-blender.jar:../lib/jME3-core.jar:../lib/jME3-desktop.jar:../lib/jME3-jogg.jar:../lib/jME3-plugins.jar:../lib/jME3-terrain.jar:../lib/jME3-testdata.jar:../lib/jME3-niftygui.jar:../lib/nifty-default-controls.jar:../lib/nifty-examples.jar:../lib/nifty-style-black.jar:../lib/nifty.jar:." hello/HelloJME3----
+java -cp "../lib/eventbus-1.4.jar:../lib/j-ogg-oggd.jar:../lib/j-ogg-vorbisd.jar:../lib/jME3-lwjgl-natives.jar:../lib/jbullet.jar:../lib/jinput.jar:../lib/lwjgl.jar:../lib/stack-alloc.jar:../lib/vecmath.jar:../lib/xmlpull-xpp3-1.1.4c.jar:../lib/jME3-blender.jar:../lib/jME3-core.jar:../lib/jME3-desktop.jar:../lib/jME3-jogg.jar:../lib/jME3-plugins.jar:../lib/jME3-terrain.jar:../lib/jME3-testdata.jar:../lib/jME3-niftygui.jar:../lib/nifty-default-controls.jar:../lib/nifty-examples.jar:../lib/nifty-style-black.jar:../lib/nifty.jar:." hello/HelloJME3
+----
+
 Note: If you use Windows, the classpath separator is “; instead of “:.
 
 
@@ -146,7 +182,9 @@ For <<jme3/intermediate/multi-media_asset_pipeline#,multi-media files, models, a
 
 
 [source]
+
 ----
+
 cd HelloJME3
 mkdir assets
 mkdir assets/Interface
@@ -157,18 +195,24 @@ mkdir assets/Scenes
 mkdir assets/Shaders
 mkdir assets/Sounds
 mkdir assets/Textures
+
 ----
+
 This directory structure will allow <<jme3/intermediate/simpleapplication#,SimpleApplication>>'s default <<jme3/advanced/asset_manager#,AssetManager>> to load media files from your `assets` directory, like in this example:
 
 
 [source]
+
 ----
+
 import com.jme3.scene.Spatial;
 ...
   Spatial elephant = assetManager.loadModel("Models/Elephant/Elephant.meshxml");
   rootNode.attachChild(elephant);
 ...
+
 ----
+
 You will learn more about the asset manager and how to customize it later. For now feel free to structure your assets (images, textures, models) into further sub-directories, like in this example the `assets/models/Elephant` directory that contains the `elephant.meshxml` model and its materials.
 
 

@@ -112,7 +112,9 @@ Information relate to the orginal Magic card game:
 
 
 [source,java]
+
 ----
+
 String cardId=”"
 String name = “”
 String picture = “”
@@ -122,7 +124,9 @@ int defend = -1
 String cardType = “”
 
 String attribute = “”
+
 ----
+
 […full in the source code.The meanings are obvious.] 
 
 
@@ -134,7 +138,9 @@ This hold a link to the orginal Card in the CardLibrary, which keeps information
 
 
 [source,java]
+
 ----
+
 package magiccard.gameplay
  
 import com.jme3.scene.Spatial
@@ -185,7 +191,9 @@ public class Card  extends SpatialEntity{
         this.longDesc = orgCard.longDesc
     }
 }
+
 ----
+
 
 ==== Show the card
 
@@ -199,7 +207,9 @@ This is a part of the CardTable class which create and “attach” the Card spa
 
 
 [source,java]
+
 ----
+
     public void createCardOrg(){
         cardOrg = ((Node) ((Node) assetManager.loadModel(“Models/Cards/Template/card1.j3o”)).getChild(“Card”)).getChild(“Cube1″);
     }
@@ -221,7 +231,9 @@ This is a part of the CardTable class which create and “attach” the Card spa
         newCard.addControl(new CardSelectControl(worldManager,gamePlayManager));
         return newCard;
     }
+
 ----
+
 
 ==== Card movement
 
@@ -243,7 +255,9 @@ These 3 basic movement types are already enough to compose quite fascinated effe
 
 
 [source,java]
+
 ----
+
 package magiccard.gameplay
 
 import com.jme3.scene.control.AbstractControl
@@ -337,7 +351,9 @@ public class CardSpatialControl extends SpatialEntityControl{
         spatial.setLocalTranslation(oldPos.add(x,y,z));
     }
 }
+
 ----
+
 
 ==== More
 
@@ -382,7 +398,9 @@ This part
 *  load card models with texture (cover) and attach a CardControl to handle the Movement and highlight
 
 [source,java]
+
 ----
+
 package magiccard.gameplay
 
 import com.jme3.asset.AssetManager
@@ -536,7 +554,9 @@ return newCard;
 CardSpatialControl getCardControl(Spatial spatial){
 return spatial.getControl(CardSpatialControl.class)
 }
+
 ----
+
 These pieces help to find the exact location of card in each situation:
 
 
@@ -549,7 +569,9 @@ These pieces help to find the exact location of card in each situation:
 *  MagicPos
 
 [source,java]
+
 ----
+
 public void arrangeDeck(CardPlayer player){
 int numOfCards = player.currentDeck.cardList.size()
 
@@ -704,12 +726,16 @@ public Vector3f getCamPos(){
 return center.add(0f,-8f,20f)
 }
 
+
 ----
+
 This is the update hook of the Level. We update it by clean up and execute delayed actions!!!
 
 
 [source,java]
+
 ----
+
 public void simpleUpdate(float tpf){
 // see if anything queued
 for (Iterator it=actions.iterator(); it.hasNext(); ) {
@@ -722,12 +748,16 @@ it.remove();
 }
 }
 }
+
 ----
+
 Make a cool explosion effect by calling the Atom's ParticleFactory, play it when a card destroyed
 
 
 [source,java]
+
 ----
+
 void destroy(CardPlayer player,Card card){
 addExplosion(card.spatial.localTranslation)
 CardSpatialControl cc=getCardControl(card.spatial)
@@ -767,12 +797,16 @@ spark.setLocalTranslation(new Vector3f(0,0,-5f));
 explosionPrefab = pf.createExplosionNode();
 explosionPrefab.getControl(ExplosionNodeControl.class).setMaxTime(2f)
 }
+
 ----
+
 Load the card character 3d model for a specific card
 
 
 [source,java]
+
 ----
+
 public void loadCharacters(){
 
 Quaternion rot= new Quaternion().fromAngleAxis(FastMath.HALF_PI,Vector3f.UNIT_X)
@@ -801,7 +835,9 @@ lamp.setColor(ColorRGBA.White);
 levelNode.addLight(lamp);
 }
 }
+
 ----
+
 
 === Select
 
@@ -822,21 +858,31 @@ For this card game, we will implement a few things in this designed mechanic:
 ==== Select function:
 
 [source,java]
-----
 
 ----
+
+
+
+----
+
 
 ==== Select condition:
 
 [source,java]
-----
 
 ----
+
+
+
+----
+
 
 ==== Select Control:
 
 [source,java]
+
 ----
+
 package magiccard.stage;
 
 import com.jme3.math.Vector3f;
@@ -991,7 +1037,9 @@ isHighlight = false;
 }
 }
 }
+
 ----
+
 
 ==== Cached conditions – Rules:
 
@@ -1002,7 +1050,9 @@ We use a Groovy Map cardSelectRules to save all rule in form of Closure that det
 
 
 [source,java]
+
 ----
+
 public Map cardSelectRules=[:];
 void createSelectConditions(){
 // RULE : The card is in hand
@@ -1068,7 +1118,9 @@ return false;
 cardSelectRules["noneSelect"] =new ClosureSelectCondition(noneSelect);
 
 }
+
 ----
+
 
 === States
 

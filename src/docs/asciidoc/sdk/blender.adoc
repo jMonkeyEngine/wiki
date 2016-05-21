@@ -116,7 +116,9 @@ You have two loaders available.
 *  BlenderLoader that loads the whole scene. It returns an instance of  LoadingResults that contains all the data loaded from the scene.
 
 [source,java]
+
 ----
+
 public static class LoadingResults extends Spatial {
         /** Bitwise mask of features that are to be loaded. */
         private final int featuresToLoad;
@@ -136,23 +138,33 @@ public static class LoadingResults extends Spatial {
         private List<Light> lights;
 	/** Access Methods goes here. */
 }
+
 ----
+
 *  BlenderModelLoader loads only the model node and should be used if you have a single model in a file.
 
 To register the model do the following:
 
 
 [source,java]
+
 ----
+
 assetManager.registerLoader(BlenderLoader.class, "blend");
+
 ----
+
 or
 
 
 [source,java]
+
 ----
+
 assetManager.registerLoader(BlenderModelLoader.class, "blend");
+
 ----
+
 *  The last thing to do is to create a proper key.
 
 You can use com.jme3.asset.BlenderKey for that.

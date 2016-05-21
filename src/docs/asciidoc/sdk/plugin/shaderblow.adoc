@@ -66,7 +66,9 @@ Add a link:http://code.google.com/p/jmonkeyplatform-contributions/source/browse/
 
 
 [source,java]
+
 ----
+
 		this.fpp = new FilterPostProcessor(this.assetManager);
 		this.fpp.setNumSamples(4);
 		this.colorScale = new ColorScaleFilter();
@@ -76,7 +78,9 @@ Add a link:http://code.google.com/p/jmonkeyplatform-contributions/source/browse/
 		// colorScale.setColorDensity(0.5f); // Set Color intensity (between 0 and 1);
 
 		this.viewPort.addProcessor(this.fpp);
+
 ----
+
 link:http://code.google.com/p/jmonkeyplatform-contributions/source/browse/trunk/ShaderBlow/test-src/com/shaderblow/test/filter/color/TestColorScale.java[TestCase]
 
 
@@ -107,12 +111,16 @@ Add a link:http://code.google.com/p/jmonkeyplatform-contributions/source/browse/
 
 
 [source,java]
+
 ----
+
         this.fpp = new FilterPostProcessor(this.assetManager); // Create FilterPostProcessor instance
         this.grayScale = new GrayScaleFilter();  // Create GrayScaleFilter instance
         this.fpp.addFilter(this.grayScale);  // Add GrayScaleFilter instance to FilterPostProcessor instance
         this.viewPort.addProcessor(this.fpp);  // Add FilterPostProcessor instance to ViewPort
+
 ----
+
 link:http://code.google.com/p/jmonkeyplatform-contributions/source/browse/trunk/ShaderBlow/test-src/com/shaderblow/test/filter/grayscale/TestGrayScale.java[TestCase]
 
 
@@ -152,12 +160,16 @@ Add a link:http://code.google.com/p/jmonkeyplatform-contributions/source/browse/
 
 
 [source,java]
+
 ----
+
         this.fpp = new FilterPostProcessor(this.assetManager); // Create FilterPostProcessor instance
         this.oldFilmFilter= new OldFilmFilter();  // Create OldFilmFilter instance
         this.fpp.addFilter(this.oldFilmFilter);  // Add OldFilmFilter instance to FilterPostProcessor instance
         this.viewPort.addProcessor(this.fpp);  // Add FilterPostProcessor instance to ViewPort
+
 ----
+
 link:http://code.google.com/p/jmonkeyplatform-contributions/source/browse/trunk/shaderblowlib/ShaderBlow/test-src/com/shaderblow/test/filter/oldfilm/TestOldFilm.java[TestCase]
 
 
@@ -267,7 +279,9 @@ The shader requires 2 parameters:
 
 
 [source,java]
+
 ----
+
         // Create a material instance using ShaderBlow's Lighting.j3md
         final Material mat = new Material(this.assetManager, "ShaderBlow/MatDefs/Dissolve/Lighting.j3md");
         mat.setColor("Ambient", ColorRGBA.Blue);
@@ -285,7 +299,9 @@ The shader requires 2 parameters:
         final Box b = new Box(Vector3f.ZERO, 1, 1, 1);
         final Geometry geom = new Geometry("Box", b);
         geom.setMaterial(mat);
+
 ----
+
 link:http://code.google.com/p/jmonkeyplatform-contributions/source/browse/trunk/ShaderBlow/test-src/com/shaderblow/test/dissolve/TestDissolve.java[TestCase]
 
 
@@ -337,7 +353,9 @@ image:sdk/plugin/fakeobject.png[fakeobject.png,with="100",height=""]
 
 
 [source,java]
+
 ----
+
         // Create the material
         final Material mat = new Material(this.assetManager,
                 "ShaderBlow/MatDefs/FakeParticleBlow/FakeParticleBlow.j3md");
@@ -371,15 +389,21 @@ image:sdk/plugin/fakeobject.png[fakeobject.png,with="100",height=""]
         geom.setMaterial(mat); // Assign the material to the spatial
         TangentBinormalGenerator.generate(geom);
         geom.setQueueBucket(Bucket.Transparent); // Remenber to set the queue bucket to transparent for the spatial
+
 ----
+
 To get green/yellow/blue fog (not transparency):
 
 
 [source,java]
+
 ----
+
         mat.getAdditionalRenderState().setBlendMode(BlendMode.AlphaAdditive);
         final ColorRGBA fogColor = ColorRGBA.Blue.clone();
+
 ----
+
 Several planes geometries will be required as there will be AlphaAdditive material.
 
 
@@ -430,7 +454,9 @@ Add the control instance to the spatial.
 
 
 [source,java]
+
 ----
+
         // Create spatial to be the shield
         final Sphere sphere = new Sphere(30, 30, 1.2f);
         final Geometry shield = new Geometry("forceshield", sphere);
@@ -447,12 +473,16 @@ Add the control instance to the spatial.
         this.forceShieldControl.setTexture(this.assetManager.loadTexture("TestTextures/ForceShield/fs_texture.png"));
 
         // this.forceShieldControl.setEnabled(false); // Enable, disable animation.
+
 ----
+
 Use _forceShieldControl.registerHit(final Vector3f position)_ method to register a hit.
 
 
 [source,java]
+
 ----
+
             final CollisionResults crs = new CollisionResults();
             this.rootNode.collideWith(new Ray(this.cam.getLocation(), this.cam.getDirection()), crs);
             if (crs.getClosestCollision() != null) {
@@ -461,7 +491,9 @@ Use _forceShieldControl.registerHit(final Vector3f position)_ method to register
                 this.forceShieldControl.registerHit(crs.getClosestCollision().getContactPoint());
 
             }
+
 ----
+
 link:http://code.google.com/p/jmonkeyplatform-contributions/source/browse/trunk/ShaderBlow/test-src/com/shaderblow/test/forceshield/TestShield.java[TestCase]
 
 
@@ -504,7 +536,9 @@ Create a material (by SDK or by code) using link:http://code.google.com/p/jmonke
 
 
 [source]
+
 ----
+
 Material My Material : ShaderBlow/MatDefs/MatCap/MatCap.j3md {
      MaterialParameters {
         DiffuseMap : Flip TestTextures/matcaps/met2.png
@@ -522,7 +556,9 @@ Material My Material : ShaderBlow/MatDefs/MatCap/MatCap.j3md {
     AdditionalRenderState {
     }
 }
+
 ----
+
 link:http://code.google.com/p/jmonkeyplatform-contributions/source/browse/trunk/ShaderBlow/test-src/com/shaderblow/test/matcap/TestMatCap.java[TestCase]
 
 
@@ -558,7 +594,9 @@ Create a material (by SDK or by code) using link:http://code.google.com/p/jmonke
 
 
 [source]
+
 ----
+
 Material My Material : ShaderBlow/MatDefs/Glass/Glass.j3md {
      MaterialParameters {
 
@@ -579,7 +617,9 @@ Material My Material : ShaderBlow/MatDefs/Glass/Glass.j3md {
     AdditionalRenderState {
     }
 }
+
 ----
+
 link:http://code.google.com/p/jmonkeyplatform-contributions/source/browse/trunk/ShaderBlow/test-src/com/shaderblow/test/glass/TestGlass.java[TestCase]
 
 

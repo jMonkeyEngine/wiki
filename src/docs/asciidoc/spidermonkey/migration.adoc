@@ -91,16 +91,22 @@ In general, the actual client changes are of one of the following to types:
 
 
 [source,java]
+
 ----
+
   Client client = new Client( host, port );
   ...becomes...
   Client client = Network.connectToServer( host, port );
+
 ----
+
 In the delayed connection case:
 
 
 [source,java]
+
 ----
+
   Client client = new Client();
   ...
   client.connect( host, port );
@@ -108,7 +114,9 @@ In the delayed connection case:
   NetworkClient client = Network.createClient();
   ...
   client.connectToServer( host, port );
+
 ----
+
 NetworkClient is a Client.  The rest of your code can just refer to Client.
 Those are the easy changes.  The trickier ones are related to the MessageListeners.
 
@@ -121,7 +129,9 @@ Depending on whether your MessageListener is being added to the Client or the Se
 
 
 [source,java]
+
 ----
+
 // An example client-specific listener
 public class MyClientListener implements MessageListener<Client> {
     public void messageReceived( Client source, Message m ) {
@@ -140,7 +150,9 @@ public class MyGenericListener implements MessageListener<MessageConnection> {
         ... do limited stuff....
     }
 }
+
 ----
+
 Your listeners will fall into one of those three categories.
 +++<abbr title="Application Programming Interface">API</abbr>+++
 

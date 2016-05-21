@@ -91,8 +91,12 @@ a|Usage
 a|initialize(asm,app)
 a|When this AppState is added to the game, the RenderThread initializes the AppState and then calls this method. You can modify the scene graph from here (e.g. attach nodes). To get access to the main app, call: 
 [source,java]
-----super.initialize(stateManager, app);
-this.app = (SimpleApplication) app;----
+
+----
+super.initialize(stateManager, app);
+this.app = (SimpleApplication) app;
+----
+
 
 a|cleanup()
 a|This method is executed after you remove the AppState from the game. Here you implement clean-up code for when this state is detached. You can modify the scene graph from here (e.g. detach nodes).
@@ -132,7 +136,9 @@ Definition:
 
 
 [source,java]
-----public class MyAppState extends AbstractAppState {
+
+----
+public class MyAppState extends AbstractAppState {
 
     private SimpleApplication app;
 
@@ -179,7 +185,9 @@ Definition:
       x.setUserData(...);                                 // call some methods...
     }
     
-}----
+}
+----
+
 
 == Pausing and Unpausing
 
@@ -227,7 +235,11 @@ You can use custom accessors to get data from AppStates, to set data in AppState
 
 
 [source,java]
-----this.app.getStateManager().getState(MyAppState.class).doSomeCustomStuffInThisState();----
+
+----
+this.app.getStateManager().getState(MyAppState.class).doSomeCustomStuffInThisState();
+----
+
 
 === Initialize Familiar Class Fields
 
@@ -235,7 +247,9 @@ To access class fields of the SimpleApplication the way you are used to, initial
 
 
 [source,java]
+
 ----
+
 private SimpleApplication app;
 private Node              rootNode;
 private AssetManager      assetManager;
@@ -257,4 +271,5 @@ public class MyAppState extends AbstractAppState {
     this.physics      = this.stateManager.getState(BulletAppState.class);
   }
 }
+
 ----

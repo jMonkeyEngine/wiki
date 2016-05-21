@@ -37,7 +37,9 @@ Particle effects can be animated (e.g. sparks, drops) and static (strands of gra
 == Sample Code
 
 [source,java]
-----package jme3test.helloworld;
+
+----
+package jme3test.helloworld;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.effect.ParticleEmitter;
@@ -95,7 +97,9 @@ public class HelloEffects extends SimpleApplication {
     rootNode.attachChild(debris);
     debris.emitAllParticles();
   }
-}----
+}
+----
+
 You should see an explosion that sends debris flying, and a fire.
 link:https://github.com/jMonkeyEngine/jmonkeyengine/tree/master/jme3-examples/src/main/java/jme3test/effect[More example code is here.]
 
@@ -115,7 +119,9 @@ Setting emitter textures works just as you have already learned in previous chap
 
 
 [source,java]
+
 ----
+
     ParticleEmitter debris = 
             new ParticleEmitter("Debris", ParticleMesh.Type.Triangle, 10);
     Material debris_mat = new Material(assetManager, 
@@ -127,7 +133,9 @@ Setting emitter textures works just as you have already learned in previous chap
     debris.setImagesY(3); // 3x3 texture animation
     debris.setSelectRandomImage(true);
         ...
+
 ----
+
 .  Create a material and load the texture.
 .  Tell the Emitter into how many animation steps (x*y) the texture is divided. +
 The debris texture has 3x3 frames.
@@ -184,7 +192,9 @@ For your game, you will likely create custom particle textures. Look at the fire
 
 
 [source,java]
+
 ----
+
     ParticleEmitter fire = 
             new ParticleEmitter("Emitter", ParticleMesh.Type.Triangle, 30);
     Material mat_red = new Material(assetManager, 
@@ -196,7 +206,9 @@ For your game, you will likely create custom particle textures. Look at the fire
     fire.setImagesY(2); // 2x2 texture animation
     fire.setEndColor(  new ColorRGBA(1f, 0f, 0f, 1f));   // red
     fire.setStartColor(new ColorRGBA(1f, 1f, 0f, 0.5f)); // yellow
-    ----
+    
+----
+
 
 image::http///jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Effects/Explosion/flame.png[flame.png,with="96",height="96",align="right"]
 
@@ -231,7 +243,11 @@ Example:
 
 
 [source,java]
-----emitter.setShape(new EmitterPointShape(Vector3f.ZERO));----
+
+----
+emitter.setShape(new EmitterPointShape(Vector3f.ZERO));
+----
+
 You create different effects by changing the emitter parameters: 
 
 [cols="4", options="header"]

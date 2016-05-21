@@ -9,7 +9,9 @@ AppState example:
 
 
 [source,java]
+
 ----
+
 public class XMLScreenSample extends AbstractAppState {
     Screen screen;
     Window inventory;
@@ -60,7 +62,9 @@ public class XMLScreenSample extends AbstractAppState {
         // Now our UI component scene fades out when the AppState in unloaded.
     }
 }
+
 ----
+
 
 ==== A Look at the XML Layout
 
@@ -68,7 +72,9 @@ Below is a rather large XML layout with a bunch of different components, method 
 
 
 [source,xml]
+
 ----
+
 <root>
     <screen>
         <component type="Window" id="InventoryWindowID" position="15%,15%" dimensions="70%,70%">
@@ -164,23 +170,33 @@ Below is a rather large XML layout with a bunch of different components, method 
         </component>
     </screen>
 </root>
+
 ----
+
 In the above example, you'll see that many components have defined an eventMethod tag.  The eventMethod tag defines the AppState method that will be used as a passthrough from the defined control event method.  There is no need to define parameters for these methods, as they simply forward the event methods parameters directly to the defined app state method.  Like so:
 
 
 [source,xml]
+
 ----
+
 <eventMethod name="onButtonMouseLeftUp" stateMethodName="invSubmitButtonClick" />
+
 ----
+
 Now we'll need to add the invSubmitButtonClick method to the AbstractAppState that called the parseLayout method, like so:
 
 
 [source,java]
+
 ----
+
 public void invSubmitButtonClick(MouseButtonEvent evt, boolean isToggled) {
     // We'll show the AlertBox we defined in the layout when this button is clicked
     ((AlertBox)screen.getElementById("Alert1")).showWithEffect();
 }
+
 ----
+
 The quickest way of getting the definition of the event method you are creating, is to create a new instance of the class the event is being passed from, implementing it's abstract methods &amp; cutt/paste the needed method.  Then you simply rename it.
 

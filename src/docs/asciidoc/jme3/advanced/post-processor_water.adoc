@@ -60,7 +60,9 @@ This is how you use the water filter post-processor code in your code:
 
 
 [source,java]
+
 ----
+
 private FilterPostProcessor fpp;
 private WaterFilter water;
 private Vector3f lightDir = new Vector3f(-4.9f, -1.3f, 5.9f); // same as light source
@@ -76,7 +78,9 @@ public void simpleInitApp() {
   viewPort.addProcessor(fpp);
   ...
 }
+
 ----
+
 Usually you make the water reflect everything attached to the rootNode. But you can also give a custom node (a subnode of the rootNode) to the WaterFilter constructor that has only a subset of scene nodes attached. This would be a relevant optimization if you have lots of nodes that are far away from the water, or covered, and will never be reflected.
 
 
@@ -87,7 +91,9 @@ If you want waves, set the water height in the update loop. We reuse the initial
 
 
 [source,java]
+
 ----
+
 private float time = 0.0f;
 private float waterHeight = 0.0f; 
 
@@ -98,7 +104,9 @@ public void simpleUpdate(float tpf) {
   waterHeight = (float) Math.cos(((time * 0.6f) % FastMath.TWO_PI)) * 1.5f;
   water.setWaterHeight(initialWaterHeight + waterHeight);
 }
+
 ----
+
 
 === Optional: Water Wave and Color Effects
 
@@ -279,11 +287,15 @@ You should also add audio nodes with water sounds to complete the effect.
 
 
 [source,java]
+
 ----
+
 AudioNode waves = new AudioNode(assetManager, "Sounds/Environment/Ocean Waves.ogg", false);
 waves.setLooping(true);
 audioRenderer.playSource(waves);
+
 ----
+
 See also: <<jme3/advanced/audio#,audio>>. 
 
 '''

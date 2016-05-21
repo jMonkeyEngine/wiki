@@ -125,7 +125,11 @@ In your IDE, use code completion to quickly look up Trigger literals. In the jMo
 == 2. Remove Default Trigger Mappings
 
 [source]
-----inputManager.deleteMapping( SimpleApplication.INPUT_MAPPING_MEMORY );----[cols="3", options="header"]
+
+----
+inputManager.deleteMapping( SimpleApplication.INPUT_MAPPING_MEMORY );
+----
+[cols="3", options="header"]
 |===
 
 a|Default Mapping
@@ -160,22 +164,30 @@ Give the mapping a meaningful name. The name should reflect the action, not the 
 
 
 [source,java]
+
 ----
+
 inputManager.addMapping("Pause Game", new KeyTrigger(KeyInput.KEY_P));
 inputManager.addMapping("Rotate",     new KeyTrigger(KeyInput.KEY_SPACE));
 ...
+
 ----
+
 There are cases where you may want to provide more then one trigger for one action. For example, some users prefer the WASD keys to navigate, while others prefer the arrow keys. Add several triggers for one mapping, by separating the Trigger objects with commas:
 
 
 [source,java]
+
 ----
+
 inputManager.addMapping("Left",  new KeyTrigger(KeyInput.KEY_A), 
                                  new KeyTrigger(KeyInput.KEY_LEFT)); // A and left arrow
 inputManager.addMapping("Right", new KeyTrigger(KeyInput.KEY_D), 
                                  new KeyTrigger(KeyInput.KEY_RIGHT)); // D and right arrow
                                  ...
+
 ----
+
 
 == 4. Create Listeners
 
@@ -202,12 +214,16 @@ The jME3 input manager supports two types of event listeners for inputs: AnalogL
 *  
 
 [source,java]
+
 ----
+
 private ActionListener actionListener = new ActionListener() {
   public void onAction(String name, boolean keyPressed, float tpf) {
      /** TODO: test for mapping names and implement actions */
   }
-};----
+};
+----
+
 
 === AnalogListener
 
@@ -224,12 +240,16 @@ private ActionListener actionListener = new ActionListener() {
 
 
 [source,java]
+
 ----
+
 private AnalogListener analogListener = new AnalogListener() {
   public void onAnalog(String name, float keyPressed, float tpf) {
      /** TODO: test for mapping names and implement actions */
   }
-};----
+};
+----
+
 
 == 4. Register Mappings to Listeners
 
@@ -240,12 +260,20 @@ In the following example, you register the “Pause Game mapping to the `actionL
 
 
 [source,java]
-----inputManager.addListener(actionListener, new String[]{"Pause Game"});----
+
+----
+inputManager.addListener(actionListener, new String[]{"Pause Game"});
+----
+
 In the following example, you register navigational mappings to the `analogListener` object, because walking is a continuous action. Players typically keep the key pressed to express continuity, for example when they want to “walk on or “accelerate.
 
 
 [source,java]
-----inputManager.addListener(analogListener, new String[]{"Left", "Right"});----
+
+----
+inputManager.addListener(analogListener, new String[]{"Left", "Right"});
+----
+
 As you see, you can add several listeners in one String array. You can call the addListener() method more than once, each time with a subset of your list, if that helps you keep you code tidy. Again, the Listeners do not care about actual which keys are configured, you only register named trigger mappings.
 
 
@@ -271,7 +299,9 @@ In the most common case, you want an action to be triggered once, in the moment 
 
 
 [source,java]
-----private ActionListener actionListener = new ActionListener() {
+
+----
+private ActionListener actionListener = new ActionListener() {
     public void onAction(String name, boolean keyPressed, float tpf) {
 
       if (name.equals("Pause Game") && !keyPressed) { // test?
@@ -282,7 +312,9 @@ In the most common case, you want an action to be triggered once, in the moment 
 
     }
   };
+
 ----
+
 
 === AnalogListener
 
@@ -290,7 +322,9 @@ The following example shows how you define actions with an AnalogListener. These
 
 
 [source,java]
-----private AnalogListener analogListener = new AnalogListener() {
+
+----
+private AnalogListener analogListener = new AnalogListener() {
     public void onAnalog(String name, float value, float tpf) {
 
       if (name.equals("Rotate")) {         // test?
@@ -300,7 +334,9 @@ The following example shows how you define actions with an AnalogListener. These
       if ...
 
     }
-  };----
+  };
+----
+
 
 == Let Users Remap Keys
 

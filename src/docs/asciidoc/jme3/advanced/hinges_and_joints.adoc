@@ -37,14 +37,18 @@ The hookNode is the fixed point from which the pendulum hangs. It has no mass.
 
 
 [source,java]
+
 ----
+
 Node hookNode=PhysicsTestHelper.createPhysicsTestNode(
     assetManager, new BoxCollisionShape(new Vector3f( .1f, .1f, .1f)),0);
 hookNode.getControl(RigidBodyControl.class).setPhysicsLocation(new Vector3f(0f,0,0f));
 
 rootNode.attachChild(hookNode);
 getPhysicsSpace().add(hookNode);
+
 ----
+
 For a rope bridge, there would be two fixed nodes where the bridge is attached to the mountainside.
 
 
@@ -55,13 +59,17 @@ The pendulumNode is the dynamic part of the construction. It has a mass.
 
 
 [source,java]
+
 ----
+
 Node pendulumNode=PhysicsTestHelper.createPhysicsTestNode(
     assetManager, new BoxCollisionShape(new Vector3f( .3f, .3f, .3f)),1);
 pendulumNode.getControl(RigidBodyControl.class).setPhysicsLocation(new Vector3f(0f,-1,0f));
 rootNode.attachChild(pendulumNode);
 getPhysicsSpace().add(pendulumNode);
+
 ----
+
 For a rope bridge, each set of planks would be one dynamic node. 
 
 
@@ -94,7 +102,9 @@ You create the HingeJoint after you have created the nodes that are to be chaine
 
 
 [source,java]
+
 ----
+
 private HingeJoint joint;
 ...
   public void simpleInitApp() {
@@ -108,7 +118,9 @@ private HingeJoint joint;
                      new Vector3f(0f, 1f, 0f),  // pivot point local to B 
                      Vector3f.UNIT_Z,           // DoF Axis of A (Z axis)
                      Vector3f.UNIT_Z  );        // DoF Axis of B (Z axis)
+
 ----
+
 The pivot point's position will be at `(0,0,0)` in the global 3D space. In A's local space that is at `(0,0,0)` and in B's local space (remember B's position was set to `(0,-1,0)`) that is at `(0,1,0)`.
 
 
@@ -127,7 +139,11 @@ Remember to add all joint objects to the physicsSpace, just like you would do wi
 
 
 [source,java]
-----bulletAppState.getPhysicsSpace().add(joint);----
+
+----
+bulletAppState.getPhysicsSpace().add(joint);
+----
+
 *Tip:* If you want the joint to be visible, attach a geometry to the dynamic node, and translate it to its start position.
 
 
@@ -144,8 +160,12 @@ The method to call on the joint is `enableMotor()`.
 
 
 [source,java]
-----joint.enableMotor(true, 1, .1f);
-joint.enableMotor(true, -1, .1f);----
+
+----
+joint.enableMotor(true, 1, .1f);
+joint.enableMotor(true, -1, .1f);
+----
+
 .  Switch the motor on by supplying `true`
 .  Specify the velocity with which the joint should rotate around the specified axis. 
 **  Use positive and negative numbers to change direction.
@@ -156,4 +176,8 @@ When you disable the motor, the chained nodes are exposed to gravity again:
 
 
 [source,java]
-----joint.enableMotor(false, 0, 0);----<tags><tag target="documentation" /><tag target="physics" /><tag target="joint" /></tags>
+
+----
+joint.enableMotor(false, 0, 0);
+----
+<tags><tag target="documentation" /><tag target="physics" /><tag target="joint" /></tags>

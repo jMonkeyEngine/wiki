@@ -16,7 +16,9 @@ Every game has its custom keybindings, and this tutorial explains how you define
 == Sample Code
 
 [source,java]
+
 ----
+
 package jme3test.helloworld;
 
 import com.jme3.app.SimpleApplication;
@@ -95,7 +97,9 @@ public class HelloInput extends SimpleApplication {
     }
   };
 }
+
 ----
+
 Build and run the example.
 
 
@@ -126,14 +130,18 @@ Have a look at the code:
 .  You map the `Pause`, `Left`, `Right` mappings to the P, J, K keys, respectively. 
 
 [source,java]
+
 ----
+
     // You can map one or several inputs to one named action
     inputManager.addMapping("Pause",  new KeyTrigger(KeyInput.KEY_P));
     inputManager.addMapping("Left",   new KeyTrigger(KeyInput.KEY_J));
     inputManager.addMapping("Right",  new KeyTrigger(KeyInput.KEY_K));
     inputManager.addMapping("Rotate", new KeyTrigger(KeyInput.KEY_SPACE),
                                       new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
+
 ----
+
 Now you need to register your trigger mappings.
 
 
@@ -141,11 +149,15 @@ Now you need to register your trigger mappings.
 .  You register the movement actions to the AnalogListener, because they are gradual actions.
 
 [source,java]
+
 ----
+
     // Add the names to the action listener.
     inputManager.addListener(actionListener, new String[]{"Pause"});
     inputManager.addListener(analogListener, new String[]{"Left", "Right", "Rotate"});
+
 ----
+
 This code goes into the `simpleInitApp()` method. But since we will likely add many keybindings, we extract these lines and wrap them in an auxiliary method, `initKeys()`. The `initKeys()` method is not part of the Input Controls interface – you can name it whatever you like. Just don't forget to call your method from the `initSimpleApp()` method.
 
 
@@ -167,7 +179,9 @@ In this example, we trigger the following actions:
 .  We also want to check the boolean `isRunning` before any action (other than unpausing) is executed.
 
 [source,java]
+
 ----
+
   private ActionListener actionListener = new ActionListener() {
     public void onAction(String name, boolean keyPressed, float tpf) {
       if (name.equals("Pause") && !keyPressed) {
@@ -194,12 +208,16 @@ In this example, we trigger the following actions:
         System.out.println("Press P to unpause.");
       }
     }
-  };----
+  };
+----
+
 You can also combine both listeners into one, the engine will send the appropriate events to each method (onAction or onAnalog). For example:
 
 
 [source,java]
+
 ----
+
   private MyCombinedListener combinedListener = new MyCombinedListener();
 
   private static class MyCombinedListener implements AnalogListener, ActionListener {
@@ -229,7 +247,9 @@ You can also combine both listeners into one, the engine will send the appropria
   }
 // ...
 inputManager.addListener(combinedListener, new String[]{"Pause", "Left", "Right", "Rotate"});
-  ----
+  
+----
+
 It's okay to use only one of the two Listeners, and not implement the other one, if you are not using this type of interaction. In the following, we have a closer look how to decide which of the two listeners is best suited for which situation.
 
 
@@ -265,9 +285,13 @@ Mappings registered to the *ActionListener* are digital either-or actions – �
 
 
 [source,java]
-----      if (name.equals("Pause") && !keyPressed) {
+
+----
+      if (name.equals("Pause") && !keyPressed) {
         isRunning = !isRunning;
-      }----
+      }
+----
+
 
 == Table of Triggers
 
@@ -315,10 +339,14 @@ KeyTrigger(KeyInput.KEY_LEFT), KeyTrigger(KeyInput.KEY_RIGHT)
 
 .  In which situation would it be better to use variables instead of literals for the MouseInput/KeyInput definitions? 
 [source,java]
-----int usersPauseKey = KeyInput.KEY_P; 
+
+----
+int usersPauseKey = KeyInput.KEY_P; 
 ...
 inputManager.addMapping("Pause",  new KeyTrigger(usersPauseKey));
+
 ----
+
 
 link:http://jmonkeyengine.org/wiki/doku.php/jm3:solutions[http://jmonkeyengine.org/wiki/doku.php/jm3:solutions]
 +++<u>Be sure to try to solve them for yourself first!</u>+++

@@ -12,7 +12,11 @@ If you want to support special properties of your objects that are not exposed b
 
 
 [source]
-----@org.openide.util.lookup.ServiceProvider(service=SceneExplorerNode.class)----
+
+----
+@org.openide.util.lookup.ServiceProvider(service=SceneExplorerNode.class)
+----
+
  above the body of your class. Thats all, your Spatial type will automatically be used and displayed in the SceneExplorer. Make sure you register a jar with the used classes in the plugin preferences under “wrapped libraries, otherwise the IDE cannot access those classes.
 
 
@@ -28,7 +32,9 @@ The SceneExplorerNode can be used for Spatial and Control type objects.
 === Spatial Example
 
 [source,java]
+
 ----
+
 @org.openide.util.lookup.ServiceProvider(service=SceneExplorerNode.class)
 public class JmeGeometry extends JmeSpatial {
 
@@ -90,12 +96,16 @@ public class JmeGeometry extends JmeSpatial {
         return new org.openide.nodes.Node[]{new JmeGeometry((Geometry) key, children).setReadOnly(readOnly)};
     }
 }
+
 ----
+
 
 === Control Example
 
 [source,java]
+
 ----
+
 @org.openide.util.lookup.ServiceProvider(service=SceneExplorerNode.class)
 public class JmeGhostControl extends AbstractSceneExplorerNode {
 
@@ -192,7 +202,9 @@ public class JmeGhostControl extends AbstractSceneExplorerNode {
     public org.openide.nodes.Node[] createNodes(Object key, DataObject key2, boolean cookie) {
         return new org.openide.nodes.Node[]{new JmeGhostControl((GhostControl) key, key2).setReadOnly(cookie)};
     }
-}----
+}
+----
+
 
 == Adding items to the add and tools menus
 
@@ -206,7 +218,9 @@ To add a new Tool, create a new AbstractToolAction:
 
 
 [source,java]
+
 ----
+
 @org.openide.util.lookup.ServiceProvider(service = ToolAction.class)
 public class GenerateTangentsTool extends AbstractToolAction {
 
@@ -237,12 +251,16 @@ public class GenerateTangentsTool extends AbstractToolAction {
         return JmeGeometry.class;
     }
 
-}----
+}
+----
+
 For a new Spatial or Control, use AbstractNewSpatialAction
 
 
 [source,java]
+
 ----
+
 @org.openide.util.lookup.ServiceProvider(service = NewSpatialAction.class)
 public class NewSpecialSpatialAction extends AbstractNewSpatialAction {
 
@@ -256,12 +274,16 @@ public class NewSpecialSpatialAction extends AbstractNewSpatialAction {
         return spatial;
     }
 }
+
 ----
+
 or AbstractNewControlAction:
 
 
 [source,java]
+
 ----
+
 @org.openide.util.lookup.ServiceProvider(service = NewControlAction.class)
 public class NewRigidBodyAction extends AbstractNewControlAction {
 
@@ -284,7 +306,9 @@ public class NewRigidBodyAction extends AbstractNewControlAction {
         return control;
     }
 }
+
 ----
+
 
 ==== Adding using a Wizard
 
@@ -295,7 +319,9 @@ A good example is the “Add SkyBox Wizard:
 
 
 [source,java]
+
 ----
+
 @org.openide.util.lookup.ServiceProvider(service = NewSpatialAction.class)
 public class AddSkyboxAction extends AbstractNewSpatialWizardAction {
 
@@ -382,6 +408,8 @@ public class AddSkyboxAction extends AbstractNewSpatialWizardAction {
         return panels;
     }
 }
+
 ----
+
 
 

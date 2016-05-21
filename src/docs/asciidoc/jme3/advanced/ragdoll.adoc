@@ -37,7 +37,9 @@ Since you're just creating the ragdoll for this example, all the limbs have the 
 
 
 [source,java]
+
 ----
+
 private Node createLimb(float width, float height, Vector3f location, boolean rotate) {
         int axis = rotate ? PhysicsSpace.AXIS_X : PhysicsSpace.AXIS_Y;
         CapsuleCollisionShape shape = new CapsuleCollisionShape(width, height, axis);
@@ -47,7 +49,9 @@ private Node createLimb(float width, float height, Vector3f location, boolean ro
         node.addControl(rigidBodyControl);
         return node;
 }
+
 ----
+
 You write a custom helper method to initialize the limbs. Look at the screenshot above for orientation.
 
 
@@ -57,7 +61,9 @@ You write a custom helper method to initialize the limbs. Look at the screenshot
 *  The shoulders and hips are _vertical_ cylinders, this is why we set the rotation to true.
 
 [source,java]
+
 ----
+
 Node shoulders = createLimb(0.2f, 1.0f, new Vector3f( 0.00f, 1.5f, 0), true);
 Node     uArmL = createLimb(0.2f, 0.5f, new Vector3f(-0.75f, 0.8f, 0), false);
 Node     uArmR = createLimb(0.2f, 0.5f, new Vector3f( 0.75f, 0.8f, 0), false);
@@ -69,7 +75,9 @@ Node     uLegL = createLimb(0.2f, 0.5f, new Vector3f(-0.25f,-1.2f, 0), false);
 Node     uLegR = createLimb(0.2f, 0.5f, new Vector3f( 0.25f,-1.2f, 0), false);
 Node     lLegL = createLimb(0.2f, 0.5f, new Vector3f(-0.25f,-2.2f, 0), false);
 Node     lLegR = createLimb(0.2f, 0.5f, new Vector3f( 0.25f,-2.2f, 0), false);
+
 ----
+
 You now have the outline of a person. But if you ran the application now, the individual limbs would fall down independently of one another – the ragdoll is still lacking joints.
 
 
@@ -83,7 +91,9 @@ As before, you write a small helper method. This time its purpose is to quickly 
 *  Use a ConeJoint, a special joint that approximates the degree of freedom that limbs typically have. The ConeJoint constructor requires the two nodes, and the two local pivot coordinates that we just determined.
 *  Set the joints limits to allow swinging, but not twisting.
 [source,java]
-----private PhysicsJoint join(Node A, Node B, Vector3f connectionPoint) {
+
+----
+private PhysicsJoint join(Node A, Node B, Vector3f connectionPoint) {
         Vector3f pivotA = A.worldToLocal(connectionPoint, new Vector3f());
         Vector3f pivotB = B.worldToLocal(connectionPoint, new Vector3f());
         ConeJoint joint = new ConeJoint(A.getControl(RigidBodyControl.class),
@@ -91,13 +101,17 @@ As before, you write a small helper method. This time its purpose is to quickly 
                                         pivotA, pivotB);
         joint.setLimit(1f, 1f, 0);
         return joint;
-}----
+}
+----
+
 
 Use the helper method to connect all limbs with joints where they belong, at one end of the limb.
 
 
 [source,java]
+
 ----
+
 join(body,  shoulders, new Vector3f( 0.00f,  1.4f, 0));
 join(body,       hips, new Vector3f( 0.00f, -0.5f, 0));
 join(uArmL, shoulders, new Vector3f(-0.75f,  1.4f, 0));
@@ -107,7 +121,9 @@ join(uArmR,     lArmR, new Vector3f( 0.75f,  0.4f, 0));
 join(uLegL,      hips, new Vector3f(-0.25f, -0.5f, 0));
 join(uLegR,      hips, new Vector3f( 0.25f, -0.5f, 0));
 join(uLegL,     lLegL, new Vector3f(-0.25f, -1.7f, 0));
-join(uLegR,     lLegR, new Vector3f( 0.25f, -1.7f, 0));----
+join(uLegR,     lLegR, new Vector3f( 0.25f, -1.7f, 0));
+----
+
 Now the ragdoll is connected. If you ran the app now, the doll would collapse, but the limbs would stay together.
 
 
@@ -118,7 +134,9 @@ We create one (non-physical) Node named ragDoll, and attach all other nodes to i
 
 
 [source,java]
+
 ----
+
 ragDoll.attachChild(shoulders);
 ragDoll.attachChild(body);
 ragDoll.attachChild(hips);
@@ -129,15 +147,21 @@ ragDoll.attachChild(lArmR);
 ragDoll.attachChild(uLegL);
 ragDoll.attachChild(uLegR);
 ragDoll.attachChild(lLegL);
-ragDoll.attachChild(lLegR);----
+ragDoll.attachChild(lLegR);
+----
+
 To use the ragdoll in a scene, we attach its main node to the rootNode, and to the PhysicsSpace.
 
 
 [source,java]
+
 ----
+
 rootNode.attachChild(ragDoll);
 bulletAppState.getPhysicsSpace().addAll(ragDoll);
+
 ----
+
 
 == Applying Forces
 
@@ -145,10 +169,14 @@ To pull the doll up, you could add an input handler that triggers the following 
 
 
 [source,java]
+
 ----
+
 Vector3f upforce = new Vector3f(0, 200, 0);
 shoulders.applyContinuousForce(true, upforce);
+
 ----
+
 We can use the action to pick the doll up and put it back on its feet, or what ever. Read more about <<jme3/advanced/physics#forcesmoving_physical_objects,Forces>> here.
 
 

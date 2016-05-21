@@ -37,7 +37,9 @@ Thanks to double1984 for contributing this fun sample!
 
 
 [source,java]
-----package jme3test.helloworld;
+
+----
+package jme3test.helloworld;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.asset.TextureKey;
@@ -230,7 +232,9 @@ public class HelloPhysics extends SimpleApplication {
     guiNode.attachChild(ch);
   }
 }
+
 ----
+
 You should see a brick wall. Click to shoot cannon balls. Watch the bricks fall and bounce off one another!
 
 
@@ -244,7 +248,9 @@ As always, start with a standard com.jme3.app.SimpleApplication. To activate phy
 
 
 [source,java]
+
 ----
+
 public class HelloPhysics extends SimpleApplication {
   private BulletAppState bulletAppState;
   
@@ -254,7 +260,9 @@ public class HelloPhysics extends SimpleApplication {
     ...
   }
   ...
-}----
+}
+----
+
 The BulletAppState gives the game access to a PhysicsSpace. The PhysicsSpace lets you use com.jme3.bullet.control.PhysicsControls that add physical properties to Nodes.
 
 
@@ -268,7 +276,9 @@ In this “shoot at the wall example, you use Geometries such as cannon balls an
 
 
 [source,java]
+
 ----
+
   /** Prepare geometries and physical nodes for bricks and cannon balls. */
   private static final Box    box;
   private static final Sphere sphere;
@@ -287,7 +297,9 @@ In this “shoot at the wall example, you use Geometries such as cannon balls an
     /** Initialize the floor geometry */
     floor = new Box(10f, 0.1f, 5f);
     floor.scaleTextureCoordinates(new Vector2f(3, 6));
-  }----
+  }
+----
+
 
 === RigidBodyControl: Brick
 
@@ -295,9 +307,13 @@ We want to create brick Geometries from those boxes. For each Geometry with phys
 
 
 [source,java]
+
 ----
+
   private RigidBodyControl brick_phy;
+
 ----
+
 The custom `makeBrick(loc)` methods creates individual bricks at the location `loc`. A brick has the following properties:
 
 
@@ -305,7 +321,9 @@ The custom `makeBrick(loc)` methods creates individual bricks at the location `l
 *  It has physical properties `brick_phy` (RigidBodyControl)
 
 [source,java]
+
 ----
+
   public void makeBrick(Vector3f loc) {
     /** Create a brick geometry and attach to scene graph. */
     Geometry brick_geo = new Geometry("brick", box);
@@ -318,7 +336,9 @@ The custom `makeBrick(loc)` methods creates individual bricks at the location `l
     /** Add physical brick to physics space. */
     brick_geo.addControl(brick_phy);
     bulletAppState.getPhysicsSpace().add(brick_phy);
-  }----
+  }
+----
+
 This code sample does the following:
 
 
@@ -344,7 +364,9 @@ You notice that the cannon ball is created in the same way, using the custom `ma
 *  It has physical properties `ball_phy` (RigidBodyControl)
 
 [source,java]
+
 ----
+
     /** Create a cannon ball geometry and attach to scene graph. */
     Geometry ball_geo = new Geometry("cannon ball", sphere);
     ball_geo.setMaterial(stone_mat);
@@ -358,7 +380,9 @@ You notice that the cannon ball is created in the same way, using the custom `ma
     bulletAppState.getPhysicsSpace().add(ball_phy);
     /** Accelerate the physcial ball to shoot it. */
     ball_phy.setLinearVelocity(cam.getDirection().mult(25));
-    ----
+    
+----
+
 This code sample does the following:
 
 
@@ -388,7 +412,9 @@ As before, you write a custom `initFloor()` method that creates a flat box with 
 *  It has physical properties `floor_phy` (RigidBodyControl)
 
 [source,java]
+
 ----
+
   public void initFloor() {
     Geometry floor_geo = new Geometry("Floor", floor);
     floor_geo.setMaterial(floor_mat);
@@ -398,7 +424,9 @@ As before, you write a custom `initFloor()` method that creates a flat box with 
     floor_phy = new RigidBodyControl(0.0f);
     floor_geo.addControl(floor_phy);
     bulletAppState.getPhysicsSpace().add(floor_phy);
-  }----
+  }
+----
+
 This code sample does the following:
 
 
@@ -435,24 +463,32 @@ In the `initInputs()` method, you add an input mapping that triggers a shoot act
 
 
 [source,java]
+
 ----
+
   private void initInputs() {
     inputManager.addMapping("shoot", 
             new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
     inputManager.addListener(actionListener, "shoot");
-  }----
+  }
+----
+
 You define the actual action of shooting a new cannon ball as follows:
 
 
 [source,java]
+
 ----
+
     private ActionListener actionListener = new ActionListener() {
         public void onAction(String name, boolean keyPressed, float tpf) {
             if (name.equals("shoot") && !keyPressed) {
                 makeCannonBall();
             }
         }
-    };----
+    };
+----
+
 In the moment the cannonball appears in the scene, it flies off with the velocity (and in the direction) that you specified using `setLinearVelocity()` inside `makeCannonBall()`. The newly created cannon ball flies off, hits the wall, and exerts a _physical force_ that impacts individual bricks.
 
 
@@ -482,7 +518,11 @@ Add the following line after the bulletAppState initialization.
 
 
 [source,java]
-----bulletAppState.getPhysicsSpace().enableDebug(assetManager);----
+
+----
+bulletAppState.getPhysicsSpace().enableDebug(assetManager);
+----
+
 Now you see the collisionShapes of the bricks and spheres, and the floor highlighted. 
 
 

@@ -26,7 +26,9 @@ Você aprendera que o grafo de cena representa o mundo 3D, e porque o nó raiz (
 == Amostra de código
 
 [source,java]
-----package jme3test.helloworld;
+
+----
+package jme3test.helloworld;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.material.Material;
@@ -78,7 +80,9 @@ public class HelloNode extends SimpleApplication {
         /** Rotaciona o nó pivô: Veja que ambas as caixas rotacionaram! */
         pivot.rotate(.4f,.4f,0f);
     }
-}----
+}
+----
+
 Construa e execute a amostra de código. Você deveria ver duas caixas coloridas inclinadas no mesmo ângulo.
 
 
@@ -150,14 +154,18 @@ O que acontece no trecho de código? Você usa o método `simpleInitApp()` que f
 **  Crie um material azul
 **  Aplique o material azul para a geometria da caixa (Box Geometry). 
 [source,java]
+
 ----
+
     Box box1 = new Box( Vector3f.ZERO, 1,1,1);
     Geometry blue = new Geometry("Box", box1);
     Material mat1 = new Material(assetManager,
       "Common/MatDefs/Misc/Unshaded.j3md");
     mat1.setColor("Color", ColorRGBA.Blue);
     blue.setMaterial(mat1);
-    blue.move(1,-1,1);----
+    blue.move(1,-1,1);
+----
+
 
 .  Você cria uma segunda geometria (Geometry) de caixa.
 **  Crie uma segunda forma caixa (Box) com o mesmo tamanho.
@@ -166,14 +174,18 @@ O que acontece no trecho de código? Você usa o método `simpleInitApp()` que f
 **  Crie um material vermelho
 **  Aplique o material vermelho para a geometria caixa (Box Geometry). 
 [source,java]
+
 ----
+
     Box box2 = new Box( Vector3f.ZERO, 1,1,1);
     Geometry red = new Geometry("Box", box2);
     Material mat2 = new Material(assetManager,
       "Common/MatDefs/Misc/Unshaded.j3md");
     mat2.setColor("Color", ColorRGBA.Red);
     red.setMaterial(mat2);
-    red.move(1,3,1);----
+    red.move(1,3,1);
+----
+
 
 .  Você cria um nó (Node) pivô. 
 **  Nomeie o nó “pivot.
@@ -181,24 +193,36 @@ O que acontece no trecho de código? Você usa o método `simpleInitApp()` que f
 **  Anexe o nó (Node) ao nó raiz (rootNode).
 **  O nó (Node) não tem aparência visível na cena. 
 [source,java]
+
 ----
+
     Node pivot = new Node("pivot");
-    rootNode.attachChild(pivot);----
+    rootNode.attachChild(pivot);
+----
+
 Se você executar a aplicação somente com o código dado até aqui, a cena parece vazia. Isto é porque o nó (Node) está invisível, e você não tem ainda anexado quaisquer geometrias (Geometries) visíveis para o nó raiz (rootNode).. 
 
 
 
 .  Anexe as duas caixas para o nó pivô 
 [source,java]
+
 ----
+
         pivot.attachChild(blue);
-        pivot.attachChild(red);----
+        pivot.attachChild(red);
+----
+
 Se você executar o aplicativo com somente o código dado até aqui, você vê dois cubos: Um vermelho imediatamente acima de um azul.
 
 
 .  Rotacione o nó pivô.
 [source,java]
-----        pivot.rotate( 0.4f , 0.4f , 0.0f );----
+
+----
+        pivot.rotate( 0.4f , 0.4f , 0.0f );
+----
+
  Se você executar o aplicativo agora, você verá duas caixas uma no topo da outra - ambas inclinadas no mesmo ângulo.
 
 
@@ -228,32 +252,60 @@ a| Solução!
 a| Crie um espacial (Spatial) 
 a| Crie uma forma malha (Mesh), envolva ela em uma geometria (Geometry), e dê a ela um Material. Por exemplo: 
 [source,java]
-----Box mesh = new Box(Vector3f.ZERO, 1, 1, 1); // a cuboid default mesh
+
+----
+Box mesh = new Box(Vector3f.ZERO, 1, 1, 1); // a cuboid default mesh
 Geometry thing = new Geometry("thing", mesh); 
 Material mat = new Material(assetManager,
    "Common/MatDefs/Misc/ShowNormals.j3md");
-thing.setMaterial(mat);----
+thing.setMaterial(mat);
+----
+
 
 a| Faça um objeto aparecer na cena 
 a| Anexe o espacial (Spatial) para o `nó raiz (rootNode)`, ou para qualquer no que esteja anexado para o nó raiz (rootNode). 
 [source,java]
-----rootNode.attachChild(thing);----
+
+----
+rootNode.attachChild(thing);
+----
+
 
 a| Remova objetos da cena 
 a| Retire o nó espacial (Spatial) do `nó raiz (rootNode)`, e de qualquer nó que esteja vinculado ao nó raiz (rootNode). 
 [source,java]
-----rootNode.detachChild(thing);----
+
+----
+rootNode.detachChild(thing);
+----
+
 [source,java]
-----rootNode.detachAllChildren();----
+
+----
+rootNode.detachAllChildren();
+----
+
 
 a| Ache um nó espacial na cena pelo nome do objeto, ou ID, ou por sua posição na hierarquia pai-criança. 
 a| Olhe na criança ou pai do nó:  
 [source,java]
-----Spatial thing = rootNode.getChild("thing");----
+
+----
+Spatial thing = rootNode.getChild("thing");
+----
+
 [source,java]
-----Spatial twentyThird = rootNode.getChild(22);----
+
+----
+Spatial twentyThird = rootNode.getChild(22);
+----
+
 [source,java]
-----Spatial parent = myNode.getParent();----
+
+----
+Spatial parent = myNode.getParent();
+----
+
 
 a| Especifique o que deveria ser carregado no início 
 a| Tudo que você inicializa e anexa ao `nó raiz (rootNode)` no método `simpleInitApp()` é parte da cena no início do jogo. 
@@ -284,12 +336,20 @@ Para mover um espacial (Spatial) para coordenadas específicas, tais como (0,40.
 
 
 [source,java]
-----thing.setLocalTranslation( new Vector3f( 0.0f, 40.2f, -2.0f ) );----
+
+----
+thing.setLocalTranslation( new Vector3f( 0.0f, 40.2f, -2.0f ) );
+----
+
  Para mover um espacial (Spatial) por uma certa quantia, e.g. mais acima (y=40.2f) e mais atrás (z=-2.0f): 
 
 
 [source,java]
-----thing.move( 0.0f, 40.2f, -2.0f );----
+
+----
+thing.move( 0.0f, 40.2f, -2.0f );
+----
+
  |+right -left|+up -down|+forward -backward|
 
 [cols="4", options="header"]
@@ -305,7 +365,11 @@ a|Especifique o fator de escalonamento em cada dimensão: tamanho, altura, compr
  Usando o mesmo valor para cada dimensão escalona proporcionalmente, valor diferentes esticam ele. +
  Para escalonar um espacial (Spatial) 10 vezes mais longo, um décimo da altura, e manter o mesmo comprimento:  
 [source,java]
-----thing.scale( 10.0f, 0.1f, 1.0f );----
+
+----
+thing.scale( 10.0f, 0.1f, 1.0f );
+----
+
 a|length
 a|height
 a|width
@@ -322,13 +386,21 @@ a| eixo Z
 a|Rotação 3-D é um pouco complicado (<<jme3/rotate#,aprenda os detalhes aqui>>)). em breve: Você pode rotacionar ao redor de três eixos: Pitch (X), yaw (Y), e roll (Z). Você pode especificar ângulos em graus por multiplicar o valor de graus com `FastMath.DEG_TO_RAD`. +
  Para rolar um objeto 180° ao redor do z axis: : 
 [source,java]
-----thing.rotate( 0f , 0f , 180*FastMath.DEG_TO_RAD );----
+
+----
+thing.rotate( 0f , 0f , 180*FastMath.DEG_TO_RAD );
+----
+
  Tip: Dica: Se sua idéia de jogo pede uma quantidade séria de rotações, é merecedor dar uma olhada em <<jme3/quaternion#,quaternion>>s, uma estrutura de dado que pode combinar e armazenar rotações eficientemente. 
 
 
 [source,java]
-----thing.setLocalRotation( 
-  new Quaternion().fromAngleAxis(180*FastMath.DEG_TO_RAD, new Vector3f(1,0,0)));----
+
+----
+thing.setLocalRotation( 
+  new Quaternion().fromAngleAxis(180*FastMath.DEG_TO_RAD, new Vector3f(1,0,0)));
+----
+
 a|pitch = fazer um sinal de sim com sua cabeça
 a|yaw = agitar sua cabeça
 a|roll = inclinar sua cabeça
@@ -380,12 +452,20 @@ Por exemplo, para adicionar um número de id customizado para um nó, você usar
 
 
 [source,java]
-----pivot.setUserData( "pivot id", 42 );----
+
+----
+pivot.setUserData( "pivot id", 42 );
+----
+
 Para ler o id do nó (Node) em outro lugar, você usaria:
 
 
 [source,java]
-----int id = pivot.getUserData( "pivot id" ); ----
+
+----
+int id = pivot.getUserData( "pivot id" ); 
+----
+
 Por usar diferentes chaves de Strings (aqui a chave é o `id do pivô`), você pode recuperar e configurar vários valores para quaisquer dados que o espacial (Spatial) precisa carregar. Quando você iniciar a escrever seu jogo, você talvez adicione um valor de combustível para um nó carro, valor de velocidade para um nó avião, ou número de moedas douradas para um nó jogador, e muito mais. Entretanto, deve-se notar que somente objetos customizados que implementam Savable podem ser passados.
 
 

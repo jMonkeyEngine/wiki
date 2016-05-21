@@ -27,7 +27,9 @@
 == Пример кода
 
 [source,java]
-----package jme3test.helloworld;
+
+----
+package jme3test.helloworld;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.material.Material;
@@ -78,7 +80,9 @@ public class HelloNode extends SimpleApplication {
         /** Поворот свободного узла: учтите, что это повернет оба куба! */
         pivot.rotate(.4f,.4f,0f);
     }
-}----
+}
+----
+
 Скомпилируйте и запустите этот пример. Вы увидите, что два цветных куба наклонены на одинаковый угол.
 
 
@@ -150,13 +154,17 @@ a| `rootNode` (корневой узел), этаж, объединяющий н
 **  Создается синий материал.
 **  Синий материал наносится на куб. 
 [source,java]
+
 ----
+
     Box box1 = new Box(1,1,1);
     Geometry blue = new Geometry("Box", box1);
     blue.setLocalTranslation(new Vector3f(1,-1,1));
     Material mat1 = new Material(assetManager,"Common/MatDefs/Misc/Unshaded.j3md");
     mat1.setColor("Color", ColorRGBA.Blue);
-    blue.setMaterial(mat1);----
+    blue.setMaterial(mat1);
+----
+
 
 .  Вы создаете второй куб
 **  Создается второй куб с таким же размером.
@@ -165,14 +173,18 @@ a| `rootNode` (корневой узел), этаж, объединяющий н
 **  Создается красный материал. 
 **  Красный материал применяется ко второму кубу. 
 [source,java]
+
 ----
+
     Box box2 = new Box(1,1,1);
     Geometry red = new Geometry("Box", box2);
     red.setLocalTranslation(new Vector3f(1,3,1));
     Material mat2 = new Material(assetManager,
       "Common/MatDefs/Misc/Unshaded.j3md");
     mat2.setColor("Color", ColorRGBA.Red);
-    red.setMaterial(mat2);----
+    red.setMaterial(mat2);
+----
+
 
 .  Вы создаете Node с именем pivot. 
 **  К Node применяется имя “pivot.
@@ -180,24 +192,36 @@ a| `rootNode` (корневой узел), этаж, объединяющий н
 **  Node прикрепляется к rootNode.
 **  Узел не имеет видимого проявления на сцене. 
 [source,java]
+
 ----
+
     Node pivot = new Node("pivot");
-    rootNode.attachChild(pivot);----
+    rootNode.attachChild(pivot);
+----
+
 Если вы запустите приложение приложение с кодом выше, сцена будет пустой. Это потому что узел невидим, и вы не прикрепили никакого видимого объекта к rootNode. 
 
 
 
 .  Прикрепление кубов к узлу pivot. 
 [source,java]
+
 ----
+
         pivot.attachChild(blue);
-        pivot.attachChild(red);----
+        pivot.attachChild(red);
+----
+
 Если вы запустите приложение с этим кодом, вы увидите два куба: красный расположен прямо над синим.
 
 
 .  Поворот узла pivot.
 [source,java]
-----        pivot.rotate( 0.4f , 0.4f , 0.0f );----
+
+----
+        pivot.rotate( 0.4f , 0.4f , 0.0f );
+----
+
  Если вы запустите сейчас, вы увидите что оба куба наклонены на одинаковый угол
 
 
@@ -224,32 +248,60 @@ a| Решение!
 a| Создать Spatial 
 a| Создать Сетку формы, обернуть её в Геометрию, и дать ей Материал. Например: 
 [source,java]
-----Box mesh = new Box(Vector3f.ZERO, 1, 1, 1); // параллелепипед по умолчанию сетка
+
+----
+Box mesh = new Box(Vector3f.ZERO, 1, 1, 1); // параллелепипед по умолчанию сетка
 Geometry thing = new Geometry("thing", mesh); 
 Material mat = new Material(assetManager,
    "Common/MatDefs/Misc/ShowNormals.j3md");
-thing.setMaterial(mat);----
+thing.setMaterial(mat);
+----
+
 
 a| Добавить объект на сцену 
 a| Прикрепите к Spatial к `rootNode`, или к любому узлу, который подключен к rootNode. 
 [source,java]
-----rootNode.attachChild(thing);----
+
+----
+rootNode.attachChild(thing);
+----
+
 
 a| Удалить объекты из сцены 
 a| Отсоединить Spatial от `rootNode`, и от любого узла, подключенного к rootNode. 
 [source,java]
-----rootNode.detachChild(thing);----
+
+----
+rootNode.detachChild(thing);
+----
+
 [source,java]
-----rootNode.detachAllChildren();----
+
+----
+rootNode.detachAllChildren();
+----
+
 
 a| Найти Spatial на сцене по имени объекта, или ID, или его положение в иерархии “ родители-потомки. 
 a| Посмотрите на узел, потомки или родителей:: 
 [source,java]
-----Spatial thing = rootNode.getChild("thing");----
+
+----
+Spatial thing = rootNode.getChild("thing");
+----
+
 [source,java]
-----Spatial twentyThird = rootNode.getChild(22);----
+
+----
+Spatial twentyThird = rootNode.getChild(22);
+----
+
 [source,java]
-----Spatial parent = myNode.getParent();----
+
+----
+Spatial parent = myNode.getParent();
+----
+
 
 a| Указать, что должно быть загружен при старте 
 a| Все ваши инициализации прикрепить к `rootNode` в `simpleInitApp()`метод является частью сцены в начале игры. 
@@ -272,12 +324,20 @@ a| ось-Z
 a| Укажите новое расположение в трех измерениях: Насколько все это далеко от источника идет вправо-вверх-вперед?  +
 Чтобы переместить Spatial _по_ конкретным координатам, таким как (0,40.2 f,-2), используйте: 
 [source,java]
-----thing.setLocalTranslation( new Vector3f( 0.0f, 40.2f, -2.0f ) );----
+
+----
+thing.setLocalTranslation( new Vector3f( 0.0f, 40.2f, -2.0f ) );
+----
+
  Чтобы переместить Spatial _на_ определенную величину, например, выше вверх (y=40.2f) и дальше (z=-2.0f): 
 
 
 [source,java]
-----thing.move( 0.0f, 40.2f, -2.0f );----
+
+----
+thing.move( 0.0f, 40.2f, -2.0f );
+----
+
 a|+вправо -влево
 a|+вправо -влево
 a|+вперед -назад
@@ -296,7 +356,11 @@ a|Укажите коэффициент масштабирования в каж
 Используя ту же величину для каждого измерения шкалы, пропорционально различные значения растягивают его. +
 Для масштабирования Spatial в 10 раз длиннее, одной десятой высоты, и ширины: 
 [source,java]
-----thing.scale( 10.0f, 0.1f, 1.0f );----
+
+----
+thing.scale( 10.0f, 0.1f, 1.0f );
+----
+
 a|длина
 a|высота
 a|ширина
@@ -313,13 +377,21 @@ a| ось-Z
 a|3-D вращение немного сложнее (<<документация/jme3_ru/вращение#,узнать подробности здесь>>). Вкратце: Вы можете вращаться вокруг трех осей: Тангаж, рыскание и крен.  Вы можете указать углы в градусах путем умножения степеней значения с `FastMath.DEG_TO_RAD`. +
 Крен объекта на 180° вокруг оси Z: 
 [source,java]
-----thing.rotate( 0f , 0f , 180*FastMath.DEG_TO_RAD );----
+
+----
+thing.rotate( 0f , 0f , 180*FastMath.DEG_TO_RAD );
+----
+
  Совет: если в игре идея требует серьезной суммы оборотов, это стоит посмотреть в <<документация/jme3_ru/кватернионы#,кватернионы>> структура данных, которая может объединять и хранить обороты эффективно. 
 
 
 [source,java]
-----thing.setLocalRotation( 
-  new Quaternion().fromAngleAxis(180*FastMath.DEG_TO_RAD, new Vector3f(1,0,0)));----
+
+----
+thing.setLocalRotation( 
+  new Quaternion().fromAngleAxis(180*FastMath.DEG_TO_RAD, new Vector3f(1,0,0)));
+----
+
 a|тангаж = кивок головой
 a|рыскание = покачать головой
 a|крен = склонить голову
@@ -369,12 +441,20 @@ a| Геометрия имеет неожиданный цвет или мате
 
 
 [source,java]
-----pivot.setUserData( "pivot id", 42 );----
+
+----
+pivot.setUserData( "pivot id", 42 );
+----
+
 Чтобы прочитать id номер данного узла в другом месте, вы должны использовать:
 
 
 [source,java]
-----int id = pivot.getUserData( "pivot id" ); ----
+
+----
+int id = pivot.getUserData( "pivot id" ); 
+----
+
 С помощью различных Strings ключей (здесь ключевым является  `pivot id`), вы можете получить и задать несколько различных значений для любых данных Spatial необходимых для вашей игры. Когда вы начнете писать игру, вы можете добавить значение топлива в узел автомобиля, значение скорости в узел самолета или количеству золотых монет узлу игрока, и многое другое. Тем не менее, следует отметить, что только пользовательские объекты, которые реализуют сохранение могут быть приняты.
 
 

@@ -95,18 +95,24 @@ Use `makeAtlasBatch` to turn several geometries that are loaded from a j3o file 
 
 
 [source,java]
+
 ----
+
  // scene contains many geometries ared attached to one node:
  Node scene = assetManager.loadModel("Scenes/MyScene.j3o");
  // geom is one geometry containing all of these geometries together
  Geometry geom = TextureAtlas.makeAtlasBatch(scene);
  rootNode.attachChild(geom);
+
 ----
+
 Create a texture atlas and change the texture coordinates of one geometry:
 
 
 [source,java]
+
 ----
+
  Node scene = assetManager.loadModel("Scenes/MyScene.j3o");
 
  // Either auto-create texture Atlas from an existing node that has geometries...
@@ -128,4 +134,5 @@ Create a texture atlas and change the texture coordinates of one geometry:
  // of this geometry to the atlas, and replace the material.
  Geometry geom = scene.getChild("MyGeometry");
  atlas.applyCoords(geom);
- geom.setMaterial(mat);----
+ geom.setMaterial(mat);
+----

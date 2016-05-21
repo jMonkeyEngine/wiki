@@ -17,7 +17,9 @@
 == Пример кода
 
 [source,java]
-----package jme3test.helloworld;
+
+----
+package jme3test.helloworld;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.audio.AudioNode;
@@ -100,7 +102,9 @@ public class HelloAudio extends SimpleApplication {
   }
 
 }
+
 ----
+
 При запуске примера, вы должны увидеть синий куб. Вы должны услышать как природный, окружающий звук. При нажатии кнопки мыши, вы слышите громкий выстрел.
 
 
@@ -123,19 +127,27 @@ public class HelloAudio extends SimpleApplication {
 
 
 [source,java]
+
 ----
+
   private AudioNode audio_gun;
   private AudioNode audio_nature;
+
 ----
+
 Для каждого звука, создается метод `initAudio()`: Здесь вы инициализировать звуковые объекты и установить их параметры.
 
 
 [source,Java]
+
 ----
+
 audio_gun = new AudioNode(assetManager, "Sound/Effects/Gun.wav", false);
     ...
 audio_nature = new AudioNode(assetManager, "Sound/Environment/Nature.ogg", false);
+
 ----
+
 Эти две строки создают новые звуковые узлы из данного аудио файла в AssetManager. Значение “false  означает, что вы хотите, чтобы  эти звуки помещались в буфер, прежде чем проигрываться. (Если вы установите этот флаг в true, то звук будет передаваться в потоковом режиме, который нужен для достаточно длинных звуков.)
 
 
@@ -143,12 +155,16 @@ audio_nature = new AudioNode(assetManager, "Sound/Environment/Nature.ogg", false
 
 
 [source,java]
+
 ----
+
     audio_gun.setPositional(false);
     audio_gun.setLooping(false);
     audio_gun.setVolume(2);
     rootNode.attachChild(audio_gun);
+
 ----
+
 
 
 
@@ -156,23 +172,31 @@ audio_nature = new AudioNode(assetManager, "Sound/Environment/Nature.ogg", false
 
 
 [source,java]
+
 ----
+
     audio_nature.setLooping(true); // включение непрерывного воспроизведения
     ...
     audio_nature.setVolume(3);
     rootNode.attachChild(audio_nature);
     audio_nature.play(); // играть постоянно!
-  }----
+  }
+----
+
 Здесь вы делаете audio_nature позиционный звук, который исходит из определенного места. Для этого вы задаете узлу конкретное место, в нашем примере, вы выбираете Vector3f.ZERO (что расшифровывается как координаты `0.0f,0.0f,0.0f`, центр сцены.) Так как jME, Поддержка 3D звука, теперь вы сможете услышать этот звук, исходящий из конкретного места. Делая звук позиционным необязательно. Если вы не используете эти строки, окружающий звук будет приходить со всех сторон.
 
 
 [source,java]
+
 ----
+
     ...
     audio_nature.setPositional(true);
     audio_nature.setLocalTranslation(Vector3f.ZERO.clone());
     ...
+
 ----
+
 *Совет:* Прикрепить AudioNodes в граф сцены, как и все узлы, чтобы сделать некоторые перемещения узлов stay up-to-date. Если вы их не присоедините они все равно будут слышны, и вы не получите сообщение об ошибке, но 3D-звук не будет работать, как ожидалось. AudioNodes могут быть прикреплены непосредственно к корневому узлу или они могут быть прикреплены внутри узла который движется через сцену  и как AudioNode и 3d-позиционированный звук, он будут порождаться и двигаться соответственно.
 
 
@@ -186,18 +210,24 @@ audio_nature = new AudioNode(assetManager, "Sound/Environment/Nature.ogg", false
 
 
 [source,java]
+
 ----
+
   /** Объявление  действия "Shoot(стрелять)", сопоставление его триггеру (левый щелчок мыши). */
   private void initKeys() {
     inputManager.addMapping("Shoot", new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
     inputManager.addListener(actionListener, "Shoot");
   }
+
 ----
+
 Настройка ActionListener также должны быть знакомы из предыдущих уроков. Вы задаете, что, когда триггер (кнопка) нажата и отпущена, вы хотите проиграть звук пистолета.
 
 
 [source,java]
+
 ----
+
   /** Задать действие "стрелять": играть звук оружия. */
   private ActionListener actionListener = new ActionListener() {
     @Override
@@ -206,7 +236,9 @@ audio_nature = new AudioNode(assetManager, "Sound/Environment/Nature.ogg", false
         audio_gun.playInstance(); // играть каждый экземпляр один раз!
       }
     }
-  };----
+  };
+----
+
 Так как необходимо стрелять быстро несколько раз подряд, и вы не можете подождать, пока предыдущая звуком выстрела дойдет до конца, для следующего запуска. Вот этому вы проигрываете этот звук с помощью метода“playInstance(). Это означает, что каждый клик запускает новый экземпляр звука, поэтому два экземпляра могут перекрываться. Вы задайте этот звук не циклом, так что каждый экземпляр играет только один раз. Как и следует ожидать это от выстрела.
 
 
@@ -231,11 +263,17 @@ audio_nature = new AudioNode(assetManager, "Sound/Environment/Nature.ogg", false
 
 *  Вы начнете играть в фоне природы звука сразу после того, как вы ее создали, в методе initAudio().
 [source,java]
-----    audio_nature.play(); // играть постоянно!
+
 ----
+    audio_nature.play(); // играть постоянно!
+
+----
+
 *  Звук выстрела, однако, срабатывает ситуационно, один раз, только как часть `Shoot` входного действия, определенного в ActionListener.
 [source,java]
+
 ----
+
   /** Задать действие "стрелять": играть звук оружия. */
   private ActionListener actionListener = new ActionListener() {
     @Override
@@ -244,7 +282,9 @@ audio_nature = new AudioNode(assetManager, "Sound/Environment/Nature.ogg", false
         audio_gun.playInstance(); // играть каждый экземпляр один раз!
       }
     }
-  };----
+  };
+----
+
 
 
 == Buffered или Streaming?
@@ -253,9 +293,13 @@ Boolean в AudioNode конструкторе определяет, являет
 
 
 [source,java]
-----audio_gunshot = new AudioNode(assetManager, "Sound/Effects/Gun.wav", false); // buffered
+
+----
+audio_gunshot = new AudioNode(assetManager, "Sound/Effects/Gun.wav", false); // buffered
 ...
-audio_nature = new AudioNode(assetManager, "Sound/Environment/Nature.ogg", true); // streamed ----
+audio_nature = new AudioNode(assetManager, "Sound/Environment/Nature.ogg", true); // streamed 
+----
+
 Как правило, stream длинные звуки, и buffer короткие звуки.
 
 
@@ -291,12 +335,16 @@ a|Те же звуки могут играть несколько раз и пе
 
 
 [source,java]
+
 ----
+
   public void simpleUpdate(float tpf) {
     listener.setLocation(cam.getLocation());
     listener.setRotation(cam.getRotation());
   }
+
 ----
+
 Если вы не делаете этого, то результаты 3D-звука будет совершенно случайными.
 
 

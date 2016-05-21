@@ -38,13 +38,17 @@ image::http///img821.imageshack.us/img821/1829/hellomesh.png[hellomesh.png,with=
 
 
 [source]
-----0,3,0--3,3,0
+
+----
+0,3,0--3,3,0
 | \        |
 |   \      |
 |     \    |
 |       \  |
 |         \|
-0,0,0--3,0,0----
+0,0,0--3,0,0
+----
+
 
 === Объект Сетка
 
@@ -52,7 +56,11 @@ image::http///img821.imageshack.us/img821/1829/hellomesh.png[hellomesh.png,with=
 
 
 [source,java]
-----Mesh mesh = new Mesh();----
+
+----
+Mesh mesh = new Mesh();
+----
+
 Совет: Если вы создаете свои собственные сетки на основе базового-Mesh класса (`public class MyMesh extends Mesh {  }`), замените переменную `mesh` на `this` как в следующих примерах.
 
 
@@ -63,13 +71,17 @@ image::http///img821.imageshack.us/img821/1829/hellomesh.png[hellomesh.png,with=
 
 
 [source,java]
+
 ----
+
 Vector3f [] vertices = new Vector3f[4];
 vertices[0] = new Vector3f(0,0,0);
 vertices[1] = new Vector3f(3,0,0);
 vertices[2] = new Vector3f(0,3,0);
 vertices[3] = new Vector3f(3,3,0);
+
 ----
+
 
 === Координаты Текстуры
 
@@ -77,13 +89,17 @@ vertices[3] = new Vector3f(3,3,0);
 
 
 [source,java]
+
 ----
+
 Vector2f[] texCoord = new Vector2f[4];
 texCoord[0] = new Vector2f(0,0);
 texCoord[1] = new Vector2f(1,0);
 texCoord[2] = new Vector2f(0,1);
 texCoord[3] = new Vector2f(1,1);
+
 ----
+
 Этот синтаксис означает, когда вы применить текстуру к этой сетке, текстура заполнит четырехугольник из угла в угол в 100% размера. Особенно, когда вы сшить вместе большую сетку, можно использовать это, чтобы сказать визуализации ли, и как именно, вы хотите, чтобы покрыть всю сетку. Например если вы используете 0.5f или 2f как текстурные координаты, а не 1f, текстура будет растягиваться или сжиматься соответственно.
 
 
@@ -97,9 +113,13 @@ texCoord[3] = new Vector2f(1,1);
 
 
 [source,java]
+
 ----
+
 int [] indexes = { 2,0,1, 1,3,2 };
+
 ----
+
 Этот синтаксис означает:
 
 
@@ -108,12 +128,16 @@ int [] indexes = { 2,0,1, 1,3,2 };
 *  1,3,2 треугольник начало в правом нижнем углу, по-прежнему в правом верхнем углу, и заканчивается в левом верхнем углу.
 
 [source]
+
 ----
+
 2\2--3
 | \  | Против часовой стрелки
 |  \ |
 0--1\1
+
 ----
+
 Если фигура более сложная, в ней больше треугольников, и поэтому также несколько вершин/индексов. Просто продолжаем расширять список, добавляя группы из трех показателей для каждого треугольника. (Например три-треугольника “дом фигура имеет 5 вершин/индексов, и вы бы указали на три группы: `int [] indexes = { 2,0,1, 1,3,2, 2,3,4 };`.) 
 
 
@@ -136,12 +160,16 @@ int [] indexes = { 2,0,1, 1,3,2 };
 .  Для отображения сетки в сцене, мы должны предварительно рассчитать bounding volume нашей новой сетки: Вызовем метод `updateBound()`.
 
 [source,java]
+
 ----
+
 mesh.setBuffer(Type.Position, 3, BufferUtils.createFloatBuffer(vertices));
 mesh.setBuffer(Type.TexCoord, 2, BufferUtils.createFloatBuffer(texCoord));
 mesh.setBuffer(Type.Index,    3, BufferUtils.createIntBuffer(indexes));
 mesh.updateBound();
+
 ----
+
 Наша сетка готова! Теперь мы хотим увидеть её.
 
 
@@ -152,14 +180,18 @@ mesh.updateBound();
 
 
 [source,java]
+
 ----
+
 Geometry geo = new Geometry("OurMesh", mesh); //с помощью нашего пользовательского объекта сетки
 Material mat = new Material(assetManager, 
     "Common/MatDefs/Misc/Unshaded.j3md");
 mat.setColor("Color", ColorRGBA.Blue);
 geo.setMaterial(mat);
 rootNode.attachChild(geo);
+
 ----
+
 Библиотека для assetManager?
 Ta-daa!
 
@@ -171,7 +203,9 @@ Ta-daa!
 
 
 [source,java]
+
 ----
+
 Quad quad = new Quad(1,1); // replace the definition of Vertex and Textures Coordinates plus indexes
 Geometry geo = new Geometry("OurQuad", quad); // с помощью Quad объекта
 Material mat = new Material(assetManager, 
@@ -179,15 +213,21 @@ Material mat = new Material(assetManager,
 mat.setColor("Color", ColorRGBA.Blue);
 geo.setMaterial(mat);
 rootNode.attachChild(geo);
+
 ----
+
 Если вы хотите изменить координаты текстуры, чтобы изменить масштаб текстуры, используйте:
 
 
 [source,java]
+
 ----
+
 Quad quad = new Quad(1,1);
 quad.scaleTextureCoordinates(new Vector2f(width , height));
+
 ----
+
 
 == Динамические Сетки
 
@@ -216,32 +256,50 @@ Vertex coloring это простой способ окраски сетки. В
 
 
 [source,java]
-----Geometry geo = new Geometry ("ColoredMesh", mesh); // используем пользовательскую сетку
+
+----
+Geometry geo = new Geometry ("ColoredMesh", mesh); // используем пользовательскую сетку
 Material matVC = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-matVC.setBoolean("VertexColor", true);----
+matVC.setBoolean("VertexColor", true);
+----
+
 Вы создаете  float массив буфер цвета:
 
 
 *  Назначить 4 значения Цвет RGBA, для каждой вершины.
 **  Цикл по 4 значения цвета, использовать цветовой индекс 
 [source,java]
-----int colorIndex = 0;----
+
+----
+int colorIndex = 0;
+----
+
 
 *   Буфер цвета содержит четыре значения цвета для каждой вершины.
 **  Quad в данном примере, имеет 4 вершины. 
 [source,java]
-----float[] colorArray = new float[4*4];
+
 ----
+float[] colorArray = new float[4*4];
+
+----
+
 **  Совет: Если сетка имеет разное количество вершин, вы должны написать: 
 [source,java]
-----float[] colorArray = new float[yourVertexCount * 4]----
+
+----
+float[] colorArray = new float[yourVertexCount * 4]
+----
+
 
 
 Цикл по буферу colorArray быстро установить какие-то значения RGBA для каждой вершины. Как обычно, цветовые значения RGBA в диапазоне от 0.0f до 1.0f. *Обратите внимание, что значения цвета в этом примере выбраны произвольно.* Это просто быстрый цикл, чтобы дать каждой вершины другое значение RGBA (фиолетово-серый, фиолетовый, зеленовато-серый, зеленый, см. скриншот), без написания большого количества кода. Для вашей собственной сетки, вы назначите осмысленные значения для цветового буфера в зависимости от, какой цвет вы хотите, чтобы ваш сетка, имела.
 
 
 [source,java]
+
 ----
+
 // Примечание: красным и зеленым значения arbitray в этом примере
 for(int i = 0; i < 4; i++){
    // Значение Красного (увеличивается .2 на каждой следующей вершины здесь)
@@ -252,14 +310,20 @@ for(int i = 0; i < 4; i++){
    colorArray[colorIndex++]= 0.5f;
    // Значение альфа (без прозрачности установить здесь)
    colorArray[colorIndex++]= 1.0f;
-}----
+}
+----
+
 Далее, установите цветовой буфер. RGBA значение цвета содержит четыре float компонента таким образом, параметр `4`.
 
 
 [source,java]
-----mesh.setBuffer(Type.Color, 4, colorArray);
-geo.setMaterial(matVC);
+
 ----
+mesh.setBuffer(Type.Color, 4, colorArray);
+geo.setMaterial(matVC);
+
+----
+
 Когда вы запустите этот код, вы увидите градиент цвета простирающийся от каждой вершины.
 
 
@@ -270,11 +334,15 @@ geo.setMaterial(matVC);
 
 
 [source,java]
+
 ----
+
 float[] normals = new float[12];
 normals = new float[]{0,0,1, 0,0,1, 0,0,1, 0,0,1};
 mesh.setBuffer(Type.Normal, 3, BufferUtils.createFloatBuffer(normals));
+
 ----
+
 Вы должны указать, как много нормалей в качестве вершин многоугольника.  Для плоского quad, четыре нормали указывают в одном направлении. В этом случае, направление Z единичный вектор (0,0,1), это означает, что наша quad смотрит в камеру.
 
 
@@ -288,7 +356,9 @@ mesh.setBuffer(Type.Normal, 3, BufferUtils.createFloatBuffer(normals));
 
 
 [source,java]
-----Geometry coloredMesh = new Geometry ("ColoredMesh", cMesh);
+
+----
+Geometry coloredMesh = new Geometry ("ColoredMesh", cMesh);
 ...
 mesh.setMode(Mesh.Mode.Points);
 mesh.setPointSize(10f);
@@ -298,7 +368,9 @@ Geometry points = new Geometry("Points", mesh);
 points.setMaterial(mat);
 rootNode.attachChild(points);
 rootNode.attachChild(geo);
+
 ----
+
 В результате в 10 px точек будут рендерины для каждой из четырех вершин. Точки имеют цвет вершины, указанной выше. Грани Quad не отображаются в этом режиме. Вы можете использовать это, чтобы визуализировать специальную отладку или для режима редактирования в игре.
 
 
@@ -316,10 +388,18 @@ rootNode.attachChild(geo);
 
 *  Если у вас есть очень простая сцена, вы можете просто отключить backface выбраковку невидимой поверхности для материала этой сетки. 
 [source]
-----mat.getAdditionalRenderState().setFaceCullMode(FaceCullMode.Off);----
+
+----
+mat.getAdditionalRenderState().setFaceCullMode(FaceCullMode.Off);
+----
+
 *  Еще одно решение для по-настоящему двусторонней сетки является указание каждого треугольника дважды, второй раз с противоположной последовательностью вершин. Второй (обратный) треугольник-это второй frontface, который покрывает выбраковку на торцах. 
 [source]
-----int[] indexes = { 2,0,1, 1,3,2, 2,3,1, 1,0,2 };----
+
+----
+int[] indexes = { 2,0,1, 1,3,2, 2,3,1, 1,0,2 };
+----
+
 '''
 
 Смотрите также: 

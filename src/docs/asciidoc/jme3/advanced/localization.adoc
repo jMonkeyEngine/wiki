@@ -29,18 +29,30 @@ To prepare the application for localization, you have to first identify all hard
 .  Find every line in your jME3 game where you hard-coded message strings, e.g. +
 
 [source,java]
-----System.out.print("Hello World!");
-UiText.setText("Score: "+score);----
+
+----
+System.out.print("Hello World!");
+UiText.setText("Score: "+score);
+----
+
 .  Create one file named `Bundle.properties` in each directory where there are Java file that contain messages.
 .  For every hard-coded message, you add one line to the `Bundle.properties` file: First specify a unique key that identifies this string; then an equal sign; and the literal string itself. +
 
 [source]
-----greeting=Hello World!
-score.display=Score: ----
+
+----
+greeting=Hello World!
+score.display=Score: 
+----
+
 .  In the source code, replace every occurence of a hard-coded message with the appropriate Resource Bundle call to its unique key: 
 [source,java]
-----System.out.print(ResourceBundle.getBundle("Bundle").getString("greeting"));
-UiText.setText(ResourceBundle.getBundle("Bundle").getString("score.display")+score);----
+
+----
+System.out.print(ResourceBundle.getBundle("Bundle").getString("greeting"));
+UiText.setText(ResourceBundle.getBundle("Bundle").getString("score.display")+score);
+----
+
 
 The language used in the Bundle.properties files will be the default language for your game.
 
@@ -58,8 +70,12 @@ To translate the messages to another language, for example, German:
 .  Name the copy `Bundle_de.properties` for German. Note the added suffix _de.
 .  Translate all strings (text on the right side of the equal sign) in the `Bundle_de.properties` to German. 
 [source]
-----greeting=Hallo Welt!
-score.display=Spielstand: ----
+
+----
+greeting=Hallo Welt!
+score.display=Spielstand: 
+----
+
  *Important:* Do not modify any of the keys (text to the left of the equal sign)!
 
 
@@ -72,7 +88,11 @@ To get the full list of language suffixes use
 
 
 [source,java]
-----System.out.println(Arrays.toString(Locale.getISOLanguages()));----
+
+----
+System.out.println(Arrays.toString(Locale.getISOLanguages()));
+----
+
 
 == Which Strings Not to Translate
 
@@ -81,18 +101,34 @@ To get the full list of language suffixes use
 
 *  Keep material layers: 
 [source,java]
-----mat.setTexture("ColorMap", tex);----
+
+----
+mat.setTexture("ColorMap", tex);
+----
+
 *  Keep paths: 
 [source,java]
-----teapot = assetManager.loadModel("Models/Teapot/Teapot.obj");----
+
+----
+teapot = assetManager.loadModel("Models/Teapot/Teapot.obj");
+----
+
 *  Keep geometry and node names: 
 [source,java]
-----Geometry thing=new Geometry("A thing", mesh);
-Node vehicle = new Node("Vehicle");----
+
+----
+Geometry thing=new Geometry("A thing", mesh);
+Node vehicle = new Node("Vehicle");
+----
+
 *  Keep mappings: 
 [source,java]
-----inputManager.addMapping("Shoot", trigger);
-inputManager.addListener(actionListener, "Shoot");----
+
+----
+inputManager.addMapping("Shoot", trigger);
+inputManager.addListener(actionListener, "Shoot");
+----
+
 
 Only localize messages and UI text!
 

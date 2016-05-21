@@ -7,7 +7,9 @@ The popup element needs to be placed _outside_ of any screen!
 
 
 [source,xml]
+
 ----
+
 <useControls filename="nifty-default-controls.xml"/>
 ...
 <popup id="niftyPopupMenu" childLayout="absolute-inside"
@@ -15,7 +17,9 @@ The popup element needs to be placed _outside_ of any screen!
   <interact onClick="closePopup()" onSecondaryClick="closePopup()" onTertiaryClick="closePopup()" />
   <control id="#menu" name="niftyMenu" />
 </popup>
-...----
+...
+----
+
 A brief explanation of some the attributes above:
 
 
@@ -28,7 +32,9 @@ The Java code within your defined ScreenController implementation:
 
 
 [source,java]
+
 ----
+
 private Element popup;
 ...
 public void createMyPopupMenu(){
@@ -60,7 +66,9 @@ private class menuItem {
     this.name = name;
   }
 }
+
 ----
+
 *  The createMyPopupMenu() method creates the menu with set width so that you can populate it.
 *  The showMenu() method is called by something to trigger the menu (i.e. could be a Key or some other method).
 *  Note: if you want to be able to access the popup via your id, use createPopupWithId(id, id) instead.
@@ -69,7 +77,9 @@ To handle menu item events (i.e. calling a method when you click on a menu item)
 
 
 [source,java]
+
 ----
+
   private class MenuItemActivatedEventSubscriber 
     implements EventTopicSubscriber<MenuItemActivatedEvent> {
     
@@ -81,4 +91,5 @@ To handle menu item events (i.e. calling a method when you click on a menu item)
        }
     }
   };
+
 ----

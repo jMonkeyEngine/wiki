@@ -15,7 +15,11 @@ A SimpleApplication with a BulletAppState allows setting the threading type via
 
 
 [source]
-----setThreadingType(ThreadingType type);----
+
+----
+setThreadingType(ThreadingType type);
+----
+
  where ThreadingType can be either SEQUENTIAL or PARALLEL. By default, it's SEQUENTIAL.
 
 
@@ -23,9 +27,13 @@ You can activate PARALLEL threading in the simpleInitApp() method:
 
 
 [source,java]
-----bulletAppState = new BulletAppState();
+
+----
+bulletAppState = new BulletAppState();
 bulletAppState.setThreadingType(BulletAppState.ThreadingType.PARALLEL);
-stateManager.attach(bulletAppState);----
+stateManager.attach(bulletAppState);
+----
+
 Now the physics update happens in parallel to render(), that is, after the user's changes in the update() call have been applied. During update() the physics update loop pauses. This way the loop logic is still maintained: the user can set and change values in physics and scenegraph objects before render() and physicsUpdate() are called in parallel. This allows you to use physics methods in update() as if it was single-threaded.
 
 [cols="2", options="header"]

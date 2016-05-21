@@ -69,7 +69,11 @@ The BitmapTexts and Pictures appear as 2 dimensional element on the screen.
 
 
 [source,java]
-----setDisplayStatView(false); setDisplayFps(false);----
+
+----
+setDisplayStatView(false); setDisplayFps(false);
+----
+
 
 
 
@@ -80,13 +84,17 @@ A simple image can be displayed using `com.jme3.ui.Picture`.
 
 
 [source,java]
-----Picture pic = new Picture("HUD Picture");
+
+----
+Picture pic = new Picture("HUD Picture");
 pic.setImage(assetManager, "Textures/ColoredTex/Monkey.png", true);
 pic.setWidth(settings.getWidth()/2);
 pic.setHeight(settings.getHeight()/2);
 pic.setPosition(settings.getWidth()/4, settings.getHeight()/4);
 guiNode.attachChild(pic);
+
 ----
+
 When you set the last boolean in setImage() to true, the alpha channel of your image is rendered transparent/translucent.
 
 
@@ -97,20 +105,28 @@ You use `com.jme3.font.BitmapText` to display text on the screen.
 
 
 [source,java]
+
 ----
+
 BitmapText hudText = new BitmapText(guiFont, false);          
 hudText.setSize(guiFont.getCharSet().getRenderedSize());      // font size
 hudText.setColor(ColorRGBA.Blue);                             // font color
 hudText.setText("You can write any string here");             // the text
 hudText.setLocalTranslation(300, hudText.getLineHeight(), 0); // position
 guiNode.attachChild(hudText);
+
 ----
+
 The BitmapFont object `guiFont` is a default font provided by SimpleApplication. Copy you own fonts as .fnt plus .png files into the `assets/Interface/Fonts` directory and load them like this:
 
 
 [source]
-----BitmapFont myFont = assetManager.loadFont("Interface/Fonts/Console.fnt");
-hudText = new BitmapText(myFont, false);----
+
+----
+BitmapFont myFont = assetManager.loadFont("Interface/Fonts/Console.fnt");
+hudText = new BitmapText(myFont, false);
+----
+
 
 === Positioning HUD Elements
 
@@ -134,13 +150,17 @@ Use the update loop to keep the content up-to-date.
 
 
 [source,java]
-----public void simpleUpdate(float tpf) {
+
+----
+public void simpleUpdate(float tpf) {
   ...
   hudText.setText("Score: " + score);
   ...
   picture.setImage(assetManager, "Interface/statechange.png", true);
   ...
-}----
+}
+----
+
 
 == Advanced HUD: Nifty GUI
 

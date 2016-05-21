@@ -63,12 +63,16 @@ You might wish to represent your rotations as Angle Axis pairs. That is, you def
 ==== Example - Rotate a Spatial Using fromAngleAxis
 
 [source,java]
+
 ----
+
 //rotate about the Y-Axis by approximately 1 pi
 Vector3f axis = Vector3f.UNIT_Y; // this equals (0, 1, 0) and does not require to create a new object
 float angle = 3.14f;
 s.getLocalRotation().fromAngleAxis(angle, axis);
+
 ----
+
 
 === Three Angles
 
@@ -79,11 +83,15 @@ You can also represent a rotation by defining three angles. The angles represent
 ==== Example - Rotate a Spatial Using fromAngles
 
 [source,java]
+
 ----
+
 //rotate 1 radian on the x, 3 on the y and 0 on z
 float[] angles = {1, 3, 0};
 s.getLocalRotation().fromAngles(angles);
+
 ----
+
 
 === Three Axes
 
@@ -94,7 +102,9 @@ If you have three axes that define your rotation, where the axes define the left
 ==== Example - Rotate a Spatial Using fromAxes
 
 [source,java]
+
 ----
+
 //rotate a spatial to face up ~45 degrees
 Vector3f[] axes = new Vector3f[3];
 axes[0] = new Vector3f(-1, 0, 0); //left
@@ -102,7 +112,9 @@ axes[1] = new Vector3f(0, 0.5f, 0.5f); //up
 axes[2] = new Vector3f(0, 0.5f, 0.5f); //dir
 
 s.getLocalRotation().fromAxes(axes);
+
 ----
+
 
 === Rotation Matrix
 
@@ -113,7 +125,9 @@ Commonly you might find yourself with a <<matrix#,Matrix>> defining a rotation. 
 ==== Example - Rotate a Spatial Using a Rotation Matrix
 
 [source,java]
+
 ----
+
 
 Matrix3f mat = new Matrix3f();
 mat.setColumn(0, new Vector3f(1,0,0));
@@ -121,7 +135,9 @@ mat.setColumn(1, new Vector3f(0,-1,0));
 mat.setColumn(2, new Vector3f(0,0,1));
 
 s.getLocalRotation().fromRotationMatrix(mat);
+
 ----
+
 As you can see there are many ways to build a Quaternion. This allows you to work with rotations in a way that is conceptually easier to picture, but still build Quaternions for internal representation.
 
 
@@ -135,10 +151,13 @@ One of the biggest advantages to using Quaternions is allowing interpolation bet
 ==== Example - Use Slerp to Rotate Between two Quaternions
 
 [source,java]
+
 ----
+
 Quaternion q1;
 Quaternion q2;
 
 //the rotation half-way between these two
 Quaternion q3 = q1.slerp(q2, 0.5f);
+
 ----

@@ -159,7 +159,9 @@ First, we load our textures and the heightmap texture for the terrain
 
 
 [source,java]
+
 ----
+
 // Create material from Terrain Material Definition
 matRock = new Material(assetManager, "Common/MatDefs/Terrain/Terrain.j3md");
 // Load alpha map (for splat textures)
@@ -181,16 +183,22 @@ Texture rock = assetManager.loadTexture("Textures/Terrain/splat/road.jpg");
 rock.setWrap(WrapMode.Repeat);
 matRock.setTexture("Tex3", rock);
 matRock.setFloat("Tex3Scale", 128f);
+
 ----
+
 We create the heightmap from the `heightMapImage`.
 
 
 [source,java]
+
 ----
+
 AbstractHeightMap heightmap = null;
 heightmap = new ImageBasedHeightMap(heightMapImage.getImage(), 1f);
 heightmap.load();
+
 ----
+
 Next we create the actual terrain.
 
 
@@ -199,7 +207,9 @@ Next we create the actual terrain.
 *  It uses the heightmap to generate the height values.
 
 [source,java]
+
 ----
+
 terrain = new TerrainQuad("terrain", 65, 513, heightmap.getHeightMap());
 terrain.setMaterial(matRock);
 terrain.setLocalScale(2f, 1f, 2f); // scale to make it less steep
@@ -208,11 +218,16 @@ cameras.add(getCamera());
 TerrainLodControl control = new TerrainLodControl(terrain, cameras);
 terrain.addControl(control);
 rootNode.attachChild(terrain);
+
 ----
+
 PS: As an alternative to an image-based height map, you can also generate a Hill hightmap:
 
 
 [source,java]
+
 ----
+
 heightmap = new HillHeightMap(1025, 1000, 50, 100, (byte) 3);
+
 ----

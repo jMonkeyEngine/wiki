@@ -25,7 +25,9 @@ image::jme3/beginner/beginner-terrain.png[beginner-terrain.png,with="360",height
 == Пример кода
 
 [source,java]
-----package jme3test.helloworld;
+
+----
+package jme3test.helloworld;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.material.Material;
@@ -114,7 +116,9 @@ public class HelloTerrain extends SimpleApplication {
     TerrainLodControl control = new TerrainLodControl(terrain, getCamera());
     terrain.addControl(control);
   }
-}----
+}
+----
+
 При запуске этого примера вы должны увидеть пейзаж с грязью на горе, травой на равнинах а также некоторых извилистых дорог.
 
 
@@ -184,12 +188,16 @@ image::http///jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Textures/T
 .  Загрузите карту высот.
 
 [source,java]
-----    AbstractHeightMap heightmap = null;
+
+----
+    AbstractHeightMap heightmap = null;
     Texture heightMapImage = assetManager.loadTexture(
             "Textures/Terrain/splat/mountains512.png");
     heightmap = new ImageBasedHeightMap(heightMapImage.getImage());
     heightmap.load();
+
 ----
+
 
 == Что такое splat-текстура?
 
@@ -243,18 +251,28 @@ image:http///jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Textures/Te
 
 
 [source,java]
-----Material mat_terrain = new Material(assetManager, "Common/MatDefs/Terrain/Terrain.j3md");----
+
+----
+Material mat_terrain = new Material(assetManager, "Common/MatDefs/Terrain/Terrain.j3md");
+----
+
 Загрузите четыре текстуры в этот материал. Первым “Alpha, который только что создали.
 
 
 [source,java]
-----mat_terrain.setTexture("Alpha",
-    assetManager.loadTexture("Textures/Terrain/splat/alphamap.png"));----
+
+----
+mat_terrain.setTexture("Alpha",
+    assetManager.loadTexture("Textures/Terrain/splat/alphamap.png"));
+----
+
 Три других текстур слоя которые вы ранее решили покрасить: grass, dirt, и road. Вы создаете текстуру объекта и загрузили три текстуры как обычно. Обратите внимание как вы назначаете их в соответствующие слои текстур (Tex1, Tex2, and Tex3) внутри материала!
 
 
 [source,java]
-----    /** 1.2) Добавим GRASS текстуру в красный слой (Tex1). */
+
+----
+    /** 1.2) Добавим GRASS текстуру в красный слой (Tex1). */
     Texture grass = assetManager.loadTexture(
             "Textures/Terrain/splat/grass.jpg");
     grass.setWrap(WrapMode.Repeat);
@@ -274,7 +292,9 @@ image:http///jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Textures/Te
     rock.setWrap(WrapMode.Repeat);
     mat_terrain.setTexture("Tex3", rock);
     mat_terrain.setFloat("Tex3Scale", 128f);
+
 ----
+
 Отдельно масштаб текстур (например “mat_terrain.setFloat(“Tex3Scale, 128f);) зависит от размера текстуры при использовании.
 
 
@@ -313,22 +333,34 @@ image:http///jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Textures/Te
 
 
 [source]
-----terrain = new TerrainQuad(
+
+----
+terrain = new TerrainQuad(
   "my terrain",               // имя
   65,                         // размер плитки
   513,                        // размер блока
   heightmap.getHeightMap());  // карта высот
+
 ----
+
 Вы создали объект местности.
 
 
 .  Не забудьте применить созданный материал: 
 [source,java]
-----terrain.setMaterial(mat_terrain);----
+
+----
+terrain.setMaterial(mat_terrain);
+----
+
 .  Не забудьте прикрепить местность к RootNode.
 [source,java]
-----rootNode.attachChild(terrain);
+
 ----
+rootNode.attachChild(terrain);
+
+----
+
 .  При необходимости масштабируйте и переносите местност как и любой другой объект.
 
 *Совет:* Terrain.j3md является незатененым материалом поэтому вам не нужен источник света. Вы также можете использовать TerrainLighting.j3md плюс свет, если вы хотите затененную местность.
@@ -341,10 +373,14 @@ JME3 включает в себя оптимизацию которая регу
 
 
 [source,java]
+
 ----
+
     TerrainLodControl control = new TerrainLodControl(terrain, getCamera());
     terrain.addControl(control);
+
 ----
+
 Закрывая часть местности показывая остальное во всех деталях. Части местности которые дальше не видны отсекаются - JME3 повышает производительность. Таким образом вы можете себе позволить загрузить огромные местности без страха снизить производительность.
 
 
@@ -358,12 +394,16 @@ JME3 включает в себя оптимизацию которая регу
 
 
 [source,java]
+
 ----
+
 ...
 mat_terrain.setTexture("Tex2", grass);
 ...
 mat_terrain.setTexture("Tex1", dirt);
+
 ----
+
 Вы видите что легче поменять слои в коде чем изменить цвета в alphamap.
 
 
@@ -374,23 +414,31 @@ mat_terrain.setTexture("Tex1", dirt);
 
 
 [source,java]
-----    AbstractHeightMap heightmap = null;
+
+----
+    AbstractHeightMap heightmap = null;
     Texture heightMapImage = assetManager.loadTexture(
         "Textures/Terrain/splat/mountains512.png");
-    heightmap = new ImageBasedHeightMap(heightMapImage.getImage());----
+    heightmap = new ImageBasedHeightMap(heightMapImage.getImage());
+----
+
 Вместо этого вы также можете позволить JME3 генерировать случайный пейзаж для вас:
 
 
 .  Какой результат вы получаете когда вы замените три строки выше на следующие строки и запустите?
 [source,java]
+
 ----
+
 HillHeightMap heightmap = null;
 HillHeightMap.NORMALIZE_RANGE = 100; // необязательно
 try {
     heightmap = new HillHeightMap(513, 1000, 50, 100, (byte) 3); // 3 байта представляют собой случайное начальное число
 } catch (Exception ex) {
     ex.printStackTrace();
-}----
+}
+----
+
 .  Изменените один параметр за один раз и запустите образец снова. Обратите внимание на различия. Можете ли вы выяснить какие из значений имеют действие на генерацию местности (посмотрите на документацию)?
 **  Какое значение управляет размером?
 ***  Что произойдет если размер не является квадратом числа + 1 ?

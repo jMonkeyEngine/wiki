@@ -27,9 +27,13 @@ You can import the LWJGL JNLP extension directly into your extension, however be
 
 
 [source,xml]
+
 ----
+
 <extension name="lwjgl" href="http://lwjgl.org/webstart/2.7.1/extension.jnlp" />
+
 ----
+
 
 == Reliable way
 
@@ -40,7 +44,9 @@ You can download the LWJGL native jars from their site, or to ensure you're usin
 
 
 [source]
+
 ----
+
 mkdir tmp
 cd tmp
 jar xfv ../jME3-lwjgl-natives.jar
@@ -50,12 +56,16 @@ for i in *; do
   jar cfv ../../native_$i.jar .
   cd ..
 done
+
 ----
+
 For Windows:
 
 
 [source]
+
 ----
+
 @echo off
 md tmp
 cd tmp
@@ -67,7 +77,9 @@ for /D %%i in ("*") do (
   cd ..
 )
 cd ..
+
 ----
+
 Remember to sign all the jar files and move them into the right place from the tmp directory.
 
 
@@ -78,7 +90,9 @@ Add the following to your JNLP file:
 
 
 [source,xml]
+
 ----
+
   <resources os="Windows">
     <j2se version="1.4+"/>
     <nativelib href="native_windows.jar"/>
@@ -95,7 +109,9 @@ Add the following to your JNLP file:
     <j2se version="1.4+"/>
     <nativelib href="native_solaris.jar"/>
   </resources>
+
 ----
+
 
 === Set low-permissions mode
 
@@ -103,10 +119,13 @@ In your main() method, if running under WebStart, tell jME3 it is running in a l
 
 
 [source,java]
+
 ----
+
   public static void main(String[] args)
   {
       if (System.getProperty("javawebstart.version") != null) {
         JmeSystem.setLowPermissions(true);
       }
+
 ----

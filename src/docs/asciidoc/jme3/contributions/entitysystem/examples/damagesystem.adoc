@@ -13,7 +13,9 @@ This makes the code easy to debug and prevents component changes from being skip
 === The HealthComponent
 
 [source,java]
+
 ----
+
 public class HealthComponent extends Component {
     
     public float health;
@@ -29,12 +31,16 @@ public class HealthComponent extends Component {
     }
     
 }
+
 ----
+
 
 === The DamageComponent
 
 [source,java]
+
 ----
+
     private float damage;
     private EntityId target;
     
@@ -53,12 +59,16 @@ public class HealthComponent extends Component {
     {
         return target;
     }
+
 ----
+
 
 == The AppState
 
 [source,java]
+
 ----
+
 public class DamageAppState extends AbstractAppState {
     
     EntitySet damageSet;
@@ -119,12 +129,16 @@ public class DamageAppState extends AbstractAppState {
    }
     
 }
+
 ----
+
 
 == Usage
 
 [source,java]
+
 ----
+
 //Create a new Entity System
 entitySystem = new EntitySystem(new MapEntityData());
         
@@ -136,4 +150,5 @@ EntityId healthEntity = entitySystem.newEntity(new HealthComponent(100));
         
 //Create a new Damage Entity who deals 5 damage to the health entity
 entitySystem.newEntity(new DamageComponent(healthEntity,5));
+
 ----

@@ -21,11 +21,19 @@ The main jME audio class to look at is `com.jme3.audio.AudioNode`. When creating
 
 *  *Buffered:* By default, a new audio node is buffered. This means jME3 loads the whole file into memory before playing. Use this for short sounds. You create a buffered sound  by setting the boolean to false, or using no boolean at all: 
 [source,java]
-----AudioNode boom = new AudioNode(assetManager, "Sound/boom.wav");
-AudioNode boom = new AudioNode(assetManager, "Sound/boom.wav", false);----
+
+----
+AudioNode boom = new AudioNode(assetManager, "Sound/boom.wav");
+AudioNode boom = new AudioNode(assetManager, "Sound/boom.wav", false);
+----
+
 *  *Streamed:* If it is a long file such as music or a dialog, you stream the audio. Streaming means, you load and play in parallel until the sound is done. You cannot loop streams. You create a streamed sound by setting the boolean to true:
 [source,java]
-----AudioNode music = new AudioNode(assetManager, "Sound/music.wav", true);----
+
+----
+AudioNode music = new AudioNode(assetManager, "Sound/music.wav", true);
+----
+
 
 
 == Getting AudioNode Properties
@@ -143,11 +151,23 @@ You play, pause, and stop a node called myAudioNode by using the respective of t
 
 
 [source,java]
-----myAudioNode.play();----
+
+----
+myAudioNode.play();
+----
+
 [source,java]
-----myAudioNode.pause();----
+
+----
+myAudioNode.pause();
+----
+
 [source,java]
-----myAudioNode.stop();----
+
+----
+myAudioNode.stop();
+----
+
 *Note:* Whether an Audio Node plays continuously or only once, depends on the Loop properties you have set above!
 
 
@@ -155,7 +175,11 @@ You can also start playing instances of an AudioNode. Use the `playInstance()` m
 
 
 [source,java]
-----myAudioNode.playInstance();----
+
+----
+myAudioNode.playInstance();
+----
+
 
 == The Audio Listener
 
@@ -163,14 +187,18 @@ The default AudioListener object `listener` in `SimpleApplication` is the user's
 
 
 [source,java]
+
 ----
+
   @Override
   public void simpleUpdate(float tpf) {
     // first-person: keep the audio listener moving with the camera
     listener.setLocation(cam.getLocation());
     listener.setRotation(cam.getRotation());
   }
+
 ----
+
 
 == Setting Audio Environment Properties
 
@@ -256,17 +284,29 @@ a|0.0006f
 .  Activate a Environment preset
 **  Either use a default, e.g. make you scene sounds like a dungeon environment: 
 [source,java]
-----audioRenderer.setEnvironment(new Environment(Environment.Dungeon));----
+
+----
+audioRenderer.setEnvironment(new Environment(Environment.Dungeon));
+----
+
 **  Or activate <<jme3/advanced/audio_environment_presets#,custom environment settings>> in the Environment constructor:
 [source,java]
-----audioRenderer.setEnvironment(
+
+----
+audioRenderer.setEnvironment(
         new Environment( density, diffusion, gain, gainHf, decayTime, decayHf,
-                reflGain, reflDelay, lateGain, lateDelay ) );----
+                reflGain, reflDelay, lateGain, lateDelay ) );
+----
+
 
 .  Activate 3D audio for certain sounds: 
 [source,java]
-----footstepsAudio.setPositional(true);
-footstepsAudio.setReverbEnabled(true);----
+
+----
+footstepsAudio.setPositional(true);
+footstepsAudio.setReverbEnabled(true);
+----
+
 
 `com.​jme3.​audio.Environment`…<<jme3/advanced/audio_environment_presets#,examples of custom audio environment presets>>
 

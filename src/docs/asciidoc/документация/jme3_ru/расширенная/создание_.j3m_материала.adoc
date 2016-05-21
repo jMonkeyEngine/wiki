@@ -15,7 +15,9 @@
 .  Поместите файл в ваш проект в папку `assets/Materials/` например `MyGame/src/assets/Materials/SimpleBump.j3m`
 .  Отредактируйте файл и добавте content используя следующий Синтаксис, например:
 [source]
+
 ----
+
 Material shiny bumpy rock : Common/MatDefs/Light/Lighting.j3md {
      MaterialParameters {
          Shininess: 8.0
@@ -26,7 +28,9 @@ Material shiny bumpy rock : Common/MatDefs/Light/Lighting.j3md {
          Specular : 0.0 0.0 0.0 1.0
      }
 }
+
 ----
+
 
 Какую структуру имеет этот файл:
 
@@ -51,7 +55,11 @@ Material shiny bumpy rock : Common/MatDefs/Light/Lighting.j3md {
 
 
 [source,java]
-----myGeometry.setMaterial(assetManager.loadMaterial("Materials/SimpleBump.j3m"));----
+
+----
+myGeometry.setMaterial(assetManager.loadMaterial("Materials/SimpleBump.j3m"));
+----
+
 *Совет:* В jMonkeyEngine SDK, откройте Windows&gt;Palette и перетащите `JME Material: Set J3M` фрагмент в код.
 
 
@@ -232,19 +240,25 @@ a| Enable point sprite rendering for point meshes
 === Пример 1: Блестящие
 
 [source,java]
+
 ----
+
 Spatial signpost = (Spatial) assetManager.loadAsset(
     new OgreMeshKey("Models/Sign Post/Sign Post.mesh.xml", null));
 signpost.setMaterial( assetManager.loadMaterial(
     new AssetKey("Models/Sign Post/Sign Post.j3m")));
 TangentBinormalGenerator.generate(signpost);
 rootNode.attachChild(signpost);
+
 ----
+
 Файл `assets/Models/Sign Post/Sign Post.j3m` содержит:
 
 
 [source]
+
 ----
+
 Material Signpost : Common/MatDefs/Light/Lighting.j3md {
     MaterialParameters {
          Shininess: 4.0
@@ -257,7 +271,9 @@ Material Signpost : Common/MatDefs/Light/Lighting.j3md {
          Specular : 1.0 1.0 1.0 1.0
     }
 }
+
 ----
+
 JPG файл находится в той же папке, `assets/Models/Sign Post/…`.
 
 
@@ -265,18 +281,24 @@ JPG файл находится в той же папке, `assets/Models/Sign P
 === Пример 2: Повторение Текстуры
 
 [source,java]
+
 ----
+
 Material mat = assetManager.loadMaterial(
     "Textures/Terrain/Pond/Pond.j3m");
 mat.setColor("Ambient", ColorRGBA.DarkGray);
 mat.setColor("Diffuse", ColorRGBA.White);
 mat.setBoolean("UseMaterialColors", true);
+
 ----
+
 Файл `assets/Textures/Terrain/Pond/Pond.j3m` содержит:
 
 
 [source]
+
 ----
+
 Material Pong Rock : Common/MatDefs/Light/Lighting.j3md {
      MaterialParameters {
          Shininess: 8.0
@@ -284,7 +306,9 @@ Material Pong Rock : Common/MatDefs/Light/Lighting.j3md {
          NormalMap:  Repeat Textures/Terrain/Pond/Pond_normal.png
      }
 }
+
 ----
+
 PNG файл находится в той же папке, `assets/Textures/Terrain/Pond/`
 
 
@@ -295,7 +319,9 @@ PNG файл находится в той же папке, `assets/Textures/Terr
 
 
 [source]
+
 ----
+
 Material Leaves : Common/MatDefs/Light/Lighting.j3md {
 
     Transparent On
@@ -316,7 +342,9 @@ Material Leaves : Common/MatDefs/Light/Lighting.j3md {
         FaceCull Off
     }
 }
+
 ----
+
 PNG файл находится в той же папке, `assets/Models/Tree/…`
 
 

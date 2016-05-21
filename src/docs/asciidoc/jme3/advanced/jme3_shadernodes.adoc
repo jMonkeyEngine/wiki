@@ -71,7 +71,9 @@ global structure should look like this :+
 
 
 [source,java]
+
 ----
+
 ShaderNodeDefinitions{
       ShaderNodeDefinition <NodeDefName>{
             Type : <ShaderType> 
@@ -97,7 +99,9 @@ ShaderNodeDefinitions{
       }]
       [...]
 }
+
 ----
+
 All that is not between [] is mandatory.+
 
 
@@ -135,7 +139,9 @@ Here is a typical shader node definition
 
 
 [source,java]
+
 ----
+
 ShaderNodeDefinitions{
      ShaderNodeDefinition LightMapping{
         Type: Fragment
@@ -157,7 +163,9 @@ ShaderNodeDefinitions{
         }
     }   
 }    
+
 ----
+
 
 ==== Declare an array
 
@@ -171,9 +179,13 @@ _Example_
 
 
 [source]
+
 ----
+
       float myArray[10]
+
 ----
+
 this will declare a float array with 10 elements.
 Any material parameter mapped with this array should be of FloatArray type and it's size will be assumed as 10 when the shader is generated.+
 
@@ -187,9 +199,13 @@ _Example_
 
 
 [source]
+
 ----
+
      float myArray[NumberOfElements]
+
 ----
+
 This declares a float array with the size depending on the value of the NumberOfElement material parameter.+
 
 NumberOfElement *HAS* to be declared in the material definition as a material parameter. It will be mapped to a define and used in the shader.
@@ -211,11 +227,15 @@ Here is a the code of the LightMap.frag shader.+
 
 
 [source,java]
+
 ----
+
 void main(){
     color *= texture2D(lightMap, texCoord);
 }
+
 ----
+
 Very simple, it's just a texture fetch, but of course anything can be done.+
 
 *Do not declare uniforms, attributes or varyings in a shader node code*, the Generator will handle this, just use the inputs and outputs and optional local variables you may need.
@@ -234,7 +254,9 @@ Here is how a ShaderNode declaration should look :
 
 
 [source,java]
+
 ----
+
 ShaderNode <ShaderNodeName>{
      Definition : <DefinitionName> [: <DefinitionPath>]
      [Condition : <ActivationCondition>]
@@ -247,7 +269,9 @@ ShaderNode <ShaderNodeName>{
           [...]
      }]
 }
+
 ----
+
 *  +++<u>ShaderNode</u>+++ the shader node block
 **  *ShaderNodeName* the name of this shader node, can be anything, but has to be *unique* in the shader scope
 
@@ -264,11 +288,15 @@ ShaderNode <ShaderNodeName>{
 
 
 [source,java]
+
 ----
+
         #if defined(COLOR) || defined(COLORMAP)
             ...
         #endif
+
 ----
+
 *  +++<u>InputMapping</u>+++ the wiring of the inputs of this node, coming from previous node's outputs or from built in glsl inputs.
 **  *InputVariableName* : the name of the variable to map as declared in the definition.
 **  *Swizzle* : Swizling for the preceding variable. More information on glsl swizzling on this page link:http://www.opengl.org/wiki/GLSL_Type[http://www.opengl.org/wiki/GLSL_Type]
@@ -297,7 +325,9 @@ Here is an example of a very simple Material definition that just displays a sol
 
 
 [source,java]
+
 ----
+
 MaterialDef Simple {
     MaterialParameters {
         Color Color
@@ -332,7 +362,9 @@ MaterialDef Simple {
         }
     }
 }
+
 ----
+
 This Material definition has one Default technique with 2 node declarations.+
 
 +++<u>*CommonVert Definition*</u>++++
@@ -342,7 +374,9 @@ here is the definition content (Common/MatDefs/ShaderNodes/Common/CommonVert.j3s
 
 
 [source,java]
+
 ----
+
 ShaderNodesDefinitions {
     ShaderNodeDefinition CommonVert {
         Type: Vertex
@@ -375,17 +409,23 @@ ShaderNodesDefinitions {
         }
     }
 }
+
 ----
+
 
 here is the shader Node code ( Common/MatDefs/ShaderNodes/Common/commonVert.vert)
 
 
 [source,java]
+
 ----
+
 void main(){
     projPosition = worldViewProjectionMatrix * vec4(modelPosition, 1.0);
 }
+
 ----
+
 As you can see all the inputs and outputs are not used. that's because most of them are attributes meant to be passed to the fragment shader as varyings. all the wiring will be handled by the generator only if those variables are used in an input or output mapping.+
 
 
@@ -414,7 +454,9 @@ here is the definition content (Common/MatDefs/ShaderNodes/Basic/ColorMult.j3sn)
 
 
 [source,java]
+
 ----
+
 ShaderNodeDefinitions{
     ShaderNodeDefinition ColorMult {      
         Type: Fragment
@@ -434,16 +476,22 @@ ShaderNodeDefinitions{
         }
     }
 }
+
 ----
+
 here is the shader Node code (Common/MatDefs/ShaderNodes/Basic/colorMult.frag)
 
 
 [source,java]
+
 ----
+
 void main(){
     outColor = color1 * color2;
 }
+
 ----
+
 +++<u>*ColorMult input mapping*</u>++++
 
 All inputs are mapped here :
@@ -469,7 +517,9 @@ Vertex Shader (glsl 1.0)
 
 
 [source,java]
+
 ----
+
 
 uniform mat4 g_WorldViewProjectionMatrix;
 
@@ -491,7 +541,9 @@ void main(){
 
         gl_Position = Global_position;
 }
+
 ----
+
 All materials parameter, world parameters, attributes varying are declared first. then for each shader node, the declarative part is appended.+
 
 For the main function, for each shader node, the input mappings are declared and assigned, the output are declared.+
@@ -510,7 +562,9 @@ Fragment Shader (glsl 1.0)
 
 
 [source,java]
+
 ----
+
 
 uniform vec4 m_Color;
 
@@ -527,7 +581,9 @@ void main(){
 
         gl_FragColor = Global_color;
 }
+
 ----
+
 Same as for the Vertex shader. note that the color1 is not declared, because it's directly replaced by the material parameter.
 
 

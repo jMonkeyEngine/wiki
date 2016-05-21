@@ -12,7 +12,9 @@ If you are new Entity Systems please read the <<jme3/contributions/entitysystem/
 === Sample Code
 
 [source,java]
+
 ----
+
 import com.simsilica.es.Entity;
 import com.simsilica.es.EntityData;
 import com.simsilica.es.EntityId;
@@ -44,7 +46,9 @@ public class Main {
         entityData.removeEntity(entity.getId());
     }
 }
+
 ----
+
 
 == Description of the sample
 
@@ -55,7 +59,9 @@ You simply create a component by implementing the EntityComponent interface:
 
 
 [source,java]
-----public class TestComponent implements EntityComponent {
+
+----
+public class TestComponent implements EntityComponent {
     
     private String value;
     
@@ -68,7 +74,9 @@ You simply create a component by implementing the EntityComponent interface:
     {
         return value;
     }
-}----
+}
+----
+
 But there are some rules you must consider:
 Components only have a constructor and getter.
 It is important that you only store pure data in the components because otherwise you would no longer know where you can find the logic and the approach of a clear software design would get lost.
@@ -86,7 +94,11 @@ Besides an entity can only have one component of the same class.
 === Initialize the Entity System
 
 [source,java]
----- EntityData entityData = new DefaultEntityData();----
+
+----
+ EntityData entityData = new DefaultEntityData();
+----
+
 The EntityData is the main class of the entity system.  All the data are stored here.
 
 
@@ -100,10 +112,14 @@ For every component class a new Hashmap is created which contains the entityId a
 === Creating Entitys and adding Components
 
 [source,java]
-----//Creates a new EntityId, the id is handled as an object to prevent botching
+
+----
+//Creates a new EntityId, the id is handled as an object to prevent botching
 EntityId entityId = entityData.createEntity();
 //A new TestComponent is added to the Entity
-entityData.setComponent(entityId, new TestComponent("Hello World"));----
+entityData.setComponent(entityId, new TestComponent("Hello World"));
+----
+
 EntityIds are a objects which contain a long value. Zay-ES uses this objects to prevent users from writing dirty code.
 
 
@@ -121,11 +137,15 @@ Ids are not reused because, if they were, they would not be unique anymore, whic
 === The Entity Class
 
 [source,java]
-----//Get a new Entity Object with TestComponents
+
+----
+//Get a new Entity Object with TestComponents
 Entity entity = entityData.getEntity(entityId, TestComponent.class);
 //Get the Component and display the value
 TestComponent testComponent = entity.get(TestComponent.class);
-System.out.println(testComponent.getValue());----
+System.out.println(testComponent.getValue());
+----
+
 If you want to work with entities, the EntityData is able to create Entity objects. This objects contains
 all the Components of the classes you are interested in. In this example it is only the TestComponent.class.
 You can have multiple Entity objects for the same entity.
@@ -138,18 +158,26 @@ You can have multiple Entity objects for the same entity.
 === Replacing a component
 
 [source,java]
+
 ----
+
 //Overwrite the existing component
 entity.set(new TestComponent("New Value"));
-System.out.println(testComponent.getValue());----
+System.out.println(testComponent.getValue());
+----
+
 
 === Delete an entity
 
 [source,java]
+
 ----
+
 //Remove the Entity from the data
 entityData.removeEntity(entity.getId());
+
 ----
+
 
 == Entity Sets
 

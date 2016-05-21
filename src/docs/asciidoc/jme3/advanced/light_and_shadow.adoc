@@ -57,11 +57,15 @@ A PointLight has a location and shines from there in all directions as far as it
 
 
 [source,java]
-----PointLight lamp_light = new PointLight();
+
+----
+PointLight lamp_light = new PointLight();
 lamp_light.setColor(ColorRGBA.Yellow);
 lamp_light.setRadius(4f);
 lamp_light.setPosition(new Vector3f(lamp_geo.getLocalTranslation()));
-rootNode.addLight(lamp_light);----
+rootNode.addLight(lamp_light);
+----
+
 
 === DirectionalLight
 
@@ -77,10 +81,14 @@ A DirectionalLight has no position, only a direction. It sends out parallel beam
 
 
 [source,java]
-----DirectionalLight sun = new DirectionalLight();
+
+----
+DirectionalLight sun = new DirectionalLight();
 sun.setColor(ColorRGBA.White);
 sun.setDirection(new Vector3f(-.5f,-.5f,-.5f).normalizeLocal());
-rootNode.addLight(sun);----
+rootNode.addLight(sun);
+----
+
 
 === SpotLight
 
@@ -96,14 +104,18 @@ A SpotLight sends out a distinct beam or cone of light. A SpotLight has a direct
 
 
 [source,java]
-----SpotLight spot = new SpotLight();
+
+----
+SpotLight spot = new SpotLight();
 spot.setSpotRange(100f);                           // distance
 spot.setSpotInnerAngle(15f * FastMath.DEG_TO_RAD); // inner light cone (central beam)
 spot.setSpotOuterAngle(35f * FastMath.DEG_TO_RAD); // outer light cone (edge of the light)
 spot.setColor(ColorRGBA.White.mult(1.3f));         // light color
 spot.setPosition(cam.getLocation());               // shine from camera loc
 spot.setDirection(cam.getDirection());             // shine forward from camera loc
-rootNode.addLight(spot);----
+rootNode.addLight(spot);
+----
+
 If you want the spotlight to follow the flycam, repeat the setDirection(…) and setPosition(…) calls in the update loop, and kee syncing them with the camera position and direction.
 
 
@@ -117,9 +129,13 @@ An AmbientLight simply influences the brightness and color of the scene globally
 
 
 [source,java]
-----AmbientLight al = new AmbientLight();
+
+----
+AmbientLight al = new AmbientLight();
 al.setColor(ColorRGBA.White.mult(1.3f));
-rootNode.addLight(al);----
+rootNode.addLight(al);
+----
+
 +
 `mylight.setColor(ColorRGBA.White.mult(1.3f));`
 
@@ -131,12 +147,16 @@ You can use a `com.jme3.scene.control.LightControl` to make a SpotLight or Point
 
 
 [source,java]
+
 ----
+
 PointLight myLight = new PointLight();
 rootNode.addLight(myLight);
 LightControl lightControl = new LightControl(myLight);
 spatial.addControl(lightControl); // this spatial controls the position of this light.
+
 ----
+
 Obviously, this does not apply to AmbientLights, which have no position.
 
 
@@ -188,14 +208,18 @@ Shadow calculations (cast and receive) have a performance impact, so use them sp
 
 
 [source,java]
+
 ----
+
 spatial.setShadowMode(ShadowMode.Inherit);     // This is the default setting for new spatials.
 rootNode.setShadowMode(ShadowMode.Off);        // Disable shadows for the whole scene, except where overridden. 
 wall.setShadowMode(ShadowMode.CastAndReceive); // The wall can cast shadows and also receive them.
 floor.setShadowMode(ShadowMode.Receive);       // Any shadows cast by the floor would be hidden by it.
 airplane.setShadowMode(ShadowMode.Cast);       // There's nothing above the airplane to cast shadows on it.
 ghost.setShadowMode(ShadowMode.Off);           // The ghost is translucent: it neither casts nor receives shadows.
+
 ----
+
 Both shadow renderers and shadow filters use shadow modes to determine which objects can cast shadows. However, only the shadow renderers pay attention to shadow modes when determining which objects receive shadows.  With a shadow filter, shadow modes have no effect on which objects receive shadows.
 
 
@@ -208,7 +232,9 @@ Here is the key code fragment:
 
 
 [source,java]
+
 ----
+
         DirectionalLight sun = new DirectionalLight();
         sun.setColor(ColorRGBA.White);
         sun.setDirection(cam.getDirection());
@@ -226,7 +252,9 @@ Here is the key code fragment:
         FilterPostProcessor fpp = new FilterPostProcessor(assetManager);
         fpp.addFilter(dlsf);
         viewPort.addProcessor(fpp);
+
 ----
+
 Constructor arguments:
  * your AssetManager object
  * size of the rendered shadow maps, in pixels per side (512, 1024, 2048, etc…)
@@ -254,14 +282,18 @@ image::jme3/advanced/shadow.png[A lit scene with PSSM drop shadows,with="300",he
 
 
 [source,java]
-----private PssmShadowRenderer pssmRenderer;
+
+----
+private PssmShadowRenderer pssmRenderer;
 ...
 public void simpleInitApp() {
     ....
     pssmRenderer = new PssmShadowRenderer(assetManager, 1024, 3);
     pssmRenderer.setDirection(new Vector3f(-.5f,-.5f,-.5f).normalizeLocal()); // light direction
     viewPort.addProcessor(pssmRenderer);
+
 ----
+
 
 == Screen Space Ambient Occlusion
 
@@ -279,11 +311,15 @@ In JME3, SSAO is implemented by adding an instance of `com.jme3.post.SSAOFilter`
 
 
 [source,java]
+
 ----
+
 FilterPostProcessor fpp = new FilterPostProcessor(assetManager);
 SSAOFilter ssaoFilter = new SSAOFilter(12.94f, 43.92f, 0.33f, 0.61f);
 fpp.addFilter(ssaoFilter);
 viewPort.addProcessor(fpp);
+
 ----
+
 image:jme3/advanced/shading-textured-ani.gif[Shading with and without Ambient Occlusion,with="",height=""]
 

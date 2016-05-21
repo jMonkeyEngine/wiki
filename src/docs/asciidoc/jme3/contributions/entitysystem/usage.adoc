@@ -6,14 +6,20 @@
 === Initialize the Entity System
 
 [source,java]
+
 ----
+
 EntitySystem entitySystem = new EntitySystem(new DefaultEntityData());
+
 ----
+
 
 === Writing an own Component
 
 [source,java]
+
 ----
+
 public class MovementComponent extends Component {
  
     private Vector3f movement;
@@ -27,12 +33,16 @@ public class MovementComponent extends Component {
     {
         return movement;
     }
-}----
+}
+----
+
 
 === Adding a new Entity
 
 [source,java]
+
 ----
+
 Component[] components = new Component[6];
 
 components[0] = new VisualRepComponent("Models/HoverTank/Tank2.mesh.xml");     
@@ -43,14 +53,20 @@ components[4] = new PlayerComponent();
 components[5] = new CollisionComponent(5);
        
 entitySystem.newEntity(components);
+
 ----
+
 
 === Creating a new EntitySet
 
 [source,java]
+
 ----
+
 Entity Set entitySet = entitySystem.getEntitySet(MovementComponent.class, PositionComponent.class);
+
 ----
+
 For the single parts of your programm who deal with special components it is recommended to use <<jme3/advanced/application_states#,AppStates>>.
 
 
@@ -58,7 +74,9 @@ For the single parts of your programm who deal with special components it is rec
 === Loop through all entities
 
 [source,java]
+
 ----
+
 entitySet.applyChanges()
 
 Iterator<Entity> iterator = entitySet.getIterator();
@@ -66,33 +84,47 @@ while (iterator.hasNext()) {
       Entity entity = iterator.next();
 	//do something
 }
+
 ----
+
 
 === Only get changed Entities
 
 [source,java]
+
 ----
+
 if(entitySet.applyChanges())
 {
  	entitySet.getAddedEntities(); //Get the Set of new added entities
         entitySet.getChangedEntities(); //Get the Set of changed entities
         entitySet.getRemovedEntities(); //Get the Set of removed entities
 }
+
 ----
+
 
 === Update a component
 
 [source,java]
+
 ----
+
 entity.setComponent(new PositionComponent(new Vector3f()));
+
 ----
+
 
 === Destroy an entity
 
 [source,java]
+
 ----
+
 entity.destroy();
+
 ----
+
 
 === How to display Spatials if it not allowed to save them into the components?
 

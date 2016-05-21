@@ -17,18 +17,34 @@ image:jme3/advanced/explosion-5.png[explosion-5.png,with="150",height="100"]  im
 
 .  Create one emitter for each effect: 
 [source,java]
-----ParticleEmitter explosion = new ParticleEmitter(
-"My explosion effect", Type.Triangle, 30);----
+
+----
+ParticleEmitter explosion = new ParticleEmitter(
+"My explosion effect", Type.Triangle, 30);
+----
+
 .  Attach the emitter to the rootNode and position it in the scene: 
 [source,java]
-----rootNode.attachChild(explosion);
-explosion.setLocalTranslation(bomb.getLocalTranslation());----
+
+----
+rootNode.attachChild(explosion);
+explosion.setLocalTranslation(bomb.getLocalTranslation());
+----
+
 .  Trigger the effect by calling 
 [source,java]
-----explosion.emitAllParticles()----
+
+----
+explosion.emitAllParticles()
+----
+
 .  End the effect by calling 
 [source,java]
-----explosion.killAllParticles()----
+
+----
+explosion.killAllParticles()
+----
+
 
 Choose one of the following mesh shapes
 
@@ -146,7 +162,9 @@ Use the common Particle.j3md Material Definition and a texture to specify the sh
 
 
 [source,java]
+
 ----
+
     Material flash_mat = new Material(
         assetManager, "Common/MatDefs/Misc/Particle.j3md");
     flash_mat.setTexture("Texture",
@@ -155,7 +173,9 @@ Use the common Particle.j3md Material Definition and a texture to specify the sh
     flash.setImagesX(2); // columns
     flash.setImagesY(2); // rows
     flash.setSelectRandomImage(true);
+
 ----
+
 The effect texture can be one image, or contain a sprite animation – a series of slightly different pictures in equally spaced rows and columns. If you choose the sprite animation:
 
 
@@ -219,7 +239,9 @@ a| image:http///jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Effects/
 == Usage Example
 
 [source,java]
+
 ----
+
     ParticleEmitter fire = new ParticleEmitter("Emitter", Type.Triangle, 30);
     Material mat_red = new Material(assetManager, "Common/MatDefs/Misc/Particle.j3md");
     mat_red.setTexture("Texture", assetManager.loadTexture("Effects/Explosion/flame.png"));
@@ -235,7 +257,9 @@ a| image:http///jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Effects/
     fire.setHighLife(3f);
     fire.getParticleInfluencer().setVelocityVariation(0.3f);
     rootNode.attachChild(fire);
+
 ----
+
 Browse the full source code of all link:https://github.com/jMonkeyEngine/jmonkeyengine/tree/master/jme3-examples/src/main/java/jme3test/effect[effect examples] here.
 
 '''

@@ -12,7 +12,11 @@ All AssetDataObjects and SceneExplorerNodes allow access to the ProjectAssetMana
 
 
 [source,java]
-----ProjectAssetManager pm = node.getLookup().lookup(ProjectAssetManager.class)----
+
+----
+ProjectAssetManager pm = node.getLookup().lookup(ProjectAssetManager.class)
+----
+
 The ProjectAssetManager is basically a normal DesktopAssetManager for each project with some added functionality:
 
 
@@ -28,7 +32,11 @@ Most “files that you encounter in the SDK come in the form of AssetDataObjects
 
 
 [source,java]
-----assetDataObject.getLookup().lookup(AssetData.class)----
+
+----
+assetDataObject.getLookup().lookup(AssetData.class)
+----
+
 
 == New Asset File Types
 
@@ -36,20 +44,27 @@ When you add a new file type for a model format or other asset file that can be 
 
 
 [source,java]
-----public class BlenderDataObject extends SpatialAssetDataObject {
+
+----
+public class BlenderDataObject extends SpatialAssetDataObject {
     public BlenderDataObject(FileObject pf, MultiFileLoader loader) throws DataObjectExistsException, IOException {
         super(pf, loader);
     }
-}----
+}
+----
+
 An AssetManagerConfigurator class can be created to configure the assetManager of the projects and model importer to use the new asset type:
 
 
 [source,java]
+
 ----
+
 @org.openide.util.lookup.ServiceProvider(service = AssetManagerConfigurator.class)
 public class BlenderAssetManagerConfigurator implements AssetManagerConfigurator {
     public void prepareManager(AssetManager manager) {
         manager.registerLoader(com.jme3.scene.plugins.blender.BlenderModelLoader.class, "blend");
     }
 }
+
 ----

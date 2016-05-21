@@ -12,7 +12,9 @@ Material definitions and material instance files are formatted similarly to curl
 
 
 [source]
-----RootBlock {
+
+----
+RootBlock {
   // Comment
   SubBlock NameForTheBlock {
     Statement1 // Another comment
@@ -28,7 +30,9 @@ Material definitions and material instance files are formatted similarly to curl
   SubBlock3
     { // bracket can be on next line as well
     }
-}----
+}
+----
+
 The syntax for J3MD and J3M files follows from this base format.
 
 
@@ -64,7 +68,11 @@ All J3MD files begin with `MaterialDef` as the root block, following that, is th
 
 
 [source]
-----MaterialDef Test Material 123 {----
+
+----
+MaterialDef Test Material 123 {
+----
+
 Inside a MaterialDef block, there can be at most one MaterialParameters block, and one or more `Technique` blocks.
 
 
@@ -75,11 +83,15 @@ Techniques may have an optional name, which specifies the name of the technique.
 
 
 [source]
-----MaterialDef Test Material 123 { 
+
+----
+MaterialDef Test Material 123 { 
   MaterialParameters { }
   Technique { }
   Technique NamedTech { } 
-}----
+}
+----
+
 Inside the MaterialParameters block, the parameters are specified. Every parameter has a type and a name. Material parameters are similar to Java variables in that aspect.
 
 
@@ -87,13 +99,17 @@ Inside the MaterialParameters block, the parameters are specified. Every paramet
 
 
 [source]
-----MaterialParameters {
+
+----
+MaterialParameters {
     Texture2D TexParam
     Color     ColorParam
     Vector3   VectorParam
     Boolean   BoolParam
 // ...
-}----
+}
+----
+
 Whereas in the J3MD file, the parameter names and types are specified, in a J3M (Material instance) file, the values for these parameters are assigned, as will be shown later. This is how the materials are configured.
 
 
@@ -104,10 +120,14 @@ You can specify a default value for material parameters, inside material definit
 
 
 [source]
-----MaterialParameters {
+
+----
+MaterialParameters {
      Float MyParam : 1
 // ...
-}----
+}
+----
+
 1 will be used as the default value and sent to the shader if it has not been set by a meterial.setFloat() call.
 
 
@@ -130,14 +150,22 @@ For example, assuming the parameter `Shininess` is defined in the MaterialParame
 
 
 [source]
-----MaterialParameters {
+
+----
+MaterialParameters {
   Float Shininess
-}----
+}
+----
+
 The value of that parameter will map into an uniform with same name with the “m_ prefix in the GLSL shader:
 
 
 [source]
-----uniform float m_Shininess;----
+
+----
+uniform float m_Shininess;
+----
+
 The letter `m` in the prefix stands for material.
 
 
@@ -148,15 +176,23 @@ An important structure, that also relates to shaders, is the WorldParameters str
 
 
 [source]
-----WorldParameters {
+
+----
+WorldParameters {
   Time
 // ...
-}----
+}
+----
+
 The shader will be able to access this parameter through a uniform, also named `Time` but prefixed with `g_`:
 
 
 [source]
-----uniform float g_Time;----
+
+----
+uniform float g_Time;
+----
+
 The `g` letter stands for “global, which is considered a synonym with “world in the context of parameter scope.
 
 
@@ -176,9 +212,13 @@ The most commonly used render state is alpha blending, to specify it for a parti
 
 
 [source]
-----RenderState {
+
+----
+RenderState {
  Blend Alpha
-}----
+}
+----
+
 *Full Example of a J3MD*
 
 
@@ -186,7 +226,9 @@ Included is a full example of a J3MD file using all the features learned:
 
 
 [source]
-----MaterialDef Test Material 123 { 
+
+----
+MaterialDef Test Material 123 { 
   MaterialParameters {
     Float m_Shininess
     Texture2D m_MyTex
@@ -201,7 +243,9 @@ Included is a full example of a J3MD file using all the features learned:
       Blend Alpha
     }
   } 
-}----
+}
+----
+
 
 == Material Instance files (J3M)
 
@@ -215,7 +259,11 @@ All J3M files begin with the word `Material` followed by the name of the materia
 
 
 [source]
-----Material MyGrass : Common/MatDefs/Misc/TestMaterial.j3md {----
+
+----
+Material MyGrass : Common/MatDefs/Misc/TestMaterial.j3md {
+----
+
 The material definition is a required component, depending on the material definition being used, the appearance and functionality of the material changes completely. Whereas the material definition provided the “logic for the material, the material instance provides the configuration for how this logic operates.
 
 
@@ -229,9 +277,13 @@ To specify a value for a parameter, one must specify first the parameter name, f
 
 
 [source]
-----MaterialParameters {
+
+----
+MaterialParameters {
   m_Shininess : 20.0 
-}----[cols="2", options="header"]
+}
+----
+[cols="2", options="header"]
 |===
 
 a|Param type
@@ -270,12 +322,16 @@ The formatting of the value, depends on the type of the value that was specified
 
 
 [source]
-----Material MyGrass : Common/MatDefs/Misc/TestMaterial.j3md { 
+
+----
+Material MyGrass : Common/MatDefs/Misc/TestMaterial.j3md { 
   MaterialParameters {
     m_MyTex : Flip Textures/GrassTex.jpg
     m_Shininess : 20.0
   }
-}----
+}
+----
+
 
 === Java interface for J3M
 
@@ -283,7 +339,9 @@ It is possible to generate an identical J3M file using Java code, by using the c
 
 
 [source,java]
+
 ----
+
 // Create a material instance
 Material mat = new Material(assetManager, "Common/MatDefs/Misc/
     TestMaterial.j3md");
@@ -293,7 +351,9 @@ assetManager.loadTexture(new TextureKey("Textures/GrassTex.jpg", true));
 // Set the parameters
 mat.setTexture("MyTex", tex);
 mat.setFloat("Shininess", 20.0f);
+
 ----
+
 
 == Conclusion
 

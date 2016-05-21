@@ -17,7 +17,9 @@
 == Пример Кода
 
 [source,java]
+
 ----
+
 package jme3test.helloworld;
 
 import com.jme3.app.SimpleApplication;
@@ -96,7 +98,9 @@ public class HelloInput extends SimpleApplication {
     }
   };
 }
+
 ----
+
 Откомпилировать и запустить пример.
 
 
@@ -127,14 +131,18 @@ public class HelloInput extends SimpleApplication {
 .  Вы сопоставите привязки `Pause`, `Left`, `Right`  соответственно клавишам P, J, K. 
 
 [source,java]
+
 ----
+
     // Можно сопоставить одну или несколько клавиш для одного имени привязки
     inputManager.addMapping("Pause",  new KeyTrigger(KeyInput.KEY_P));
     inputManager.addMapping("Left",   new KeyTrigger(KeyInput.KEY_J));
     inputManager.addMapping("Right",  new KeyTrigger(KeyInput.KEY_K));
     inputManager.addMapping("Rotate", new KeyTrigger(KeyInput.KEY_SPACE),
                                       new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
+
 ----
+
 Теперь вам нужно зарегистрировать свои триггеры с привязками.
 
 
@@ -142,11 +150,15 @@ public class HelloInput extends SimpleApplication {
 .  Регистрируем привязки движения с AnalogListener, потому что это поэтапные действия.
 
 [source,java]
+
 ----
+
     // Добавим имена привязок в listener.
     inputManager.addListener(actionListener,"Pause");
     inputManager.addListener(analogListener,"Left", "Right", "Rotate");
+
 ----
+
 Этот код входит в метод `simpleInitApp()`. Но так как мы, скорее всего, добавим много комбинаций клавиш, мы извлечем эти строки и сделаем вспомогательного метод `initKeys()`  с ними. Метод `initKeys()`  не является частью  Input Controls interface – Вы можете назвать его как угодно. Только не забудьте указать свой метод в методе “initSimpleApp().
 
 
@@ -168,7 +180,9 @@ public class HelloInput extends SimpleApplication {
 .  Мы также хотим проверить рабату логической `isRunning` для любых действий (кроме отключения паузу).
 
 [source,java]
+
 ----
+
   private ActionListener actionListener = new ActionListener() {
     public void onAction(String name, boolean keyPressed, float tpf) {
       if (name.equals("Pause") && !keyPressed) {
@@ -195,12 +209,16 @@ public class HelloInput extends SimpleApplication {
         System.out.println("Press P to unpause.");
       }
     }
-  };----
+  };
+----
+
 Вы также можете комбинировать оба listeners в один. Движок будет отправлять соответствующие события для каждого метода (onAction или onAnalog). Например:
 
 
 [source,java]
+
 ----
+
   private MyCombinedListener combinedListener = new MyCombinedListener();
 
   private static class MyCombinedListener implements AnalogListener, ActionListener {
@@ -230,7 +248,9 @@ public class HelloInput extends SimpleApplication {
   }
 // ...
 inputManager.addListener(combinedListener, new String[]{"Pause", "Left", "Right", "Rotate"});
-  ----
+  
+----
+
 Это нормально, использовать только один из двух listeners, и не реализовывать другой, если вы не используете этот тип привязок. Далее мы научим определять, какой из двух listeners лучше всего подходит для какой ситуации.
 
 
@@ -266,9 +286,13 @@ inputManager.addListener(combinedListener, new String[]{"Pause", "Left", "Right"
 
 
 [source,java]
-----      if (name.equals("Pause") && !keyPressed) {
+
+----
+      if (name.equals("Pause") && !keyPressed) {
         isRunning = !isRunning;
-      }----
+      }
+----
+
 
 == Таблица триггеров
 
@@ -319,10 +343,14 @@ KeyTrigger(KeyInput.KEY_LEFT), KeyTrigger(KeyInput.KEY_RIGHT)
 
 .  В какой ситуации лучше использовать переменные вместо литералов для определения MouseInput/KeyInput ? 
 [source,java]
-----int usersPauseKey = KeyInput.KEY_P; 
+
+----
+int usersPauseKey = KeyInput.KEY_P; 
 ...
 inputManager.addMapping("Pause",  new KeyTrigger(usersPauseKey));
+
 ----
+
 
 <<документация/jme3_ru/решения#,Решения>>
 +++<u>Будьте уверены в себе, и попытайтесь решить их в первую очередь для себя!</u>+++

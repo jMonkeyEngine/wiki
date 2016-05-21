@@ -63,12 +63,16 @@
 ==== Пример - поворот Spatial с помощью fromAngleAxis
 
 [source,java]
+
 ----
+
 //поворот вокруг Y-оси примерно на 1 pi
 Vector3f axis = Vector3f.UNIT_Y; // это составляет (0, 1, 0) и не требуется для создания нового объекта
 float angle = 3.14f;
 s.getLocalRotation().fromAngleAxis(angle, axis);
+
 ----
+
 
 === Три Угла
 
@@ -79,11 +83,15 @@ s.getLocalRotation().fromAngleAxis(angle, axis);
 ==== Пример - поворот Spatial с помощью fromAngles
 
 [source,java]
+
 ----
+
 //поворот 1 радиан на х, 3-х на y и 0 для z
 float[] angles = {1, 3, 0};
 s.getLocalRotation().fromAngles(angles);
+
 ----
+
 
 === Три Оси
 
@@ -95,7 +103,9 @@ s.getLocalRotation().fromAngles(angles);
 ==== Пример - поворот Spatial с помощью fromAxes
 
 [source,java]
+
 ----
+
 //rotate a spatial to face up ~45 degrees
 Vector3f[] axes = new Vector3f[3];
 axes[0] = new Vector3f(-1, 0, 0); //left
@@ -103,7 +113,9 @@ axes[1] = new Vector3f(0, 0.5f, 0.5f); //up
 axes[2] = new Vector3f(0, 0.5f, 0.5f); //dir
 
 s.getLocalRotation().fromAxes(axes);
+
 ----
+
 
 === Матрица Вращения
 
@@ -114,7 +126,9 @@ s.getLocalRotation().fromAxes(axes);
 ==== Пример - поворот Spatial с помощью матрицы вращения
 
 [source,java]
+
 ----
+
 
 Matrix3f mat = new Matrix3f();
 mat.setColumn(0, new Vector3f(1,0,0));
@@ -122,7 +136,9 @@ mat.setColumn(1, new Vector3f(0,-1,0));
 mat.setColumn(2, new Vector3f(0,0,1));
 
 s.getLocalRotation().fromRotationMatrix(mat);
+
 ----
+
 As you can see there are many ways to build a Quaternion. This allows you to work with rotations in a way that is conceptually easier to picture, but still build Quaternions for internal representation.
 
 
@@ -136,10 +152,13 @@ As you can see there are many ways to build a Quaternion. This allows you to wor
 ==== Пример использования Slerp вращаться между двумя Кватернионами
 
 [source,java]
+
 ----
+
 Quaternion q1;
 Quaternion q2;
 
 //вращение на полпути между этими двумя
 Quaternion q3 = q1.slerp(q2, 0.5f);
+
 ----

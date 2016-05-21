@@ -36,18 +36,28 @@ You create either a file inputstream to load the video from your hard drive:
 
 
 [source,java]
-----FileInputStream  fis = new FileInputStream("E:\\my_bunny.ogg");----
+
+----
+FileInputStream  fis = new FileInputStream("E:\\my_bunny.ogg");
+----
+
 Or you stream the video live from a web location:
 
 
 [source,java]
-----InputStream fis = new URL("http://server/my_video.ogg").openStream();----
+
+----
+InputStream fis = new URL("http://server/my_video.ogg").openStream();
+----
+
 Setting the queued frames to a value value higher than 5 (`videoQueue = new VQueue(5);`) will make web streamed playback smoother at the cost of memory.
 Here is an example of video streaming in context:
 
 
 [source,java]
+
 ----
+
     private void createVideo(){
         try {
             InputStream fis = new URL("http://mirrorblender.top-ix.org/peach/"+
@@ -62,12 +72,16 @@ Here is an example of video streaming in context:
             ex.printStackTrace();
         }
     }
+
 ----
+
 Use the simpleUpdate() method to play the audio:
 
 
 [source,java]
+
 ----
+
     @Override
     public void simpleUpdate(float tpf){
         if (source == null){
@@ -140,12 +154,16 @@ Use the simpleUpdate() method to play the audio:
             }
         }
     }
+
 ----
+
 Helper Methods:
 
 
 [source,java]
+
 ----
+
     private void drawFrame(VFrame frame){
         Image image = frame.getImage();
         frame.setImage(image);
@@ -158,9 +176,13 @@ Helper Methods:
         videoQueue.returnFrame(frame);
         lastFrameTime = frame.getTime();
     }
+
 ----
+
 [source,java]
+
 ----
+
     private void waitNanos(long time){
         long millis = (long) (time / Clock.MILLIS_TO_NANOS);
         int nanos   = (int) (time - (millis * Clock.MILLIS_TO_NANOS));
@@ -172,4 +194,5 @@ Helper Methods:
             return;
         }
     }
+
 ----

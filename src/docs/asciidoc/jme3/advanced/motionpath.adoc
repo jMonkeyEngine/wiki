@@ -36,11 +36,15 @@ Create a Motionpath object and add way points to it.
 
 
 [source,java]
-----MotionPath path = new MotionPath();
+
+----
+MotionPath path = new MotionPath();
 path.addWayPoint(new Vector3f(10, 3, 0));
 path.addWayPoint(new Vector3f(8, -2, 1));
 ...
+
 ----
+
 You can configure the path as follows.
 
 [cols="2", options="header"]
@@ -83,7 +87,9 @@ In this example, you just print the status at every way point. In a game you cou
 
 
 [source,java]
-----path.addListener( new MotionPathListener() {
+
+----
+path.addListener( new MotionPathListener() {
   public void onWayPointReach(MotionTrack control, int wayPointIndex) {
     if (path.getNbWayPoints() == wayPointIndex + 1) {
       println(control.getSpatial().getName() + " has finished moving. ");
@@ -91,4 +97,5 @@ In this example, you just print the status at every way point. In a game you cou
       println(control.getSpatial().getName() + " has reached way point " + wayPointIndex);
     }
   }
-});----
+});
+----

@@ -30,7 +30,9 @@ To make the camera follow a target node, add this camera node code to your init 
 
 
 [source,java]
+
 ----
+
 // Disable the default flyby cam
 flyCam.setEnabled(false);
 //create the camera Node
@@ -43,7 +45,9 @@ target.attachChild(camNode);
 camNode.setLocalTranslation(new Vector3f(0, 5, -5));
 //Rotate the camNode to look at the target:
 camNode.lookAt(target.getLocalTranslation(), Vector3f.UNIT_Y);
+
 ----
+
 *Important:* Where the example says `camNode.setLocalTranslation(new Vector3f(0, 5, -5));`, you have to supply your own start position for the camera. This depends on the size of your target (the player character) and its position in your particular scene. Optimally, you set this to a spot a bit behind and above the target.
 
 [cols="2", options="header"]
@@ -75,13 +79,17 @@ To activate the chase camera, add the following code to your init method (e.g. `
 
 
 [source,java]
+
 ----
+
 // Disable the default flyby cam
 flyCam.setEnabled(false);
 // Enable a chase cam for this target (typically the player).
 ChaseCamera chaseCam = new ChaseCamera(cam, target, inputManager);
 chaseCam.setSmoothMotion(true);
-----[cols="2", options="header"]
+
+----
+[cols="2", options="header"]
 |===
 
 a|Method

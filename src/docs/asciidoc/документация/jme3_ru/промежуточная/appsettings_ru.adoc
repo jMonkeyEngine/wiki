@@ -21,14 +21,18 @@
 
 
 [source,java]
-----public static void main(String[] args) {
+
+----
+public static void main(String[] args) {
   AppSettings settings = new AppSettings(true);
   settings.setResolution(640,480);
   // ... другие свойства, см. ниже
   MyGame app = new MyGame(); 
   app.setSettings(settings);
   app.start();
-}----
+}
+----
+
 Установите в AppSettings contructor логическое значение true, если вы хотите сохранить параметры по умолчанию для значений, которые вы не указываете. Установите для этого параметра значение false, если вы хотите, чтобы приложение, загружало пользовательские параметры из предыдущих запусков. В любом случае вы все еще сможете настроить индивидуальные параметры.
 
 
@@ -36,7 +40,9 @@
 
 
 [source,java]
-----public void toggleToFullscreen() {
+
+----
+public void toggleToFullscreen() {
   GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
   DisplayMode[] modes = device.getDisplayModes();
   int i=0; // Примечание: существует обычно несколько, давайте выберем первый
@@ -46,7 +52,9 @@
   settings.setFullscreen(device.isFullScreenSupported());
   app.setSettings(settings);
   app.restart(); // перезагрузите контексте, чтобы применить изменения
-}----
+}
+----
+
 
 == Свойства
 [cols="3", options="header"]
@@ -200,10 +208,14 @@ a|Restart() во время работы игры перезапускает и�
 
 
 [source,java]
+
 ----
+
     try { settings.save("com.foo.MyCoolGame3"); } 
     catch (BackingStoreException ex) { /** не удалось сохранить параметры */ }
+
 ----
+
 *  На Windows, настройки сохраняются в следующем разделе реестра: +
 `HKEY_CURRENT_USER\Software\JavaSoft\Prefs\com\foo\MyCoolGame3`
 *  На Linux, настройки сохраняются в XML-файл в соответствии с: +

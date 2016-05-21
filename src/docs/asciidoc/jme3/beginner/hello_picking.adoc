@@ -24,7 +24,9 @@ image::beginner-picking.png[beginner-picking.png,with="",height="",align="center
 == Sample Code
 
 [source,java]
-----package jme3test.helloworld;
+
+----
+package jme3test.helloworld;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.collision.CollisionResult;
@@ -172,7 +174,9 @@ public class HelloPicking extends SimpleApplication {
     golem.addLight(sun);
     return golem;
   }
-}----
+}
+----
+
 You should see four colored cubes floating over a gray floor, and cross-hairs. Aim the cross-hairs and click, or press the spacebar to shoot. The hit spot is marked with a red dot.
 
 
@@ -225,7 +229,9 @@ First initialize some shootable nodes and attach them to the scene. You will use
 
 
 [source,java]
+
 ----
+
   Node shootables;
   Geometry mark;
   
@@ -242,7 +248,9 @@ First initialize some shootable nodes and attach them to the scene. You will use
     shootables.attachChild(makeCube("the Sheriff",  0f, 1f,-2f));
     shootables.attachChild(makeCube("the Deputy",   1f, 0f, -4));
     shootables.attachChild(makeFloor());
-  }----
+  }
+----
+
 
 === Setting Up the Input Listener
 
@@ -250,7 +258,9 @@ Next you declare the shooting action. It can be triggered either by clicking, or
 
 
 [source,java]
+
 ----
+
   /** Declaring the "Shoot" action and its triggers. */
   private void initKeys() {
     inputManager.addMapping("Shoot",      // Declare...
@@ -258,7 +268,9 @@ Next you declare the shooting action. It can be triggered either by clicking, or
       new MouseButtonTrigger(MouseInput.BUTTON_LEFT));         // trigger 2: left-button click
     inputManager.addListener(actionListener, "Shoot"); // ... and add.
   }
+
 ----
+
 
 === Picking Action Using Crosshairs
 
@@ -275,7 +287,9 @@ Note how it prints a lot of output to show you which hits were registered.
 
 
 [source,java]
-----  /** Defining the "Shoot" action: Determine what was hit and how to respond. */
+
+----
+  /** Defining the "Shoot" action: Determine what was hit and how to respond. */
   private ActionListener actionListener = new ActionListener() {
     @Override
     public void onAction(String name, boolean keyPressed, float tpf) {
@@ -309,7 +323,9 @@ Note how it prints a lot of output to show you which hits were registered.
         }
       }
     }
-  };----
+  };
+----
+
 *Tip:* Notice how you use the provided method `results.getClosestCollision().getContactPoint()` to determine the _closest_ hit's location. If your game includes a “weapon or “spell that can hit multiple targets, you could also loop over the list of results, and interact with each of them.
 
 
@@ -326,7 +342,9 @@ The above example assumes that the player is aiming crosshairs (attached to the 
 .  Collect intersections between ray and all nodes into a results list.
 
 [source,java]
-----...
+
+----
+...
 CollisionResults results = new CollisionResults();
 Vector2f click2d = inputManager.getCursorPosition();
 Vector3f click3d = cam.getWorldCoordinates(
@@ -335,7 +353,9 @@ Vector3f dir = cam.getWorldCoordinates(
     new Vector2f(click2d.x, click2d.y), 1f).subtractLocal(click3d).normalizeLocal();
 Ray ray = new Ray(click3d, dir);
 shootables.collideWith(ray, results);
-...----
+...
+----
+
 Use this together with `inputManager.setCursorVisible(true)` to make certain the cursor is visible. 
 
 

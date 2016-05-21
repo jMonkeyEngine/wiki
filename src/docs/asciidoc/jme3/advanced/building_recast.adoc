@@ -63,11 +63,15 @@ Example of method in wrapper:
 
 
 [source,java]
+
 ----
+
 SWIGEXPORT jint JNICALL Java_com_jme3_ai_navigation_utils_RecastJNI_rcIntArray_1size(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
  ...
 }
+
 ----
+
 The Recast_wrap.cxx uses SWIG wrapper so for declaring method in wrapper you must first use the keyword `SWIGEXPORT` then returning type (for more information on returning types see link:http://docs.oracle.com/javase/1.5.0/docs/guide/jni/spec/types.html[link]), then again keyword `JNICALL` and then as the name of method `Java_com_jme3_ai_navigation_utils_RecastJNI_` + `name of class` + `name of method`, after that, there goes list of parameters needed for the function (for more information see link:http://docs.oracle.com/javase/7/docs/technotes/guides/jni/spec/functions.html[link]). In body of method write how the function should be used.
 
 
@@ -85,7 +89,9 @@ The following script was used for generating wrapper:
 
 
 [source]
+
 ----
+
 %module Recast
 %include "carrays.i"
 %array_class(double, DoubleArray);
@@ -147,7 +153,9 @@ The following script was used for generating wrapper:
     System.load("Recast");
   }
 %}
+
 ----
+
 If there are more headers at some moment, include them in both places.
 
 

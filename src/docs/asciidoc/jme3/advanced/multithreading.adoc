@@ -6,7 +6,9 @@ jME3 is similar to Swing in that, for speed and efficiency, all changes to the s
 
 
 [source,java]
+
 ----
+
 public void rotateGeometry(final Geometry geo, final Quaternion rot) {
     mainApp.enqueue(new Callable<Spatial>() {
         public Spatial call() throws Exception {
@@ -14,7 +16,9 @@ public void rotateGeometry(final Geometry geo, final Quaternion rot) {
         }
     });
 }
+
 ----
+
 Note that this example does not fetch the returned value by calling `get()` on the Future object returned from `enqueue()`. This means that the example method `rotateGeometry()` will return immediately and will not wait for the rotation to be processed before continuing.
 
 
@@ -65,10 +69,14 @@ You create the executor object in a global AppState (or the initSimpleApp() meth
 
 
 [source,java]
+
 ----
+
 /* This constructor creates a new executor with a core pool size of 4. */
 ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(4);
+
 ----
+
 Pool size means the executor will keep four threads alive at any time. Having more threads in the pool means that more tasks can run concurrently. But a bigger pool only results in a speed gain if the PC can handle it! Allocating a pool  that is uselessly large just wastes memory, so you need to find a good compromise: About the same to double the size of the number of cores in the computer makes sense. 
 
 
@@ -77,13 +85,17 @@ In your simple application you can override the destroy method and shutdown the 
 
 
 [source,java]
+
 ----
+
     @Override
     public void destroy() {
         super.destroy();
         executor.shutdown();
     }
+
 ----
+
 
 === Control Class Fields
 
@@ -91,14 +103,18 @@ In the NPC Control, we create the individual objects that the thread manipulates
 
 
 [source,Java]
+
 ----
+
 //The vector to store the desired location in:
 Vector3f desiredLocation = new Vector3f();
 //The MyWayList object that contains the result waylist:
 MyWayList wayList = null;
 //The future that is used to check the execution status:
 Future future = null;
+
 ----
+
 Here we also created the Future variable to track the state of this task.
 
 
@@ -109,7 +125,9 @@ Next let's look at the update() call of the Control where the time-intensive tas
 
 
 [source,java]
+
 ----
+
 public void update(float tpf) {
     try{
         //If we have no waylist and not started a callable yet, do so!
@@ -139,7 +157,9 @@ public void update(float tpf) {
     if(wayList != null){
         //.... Success! Let's process the wayList and move the NPC...
     }
-}----
+}
+----
+
 Note how this logic makes its decision based on the Future object.
 
 
@@ -167,7 +187,9 @@ These two ways are thread-safe, they don't mess up the game logic, and keep the 
 
 
 [source,java]
+
 ----
+
 // A self-contained time-intensive task:
 private Callable<MyWayList> findWay = new Callable<MyWayList>(){
     public MyWayList call() throws Exception {
@@ -189,7 +211,9 @@ private Callable<MyWayList> findWay = new Callable<MyWayList>(){
     }
 };
 
+
 ----
+
 
 == Useful Links
 

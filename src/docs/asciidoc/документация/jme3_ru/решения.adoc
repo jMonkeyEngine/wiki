@@ -22,7 +22,9 @@
 
 
 [source,java]
+
 ----
+
 protected Geometry redCube;
 
 public void simpleInitApp() {
@@ -43,12 +45,16 @@ public void simpleInitApp() {
     // Добавим красный куб на экран
     rootNode.attachChild(redCube);
 }
+
 ----
+
 Чтобы красный куб вращался в два раза быстрее, чем другой куба, просто сделайте его вращаться на той же оси, но с удвоенным значением:
 
 
 [source,java]
+
 ----
+
 public void simpleUpdate(float tpf) {
     // делает поворот player 
     player.rotate(0, 2*tpf, 0);
@@ -56,7 +62,9 @@ public void simpleUpdate(float tpf) {
     // делает поворот redCub в два раза быстрее игрока
     redCube.rotate(0, 4*tpf, 0);
 }
+
 ----
+
 
 === Упражнение 3
 
@@ -64,7 +72,9 @@ public void simpleUpdate(float tpf) {
 
 
 [source,java]
+
 ----
+
 private boolean grow = true;
 ...
 public void simpleUpdate(float tpf) {
@@ -81,7 +91,9 @@ public void simpleUpdate(float tpf) {
                 grow = true;
         }
 }
+
 ----
+
 Куб начинается с роста, и когда он достигает размер больше, чем 120% от исходного размера, он начинает сжиматься. Куб будет сжиматься, пока он не достигнет размера меньше, чем 80% от исходного размера, и тогда снова запустится рост, и так далее.
 
 
@@ -89,7 +101,9 @@ public void simpleUpdate(float tpf) {
 
 
 [source,java]
+
 ----
+
 // Прошло время
 private float timeVar = 0;
 ...
@@ -103,7 +117,9 @@ public void simpleUpdate(float tpf) {
         timeVar = 0;
     }
 }
+
 ----
+
 Куба растет 2  секунды, затем уменьшается еще 2 секунды, и повторяется бесконечно.
 
 
@@ -111,7 +127,9 @@ public void simpleUpdate(float tpf) {
 
 
 [source,java]
+
 ----
+
 public void simpleUpdate(float tpf) {
     float timeInSec = timer.getTimeInSeconds();
     float initScale = 1;
@@ -120,7 +138,9 @@ public void simpleUpdate(float tpf) {
     float scale = initScale + amplitude * FastMath.sin(timeInSec * angularFrequency);
     player.setLocalScale(scale);
 }
+
 ----
+
 Куба неоднократно и плавно растут и уменьшаются, а имеют максимальный и минимальный масштаб 0,5 и 1,5 исходного размера. Следующие переменные могут изменять масштаб поведения:
 
 
@@ -135,21 +155,31 @@ Same logic! Use a timeVar, and make the Material declaration + initialization li
 
 
 [source,java]
+
 ----
+
 protected Material mat;
+
 ----
+
 As global var, then the initialization cuts off the Material bit:
 
 
 [source,java]
+
 ----
+
 mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+
 ----
+
 И тогда simpleUpdate()
 
 
 [source,java]
+
 ----
+
 public void simpleUpdate(float tpf) {
     timeVar += tpf;
     if (timeVar > 1) {
@@ -157,7 +187,9 @@ public void simpleUpdate(float tpf) {
         timeVar= 0;
     }
 }
+
 ----
+
 
 === Упражнение 5
 
@@ -165,13 +197,17 @@ public void simpleUpdate(float tpf) {
 
 
 [source,java]
+
 ----
+
 public void simpleUpdate(float tpf) {
     // player сделает поворот
     player.rotate(2*tpf, 0, 0);
     player.move(0, 0, 2*tpf);
 }
+
 ----
+
 Приведенный выше код должен сделать крен player в сторону камеры.
 
 
@@ -185,7 +221,9 @@ public void simpleUpdate(float tpf) {
 
 
 [source,java]
+
 ----
+
 private void initKeys() {
     ...
     inputManager.addMapping("Up", new KeyTrigger(KeyInput.KEY_H));
@@ -193,12 +231,16 @@ private void initKeys() {
     ...
     inputManager.addListener(combinedListener, new String[]{"Left", "Right", "Up", "Down", "Rotate"});
 }
+
 ----
+
 Затем реализуйте действия в методе onAnalog():
 
 
 [source,java]
+
 ----
+
 public void onAnalog(String name, float value, float tpf) {
     if (isRunning) {
         ...
@@ -214,7 +256,9 @@ public void onAnalog(String name, float value, float tpf) {
         ...
     }
 }
+
 ----
+
 Это должно позволить кубу двигаться вверх, если нажата клавиша H, и вниз если нажата клавиша L.
 
 
@@ -225,7 +269,9 @@ public void onAnalog(String name, float value, float tpf) {
 
 
 [source,java]
+
 ----
+
 private void initKeys() {
     ...
     inputManager.addMapping("Up", new KeyTrigger(KeyInput.KEY_H),
@@ -234,7 +280,9 @@ private void initKeys() {
                                     new MouseAxisTrigger(MouseInput.AXIS_WHEEL, false));
     ...
 }
+
 ----
+
 Теперь вы сможете переместить куба вверх или вниз с помощью прокрутки колесика мыши.
 
 
@@ -254,9 +302,13 @@ You can jump right off and obtain the hit object's material, by acessing the “
 
 
 [source,java]
+
 ----
+
 Material g = closest.getGeometry().getMaterial();
+
 ----
+
 It's the same as going through the two steps hinted in the tips: `Geometry g = closest.getGeometry(); Material material = g.getMaterial();`
 Finally, you need only add this line: `material.setColor(“Color, ColorRGBA.randomColor())` , which will change the material from the hit object to a random color!
 
@@ -265,10 +317,14 @@ The lines can be added anywhere within the `if (results.size() &gt; 0)` block, a
 
 
 [source,java]
+
 ----
+
 Material material = closest.getGeometry().getMaterial();
 material.setColor("Color", ColorRGBA.randomColor());
+
 ----
+
 
 === Упражнение 2
 
@@ -277,16 +333,24 @@ Then, declare a `Spatial golem` variable outside of methods. Then initialize gol
 
 
 [source,java]
+
 ----
+
 golem = assetManager.loadModel("Models/Oto/Oto.mesh.xml");
+
 ----
+
 Now we need him to show up! So we need to attach him: but the rootNode won't do, because we're checking collision with it's child, the shootables node! So we attach it to shootables!
 
 
 [source,java]
+
 ----
+
 shootables.attachChild(golem);
+
 ----
+
 
 === Упражнение 3
 
@@ -294,7 +358,9 @@ Here is my code, it works and it is well commented.
 
 
 [source,java]
+
 ----
+
 package jme3test.helloworld;
 
 import com.jme3.app.SimpleApplication;
@@ -446,4 +512,5 @@ public class HelloPicking extends SimpleApplication
 	return golem;
     }
 }
+
 ----

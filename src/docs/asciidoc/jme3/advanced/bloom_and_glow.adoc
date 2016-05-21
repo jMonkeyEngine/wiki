@@ -20,12 +20,16 @@ image:jme3/advanced/nobloomsky.png[No bloom,with="",height=""]image:jme3/advance
 .  Add the processor to the viewPort
 
 [source,java]
+
 ----
+
  FilterPostProcessor fpp=new FilterPostProcessor(assetManager);
  BloomFilter bloom=new BloomFilter();
  fpp.addFilter(bloom);
  viewPort.addProcessor(fpp);
+
 ----
+
 Here are the parameters that you can tweak :
 
 [cols="4", options="header"]
@@ -84,7 +88,9 @@ The tank material looks like this :
 
 
 [source]
+
 ----
+
 Material My Material : Common/MatDefs/Light/Lighting.j3md {
      MaterialParameters {
         SpecularMap : Models/HoverTank/tank_specular.png
@@ -98,7 +104,9 @@ Material My Material : Common/MatDefs/Light/Lighting.j3md {
         Specular : 1.0 1.0 1.0 1.0
      }
 }
+
 ----
+
 The glow map is defined here : *GlowMap : Models/HoverTank/tank_glow_map_highres.png*
 
 
@@ -111,12 +119,16 @@ The glow map is defined here : *GlowMap : Models/HoverTank/tank_glow_map_highres
 .  Add the processor to the viewPort
 
 [source]
+
 ----
+
   FilterPostProcessor fpp=new FilterPostProcessor(assetManager);
   BloomFilter bf=new BloomFilter(BloomFilter.GlowMode.Objects);
   fpp.addFilter(bf);
   viewPort.addProcessor(fpp);
+
 ----
+
 Here is the result : +
 
 image:jme3/advanced/tanlglow1.png[Glowing hover tank,with="",height=""]
@@ -139,7 +151,9 @@ In this case you'll need to use the glow color parameter.
 .  Add the processor to the viewPort
 
 [source]
+
 ----
+
     Material mat = new Material(getAssetManager(), "Common/MatDefs/Misc/SolidColor.j3md");
     mat.setColor("Color", ColorRGBA.Green);
     mat.setColor("GlowColor", ColorRGBA.Green);
@@ -147,7 +161,9 @@ In this case you'll need to use the glow color parameter.
     bloom= new BloomFilter(BloomFilter.GlowMode.Objects);        
     fpp.addFilter(bloom);
     viewPort.addProcessor(fpp);
+
 ----
+
 Here is the result on Oto's plasma ball (before and after) : +
 
 
@@ -170,10 +186,14 @@ You can reduce the size of the bloom sampling just by using the setDownSamplingF
 
 
 [source,java]
+
 ----
+
  BloomFilter bloom=new BloomFilter();
  bloom.setDownSamplingFactor(2.0f); 
+
 ----
+
 In this example the sampling size is divided by 4 (width/2,height/2), resulting in less work to blur the scene.
 The resulting texture is then up sampled to the screen size using hardware bilinear filtering. this results in a wider blur range.
 
@@ -186,9 +206,13 @@ You can use only one bloom filter for both effects like that
 
 
 [source,java]
+
 ----
+
 BloomFilter bloom=new BloomFilter(BloomFilter.GlowMode.SceneAndObjects);
+
 ----
+
 However, note that both effects will share the same values of attribute, and sometimes, it won't be what you need.
 
 
@@ -200,7 +224,9 @@ In your material definition you need to add those lines in the MaterialParameter
 
 
 [source]
+
 ----
+
  MaterialParameters {
         
         ....
@@ -210,12 +236,16 @@ In your material definition you need to add those lines in the MaterialParameter
         // The glow color of the object
         Color GlowColor
     }
+
 ----
+
 Then add the following technique : 
 
 
 [source]
+
 ----
+
     Technique Glow {
 
         LightMode SinglePass
@@ -232,7 +262,9 @@ Then add the following technique :
             HAS_GLOWCOLOR : GlowColor
         }
     }
+
 ----
+
 Then you can use this material with the BloomFilter
 
 
@@ -243,13 +275,21 @@ If you are using a glow map, remove the texture from the material.
 
 
 [source]
+
 ----
+
 material.clearTextureParam("GlowMap");
+
 ----
+
 If you are using a glow color, set it to black
 
 
 [source]
+
 ----
+
 material.setColor("GlowColor",ColorRGBA.Black);
-----<tags><tag target="documentation" /><tag target="effect" /><tag target="light" /></tags>
+
+----
+<tags><tag target="documentation" /><tag target="effect" /><tag target="light" /></tags>

@@ -38,7 +38,9 @@ image::jme3/beginner/beginner-physics.png[beginner-physics.png,with="360",height
 
 
 [source,java]
-----package jme3test.helloworld;
+
+----
+package jme3test.helloworld;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.asset.TextureKey;
@@ -231,7 +233,9 @@ public class HelloPhysics extends SimpleApplication {
     guiNode.attachChild(ch);
   }
 }
+
 ----
+
 Вы должны увидеть кирпичную стену. Нажмите, чтобы пушка стреляла шарами. Смотреть кирпичи падают и отскакивают друг друга!
 
 
@@ -245,7 +249,9 @@ public class HelloPhysics extends SimpleApplication {
 
 
 [source,java]
+
 ----
+
 public class HelloPhysics extends SimpleApplication {
   private BulletAppState bulletAppState;
   
@@ -255,7 +261,9 @@ public class HelloPhysics extends SimpleApplication {
     ...
   }
   ...
-}----
+}
+----
+
 BulletAppState дает игре доступ к PhysicsSpace. PhysicsSpace позволяет использовать com.jme3.bullet.control.PhysicsControls который добавляет физические свойства Узлу.
 
 
@@ -269,7 +277,9 @@ BulletAppState дает игре доступ к PhysicsSpace. PhysicsSpace по
 
 
 [source,java]
+
 ----
+
   /** Подготовка геометрии и физических узлов для кирпича и пушечных ядер. */
   private static final Box    box;
   private static final Sphere sphere;
@@ -288,7 +298,9 @@ BulletAppState дает игре доступ к PhysicsSpace. PhysicsSpace по
     /** Инициализировать геометрию пола */
     floor = new Box(10f, 0.1f, 5f);
     floor.scaleTextureCoordinates(new Vector2f(3, 6));
-  }----
+  }
+----
+
 
 === RigidBodyControl: Кирпич
 
@@ -296,9 +308,13 @@ BulletAppState дает игре доступ к PhysicsSpace. PhysicsSpace по
 
 
 [source,java]
+
 ----
+
   private RigidBodyControl brick_phy;
+
 ----
+
 Пользовательский метод `makeBrick(loc)` создает отдельные кирпичи на месте `loc`. Кирпич имеет следующие свойства:
 
 
@@ -306,7 +322,9 @@ BulletAppState дает игре доступ к PhysicsSpace. PhysicsSpace по
 *  Он имеет физические свойства `brick_phy` (RigidBodyControl)
 
 [source,java]
+
 ----
+
   public void makeBrick(Vector3f loc) {
     /** Создаем геометрии кирпича и вложить их в граф сцены. */
     Geometry brick_geo = new Geometry("brick", box);
@@ -319,7 +337,9 @@ BulletAppState дает игре доступ к PhysicsSpace. PhysicsSpace по
     /** Добавим физику кирпича физику пространства. */
     brick_geo.addControl(brick_phy);
     bulletAppState.getPhysicsSpace().add(brick_phy);
-  }----
+  }
+----
+
 Этот пример кода выполняет следующие действия:
 
 
@@ -345,7 +365,9 @@ BulletAppState дает игре доступ к PhysicsSpace. PhysicsSpace по
 *  Оно имеет физические свойства `ball_phy` (RigidBodyControl)
 
 [source,java]
+
 ----
+
     /** Создаем геометрию cannon ball и вложим её в граф сцены. */
     Geometry ball_geo = new Geometry("cannon ball", sphere);
     ball_geo.setMaterial(stone_mat);
@@ -359,7 +381,9 @@ BulletAppState дает игре доступ к PhysicsSpace. PhysicsSpace по
     bulletAppState.getPhysicsSpace().add(ball_phy);
     /** Ускорим физически шар, чтобы выстрелить им. */
     ball_phy.setLinearVelocity(cam.getDirection().mult(25));
-    ----
+    
+----
+
 Этот пример кода выполняет следующие действия:
 
 
@@ -389,7 +413,9 @@ BulletAppState дает игре доступ к PhysicsSpace. PhysicsSpace по
 *  Он имеет физические свойства `floor_phy` (RigidBodyControl)
 
 [source,java]
+
 ----
+
   public void initFloor() {
     Geometry floor_geo = new Geometry("Floor", floor);
     floor_geo.setMaterial(floor_mat);
@@ -399,7 +425,9 @@ BulletAppState дает игре доступ к PhysicsSpace. PhysicsSpace по
     floor_phy = new RigidBodyControl(0.0f);
     floor_geo.addControl(floor_phy);
     bulletAppState.getPhysicsSpace().add(floor_phy);
-  }----
+  }
+----
+
 Этот пример кода выполняет следующие действия:
 
 
@@ -436,24 +464,32 @@ BulletAppState дает игре доступ к PhysicsSpace. PhysicsSpace по
 
 
 [source,java]
+
 ----
+
   private void initInputs() {
     inputManager.addMapping("shoot", 
             new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
     inputManager.addListener(actionListener, "shoot");
-  }----
+  }
+----
+
 Вы задаете действие стрельба новым пушечным ядром следующим образом:
 
 
 [source,java]
+
 ----
+
     private ActionListener actionListener = new ActionListener() {
         public void onAction(String name, boolean keyPressed, float tpf) {
             if (name.equals("shoot") && !keyPressed) {
                 makeCannonBall();
             }
         }
-    };----
+    };
+----
+
 В данный момент пушечное ядро появляется на сцене,  она улетает со скоростью (и в направлении), которое вы указали при помощи `setLinearVelocity()` внутри `makeCannonBall()`. Вновь созданное пушечное ядро летит, попадает в стену, и оказывает физическую силу, которые оказывают влияние на отдельные кирпичи.
 
 
@@ -483,7 +519,11 @@ BulletAppState дает игре доступ к PhysicsSpace. PhysicsSpace по
 
 
 [source,java]
-----bulletAppState.getPhysicsSpace().enableDebug(assetManager);----
+
+----
+bulletAppState.getPhysicsSpace().enableDebug(assetManager);
+----
+
 Теперь вы видите collisionShapes кирпича и сферах, и пол подсвечен.
 
 

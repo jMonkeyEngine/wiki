@@ -33,7 +33,9 @@ Just so you get a quick picture what Nifty +++<abbr title="Graphical User Interf
 
 
 [source,java]
-----package mygame;
+
+----
+package mygame;
  
 import com.jme3.app.SimpleApplication;
 import com.jme3.niftygui.NiftyJmeDisplay;
@@ -96,7 +98,9 @@ public class Main extends SimpleApplication {
  
     nifty.gotoScreen("Screen_ID"); // start the screen
     }
-}----
+}
+----
+
 
 == Implement Your GUI Layout
 
@@ -118,7 +122,9 @@ The following minimal Java file contains a start screen and a HUD screen. (Neith
 
 
 [source,java]
+
 ----
+
 nifty.addScreen("start", new ScreenBuilder("start"){{
     controller(new DefaultScreenController());
     // <!-- ... -->
@@ -128,7 +134,9 @@ nifty.addScreen("hud", new ScreenBuilder("hud"){{
     controller(new DefaultScreenController());
     // <!-- ... -->
   }}.build(nifty));
+
 ----
+
 Every Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++ must have a start screen. The others (in this example, the HUD screen) are optional. 
 
 
@@ -139,7 +147,9 @@ The following Java code shows how we add layers to the start screen and HUD scre
 
 
 [source,java]
+
 ----
+
 nifty.addScreen("start", new ScreenBuilder("start"){{
         controller(new DefaultScreenController());
  
@@ -159,12 +169,18 @@ nifty.addScreen("start", new ScreenBuilder("start"){{
          }});
          // layer added
  
-      }}.build(nifty));----
+      }}.build(nifty));
+----
+
 Repeat the same, but use 
 
 
 [source]
-----nifty.addScreen("hud", new ScreenBuilder("hud"){{----
+
+----
+nifty.addScreen("hud", new ScreenBuilder("hud"){{
+----
+
  for the HUD screen.
 
 
@@ -178,7 +194,9 @@ A panel is the inner-most container (that will contain the actual content: text,
 
 
 [source,java]
+
 ----
+
     nifty.addScreen("start", new ScreenBuilder("start") {{
         controller(new DefaultScreenController());
         layer(new LayerBuilder("background") {{
@@ -234,12 +252,16 @@ A panel is the inner-most container (that will contain the actual content: text,
         }});
 
     }}.build(nifty));
+
 ----
+
 The following panels go into in the `hud` screen:
 
 
 [source,Java]
+
 ----
+
     nifty.addScreen("hud", new ScreenBuilder("hud") {{
         controller(new DefaultScreenController());
 
@@ -291,7 +313,9 @@ The following panels go into in the `hud` screen:
                 }});
             }}); // panel added
         }});
-    }}.build(nifty));----
+    }}.build(nifty));
+----
+
 Try the sample. Remember to activate a screen using `nifty.gotoScreen(“start);` or `hud` respectively.
 The result should look as follows:
 
@@ -314,7 +338,9 @@ The start-background.png image is a fullscreen background picture. In the `start
 
 
 [source,java]
+
 ----
+
     nifty.addScreen("start", new ScreenBuilder("start") {{
         controller(new DefaultScreenController());
         layer(new LayerBuilder("background") {{
@@ -327,12 +353,16 @@ The start-background.png image is a fullscreen background picture. In the `start
             }});
 
         }});
+
 ----
+
 The hud-frame.png image is a transparent frame that we use as HUD decoration. In the `hud` screen, add the following image element:
 
 
 [source,java]
-----    nifty.addScreen("hud", new ScreenBuilder("hud") {{
+
+----
+    nifty.addScreen("hud", new ScreenBuilder("hud") {{
         controller(new DefaultScreenController());
 
         layer(new LayerBuilder("background") {{
@@ -344,13 +374,17 @@ The hud-frame.png image is a transparent frame that we use as HUD decoration. In
                 filename("Interface/tutorial/hud-frame.png");
             }});
 
-        }});----
+        }});
+----
+
 The face1.png image is an image that you want to use as a status icon. 
 In the `hud` screen's `foreground` layer, add the following image element:
 
 
 [source,java]
-----                panel(new PanelBuilder("panel_top_right2") {{
+
+----
+                panel(new PanelBuilder("panel_top_right2") {{
                     childLayoutCenter();
                     backgroundColor("#44f8");
                     height("15%");
@@ -365,7 +399,9 @@ In the `hud` screen's `foreground` layer, add the following image element:
                         width("30%");
                     }});
                     
-                }});----
+                }});
+----
+
 This image is scaled to use 50% of the height and 30% of the width of its container.
 
 
@@ -376,7 +412,9 @@ The game title is a typical example of static text. In the `start` screen, add t
 
 
 [source,java]
+
 ----
+
            // panel added
             panel(new PanelBuilder("panel_top") {{
                 childLayoutCenter();
@@ -393,12 +431,16 @@ The game title is a typical example of static text. In the `start` screen, add t
                     width("100%");
                 }});
                 
-            }});----
+            }});
+----
+
 For longer pieces of static text, such as an introduction, you can use wrap=“true. Add the following text element to the `Start screen`:
 
 
 [source,java]
+
 ----
+
             panel(new PanelBuilder("panel_mid") {{
                 childLayoutCenter();
                 alignCenter();
@@ -415,7 +457,9 @@ For longer pieces of static text, such as an introduction, you can use wrap=“t
                     width("100%");
                 }});
 
-            }});----
+            }});
+----
+
 The font used is jME3's default font “Interface/Fonts/Default.fnt which is included in the jMonkeyEngine.JAR. You can add your own fonts to your own `assets/Interface` directory.
 
 
@@ -426,9 +470,13 @@ Before you can use any control, you must load a Control Definition first. Add th
 
 
 [source,java]
+
 ----
+
     nifty.loadStyleFile("nifty-default-styles.xml");
-    nifty.loadControlFile("nifty-default-controls.xml");----
+    nifty.loadControlFile("nifty-default-controls.xml");
+----
+
 
 ==== Label Control
 
@@ -437,7 +485,9 @@ In the `hud` screen's `foreground` layer, add the following text element:
 
 
 [source,java]
-----                panel(new PanelBuilder("panel_top_right1") {{
+
+----
+                panel(new PanelBuilder("panel_top_right1") {{
                     childLayoutCenter();
                     backgroundColor("#00f8");
                     height("15%");
@@ -448,7 +498,9 @@ In the `hud` screen's `foreground` layer, add the following text element:
                         text("123"); 
                         width("100%"); 
                         height("100%");
-                    }});----
+                    }});
+----
+
 Note that the width and height do not scale the bitmap font, but make indirectly certain it is centered. If you want a different size for the font, you need to provide an extra bitmap font (they come with fixes sizes and don't scale well).
 
 
@@ -459,7 +511,9 @@ Our +++<abbr title="Graphical User Interface">GUI</abbr>+++ plan asks for two bu
 
 
 [source,java]
+
 ----
+
                 panel(new PanelBuilder("panel_bottom_left") {{
                     childLayoutCenter();
                     valignCenter();
@@ -492,7 +546,9 @@ Our +++<abbr title="Graphical User Interface">GUI</abbr>+++ plan asks for two bu
                       width("50%");
                     }});
 
-                }});----
+                }});
+----
+
 Note that these controls don't do anything yet – we'll get to that soon.
 
 
@@ -548,7 +604,11 @@ Example:
 
 
 [source,java]
-----nifty.registerMouseCursor("hand", "Interface/mouse-cursor-hand.png", 5, 4);----
+
+----
+nifty.registerMouseCursor("hand", "Interface/mouse-cursor-hand.png", 5, 4);
+----
+
 
 == Next Steps
 

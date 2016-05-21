@@ -71,19 +71,27 @@ Clean, build and run. You’re ready to load your procedural material!
 
 
 [source,java]
+
 ----
+
 assetManager.registerLoader(com.jme3.material.plugins.NeoTextureMaterialLoader.class,"tgr");
 NeoTextureMaterialKey key = new NeoTextureMaterialKey("Materials/neoMaterial.tgr");
  
 Material mat = assetManager.loadAsset(key);
 mat.setFloat("Shininess",12); /* Lighting.j3md has non-map parameters too that we can set. */
 thing.setMaterial(mat);
+
 ----
+
 The default Material Definition for NeoTextures is `Lighting.j3md`, and it's probably the one you will use most often. In case that you want to use additional texture parameters, other than DiffuseMap, SpecularMap, ParallaxMap, and NormalMap, you can switch to another Material Definition using setMaterialDef(), for instance:
 
 
 [source,java]
-----key.setMaterialDef("Commons/MatDefs/Misc/ColoredTextured.j3md");----
+
+----
+key.setMaterialDef("Commons/MatDefs/Misc/ColoredTextured.j3md");
+----
+
 Remember that the layer names in the .tgr file must match the ones declared in the .j3md file. In our example of `ColoredTextured.j3md`, the .tgr file must contain a `ColorMap` and you need to set a RGBAColor.
 
 
@@ -99,7 +107,11 @@ To be able to load these textures, you have to register a Locator and a Loader i
 
 
 [source,java]
+
 ----
+
 assetManager.registerLocator("/", com.jme3.texture.plugins.NeoTextureLocator.class );
 assetManager.registerLoader(com.jme3.texture.plugins.NeoTextureLoader.class,"tgr");
-----<tags><tag target="documentation" /><tag target="sdk" /><tag target="tool" /><tag target="texture" /><tag target="material" /></tags>
+
+----
+<tags><tag target="documentation" /><tag target="sdk" /><tag target="tool" /><tag target="texture" /><tag target="material" /></tags>

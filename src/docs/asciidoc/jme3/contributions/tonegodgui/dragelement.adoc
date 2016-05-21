@@ -11,10 +11,14 @@ The DragElement class uses the single constructor of the Element class and confi
 
 
 [source,java]
+
 ----
+
 Element.setIsDragDropDragElement(true);
 Element.setIsMovable(true);
+
 ----
+
 It also provides a way of managing multiple drop elements and reacting to the appropriately.
 
 
@@ -22,15 +26,21 @@ It also provides a way of managing multiple drop elements and reacting to the ap
 ==== Enable/Disable the DragElement
 
 [source,java]
+
 ----
+
 dragEl.setIsEnabled(boolean isEnabled);
 dragEl.getIsEnabled();
+
 ----
+
 
 ==== Managing Drop Elements
 
 [source,java]
+
 ----
+
 // Add an element as a valid drop Element
 dragEl.addDropElement(Element element);
 
@@ -41,12 +51,16 @@ dragEl.getDropElement(int index); // Returns a single drop element by index
 // Remove drop elements
 dragEl.removeDropElement(int index);
 dragEl.removeDropElement(Element element);
+
 ----
+
 
 ==== Responding to Incorrect Drops
 
 [source,java]
+
 ----
+
 // Enable/disable springback (returns drag element to original position)
 dragEl.setUseSpringBack(boolean useSpringBack);
 dragEl.getUseSpringBack();
@@ -54,12 +68,16 @@ dragEl.getUseSpringBack();
 // Use SlideTo effect when springback is called
 dragEl.setUseSpringBackEffect(boolean useSpringBackEffect);
 dragEl.getUseSpringBackEffect();
+
 ----
+
 
 ==== Responding to Correct Drops
 
 [source,java]
+
 ----
+
 //Position the DragElement in the center of drop element
 dragEl.setUseLockToDropElementCenter(boolean lockToDropElementCenter);
 dragEl.getUseLockToDropElementCenter();
@@ -67,12 +85,17 @@ dragEl.getUseLockToDropElementCenter();
 // Use SlideTo effect when centering
 dragEl.setUseLockToDropElementEffect(boolean useLockToDropElementEffect);
 dragEl.getUseLockToDropElementEffect();
+
 ----
+
 
 ==== Abstract Event Methods
 
 [source,java]
+
 ----
+
 public abstract void onDragStart(MouseButtonEvent evt);
 public abstract void onDragEnd(MouseButtonEvent evt, int index, Element dropElement);
+
 ----

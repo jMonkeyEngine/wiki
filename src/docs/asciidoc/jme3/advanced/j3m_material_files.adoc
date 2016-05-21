@@ -15,7 +15,9 @@ If you want to colorize simple shapes (one texture all around), then .j3m are th
 .  Place the file in your project's `assets/Materials/` directory, e.g. `MyGame/src/assets/Materials/SimpleBump.j3m`
 .  Edit the file and add content using the following Syntax, e.g.:
 [source]
+
 ----
+
 Material shiny bumpy rock : Common/MatDefs/Light/Lighting.j3md {
      MaterialParameters {
          Shininess: 8.0
@@ -26,7 +28,9 @@ Material shiny bumpy rock : Common/MatDefs/Light/Lighting.j3md {
          Specular : 0.0 0.0 0.0 1.0
      }
 }
+
 ----
+
 
 How to this file is structured:
 
@@ -51,7 +55,11 @@ This is how you use the prepared .j3m Material on a Spatial. Since you have save
 
 
 [source,java]
-----myGeometry.setMaterial(assetManager.loadMaterial("Materials/SimpleBump.j3m"));----
+
+----
+myGeometry.setMaterial(assetManager.loadMaterial("Materials/SimpleBump.j3m"));
+----
+
 *Tip:* In the jMonkeyEngine SDK, open Windows&gt;Palette and drag the `JME Material: Set J3M` snippet into your code.
 
 
@@ -232,19 +240,25 @@ a| Enable point sprite rendering for point meshes
 === Example 1: Shiny
 
 [source,java]
+
 ----
+
 Spatial signpost = (Spatial) assetManager.loadAsset(
     new OgreMeshKey("Models/Sign Post/Sign Post.mesh.xml", null));
 signpost.setMaterial( assetManager.loadMaterial(
     new AssetKey("Models/Sign Post/Sign Post.j3m")));
 TangentBinormalGenerator.generate(signpost);
 rootNode.attachChild(signpost);
+
 ----
+
 The file `assets/Models/Sign Post/Sign Post.j3m` contains:
 
 
 [source]
+
 ----
+
 Material Signpost : Common/MatDefs/Light/Lighting.j3md {
     MaterialParameters {
          Shininess: 4.0
@@ -257,7 +271,9 @@ Material Signpost : Common/MatDefs/Light/Lighting.j3md {
          Specular : 1.0 1.0 1.0 1.0
     }
 }
+
 ----
+
 The JPG files are in the same directory, `assets/Models/Sign Post/…`.
 
 
@@ -265,18 +281,24 @@ The JPG files are in the same directory, `assets/Models/Sign Post/…`.
 === Example 2: Repeating Texture
 
 [source,java]
+
 ----
+
 Material mat = assetManager.loadMaterial(
     "Textures/Terrain/Pond/Pond.j3m");
 mat.setColor("Ambient", ColorRGBA.DarkGray);
 mat.setColor("Diffuse", ColorRGBA.White);
 mat.setBoolean("UseMaterialColors", true);
+
 ----
+
 The file `assets/Textures/Terrain/Pond/Pond.j3m` contains:
 
 
 [source]
+
 ----
+
 Material Pong Rock : Common/MatDefs/Light/Lighting.j3md {
      MaterialParameters {
          Shininess: 8.0
@@ -284,7 +306,9 @@ Material Pong Rock : Common/MatDefs/Light/Lighting.j3md {
          NormalMap:  Repeat Textures/Terrain/Pond/Pond_normal.png
      }
 }
+
 ----
+
 The PNG files are in the same directory, `assets/Textures/Terrain/Pond/`
 
 
@@ -295,7 +319,9 @@ The file `assets/Models/Tree/Leaves.j3m` contains:
 
 
 [source]
+
 ----
+
 Material Leaves : Common/MatDefs/Light/Lighting.j3md {
 
     Transparent On
@@ -316,7 +342,9 @@ Material Leaves : Common/MatDefs/Light/Lighting.j3md {
         FaceCull Off
     }
 }
+
 ----
+
 The PNG file is in the same directory, `assets/Models/Tree/…`
 
 

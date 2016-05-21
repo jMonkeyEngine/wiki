@@ -19,7 +19,9 @@ image::beginner-materials.png[beginner-materials.png,with="320",height="240",ali
 == Sample Code
 
 [source,java]
-----package jme3test.helloworld;
+
+----
+package jme3test.helloworld;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.light.DirectionalLight;
@@ -98,7 +100,9 @@ public class HelloMaterial extends SimpleApplication {
 
   }
 }
+
 ----
+
 You should see
 
 
@@ -115,7 +119,9 @@ Typically you want to give objects in your scene textures: It can be rock, grass
 
 
 [source,java]
+
 ----
+
     /** A simple textured cube -- in good MIP map quality. */
     Box cube1Mesh = new Box( 1f,1f,1f);
     Geometry cube1Geo = new Geometry("My Textured Box", cube1Mesh);
@@ -127,7 +133,9 @@ Typically you want to give objects in your scene textures: It can be rock, grass
     cube1Mat.setTexture("ColorMap", cube1Tex);
     cube1Geo.setMaterial(cube1Mat);
     rootNode.attachChild(cube1Geo);
+
 ----
+
 Here is what we did: to create a textured box:
 
 
@@ -152,7 +160,9 @@ For a partially translucent/transparent texture, you need:
 This bucket ensures that the transparent object is drawn on top of objects behind it, and they show up correctly under the transparent parts. 
 
 [source,java]
+
 ----
+
     /** A translucent/transparent texture, similar to a window frame. */
     Box cube2Mesh = new Box( 1f,1f,0.01f);
     Geometry cube2Geo = new Geometry("window frame", cube2Mesh);
@@ -164,7 +174,9 @@ This bucket ensures that the transparent object is drawn on top of objects behin
     cube2Geo.setQueueBucket(Bucket.Transparent);                        // !
     cube2Geo.setMaterial(cube2Mat);
     rootNode.attachChild(cube2Geo);
+
 ----
+
 For non-transparent objects, the drawing order is not so important, because the z-buffer already keeps track of whether a pixel is behind something else or not, and the color of an opaque pixel doesn't depend on the pixels under it, this is why opaque Geometries can be drawn in any order.
 
 
@@ -196,57 +208,93 @@ Let's have a look at the part of the code example where you create the shiny bum
 
 .  Create a Geometry from a Sphere shape. Note that this shape is a normal smooth sphere mesh. 
 [source,java]
+
 ----
+
     Sphere sphereMesh = new Sphere(32,32, 2f);
-    Geometry sphereGeo = new Geometry("Shiny rock", sphereMesh);----
+    Geometry sphereGeo = new Geometry("Shiny rock", sphereMesh);
+----
+
 ..  (Only for Spheres) Change the sphere's TextureMode to make the square texture project better onto the sphere.
 [source,java]
+
 ----
-    sphereMesh.setTextureMode(Sphere.TextureMode.Projected);----
+
+    sphereMesh.setTextureMode(Sphere.TextureMode.Projected);
+----
+
 ..  You must generate TangentBinormals for the mesh so you can use the NormalMap layer of the texture.
 [source,java]
+
 ----
-    TangentBinormalGenerator.generate(sphereMesh);----
+
+    TangentBinormalGenerator.generate(sphereMesh);
+----
+
 
 .  Create a material based on the `Lighting.j3md` default material.
 [source,java]
+
 ----
+
     Material sphereMat = new Material(assetManager, 
-        "Common/MatDefs/Light/Lighting.j3md");----
+        "Common/MatDefs/Light/Lighting.j3md");
+----
+
 ..  Set a standard rocky texture in the `DiffuseMap` layer. +
 
 image::http///jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Textures/Terrain/Pond/Pond.jpg[Pond.jpg,with="64",height="64",align="right"]
 
 [source,java]
+
 ----
+
     sphereMat.setTexture("DiffuseMap", 
         assetManager.loadTexture("Textures/Terrain/Pond/Pond.jpg"));
+
 ----
+
 ..  Set the `NormalMap` layer that contains the bumpiness. The NormalMap was generated for this particular DiffuseMap with a special tool (e.g. Blender). 
 image::http///jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Textures/Terrain/Pond/Pond_normal.png[Pond_normal.png,with="64",height="64",align="right"]
  
 [source,java]
+
 ----
+
     sphereMat.setTexture("NormalMap", 
-        assetManager.loadTexture("Textures/Terrain/Pond/Pond_normal.png"));----
+        assetManager.loadTexture("Textures/Terrain/Pond/Pond_normal.png"));
+----
+
 ..  Set the Material's Shininess to a value between 1 and 128. For a rock, a low fuzzy shininess is appropriate. Use material colors to define the shiny Specular color. 
 [source,java]
+
 ----
+
     sphereMat.setBoolean("UseMaterialColors",true);    
     sphereMat.setColor("Diffuse",ColorRGBA.White);  // minimum material color
     sphereMat.setColor("Specular",ColorRGBA.White); // for shininess
-    sphereMat.setFloat("Shininess", 64f); // [1,128] for shininess----
+    sphereMat.setFloat("Shininess", 64f); // [1,128] for shininess
+----
+
 
 .  Assign your newly created material to the Geometry.
 [source,java]
+
 ----
-    sphereGeo.setMaterial(sphereMat);----
+
+    sphereGeo.setMaterial(sphereMat);
+----
+
 .  Let's move and rotate the geometry a bit to position it better. 
 [source,java]
+
 ----
+
     sphereGeo.setLocalTranslation(0,2,-2); // Move it a bit
     sphereGeo.rotate(1.6f, 0, 0);          // Rotate it a bit
-    rootNode.attachChild(sphereGeo);----
+    rootNode.attachChild(sphereGeo);
+----
+
 
 Remember that any Lighting.j3md-based material requires a light source, as shown in the full code sample above.
 
@@ -306,7 +354,9 @@ You create a j3m file as follows:
 
 .  Create a plain text file `assets/Materials/MyCustomMaterial.j3m` in your project directory, with the following content:
 [source]
-----Material My shiny custom material : Common/MatDefs/Light/Lighting.j3md {
+
+----
+Material My shiny custom material : Common/MatDefs/Light/Lighting.j3md {
      MaterialParameters {
         DiffuseMap : Textures/Terrain/Pond/Pond.jpg
         NormalMap : Textures/Terrain/Pond/Pond_normal.png
@@ -316,7 +366,9 @@ You create a j3m file as follows:
         Shininess : 64.0
      }
 }
+
 ----
+
 **  Note that `Material` is a fixed keyword.
 **  Note that `My shiny custom material` is a String that you can choose to describe the material.
 **  Note how the code sets all the same properties as before! 
@@ -324,9 +376,13 @@ You create a j3m file as follows:
 .  In the code sample, comment out the eight lines that have `sphereMat` in them.
 .  Below this line, add the following line: 
 [source,java]
-----sphereGeo.setMaterial((Material) assetManager.loadMaterial( 
-    "Materials/MyCustomMaterial.j3m"));
+
 ----
+sphereGeo.setMaterial((Material) assetManager.loadMaterial( 
+    "Materials/MyCustomMaterial.j3m"));
+
+----
+
 .  Run the app. The result is the same.
 
 Using this new custom material `MyCustomMaterial.j3m` only takes one line. You have replaced the eight lines of an on-the-fly material definition with one line that loads a custom material from a file. Using .j3m files is very handy if you use the same material often. 

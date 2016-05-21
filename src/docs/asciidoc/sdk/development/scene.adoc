@@ -24,7 +24,9 @@ To listen to the current selection, implement org.openide.util.LookupListener an
 
 
 [source,java]
+
 ----
+
 private final Result<JmeSpatial> result;
 
 //method to register the listener;
@@ -43,12 +45,16 @@ public void resultChanged(LookupEvent ev) {
     }
 }
 
+
 ----
+
 You can also access the “real spatial but since its part of the scenegraph you will have to modify it on that thread:
 
 
 [source,java]
+
 ----
+
 //retrieve the "real" spatial class from the JmeNode
 for (JmeSpatial jmeSpatial : items) {
     //the spatial is stored inside the JmeSpatials "Lookup", a general container for Objects
@@ -62,7 +68,9 @@ for (JmeSpatial jmeSpatial : items) {
     });
     return;
 }
+
 ----
+
 
 == Requesting the Scene
 
@@ -75,7 +83,9 @@ The SceneRequest object has to contain several things. A thing that you must sup
 
 
 [source,java]
+
 ----
+
 com.jme3.scene.Node rootNode = new com.jme3.scene.Node("MyRootNode");
 
 private void registerSceneListener(){
@@ -104,7 +114,9 @@ public void sceneClosed(SceneRequest request) {
         //we have to close the scene,  any operations on the scene have to be done via Callables
     }
 }
+
 ----
+
 
 == Undo/Redo support
 
@@ -112,17 +124,23 @@ The jMonkeyEngine SDK has a global undo/redo queue that activates the undo/redo 
 
 
 [source,java]
+
 ----
+
 @Override 
 public UndoRedo getUndoRedo() { 
 return Lookup.getDefault().lookup(SceneUndoRedoManager.class); 
 } 
+
 ----
+
 To add a undo/redo event that modifies objects on the Scenegraph, theres a special version of AbstractUndoableEdit which executes the undo/redo calls on the scene thread. Simply implement that class and add it to the queue like this:
 
 
 [source,java]
+
 ----
+
 Lookup.getDefault().lookup(SceneUndoRedoManager.class).addEdit(this, new AbstractUndoableSceneEdit() { 
 
 @Override 
@@ -145,6 +163,8 @@ public void awtRedo() {
     //redo stuff on awt thread here
 } 
 });
+
 ----
+
 Note: Its important that you use the method addEdit(Object source, UndoableEdit edit);
 

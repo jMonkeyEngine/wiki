@@ -10,12 +10,16 @@ First off - there are two compression types in SpiderMonkey, they are GZip and Z
 
 
 [source,java]
+
 ----
+
 MyMessage msg = new MyMessage();
 client.send(new GZIPCompressedMessage(msg));
 // or
 client.send(new ZIPCompressedMessage(msg));
+
 ----
+
 Really simple, but ZIP requires some explanation. The ZIPCompressedMessage class also has two extra methods; setLevel(int) and getLevel(). These methods are for setting the compression level, where 1 is best compression but slowest, and where 9 is weakest compression but fastest. Please note that 9 is *not* the so called 'store' ZIP method, which simply stores file in the ZIP, instead of compressing it. This 'store' feature is not in SpiderMonkey since otherwise it would not have been called compression.
 
 

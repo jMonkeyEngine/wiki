@@ -36,7 +36,9 @@ For example:
 
 
 [source,java]
+
 ----
+
 inputManager.addMapping("Left",    new KeyTrigger(KeyInput.KEY_LEFT));
 inputManager.addMapping("Right",   new KeyTrigger(KeyInput.KEY_RIGHT));
 inputManager.addMapping("Up",      new KeyTrigger(KeyInput.KEY_UP));
@@ -44,7 +46,9 @@ inputManager.addMapping("Down",    new KeyTrigger(KeyInput.KEY_DOWN));
 inputManager.addMapping("Attack1", new KeyTrigger(KeyInput.KEY_SPACE));
 ...
 inputManager.addListener(this, "Left", "Right", "Up", "Down", "Attack1");
+
 ----
+
 
 == Define Combos
 
@@ -55,21 +59,29 @@ The following example shows how a fireball combo move is triggered by pressing t
 
 
 [source,java]
+
 ----
+
 ComboMove fireball = new ComboMove("Fireball");
 fireball.press("Down").notPress("Right").done();
 fireball.press("Right", "Down").done();
 fireball.press("Right").notPress("Down").done();
 fireball.notPress("Right", "Down").done();
 fireball.setUseFinalState(false);
+
 ----
+
 Also create a ComboMoveExecution object for each ComboMove. You need it later to execute the detected combo.
 
 
 [source,java]
+
 ----
+
 ComboMoveExecution fireballExec = new ComboMoveExecution(fireball);
+
 ----
+
 
 === ComboMove Class Methods
 
@@ -144,7 +156,9 @@ We also track the cast time of a combo to determine if it has timed out (see upd
 
 
 [source,java]
+
 ----
+
 private HashSet<String> pressedMappings = new HashSet<String>();
 private ComboMove currentMove = null;
 private float currentMoveCastTime = 0;
@@ -186,7 +200,9 @@ public void onAction(String name, boolean isPressed, float tpf) {
         currentMoveCastTime = currentMove.getCastTime();
     }
 }
+
 ----
+
 
 == Execute Combos in the Update Loop
 
@@ -194,7 +210,9 @@ Now that you have detected the current move, you want to execute it. You do that
 
 
 [source,java]
+
 ----
+
 @Override
 public void simpleUpdate(float tpf){
     time += tpf;
@@ -210,7 +228,9 @@ public void simpleUpdate(float tpf){
             currentMove = null;
         }
     }
-}----
+}
+----
+
 Test `currentMove.getMoveName()` and proceed to call methods that implement any special actions and bonuses. This is up to you and depends individually on your game.
 
 

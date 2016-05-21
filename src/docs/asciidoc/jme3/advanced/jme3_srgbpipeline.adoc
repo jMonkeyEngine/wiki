@@ -72,11 +72,15 @@ use this in the main() method of your application :
 
 
 [source,java]
+
 ----
+
 AppSettings settings = new AppSettings(true);
 settings.setGammaCorrection(true);
 app.setSettings(settings);
+
 ----
+
 This setting is also exposed in the Settings dialog displayed when you launch a jME application.+
 
 image:http///i.imgur.com/Lya1ldH.png[Lya1ldH.png,with="400",height=""]
@@ -93,7 +97,11 @@ You can enable or disable the Gamma correction of the rendered output by using
 
 
 [source,java]
-----renderer.setMainFrameBufferSrgb(boolean srgb)----
+
+----
+renderer.setMainFrameBufferSrgb(boolean srgb)
+----
+
 This will be ignored if the hardware doesn't have the GL_ARB_framebuffer_sRGB or the GL_EXT_texture_sRGB.
 This can be toggled at run time.
 
@@ -112,7 +120,11 @@ You can enable or disable texture linearization by using
 
 
 [source,java]
-----renderer.setLinearizeSrgbImages(boolean linearize)----
+
+----
+renderer.setLinearizeSrgbImages(boolean linearize)
+----
+
 This will be ignored if the hardware doesn't have the GL_ARB_framebuffer_sRGB or the GL_EXT_texture_sRGB.
 
 
@@ -163,10 +175,14 @@ For example here is how the NormalMap parameter is declared in the lighting mate
 
 
 [source]
+
 ----
+
  // Normal map
  Texture2D NormalMap -LINEAR
+
 ----
+
 When a texture is assigned to this material param by using material.setTexture(“NormalMap, myNormalTexture), the color space of this texture's image will be forced to linear. 
 So if you make your own material and want to use Gamma Correction, make sure you properly mark your textures as in the proper color space.
 

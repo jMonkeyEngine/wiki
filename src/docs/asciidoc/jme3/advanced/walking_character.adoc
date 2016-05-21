@@ -37,7 +37,9 @@ This code sample creates a simple upright Character:
 
 
 [source,java]
+
 ----
+
 // Load any model
 Node myCharacter = (Node) assetManager.loadModel("Models/myCharacterModel.mesh.xml");
 rootNode.attachChild(myCharacter);
@@ -47,12 +49,16 @@ CharacterControl myCharacter_phys = new CharacterControl(capsuleShape, 0.01f);
 // Attach physical properties to model and PhysicsSpace
 myCharacter.addControl(myCharacter_phys);
 bulletAppState.getPhysicsSpace().add(myCharacter_phys);
+
 ----
+
 To use the BetterCharacterControl, you may load your character like this:
 
 
 [source,java]
+
 ----
+
 // Load any model
 Spatial playerSpatial = assetManager.loadModel("Models/Oto/Oto.mesh.xml");
 player =  (Node)playerSpatial; // You can set the model directly to the player. (We just wanted to explicitly show that it's a spatial.)
@@ -75,7 +81,9 @@ playerControl.warp(new Vector3f(0,10,10)); // warp character into landscape at p
         bulletAppState.getPhysicsSpace().add(playerControl); 
         bulletAppState.getPhysicsSpace().addAll(playerNode); 
 rootNode.attachChild(playerNode); // add wrapper to root
+
 ----
+
 “<<physics_listeners#,collision listener>>
 
 
@@ -119,7 +127,9 @@ For best practices on how to use `setWalkDirection()`, see the Navigation Inputs
 === Code Skeleton
 
 [source,java]
-----public class WalkingCharacterDemo extends SimpleApplication
+
+----
+public class WalkingCharacterDemo extends SimpleApplication
         implements ActionListener, AnimEventListener {
 
   public static void main(String[] args) {
@@ -136,7 +146,9 @@ For best practices on how to use `setWalkDirection()`, see the Navigation Inputs
   public void onAnimCycleDone(AnimControl control, AnimChannel channel, String animName) { }
 
   public void onAnimChange(AnimControl control, AnimChannel channel, String animName) { }
+
 ----
+
 
 === Overview
 
@@ -157,7 +169,9 @@ To create a walking character:
 === Activate Physics
 
 [source,java]
+
 ----
+
 private BulletAppState bulletAppState;
 ...
 public void simpleInitApp() {
@@ -166,7 +180,9 @@ public void simpleInitApp() {
     stateManager.attach(bulletAppState);
     ...
 }
+
 ----
+
 
 === Initialize the Scene
 
@@ -174,18 +190,24 @@ In the simpleInitApp() method you initialize the scene and give it a MeshCollisi
 
 
 [source,java]
+
 ----
+
 public void simpleInitApp() {
   ...
   PhysicsTestHelper.createPhysicsTestWorld(rootNode,
       assetManager, bulletAppState.getPhysicsSpace());
   ...
+
 ----
+
 In a real game, you would load a scene model here instead of a test world. You can load a model from a local or remote zip file, and scale and position it:
 
 
 [source,java]
+
 ----
+
 private Node gameLevel;
 ..
 public void simpleInitApp() {
@@ -203,16 +225,22 @@ public void simpleInitApp() {
   rootNode.attachChild(gameLevel);
   bulletAppState.getPhysicsSpace().addAll(gameLevel);
   ...
+
 ----
+
 Also, add a light source to be able to see the scene.
 
 
 [source,java]
+
 ----
+
   AmbientLight light = new AmbientLight();
   light.setColor(ColorRGBA.White.mult(2));
   rootNode.addLight(light);
+
 ----
+
 
 === Create the Animated Character
 
@@ -227,7 +255,9 @@ You create an animated model, such as Oto.mesh.xml.
 .  Attach the visible model to the rootNode.
 
 [source,java]
+
 ----
+
 private CharacterControl character;
 private Node model;
 ...
@@ -241,7 +271,9 @@ public void simpleInitApp() {
   bulletAppState.getPhysicsSpace().add(character);
   rootNode.attachChild(model);
   ...
+
 ----
+
 *Did you know?*
 
 
@@ -252,7 +284,9 @@ Create several AnimChannels, one for each animation that can happen simultaneous
 
 
 [source,java]
+
 ----
+
 private AnimChannel animationChannel;
 private AnimChannel attackChannel;
 private AnimControl animationControl;
@@ -267,7 +301,9 @@ public void simpleInitApp() {
   attackChannel.addBone(animationControl.getSkeleton().getBone("arm.right"));
   attackChannel.addBone(animationControl.getSkeleton().getBone("hand.right"));
   ...
+
 ----
+
 The attackChannel only controls one arm, while the walking channels controls the whole character.
 
 
@@ -275,7 +311,9 @@ The attackChannel only controls one arm, while the walking channels controls the
 === Add ChaseCam / CameraNode
 
 [source,java]
+
 ----
+
 private ChaseCamera chaseCam;
 
 ...
@@ -285,7 +323,9 @@ public void simpleInitApp() {
   flyCam.setEnabled(false);
   chaseCam = new ChaseCamera(cam, model, inputManager);
   ...
+
 ----
+
 
 === Handle Navigation
 
@@ -293,7 +333,9 @@ Configure custom key bindings for WASD keys that you will use to make the charac
 
 
 [source,java]
+
 ----
+
 // track directional input, so we can walk left-forward etc
 private boolean left = false, right = false, up = false, down = false;
 ...
@@ -312,12 +354,16 @@ public void simpleInitApp() {
   inputManager.addListener(this, "CharJump", "CharAttack");
   ...
 }
+
 ----
+
 Respond to the key bindings by setting variables that track in which direction you will go. This allows us to steer the character forwards and to the left at the same time. *Note that no actual walking happens here yet!* We just track the input.
 
 
 [source,java]
+
 ----
+
 @Override
 public void onAction(String binding, boolean value, float tpf) {
   if (binding.equals("CharLeft")) {
@@ -337,17 +383,23 @@ public void onAction(String binding, boolean value, float tpf) {
   if (binding.equals("CharAttack"))
     attack();
 }
+
 ----
+
 The player can attack and walk at the same time. `Attack()` is a custom method that triggers an attack animation in the arms. Here you should also add custom code to play an effect and sound, and to determine whether the hit was successful.
 
 
 [source,java]
+
 ----
+
 private void attack() {
     attackChannel.setAnim("Dodge", 0.1f);
     attackChannel.setLoopMode(LoopMode.DontLoop);
 }
+
 ----
+
 Finally, the update loop looks at the directional variables and moves the character accordingly. Since this is a special kinematic CharacterControl, we use the `setWalkDirection()` method. 
 
 
@@ -355,7 +407,9 @@ The variable `airTime` tracks how long the character is off the ground (e.g. whe
 
 
 [source,java]
+
 ----
+
 private Vector3f walkDirection = new Vector3f(0,0,0); // stop
 
 private float airTime = 0;
@@ -398,18 +452,24 @@ public void simpleUpdate(float tpf) {
   walkDirection.multLocal(25f).multLocal(tpf);// The use of the first multLocal here is to control the rate of movement multiplier for character walk speed. The second one is to make sure the character walks the same speed no matter what the frame rate is.
   character.setWalkDirection(walkDirection); // THIS IS WHERE THE WALKING HAPPENS
 }
+
 ----
+
 This method resets the walk animation.
 
 
 [source,java]
+
 ----
+
 public void onAnimCycleDone(AnimControl control, AnimChannel channel, String animName) {
         if (channel == attackChannel) channel.setAnim("stand");
 }
 
 public void onAnimChange(AnimControl control, AnimChannel channel, String animName) { }
+
 ----
+
 
 == See also
 

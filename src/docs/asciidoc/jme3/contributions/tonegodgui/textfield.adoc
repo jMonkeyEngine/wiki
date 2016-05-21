@@ -31,7 +31,9 @@ TextFields provide the standard 3 constructors as shown in the link:http://jmonk
 
 
 [source,java]
+
 ----
+
 /** Parameters:
   * Screen screen,
   * String UID,
@@ -39,26 +41,34 @@ TextFields provide the standard 3 constructors as shown in the link:http://jmonk
   */
  
 TextField text = new TextField(screen, “text”, new Vector2f(15, 15));
+
 ----
+
 *Constructor 2:*+
 
 
 
 [source,java]
+
 ----
+
 /** Additional Parameter:
   * Vector2f dimensions  */
  
 TextField text = new TextField(screen, “text”, new Vector2f(15, 15),
     new Vector2f(150, 25)
 );
+
 ----
+
 *Constructor 3:*+
 
 
 
 [source,java]
+
 ----
+
 /** Additional Parameters:
   * Vector4f resizeBorders,
   * String defaultImg
@@ -68,7 +78,9 @@ TextField text = new TextField(screen, “text”, new Vector2f(15, 15), new Vec
     new Vector4f(3,3,3,3),
     “tonegod/gui/style/def/TextField/text_field_x.png”
 );
+
 ----
+
 
 ==== Validations & Rules
 
@@ -76,9 +88,13 @@ TextFields can be set to a specific Type using:
 
 
 [source,java]
+
 ----
+
 text.setType(TextField.Type type);
-----[cols="2", options="header"]
+
+----
+[cols="2", options="header"]
 |===
 
 a| Rule 
@@ -117,29 +133,43 @@ To define a custom validation for Type.EXCLUDE_CUSTOM or Type.INCLUDE_CUSTOM, us
 
 
 [source,java]
+
 ----
+
 text.setCustomValidation("Character List to include/exclude");
+
 ----
+
 You can also limit the number of characters the TextField will accept using:
 
 
 [source,java]
+
 ----
+
 text.setMaxLimit(int maxLimit);
+
 ----
+
 You can force upper and lower case by using:
 
 
 [source,java]
+
 ----
+
 text.setForceUpperCase(boolean forceUpperCase);
 text.setForceLowerCase(boolean forceLowerCase);
+
 ----
+
 
 ==== Methods specific to the TextField class:
 
 [source,java]
+
 ----
+
 // Get the TextField text
 text.getText();
 // Set the TextField text !IMPORTANT! setTextFieldText is now @Deprecated, use the following instead:
@@ -151,11 +181,16 @@ text.parseFloat();
 text.parseShort();
 text.parseDouble();
 text.parseLong();
+
 ----
+
 
 ==== Hooks:
 
 [source,java]
+
 ----
+
 public void controlKeyPressHook(KeyInputEvent evt, String text) {  }
+
 ----

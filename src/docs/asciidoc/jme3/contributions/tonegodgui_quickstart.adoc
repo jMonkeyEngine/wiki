@@ -14,22 +14,30 @@ The first step is to create the screen control. This can be done one of two ways
 
 
 [source,java]
+
 ----
+
 // this = any JME Application
 Screen screen = new Screen(this);
 screen.initialize();
 guiNode.addControl(screen);
+
 ----
+
 2. Providing a path to another Style map.
 
 
 [source,java]
+
 ----
+
 // this = any JME Application
 Screen screen = new Screen(this, “tonegod/gui/style/def/style_map.xml”);
 screen.initialize();
 guiNode.addControl(screen);
+
 ----
+
 *NOTE:*+
 
 style_map.xml consists of a list of xml documents containing varied styles for varied use. You can copy the default style map and replace one, many, all with project specific style (Covered later in this tutorial).+
@@ -41,7 +49,9 @@ Next, we add a control. Might as well start with something interesting as all co
 
 
 [source,java]
+
 ----
+
 /** Parameters:
   * Screen screen,
   * String UID,
@@ -50,7 +60,9 @@ Next, we add a control. Might as well start with something interesting as all co
  
 Window win = new Window(screen, “win”, new Vector2f(15, 15));
 screen.addElement(win);
+
 ----
+
 And… boom! You have a fancy new resizable, movable window as part of you’re UI. Now, let’s take a look at the two additional constructors.+
 
 +
@@ -59,7 +71,9 @@ The second adds a 4th parameter to specify the windows dimensions, like such:
 
 
 [source,java]
+
 ----
+
 /** Additional Parameter:
   * Vector2f dimensions  */
  
@@ -67,12 +81,16 @@ Window win = new Window(screen, “win”, new Vector2f(15, 15),
     new Vector2f(400, 300)
 );
 screen.addElement(win);
+
 ----
+
 The third option adds 2 more parameters and looks like this:
 
 
 [source,java]
+
 ----
+
 /** Additional Parameters:
   * Vector4f resizeBorders,
   * String defaultImg
@@ -83,7 +101,9 @@ Window win = new Window(screen, “win”, new Vector2f(15, 15), new Vector2f(40
     “tonegod/gui/style/def/Window/panel_x.png”
 );
 screen.addElement(win);
+
 ----
+
 Any parameters not specified are derived from the defaults specified in the Window style information.+
 
 +
@@ -108,7 +128,9 @@ The button control (like many controls) is abstract and provides methods for han
 
 
 [source,java]
+
 ----
+
 private int winCount = 0;
  
 public final void createNewWindow(String someWindowTitle) {
@@ -121,12 +143,16 @@ public final void createNewWindow(String someWindowTitle) {
     screen.addElement(nWin);
     winCount++;
 }
+
 ----
+
 Now lets add the button to allow users to create new window:
 
 
 [source,java]
+
 ----
+
 /** Parameters:
   * Screen screen,
   * String UID,
@@ -142,7 +168,9 @@ ButtonAdapter makeWindow = new ButtonAdapter( screen, “Btn1″, new Vector2f(1
  
 // Add it to out initial window
 win.addChild(makeWindow);
+
 ----
+
 *NOTE:*+
 
 For layout purposes, it is suggested that you add all child Elements toa control PRIOR to adding the control to the screen… so, ceate a window, add a button, add window to screen.+
@@ -158,7 +186,9 @@ For layout purposes, it is suggested that you add all child Elements toa control
 === A Few of the Common Behaviors:
 
 [source,java]
+
 ----
+
 // Makes control resizable from defined borders
 setIsResizable(boolean);
 
@@ -185,7 +215,9 @@ setDockE(boolean); // also enables/disables dock west
 setDockW(boolean); // also enables/disables dock east
 
 setIgnoreMouse(boolean);
+
 ----
+
 *NOTE:*+
 
 There are far more behaviors, however, these are the most critical when creating custom controls to ensure that nested Elements react as you would like when a parent Element is altered.+

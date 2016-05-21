@@ -68,7 +68,9 @@ For a full reference of the standard options available see the <<jme3/contributi
 === Simple Fire
 
 [source,java]
+
 ----
+
 
 public class HelloParticles1_SimpleFire extends SimpleApplication {
 
@@ -112,7 +114,9 @@ public class HelloParticles1_SimpleFire extends SimpleApplication {
         rootNode.attachChild(pCtrl.getGeometry());
     }
 }
+
 ----
+
 Run that and the result should look something like:
 
 
@@ -123,7 +127,9 @@ image:jme3/particles1.jpg[particles1.jpg,with="",height=""]
 === Simple Fire and Smoke
 
 [source,java]
+
 ----
+
     @Override
     public void simpleInitApp() {
 
@@ -164,7 +170,9 @@ image:jme3/particles1.jpg[particles1.jpg,with="",height=""]
 // Finally attach the geometry to the rootNode in order to start the particles running
         rootNode.attachChild(pCtrl.getGeometry());
     }
+
 ----
+
 You can see that the only change is to make the particles last a little longer and to change the ColorInfluencer for a MultiColorInfluencer, and yet the results look quite different:
 
 
@@ -192,7 +200,9 @@ image:jme3/runecircle.png[runecircle.png,with="256",height=""]
 
 
 [source,java]
+
 ----
+
     @Override
     public void simpleInitApp() {
 
@@ -261,7 +271,9 @@ image:jme3/runecircle.png[runecircle.png,with="256",height=""]
         cam.lookAt(Vector3f.ZERO, Vector3f.UNIT_Y);
     }
 
+
 ----
+
 The result should look something like:
 image:youtube_spjqag99hy[youtube_spjqag99hy,with="",height=""]
 
@@ -273,7 +285,9 @@ There is a model of a monkeys head in the test data that is used in this example
 
 
 [source,java]
+
 ----
+
     @Override
     public void simpleInitApp() {
 
@@ -288,7 +302,9 @@ There is a model of a monkeys head in the test data that is used in this example
         AmbientLight al = new AmbientLight();
         al.setColor(ColorRGBA.White);
         rootNode.addLight(al);
+
 ----
+
 The result should look something like:
 
 
@@ -299,7 +315,9 @@ Now lets set fire to the monkey! (No monkeys were harmed during the making of th
 
 
 [source,java]
+
 ----
+
    
 // Construct a new ParticleController       
         ParticleController pCtrl = new ParticleController(
@@ -342,7 +360,9 @@ Now lets set fire to the monkey! (No monkeys were harmed during the making of th
 
 // Finally attach the geometry to the rootNode in order to start the particles running
         rootNode.attachChild(pCtrl.getGeometry());
+
 ----
+
 Again this is just a very simple example, much more sophisticated fire effects are possible with the use of the right textures and mixture of emitters and influencers. The result though should look something like this:
 
 
@@ -377,7 +397,9 @@ link:http://www.zero-separation.com/particles/FracturedCube.j3o[FracturedCube.j3
 
 
 [source,java]
+
 ----
+
     @Override
     public void simpleInitApp() {
 
@@ -440,7 +462,9 @@ link:http://www.zero-separation.com/particles/FracturedCube.j3o[FracturedCube.j3
         
         rootNode.attachChild(rockCtrl.getGeometry());        
     }        
+
 ----
+
 The result should look like:
 image:youtube_a7y53uf8giw[youtube_a7y53uf8giw,with="",height=""]
 
@@ -458,7 +482,9 @@ Adding the following code:
 
 
 [source,java]
+
 ----
+
 
 
 
@@ -480,7 +506,9 @@ Adding the following code:
         
         rootNode.attachChild(pCtrl.getGeometry());
         
+
 ----
+
 Results in something that looks like this:
 
 
@@ -497,9 +525,13 @@ Leave everything else the same but change the MeshSource into
 
 
 [source,java]
+
 ----
+
                 new ParticleParticleSource(rockCtrl),
+
 ----
+
 You can see that this gives much better results:
 image:youtube_2blbzvm0ezq[youtube_2blbzvm0ezq,with="",height=""]
 
@@ -511,7 +543,9 @@ To add smoke we can add a third emitter after the other two:
 
 
 [source,java]
+
 ----
+
 
 // Construct a new material for the smoke based off the default particle material
         Material smokeMat = new Material(
@@ -548,7 +582,9 @@ To add smoke we can add a third emitter after the other two:
                     new Vector3f(0.5f, 0.5f, 0.5f)));
         
         rootNode.attachChild(pCtrl.getGeometry());      
+
 ----
+
 The results look something like:
 image:youtube_01qcbgbvf-c[youtube_01qcbgbvf-c,with="",height=""]
 
@@ -557,9 +593,13 @@ To complete the effect one final line of code adds a skybox (using another textu
 
 
 [source,java]
+
 ----
+
         rootNode.attachChild(SkyFactory.createSky(assetManager, "Textures/BrightSky.dds", false));
+
 ----
+
 Now we have the final effect which looks like:
 
 

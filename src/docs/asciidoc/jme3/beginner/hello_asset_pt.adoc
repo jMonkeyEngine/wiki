@@ -21,7 +21,9 @@ image::beginner-assets-models.png[beginner-assets-models.png,with="320",height="
 == Amostra de Código
 
 [source,java]
+
 ----
+
 package jme3test.helloworld;
 
 import com.jme3.app.SimpleApplication;
@@ -83,7 +85,9 @@ public class HelloAssets extends SimpleApplication {
         rootNode.addLight(sun);
 
     }
-}----
+}
+----
+
 Compile e execute a amostra de código. Você deveria ver um ninja verde com um bule colorido permanecendo atrás de uma parede. O texto na tela deveria dizer “Hello World.
 
 
@@ -102,7 +106,9 @@ O seguinte é a estrutura de diretório recomendada em seu diretório de projeto
 
 
 [source]
+
 ----
+
 MyGame/assets/Interface/
 MyGame/assets/MatDefs/
 MyGame/assets/Materials/
@@ -114,7 +120,9 @@ MyGame/assets/Textures/
 MyGame/build.xml            <-- Ant build script
 MyGame/src/...              <-- Java sources go here
 MyGame/...
+
 ----
+
 Isto é apenas um melhor prática sugerida, e é o que você consegue por padrão quando criando um novo projeto Java no <<sdk#,SDK>> da jMokeyEngine. Você pode criar um diretório de ativos e tecnicamente nomear os subdiretórios da maneira que você gostar.
 
 
@@ -125,7 +133,9 @@ Coloque suas texturas em um subdiretório de `assets/Textures/`. Carregue a text
 
 
 [source,java]
+
 ----
+
 // Create a wall with a simple texture from test_data
 Box box = new Box(Vector3f.ZERO, 2.5f,2.5f,1.0f);
 Spatial wall = new Geometry("Box", box );
@@ -136,7 +146,9 @@ mat_brick.setTexture("ColorMap",
 wall.setMaterial(mat_brick);
 wall.setLocalTranslation(2.0f,-2.5f,0.0f);
 rootNode.attachChild(wall);
+
 ----
+
 Neste caso, você <<hello_material#,cria seu próprio Material>> e aplica ele para a geometria (Geometry). Você baseia Materiais nas descrições de material padrão (por exemplo, “Unshaded.j3md), como mostrado neste exemplo.
 
 
@@ -148,7 +160,9 @@ A seguinte amostra de código vai no método `simpleInitApp()`.
 
 
 [source,java]
-----// Display a line of text with a default font
+
+----
+// Display a line of text with a default font
 guiNode.detachAllChildren();
 guiFont = assetManager.loadFont("Interface/Fonts/Default.fnt");
 BitmapText helloText = new BitmapText(guiFont, false);
@@ -156,7 +170,9 @@ helloText.setSize(guiFont.getCharSet().getRenderedSize());
 helloText.setText("Hello World");
 helloText.setLocalTranslation(300, helloText.getLineHeight(), 0);
 guiNode.attachChild(helloText);
+
 ----
+
 *Dica:* Limpe o texto existente no nó da +++<abbr title="Graphical User Interface">GUI</abbr>+++ (guiNode) por retirar todas as suas crianças.
 
 
@@ -167,7 +183,9 @@ Exporte seu modelo 3D no formato OgreXML (.mesh.xml, .scene, .material, .skeleto
 
 
 [source,java]
+
 ----
+
 // Load a model from test_data (OgreXML + material + texture)
 Spatial ninja = assetManager.loadModel("Models/Ninja/Ninja.mesh.xml");
 ninja.scale(0.05f, 0.05f, 0.05f);
@@ -178,7 +196,9 @@ rootNode.attachChild(ninja);
 DirectionalLight sun = new DirectionalLight();
 sun.setDirection(new Vector3f(-0.1f, -0.7f, -1.0f).normalizeLocal());
 rootNode.addLight(sun);
+
 ----
+
 Note que você precisa criar um Material se você exportou o modelo com um material. Lembre-se de adicionar uma fonte de luz, como mostrado, de outra maneira o material (e o modelo inteiro) não estará visível!
 
 
@@ -192,22 +212,30 @@ Aqui está um exemplo de uso de um ZipLocator que está registrado para um arqui
 
 
 [source,java]
+
 ----
+
     assetManager.registerLocator("town.zip", ZipLocator.class);
     Spatial scene = assetManager.loadModel("main.scene");
     rootNode.attachChild(scene);
+
 ----
+
  Aque está um HttpZipLocator que pode baixar modelos zipados e carregá-los: 
 
 
 [source,java]
+
 ----
+
     assetManager.registerLocator(
       "http://jmonkeyengine.googlecode.com/files/wildhouse.zip", 
       HttpZipLocator.class);
     Spatial scene = assetManager.loadModel("main.scene");
     rootNode.attachChild(scene);
+
 ----
+
 JME3 oferece ClasspathLocator, ZipLocator, FileLocator, HttpZipLocator, e UrlLocator (Veja `com.jme3.asset.plugins`). 
 
 
@@ -245,12 +273,16 @@ Se você construir os executáveis usando o scrit de construção padrão, entã
 
 
 [source]
-----com.jme3.asset.DesktopAssetManager loadAsset
+
+----
+com.jme3.asset.DesktopAssetManager loadAsset
 WARNING: Cannot locate resource: Models/Ninja/Ninja.mesh.xml
 com.jme3.app.Application handleError
 SEVERE: Uncaught exception thrown in Thread[LWJGL Renderer Thread,5,main]
 java.lang.NullPointerException
+
 ----
+
 Carregando os arquivos XML/OBJ diretamente é somente aceitável durante a fase de desenvolvimento. Se seus projetista gráfico coloca arquivos atualizados para o diretório de ativos, você pode rapidamente revisar a versão mais recente em seu ambiente de desenvolvimento.
 
 
@@ -264,7 +296,11 @@ Abra seu Projeto JME3 no SDK da jMonkeyEngine.
 .  O arquivo .j3o aparece próximo ao arquivo .mesh.xml file e tem o mesmo nome.
 .  Mude todas as linhas do seu loadModel() de acordo. Por exemplo: 
 [source,java]
-----Spatial ninja = assetManager.loadModel("Models/Ninja/Ninja.j3o");----
+
+----
+Spatial ninja = assetManager.loadModel("Models/Ninja/Ninja.j3o");
+----
+
 
 Se seu executável dá uma exceção em tempo de execução, tenha certeza de que você converteu todos os modelos para .j3o!
 
@@ -280,28 +316,48 @@ a| Solução!
 a| Carregar um modelo com materiais 
 a| Use o método `loadModel()` do gerenciador de ativo (asset manager) e anexe o Spatial para o nó raiz (rootNode). 
 [source,java]
-----Spatial elephant = assetManager.loadModel("Models/Elephant/Elephant.mesh.xml");
-rootNode.attachChild(elephant);----
+
+----
+Spatial elephant = assetManager.loadModel("Models/Elephant/Elephant.mesh.xml");
+rootNode.attachChild(elephant);
+----
+
 [source,java]
-----Spatial elephant = assetManager.loadModel("Models/Elephant/Elephant.j3o");
-rootNode.attachChild(elephant);----
+
+----
+Spatial elephant = assetManager.loadModel("Models/Elephant/Elephant.j3o");
+rootNode.attachChild(elephant);
+----
+
 
 a| carregar um modelo sem materiais 
 a| Se você tiver um modelo sem materiais, você tem de dár a ele um material para fazê-lo visível. 
 [source,java]
-----Spatial teapot = assetManager.loadModel("Models/Teapot/Teapot.j3o");
+
+----
+Spatial teapot = assetManager.loadModel("Models/Teapot/Teapot.j3o");
 Material mat = new Material(assetManager, "Common/MatDefs/Misc/ShowNormals.j3md"); // default material
 teapot.setMaterial(mat);
-rootNode.attachChild(teapot);----
+rootNode.attachChild(teapot);
+----
+
 
 a| Carregar uma cena 
 a| Você carrega cenas da mesma forma que você carrega modelos: 
 [source,java]
-----Spatial scene = assetManager.loadModel("Scenes/town/main.scene");
-rootNode.attachChild(scene);----
+
+----
+Spatial scene = assetManager.loadModel("Scenes/town/main.scene");
+rootNode.attachChild(scene);
+----
+
 [source,java]
-----Spatial scene = assetManager.loadModel("Scenes/town/main.j3o");
-rootNode.attachChild(scene);----
+
+----
+Spatial scene = assetManager.loadModel("Scenes/town/main.j3o");
+rootNode.attachChild(scene);
+----
+
 
 |===
 
@@ -315,12 +371,16 @@ Como um exercício, vamos tentar diferentes maneiras de carregar uma cena. Você
 .  (Opcional:) Dezipe o arquivo town.zip para ver a estrutura da Ogre dotScene contida: Você terá um diretório chamado `town`. Ele contém arquivos XML e textura, e o arquivo chamado main.scene. (Isto é apenas para sua informação, você não precisa fazer nada com ele.)
 .  Coloque o arquivo town.zip no diretório topo de nível de seu projeto JME3, assim:
 [source]
-----jMonkeyProjects/MyGameProject/assets/
+
+----
+jMonkeyProjects/MyGameProject/assets/
 jMonkeyProjects/MyGameProject/build.xml
 jMonkeyProjects/MyGameProject/src/
 jMonkeyProjects/MyGameProject/town.zip
 ...
+
 ----
+
 
 Use o seguinte método para carregar modelos de um arquivo zip:
 
@@ -328,11 +388,15 @@ Use o seguinte método para carregar modelos de um arquivo zip:
 .  Verifique se `town.zip` está no diretório do projeto.
 .  Registre um localizador de arquivo zip para o diretório do projeto: Adicione o seguinte código sobre `simpleInitApp(){`
 [source,java]
-----    assetManager.registerLocator("town.zip", ZipLocator.class);
+
+----
+    assetManager.registerLocator("town.zip", ZipLocator.class);
     Spatial gameLevel = assetManager.loadModel("main.scene");
     gameLevel.setLocalTranslation(0, -5.2f, 0);
     gameLevel.setLocalScale(2);
-    rootNode.attachChild(gameLevel);----
+    rootNode.attachChild(gameLevel);
+----
+
 O método loadModel() agora pesquisa pelo arquivo zip diretamente para carregar os arquivos (isto significa, não escreva `loadModel(town.zip/main.scene)` ou similar!) 
 
 
@@ -349,10 +413,14 @@ Anteriormente neste tutorial, você carregou cenas e modelos do diretório de at
 .  Mova o diretório dezipado `town/` no diretório `assets/Scenes/` de seu projeto.
 .  Adicione o seguinte código sobre `simpleInitApp() {` 
 [source,java]
-----    Spatial gameLevel = assetManager.loadModel("Scenes/town/main.scene");
+
+----
+    Spatial gameLevel = assetManager.loadModel("Scenes/town/main.scene");
     gameLevel.setLocalTranslation(0, -5.2f, 0);
     gameLevel.setLocalScale(2);
-    rootNode.attachChild(gameLevel);----
+    rootNode.attachChild(gameLevel);
+----
+
  Note que o caminho é relativo ao diretório `assets/…`.
 
 
@@ -367,10 +435,14 @@ Aqui está um terceiro método que você deve conhecer, carregando uma cena/mode
 .  Dê um clique com o botão direito em `main.scene` e converta a cena para binário: A jMonkeyPlatform gera um arquivo main.j3o.
 .  Adicione o seguinte código em `simpleInitApp() {`
 [source,java]
-----    Spatial gameLevel = assetManager.loadModel("Scenes/town/main.j3o");
+
+----
+    Spatial gameLevel = assetManager.loadModel("Scenes/town/main.j3o");
     gameLevel.setLocalTranslation(0, -5.2f, 0);
     gameLevel.setLocalScale(2);
-    rootNode.attachChild(gameLevel);----
+    rootNode.attachChild(gameLevel);
+----
+
  Novamente, note que o caminho é relativo ao diretório `assets/…` directory.
 
 

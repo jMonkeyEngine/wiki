@@ -15,14 +15,18 @@ The `BlockNavigator` class contains various methods to help you navigate through
 
 
 [source,java]
-----public static Vector3Int getPointedBlockLocation(BlockTerrain blockTerrain, Vector3f collisionContactPoint, boolean getNeighborLocation){
+
+----
+public static Vector3Int getPointedBlockLocation(BlockTerrain blockTerrain, Vector3f collisionContactPoint, boolean getNeighborLocation){
     //Some mysterious code that returns the location
     //of the block in the terrain, which is placed
     //at the specified collisionContactPoint (world coordinates)
     //If you set getNeighborLocation to true, you can
     //get the empty block gap, in the direction towards you
     //(e.g. if you want to add a block to the block you've clicked)
-}----
+}
+----
+
 
 == Get the cursor-pointed location / RayCasting
 
@@ -36,7 +40,9 @@ This is a method I've created while creating a test case for mouse picking in th
 
 
 [source,java]
-----private CollisionResults getRayCastingResults(Node node){
+
+----
+private CollisionResults getRayCastingResults(Node node){
     Vector3f origin = cam.getWorldCoordinates(new Vector2f((settings.getWidth() / 2), (settings.getHeight() / 2)), 0.0f);
     Vector3f direction = cam.getWorldCoordinates(new Vector2f((settings.getWidth() / 2), (settings.getHeight() / 2)), 0.3f);
     direction.subtractLocal(origin).normalizeLocal();
@@ -44,19 +50,25 @@ This is a method I've created while creating a test case for mouse picking in th
     CollisionResults results = new CollisionResults();
     node.collideWith(ray, results);
     return results;
-}----
+}
+----
+
 You can use the closest CollisionResult to receive the collisionContactPoint with your BlockTerrain and to finally get the “pointed block location:
 
 
 [source,java]
-----private Vector3Int getCurrentPointedBlockLocation(boolean getNeighborLocation){
+
+----
+private Vector3Int getCurrentPointedBlockLocation(boolean getNeighborLocation){
     CollisionResults results = getRayCastingResults(terrainNode);
     if(results.size() > 0){
         Vector3f collisionContactPoint = results.getClosestCollision().getContactPoint();
         return BlockNavigator.getPointedBlockLocation(blockTerrain, collisionContactPoint, getNeighborLocation);
     }
     return null;
-}----
+}
+----
+
 Time to sum up: You can now get the current block location that you point with your mouse at any time you want. :)
 
 
@@ -67,13 +79,17 @@ One nice example would be to register a mouse-listener (See <<jme3/beginner/hell
 
 
 [source,java]
-----//Get the free block gap, to which the user is loooking...
+
+----
+//Get the free block gap, to which the user is loooking...
 Vector3Int blockLocation = getCurrentPointedBlockLocation(true);
 //(The block location is null, if the user looks in the sky or out of the map)
 if(blockLocation != null){
     //... and place a block there :)
     blockTerrain.setBlock(blockLocation, CubesTestAssets.BLOCK_WOOD);
-}----
+}
+----
+
 And that's it - You just created your own minecraft-like blockworld-editor. Give yourself a challenge and implement the other mouse button to remove the pointed block (Look out for the `getNeighborLocation` parameter).
 
 

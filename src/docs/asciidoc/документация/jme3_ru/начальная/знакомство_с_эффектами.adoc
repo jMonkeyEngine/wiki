@@ -38,7 +38,9 @@ image::jme3/beginner/beginner-effect-fire.png[beginner-effect-fire.png,with="150
 == Пример кода
 
 [source,java]
-----package jme3test.helloworld;
+
+----
+package jme3test.helloworld;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.effect.ParticleEmitter;
@@ -96,7 +98,9 @@ public class HelloEffects extends SimpleApplication {
     rootNode.attachChild(debris);
     debris.emitAllParticles();
   }
-}----
+}
+----
+
 Вы должны увидеть взрыв, от которого разлетается мусора, и огонь.
 link:http://jmonkeyengine.googlecode.com/svn/trunk/engine/src/test/jme3test/effect/[More example code is here.]
 
@@ -116,7 +120,9 @@ image::http///jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Effects/Ex
 
 
 [source,java]
+
 ----
+
     ParticleEmitter debris = 
             new ParticleEmitter("Debris", ParticleMesh.Type.Triangle, 10);
     Material debris_mat = new Material(assetManager, 
@@ -128,7 +134,9 @@ image::http///jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Effects/Ex
     debris.setImagesY(3); // 3x3 текстура анимации
     debris.setSelectRandomImage(true);
         ...
+
 ----
+
 .  Создайте материал и загрузите текстуру.
 .  Сообщите излучателю, на сколько шагов анимация (х * у) текстура разделилась. +
 Текстуры мусора 3x3 кадров.
@@ -185,7 +193,9 @@ a| image:http///jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Effects/
 
 
 [source,java]
+
 ----
+
     ParticleEmitter fire = 
             new ParticleEmitter("Emitter", ParticleMesh.Type.Triangle, 30);
     Material mat_red = new Material(assetManager, 
@@ -197,7 +207,9 @@ a| image:http///jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Effects/
     fire.setImagesY(2); // 2x2 текстура анимации
     fire.setEndColor(  new ColorRGBA(1f, 0f, 0f, 1f));   // red
     fire.setStartColor(new ColorRGBA(1f, 1f, 0f, 0.5f)); // yellow
-    ----
+    
+----
+
 
 image::http///jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Effects/Explosion/flame.png[flame.png,with="96",height="96",align="right"]
 
@@ -232,7 +244,11 @@ image::http///jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Effects/Ex
 
 
 [source,java]
-----emitter.setShape(new EmitterPointShape(Vector3f.ZERO));----
+
+----
+emitter.setShape(new EmitterPointShape(Vector3f.ZERO));
+----
+
 Создания различных эффектов путем изменения параметров излучателя:
 
 [cols="4", options="header"]

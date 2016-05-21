@@ -31,29 +31,41 @@ You want to make the most of your 3D models by specifying good looking material 
 
 
 [source,java]
-----Spatial myGeometry = assetManager.loadModel("Models/Teapot/Teapot.j3o");
+
+----
+Spatial myGeometry = assetManager.loadModel("Models/Teapot/Teapot.j3o");
 Material mat = new Material(assetManager,  // Создаем новый материал и...
     "Common/MatDefs/Misc/Unshaded.j3md");  // ... укажем .j3md файл используем (незатененной).
 mat.setColor("Color", ColorRGBA.Blue);     // Установим некоторые параметры, например, синий.
 myGeometry.setMaterial(mat);               // Используем новый материал на геометрии.
+
 ----
+
 В этом примере создается link:http://en.wikipedia.org/wiki/Phong_reflection_model[Phong]-illuminated синего материала. Используйте его для освещения, натуралистических объектов, таких как персонажи, здания, территорий, транспортные средства. Нужен источник света, в противном случае они будут невидимы.
 
 
 [source,java]
-----Spatial myGeometry = assetManager.loadModel("Models/Teapot/Teapot.j3o");
+
+----
+Spatial myGeometry = assetManager.loadModel("Models/Teapot/Teapot.j3o");
 Material mat = new Material(assetManager,  // Создаем новый материал и...
     "Common/MatDefs/Light/Lighting.j3md"); // ... укажем .j3md файл используем  (с подсветкой).
 mat.setBoolean("UseMaterialColors",true);  // Установим некоторые параметры, например, синий.
 mat.setColor("Ambient", ColorRGBA.Blue);   // ... цвет этого объекта
 mat.setColor("Diffuse", ColorRGBA.Blue);   // ... цвет света отражается
 myGeometry.setMaterial(mat);               // Используем новый материал на геометрии.
+
 ----
+
 <<sdk/material_editing#,store Material properties in a .j3m file>>
 
 
 [source,java]
-----myGeometry.setMaterial( assetManager.loadMaterial("Materials/myMaterial.j3m"));----
+
+----
+myGeometry.setMaterial( assetManager.loadMaterial("Materials/myMaterial.j3m"));
+----
+
 
 
 
@@ -71,18 +83,30 @@ myGeometry.setMaterial(mat);               // Используем новый м
 
 .  Укажите свойство color 
 [source,java]
-----mat.setColor("Color", ColorRGBA.Blue); // с Unshaded.j3md----
+
+----
+mat.setColor("Color", ColorRGBA.Blue); // с Unshaded.j3md
+----
+
 
 Дать Phong-illuminated цвету материала:
 
 
 .  Активировать  цвета материал: 
 [source,java]
-----mat.setBoolean("UseMaterialColors",true); // с Lighting.j3md----
+
+----
+mat.setBoolean("UseMaterialColors",true); // с Lighting.j3md
+----
+
 .  Укажите, по крайней мере Diffuse и Ambient цвета. Set both to the same color in the standard case. 
 [source,java]
-----mat.setColor("Diffuse", ColorRGBA.Blue ); // с Lighting.j3md
-mat.setColor("Ambient", ColorRGBA.Blue ); // с Lighting.j3md----
+
+----
+mat.setColor("Diffuse", ColorRGBA.Blue ); // с Lighting.j3md
+mat.setColor("Ambient", ColorRGBA.Blue ); // с Lighting.j3md
+----
+
 
 
 === Текстурированние
@@ -92,20 +116,32 @@ mat.setColor("Ambient", ColorRGBA.Blue ); // с Lighting.j3md----
 
 *  Укажите хотя бы цветовую палитру: 
 [source,java]
-----mat.setTexture("ColorMap", assetManager.loadTexture("Textures/monkey.png")); // с Unshaded.j3md----
+
+----
+mat.setTexture("ColorMap", assetManager.loadTexture("Textures/monkey.png")); // с Unshaded.j3md
+----
+
 
 Дать Phong-illuminated материал текстуре:
 
 
 *  Укажите по крайней мере DiffuseMap текстуры: 
 [source,java]
-----mat.setTexture("DiffuseMap", assetManager.loadTexture("Textures/wood_diffuse.png")); // с Lighting.j3md----
+
+----
+mat.setTexture("DiffuseMap", assetManager.loadTexture("Textures/wood_diffuse.png")); // с Lighting.j3md
+----
+
 
 
 
 
 [source,java]
-----geometry.scaleTextureCoordinates(new Vector2f(0.5f, 0.5f));----
+
+----
+geometry.scaleTextureCoordinates(new Vector2f(0.5f, 0.5f));
+----
+
 
 
 
@@ -123,10 +159,18 @@ To add a BumpMap (this only makes sense for illuminated Materials):
 
 .  Generate normal vectors information for the Mesh (not for the Geometry!) using `com.jme3.util.TangentBinormalGenerator`. 
 [source,java]
-----TangentBinormalGenerator.generate(mesh);----
+
+----
+TangentBinormalGenerator.generate(mesh);
+----
+
 .  Specify the `NormalMap` texture for the Material. 
 [source,java]
-----mat.setTexture("NormalMap", assetManager.loadTexture("Textures/wood_normal.png")); // with Lighting.j3md----
+
+----
+mat.setTexture("NormalMap", assetManager.loadTexture("Textures/wood_normal.png")); // with Lighting.j3md
+----
+
 
 link:http://en.wikipedia.org/wiki/Bump_mapping[Learn more about creating and using NormalMaps and BumpMaps here.]
 
@@ -140,26 +184,46 @@ To activate Shininess (this only makes sense for illuminated Materials):
 .  Specify the `Shininess` intensity the Material. +
 Shininess is a float value between 1 (rough surface with blurry shininess) and 128 (very smooth surface with focused shininess)
 [source,java]
-----mat.setFloat("Shininess", 5f);----
+
+----
+mat.setFloat("Shininess", 5f);
+----
+
 .  Activate material colors: 
 [source,java]
-----mat.setBoolean("UseMaterialColors",true);----
+
+----
+mat.setBoolean("UseMaterialColors",true);
+----
+
 .  Specify the `Specular` and `Diffuse` colors of the shiny spot. +
 Typically you set Specular to the ColorRGBA value of the light source, often RGBA.White.
 [source,java]
-----mat.setColor("Specular",ColorRGBA.White);
-mat.setColor("Diffuse",ColorRGBA.White);----
+
+----
+mat.setColor("Specular",ColorRGBA.White);
+mat.setColor("Diffuse",ColorRGBA.White);
+----
+
 .  (Optional) Specify a `SpecularMap` texture. +
 You optionally hand-draw this grayscale texture to outline in detail where the surface should be more shiny (whiter grays) and where less (blacker grays). If you don't supply a SpecularMap, the whole material is shiny everywhere. 
 [source,java]
-----mat.setTexture("SpecularMap", assetManager.loadTexture("Textures/metal_spec.png")); // with Lighting.j3md----
+
+----
+mat.setTexture("SpecularMap", assetManager.loadTexture("Textures/metal_spec.png")); // with Lighting.j3md
+----
+
 
 To deactivate shininess
 
 
 *  Set the `Specular` color to `ColorRGBA.Black`. Do not just set `Shininess` to 0.
 [source,java]
-----mat.setColor("Specular",ColorRGBA.Black);----
+
+----
+mat.setColor("Specular",ColorRGBA.Black);
+----
+
 
 
 == (Необязательно) Светящийся
@@ -169,25 +233,41 @@ To activate glow:
 
 .  Add one <<jme3/advanced/bloom_and_glow#,BloomFilter PostProcessor>> in your simpleInitApp() method (only once, it is used by all glowing objects).
 [source,java]
-----FilterPostProcessor fpp=new FilterPostProcessor(assetManager);
+
+----
+FilterPostProcessor fpp=new FilterPostProcessor(assetManager);
 BloomFilter bloom = new BloomFilter(BloomFilter.GlowMode.Objects);
 fpp.addFilter(bloom);
-viewPort.addProcessor(fpp);----
+viewPort.addProcessor(fpp);
+----
+
 .  Specify a `Glow` color. +
 A ColorRGBA value of your choice, e.g. choose a warm or cold color for different effects, or white for a neutral glow.
 [source,java]
-----mat.setColor("GlowColor",ColorRGBA.White);----
+
+----
+mat.setColor("GlowColor",ColorRGBA.White);
+----
+
 .  (Optional) Specify a `GlowMap` texture. +
 This texture outlines in detail where the DiffuseMap texture glows. If you don't supply a GlowMap, the whole material glows everwhere.  
 [source,java]
-----mat.setTexture("GlowMap", assetManager.loadTexture("Textures/alien_glow.png"));----
+
+----
+mat.setTexture("GlowMap", assetManager.loadTexture("Textures/alien_glow.png"));
+----
+
 
 To deactivate glow:
 
 
 *  Set the `Glow` color to `ColorRGBA.Black`.
 [source,java]
-----mat.setColor("GlowColor", ColorRGBA.Black);----
+
+----
+mat.setColor("GlowColor", ColorRGBA.Black);
+----
+
 
 Learn more about <<jme3/advanced/bloom_and_glow#,Bloom and Glow>>.
 
@@ -208,25 +288,49 @@ To make a Geometry transparent or translucent:
 .  Specify which areas you want to be transparent or translucent by specifying the alpha channel:
 **  (For colored Materials) In any RGBA color, the first three are Red-Green-Blue, and the last float is the Alpha channel. For example, to replace ColorRGBA.Red with a translucent red: 
 [source,java]
-----mat.setColor("Color", new ColorRGBA(1,0,0,0.5f));----
+
+----
+mat.setColor("Color", new ColorRGBA(1,0,0,0.5f));
+----
+
 **  (For textured Materials) Supply an AlphaMap that outlines which areas are transparent. 
 [source,java]
-----mat.setTexture("AlphaMap", assetManager.loadTexture("Textures/window_alpha.png"));----
+
+----
+mat.setTexture("AlphaMap", assetManager.loadTexture("Textures/window_alpha.png"));
+----
+
 **  (For textured Materials) If the DiffuseMap has an alpha channel, use: 
 [source,java]
-----mat.setBoolean("UseAlpha",true);----
+
+----
+mat.setBoolean("UseAlpha",true);
+----
+
 
 .  Specify BlendMode Alpha for the Material. 
 [source,java]
-----mat.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);----
+
+----
+mat.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
+----
+
 .  Put the Geometry (not the Material!) in the appropriate render queue bucket. +
 Objects in the translucent bucket (e.g. particles) are not affected by SceneProcessors (e.g. shadows). Objects in the transparent bucket (e.g. foliage) are affected by SceneProcessors (e.g. shadows).
 **  
 [source,java]
-----geo.setQueueBucket(Bucket.Translucent); ----
+
+----
+geo.setQueueBucket(Bucket.Translucent); 
+----
+
 **  
 [source,java]
-----geo.setQueueBucket(Bucket.Transparent); ----
+
+----
+geo.setQueueBucket(Bucket.Transparent); 
+----
+
 
 .  (Optional) Specify other material settings.
 [cols="3", options="header"]
@@ -260,7 +364,11 @@ Deactivate Alpha Testing for gradually *translucent* objects, such as colored gl
 
 
 [source,java]
-----mat.setBoolean("UseAlpha",true);----
+
+----
+mat.setBoolean("UseAlpha",true);
+----
+
 –“
 
 

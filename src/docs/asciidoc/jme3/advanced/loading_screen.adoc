@@ -24,7 +24,9 @@ nifty_loading.xml
 
 
 [source,xml]
+
 ----
+
 <?xml version="1.0" encoding="UTF-8"?>
 <nifty>
     <useStyles filename="nifty-default-styles.xml" />
@@ -63,7 +65,9 @@ nifty_loading.xml
     </screen>
     
 </nifty>
+
 ----
+
 
 ==== Understanding Nifty XML
 
@@ -72,7 +76,9 @@ A custom control is created, which represents the progress bar.
 
 
 [source,xml]
+
 ----
+
     <controlDefinition name = "loadingbar" controller = "jme3test.TestLoadingScreen">
         <image filename="Interface/border.png" childLayout="absolute" 
                imageMode="resize:15,2,15,15,15,2,15,2,15,2,15,15">
@@ -80,12 +86,16 @@ A custom control is created, which represents the progress bar.
                    imageMode="resize:15,2,15,15,15,2,15,2,15,2,15,15"/>
         </image>
     </controlDefinition>
+
 ----
+
 This screen simply displays a button in the middle of the screen, which could be seen as a simple main menu UI.
 
 
 [source,xml]
+
 ----
+
     <screen id="start" controller = "jme3test.TestLoadingScreen">
         <layer id="layer" childLayout="center">
             <panel id = "panel2" height="30%" width="50%" align="center" valign="center" childLayout="vertical"
@@ -96,12 +106,16 @@ This screen simply displays a button in the middle of the screen, which could be
             </panel>
         </layer>
     </screen>
+
 ----
+
 This screen displays our custom progress bar control with a text control
 
 
 [source,xml]
+
 ----
+
     <screen id="loadlevel" controller = "jme3test.TestLoadingScreen">
         <layer id="loadinglayer" childLayout="center" backgroundColor="#000000">
             <panel id = "loadingpanel" childLayout="vertical" align="center" valign="center" height="32px" width="400px">
@@ -111,7 +125,9 @@ This screen displays our custom progress bar control with a text control
             </panel>
         </layer>
     </screen>
+
 ----
+
 
 === Creating the bindings to use the Nifty XML
 
@@ -122,14 +138,18 @@ Something like this in a single thread will not work:
 
 
 [source,java]
+
 ----
+
 load_scene();
 update_bar(30%);
 load_characters();
 update_bar(60%);
 load_sounds();
 update_bar(100%);
+
 ----
+
 If you do all of this in a single frame, then it is sent to the graphics card only after the whole code block has executed. By this time the bar has reached 100% and the game has already begun – for the user, the progressbar on the screen would not have visibly changed.
 
 
@@ -146,7 +166,9 @@ The idea is to break down the loading of the game into discrete parts
 
 
 [source,java]
+
 ----
+
 package jme3test;
 
 import com.jme3.niftygui.NiftyJmeDisplay;
@@ -320,7 +342,9 @@ public class TestLoadingScreen extends SimpleApplication implements ScreenContro
     public void onFocus(boolean getFocus) {
     }
 }
+
 ----
+
 Note:
 
 
@@ -336,7 +360,9 @@ Make sure to change the XML file to point the controller to TestLoadingScreen*1*
 
 
 [source,java]
+
 ----
+
 package jme3test;
 
 import com.jme3.niftygui.NiftyJmeDisplay;
@@ -541,5 +567,6 @@ public class TestLoadingScreen1 extends SimpleApplication implements ScreenContr
         exec.shutdown();
     }
 }
+
 
 ----

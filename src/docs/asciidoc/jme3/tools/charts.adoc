@@ -30,13 +30,17 @@ Let's think about how we are going to get JME to display our terrain. The easies
 
 
 [source,java]
+
 ----
+
 Texture heightMapImage = assetManager.loadTexture(DEFAULT_HEIGHTMAP);
 heightmap = new ImageBasedHeightMap(heightMapImage.getImage());
 heightmap.load();
 terrain = new TerrainQuad("terrain", 257, TERRAIN_SIZE, heightmap.getHeightMap());
 applyDefaultTexture();
+
 ----
+
 image:jme3/tools/globe.png[A 256x256 mercator projection of planet earth.,with="",height=""]
 
 
@@ -56,7 +60,9 @@ There are two ways to create your heightmaps (also referred to as 'tiles' as eac
 
 
 [source,java]
+
 ----
+
 public class TileGenerator {
     private int lineCount;
 
@@ -286,12 +292,16 @@ public class TileGenerator {
         System.out.println("Chart generated. Placed in file 'chart.png'. Exiting.");
     }
 }
+
 ----
+
 …where  .out file contains longitude / latitude coordinate pairs defining landmass contours. Here an extract:
 
 
 [source]
+
 ----
+
 51.79188150756147+-8.25435369629442
 51.79184641740534+-8.254357553715453
 51.79182071886024+-8.254353833180712
@@ -318,7 +328,9 @@ public class TileGenerator {
 51.79169051462138+-8.254930145346941
 51.79167197282713+-8.254993914789209
 51.79165344300885+-8.255042583168985
+
 ----
+
 (-1 acts as a separator, denoting the end of one polygon and the beginning of another).
 
 
@@ -327,7 +339,9 @@ Essentially, this algorithm can be summarized as follows:
 
 
 [source]
+
 ----
+
 Constructor ( files ): 
    for each file in files
       for each line in file 
@@ -341,7 +355,9 @@ Paint ( graphics context ):
    for each polygon in polygonList
       if polygon inside view bounds
          graphics context.paint(polygon)
+
 ----
+
 image:jme3/tools/heightmap_modelling.png[Summarizing process of visualizing a chart. From left to right: We draw the coordinates downloaded from noaa.gov. Ideally, each polygon should be filled in a light colour, whilst the surrounding ocean remains dark. JME uses these images to create an internal representation of the terrain (a float matrix).,with="",height=""]
 *Above:* Summarizing process of visualizing a chart. From left to right: We draw the coordinates downloaded from noaa.gov. Ideally, each polygon should be filled in a light colour, whilst the surrounding ocean remains dark. JME uses these images to create an internal representation of the terrain (a float matrix).
 
@@ -361,7 +377,9 @@ A tile tree is our way of keeping track of individual tiles. All that it is, is 
 == Creating a tile tree
 
 [source,java]
+
 ----
+
 try {
             File resourceDirectory = new File(worldResourcesDirectory);
             if (!resourceDirectory.isDirectory()) {
@@ -372,7 +390,9 @@ try {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
 ----
+
 Upon initialization, these tiles are read into memory by the `TileTree` object which treats, as the name suggests, the tiles composing the chart as a tree whereby the root node refers to the entire globe. Its children refer to sub-sections of the globe, and its children in turn to sub-sections of that sub-section. For example, the ”Ireland” node is a direct child of the root node. The ”Cork Harbour” node in turn is a direct child of the ”Ireland” node and represents an enlarged version of a sub-section of the Irish coast. Each such Node consists of a unique ID (used to identify the node), a list of child nodes, a path to the heightmap (tile) that it represents, the zoom level (referred to as the longitude level as the zoom is defined by minutes of longitude per pixel) and a latitude/longitude pair denoting the tile’s centre.
 
 
@@ -388,7 +408,9 @@ image:jme3/tools/slide2.jpg[Looking inside a node...,with="",height=""]
 
 
 [source,java]
+
 ----
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -592,12 +614,16 @@ public class TileTree {
         nodes.add(node);
     }
 }
+
 ----
+
 ..and the Node:
 
 
 [source,java]
+
 ----
+
 package util.datastructure;
 
 import java.util.ArrayList;
@@ -712,22 +738,32 @@ public class Node {
         return centre;
     }
 }
+
 ----
+
 Loading a new chart is simple: all that we need to do is get the TileTree to find the chart for us (it'll handle loading the descriptor file and just return a node):
 
 
 [source,java]
+
 ----
+
 Node node = tileTree.find(chartID);
+
 ----
+
 We then use the returned node, to adjust our zoom-level:
 
 
 [source,java]
+
 ----
+
 mapModel.calculateMinutesPerWorldUnit(node.getLongitudeLevel());
 mapModel.setCentre(node.getCentre());
+
 ----
+
 
 == Drawing the Mercator Grid
 
@@ -735,7 +771,9 @@ A mercator grid reflects the ”stretching” of the flat Mercator chart through
 
 
 [source,java]
+
 ----
+
 public void createGrid(double longitudeLevel, float increment) {
         granularity = increment;
         Mesh m = new Mesh();
@@ -809,6 +847,8 @@ public void createGrid(double longitudeLevel, float increment) {
         gridGeometry.setLocalTranslation(new Vector3f(worldCentre.getX(),
                 gridHeight, worldCentre.getZ()));
     }
+
 ----
+
 image:jme3/tools/screen_shot_2011-12-18_at_13.12.01.png[screen_shot_2011-12-18_at_13.12.01.png,with="",height=""]
 

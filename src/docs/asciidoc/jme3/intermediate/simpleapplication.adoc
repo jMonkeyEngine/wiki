@@ -15,7 +15,9 @@ The following code sample shows the typical base structure of a jME3 game:
 
 
 [source,java]
+
 ----
+
 import com.jme3.app.SimpleApplication;
 
 public class MyBaseGame extends SimpleApplication {
@@ -39,7 +41,9 @@ public class MyBaseGame extends SimpleApplication {
     public void simpleRender(RenderManager rm) {
        /* (optional) Make advanced modifications to frameBuffer and scene graph. */
     }
-}----
+}
+----
+
 Let's have a look at the +++<abbr title="Application Programming Interface">API</abbr>+++ of the base class.
 
 
@@ -304,12 +308,20 @@ The following example shows how you can remove one of the default AppStates, in 
 
 *  Either, in your application's contructor, you create the SimpleApplication with only the AppStates you want to keep: 
 [source,java]
-----public MyAppliction() {
+
+----
+public MyAppliction() {
   super( new StatsAppState(), new DebugKeysAppState() );
-}----
+}
+----
+
 *  Or, in the `simpleInitApp()` method, you remove the ones you do not want to keep: 
 [source,java]
-----  public void simpleInitApp() {
+
+----
+  public void simpleInitApp() {
     stateManager.detach( stateManager.getState(FlyCamAppState.class));
-    ...----
+    ...
+----
+
 <tags><tag target="display" /><tag target="basegame" /><tag target="documentation" /><tag target="intro" /><tag target="intermediate" /><tag target="init" /><tag target="input" /><tag target="game" /><tag target="loop" /><tag target="rootnode" /><tag target="application" /><tag target="simpleapplication" /></tags>

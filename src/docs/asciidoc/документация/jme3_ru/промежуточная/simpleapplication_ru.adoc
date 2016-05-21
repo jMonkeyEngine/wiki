@@ -18,7 +18,9 @@ SimpleApplication дает вам доступ к стандартным осо�
 
 
 [source,java]
+
 ----
+
 import com.jme3.app.SimpleApplication;
 
 public class MyBaseGame extends SimpleApplication {
@@ -42,7 +44,9 @@ public class MyBaseGame extends SimpleApplication {
     public void simpleRender(RenderManager rm) {
        /* (необязательно) сделать дополнительные изменения в frameBuffer и граф сцены. */
     }
-}----
+}
+----
+
 Давайте посмотрим на +++<abbr title="Application Programming Interface">API</abbr>+++ базового класса.
 
 
@@ -307,12 +311,20 @@ a|AXIS_WHEEL, или прокрутите колесико мыши вперед
 
 *  Либо, приложения contructor, создания SimpleApplication только AppStates вы хотите сохранить: 
 [source,java]
-----public MyAppliction() {
+
+----
+public MyAppliction() {
   super( new StatsAppState(), new DebugKeysAppState() );
-}----
+}
+----
+
 *  Или, в методе `simpleInitApp()` вы удалите те, которые вы не хотите держать: 
 [source,java]
-----  public void simpleInitApp() {
+
+----
+  public void simpleInitApp() {
     stateManager.detach( stateManager.getState(FlyCamAppState.class));
-    ...----
+    ...
+----
+
 <tags><tag target="display" /><tag target="basegame" /><tag target="documentation" /><tag target="intro" /><tag target="intermediate" /><tag target="init" /><tag target="input" /><tag target="game" /><tag target="loop" /><tag target="rootnode" /><tag target="application" /><tag target="simpleapplication" /></tags>

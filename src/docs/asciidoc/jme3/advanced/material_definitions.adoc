@@ -12,12 +12,16 @@ The most common Material Definitions are included in the engine, advanced users 
 
 
 [source,java]
-----Spatial myGeometry = assetManager.loadModel("Models/Teapot/Teapot.j3o");
+
+----
+Spatial myGeometry = assetManager.loadModel("Models/Teapot/Teapot.j3o");
 Material mat = new Material(assetManager,  // Create new material and...
     "Common/MatDefs/Misc/Unshaded.j3md");  // ... specify a Material Definition file, here "Unshaded.j3md"!
 mat.setColor("Color", ColorRGBA.Blue);     // Set one or more material parameters.
 myGeometry.setMaterial(mat);               // Use material on this Geometry.
+
 ----
+
 <<j3m_material_files#,j3m Material Files>><<sdk/material_editing#,use the jMonkeyEngine SDK to create .j3m files>><<jme3/advanced/j3m_material_files#,write .j3m files in a text editor>>
 
 
@@ -46,16 +50,32 @@ In your Java code,
 
 .  Create a Material object based on the chosen Material Definition (.j3md file): 
 [source,java]
-----Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");----
+
+----
+Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+----
+
 .  Configure your Material by setting the appropriate values listed in the <<materials_overview#,Materials Overview>> table. 
 [source,java]
-----mat.setColor("Color", ColorRGBA.Yellow ); // and more----
+
+----
+mat.setColor("Color", ColorRGBA.Yellow ); // and more
+----
+
 .  Apply your prepared Material to a Geometry: 
 [source,java]
-----myGeometry.setMaterial(mat);----
+
+----
+myGeometry.setMaterial(mat);
+----
+
 .  (Optional) Adjust the texture scale of the mesh: 
 [source,java]
-----myGeometryMesh.scaleTextureCoordinates(new Vector2f(2f, 2f));----
+
+----
+myGeometryMesh.scaleTextureCoordinates(new Vector2f(2f, 2f));
+----
+
 
 For details see also: <<jme3/intermediate/how_to_use_materials#,How to Use Materials>>
 
@@ -76,33 +96,45 @@ A simpled textured material.
 
 
 [source,java]
+
 ----
+
 Material mat = new Material(assetManager, 
     "Common/MatDefs/Misc/Unshaded.j3md");
 mat.setTexture("ColorMap", assetManager.loadTexture(
     "Interface/Logo/Monkey.jpg"));
+
 ----
+
 A textured material with a color bleeding through transparent areas.
 
 
 [source,java]
+
 ----
+
 Material mat = new Material(assetManager, 
     "Common/MatDefs/Misc/Unshaded.j3md");
 mat.setTexture("ColorMap", assetManager.loadTexture(
     "Textures/ColoredTex/Monkey.png"));
 mat.setColor("Color", ColorRGBA.Blue);
+
 ----
+
 You can test these examples within the following code snippet. It creates a box and applies the material:
 
 
 [source,java]
----- Box b = new Box(Vector3f.ZERO, 1, 1, 1);
+
+----
+ Box b = new Box(Vector3f.ZERO, 1, 1, 1);
 Geometry geom = new Geometry("Box", b);
 // ... insert Material definition...
 geom.setMaterial(mat);
 rootNode.attachChild(geom);
+
 ----
+
 
 
 

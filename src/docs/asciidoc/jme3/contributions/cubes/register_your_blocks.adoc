@@ -9,7 +9,11 @@ After initialising your object, you have to register it in the BlockManager:
 
 
 [source,java]
-----BlockManager.register(myBlockObject);----
+
+----
+BlockManager.register(myBlockObject);
+----
+
 _should_*CubesTestAssets.BLOCK_GRASS*
 
 
@@ -26,9 +30,13 @@ Let's say, you want to add a simple block, which uses the same texture on every 
 
 
 [source,java]
-----//The stone texture is in the 10th column and 1st row in the texture atlas
+
+----
+//The stone texture is in the 10th column and 1st row in the texture atlas
 Block blockStone = new Block(new BlockSkin(new BlockSkin_TextureLocation(9, 0), false));
-BlockManager.register(blockStone);----
+BlockManager.register(blockStone);
+----
+
 
 == Face-Dependant Textures Block
 
@@ -39,7 +47,9 @@ Now it's time to get prettier blocks - The wood block as known in Minecraft has 
 
 
 [source,java]
-----Block blockWood = new Block(new BlockSkin[]{
+
+----
+Block blockWood = new Block(new BlockSkin[]{
     new BlockSkin(new BlockSkin_TextureLocation(4, 0), false),
     new BlockSkin(new BlockSkin_TextureLocation(4, 0), false),
     new BlockSkin(new BlockSkin_TextureLocation(3, 0), false),
@@ -47,7 +57,9 @@ Now it's time to get prettier blocks - The wood block as known in Minecraft has 
     new BlockSkin(new BlockSkin_TextureLocation(3, 0), false),
     new BlockSkin(new BlockSkin_TextureLocation(3, 0), false)
 });
-BlockManager.register(blockWood);----
+BlockManager.register(blockWood);
+----
+
 
 == Dynamic Textures Block
 
@@ -62,7 +74,9 @@ Special behaviours like this can be achieved by overwriting the *getSkinIndex* m
 
 
 [source,java]
-----Block blockGrass = new Block(new BlockSkin[]{
+
+----
+Block blockGrass = new Block(new BlockSkin[]{
         //We specify the 3 skins we need:
         //Grass, Earth-Grass-Transition and Earth
         new BlockSkin(new BlockSkin_TextureLocation(0, 0), false),
@@ -87,4 +101,5 @@ Special behaviours like this can be achieved by overwriting the *getSkinIndex* m
         return 2;
     }
 };
-BlockManager.register(blockGrass);----
+BlockManager.register(blockGrass);
+----

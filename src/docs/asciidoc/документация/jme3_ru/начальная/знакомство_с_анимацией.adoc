@@ -22,7 +22,9 @@ image::jme3/beginner/beginner-animation.png[beginner-animation.png,with="",heigh
 == Пример кода
 
 [source,java]
+
 ----
+
 package jme3test.helloworld;
 
 import com.jme3.animation.AnimChannel;
@@ -94,7 +96,9 @@ public class HelloAnimation extends SimpleApplication
     }
   };
 }
+
 ----
+
 
 == Создание и Загрузка Анимированных Моделей
 
@@ -105,7 +109,9 @@ public class HelloAnimation extends SimpleApplication
 
 
 [source,java]
+
 ----
+
   public void simpleInitApp() {
     /* Отображение модели требует источника света */
     DirectionalLight dl = new DirectionalLight();
@@ -117,7 +123,9 @@ public class HelloAnimation extends SimpleApplication
     rootNode.attachChild(player);
     ...
     }
+
 ----
+
 Не забудьте добавить источник света, чтобы сделать материал видимым.
 
 
@@ -132,7 +140,9 @@ public class HelloAnimation extends SimpleApplication
 *  Чтобы запустить несколько последовательностей, вы создаете несколько каналов, и устанавливаете каждый из них на отдельную анимации.
 
 [source,java]
+
 ----
+
   private AnimChannel channel;
   private AnimControl control;
 
@@ -145,7 +155,9 @@ public class HelloAnimation extends SimpleApplication
     channel = control.createChannel();
     channel.setAnim("stand");
     ...
+
 ----
+
 *Nehon на форум jME link:http://jmonkeyengine.org/groups/general-2/forum/topic/helloanimation-animations-seem-to-be-clashing/#post-180994[написал],*
 
 
@@ -166,16 +178,24 @@ public class HelloAnimation extends SimpleApplication
 
 
 [source]
+
 ----
+
 control = player.getControl(AnimControl.class);
+
 ----
+
 “
 
 
 [source]
+
 ----
+
 player.getChild("Subnode").getControl(AnimControl.class);
+
 ----
+
 
 
 
@@ -186,7 +206,9 @@ player.getChild("Subnode").getControl(AnimControl.class);
 
 
 [source,java]
+
 ----
+
 public class HelloAnimation extends SimpleApplication
                          implements AnimEventListener {
   ...
@@ -202,7 +224,9 @@ public class HelloAnimation extends SimpleApplication
   public void onAnimChange(AnimControl control, AnimChannel channel, String animName) {
     // не используем
   }
+
 ----
+
 
 == Триггер Анимации После пользовательского Ввода
 
@@ -218,12 +242,16 @@ public class HelloAnimation extends SimpleApplication
 .  Добавим ввод listener для действия `Walk`.
 
 [source,java]
+
 ----
+
   private void initKeys() {
     inputManager.addMapping("Walk", new KeyTrigger(KeyInput.KEY_SPACE));
     inputManager.addListener(actionListener, "Walk");
   }
+
 ----
+
 Для использования контроллера ввода, вы должны реализовать actionListener путем тестирования для каждого действия по имени, а затем для запуска анимации, установите канал с соответствующей анимацией.
 
 
@@ -233,7 +261,9 @@ public class HelloAnimation extends SimpleApplication
 *  При необходимости используйте channel.setTime() для перемотки вперед или назад в какой-то момент во время этой анимации.
 
 [source,java]
+
 ----
+
   private ActionListener actionListener = new ActionListener() {
     public void onAction(String name, boolean keyPressed, float tpf) {
         if (name.equals("Walk") && !keyPressed) {
@@ -244,7 +274,9 @@ public class HelloAnimation extends SimpleApplication
         }
     }
   };
+
 ----
+
 
 == Упражнения
 
@@ -258,7 +290,11 @@ public class HelloAnimation extends SimpleApplication
 ..  Создать новую клавишу вызова и привяжите её к действию (см.: <<документация/jme3_ru/начальная/знакомство_с_системой_ввода#,Знакомство с вводом>>)
 ..  Полезный совет: Если вы хотите узнать, какие последовательности анимации доступны в модели используйте: 
 [source,java]
-----for (String anim : control.getAnimationNames()) { System.out.println(anim); }----
+
+----
+for (String anim : control.getAnimationNames()) { System.out.println(anim); }
+----
+
 
 
 ==== Упражнение 2: Показать скелет (1)
@@ -277,15 +313,21 @@ public class HelloAnimation extends SimpleApplication
 
 
 [source,java]
+
 ----
+
      import com.jme3.scene.debug.SkeletonDebugger;
      import com.jme3.material.Material;
+
 ----
+
 Добавьте следующий фрагмент кода в `simpleInitApp()` чтобы сделать кости (о которых вы только что прочли) видными!
 
 
 [source,java]
+
 ----
+
      SkeletonDebugger skeletonDebug = 
          new SkeletonDebugger("skeleton", control.getSkeleton());
      Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
@@ -293,7 +335,9 @@ public class HelloAnimation extends SimpleApplication
      mat.getAdditionalRenderState().setDepthTest(false);
      skeletonDebug.setMaterial(mat);
      player.attachChild(skeletonDebug);
+
 ----
+
 Можете ли вы идентифицировать отдельные кости скелета?
 
 

@@ -20,7 +20,9 @@ Advanced users can write a custom build and packaging script, and can register c
 ==== Context
 
 [source]
+
 ----
+
 jMonkeyProjects/MyGame/assets/    # You store assets in subfolders here! <------
 jMonkeyProjects/MyGame/build/     # SDK generates built classes here (*)
 jMonkeyProjects/MyGame/build.xml  # You customize Ant build script here
@@ -29,7 +31,9 @@ jMonkeyProjects/MyGame/dist/      # SDK generates executable distribution here (
 jMonkeyProjects/MyGame/src/       # You store Java sources here
 jMonkeyProjects/MyGame/test/      # You store test classes here (optional)
 (*) Managed by jMonkeyEngine SDK -- don't edit!
+
 ----
+
 See also <<jme3/intermediate/best_practices#,Best Practices>>.
 
 
@@ -46,8 +50,12 @@ Here is an example how you load assets using the AssetManager. This lines loads 
 
 
 [source,java]
-----Material mat = (Material) assetManager.loadAsset(
-    new AssetKey("Common/Materials/RedColor.j3m"));----
+
+----
+Material mat = (Material) assetManager.loadAsset(
+    new AssetKey("Common/Materials/RedColor.j3m"));
+----
+
 This Material is “somewhere in the jME3 JAR; the default Asset Manager is configured to handle a `Common/…` path correctly, so you don't have to specify the whole path when referring to built-in assets (such as default Materials).
 
 
@@ -67,7 +75,9 @@ This is our recommended directory structure for storing assets:
 
 
 [source]
+
 ----
+
 jMonkeyProjects/MyGame/src/...           # Packages, .java source code.
 jMonkeyProjects/MyGame/assets/...        # The assets directory:
 jMonkeyProjects/MyGame/assets/Interface/   # .font, .jpg, .png, .xml
@@ -78,7 +88,9 @@ jMonkeyProjects/MyGame/assets/Scenes/      # .j3o
 jMonkeyProjects/MyGame/assets/Shaders/     # .j3f, .vert, .frag
 jMonkeyProjects/MyGame/assets/Sounds/      # .ogg, .wav
 jMonkeyProjects/MyGame/assets/Textures/    # .jpg, .png; also .mesh.xml+.material, .mtl+.obj, .blend (!) 
+
 ----
+
 These subdirectories are just the most common examples. 
 
 
@@ -99,51 +111,75 @@ Creating a material instance with the definition “Unshaded.j3md:
 
 
 [source,java]
+
 ----
+
 Material mat_brick = new Material( 
     assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+
 ----
+
 Applying a texture to the material:
 
 
 [source,java]
+
 ----
+
 mat_brick.setTexture("ColorMap", 
     assetManager.loadTexture("Textures/Terrain/BrickWall/BrickWall.jpg"));
+
 ----
+
 Loading a font:
 
 
 [source,java]
+
 ----
+
 guiFont = assetManager.loadFont("Interface/Fonts/Default.fnt");
+
 ----
+
 Loading a model:
 
 
 [source,java]
+
 ----
+
 Spatial ninja = assetManager.loadModel("Models/Ninja/Ninja.mesh.xml");
+
 ----
+
 Loading a scene from an Ogre3D dotScene file stored inside a zip:
 
 
 [source,java]
+
 ----
+
 assetManager.registerLocator("town.zip", ZipLocator.class);
 Spatial scene = assetManager.loadModel("main.scene");
 rootNode.attachChild(scene);
+
 ----
+
 Alternatively to ZipLocator, there is also a HttpZipLocator that can stream models from a zip file online:
 
 
 [source,java]
+
 ----
+
 assetManager.registerLocator("http://jmonkeyengine.googlecode.com/files/wildhouse.zip", 
                              HttpZipLocator.class);
 Spatial scene = assetManager.loadModel("main.scene");
 rootNode.attachChild(scene);
+
 ----
+
 jME3 also offers a ClasspathLocator, ZipLocator, FileLocator, HttpZipLocator, and UrlLocator (see `com.jme3.asset.plugins`). 
 
 
@@ -161,25 +197,41 @@ a| Solution!
 a| Load a model with materials 
 a| Use the asset manager's `loadModel()` method and attach the Spatial to the rootNode. 
 [source,java]
-----Spatial elephant = assetManager.loadModel("Models/Elephant/Elephant.mesh.xml");
-rootNode.attachChild(elephant);----
+
+----
+Spatial elephant = assetManager.loadModel("Models/Elephant/Elephant.mesh.xml");
+rootNode.attachChild(elephant);
+----
+
 [source,java]
-----Spatial elephant = assetManager.loadModel("Models/Elephant/Elephant.j3o");
-rootNode.attachChild(elephant);----
+
+----
+Spatial elephant = assetManager.loadModel("Models/Elephant/Elephant.j3o");
+rootNode.attachChild(elephant);
+----
+
 
 a| Load a model without materials 
 a| If you have a model without materials, you have to add a default material to make it visible. 
 [source,java]
-----Spatial teapot = assetManager.loadModel("Models/Teapot/Teapot.obj");
+
+----
+Spatial teapot = assetManager.loadModel("Models/Teapot/Teapot.obj");
 Material mat = new Material(assetManager, "Common/MatDefs/Misc/ShowNormals.j3md");
 teapot.setMaterial(mat);
-rootNode.attachChild(teapot);----
+rootNode.attachChild(teapot);
+----
+
 
 a| Load a scene 
 a| You load scenes just like you load models: 
 [source,java]
-----Spatial scene = assetManager.loadModel("Scenes/house/main.scene");
-rootNode.attachChild(scene);----
+
+----
+Spatial scene = assetManager.loadModel("Scenes/house/main.scene");
+rootNode.attachChild(scene);
+----
+
 
 |===
 
@@ -193,12 +245,16 @@ My game runs fine when I run it right from the jMonkeyEngine SDK. But when I run
 
 
 [source]
-----com.jme3.asset.DesktopAssetManager loadAsset
+
+----
+com.jme3.asset.DesktopAssetManager loadAsset
 WARNING: Cannot locate resource: Scenes/town/main.scene
 com.jme3.app.Application handleError
 SEVERE: Uncaught exception thrown in Thread[LWJGL Renderer Thread,5,main]
 java.lang.NullPointerException
+
 ----
+
 *Reason:*
 
 

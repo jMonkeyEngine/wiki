@@ -85,7 +85,9 @@ Once we know which container fits better for our agent, We create a new instance
 
 
 [source,java]
+
 ----
+
 SimpleMainBehaviour mainBehavior = new SimpleMainBehavior(myAgent);
     CompoundSteeringBehavior steer = new CompoundSteeringBehavior(myAgent);
     //BalancedCompoundSteeringBehavior steer = new BalancedCompoundSteeringBehavior(myAgent);
@@ -93,12 +95,16 @@ SimpleMainBehaviour mainBehavior = new SimpleMainBehavior(myAgent);
     steer.addSteerBehavior(steerBehavior2);
 mainBehaviour.addBehavior(steer);
 myAgent.setMainBehavior(mainBehavior);
+
 ----
+
 
 
 
 [source,java]
+
 ----
+
 SimpleMainBehaviour mainBehavior = new SimpleMainBehavior(myAgent);
     CompoundSteeringBehavior steer = new CompoundSteeringBehavior(myAgent);
         BalancedCompoundSteeringBehavior nestedSteer = new BalancedCompoundSteeringBehavior(myAgent);
@@ -107,7 +113,9 @@ SimpleMainBehaviour mainBehavior = new SimpleMainBehavior(myAgent);
     steer.addSteerBehavior(steerBehavior2);
 mainBehavior.addBehavior(steer);
 myAgent.setMainBehavior(mainBehavior);
+
 ----
+
 
 == Prioritizing behaviors
 
@@ -138,13 +146,17 @@ Example:
 
 
 [source,java]
+
 ----
+
     Plane horizontalPlane = new Plane(new Vector3f(0,1,0), 0);
     
     steerBehavior1.setupStrengthControl(0.5f); //Force reduced a 50%
     steerBehavior2.setupStrengthControl(horizontalPlane); //Force contained in the XZ plane
     steerContainer.setupStrengthControl(horizontalPlane, 2f); //Contained in the XZ plane and increased a 100%
+
 ----
+
 
 == Implementing your own steer behavior
 
@@ -155,7 +167,9 @@ The responsible for the agent's acceleration is the vector returned in the `calc
 
 
 [source,java]
+
 ----
+
     @Override
     protected Vector3f calculateRawSteering() {
         Vector3f steerForce = Vector3f.ZERO;
@@ -164,18 +178,24 @@ The responsible for the agent's acceleration is the vector returned in the `calc
         
         return steerForce;
     }
+
 ----
+
 In addition, you can change a brake factor which will reduce the resultant velocity for the agent:
 
 
 [source,java]
+
 ----
+
     @Override
     protected Vector3f calculateRawSteering(){
         this.setBrakingFactor(0.5f); //The agent's velocity will be reduced a 50%
         return Vector3f.ZERO;
     }
+
 ----
+
 
 
 
@@ -190,7 +210,9 @@ Example:
 
 
 [source,java]
+
 ----
+
     public class CustomSteeringExceptions extends SteeringExceptions  {
     
         public static class CustomRuntimeException extends SteeringBehaviorException {
@@ -199,15 +221,21 @@ Example:
     
         // ... other exceptions ...
     }
+
 ----
+
 [source,java]
+
 ----
+
     public SteerBehaviorConstructor(Agent agent, int value, Spatial spatial) {
         super(agent, spatial);
         if(value > 5) throw new CustomSteeringExceptions.customRuntimeException ("Value must be lower than 5");
         this.value = value;
     }
+
 ----
+
 
 == Useful links
 

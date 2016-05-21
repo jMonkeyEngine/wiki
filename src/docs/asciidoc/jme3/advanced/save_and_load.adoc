@@ -29,7 +29,9 @@ The following example overrides `stop()` in SimpleApplication to save the rootNo
 
 
 [source,java]
+
 ----
+
   /* This is called when the user quits the app. */
   @Override
   public void stop() {
@@ -42,7 +44,9 @@ The following example overrides `stop()` in SimpleApplication to save the rootNo
       Logger.getLogger(Main.class.getName()).log(Level.SEVERE, "Error: Failed to save game!", ex);
     }
     super.stop(); // continue quitting the game
-  }----
+  }
+----
+
 
 == Loading a Node
 
@@ -50,7 +54,9 @@ The following example overrides `simpleInitApp()` in SimpleApplication to load `
 
 
 [source,java]
-----  @Override
+
+----
+  @Override
   public void simpleInitApp() {
      String userHome = System.getProperty("user.home");
      assetManager.registerLocator(userHome, FileLocator.class);
@@ -58,7 +64,9 @@ The following example overrides `simpleInitApp()` in SimpleApplication to load `
      loadedNode.setName("loaded node");
      rootNode.attachChild(loadedNode);
   }
-   ----
+   
+----
+
 –
 
 
@@ -80,7 +88,9 @@ So every time you create a custom Control or custom user data class, remember to
 
 
 [source,java]
+
 ----
+
 import com.jme3.export.InputCapsule;
 import com.jme3.export.JmeExporter;
 import com.jme3.export.JmeImporter;
@@ -112,7 +122,9 @@ public class MyCustomClass implements Savable {
         someJmeObject  = capsule.readSavable("someJmeObject",  new Material());
     }
 }
+
 ----
+
 To make a custom class savable:
 
 

@@ -39,7 +39,9 @@ This gives the ScreenController access to the application object and to the upda
 
 
 [source,java]
+
 ----
+
 public class StartScreenState extends AbstractAppState {
 
   private ViewPort viewPort;
@@ -81,12 +83,16 @@ public StartScreenState(SimpleApplication app){
     super.cleanup();
   }
   
-}----
+}
+----
+
 
 
 
 [source,java]
+
 ----
+
 public class TestNiftyGui extends SimpleApplication {
   public void simpleInitApp() {
      StartScreenState startScreenState = new StartScreenState(this);
@@ -95,7 +101,9 @@ public class TestNiftyGui extends SimpleApplication {
      nifty.fromXml("Interface/myGui.xml", "start", startScreenState); //one of the XML screen elements needs to reference StartScreenState controller class
   }
 }
+
 ----
+
 
 == Know Your Variables
 [cols="2", options="header"]
@@ -158,13 +166,17 @@ Here is an example that moves a panel when the startScreen opens. You place an &
 
 
 [source,xml]
+
 ----
+
 <panel height="25%" width="35%" ...>
   <effect>
     <onStartScreen name="move" mode="in" direction="top" length="300" startDelay="0" inherit="true"/>
   </effect>
 </panel>
+
 ----
+
 Learn more from the NiftyGUI page:
 
 
@@ -177,7 +189,9 @@ Playing sounds using Nifty is also possible with a `playSound` effect as trigger
 
 
 [source,xml]
+
 ----
+
 <registerSound id="myclick" filename="Interface/sounds/ButtonClick.ogg" />
 ...
 <label>
@@ -185,7 +199,9 @@ Playing sounds using Nifty is also possible with a `playSound` effect as trigger
     <onClick name="playSound" sound="myclick"/>
   </effect>
 </label>
+
 ----
+
 
 == Pass ClickLoc From Nifty to Java
 
@@ -196,18 +212,26 @@ To pass the clickLoc as two ints, you can use the special `(int x, int y)` synta
 
 
 [source,java]
+
 ----
+
   public void clicked(int x, int y) {
     // here you can use the x and y of the clickLoc
   }
+
 ----
+
 In the Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++ screen code (e.g. XML file) you must call the `(int x, int y)` method _without_ any parameters! 
 
 
 [source,xml]
+
 ----
+
 <interact onClick="clicked()"/>  
+
 ----
+
 You can name the method (here `clicked`) what ever you like, as long as you keep the argument syntax.
 
 
@@ -219,7 +243,9 @@ The following code sample shows how you can load several XML files into one nift
 
 
 [source,java]
+
 ----
+
 NiftyJmeDisplay niftyDisplay = new NiftyJmeDisplay(assetManager, inputManager, audioRenderer, viewPort);
 Nifty nifty = niftyDisplay.getNifty();
 nifty.addXml("Interface/Screens/OptionsScreen.xml");
@@ -230,7 +256,9 @@ OptionsScreenControl optionsControl = (OptionsScreenControl) nifty.getScreen("op
 stateManager.attach(screenControl);
 stateManager.attach(optionsControl);
 guiViewPort.addProcessor(niftyDisplay);
+
 ----
+
 
 == Register additional explicit screen controllers
 
@@ -241,13 +269,17 @@ The following code sample shows how you can explicitly attach several screen con
 
 
 [source,java]
+
 ----
+
 NiftyJmeDisplay niftyDisplay = new NiftyJmeDisplay(assetManager, inputManager, audioRenderer, viewPort);
 Nifty nifty = niftyDisplay.getNifty();
 
 nifty.registerScreenController(new OptionsScreenController(randomConstructorArgument));
 nifty.addXml("Interface/Screens/OptionsScreen.xml");
+
 ----
+
 
 == Design Your Own Styles
 
@@ -255,17 +287,27 @@ By default, your Nifty XML screens use the built.in styles:
 
 
 [source,xml]
----- <useStyles filename="nifty-default-styles.xml" /> ----
+
+----
+ <useStyles filename="nifty-default-styles.xml" /> 
+----
+
 But you can switch to a set of custom styles in your game project's asset directory like this:
 
 
 [source,xml]
----- <useStyles filename="Interface/Styles/myCustomStyles.xml" /> ----
+
+----
+ <useStyles filename="Interface/Styles/myCustomStyles.xml" /> 
+----
+
 Inside myCustomStyles.xml you define styles like this:
 
 
 [source,xml]
-----	
+
+----
+	
 <?xml version="1.0" encoding="UTF-8"?>
 <nifty-styles>
   <useStyles filename="Interface/Styles/Font/myCustomFontStyle.xml" />
@@ -273,7 +315,9 @@ Inside myCustomStyles.xml you define styles like this:
   <useStyles filename="Interface/Styles/Label/myCustomLabelStyle.xml" />
   ...
 </nifty-styles>
+
 ----
+
 Learn more about how to create styles by looking at the link:http://sourceforge.net/apps/mediawiki/nifty-gui/index.php?title=Build_from_Source[Nifty GUI source code] for “nifty-style-black”. Copy it as a template and change it to create your own style.
 
 '''

@@ -15,14 +15,18 @@ Let's transfer a file to a client:
 
 
 [source,java]
+
 ----
+
 StreamingService sService = client.getService(StreamingService.class);
 sService.addStreamListener(this);
 
 sService = server.getService(StreamingService.class);
 Client receiver = server.getConnectors().get(0); // Note that you can't use 'client' here, since it's not a connector.
 sService.offerStream(receiver, new StreamMessage(), new FileInputStream("test.txt")); // StreamMessage used here as start and end message, but can be anything to describe the stream on the other end.
+
 ----
+
 As you can see, this system uses the Service system. First, we get the client's StreamingService, and register ourselves as a listener. Then we get the server's version of the StreamingService, from which you can stream things. Then we get a connector client (the first one), and send the file via an InputStream.
 
 
@@ -30,7 +34,9 @@ Now to receive this stuff is simple;
 
 
 [source,java]
+
 ----
+
 public boolean streamOffered(StreamMessage message) {
    // Here you'd normally check the message what this stream is all about, and 
    // base your acception criteria on that.
@@ -46,6 +52,8 @@ public void streamCompleted(StreamMessage message) {
    fileStream.flush();
    fileStream.close();
 }
+
 ----
+
 That was all; simple right?
 

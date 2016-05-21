@@ -11,17 +11,27 @@ You can steer the camera using <<cinematics#,Cinematics>>:
 .  Create a Cinematic.
 .  Create a CameraNode and bind the camera object to the Cinematic. Note that we also give the camera node a name in this step. 
 [source,java]
-----CameraNode camNode = cinematic.bindCamera("topView", cam);----
+
+----
+CameraNode camNode = cinematic.bindCamera("topView", cam);
+----
+
 .  Position the camera node in its start location.
 .  Use activateCamera() to give the control of the camera to this node. You now see the scene from this camera's point of view. For example to see through the camera node named “topView, 6 seconds after the start of the cinematic, you'd write 
 [source,java]
-----cinematic.activateCamera(6, "topView");----
+
+----
+cinematic.activateCamera(6, "topView");
+----
+
 
 
 === Code Sample
 
 [source,java]
+
 ----
+
 flyCam.setEnabled(false);
 Cinematic cinematic = new Cinematic(rootNode, 20);
 
@@ -32,7 +42,9 @@ camNodeTop.getControl(0).setEnabled(false);
 CameraNode camNodeSide = cinematic.bindCamera("sideView", cam);
 camNodeSide.setControlDir(ControlDirection.CameraToSpatial);
 camNodeSide.getControl(0).setEnabled(false);
+
 ----
+
 
 == Moving the Camera
 

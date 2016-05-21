@@ -9,7 +9,9 @@ This tutorial expands the HelloTerrain tutorial and makes the terrain solid. You
 == Sample Code
 
 [source,java]
-----package jme3test.helloworld;
+
+----
+package jme3test.helloworld;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.bullet.BulletAppState;
@@ -197,7 +199,9 @@ public class HelloTerrainCollision extends SimpleApplication
     player.setWalkDirection(walkDirection);
     cam.setLocation(player.getPhysicsLocation());
   }
-}----
+}
+----
+
 To try this code, create a New Project → JME3 → BasicGame using the default settings. Paste the sample code over the pregenerated Main.java class. Chnage the package to “mygame if necessary. Open the Project Properties, Libraries, and add the `jme3-test-data` library to make certain you have all the files. 
 
 
@@ -228,7 +232,11 @@ Read <<jme3/beginner/hello_collision#,Hello Collision>> for details of the follo
 .  The custom `setUpKeys()` method loads your reconfigured input handlers. They now don't just walk blindly, but calculate the `walkDirection` vector that we need for collision detection.
 .  `simpleUpdate()` uses the `walkDirection` vector and makes the character walk, while taking obstacles and solid walls/floor into account. 
 [source,java]
-----player.setWalkDirection(walkDirection);----
+
+----
+player.setWalkDirection(walkDirection);
+----
+
 .  The RigidBodyControl `landscape` is the CollisionShape of the terrain.
 .  The physical first-person player is a CapsuleCollisionShape with a CharacterControl.
 
@@ -242,17 +250,25 @@ Here are the changed parts to combine the two:
 .  Add the control to the `terrain` to make it physical.
 
 [source,java]
-----/** 6. Add physics: */ 
-    terrain.addControl(new RigidBodyControl(0));  
+
 ----
+/** 6. Add physics: */ 
+    terrain.addControl(new RigidBodyControl(0));  
+
+----
+
 You attach the `terrain` and the first-person `player` to the rootNode, and to the physics space, to make them appear in the game world.
 
 
 [source,java]
+
 ----
+
     bulletAppState.getPhysicsSpace().add(terrain);
     bulletAppState.getPhysicsSpace().add(player);
+
 ----
+
 
 == Conclusion
 

@@ -26,7 +26,9 @@ You will learn that the scene graph represents the 3D world, and why the rootNod
 == Code Sample
 
 [source,java]
-----package jme3test.helloworld;
+
+----
+package jme3test.helloworld;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.material.Material;
@@ -77,7 +79,9 @@ public class HelloNode extends SimpleApplication {
         /** Rotate the pivot node: Note that both boxes have rotated! */
         pivot.rotate(.4f,.4f,0f);
     }
-}----
+}
+----
+
 Build and run the code sample. You should see two colored boxes tilted at the same angle.
 
 
@@ -149,13 +153,17 @@ What happens in the code snippet? You use the `simpleInitApp()` method that was 
 **  Create a blue material. 
 **  Apply the blue material to the Box Geometry. 
 [source,java]
+
 ----
+
     Box box1 = new Box(1,1,1);
     Geometry blue = new Geometry("Box", box1);
     blue.setLocalTranslation(new Vector3f(1,-1,1));
     Material mat1 = new Material(assetManager,"Common/MatDefs/Misc/Unshaded.j3md");
     mat1.setColor("Color", ColorRGBA.Blue);
-    blue.setMaterial(mat1);----
+    blue.setMaterial(mat1);
+----
+
 
 .  You create a second box Geometry.
 **  Create a second Box shape with the same size.
@@ -164,14 +172,18 @@ What happens in the code snippet? You use the `simpleInitApp()` method that was 
 **  Create a red material. 
 **  Apply the red material to the Box Geometry. 
 [source,java]
+
 ----
+
     Box box2 = new Box(1,1,1);
     Geometry red = new Geometry("Box", box2);
     red.setLocalTranslation(new Vector3f(1,3,1));
     Material mat2 = new Material(assetManager,
       "Common/MatDefs/Misc/Unshaded.j3md");
     mat2.setColor("Color", ColorRGBA.Red);
-    red.setMaterial(mat2);----
+    red.setMaterial(mat2);
+----
+
 
 .  You create a pivot Node. 
 **  Name the Node “pivot.
@@ -179,24 +191,36 @@ What happens in the code snippet? You use the `simpleInitApp()` method that was 
 **  Attach the Node to the rootNode.
 **  The Node has no visible appearance in the scene. 
 [source,java]
+
 ----
+
     Node pivot = new Node("pivot");
-    rootNode.attachChild(pivot);----
+    rootNode.attachChild(pivot);
+----
+
 If you run the application with only the code up to here, the scene appears empty. This is because a Node is invisible, and you have not yet attached any visible Geometries to the rootNode. 
 
 
 
 .  Attach the two boxes to the pivot node. 
 [source,java]
+
 ----
+
         pivot.attachChild(blue);
-        pivot.attachChild(red);----
+        pivot.attachChild(red);
+----
+
 If you run the app with only the code up to here, you see two cubes: A red cube straight above a blue cube.
 
 
 .  Rotate the pivot node.
 [source,java]
-----        pivot.rotate( 0.4f , 0.4f , 0.0f );----
+
+----
+        pivot.rotate( 0.4f , 0.4f , 0.0f );
+----
+
  If you run the app now, you see two boxes on top of each other – both tilted at the same angle.
 
 
@@ -223,32 +247,60 @@ a| Solution!
 a| Create a Spatial 
 a| Create a Mesh shape, wrap it into a Geometry, and give it a Material. For example: 
 [source,java]
-----Box mesh = new Box(Vector3f.ZERO, 1, 1, 1); // a cuboid default mesh
+
+----
+Box mesh = new Box(Vector3f.ZERO, 1, 1, 1); // a cuboid default mesh
 Geometry thing = new Geometry("thing", mesh); 
 Material mat = new Material(assetManager,
    "Common/MatDefs/Misc/ShowNormals.j3md");
-thing.setMaterial(mat);----
+thing.setMaterial(mat);
+----
+
 
 a| Make an object appear in the scene 
 a| Attach the Spatial to the `rootNode`, or to any node that is attached to the rootNode. 
 [source,java]
-----rootNode.attachChild(thing);----
+
+----
+rootNode.attachChild(thing);
+----
+
 
 a| Remove objects from the scene 
 a| Detach the Spatial from the `rootNode`, and from any node that is attached to the rootNode. 
 [source,java]
-----rootNode.detachChild(thing);----
+
+----
+rootNode.detachChild(thing);
+----
+
 [source,java]
-----rootNode.detachAllChildren();----
+
+----
+rootNode.detachAllChildren();
+----
+
 
 a| Find a Spatial in the scene by the object's name, or ID, or by its position in the parent-child hierarchy. 
 a| Look at the node's children or parent: 
 [source,java]
-----Spatial thing = rootNode.getChild("thing");----
+
+----
+Spatial thing = rootNode.getChild("thing");
+----
+
 [source,java]
-----Spatial twentyThird = rootNode.getChild(22);----
+
+----
+Spatial twentyThird = rootNode.getChild(22);
+----
+
 [source,java]
-----Spatial parent = myNode.getParent();----
+
+----
+Spatial parent = myNode.getParent();
+----
+
 
 a| Specify what should be loaded at the start 
 a| Everything you initialize and attach to the `rootNode` in the `simpleInitApp()` method is part of the scene at the start of the game. 
@@ -271,12 +323,20 @@ a| Z-axis
 a| Specify the new location in three dimensions: How far away is it from the origin going right-up-forward? +
 To move a Spatial _to_ specific coordinates, such as (0,40.2f,-2), use: 
 [source,java]
-----thing.setLocalTranslation( new Vector3f( 0.0f, 40.2f, -2.0f ) );----
+
+----
+thing.setLocalTranslation( new Vector3f( 0.0f, 40.2f, -2.0f ) );
+----
+
  To move a Spatial _by_ a certain amount, e.g. higher up (y=40.2f) and further back (z=-2.0f): 
 
 
 [source,java]
-----thing.move( 0.0f, 40.2f, -2.0f );----
+
+----
+thing.move( 0.0f, 40.2f, -2.0f );
+----
+
 a|+right -left
 a|+up -down
 a|+forward -backward
@@ -295,7 +355,11 @@ A value between 0.0f and 1.0f shrinks the Spatial; bigger than 1.0f stretches it
 Using the same value for each dimension scales proportionally, different values stretch it. +
 To scale a Spatial 10 times longer, one tenth the height, and keep the same width: 
 [source,java]
-----thing.scale( 10.0f, 0.1f, 1.0f );----
+
+----
+thing.scale( 10.0f, 0.1f, 1.0f );
+----
+
 a|length
 a|height
 a|width
@@ -312,13 +376,21 @@ a| Z-axis
 a|3-D rotation is a bit tricky (<<jme3/rotate#,learn details here>>). In short: You can rotate around three axes: Pitch, yaw, and roll. You can specify angles in degrees by multiplying the degrees value with `FastMath.DEG_TO_RAD`. +
 To roll an object 180° around the z axis: 
 [source,java]
-----thing.rotate( 0f , 0f , 180*FastMath.DEG_TO_RAD );----
+
+----
+thing.rotate( 0f , 0f , 180*FastMath.DEG_TO_RAD );
+----
+
  Tip: If your game idea calls for a serious amount of rotations, it is worth looking into <<jme3/quaternion#,quaternion>>s, a data structure that can combine and store rotations efficiently. 
 
 
 [source,java]
-----thing.setLocalRotation( 
-  new Quaternion().fromAngleAxis(180*FastMath.DEG_TO_RAD, new Vector3f(1,0,0)));----
+
+----
+thing.setLocalRotation( 
+  new Quaternion().fromAngleAxis(180*FastMath.DEG_TO_RAD, new Vector3f(1,0,0)));
+----
+
 a|pitch = nodding your head
 a|yaw = shaking your head
 a|roll = cocking your head
@@ -368,12 +440,20 @@ For example, to add a custom id number to a node, you would use:
 
 
 [source,java]
-----pivot.setUserData( "pivot id", 42 );----
+
+----
+pivot.setUserData( "pivot id", 42 );
+----
+
 To read this Node's id number elsewhere, you would use:
 
 
 [source,java]
-----int id = pivot.getUserData( "pivot id" ); ----
+
+----
+int id = pivot.getUserData( "pivot id" ); 
+----
+
 By using different Strings keys (here the key is `pivot id`), you can get and set several values for whatever data the Spatial needs to carry. When you start writing your game, you might add a fuel value to a car node, speed value to an airplane node, or number of gold coins to a player node, and much more. However, one should note that only custom objects that implements Savable can be passed.
 
 

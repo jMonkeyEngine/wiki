@@ -74,7 +74,9 @@ Vertex Shader : +
 
 
 [source,java]
+
 ----
+
 //the global uniform World view projection matrix
 //(more on global uniforms below)
 uniform mat4 g_WorldViewProjectionMatrix;
@@ -90,20 +92,26 @@ void main(){
     //The multiplication must be done in this order.
     gl_Position = g_WorldViewProjectionMatrix * vec4(inPosition, 1.0);
 }
+
 ----
+
 Fragment Shader : +
 
 
 
 [source,java]
+
 ----
+
 void main(){
     //returning the color of the pixel (here solid blue)
     //- gl_FragColor is the standard GLSL variable that holds the pixel
     //color. It must be filled in the Fragment Shader.
     gl_FragColor = vec4(0.0, 0.0, 1.0, 1.0);
 }
+
 ----
+
 For example applying this shader to a sphere would render a solid blue sphere on screen.+
 
 +
@@ -124,7 +132,9 @@ For example let’s have a look at the SolidColor.j3md file : +
 
 
 [source,java]
+
 ----
+
 MaterialDef Solid Color {
     //This is the complete list of user defined uniforms to be used in the
     //shaders
@@ -145,7 +155,9 @@ MaterialDef Solid Color {
     Technique FixedFunc {
     }
 }
+
 ----
+
 For more information on JME3 material system, i suggest you read this link:http://jmonkeyengine.org/groups/development-discussion-jme3/forum/topic/jmonkeyengine3-material-system-full-explanation[topic].+
 
 +
@@ -213,12 +225,16 @@ Any uniform has to be declared in the material definition file (.j3md) in the �
 
 
 [source,java]
+
 ----
+
     MaterialParameters {
         Vector4 Color
         Texture2D ColorMap
     }
+
 ----
+
 You can also pass some define to your vertex/fragment programs to know if an uniform as been declared. +
 
 You simply add it in the Defines section of your Technique in the definition file. +
@@ -226,11 +242,15 @@ You simply add it in the Defines section of your Technique in the definition fil
 
 
 [source,java]
+
 ----
+
     Defines {
         COLORMAP : ColorMap
     }
+
 ----
+
 For integer and floating point parameters, the define will contain the value that was set.+
 
 For all other types of parameters, the value 1 is defined.+
@@ -245,10 +265,14 @@ there are setXXXX methods for any type of uniform you want to pass.+
 
 
 [source,java]
+
 ----
+
    material.setColor("Color", new ColorRGBA(1.0f, 0.0f, 0.0f, 1.0f); // red color
    material.setTexture("ColorMap", myTexture); // bind myTexture for that sampler uniform
+
 ----
+
 To use this uniform in the shader, you need to declare it in the .frag or .vert files (depending on where you need it).
 You can make use of the defines here and later in the code:
 *Note that the “m_ prefix specifies that the uniform is a material parameter.*+
@@ -256,12 +280,16 @@ You can make use of the defines here and later in the code:
 
 
 [source,java]
+
 ----
+
    uniform vec4 m_Color;
    #ifdef COLORMAP
      uniform sampler2D m_ColorMap;
    #endif
+
 ----
+
 The uniforms will be populated at runtime with the value you sent.
 
 
@@ -286,41 +314,57 @@ We need to pass 2 new parameters to the Lighting.j3md definition, MaterialParame
 
 
 [source,java]
+
 ----
+
 // Keying Map
 Texture2D KeyMap
 
 // Key Color 
 Color KeyColor
+
 ----
+
 Below, add a new Define in the main Technique section:
 
 
 [source,java]
+
 ----
+
 KEYMAP : KeyMap
+
 ----
+
 In the Lighting.frag file, define the new uniforms:
 
 
 [source,java]
+
 ----
+
 #ifdef KEYMAP
   uniform sampler2D m_KeyMap;
   uniform vec4 m_KeyColor;
 #endif
+
 ----
+
 Further, when obtaining the diffuseColor from the DiffuseMap texture, check
 if we need to blend it:
 
 
 [source,java]
+
 ----
+
     #ifdef KEYMAP
       vec4 keyColor = texture2D(m_KeyMap, newTexCoord);
       diffuseColor.rgb = (1.0-keyColor.a) * diffuseColor.rgb + keyColor.a * m_KeyColor.rgb;
     #endif
+
 ----
+
 This way, a transparent pixel in the KeyMap texture doesn't modify the color. +
 
 A black pixel replaces it for the m_KeyColor and values in between are blended.+
@@ -340,14 +384,18 @@ A result preview can be seen here: link:http://wstaw.org/m/2011/10/24/plasma-des
 *  That’s it!!
 
 [source,java]
+
 ----
+
     // A cube
     Box box= new Box(Vector3f.ZERO, 1f,1f,1f);
     Geometry cube = new Geometry("box", box);
     Material mat = new Material(assetManager,"Path/To/My/materialDef.j3md");
     cube.setMaterial(mat);
     rootNode.attachChild(cube);
+
 ----
+
 +
 
 

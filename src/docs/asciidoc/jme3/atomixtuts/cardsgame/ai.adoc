@@ -235,7 +235,9 @@ The first try to implement the AI
 
 
 [source,java]
+
 ----
+
 package magiccard.gameplay.ai
 
 import magiccard.*
@@ -363,12 +365,16 @@ public class CardPlayerAI {
     }
 
 }
+
 ----
+
 And the way to call it … CardGamePlay 
 
 
 [source,java]
+
 ----
+
             case MainPhase:
                 if (!currentTurn.player.aiPlayer){
                     if (isPlayerChangePhase(MainPhase)){
@@ -381,7 +387,9 @@ And the way to call it … CardGamePlay
                     currentTurn.player.ai.think();
                     currentTurn.player.ai.act();
                 }
+
 ----
+
 The fun things here are we delayed Action we want the AI and save to Actions list made from Closure. In the main loop, we wait till ai.act is called then execute all the delayed action. The power of Groovy once again shown! By this technique we can easily introduce paralel computing with an cool ulitities of Groovy named <<gpars#,GPars>>. But we don’t use it right now though ! 
 
 

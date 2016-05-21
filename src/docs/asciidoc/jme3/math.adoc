@@ -81,17 +81,25 @@ ColorRGBA defines a few static color values for ease of use. That is, rather tha
 
 
 [source,java]
+
 ----
+
 ColorRGBA red = new ColorRGBA(1,0,0,1);
 object.setSomeColor(red);
+
 ----
+
 you can simply say:
 
 
 [source,java]
+
 ----
+
 object.setSomeColor(ColorRGBA.red)
+
 ----
+
 ColorRGBA will also handle interpolation between two colors. Given a second color and a value between 0 and 1, a the owning ColorRGBA object will have its color values altered to this new interpolated color.
 
 
@@ -413,13 +421,17 @@ You might wish to represent your rotations as Angle Axis pairs. That is, you def
 ==== Example - Rotate a Spatial Using fromAngleAxis
 
 [source,java]
+
 ----
+
 //rotate about the Y-Axis by approximately 1 pi
 Vector3f axis = Vector3f.UNIT_Y; 
 // UNIT_Y equals (0,1,0) and does not require to create a new object
 float angle = 3.14f;
 s.getLocalRotation().fromAngleAxis(angle, axis);
+
 ----
+
 
 === Three Angles
 
@@ -430,11 +442,15 @@ You can also represent a rotation by defining three angles. The angles represent
 ==== Example - Rotate a Spatial Using fromAngles
 
 [source,java]
+
 ----
+
 //rotate 1 radian on the x, 3 on the y and 0 on z
 float[] angles = {1, 3, 0};
 s.getLocalRotation().fromAngles(angles);
+
 ----
+
 
 === Three Axes
 
@@ -445,7 +461,9 @@ If you have three axes that define your rotation, where the axes define the left
 ==== Example - Rotate a Spatial Using fromAxes
 
 [source,java]
+
 ----
+
 //rotate a spatial to face up ~45 degrees
 Vector3f[] axes = new Vector3f[3];
 axes[0] = new Vector3f(-1, 0, 0); //left
@@ -453,7 +471,9 @@ axes[1] = new Vector3f(0, 0.5f, 0.5f); //up
 axes[2] = new Vector3f(0, 0.5f, 0.5f); //dir
 
 s.getLocalRotation().fromAxes(axes);
+
 ----
+
 
 === Rotation Matrix
 
@@ -464,7 +484,9 @@ Commonly you might find yourself with a <<matrix#,Matrix>> defining a rotation. 
 ==== Example - Rotate a Spatial Using a Rotation Matrix
 
 [source,java]
+
 ----
+
 
 Matrix3f mat = new Matrix3f();
 mat.setColumn(0, new Vector3f(1,0,0));
@@ -472,7 +494,9 @@ mat.setColumn(1, new Vector3f(0,-1,0));
 mat.setColumn(2, new Vector3f(0,0,1));
 
 s.getLocalRotation().fromRotationMatrix(mat);
+
 ----
+
 As you can see there are many ways to build a Quaternion. This allows you to work with rotations in a way that is conceptually easier to picture, but still build Quaternions for internal representation.
 
 
@@ -486,7 +510,9 @@ One of the biggest advantages to using Quaternions is allowing interpolation bet
 ==== Example - Use Slerp to Rotate Between two Quaternions
 
 [source,java]
+
 ----
+
 /*
 You can interpolate rotations between two quaternions using spherical linear
 interpolation (slerp).
@@ -502,7 +528,9 @@ Yroll45.fromAngleAxis(45 * FastMath.DEG_TO_RAD, Vector3f.UNIT_Y);
 Quaternion halfBetweenXroll45Yroll45 = new Quaternion();
 halfBetweenXroll45Yroll45.slerp(Xroll45, Yroll45, 0.5f);
 geom2.setLocalRotation(halfBetweenXroll45Yroll45);
+
 ----
+
 
 === Multiplication
 
@@ -510,15 +538,23 @@ You can concatenate (add) rotations: This means you turn the object first around
 
 
 [source,java]
-----Quaternion myRotation = pitch90.mult(roll45); /* pitch and roll */----
+
+----
+Quaternion myRotation = pitch90.mult(roll45); /* pitch and roll */
+----
+
 To rotate a Vector3f around its origin by the Quaternion amount, use the multLocal method of the Quaternion:
 
 
 [source,java]
-----Quaternion myRotation = pitch90;
+
+----
+Quaternion myRotation = pitch90;
 Vector3f myVector = new Vector3f(0,0,-1);
 myRotation.multLocal(myVector);
+
 ----
+
 
 = Utility Classes
 
@@ -612,10 +648,14 @@ jME defines a Line class that is defined by an origin and direction. In reality,
 === Example 1 - Find a Random Point on a Line
 
 [source,java]
+
 ----
+
 Line l = new Line(new Vector3f(0,1,0), new Vector3f(3,2,1));
 Vector3f randomPoint = l.random();
+
 ----
+
 
 == Plane
 
@@ -669,7 +709,9 @@ These values are returned on a call to `whichSide`.
 === Example 1 - Determining if a Point is On the Positive Side of a Plane
 
 [source,java]
+
 ----
+
 Vector3f normal = new Vector3f(0,1,0);
 float constant = new Vector3f(1,1,1).dot(normal);
 Plane testPlane = new Plane(normal, constant);
@@ -679,7 +721,9 @@ int side = testPlane.whichSide(new Vector3f(2,1,0);
 if(side == Plane.NO_SIDE) {
    System.out.println("This point lies on the plane");
 }
+
 ----
+
 
 === Example 2 - For the Layperson
 
@@ -687,7 +731,9 @@ Using the standard constructor Plane(Vector3f normal, float constant), here is w
 
 
 [source,java]
+
 ----
+
 package test;
 
 import java.util.logging.Logger;
@@ -750,7 +796,9 @@ public class TestPlanes
     logger.info("p3 position relative to plane is "+plane.whichSide(p3)); //outputs NONE
   }
 }
+
 ----
+
 
 == Ray
 
@@ -770,9 +818,13 @@ This Ray is used extensively in jME for <<picking#,Picking>>. A Ray is cast from
 === Example 1 - Create a Ray That Represents Where the Camera is Looking
 
 [source,java]
+
 ----
+
 Ray ray = new Ray(cam.getLocation(), cam.getDirection());
+
 ----
+
 
 == Rectangle
 
@@ -795,13 +847,17 @@ Rectangle is a straight forward data class that simply maintains values that def
 === Example 1 : Define a Rectangle and Get a Point From It
 
 [source,java]
+
 ----
+
 Vector3f v1 = new Vector3f(1,0,0);
 Vector3f v2 = new Vector3f(1,1,0);
 Vector3f v3 = new Vector3f(0,1,0);
 Rectangle r = new Rectangle(v1, v2, v3);
 Vector3f point = r.random();
+
 ----
+
 
 == Triangle
 
@@ -824,13 +880,17 @@ jME's Triangle class is a simple data class. It contains three <<vector#,Vector3
 === Example 1 - Creating a Triangle
 
 [source,java]
+
 ----
+
 //the three points that make up the triangle
 Vector3f p1 = new Vector3f(0,1,0);
 Vector3f p2 = new Vector3f(1,1,0);
 Vector3f p3 = new Vector3f(0,1,1);
 Triangle t = new Triangle(p1, p2, p3);
+
 ----
+
 
 = Tips and Tricks
 
@@ -841,16 +901,24 @@ Cast the spatial to com.jme3.bounding.BoundingBox to be able to use getExtent().
 
 
 [source,java]
-----Vector3f extent = ((BoundingBox) spatial.getWorldBound()).getExtent(new Vector3f());
+
+----
+Vector3f extent = ((BoundingBox) spatial.getWorldBound()).getExtent(new Vector3f());
 float x = ( (BoundingBox)spatial.getWorldBound()).getXExtent();
 float y = ( (BoundingBox)spatial.getWorldBound()).getYExtent();
 float z = ( (BoundingBox)spatial.getWorldBound()).getZExtent();
+
 ----
+
 
 == How do I position the center of a Geomtry?
 
 [source,java]
-----geo.center().move(pos);----
+
+----
+geo.center().move(pos);
+----
+
 
 === See Also
 

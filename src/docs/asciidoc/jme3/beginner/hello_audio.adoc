@@ -15,7 +15,9 @@ This tutorial explains how to add 3D sound to a game, and how to make sounds pla
 == Sample Code
 
 [source,java]
-----package jme3test.helloworld;
+
+----
+package jme3test.helloworld;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.audio.AudioNode;
@@ -98,7 +100,9 @@ public class HelloAudio extends SimpleApplication {
   }
 
 }
+
 ----
+
 When you run the sample, you should see a blue cube. You should hear a nature-like ambient sound. When you click, you hear a loud shot.
 
 
@@ -121,19 +125,27 @@ For each sound, you create an AudioNode. You can use an AudioNode like any node 
 
 
 [source,java]
+
 ----
+
   private AudioNode audio_gun;
   private AudioNode audio_nature;
+
 ----
+
 Look at the custom `initAudio()` method: Here you initialize the sound objects and set their parameters.
 
 
 [source,Java]
+
 ----
+
 audio_gun = new AudioNode(assetManager, "Sound/Effects/Gun.wav", false);
     ...
 audio_nature = new AudioNode(assetManager, "Sound/Environment/Nature.ogg", false);
+
 ----
+
 These two lines create new sound nodes from the given audio files in the AssetManager. The `false` flag means that you want to buffer these sounds before playing. (If you set this flag to true, the sound will be streamed, which makes sense for really long sounds.)
 
 
@@ -141,12 +153,16 @@ You want the gunshot sound to play _once_ (you don't want it to loop). You also 
 
 
 [source,java]
+
 ----
+
     audio_gun.setPositional(false);
     audio_gun.setLooping(false);
     audio_gun.setVolume(2);
     rootNode.attachChild(audio_gun);
+
 ----
+
 
 
 
@@ -154,23 +170,31 @@ The nature sound is different: You want it to loop _continuously_ as background 
 
 
 [source,java]
+
 ----
+
     audio_nature.setLooping(true); // activate continuous playing
     ...
     audio_nature.setVolume(3);
     rootNode.attachChild(audio_nature);
     audio_nature.play(); // play continuously!
-  }----
+  }
+----
+
 Here you make audio_nature a positional sound that comes from a certain place. For that you give the node an explicit translation, in this example, you choose Vector3f.ZERO (which stands for the coordinates `0.0f,0.0f,0.0f`, the center of the scene.) Since jME supports 3D audio, you are now able to hear this sound coming from this particular location. Making the sound positional is optional. If you don't use these lines, the ambient sound comes from every direction.
 
 
 [source,java]
+
 ----
+
     ...
     audio_nature.setPositional(true);
     audio_nature.setLocalTranslation(Vector3f.ZERO.clone());
     ...
+
 ----
+
 *Tip:* Attach AudioNodes into the scene graph like all nodes, to make certain moving nodes stay up-to-date. If you don't attach them, they are still audible and you don't get an error message but 3D sound will not work as expected. AudioNodes can be attached directly to the root node or they can be attached inside a node that is moving through the scene and both the AudioNode and the 3d position of the sound it is generating will move accordingly.
 
 
@@ -184,18 +208,24 @@ Let's have a closer look at `initKeys()`: As you learned in previous tutorials, 
 
 
 [source,java]
+
 ----
+
   /** Declaring "Shoot" action, mapping it to a trigger (mouse left click). */
   private void initKeys() {
     inputManager.addMapping("Shoot", new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
     inputManager.addListener(actionListener, "Shoot");
   }
+
 ----
+
 Setting up the ActionListener should also be familiar from previous tutorials. You declare that, when the trigger (the mouse button) is pressed and released, you want to play a gun sound.
 
 
 [source,java]
+
 ----
+
   /** Defining the "Shoot" action: Play a gun sound. */
   private ActionListener actionListener = new ActionListener() {
     @Override
@@ -204,7 +234,9 @@ Setting up the ActionListener should also be familiar from previous tutorials. Y
         audio_gun.playInstance(); // play each instance once!
       }
     }
-  };----
+  };
+----
+
 Since you want to be able to shoot fast repeatedly, so you do not want to wait for the previous gunshot sound to end before the next one can start. This is why you play this sound using the `playInstance()` method. This means that every click starts a new instance of the sound, so two instances can overlap. You set this sound not to loop, so each instance only plays once. As you would expect it of a gunshot.
 
 
@@ -229,11 +261,17 @@ Apart from the looping boolean, another difference is where `play().playInstance
 
 *  You start playing the background nature sound right after you have created it, in the initAudio() method.
 [source,java]
-----    audio_nature.play(); // play continuously!
+
 ----
+    audio_nature.play(); // play continuously!
+
+----
+
 *  The gunshot sound, however, is triggered situationally, once, only as part of the `Shoot` input action that you defined in the ActionListener.
 [source,java]
+
 ----
+
   /** Defining the "Shoot" action: Play a gun sound. */
   private ActionListener actionListener = new ActionListener() {
     @Override
@@ -242,7 +280,9 @@ Apart from the looping boolean, another difference is where `play().playInstance
         audio_gun.playInstance(); // play each instance once!
       }
     }
-  };----
+  };
+----
+
 
 
 == Buffered or Streaming?
@@ -251,9 +291,13 @@ The Boolean in the AudioNode constructor defines whether the audio is buffered (
 
 
 [source,java]
-----audio_gunshot = new AudioNode(assetManager, "Sound/Effects/Gun.wav", false); // buffered
+
+----
+audio_gunshot = new AudioNode(assetManager, "Sound/Effects/Gun.wav", false); // buffered
 ...
-audio_nature = new AudioNode(assetManager, "Sound/Environment/Nature.ogg", true); // streamed ----
+audio_nature = new AudioNode(assetManager, "Sound/Environment/Nature.ogg", true); // streamed 
+----
+
 Typically, you stream long sounds, and buffer short sounds.
 
 
@@ -289,12 +333,16 @@ In order to make the most of the 3D audio effect, you must use the `simpleUpdate
 
 
 [source,java]
+
 ----
+
   public void simpleUpdate(float tpf) {
     listener.setLocation(cam.getLocation());
     listener.setRotation(cam.getRotation());
   }
+
 ----
+
 If you don't do that, the results of 3D audio will be quite random.
 
 
