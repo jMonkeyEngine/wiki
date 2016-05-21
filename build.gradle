@@ -1,0 +1,31 @@
+plugins {
+	id 'org.asciidoctor.convert' version '1.5.3'
+}
+
+apply plugin: 'java'
+apply plugin: 'org.asciidoctor.convert'
+
+version = '3.1.0-SNAPSHOT'
+
+asciidoctorj {
+    version = '1.5.4'
+}
+
+asciidoctor {
+	resources {
+		from('src/docs/images')
+		into "./images"
+	}
+	attributes	'build-gradle': file('build.gradle'),
+				'sourcedir': project.sourceSets.main.java.srcDirs[0],
+				'endpoint-url': 'http://davidb.github.io/sandbox_wiki_jme',
+	
+				'source-highlighter' : 'coderay',
+				'imagesdir':'images',
+				'toc':'left',
+				'icons': 'font',
+				'setanchors':'true',
+				'idprefix':'',
+				'idseparator':'-',
+				'docinfo1':'true'
+}
