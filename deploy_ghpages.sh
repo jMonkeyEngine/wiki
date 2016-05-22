@@ -25,12 +25,12 @@ rm -Rf gh-pages
 git clone -b gh-pages --single-branch https://${GH_TOKEN}@github.com/${repo} gh-pages
 cd gh-pages
 
-rsync -az --stats --delete --force ../build/asciidoc/html5/ .
+rsync -az --stats --delete --exclude .git --force ../build/asciidoc/html5/ .
 
 git config --local user.email "travis@travis-ci.org"
 git config --local user.name "Travis"
 git add -A .
 git commit -m "Travis build $TRAVIS_BUILD_NUMBER pushed to gh-pages at ${rev}"
-git push --force --quiet https://${GH_TOKEN}@github.com/${repo} gh-pages
+git push --force --quiet origin gh-pages
 cd ..
 rm -Rf gh-pages
