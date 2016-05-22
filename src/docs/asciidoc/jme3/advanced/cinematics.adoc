@@ -1,11 +1,16 @@
-
-
 = JME3 Cinematics
+:author: 8Keep123
+:revnumber: 
+:revdate: 2015/02/22 22:03
+:relfileprefix: ../../
+:imagesdir: ../..
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
 
 JME3 cinematics (com.jme.cinematic) allow you to remote control nodes and cameras in a 3D game: You can script and and play cinematic scenes. You can use cinematics to create link:http://en.wikipedia.org/wiki/Cutscene[cutscenes] and movies/trailers for your game. Another good use case is efficient “destruction physics: Playing back prerecorded flying pieces of debris for demolitions is much faster than calculating them with live physics.
 
 
-Internally, Cinematics are implemented as <<application_states#,AppStates>>. 
+Internally, Cinematics are implemented as <<jme3/advanced/application_states#,AppStates>>. 
 
 
 Short overview of the cinematic process:
@@ -87,13 +92,13 @@ a|MotionEvent
 a|Use a MotionEvent to move a Spatial non-linearly over time. A MotionEvent is based on a list of waypoints in a MotionPath. The curve goes through each waypoint, and you can adjust the tension of the curve to modify the roundedness of the path. This is the motion interpolation you are going to use in most cases. 
 
 a|SoundEvent
-a|Use a SoundEvent to play a <<audio#,sound>> at a given time for the given duration.
+a|Use a SoundEvent to play a <<jme3/advanced/audio#,sound>> at a given time for the given duration.
 
 a|GuiEvent
-a|Displays a <<nifty_gui#,Nifty GUI>> at a given time for the given duration. Use it to display subtitles or HUD elements. Bind the Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++ XML to the cinematic using `cinematic.bindUi(“path/to/nifty/file.xml);`
+a|Displays a <<jme3/advanced/nifty_gui#,Nifty GUI>> at a given time for the given duration. Use it to display subtitles or HUD elements. Bind the Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++ XML to the cinematic using `cinematic.bindUi(“path/to/nifty/file.xml);`
 
 a|AnimationEvent
-a|Use this to start playing a model <<animation#,animation>> at a given time (a character walking animation for example)
+a|Use this to start playing a model <<jme3/advanced/animation#,animation>> at a given time (a character walking animation for example)
 
 |===
 
@@ -116,12 +121,12 @@ Details of the constructor:
 
 
 *  `thingNode` is the Spatial to be moved.
-*  `path` is a complex <<motionpath#,MotionPath>>.
+*  `path` is a complex <<jme3/advanced/motionpath#,MotionPath>>.
 
 To create a MotionEvent, do the following:
 
 
-.  <<motiontrack#,Create a MotionEvent>>
+.  <<jme3/advanced/motiontrack#,Create a MotionEvent>>
 .  Create a MotionEvent based on the MotionPath.
 .  Configure your MotionEvent (see below).
 .  Add the MotionEvent to a Cinematic.

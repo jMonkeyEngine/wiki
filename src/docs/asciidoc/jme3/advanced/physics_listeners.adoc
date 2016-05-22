@@ -1,6 +1,12 @@
-
-
 = Physics Listeners
+:author: 
+:revnumber: 
+:revdate: 2012/03/31 18:17
+:keywords: documentation, physics, collision, forces, interaction
+:relfileprefix: ../../
+:imagesdir: ../..
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
 
 You can control physical objects (push them around) by applying physical forces to them. Typically, you also want to respond to the resulting collisions, e.g. by substracting health points or by playing a sound. To specify how the game responds to such physics events, you use Physics Listeners.
 
@@ -18,7 +24,7 @@ You can control physical objects (push them around) by applying physical forces 
 Attach a com.jme3.bullet.control.GhostControl to any Spatial to turn it into a PhysicsGhostObject. Ghost objects automatically follow their spatial and detect collisions. The attached ghost itself is invisible and non-solid (!) and doesn't interfere with your game otherwise, it only passively reports collisions. 
 
 
-You can leave the GhostControl non-solid and invisible and attach it to an (invisible) Node in the scene to create something like a motion detector. But a GhostControl also works fine when added to spatials that are solid (with RigidBodyControl) and visible (with Geometry). One use case for GhostControls is to check for collisions among <<walking_character#,CharacterControls>> when the characters are walking.
+You can leave the GhostControl non-solid and invisible and attach it to an (invisible) Node in the scene to create something like a motion detector. But a GhostControl also works fine when added to spatials that are solid (with RigidBodyControl) and visible (with Geometry). One use case for GhostControls is to check for collisions among <<jme3/advanced/walking_character#,CharacterControls>> when the characters are walking.
 
 
 The shape of the ghost depends on the CollisionShape that you gave the GhostControl. This means that the GhostControl's shape can be different from the RigidBodyControl's shape. For example, the non-solid ghost shape can be bigger than the solid shape of the Spatial (so you can “feel ahead).
@@ -221,4 +227,3 @@ For example, for a click-to-select, you only care if the selection ray collides 
 myNode.getControl(RigidBodyControl.class).setCollisionGroup(PhysicsCollisionObject.COLLISION_GROUP_02);
 myNode.getControl(RigidBodyControl.class).setCollideWithGroups(PhysicsCollisionObject.COLLISION_GROUP_02);
 ----
-<tags><tag target="documentation" /><tag target="physics" /><tag target="collision" /><tag target="forces" /><tag target="interaction" /></tags>

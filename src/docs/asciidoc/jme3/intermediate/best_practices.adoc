@@ -1,6 +1,11 @@
-
-
 = Best Practices For jME3 Developers
+:author: 
+:revnumber: 
+:revdate: 2013/11/23 12:44
+:relfileprefix: ../../
+:imagesdir: ../..
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
 
 Every milestone of a game development project is made up of phases: Planning, development, testing, and release. Every milestone involves updates to multi-media assets and to code.  
 
@@ -133,7 +138,7 @@ Learn details about the <<jme3/intermediate/multi-media_asset_pipeline#,Multi-Me
 
 === Extend SimpleApplication
 
-Every jME3 game is centered around one main class that (directly or indirectly) extends com.jme3.app.<<simpleapplication#,SimpleApplication>>. 
+Every jME3 game is centered around one main class that (directly or indirectly) extends com.jme3.app.<<jme3/intermediate/simpleapplication#,SimpleApplication>>. 
 
 
 ““
@@ -199,7 +204,7 @@ If your game is even more complex, you may want to learn about “real Entity Sy
 
 === The Smart Way to Access Game Features
 
-<<simpleapplication#,SimpleApplication>> gives you access to game features such as a the rootNode, assetManager, guiNode, inputManager, audioManager, physicsSpace, viewPort, and the camera. But what if you need this access also from another class? Don't extend SimpleApplication a second time, and don't pass around tons of object references in constructors! Needing access to application level objects is a sign that this class should be designed as an <<jme3/advanced/application_states#,AppState>> (read details there). 
+<<jme3/intermediate/simpleapplication#,SimpleApplication>> gives you access to game features such as a the rootNode, assetManager, guiNode, inputManager, audioManager, physicsSpace, viewPort, and the camera. But what if you need this access also from another class? Don't extend SimpleApplication a second time, and don't pass around tons of object references in constructors! Needing access to application level objects is a sign that this class should be designed as an <<jme3/advanced/application_states#,AppState>> (read details there). 
 
 
 An AppState has access to all game features in the SimpleApplication via the `this.app` and `this.stateManager` objects. Examples:

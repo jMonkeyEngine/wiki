@@ -1,3 +1,12 @@
+= Multithreading Optimization
+:author: 
+:revnumber: 
+:revdate: 2014/12/04 09:38
+:keywords: loop, game, performance, state, states, documentation
+:relfileprefix: ../../
+:imagesdir: ../..
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
 
 
 === The jME3 Threading Model
@@ -25,10 +34,7 @@ Note that this example does not fetch the returned value by calling `get()` on t
 If the processing thread needs to wait or needs the return value then `get()` or the other methods in the returned Future object such as `isDone()` can be used.
 
 
-
-= Multithreading Optimization
-
-First, make sure you know what <<application_states#,Application States>> and <<custom_controls#,Custom Controls>> are.
+First, make sure you know what <<jme3/advanced/application_states#,Application States>> and <<jme3/advanced/custom_controls#,Custom Controls>> are.
 
 
 More complex games may feature complex mathematical operations or artificial intelligence calculations (such as path finding for several NPCs). If you make many time-intensive calls on the same thread (in the update loop), they will block one another, and thus slow down the game to a degree that makes it unplayable. If your game requires long running tasks, you should run them concurrently on separate threads, which speeds up the application considerably.
@@ -225,4 +231,3 @@ High level description which describes how to manage the game state and the rend
 
 The cool thing about this approach is that every entity creates one self-contained Callable for the Executor, and they are all executed in parallel. In theory, you can have one thread per entity without changing anything else but the settings of the executor.
 
-<tags><tag target="loop" /><tag target="game" /><tag target="performance" /><tag target="state" /><tag target="states" /><tag target="documentation" /></tags>

@@ -1,78 +1,8 @@
+= перемещение_графа_сцены
+:author: 
+:revnumber: 
+:revdate: 1970/01/01 00:00
+:relfileprefix: ../../../
+:imagesdir: ../../..
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
-
-= Traverse the SceneGraph
-
-Английская версия: <<jme3/advanced/traverse_scenegraph#,Traverse SceneGraph>>
-
-
-Вы можете запустить поиск во всем графе сцены и поиск индивидуальных Spatials (`Nodes` и `Geometry`) по специальным критериям, таким как имя Spatials, или класс Spatials, или пользовательские данные Spatials, или Spаtial's Controls.  Вы можете сделать это, когда вы хотите изменить найденные узлы (переместить их, вызвать метод, и т.д.) но у вас нет локальной переменной для них.
-
-
-
-== Пример Случаев использования
-
-*Пример 1:*
-
-
-.  Вы создали процедурно сцену с большим количеством динамически создаваемых элементов.
-.  You want to find individual Spatials under ever-changing conditions and modify their state. 
-
-*Пример 2:*
-
-
-.  You created a mostly static scene in the jMonkeyEngine SDK and exported it as .j3o file. +
-Сцена содержит также интерактивные объекты как например источник частицы, spatials с данными пользователя, или spatials с пользовательскими элементами управления.
-.  Вы загрузили .j3o сцену с помощью assetManager.
-.  You want to interact with one of the loaded interactive scene elements in your Java code. +
-For example, you want to call `emitAllParticles()` on the particle emitter. Or you want to find all NPC's Geometries with a custom CivilianControl, and call the CivilianControl method that makes them start acting their role.
-
-In this case, you can use a SceneGraphVisitorAdapter to identify and access the Spatials in question.
-
-
-
-== Пример Кода
-
-For each search, you create a `com.jme3.scene.SceneGraphVisitorAdapter` that defines your search criteria and what you want to do with the found Spatials. Then you call the `depthFirstTraversal(visitor)` or `breadthFirstTraversal(visitor)` method of the Spatial (e.g. the rootNode, or better, a subnode) to start the search.
-
-
-[source,java]
-
-----
-
-SceneGraphVisitor visitor = new SceneGraphVisitor() {
-
-  @Override
-  public void visit(Spatial spat) {
-    // search criterion can be control class:
-    MyControl control = spatial.getControl(MyControl.class);
-    if (control != null) {
-      // you have access to any method, e.g. name.
-      System.out.println("Instance of " + control.getClass().getName() 
-                       + " found for " + spatial.getName());
-    }
-  }
-
-};
-  
-// Now scan the tree either depth first...
-rootNode.depthFirstTraversal(visitor);
-// ... or scan it breadth first.
-rootNode.breadthFirstTraversal(visitor);
-
-----
-
-Which of the two methods is faster depends on how you designed the scengraph, and what tree element you are looking for. If you are searching for one single Geometry that is a “leaf of the tree, and then stop searching, depth-first may be faster. If you search for a high-level grouping Node, breadth-first may be faster. 
-
-
-The choice of depth- vs breadth-first also influences the order in which found elements are returned (children first or parents first). If you want to modify user data that is inherited from the parent node (e.g. transformations), the order of application is important, because the side-effects add up.
-
-
-You can use the SceneGraphVisitorAdapter class to scan separately for Geometry and Nodes.
-
-
-
-== См. Также
-
-*  <<jme3/the_scene_graph#,The Scene Graph>>
-*  <<spatial#,Spatial>>
-<tags><tag target="spatial" /><tag target="node" /><tag target="mesh" /><tag target="geometry" /><tag target="scenegraph" /></tags>

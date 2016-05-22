@@ -1,8 +1,14 @@
-
-
 = Saving and Loading Materials with .j3m Files
+:author: 
+:revnumber: 
+:revdate: 2012/07/21 13:15
+:keywords: material, texture, file, sdk, wireframe, documentation
+:relfileprefix: ../../
+:imagesdir: ../..
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
-In the <<material_definitions#,Material Definitions>> article you learned how to configure <<materials_overview#,Materials>>  programmatically in Java code. If you have certain commonly used Materials that never change, you can clean up the amount of Java code that clutters your init method, by moving material settings into .j3m files. Then later in your code, you only need to call one setter instead of several to apply the material.
+
+In the <<jme3/advanced/material_definitions#,Material Definitions>> article you learned how to configure <<jme3/advanced/materials_overview#,Materials>>  programmatically in Java code. If you have certain commonly used Materials that never change, you can clean up the amount of Java code that clutters your init method, by moving material settings into .j3m files. Then later in your code, you only need to call one setter instead of several to apply the material.
 
 
 If you want to colorize simple shapes (one texture all around), then .j3m are the most easily customizable solution. J3m files can contain texture mapped materials, but as usual you have to create the textures in an external editor, especially if you use UV-mapped textures. 
@@ -38,9 +44,9 @@ How to this file is structured:
 .  Header
 ..  `Material` is a fixed keyword, keep it.
 ..  `shiny bumpy rock` is a descriptive string that you can make up. Choose a name to help you remember for what you intend to use this material.
-..  After the colon, specify on which <<materials_overview#,Material>> definition you base this Material.
+..  After the colon, specify on which <<jme3/advanced/materials_overview#,Material>> definition you base this Material.
 
-.  Now look up the choosen Material Definition's parameters and their parameter types from the <<materials_overview#,Material>> table. Add one line for each parameter.
+.  Now look up the choosen Material Definition's parameters and their parameter types from the <<jme3/advanced/materials_overview#,Material>> table. Add one line for each parameter.
 **  For example: The series of four numbers in the example above represent RGBA color values.
 
 .  Check the detailed syntax reference below if you are unsure.
@@ -72,7 +78,7 @@ myGeometry.setMaterial(assetManager.loadMaterial("Materials/SimpleBump.j3m"));
 Make sure to get the paths to the textures (.png, .jpg) and material definitions (.j3md) right. 
 
 
-*  The paths to the built-in .j3md files are relative to jME3's Core Data directory. Just copy the path stated in the <<materials_overview#,Material>> table. +
+*  The paths to the built-in .j3md files are relative to jME3's Core Data directory. Just copy the path stated in the <<jme3/advanced/materials_overview#,Material>> table. +
 `Common/MatDefs/Misc/Unshaded.j3md` is resolved to `jme3/src/src/core-data/Common/MatDefs/Misc/Unshaded.j3md`.
 *  The paths to your textures are relative to your project's assets directory. +
 `Textures/bump_rock_normal.png` is resolved to `MyGame/src/assets/Textures/bump_rock_normal.png`
@@ -352,4 +358,3 @@ The PNG file is in the same directory, `assets/Models/Tree/…`
 == Related Links
 
 *  <<jme3/advanced/material_specification#,Developer specification of the jME3 material system (.j3md,.j3m)>>
-<tags><tag target="material" /><tag target="texture" /><tag target="file" /><tag target="sdk" /><tag target="wireframe" /><tag target="documentation" /></tags>

@@ -1,6 +1,11 @@
-
-
 = Custom Controls
+:author: 
+:revnumber: 
+:revdate: 2014/01/10 21:25
+:relfileprefix: ../../
+:imagesdir: ../..
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
 
 A `com.jme3.scene.control.Control` is a customizable jME3 interface that allows you to cleanly steer the behaviour of game entities (Spatials), such as artificially intelligent behaviour in NPCs, traps, automatic alarms and doors, animals and pets, self-steering vehicles or platforms – anything that moves and interacts. Several instances of custom Controls together implement the behaviours of a type of Spatial. 
 
@@ -163,8 +168,8 @@ public class MyControl extends AbstractControl implements Savable, Cloneable {
 See also:
 
 
-*  To learn more about `write()` and `read()`, see <<save_and_load#,Save and Load>>
-*  To learn more about `setUserData()`, see <<spatial#,Spatial>>.
+*  To learn more about `write()` and `read()`, see <<jme3/advanced/save_and_load#,Save and Load>>
+*  To learn more about `setUserData()`, see <<jme3/advanced/spatial#,Spatial>>.
 
 
 == The Control Interface
@@ -176,7 +181,7 @@ The Control interface can be found under `com.jme3.scene.control.Control`. It ha
 
 
 *  `cloneForSpatial(Spatial)`: Clones the Control and attaches it to a clone of the given Spatial. +
-Implement this method to be able to <<save_and_load#,save() and load()>> Spatials carrying this Control. +
+Implement this method to be able to <<jme3/advanced/save_and_load#,save() and load()>> Spatials carrying this Control. +
 The AssetManager also uses this method if the same spatial is loaded twice. You can specify which fields you want your object to reuse (e.g. collisionshapes) in this case. 
 *  `setEnabled(boolean)`: Toggles a boolean that enables or disables the Control. Goes with accessor `isEnabled();`. You test for it in the `update(float tpf)` loop before you execute anything.
 *  There are also some internal methods that you do not call from user code: `setSpatial(Spatial s)`, `update(float tpf);`, `render(RenderManager rm, ViewPort vp)`.

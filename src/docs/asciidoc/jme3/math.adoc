@@ -1,14 +1,19 @@
-
-
 = Introduction to Mathematical Functionality
+:author: 
+:revnumber: 
+:revdate: 2014/07/25 22:09
+:relfileprefix: ../
+:imagesdir: ..
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
-It's a fact of life, math is hard. Unfortunately, 3D graphics require a fair bit of knowledge about the subject. Fortunately, jME is able to hide the majority of the details away from the user. Vectors are the fundamental type in the 3D environment, and it is used extensively. Matrices are also a basic necessity of 3D for representing linear systems. <<quaternion#,Quaternion>>s are perhaps the most powerful and complicated of the basic types and are used for rotation in jME. 
+
+It's a fact of life, math is hard. Unfortunately, 3D graphics require a fair bit of knowledge about the subject. Fortunately, jME is able to hide the majority of the details away from the user. Vectors are the fundamental type in the 3D environment, and it is used extensively. Matrices are also a basic necessity of 3D for representing linear systems. <<jme3/quaternion#,Quaternion>>s are perhaps the most powerful and complicated of the basic types and are used for rotation in jME. 
 
 
 I'll discuss how these are used in the system for the core functionality. Including Transforming, Visibility Determination, Collision Detection, and the Coordinate System. Note, that these are low level details. Further chapters will discuss how to use these various systems from a high level perspective.
 
 
-To get a visual introduction to math in jME3 for the absolute beginner, check out our <<math_for_dummies#,Math for Dummies>> introduction class.
+To get a visual introduction to math in jME3 for the absolute beginner, check out our <<jme3/math_for_dummies#,Math for Dummies>> introduction class.
 
 
 
@@ -114,7 +119,7 @@ and link:http://www.jmonkeyengine.com/doc/com/jme/math/Matrix4f.html[Matrix4f Ja
 
 === Definition
 
-A Matrix is typically used as a _linear transformation_ to map vectors to vectors. That is: Y = MX where X is a Vector and M is a Matrix applying any or all transformations (scale, <<rotate#,rotate>>, translate). 
+A Matrix is typically used as a _linear transformation_ to map vectors to vectors. That is: Y = MX where X is a Vector and M is a Matrix applying any or all transformations (scale, <<jme3/rotate#,rotate>>, translate). 
 
 
 There are a few special matrices: 
@@ -414,7 +419,7 @@ These basic operations allow us to convert various rotation representations to Q
 
 === Angle Axis
 
-You might wish to represent your rotations as Angle Axis pairs. That is, you define a axis of rotation and the angle with which to <<rotate#,rotate>> about this axis. <<quaternion#,Quaternion>> defines a method `fromAngleAxis` (and `fromAngleNormalAxis`) to create a Quaternion from this pair. This is acutally used quite a bit in jME demos to continually rotate objects. You can also obtain a Angle Axis rotation from an existing Quaternion using `toAngleAxis`.
+You might wish to represent your rotations as Angle Axis pairs. That is, you define a axis of rotation and the angle with which to <<jme3/rotate#,rotate>> about this axis. <<jme3/quaternion#,Quaternion>> defines a method `fromAngleAxis` (and `fromAngleNormalAxis`) to create a Quaternion from this pair. This is acutally used quite a bit in jME demos to continually rotate objects. You can also obtain a Angle Axis rotation from an existing Quaternion using `toAngleAxis`.
 
 
 
@@ -454,7 +459,7 @@ s.getLocalRotation().fromAngles(angles);
 
 === Three Axes
 
-If you have three axes that define your rotation, where the axes define the left axis, up axis and directional axis respectively) you can make use of `fromAxes` to generate the Quaternion. It should be noted that this will generate a new <<matrix#,Matrix>> object that is then garbage collected, thus, this method should not be used if it will be called many times. Again, `toAxes` will populate a Vector3f array.
+If you have three axes that define your rotation, where the axes define the left axis, up axis and directional axis respectively) you can make use of `fromAxes` to generate the Quaternion. It should be noted that this will generate a new <<jme3/matrix#,Matrix>> object that is then garbage collected, thus, this method should not be used if it will be called many times. Again, `toAxes` will populate a Vector3f array.
 
 
 
@@ -477,7 +482,7 @@ s.getLocalRotation().fromAxes(axes);
 
 === Rotation Matrix
 
-Commonly you might find yourself with a <<matrix#,Matrix>> defining a rotation. In fact, it's very common to contain a rotation in a <<matrix#,Matrix>> create a Quaternion, rotate the Quaternion, and then get the <<matrix#,Matrix>> back. Quaternion contains a `fromRotationMatrix` method that will create the appropriate Quaternion based on the give <<matrix#,Matrix>>. The `toRotationMatrix` will populate a given <<matrix#,Matrix>>.
+Commonly you might find yourself with a <<jme3/matrix#,Matrix>> defining a rotation. In fact, it's very common to contain a rotation in a <<jme3/matrix#,Matrix>> create a Quaternion, rotate the Quaternion, and then get the <<jme3/matrix#,Matrix>> back. Quaternion contains a `fromRotationMatrix` method that will create the appropriate Quaternion based on the give <<jme3/matrix#,Matrix>>. The `toRotationMatrix` will populate a given <<jme3/matrix#,Matrix>>.
 
 
 
@@ -692,7 +697,7 @@ This gives us the general equation: (ax + by + cz + d = 0)
 jME defines the Plane as ax + by + cz = -d. Therefore, during creation of the plane, the normal of the plane (a,b,c) and the constant d is supplied.
 
 
-The most common usage of Plane is <<introduction_to_the_camera#,Camera>> frustum planes. Therefore, the primary purpose of Plane is to determine if a point is on the positive side, negative side, or intersecting a plane.
+The most common usage of Plane is <<jme3/introduction_to_the_camera#,Camera>> frustum planes. Therefore, the primary purpose of Plane is to determine if a point is on the positive side, negative side, or intersecting a plane.
 
 
 Plane defines the constants:
@@ -811,7 +816,7 @@ See link:http://www.jmonkeyengine.com/doc/com/jme/math/Ray.html[Ray Javadoc]
 Ray defines a line that starts at a point *A* and continues in a direction through *B* into infinity. 
 
 
-This Ray is used extensively in jME for <<picking#,Picking>>. A Ray is cast from a point in screen space into the scene. Intersections are found and returned. To create a ray supply the object with two points, where the first point is the origin.
+This Ray is used extensively in jME for <<jme3/picking#,Picking>>. A Ray is cast from a point in screen space into the scene. Intersections are found and returned. To create a ray supply the object with two points, where the first point is the origin.
 
 
 
@@ -840,7 +845,7 @@ Rectangle defines a finite plane within three dimensional space that is specifie
 
 === jME Usage
 
-Rectangle is a straight forward data class that simply maintains values that defines a Rectangle in 3D space. One interesting use is the `random` method that will create a random point on the Rectangle. The <<particle_system#,Particle System>> makes use of this to define an area that generates <<particles#,Particles>>.
+Rectangle is a straight forward data class that simply maintains values that defines a Rectangle in 3D space. One interesting use is the `random` method that will create a random point on the Rectangle. The <<jme3/particle_system#,Particle System>> makes use of this to define an area that generates <<jme3/particles#,Particles>>.
 
 
 
@@ -873,7 +878,7 @@ A triangle is a 3-sided polygon. Every triangle has three sides and three angles
 
 === Usage
 
-jME's Triangle class is a simple data class. It contains three <<vector#,Vector3f>> objects that represent the three points of the triangle. These can be retrieved via the `get` method. The `get` method, obtains the point based on the index provided. Similarly, the values can be set via the `set` method.
+jME's Triangle class is a simple data class. It contains three <<jme3/vector#,Vector3f>> objects that represent the three points of the triangle. These can be retrieved via the `get` method. The `get` method, obtains the point based on the index provided. Similarly, the values can be set via the `set` method.
 
 
 
@@ -922,5 +927,5 @@ geo.center().move(pos);
 
 === See Also
 
-*  <<rotate#,Rotate>> 
-*  <<quaternion#,Quaternion>>
+*  <<jme3/rotate#,Rotate>> 
+*  <<jme3/quaternion#,Quaternion>>

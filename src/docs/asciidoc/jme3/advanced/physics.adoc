@@ -1,6 +1,12 @@
-
-
 = Physics: Gravity, Collisions, Forces
+:author: Darkchaos
+:revnumber: 
+:revdate: 2015/10/11 15:42
+:keywords: physics, documentation, control
+:relfileprefix: ../../
+:imagesdir: ../..
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
 
 A physics simulation is used in games and applications where objects are exposed to physical forces: Think of games like pool billiard and car racing simulators. Massive objects are pulled by gravity, forces cause objects to gain momentum, friction slows them down, solid objects collide and bounce off one another, etc. Action and Adventure games also make use of physics to implement solid obstacles, falling, and jumping.
 
@@ -8,7 +14,7 @@ A physics simulation is used in games and applications where objects are exposed
 The jMonkeyEngine3 has built-in support for link:http://jbullet.advel.cz[jBullet Physics] (based on link:http://bulletphysics.org[Bullet Physics]) via the `com.jme3.bullet` package. This article focuses mostly on the RigidBodyControl, but also introduces you to others. 
 
 
-If you are looking for info on how to respond to physics events such as collisions, read about <<physics_listeners#,Physics Listeners>>.
+If you are looking for info on how to respond to physics events such as collisions, read about <<jme3/advanced/physics_listeners#,Physics Listeners>>.
 
 
 
@@ -159,7 +165,7 @@ a| A CompoundCollisionShape allows custom combinations of shapes. Use the `addCh
 a| A car with wheels (1 box + 4 cylinders), etc. 
 
 <a| CapsuleCollisionShape()     
-<a| A built-in compound shape of a vertical cylinder with one sphere at the top and one sphere at the bottom. Typically used with <<walking_character#,CharacterControls>>: A cylinder-shaped body does not get stuck at corners and vertical obstacles; the rounded top and bottom do not get stuck on stair steps and ground obstacles.  
+<a| A built-in compound shape of a vertical cylinder with one sphere at the top and one sphere at the bottom. Typically used with <<jme3/advanced/walking_character#,CharacterControls>>: A cylinder-shaped body does not get stuck at corners and vertical obstacles; the rounded top and bottom do not get stuck on stair steps and ground obstacles.  
 a| Persons, animals. 
 
 <a| SimplexCollisionShape()     
@@ -304,7 +310,7 @@ a|Impacting projectiles, moving obstacles like crates, rolling and bouncing ball
 Solid immobile floors, walls, static obstacles.
 
 a|GhostControl
-a|Use for collision and intersection detection between physical objects. A GhostControl itself is _non-solid_ and invisible. GhostControl moves with the Spatial it is attached to. Use GhostControls to <<physics_listeners#,implement custom game interactions>> by adding it to a visible Geometry. 
+a|Use for collision and intersection detection between physical objects. A GhostControl itself is _non-solid_ and invisible. GhostControl moves with the Spatial it is attached to. Use GhostControls to <<jme3/advanced/physics_listeners#,implement custom game interactions>> by adding it to a visible Geometry. 
 a|A monster's “aggro radius, CharacterControl collisions, motion detectors, photo-electric alarm sensors, poisonous or radioactive perimeters, life-draining ghosts, etc. 
 
 |===
@@ -321,7 +327,7 @@ a| Special Control used for <<jme3/advanced/vehicles#,&quot;terrestrial&quot;  v
 a|Cars, tanks, hover crafts, ships, motorcycles…
 
 a|CharacterControl
-a|Special Control used for <<walking_character#,Walking Character>>s.
+a|Special Control used for <<jme3/advanced/walking_character#,Walking Character>>s.
 a|Upright walking persons, animals, robots… 
 
 a|RagDollControl
@@ -624,7 +630,7 @@ setKinematic(false);
 *  You can hang kinematics up “in mid-air and attach other PhysicsControls to them using <<jme3/advanced/hinges_and_joints#,hinges and joints>>. Picture them as “air hooks for flying aircraft carriers, floating islands in the clouds, suspension bridges, swings, chains… 
 *  You can use Kinematics to create mobile remote-controlled physical objects, such as moving elevator platforms, flying blimps/airships. You have full control how Kinematics move, they never “fall or “topple over.
 
-`setLocalTranslation()``move()`<<motionpath#,MotionPath>>
+`setLocalTranslation()``move()`<<jme3/advanced/motionpath#,MotionPath>>
 
 
 
@@ -726,5 +732,4 @@ bulletAppState.getPhysicsSpace().enableDebug(assetManager);
 *Solution:* Look at the physics space accessors and change the acuracy and other parameters.
 
 *  *Need more interactivity?* You can actively _control_ a physical game by triggering forces. You may also want to be able _respond_ to collisions, e.g. by substracting health, awarding points, or by playing a sound. +
-*Solution:* To specify how the game responds to collisions, you use <<physics_listeners#,Physics Listeners>>.
-<tags><tag target="physics" /><tag target="documentation" /><tag target="control" /></tags>
+*Solution:* To specify how the game responds to collisions, you use <<jme3/advanced/physics_listeners#,Physics Listeners>>.
