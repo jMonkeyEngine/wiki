@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>jMonkeyEngine 3 Tutorial (5) - Hello Input System - Variation over time key is pressed</title>
+<title>время_нажатия_клавиши</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -511,245 +511,20 @@ table.CodeRay td.code>pre{padding:0}
 </head>
 <body class="article">
 <div id="header">
-<h1>jMonkeyEngine 3 Tutorial (5) - Hello Input System - Variation over time key is pressed</h1>
+<h1>время_нажатия_клавиши</h1>
+<div class="details">
+<span id="author" class="author"></span><br>
+<span id="revnumber">version ,</span>
+<span id="revdate">1970/01/01 00:00</span>
+</div>
 </div>
 <div id="content">
-<div class="paragraph">
-<p>Parent: <a href="jme3/beginner/hello_input_system.html">jMonkeyEngine 3 Tutorial (5) - Hello Input System</a></p>
-</div>
-<div class="paragraph">
-<p>Вот пример программы, в которой камеры ускоряется, если эта клавиша удерживается нажатой.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">import</span> <span class="include">com.jme3.app.SimpleApplication</span>;
-<span class="keyword">import</span> <span class="include">com.jme3.bounding.BoundingBox</span>;
-<span class="keyword">import</span> <span class="include">com.jme3.font.BitmapText</span>;
-<span class="keyword">import</span> <span class="include">com.jme3.input.KeyInput</span>;
-<span class="keyword">import</span> <span class="include">com.jme3.input.controls.ActionListener</span>;
-<span class="keyword">import</span> <span class="include">com.jme3.input.controls.KeyTrigger</span>;
-<span class="keyword">import</span> <span class="include">com.jme3.light.DirectionalLight</span>;
-<span class="keyword">import</span> <span class="include">com.jme3.light.PointLight</span>;
-<span class="keyword">import</span> <span class="include">com.jme3.material.Material</span>;
-<span class="keyword">import</span> <span class="include">com.jme3.math.ColorRGBA</span>;
-<span class="keyword">import</span> <span class="include">com.jme3.math.Vector3f</span>;
-<span class="keyword">import</span> <span class="include">com.jme3.scene.Geometry</span>;
-<span class="keyword">import</span> <span class="include">com.jme3.terrain.geomipmap.TerrainLodControl</span>;
-<span class="keyword">import</span> <span class="include">com.jme3.terrain.geomipmap.TerrainQuad</span>;
-<span class="keyword">import</span> <span class="include">com.jme3.terrain.geomipmap.lodcalc.DistanceLodCalculator</span>;
-<span class="keyword">import</span> <span class="include">com.jme3.terrain.heightmap.AbstractHeightMap</span>;
-<span class="keyword">import</span> <span class="include">com.jme3.terrain.heightmap.ImageBasedHeightMap</span>;
-<span class="keyword">import</span> <span class="include">com.jme3.texture.Texture</span>;
-<span class="keyword">import</span> <span class="include">com.jme3.texture.Texture.WrapMode</span>;
 
-<span class="directive">public</span> <span class="type">class</span> <span class="class">Accelerate</span> <span class="directive">extends</span> SimpleApplication <span class="directive">implements</span> <span class="predefined-type">ActionListener</span> {
-
-    <span class="directive">private</span> TerrainQuad terrain;
-    Material matTerrain;
-    Material matWire;
-    <span class="type">boolean</span> wireframe = <span class="predefined-constant">false</span>;
-    <span class="type">boolean</span> triPlanar = <span class="predefined-constant">false</span>;
-    <span class="type">boolean</span> wardiso = <span class="predefined-constant">false</span>;
-    <span class="type">boolean</span> minnaert = <span class="predefined-constant">false</span>;
-    <span class="directive">protected</span> BitmapText hintText;
-    PointLight pl;
-    Geometry lightMdl;
-    <span class="directive">private</span> <span class="type">float</span> dirtScale = <span class="integer">16</span>;
-
-    <span class="directive">private</span> <span class="type">enum</span> Actions {
-
-        LEFT, RIGHT, UP, DOWN;
-    }
-    <span class="directive">private</span> <span class="directive">final</span> <span class="type">int</span> CAMERA_HEIGHT = <span class="integer">250</span>;
-    <span class="directive">private</span> <span class="directive">final</span> <span class="type">int</span> STARTING_CAM_SPEED = <span class="integer">1</span>;
-    <span class="directive">private</span> <span class="directive">final</span> Vector3f CAM_DIRECTION = <span class="keyword">new</span> Vector3f(<span class="integer">0</span>, -<span class="float">0.3f</span>, <span class="float">1f</span>);
-    <span class="directive">private</span> <span class="directive">final</span> Vector3f CAM_LOCATION = <span class="keyword">new</span> Vector3f(-<span class="integer">1</span>, <span class="integer">0</span>, -CAMERA_HEIGHT);
-    <span class="directive">private</span> <span class="directive">final</span> Vector3f walkDirection = <span class="keyword">new</span> Vector3f();
-    <span class="directive">private</span> <span class="type">boolean</span> left = <span class="predefined-constant">false</span>;
-    <span class="directive">private</span> <span class="type">boolean</span> right = <span class="predefined-constant">false</span>;
-    <span class="directive">private</span> <span class="type">boolean</span> up = <span class="predefined-constant">false</span>;
-    <span class="directive">private</span> <span class="type">boolean</span> down = <span class="predefined-constant">false</span>;
-    <span class="directive">private</span> <span class="type">float</span> camSpeed = STARTING_CAM_SPEED;
-
-    <span class="directive">private</span> <span class="type">void</span> initCamera() {
-        cam.setLocation(CAM_LOCATION);
-        cam.lookAtDirection(CAM_DIRECTION.normalizeLocal(), Vector3f.UNIT_Y.clone().addLocal(<span class="integer">0</span>, <span class="integer">2</span>, <span class="integer">0</span>));
-    }
-
-    <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> main(<span class="predefined-type">String</span><span class="type">[]</span> args) {
-        Accelerate app = <span class="keyword">new</span> Accelerate();
-        app.start();
-    }
-
-    <span class="annotation">@Override</span>
-    <span class="directive">public</span> <span class="type">void</span> simpleInitApp() {
-        setupKeys();
-        initTerrain();
-        initCamera();
-    }
-
-    <span class="annotation">@Override</span>
-    <span class="directive">public</span> <span class="type">void</span> simpleUpdate(<span class="type">float</span> tpf) {
-        updateMovement(tpf);
-    }
-
-    <span class="directive">private</span> <span class="type">void</span> updateMovement(<span class="type">float</span> tpf) {
-        <span class="keyword">if</span> (left || right || up || down) {
-            <span class="comment">// здесь мы приращение скорости, используя tpf</span>
-            camSpeed += tpf * <span class="integer">2</span>;
-            <span class="predefined-type">System</span>.out.print(<span class="string"><span class="delimiter">&quot;</span><span class="content">Camera speed </span><span class="delimiter">&quot;</span></span> + camSpeed + <span class="string"><span class="delimiter">&quot;</span><span class="content">;  Location:</span><span class="delimiter">&quot;</span></span> + cam.getLocation().toString()
-                    + <span class="string"><span class="delimiter">&quot;</span><span class="content">;  direction:</span><span class="delimiter">&quot;</span></span>+cam.getDirection()+<span class="string"><span class="delimiter">&quot;</span><span class="content">walkDirection:</span><span class="delimiter">&quot;</span></span> + walkDirection.toString());
-        }
-        Vector3f camDir = cam.getDirection().clone().multLocal(camSpeed);
-        Vector3f camLeft = cam.getLeft().clone().multLocal(camSpeed);
-        <span class="comment">// отрегулируйте положение твердого тела для столкновений</span>
-        walkDirection.set(cam.getLocation().clone());
-        <span class="keyword">if</span> (left) {
-            walkDirection.addLocal(camLeft);
-        }
-        <span class="keyword">if</span> (right) {
-            walkDirection.addLocal(camLeft.negate());
-        }
-        <span class="keyword">if</span> (up) {
-            walkDirection.addLocal(camDir);
-        }
-        <span class="keyword">if</span> (down) {
-            walkDirection.addLocal(camDir.negate());
-        }
-<span class="comment">//        player.setWalkDirection(walkDirection);</span>
-        cam.setLocation(walkDirection);
-        <span class="keyword">if</span> (left || right || up || down) {
-            <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">; new walkDirection:</span><span class="delimiter">&quot;</span></span> + walkDirection);
-        }
-    }
-
-    <span class="directive">private</span> <span class="type">void</span> initTerrain() {
-        <span class="comment">// Для начала, мы загружаем наши текстуры и карту высот текстуры для ландшафта</span>
-
-        <span class="comment">// TERRAIN TEXTURE material</span>
-        matTerrain = <span class="keyword">new</span> Material(assetManager, <span class="string"><span class="delimiter">&quot;</span><span class="content">Common/MatDefs/Terrain/TerrainLighting.j3md</span><span class="delimiter">&quot;</span></span>);
-        matTerrain.setBoolean(<span class="string"><span class="delimiter">&quot;</span><span class="content">useTriPlanarMapping</span><span class="delimiter">&quot;</span></span>, <span class="predefined-constant">false</span>);
-        matTerrain.setFloat(<span class="string"><span class="delimiter">&quot;</span><span class="content">Shininess</span><span class="delimiter">&quot;</span></span>, <span class="float">0.0f</span>);
-
-        <span class="comment">// ALPHA map (для splat текстур)</span>
-        matTerrain.setTexture(<span class="string"><span class="delimiter">&quot;</span><span class="content">AlphaMap</span><span class="delimiter">&quot;</span></span>, assetManager.loadTexture(<span class="string"><span class="delimiter">&quot;</span><span class="content">Textures/Terrain/splat/alpha1.png</span><span class="delimiter">&quot;</span></span>));
-        matTerrain.setTexture(<span class="string"><span class="delimiter">&quot;</span><span class="content">AlphaMap_1</span><span class="delimiter">&quot;</span></span>, assetManager.loadTexture(<span class="string"><span class="delimiter">&quot;</span><span class="content">Textures/Terrain/splat/alpha2.png</span><span class="delimiter">&quot;</span></span>));
-
-        <span class="comment">// HEIGHTMAP image (for the terrain heightmap)</span>
-        Texture heightMapImage = assetManager.loadTexture(<span class="string"><span class="delimiter">&quot;</span><span class="content">Textures/Terrain/splat/mountains512.png</span><span class="delimiter">&quot;</span></span>);
-
-        <span class="comment">// GRASS texture</span>
-        Texture grass = assetManager.loadTexture(<span class="string"><span class="delimiter">&quot;</span><span class="content">Textures/Terrain/splat/grass.jpg</span><span class="delimiter">&quot;</span></span>);
-        grass.setWrap(WrapMode.Repeat);
-
-        <span class="comment">// DIRT texture</span>
-        Texture dirt = assetManager.loadTexture(<span class="string"><span class="delimiter">&quot;</span><span class="content">Textures/Terrain/splat/dirt.jpg</span><span class="delimiter">&quot;</span></span>);
-        dirt.setWrap(WrapMode.Repeat);
-        matTerrain.setTexture(<span class="string"><span class="delimiter">&quot;</span><span class="content">DiffuseMap</span><span class="delimiter">&quot;</span></span>, dirt);
-        matTerrain.setFloat(<span class="string"><span class="delimiter">&quot;</span><span class="content">DiffuseMap_0_scale</span><span class="delimiter">&quot;</span></span>, dirtScale);
-
-        <span class="comment">// ROCK texture</span>
-        Texture rock = assetManager.loadTexture(<span class="string"><span class="delimiter">&quot;</span><span class="content">Textures/Terrain/splat/road.jpg</span><span class="delimiter">&quot;</span></span>);
-        rock.setWrap(WrapMode.Repeat);
-
-        <span class="comment">// BRICK texture</span>
-        Texture brick = assetManager.loadTexture(<span class="string"><span class="delimiter">&quot;</span><span class="content">Textures/Terrain/BrickWall/BrickWall.jpg</span><span class="delimiter">&quot;</span></span>);
-        brick.setWrap(WrapMode.Repeat);
-
-        <span class="comment">// RIVER ROCK texture</span>
-        Texture riverRock = assetManager.loadTexture(<span class="string"><span class="delimiter">&quot;</span><span class="content">Textures/Terrain/Pond/Pond.jpg</span><span class="delimiter">&quot;</span></span>);
-        riverRock.setWrap(WrapMode.Repeat);
-
-        <span class="comment">// WIREFRAME material</span>
-        matWire = <span class="keyword">new</span> Material(assetManager, <span class="string"><span class="delimiter">&quot;</span><span class="content">Common/MatDefs/Misc/Unshaded.j3md</span><span class="delimiter">&quot;</span></span>);
-        matWire.getAdditionalRenderState().setWireframe(<span class="predefined-constant">true</span>);
-        matWire.setColor(<span class="string"><span class="delimiter">&quot;</span><span class="content">Color</span><span class="delimiter">&quot;</span></span>, ColorRGBA.Green);
-
-
-        <span class="comment">// CREATE HEIGHTMAP</span>
-        AbstractHeightMap heightmap = <span class="predefined-constant">null</span>;
-        <span class="keyword">try</span> {
-            heightmap = <span class="keyword">new</span> ImageBasedHeightMap(heightMapImage.getImage(), <span class="float">0.5f</span>);
-            heightmap.load();
-            heightmap.smooth(<span class="float">0.9f</span>, <span class="integer">1</span>);
-
-        } <span class="keyword">catch</span> (<span class="exception">Exception</span> e) {
-            e.printStackTrace();
-        }
-
-        <span class="comment">/*
-         * Здесь мы создаем реальную местность. Плитка будет 65x65, и общий размер
-         * рельеф будет 513x513. Он использует карту высот мы создаем, чтобы генерировать значения высоты.
-         */</span>
-        <span class="comment">/**
-         * Оптимальный размер патча местность 65 (64x64).
-         * The total size is up to you. At 1025 it ran fine for me (200+FPS), however at
-         * size=2049, it got really slow. But that is a jump from 2 million to 8 million triangles...
-         */</span>
-        terrain = <span class="keyword">new</span> TerrainQuad(<span class="string"><span class="delimiter">&quot;</span><span class="content">terrain</span><span class="delimiter">&quot;</span></span>, <span class="integer">65</span>, <span class="integer">513</span>, heightmap.getHeightMap());<span class="comment">//, new LodPerspectiveCalculatorFactory(getCamera(), 4)); // add this in to see it use entropy for LOD calculations</span>
-        TerrainLodControl control = <span class="keyword">new</span> TerrainLodControl(terrain, getCamera());
-        control.setLodCalculator(<span class="keyword">new</span> DistanceLodCalculator(<span class="integer">65</span>, <span class="float">2.7f</span>)); <span class="comment">// patch size, and a multiplier</span>
-        terrain.addControl(control);
-        terrain.setMaterial(matTerrain);
-        terrain.setModelBound(<span class="keyword">new</span> BoundingBox());
-        terrain.updateModelBound();
-        terrain.setLocalTranslation(<span class="integer">0</span>, -<span class="integer">100</span>, <span class="integer">0</span>);
-        terrain.setLocalScale(<span class="float">1f</span>, <span class="float">1f</span>, <span class="float">1f</span>);
-        rootNode.attachChild(terrain);
-
-
-        DirectionalLight light = <span class="keyword">new</span> DirectionalLight();
-        light.setDirection((<span class="keyword">new</span> Vector3f(-<span class="float">0.5f</span>, -<span class="float">0.5f</span>, -<span class="float">0.5f</span>)).normalize());
-        rootNode.addLight(light);
-    }
-
-    <span class="directive">private</span> <span class="type">void</span> setupKeys() {
-        inputManager.addMapping(Actions.LEFT.name(), <span class="keyword">new</span> KeyTrigger(KeyInput.KEY_A));
-        inputManager.addMapping(Actions.RIGHT.name(), <span class="keyword">new</span> KeyTrigger(KeyInput.KEY_D));
-        inputManager.addMapping(Actions.UP.name(), <span class="keyword">new</span> KeyTrigger(KeyInput.KEY_W));
-        inputManager.addMapping(Actions.DOWN.name(), <span class="keyword">new</span> KeyTrigger(KeyInput.KEY_S));
-        inputManager.addListener(<span class="local-variable">this</span>, Actions.LEFT.name());
-        inputManager.addListener(<span class="local-variable">this</span>, Actions.RIGHT.name());
-        inputManager.addListener(<span class="local-variable">this</span>, Actions.UP.name());
-        inputManager.addListener(<span class="local-variable">this</span>, Actions.DOWN.name());
-    }
-
-    <span class="comment">/**
-     * Это наши пользовательские действия вызваны нажатий клавиш. ы не научились ходить, мы просто отслеживать направление
-     * в котором пользователь нажал.
-     */</span>
-    <span class="annotation">@Override</span>
-    <span class="directive">public</span> <span class="type">void</span> onAction(<span class="predefined-type">String</span> name, <span class="type">boolean</span> keyPressed, <span class="type">float</span> tpf) {
-        <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">name:</span><span class="delimiter">&quot;</span></span> + name + <span class="string"><span class="delimiter">&quot;</span><span class="content">; keyPressed:</span><span class="delimiter">&quot;</span></span> + keyPressed);
-        <span class="keyword">if</span> (name.equals(Actions.LEFT.name())) {
-            left = keyPressed;
-            <span class="keyword">if</span> (!keyPressed) { <span class="comment">// если клавиша больше не нажата, сбросить скорость до первоначального значения</span>
-                camSpeed = STARTING_CAM_SPEED;
-            }
-        } <span class="keyword">else</span> <span class="keyword">if</span> (name.equals(Actions.RIGHT.name())) {
-            right = keyPressed;
-            <span class="keyword">if</span> (!keyPressed) {
-                camSpeed = STARTING_CAM_SPEED;
-            }
-        } <span class="keyword">else</span> <span class="keyword">if</span> (name.equals(Actions.UP.name())) {
-            up = keyPressed;
-            <span class="keyword">if</span> (!keyPressed) {
-                camSpeed = STARTING_CAM_SPEED;
-            }
-        } <span class="keyword">else</span> <span class="keyword">if</span> (name.equals(Actions.DOWN.name())) {
-            down = keyPressed;
-            <span class="keyword">if</span> (!keyPressed) {
-                camSpeed = STARTING_CAM_SPEED;
-            }
-        }
-    }
-}</code></pre>
-</div>
-</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-05-22 00:13:35 UTC
+Version <br>
+Last updated 2016-05-22 20:02:30 +02:00
 </div>
 </div>
 </body>

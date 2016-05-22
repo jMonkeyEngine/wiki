@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>jMonkeyEngine 3 Урок (4) - Знакомство с циклом обновления</title>
+<title>знакомство_с_основным_циклом_обработки_событий</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -509,243 +509,22 @@ table.CodeRay td.code>pre{padding:0}
 .CodeRay .head .head{color:#f4f}
 </style>
 </head>
-<body class="article toc2 toc-left">
+<body class="article">
 <div id="header">
-<h1>jMonkeyEngine 3 Урок (4) - Знакомство с циклом обновления</h1>
-<div id="toc" class="toc2">
-<div id="toctitle">Table of Contents</div>
-<ul class="sectlevel1">
-<li><a href="#Пример-Кода">Пример Кода</a></li>
-<li><a href="#Понимание-кода">Понимание кода</a></li>
-<li><a href="#Использование-цикла-обновления">Использование цикла обновления</a></li>
-<li><a href="#Инициализация-init-Обновление-update-Рендеринг-Визуализация-render">Инициализация(Init) - Обновление(Update) - Рендеринг(Визуализация)(Render)</a></li>
-<li><a href="#Упражнения">Упражнения</a></li>
-<li><a href="#Вывод">Вывод</a></li>
-</ul>
+<h1>знакомство_с_основным_циклом_обработки_событий</h1>
+<div class="details">
+<span id="author" class="author"></span><br>
+<span id="revnumber">version ,</span>
+<span id="revdate">1970/01/01 00:00</span>
 </div>
 </div>
 <div id="content">
-<div id="preamble">
-<div class="sectionbody">
-<div class="paragraph">
-<p>Предыдущий: <a href="документация/jme3_ru/начальная/знакомство_с_ресурсами.html">Знакомство с Ресурсами</a>,
-Следующий: <a href="документация/jme3_ru/начальная/знакомство_с_системой_ввода.html">Знакомство с системой ввода</a>,
-Английская версия: <a href="jme3/beginner/hello_main_event_loop.html">Hello Loop</a></p>
-</div>
-<div class="paragraph">
-<p>Теперь, когда вы знаете, как загружать ресурсы, такие как 3D-модели, которыми вы хотите реализовать некоторые геймплей, для которого они нужны. В этом уроке мы рассмотрим цикл обновления. Действия вашей игры происходят в цикле обновления.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="Пример-Кода">Пример Кода</h2>
-<div class="sectionbody">
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">jme3test.helloworld</span>;
 
-<span class="keyword">import</span> <span class="include">com.jme3.app.SimpleApplication</span>;
-<span class="keyword">import</span> <span class="include">com.jme3.material.Material</span>;
-<span class="keyword">import</span> <span class="include">com.jme3.math.ColorRGBA</span>;
-<span class="keyword">import</span> <span class="include">com.jme3.scene.Geometry</span>;
-<span class="keyword">import</span> <span class="include">com.jme3.scene.shape.Box</span>;
-
-<span class="comment">/** Образец 4 - Как триггер, повторяя действия из основного цикла обработки событий.
- * В этом примере используется цикл, чтобы создать впечатление
- * непрерывного вращения. */</span>
-<span class="directive">public</span> <span class="type">class</span> <span class="class">HelloLoop</span> <span class="directive">extends</span> SimpleApplication {
-
-    <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> main(<span class="predefined-type">String</span><span class="type">[]</span> args){
-        HelloLoop app = <span class="keyword">new</span> HelloLoop();
-        app.start();
-    }
-
-    <span class="directive">protected</span> Geometry player;
-
-    <span class="annotation">@Override</span>
-    <span class="directive">public</span> <span class="type">void</span> simpleInitApp() {
-        <span class="comment">/** этот синий куб это характеристики нашего player */</span>
-        <span class="predefined-type">Box</span> b = <span class="keyword">new</span> <span class="predefined-type">Box</span>(<span class="integer">1</span>, <span class="integer">1</span>, <span class="integer">1</span>);
-        player = <span class="keyword">new</span> Geometry(<span class="string"><span class="delimiter">&quot;</span><span class="content">blue cube</span><span class="delimiter">&quot;</span></span>, b);
-        Material mat = <span class="keyword">new</span> Material(assetManager,
-          <span class="string"><span class="delimiter">&quot;</span><span class="content">Common/MatDefs/Misc/Unshaded.j3md</span><span class="delimiter">&quot;</span></span>);
-        mat.setColor(<span class="string"><span class="delimiter">&quot;</span><span class="content">Color</span><span class="delimiter">&quot;</span></span>, ColorRGBA.Blue);
-        player.setMaterial(mat);
-        rootNode.attachChild(player);
-    }
-
-    <span class="comment">/* Использование основного цикла событий, чтобы вызвать повторяющиеся действия. */</span>
-    <span class="annotation">@Override</span>
-    <span class="directive">public</span> <span class="type">void</span> simpleUpdate(<span class="type">float</span> tpf) {
-        <span class="comment">// make the player rotate:</span>
-        player.rotate(<span class="integer">0</span>, <span class="integer">2</span>*tpf, <span class="integer">0</span>);
-    }
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Построить и запустить файл: вы видите постоянно вращающийся куб.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="Понимание-кода">Понимание кода</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>По сравнению с нашим предыдущим образцом кода, обратите внимание, что Геометрия player теперь поле класса. Это потому, что мы хотим, чтобы цикл обновления, был в состоянии получить доступ и преобразовать эту Геометрию. Как обычно, мы инициализируем объект игрока в методе <code>simpleInitApp()</code>.</p>
-</div>
-<div class="paragraph">
-<p>Теперь посмотрим на метод <code>simpleUpdate()</code> – это цикл обновления.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>player.rotate(0, 2*tpf, 0);</code> ось вращения объекта игрока.</p>
-</li>
-<li>
-<p>Мы используем <code>tpf</code> переменную (“время в кадре) для времени, этого действия в зависимости от текущего кадра в секунду. Это просто означает, что куб вращается с той же скоростью на быстрых и медленных машин, и игра остается играбельной.</p>
-</li>
-<li>
-<p>Когда игра запускается, код rotate() выполняется снова и снова.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="Использование-цикла-обновления">Использование цикла обновления</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Вращающийся объект-это всего лишь простой пример. В цикле обновления, вы, как правило, многое тестируете и запускаете различные действия игры. В нем вы обновите значение очков здоровья, проверите столкновения, выполните действия врагов и рассчитывается их следующий шаг, бросите кости, определится была ли включена ловушка, воспроизведение звуков окружающей среды и многое другое.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Метод <code>simpleUpdate()</code> начинает работать после <code>simpleInitApp()</code> - метода инициализации графа сцены и переменных состояния.</p>
-</li>
-<li>
-<p>JME3 выполняет все, что в методе <code>simpleUpdate()</code> многократно и как можно быстрее.</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p>Используйте цикл обновления хода игры, для последующей инициализации действия.</p>
-</li>
-<li>
-<p>Используйте цикл что бы вызвать реакцию и обновлять состояние игры.</p>
-</li>
-<li>
-<p>Использовать цикл с умом, потому что слишком много вызовов в цикле также замедляет игру.</p>
-</li>
-</ol>
-</div>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="Инициализация-init-Обновление-update-Рендеринг-Визуализация-render">Инициализация(Init) - Обновление(Update) - Рендеринг(Визуализация)(Render)</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Обратите внимание на три фазы в каждой игре:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Инициализация:</strong> Метод <code>simpleInitApp()</code> выполняется только <em>один раз</em>, в самом начале;</p>
-</li>
-<li>
-<p><strong>Обновление:</strong> Метод <code>simpleUpdate()</code> выполняется <em>многократно</em>, во время игры.</p>
-</li>
-<li>
-<p><strong>Рендеринг:</strong> После каждого обновления, jMonkeyEngine <em>автоматически</em> перерисовывает (<code>рендерит</code>) экран для вас.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Поскольку рендеринг происходит в автоматическом режиме, инициализации и обновления для вас это два самых важных понятий в основе простого игрового приложения:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Метод <code>simpleInitApp()</code>  приложения “первый вдох.<br>
-Здесь можно создать и загрузить игровые данные (один раз).</p>
-</li>
-<li>
-<p>Метод <code>simpleUpdate()</code>  приложения “сердцебиение (в единицу времени называется <code>ticks</code>).<br>
-Здесь вы измените их свойства для обновления состояния игры (многократно).</p>
-</li>
-<li>
-<p>Перемещение блоков кода из метода simpleInitApp() в метод <a href="документация/jme3_ru/расширенная/состояние_приложения.html">AppStates</a>.</p>
-</li>
-<li>
-<p>Перемещение блоков кода из метода simpleUpdate() в метод <a href="jme3/advanced/custom_controls.html">Custom Controls</a>.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="Упражнения">Упражнения</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Вот несколько забавных вещей, которые стоит попробовать:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Что произойдет, если вы дадите метод rotate() отрицательные числа?</p>
-</li>
-<li>
-<p>Вы можете создать две Geometries рядом друг с другом, и сделать вращение одной из них в два раза быстрее, чем другой? (используя <code>tpf</code> переменную)</p>
-</li>
-<li>
-<p>Вы можете сделать пульсирующий куб? (увеличивается и уменьшается)</p>
-</li>
-<li>
-<p>Вы можете сделать куб, который меняет цвет? (изменение и установка Материалов)</p>
-</li>
-<li>
-<p>Вы можете сделать качающийся куб? (вращение вокруг оси X, и перемещения вдоль оси Z))</p>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p>Вернитесь к <a href="документация/jme3_ru/начальная/знакомство_с_узлами.html">Знакомству с узлами</a> если вы не помните методы преобразования для масштабирования, перемещение, и вращения.</p>
-</div>
-<div class="paragraph">
-<p><a href="документация/jme3_ru/решения.html">Решения</a>
-<u>Будьте уверены в себе, и попытайтесь решить их в первую очередь для себя!</u></p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="Вывод">Вывод</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Теперь вы узнали о цикле обновления “сердце игры, и вы можете теперь добавлять в него любые действия.</p>
-</div>
-<div class="paragraph">
-<p>Следующее, что игра должна уметь это _взаимо_действие! Продолжить обучение, как <a href="документация/jme3_ru/начальная/знакомство_с_системой_ввода.html">реагировать на действия пользователя</a>.</p>
-</div>
-<hr>
-<div class="paragraph">
-<p>См. также:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Дополнительно jME3 разработчики используют <a href="документация/jme3_ru/расширенная/состояние_приложения.html">Состояние приложения</a> и <a href="jme3/advanced/custom_controls.html">Custom Controls</a>для реализации игровой механики в их цикле обновления. Вам будут попадаться эти темы снова позже, когда вы перейдете к более продвинутой документации.
-&lt;tags&gt;&lt;tag target="documentation" /&gt;&lt;tag target="state" /&gt;&lt;tag target="states" /&gt;&lt;tag target="intro" /&gt;&lt;tag target="beginner" /&gt;&lt;tag target="control" /&gt;&lt;tag target="loop" /&gt;&lt;/tags&gt;</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-05-22 00:13:35 UTC
+Version <br>
+Last updated 2016-05-22 20:02:30 +02:00
 </div>
 </div>
 </body>

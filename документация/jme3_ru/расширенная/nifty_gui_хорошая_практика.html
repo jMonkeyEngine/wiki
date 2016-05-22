@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>Nifty GUI - Хорошая практика</title>
+<title>nifty_gui_хорошая_практика</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -509,183 +509,22 @@ table.CodeRay td.code>pre{padding:0}
 .CodeRay .head .head{color:#f4f}
 </style>
 </head>
-<body class="article toc2 toc-left">
+<body class="article">
 <div id="header">
-<h1>Nifty GUI - Хорошая практика</h1>
-<div id="toc" class="toc2">
-<div id="toctitle">Table of Contents</div>
-<ul class="sectlevel1">
-<li><a href="#xml-или-java">XML или Java?</a></li>
-<li><a href="#Редактирование-и-просмотр-xml-в-sdk">Редактирование и просмотр XML в SDK</a></li>
-<li><a href="#Функция-автозавершения-кода">Функция автозавершения кода</a></li>
-<li><a href="#Используйте-правую-строку-идентификатора">Используйте правую строку идентификатора</a></li>
-<li><a href="#Размер-слоя-и-панели">Размер слоя и панели</a></li>
-<li><a href="#Цветовой-код-для-наглядности">Цветовой код для наглядности</a></li>
-</ul>
+<h1>nifty_gui_хорошая_практика</h1>
+<div class="details">
+<span id="author" class="author"></span><br>
+<span id="revnumber">version ,</span>
+<span id="revdate">1970/01/01 00:00</span>
 </div>
 </div>
 <div id="content">
-<div id="preamble">
-<div class="sectionbody">
-<div class="paragraph">
-<p>Английская версия: <a href="jme3/advanced/nifty_gui_best_practices.html">Nifty GUI - Best Practices</a></p>
-</div>
-<div class="paragraph">
-<p>Эта страница список хороших практик для использования Nifty <abbr title="Graphical User Interface">GUI</abbr>. Эти JME3 учебники позволят сосредоточиться на интеграции JME3-Nifty. Больше возможностей здесь <a href="http://sourceforge.net/projects/nifty-gui/files/nifty-gui/nifty-gui-the-manual-v1.0.pdf/download">Nifty GUI Manual</a>.</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><a href="документация/jme3_ru/расширенная/nifty_gui_ru.html">Nifty GUI Concepts</a></p>
-</li>
-<li>
-<p><strong>Nifty <abbr title="Graphical User Interface">GUI</abbr> Best Practices</strong></p>
-</li>
-<li>
-<p><a href="jme3/advanced/nifty_gui_xml_layout_ru.html">Nifty GUI XML Layout_ru</a> или <a href="jme3/advanced/nifty_gui_java_layout_ru.html">Nifty GUI Java Layout_ru</a></p>
-</li>
-<li>
-<p><a href="jme3/advanced/nifty_gui_overlay_ru.html">Nifty GUI Overlay_ru</a> или <a href="jme3/advanced/nifty_gui_projection_ru.html">Nifty GUI Projection_ru</a></p>
-</li>
-<li>
-<p><a href="jme3/advanced/nifty_gui_java_interaction_ru.html">Nifty GUI Java Interaction_ru</a></p>
-</li>
-</ol>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="xml-или-java">XML или Java?</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Вы можете строить Nifty GUIs используя XML или Java синтаксис. Так какой же выбрать? Синтаксис XML и Java эквивалентны, значит нет разницы? Не совсем так. Обычно используется XML и Java вместе.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Создайте статический макет UI с помощью XML - его намного легче писать читать.</p>
-</li>
-<li>
-<p>Используйте Java для управоления вашим <abbr title="Graphical User Interface">GUI</abbr> во время выполнения - так легче взаимодействовать с ООП кодом.</p>
-</li>
-<li>
-<p><strong>Пример:</strong> Вы создаете два UI интерфейса с немного различным XML шаблоном для мобильного и настольного приложения. Если вы используете те же идендификторы для эквивалентных элементов то ваш код Java работает независимо от того какой из двух макетов XML вы используете. Это позволяет переключиться между мобильной и десктопной версией простой заменой XML файла.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="Редактирование-и-просмотр-xml-в-sdk">Редактирование и просмотр XML в SDK</h2>
-<div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p>Используйте <a href="sdk.html">jMonkeyEngine SDK</a> что бы создать новый XML файл (из категории <abbr title="Graphical User Interface">GUI</abbr>, “Empty Nifty File).</p>
-</li>
-<li>
-<p><a href="sdk.html">jMonkeyEngine SDK</a> включает в себя XML редактор и специальный просмоторщик Nifty <abbr title="Graphical User Interface">GUI</abbr> файлов.</p>
-</li>
-<li>
-<p>При открытии XML-файла вы можете переключаться между XML Editor и <abbr title="Graphical User Interface">GUI</abbr> режимом предварительного просмотра.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Совет: При создании <abbr title="Graphical User Interface">GUI</abbr> через мастера то файл будет содержать пример кода XML.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="Функция-автозавершения-кода">Функция автозавершения кода</h2>
-<div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p>Включите следующюю XML схему в первые строки вашего NiftyGUI XML файла.</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="preprocessor">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="tag">&lt;nifty</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://nifty-gui.sourceforge.net/nifty-1.3.xsd</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">xmlns:xsi</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2001/XMLSchema-instance</span><span class="delimiter">&quot;</span></span>
-       <span class="attribute-name">xsi:schemaLocation</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://nifty-gui.sourceforge.net/nifty-1.3.xsd http://nifty-gui.sourceforge.net/nifty-1.3.xsd</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-     <span class="comment">&lt;!-- Your IDE now tells you that one &lt;screen&gt;&lt;/screen&gt; element is expected here, etc. --&gt;</span>
-<span class="tag">&lt;/nifty&gt;</span></code></pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Теперь ваш IDE (включая jMonkeyEngine SDK) будет отображать дополнительную информацию и дополнять код автоматически для Nifty <abbr title="Graphical User Interface">GUI</abbr> <abbr title="Application Programming Interface">API</abbr>.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="Используйте-правую-строку-идентификатора">Используйте правую строку идентификатора</h2>
-<div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p>Если вы хотите взаимодействовать с элементами то необходимо присвоить им ID (строка).</p>
-</li>
-<li>
-<p>При использовании прозрачных ID - панели становяться анонимными.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="Размер-слоя-и-панели">Размер слоя и панели</h2>
-<div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p>Указание ширины и высоты в процентах позволяет масштабировать <abbr title="Graphical User Interface">GUI</abbr>.</p>
-</li>
-<li>
-<p>Используйте “* вместо фиксированного значения, чтобы сделать элемент автоматически заполняющий оставшееся пространство.</p>
-</li>
-<li>
-<p>Будьте осторожны при указании фиксированных размеров и проверяйте результат в различных разрешениях.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="Цветовой-код-для-наглядности">Цветовой код для наглядности</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Экраны, слои, панели…</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>… могут иметь цвет фона RGBA.<br>
-Вы можете использовать временные цвета на этапе проектирования, что бы контроллировать расположение контейнеров.</p>
-</li>
-<li>
-<p>… могут быть прозрачными.<br>
-В готовом графическом интерфейсе экраны, слои и панели как правило прозрачные, видимы только элементы изображения, текстовые поля и элементы управления внутри панелей.</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">nifty.setDebugOptionPanelColors(<span class="predefined-constant">true</span>);</code></pre>
-</div>
-</div>
-</div>
-</div>
+
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-05-22 00:13:35 UTC
+Version <br>
+Last updated 2016-05-22 20:02:33 +02:00
 </div>
 </div>
 </body>

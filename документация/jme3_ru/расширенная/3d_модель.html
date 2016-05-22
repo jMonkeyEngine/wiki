@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>Модели и сцены</title>
+<title>3d_модель</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -509,131 +509,22 @@ table.CodeRay td.code>pre{padding:0}
 .CodeRay .head .head{color:#f4f}
 </style>
 </head>
-<body class="article toc2 toc-left">
+<body class="article">
 <div id="header">
-<h1>Модели и сцены</h1>
-<div id="toc" class="toc2">
-<div id="toctitle">Table of Contents</div>
-<ul class="sectlevel1">
-<li><a href="#Использование-моделей-и-сцен-с-jme3">Использование моделей и сцен с jME3</a></li>
-<li><a href="#Создание-Моделей-и-сцен">Создание Моделей и сцен</a></li>
-</ul>
+<h1>3d_модель</h1>
+<div class="details">
+<span id="author" class="author"></span><br>
+<span id="revnumber">version ,</span>
+<span id="revdate">1970/01/01 00:00</span>
 </div>
 </div>
 <div id="content">
-<div id="preamble">
-<div class="sectionbody">
-<div class="paragraph">
-<p>Английская версия: <a href="jme3/advanced/3d_models.html">3D Models</a></p>
-</div>
-<div class="paragraph">
-<p>Так же как и <a href="фигура.html">фигура</a>, 3D-модели тоже состоит из <a href="сетки.html">Сетки</a>, но модели являются более сложными, чем фигуры. В то время как фигуры встроены в jME3, модели вы, как правило, создаете во внешнем редакторе 3D-сетки.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="Использование-моделей-и-сцен-с-jme3">Использование моделей и сцен с jME3</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Использование 3D-моделей в jME3 приложения:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Экспортировать 3D-модели в формате Ogre XML или Wavefront OBJ. Экспорт сцен, в формате Ogre DotScene.</p>
-</li>
-<li>
-<p>Сохраните файлы в подкаталог вашего jME3 проекта в папке <code>assets</code>.</p>
-</li>
-<li>
-<p>В вашем коде вы используете <a href="asset_manager.html">Asset Manager</a> для загрузки моделей в качестве<a href="spatial.html">Spatial</a>s в приложения jME.</p>
-</li>
-</ol>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>Spatial model = assetManager.loadModel(
-    "Models/MonkeyHead/MonkeyHead.mesh.xml" );</pre>
-</div>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>(Для сборки релиза:) используйте jMonkeyEngine SDK для преобразования моделей в формат .j3o . Вам не нужен этот шаг, пока вам предстоит еще долго разрабатывать и тестировать приложения в jMonkeyEngine SDK.</p>
-</li>
-</ol>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="Создание-Моделей-и-сцен">Создание Моделей и сцен</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Для создания 3D-моделей и сцен, вам нужен 3D Mesh Editor например <a href="http://www.blender.org/">Blender</a>, с OgreXML Exporter plugin.</p>
-</div>
-<div class="paragraph">
-<p><strong>Совет:</strong> Узнайте, как создать <a href="http://en.wikibooks.org/wiki/Blender_3D:_Noob_to_Pro/UV_Map_Basics">UV textures</a> для более сложных моделей, это выглядит более профессионально.</p>
-</div>
-<div class="paragraph">
-<p>Редакторы 3D моделей сторонние продукты, поэтому, пожалуйста, просмотрите их документацию и инструкции, как использовать их. Вот пример рабочего процесса для пользователей Blender:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="jme3/external/blender.html">Создание jME3 совместимой 3D модели в Blender</a></p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Для экспорта моделей, как Ogre XML сеток с материалами:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Open the menu File &gt; Export &gt; OgreXML Exporter to open the exporter dialog.</p>
-</li>
-<li>
-<p>In the Export Materials field: Give the material the same name as the model. For example, the model <code>something.mesh.xml</code> goes with <code>something.material</code>, plus (optionally) <code>something.skeleton.xml</code>, and some JPG files.</p>
-</li>
-<li>
-<p>In the Export Meshes field: Select a target subdirectory of your <code>assets/Models/</code> directory. E.g. <code>assets/Models/something/</code>.</p>
-</li>
-<li>
-<p>Activate the following exporter settings:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Copy Textures: YES</p>
-</li>
-<li>
-<p>Rendering Materials: YES</p>
-</li>
-<li>
-<p>Flip Axis: YES</p>
-</li>
-<li>
-<p>Require Materials: YES</p>
-</li>
-<li>
-<p>Skeleton name follows mesh: YES</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Click export.</p>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p>Теперь вы можете использовать <a href="sdk.html">jMonkeyEngine SDK</a> <a href="sdk/model_loader_and_viewer.html">загрузку и просмотр моделей</a>. Вы можете <a href="sdk/scene_composer.html">создать сцену</a> от них и написать код, который загружает их в ваше приложение.</p>
-</div>
-</div>
-</div>
+
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-05-22 00:13:35 UTC
+Version <br>
+Last updated 2016-05-22 20:02:33 +02:00
 </div>
 </div>
 </body>

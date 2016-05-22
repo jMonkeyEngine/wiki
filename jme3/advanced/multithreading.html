@@ -5,7 +5,8 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>The jME3 Threading Model</title>
+<meta name="keywords" content="loop, game, performance, state, states, documentation">
+<title>Multithreading Optimization</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -511,12 +512,16 @@ table.CodeRay td.code>pre{padding:0}
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
+<h1>Multithreading Optimization</h1>
+<div class="details">
+<span id="author" class="author"></span><br>
+<span id="revnumber">version ,</span>
+<span id="revdate">2014/12/04 09:38</span>
+</div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel2">
 <li><a href="#the-jme3-threading-model">The jME3 Threading Model</a></li>
-<li><a href="#multithreading-optimization">Multithreading Optimization</a>
-<ul class="sectlevel1">
 <li><a href="#java-multithreading">Java Multithreading</a></li>
 <li><a href="#multithreading-in-jme3">Multithreading in jME3</a>
 <ul class="sectlevel2">
@@ -528,8 +533,6 @@ table.CodeRay td.code>pre{padding:0}
 </li>
 <li><a href="#useful-links">Useful Links</a></li>
 <li><a href="#conclusion">Conclusion</a></li>
-</ul>
-</li>
 </ul>
 </div>
 </div>
@@ -556,10 +559,8 @@ table.CodeRay td.code>pre{padding:0}
 <div class="paragraph">
 <p>If the processing thread needs to wait or needs the return value then <code>get()</code> or the other methods in the returned Future object such as <code>isDone()</code> can be used.</p>
 </div>
-</div>
-<h1 id="multithreading-optimization" class="sect0">Multithreading Optimization</h1>
 <div class="paragraph">
-<p>First, make sure you know what <a href="application_states.html">Application States</a> and <a href="custom_controls.html">Custom Controls</a> are.</p>
+<p>First, make sure you know what <a href="../../jme3/advanced/application_states.html">Application States</a> and <a href="../../jme3/advanced/custom_controls.html">Custom Controls</a> are.</p>
 </div>
 <div class="paragraph">
 <p>More complex games may feature complex mathematical operations or artificial intelligence calculations (such as path finding for several NPCs). If you make many time-intensive calls on the same thread (in the update loop), they will block one another, and thus slow down the game to a degree that makes it unplayable. If your game requires long running tasks, you should run them concurrently on separate threads, which speeds up the application considerably.</p>
@@ -569,6 +570,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 <div class="paragraph">
 <p>Effectively, each for-loop in the main update loop might be a chance for multithreading, if you can break it up into self-contained tasks.</p>
+</div>
 </div>
 <div class="sect1">
 <h2 id="java-multithreading">Java Multithreading</h2>
@@ -763,15 +765,13 @@ The following example gets the object <code>Data data = myWorld.getData();</code
 <div class="paragraph">
 <p>The cool thing about this approach is that every entity creates one self-contained Callable for the Executor, and they are all executed in parallel. In theory, you can have one thread per entity without changing anything else but the settings of the executor.</p>
 </div>
-<div class="paragraph">
-<p>&lt;tags&gt;&lt;tag target="loop" /&gt;&lt;tag target="game" /&gt;&lt;tag target="performance" /&gt;&lt;tag target="state" /&gt;&lt;tag target="states" /&gt;&lt;tag target="documentation" /&gt;&lt;/tags&gt;</p>
-</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-05-22 00:13:35 UTC
+Version <br>
+Last updated 2016-05-22 20:01:37 +02:00
 </div>
 </div>
 </body>

@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>Создание в JME3 пользовательского интерфейса посредством Nifty GUI</title>
+<title>nifty_gui_ru</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -509,274 +509,22 @@ table.CodeRay td.code>pre{padding:0}
 .CodeRay .head .head{color:#f4f}
 </style>
 </head>
-<body class="article toc2 toc-left">
+<body class="article">
 <div id="header">
-<h1>Создание в JME3 пользовательского интерфейса посредством Nifty GUI</h1>
-<div id="toc" class="toc2">
-<div id="toctitle">Table of Contents</div>
-<ul class="sectlevel1">
-<li><a href="#Обзор-учебников">Обзор учебников</a></li>
-<li><a href="#Это-надо-знать-Понятия-nifty-gui">Это надо знать: Понятия Nifty GUI</a></li>
-<li><a href="#Ресурсы">Ресурсы</a>
-<ul class="sectlevel2">
-<li><a href="#jme-nifty-пример-кода">JME-Nifty пример кода</a></li>
-<li><a href="#Прочие-документы">Прочие документы</a></li>
-</ul>
-</li>
-<li><a href="#Следующий-шаг">Следующий шаг</a></li>
-<li><a href="#nifty-logging-nifty-1-3-1">Nifty Logging (Nifty 1.3.1)</a></li>
-</ul>
+<h1>nifty_gui_ru</h1>
+<div class="details">
+<span id="author" class="author"></span><br>
+<span id="revnumber">version ,</span>
+<span id="revdate">1970/01/01 00:00</span>
 </div>
 </div>
 <div id="content">
-<div id="preamble">
-<div class="sectionbody">
-<div class="paragraph">
-<p>Английская версия: <a href="jme3/advanced/nifty_gui.html">Nifty GUI - JME3 Integration Tutorial</a></p>
-</div>
-<div class="imageblock" style="text-align: left">
-<div class="content">
-<img src="images/jme3/advanced/nifty-gui-13.png" alt="nifty-gui-13.png" height="217">
-</div>
-</div>
-<div class="paragraph">
-<p>Вы хотите чтобы ваши игроки сохраняли игру нажимая на нужную кнопку, вы хотите что бы текстовое поле с рекордами прокручивалось, чтобы отображались очки, раскрывающиеся списки, выбирать раскладку предпочтений чтобы задать мультимедийные опции. Обычно это можно решить с помощью Swing. Хотя можно построить все и на <a href="jme3/advanced/swing_canvas.html">jME3 canvas</a> в Swing <abbr title="Graphical User Interface">GUI</abbr>, 3D игры обычно работают в полный экран либо в окне.</p>
-</div>
-<div class="paragraph">
-<p>Этот документ ознакомит вас с <a href="http://nifty-gui.lessvoid.com/">Nifty GUI</a>, библиотекой Java для создания интерактивных пользовательских интерфейсов (<abbr title="Graphical User Interface">GUI</abbr>) для игр и похожих приложений. Nifty <abbr title="Graphical User Interface">GUI</abbr> (“de.lessvoid.nifty пакет) хорошо интегрирован в jME3 через “com.jme3.niftygui пакет. Вы создаете расположение элемнтов <abbr title="Graphical User Interface">GUI</abbr> в XML, а контролируете из Java кода. Все необходимые JAR библиотеки включены в ваш jME3 проект по умолчанию при создании, вам не нужно ничего устанавливать дополнительно. (Просто убедитесь что пути к класампрописаны верно.)</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="http://vimeo.com/25637085">Video demo of Nifty GUI 1.3</a></p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="Обзор-учебников">Обзор учебников</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Научитесь добавлять Nifty <abbr title="Graphical User Interface">GUI</abbr> для вашей jME3 игры изучая эти учебники:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><a href="документация/jme3_ru/расширенная/nifty_gui_ru.html">Принцип построения Nifty GUI</a> описание на этой странице.</p>
-</li>
-<li>
-<p><a href="документация/jme3_ru/расширенная/nifty_gui_хорошая_практика.html">Просмотрите краткий список хорошей практики</a></p>
-</li>
-<li>
-<p>Составте свой графический интерфейс:</p>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="jme3/advanced/nifty_gui_xml_layout_ru.html">Составте свой GUI в XML</a> – или –</p>
-</li>
-<li>
-<p><a href="jme3/advanced/nifty_gui_java_layout_ru.html">Составте свой GUI в Java</a></p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Интеграция <abbr title="Graphical User Interface">GUI</abbr> в игру:</p>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="jme3/advanced/nifty_gui_overlay_ru.html">Наложение пользовательского интерфейса на экран</a>  – или –</p>
-</li>
-<li>
-<p><a href="jme3/advanced/nifty_gui_projection_ru.html">Наложение интерфейса на текстуру</a></p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p><a href="jme3/advanced/nifty_gui_java_interaction_ru.html">Составление GUI на Java</a></p>
-</li>
-</ol>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="Это-надо-знать-Понятия-nifty-gui">Это надо знать: Понятия Nifty GUI</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p><span class="image"><img src="images/jme3/advanced/nifty-screen-layer-panel.png" alt="nifty-screen-layer-panel.png" height=""></span></p>
-</div>
-<div class="paragraph">
-<p>Nifty GUIs состоит из следующих <strong>элементов</strong>:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Nifty <abbr title="Graphical User Interface">GUI</abbr> содержит один или несколько <strong>screen</strong> - это экраны.</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Только один экран может отображатся в одно время.</p>
-</li>
-<li>
-<p>Назовите первый экран, например, “start. Называйте их как хотите.</p>
-</li>
-<li>
-<p>Экран <a href="jme3/advanced/nifty_gui_java_interaction.html">контролируется Java Controller классом</a>.</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Каждый экран содержит один или несколько <strong>layers</strong> - это слои.</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Слои предстовляют собой контейнеры в которых выравнивается содержимое (по вертикали, горизонтали или по центру)</p>
-</li>
-<li>
-<p>Слои могут перекрываться (z-order) но не могут быть вложнными.</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Слои содержат <strong>panels</strong> - это панели.</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Панели представляют собой контейнеры в которых выравнивается их содержимое (по вертикали, горизонтали или по центру)</p>
-</li>
-<li>
-<p>Панели могут быть вложенными но не могут перекрываться.</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Панели содержат <strong>изображения, текст, или контролы (кнопки и т.д.)</strong>.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="Ресурсы">Ресурсы</h2>
-<div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p><a href="jme3/advanced/nifty_gui_best_practices_ru.html">Просмотрите этот короткий список рекомендаций прежде чем начать</a></p>
-</li>
-</ul>
-</div>
-<div class="sect2">
-<h3 id="jme-nifty-пример-кода">JME-Nifty пример кода</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>XML пример</p>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="http://code.google.com/p/jmonkeyengine/source/browse/trunk/engine/test-data/Interface/Nifty/HelloJme.xml">HelloJme.xml</a></p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Java пример</p>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="http://code.google.com/p/jmonkeyengine/source/browse/trunk/engine/src/test/jme3test/niftygui/TestNiftyGui.java">TestNiftyGui.java</a></p>
-</li>
-<li>
-<p><a href="http://code.google.com/p/jmonkeyengine/source/browse/trunk/engine/src/test/jme3test/niftygui/TestNiftyToMesh.java">TestNiftyToMesh.java</a></p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>jME3-текущая версия Nifty <abbr title="Graphical User Interface">GUI</abbr> 1.3.2 demo (sample code, Java)</p>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="http://files.seapegasus.org/NiftyGuiDemo.zip">NiftyGuiDemo.zip</a></p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Больше примера кода <a href="http://nifty-gui.svn.sourceforge.net/viewvc/nifty-gui/nifty-default-controls-examples/trunk/">Nifty GUI source repository</a></p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="Прочие-документы">Прочие документы</h3>
-<div class="paragraph">
-<p>Узнайте больше на странице NiftyGUI:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="http://sourceforge.net/projects/nifty-gui/files/nifty-gui/1.3.2/nifty-gui-the-manual-1.3.2.pdf/download">Nifty GUI - the Manual</a></p>
-</li>
-<li>
-<p><a href="http://nifty-gui.sourceforge.net/projects/1.3-SNAPSHOT/nifty/apidocs/index.html">Nifty 1.3 JavaDoc</a></p>
-</li>
-<li>
-<p><a href="http://nifty-gui.sourceforge.net/projects/1.3-SNAPSHOT/nifty-default-controls/apidocs/">Nifty 1.3 Controls JavaDoc</a></p>
-</li>
-<li>
-<p><a href="http://jmonkeyengine.org/groups/gui/forum/topic/anyone-succeeded-in-changing-text-in-nifty-programatically/#post-109510">Forum post: Changing Text in Nifty GUIs programmatically</a></p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="Следующий-шаг">Следующий шаг</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Теперь вы знаете где найти более подробную информацию, знаете как выложить простой графический интерфейс пользователя. Как правило вы начинаете делать свои интерфейс в XML.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="jme3/advanced/nifty_gui_xml_layout_ru.html">Разработка GUI в XML</a> (рекомендуется)</p>
-</li>
-<li>
-<p><a href="jme3/advanced/nifty_gui_java_layout_ru.html">Разработка GUI в Java</a> (необязательно)</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="nifty-logging-nifty-1-3-1">Nifty Logging (Nifty 1.3.1)</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Если вы хотите отключить лог журнал то используйте этот код:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code>Logger.getLogger("de.lessvoid.nifty").setLevel(Level.SEVERE);
-Logger.getLogger("NiftyInputEventHandlingLog").setLevel(Level.SEVERE);</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>&lt;tags&gt;&lt;tag target="gui" /&gt;&lt;tag target="documentation" /&gt;&lt;tag target="nifty" /&gt;&lt;tag target="hud" /&gt;&lt;/tags&gt;</p>
-</div>
-</div>
-</div>
+
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-05-22 00:13:35 UTC
+Version <br>
+Last updated 2016-05-22 20:02:33 +02:00
 </div>
 </div>
 </body>

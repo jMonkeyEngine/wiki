@@ -512,6 +512,11 @@ table.CodeRay td.code>pre{padding:0}
 <body class="article toc2 toc-left">
 <div id="header">
 <h1>JME 3 Tutorial - Visualizing 3D Charts</h1>
+<div class="details">
+<span id="author" class="author"></span><br>
+<span id="revnumber">version ,</span>
+<span id="revdate">2012/07/03 17:55</span>
+</div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
@@ -527,7 +532,7 @@ table.CodeRay td.code>pre{padding:0}
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Previous: <a href="jme3/tools/navigation.html">Navigation</a></p>
+<p>Previous: <a href="../../jme3/tools/navigation.html">Navigation</a></p>
 </div>
 <div class="paragraph">
 <p>In this tutorial we will have a look at creating a simple 3D cartography application that allows you to display 3D charts at different zoom levels.</p>
@@ -538,15 +543,15 @@ table.CodeRay td.code>pre{padding:0}
 <div class="ulist">
 <ul>
 <li>
-<p>About the <a href="jme3/tools/navigation.html">Navigation package</a>.</p>
+<p>About the <a href="../../jme3/tools/navigation.html">Navigation package</a>.</p>
 </li>
 <li>
-<p>How to create a <a href="jme3/beginner/hello_terrain.html">3D landscape</a> using image-based heightmaps.</p>
+<p>How to create a <a href="../../jme3/beginner/hello_terrain.html">3D landscape</a> using image-based heightmaps.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="images/jme3/tools/mercator_grid_3d_small.png" alt="mercator_grid_3d_small.png" height=""></span></p>
+<p><span class="image"><img src="../../jme3/tools/mercator_grid_3d_small.png" alt="mercator_grid_3d_small.png" height=""></span></p>
 </div>
 <div class="paragraph">
 <p>You will learn that how to account for distortions that arise when mapping of one coordinate system into (i.e. when converting longitude/latitude into JME&#8217;s World Units), how to construct a tile tree and how to render a dynamic mercator grid.</p>
@@ -560,7 +565,7 @@ table.CodeRay td.code>pre{padding:0}
 <h2 id="displaying-your-first-chart">Displaying your first chart</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Let&#8217;s think about how we are going to get JME to display our terrain. The easiest way is to use JME&#8217;s`ImageBasedHeightMap`. Recall from the <a href="jme3/beginner/hello_terrain.html">Hello Terrain</a> tutorial that these are grayscale images which JME uses to create a terrain quad. So, in order to display a chart, we need an image of a (two-dimensional) mercator projection (such as the one depicted below), which we then load using:</p>
+<p>Let&#8217;s think about how we are going to get JME to display our terrain. The easiest way is to use JME&#8217;s`ImageBasedHeightMap`. Recall from the <a href="../../jme3/beginner/hello_terrain.html">Hello Terrain</a> tutorial that these are grayscale images which JME uses to create a terrain quad. So, in order to display a chart, we need an image of a (two-dimensional) mercator projection (such as the one depicted below), which we then load using:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -572,13 +577,13 @@ applyDefaultTexture();</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="images/jme3/tools/globe.png" alt="A 256x256 mercator projection of planet earth." height=""></span></p>
+<p><span class="image"><img src="../../jme3/tools/globe.png" alt="A 256x256 mercator projection of planet earth." height=""></span></p>
 </div>
 <div class="paragraph">
-<p>In essence, 3D chart visualization is achieved by converting the polygons composing planet earth&#8217;s landmass into float matrices whereby each value within the matrix represents a specific terrain height. For example, given a terrain of 100 x 100 world units, we construct a heightmap by creating a 100 x 100 matrix. Each cell within the matrix corresponds to a terrain coordinate; each cell’s value to that coordinate’s desired height. But you already knew that, so where&#8217;s the tricky part? Well, when visualizing a chart an accurate projection requires a translation of latitude/longitude coordinates into their equivalent world unit (x,y,z) counterparts. This translation however is not a straight forward mapping of one coordinate system into the other due to the distortion arising from projecting an oblate spheroid onto a flat surface (see my previous wiki article <a href="jme3/tools/navigation.html">here</a>). This means that if one would adhere to a linear scale, the Mercator projection would distort the size and shape of objects as the object distances itself from the equator, eventually resulting in infinite scaling as the pole is reached. So the first task at hand, is to construct accurate 2D projections of planet earth which we can then use as heightmaps. We can achieve this using the jme3.tools.navigation package and co-ordinate sets available at <a href="http://www.ngdc.noaa.gov/mgg/coast/">noaa.gov</a>.</p>
+<p>In essence, 3D chart visualization is achieved by converting the polygons composing planet earth&#8217;s landmass into float matrices whereby each value within the matrix represents a specific terrain height. For example, given a terrain of 100 x 100 world units, we construct a heightmap by creating a 100 x 100 matrix. Each cell within the matrix corresponds to a terrain coordinate; each cell’s value to that coordinate’s desired height. But you already knew that, so where&#8217;s the tricky part? Well, when visualizing a chart an accurate projection requires a translation of latitude/longitude coordinates into their equivalent world unit (x,y,z) counterparts. This translation however is not a straight forward mapping of one coordinate system into the other due to the distortion arising from projecting an oblate spheroid onto a flat surface (see my previous wiki article <a href="../../jme3/tools/navigation.html">here</a>). This means that if one would adhere to a linear scale, the Mercator projection would distort the size and shape of objects as the object distances itself from the equator, eventually resulting in infinite scaling as the pole is reached. So the first task at hand, is to construct accurate 2D projections of planet earth which we can then use as heightmaps. We can achieve this using the jme3.tools.navigation package and co-ordinate sets available at <a href="http://www.ngdc.noaa.gov/mgg/coast/">noaa.gov</a>.</p>
 </div>
 <div class="paragraph">
-<p>As <a href="jme3/tools/navigation.html">previously discussed</a>, the distortion in latitude is derived by using the difference in meridional parts between the chart’s centre and the current position as a baseline; through converting the difference to world units by dividing it by the number of world units contained within one minute, a latitude’s y-coordinate can be obtained. Calculating a position’s x-coordinate is somewhat easier as the distortion only applies to latitude, not longitude. Therefore x merely equals the sum or difference between itself and the viewport’s centre coordinate, depending on the relative location of the position itself and the chart’s centre. Despite being able to convert between the two coordinate systems, slight precision problems remain once the chart projection is scaled down past a level of 6 meters. This is caused by the pixel referencing system of modern displays being integer based; once the ratio of minutes to pixels exceeds the aforementioned threshold, slight inaccuracies are introduced into the display. However this is of little relevance to most GIS (such as Debrief) as a) the inaccuracies are a matter of meters (or even centimetres) and b) it is impossible to notice this variation as GPS exposes a much higher inaccuracy (between 10 - 100 meters).</p>
+<p>As <a href="../../jme3/tools/navigation.html">previously discussed</a>, the distortion in latitude is derived by using the difference in meridional parts between the chart’s centre and the current position as a baseline; through converting the difference to world units by dividing it by the number of world units contained within one minute, a latitude’s y-coordinate can be obtained. Calculating a position’s x-coordinate is somewhat easier as the distortion only applies to latitude, not longitude. Therefore x merely equals the sum or difference between itself and the viewport’s centre coordinate, depending on the relative location of the position itself and the chart’s centre. Despite being able to convert between the two coordinate systems, slight precision problems remain once the chart projection is scaled down past a level of 6 meters. This is caused by the pixel referencing system of modern displays being integer based; once the ratio of minutes to pixels exceeds the aforementioned threshold, slight inaccuracies are introduced into the display. However this is of little relevance to most GIS (such as Debrief) as a) the inaccuracies are a matter of meters (or even centimetres) and b) it is impossible to notice this variation as GPS exposes a much higher inaccuracy (between 10 - 100 meters).</p>
 </div>
 <div class="paragraph">
 <p>.</p>
@@ -882,7 +887,7 @@ Paint ( graphics context ):
 </div>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="images/jme3/tools/heightmap_modelling.png" alt="Summarizing process of visualizing a chart. From left to right: We draw the coordinates downloaded from noaa.gov. Ideally" width="each polygon should be filled in a light colour" height=""></span>
+<p><span class="image"><img src="../../jme3/tools/heightmap_modelling.png" alt="Summarizing process of visualizing a chart. From left to right: We draw the coordinates downloaded from noaa.gov. Ideally" width="each polygon should be filled in a light colour" height=""></span>
 <strong>Above:</strong> Summarizing process of visualizing a chart. From left to right: We draw the coordinates downloaded from noaa.gov. Ideally, each polygon should be filled in a light colour, whilst the surrounding ocean remains dark. JME uses these images to create an internal representation of the terrain (a float matrix).</p>
 </div>
 <div class="paragraph">
@@ -927,8 +932,8 @@ A tile’s texture is defined by its ”Alphamap”. This is a copy of its heigh
 <p>The Tile Tree’s contents is stored in assets/Heightmaps, and each directory level is composed of one descriptor file, one heightmap (in the form of a PNG image) and one alphamap (also in the form of a PNG image). The descriptor files end in a.desc filename extension and contain the geo-coordinate centre of the tile as well as the resolution of the node that they are representing (as always, the resolution is represented in minutes per pixel (mpp)). A descriptor file’s sole purpose is to allow the re-construction of the tile tree upon application initialization. Specifically, this is achieved by the ChartModel object which instantiates the TileTree, passing a reference to <em>assets/Heightmaps</em>, which <code>TileTree</code> then recursively scans, constructing the tree by interpreting the descriptor files. It is worth noting that all files per level should be named according to the heightmap tile that it represents. That is, if your level represents a chart of Ireland and your heightmap is named Ireland.png then your descriptor file should be named <em>Ireland.desc</em>, while your alphamap should be named <em>Ireland.png.Alphamap.png</em>.</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="images/jme3/tools/slide1.jpg" alt="The Tile Tree" height=""></span>
-<span class="image"><img src="images/jme3/tools/slide2.jpg" alt="Looking inside a node&#8230;&#8203;" height=""></span>
+<p><span class="image"><img src="../../jme3/tools/slide1.jpg" alt="The Tile Tree" height=""></span>
+<span class="image"><img src="../../jme3/tools/slide2.jpg" alt="Looking inside a node&#8230;&#8203;" height=""></span>
 <strong>Above:</strong> A look inside the “Ireland node. We can see the heightmap, descriptor file and alphamap.</p>
 </div>
 <div class="listingblock">
@@ -1362,14 +1367,15 @@ mapModel.setCentre(node.getCentre());</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="images/jme3/tools/screen_shot_2011-12-18_at_13.12.01.png" alt="screen_shot_2011-12-18_at_13.12.01.png" height=""></span></p>
+<p><span class="image"><img src="../../jme3/tools/screen_shot_2011-12-18_at_13.12.01.png" alt="screen_shot_2011-12-18_at_13.12.01.png" height=""></span></p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-05-22 00:13:35 UTC
+Version <br>
+Last updated 2016-05-22 20:02:15 +02:00
 </div>
 </div>
 </body>

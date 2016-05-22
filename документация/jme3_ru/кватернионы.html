@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>Кватернионы</title>
+<title>кватернионы</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -509,181 +509,22 @@ table.CodeRay td.code>pre{padding:0}
 .CodeRay .head .head{color:#f4f}
 </style>
 </head>
-<body class="article toc2 toc-left">
+<body class="article">
 <div id="header">
-<div id="toc" class="toc2">
-<div id="toctitle">Table of Contents</div>
-<ul class="sectlevel1">
-<li><a href="#Кватернионы">Кватернионы</a>
-<ul class="sectlevel2">
-<li><a href="#Определение">Определение</a></li>
-<li><a href="#Угол-Оси">Угол Оси</a></li>
-<li><a href="#Три-Угла">Три Угла</a></li>
-<li><a href="#Три-Оси">Три Оси</a></li>
-<li><a href="#Матрица-Вращения">Матрица Вращения</a></li>
-<li><a href="#slerp">Slerp</a></li>
-</ul>
-</li>
-</ul>
+<h1>кватернионы</h1>
+<div class="details">
+<span id="author" class="author"></span><br>
+<span id="revnumber">version ,</span>
+<span id="revdate">1970/01/01 00:00</span>
 </div>
 </div>
 <div id="content">
-<div class="sect1">
-<h2 id="Кватернионы">Кватернионы</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Смотрите <a href="http://www.jmonkeyengine.com/doc/com/jme/math/Quaternion.html">Javadoc</a></p>
-</div>
-<div class="sect2">
-<h3 id="Определение">Определение</h3>
-<div class="paragraph">
-<p>Кватернионы заданное подмножество системы гиперкомплексных чисел. Кватернионы определяются(i<sup>2</sup> = j<sup>2</sup> = k<sup>2</sup> = ijk = -1). jME использует кватернионs, потому что они позволяют компактно представлять вращения, и соответственно, ориентацию, в 3D-пространстве. Всего с четырьмя float значения, мы можем представить ориентации объекта, где матрица поворота потребуется девять. Они также требуют меньшего количества арифметических операций для объединения.</p>
-</div>
-<div class="paragraph">
-<p>Дополнительные преимущества кватернионов является снижение шансов <a href="http://en.wikipedia.org/wiki/Gimbal_lock">Блокировки Вращения</a> и позволяет легко интерполяцию между двумя поворотами (сферическая линейная интерполяция или slerp).</p>
-</div>
-<div class="paragraph">
-<p>В то время как кватернионы довольно трудно полностью понять, есть превосходные удобные числовые методы, которые позволят вам использовать их без необходимости понимать математику связанную с ними. В основном, эти методы включают не более чем установка Кватернионам x,y,z,w значений с помощью других средств, осуществляющих поворотов. Кватернион также содержащихся в <a href="jme3/advanced/spatial.html">Spatial</a> как местные компонента вращение.</p>
-</div>
-<div class="paragraph">
-<p>Кватернион <strong>q</strong> имеет вид</p>
-</div>
-<div class="paragraph">
-<p><strong>q</strong> = &lt;_w,x,y,z_&gt; = <em>w + xi + yj + zk</em></p>
-</div>
-<div class="paragraph">
-<p>или, альтернативно, оно может быть написано как:</p>
-</div>
-<div class="paragraph">
-<p><strong>q</strong> = <strong>s</strong> + <strong>v</strong>, где <strong>s</strong> представляет собой скалярную часть, соответствующего w-компонента <strong>q</strong>, и <strong>v</strong> представляет собой векторную, часть (x, y, z) компонента <strong>q</strong>.</p>
-</div>
-<div class="paragraph">
-<p>Умножение Кватернионов использует закон дистрибутивности и придерживается следующих правил умножения мнимых компонентов (i, j, k):</p>
-</div>
-<div class="paragraph">
-<p><code>i<sup>2</sup> = j<sup>2</sup> = k<sup>2</sup> = -1</code>+</p>
-</div>
-<div class="paragraph">
-<p><code>ij = -ji = k</code>+</p>
-</div>
-<div class="paragraph">
-<p><code>jk = -kj = i</code>+</p>
-</div>
-<div class="paragraph">
-<p><code>ki = -ik = j</code></p>
-</div>
-<div class="paragraph">
-<p>Тем не менее, умножения кватернионов является <em>не</em> не коммутативным, поэтому мы должны обращать внимание на порядок.</p>
-</div>
-<div class="paragraph">
-<p><strong>q<sub>1</sub>q<sub>2</sub></strong> = s<sub>1</sub>s<sub>2</sub> - <strong>v<sub>1</sub></strong> dot <strong>v<sub>2</sub></strong> + s<sub>1</sub><strong>v<sub>2</sub></strong> + s<sub>2</sub><strong>v<sub>1</sub></strong> + <strong>v<sub>1</sub></strong> X <strong>v<sub>2</sub></strong></p>
-</div>
-<div class="paragraph">
-<p>Кватернионы также конъюгаты, где конъюгат <strong>q</strong> это (s - <strong>v</strong>)</p>
-</div>
-<div class="paragraph">
-<p>Эти основные операции позволяют конвертировать различные представления вращения до кватернионов.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="Угол-Оси">Угол Оси</h3>
-<div class="paragraph">
-<p>Вы, возможно, пожелает представить свои повороты, как два Угола Оси. То есть, необходимо определить ось вращения и угол, с которым с возможен поворот относительно этой оси. Кватернион определяет метод <code>fromAngleAxis</code> (и <code>fromAngleNormalAxis</code>) чтобы создать Кватернион от этой пары. Это acutally использовано совсем немного в jME демо, постоянно вращать объекты. Вы можете также получить Угол Оси вращения от существующего помощью Кватерниона`toAngleAxis`.</p>
-</div>
-<div class="sect3">
-<h4 id="Пример-поворот-spatial-с-помощью-fromangleaxis">Пример - поворот Spatial с помощью fromAngleAxis</h4>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">//поворот вокруг Y-оси примерно на 1 pi</span>
-Vector3f axis = Vector3f.UNIT_Y; <span class="comment">// это составляет (0, 1, 0) и не требуется для создания нового объекта</span>
-<span class="type">float</span> angle = <span class="float">3.14f</span>;
-s.getLocalRotation().fromAngleAxis(angle, axis);</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="Три-Угла">Три Угла</h3>
-<div class="paragraph">
-<p>Вы можете также представлять вращения путем определения трех углов. Углы представляют собой вращение вокруг отдельных осей. Переходя в массиве из трех – элементов с плавающей точкой, задает углы где первый элемент X, второй Y и третий Z. Метод,  предоставляющий Кватернион <code>fromAngles</code>   также может заполнить массив с помощью <code>toAngles</code></p>
-</div>
-<div class="sect3">
-<h4 id="Пример-поворот-spatial-с-помощью-fromangles">Пример - поворот Spatial с помощью fromAngles</h4>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">//поворот 1 радиан на х, 3-х на y и 0 для z</span>
-<span class="type">float</span><span class="type">[]</span> angles = {<span class="integer">1</span>, <span class="integer">3</span>, <span class="integer">0</span>};
-s.getLocalRotation().fromAngles(angles);</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="Три-Оси">Три Оси</h3>
-<div class="paragraph">
-<p>Если у вас есть три оси, определяющие поворот (where the axes define the left axis, up axis and directional axis respectively) вы можете воспользоваться <code>fromAxes</code>  для создания кватерниона. Следует отметить, что это создаст новые <a href="документация/jme3_ru/матрица.html">Матрицы</a> Объекты, который затем подлежат сборке мусора, таким образом, этот метод не следует использовать, если она будет вызыватся много раз. Опять же, <code>toAxes</code> будет заполнять массив <a href="vector.html">Vector3f</a>.</p>
-</div>
-<div class="sect3">
-<h4 id="Пример-поворот-spatial-с-помощью-fromaxes">Пример - поворот Spatial с помощью fromAxes</h4>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">//rotate a spatial to face up ~45 degrees</span>
-Vector3f<span class="type">[]</span> axes = <span class="keyword">new</span> Vector3f[<span class="integer">3</span>];
-axes[<span class="integer">0</span>] = <span class="keyword">new</span> Vector3f(-<span class="integer">1</span>, <span class="integer">0</span>, <span class="integer">0</span>); <span class="comment">//left</span>
-axes[<span class="integer">1</span>] = <span class="keyword">new</span> Vector3f(<span class="integer">0</span>, <span class="float">0.5f</span>, <span class="float">0.5f</span>); <span class="comment">//up</span>
-axes[<span class="integer">2</span>] = <span class="keyword">new</span> Vector3f(<span class="integer">0</span>, <span class="float">0.5f</span>, <span class="float">0.5f</span>); <span class="comment">//dir</span>
 
-s.getLocalRotation().fromAxes(axes);</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="Матрица-Вращения">Матрица Вращения</h3>
-<div class="paragraph">
-<p>Обычно вы можете найти себе <a href="документация/jme3_ru/матрица.html">Матрицу</a> определяющую вращение. На самом деле, это очень часто, чтобы содержать вращения в <a href="matrix.html">Matrix</a> создать Кватернион, Кватернион поворота, а затем получить <a href="документация/jme3_ru/матрица.html">Матрица</a> назад. Кватернион содержит <code>fromRotationMatrix</code> метод, который будет создавать соответствующие Кватернион на основе дающей <a href="документация/jme3_ru/матрица.html">Матрицы</a>. <code>toRotationMatrix</code> будет заполнять учитывая <a href="документация/jme3_ru/матрица.html">Матрица</a>.</p>
-</div>
-<div class="sect3">
-<h4 id="Пример-поворот-spatial-с-помощью-матрицы-вращения">Пример - поворот Spatial с помощью матрицы вращения</h4>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">Matrix3f mat = <span class="keyword">new</span> Matrix3f();
-mat.setColumn(<span class="integer">0</span>, <span class="keyword">new</span> Vector3f(<span class="integer">1</span>,<span class="integer">0</span>,<span class="integer">0</span>));
-mat.setColumn(<span class="integer">1</span>, <span class="keyword">new</span> Vector3f(<span class="integer">0</span>,-<span class="integer">1</span>,<span class="integer">0</span>));
-mat.setColumn(<span class="integer">2</span>, <span class="keyword">new</span> Vector3f(<span class="integer">0</span>,<span class="integer">0</span>,<span class="integer">1</span>));
-
-s.getLocalRotation().fromRotationMatrix(mat);</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>As you can see there are many ways to build a Quaternion. This allows you to work with rotations in a way that is conceptually easier to picture, but still build Quaternions for internal representation.</p>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="slerp">Slerp</h3>
-<div class="paragraph">
-<p>Одно из самых больших преимуществ использования Кватернионов он позволяет интерполяцию между двумя вращениями. That is, if you have an initial Quaternion representing the original orientation of an object, and you have a final Quaternion representing the orientation you want the object to face, you can do this very smoothly with slerp. Просто поставить время, где время [0, 1] и 0-начальное вращение и 1 финальный поворот.</p>
-</div>
-<div class="sect3">
-<h4 id="Пример-использования-slerp-вращаться-между-двумя-Кватернионами">Пример использования Slerp вращаться между двумя Кватернионами</h4>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">Quaternion q1;
-Quaternion q2;
-
-<span class="comment">//вращение на полпути между этими двумя</span>
-Quaternion q3 = q1.slerp(q2, <span class="float">0.5f</span>);</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-05-22 00:13:35 UTC
+Version <br>
+Last updated 2016-05-22 20:02:28 +02:00
 </div>
 </div>
 </body>

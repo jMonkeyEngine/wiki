@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>Контрольная оптимизация</title>
+<title>оптимизация</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -509,136 +509,22 @@ table.CodeRay td.code>pre{padding:0}
 .CodeRay .head .head{color:#f4f}
 </style>
 </head>
-<body class="article toc2 toc-left">
+<body class="article">
 <div id="header">
-<h1>Контрольная оптимизация</h1>
-<div id="toc" class="toc2">
-<div id="toctitle">Table of Contents</div>
-<ul class="sectlevel1">
-<li><a href="#maintain-low-geometry-count">Maintain low Geometry count</a></li>
-<li><a href="#avoid-creating-new-objects">Avoid creating new objects</a></li>
-<li><a href="#avoid-large-objects-in-physics">Avoid large objects in physics</a></li>
-<li><a href="#Проверить-статистику">Проверить статистику</a></li>
-</ul>
+<h1>оптимизация</h1>
+<div class="details">
+<span id="author" class="author"></span><br>
+<span id="revnumber">version ,</span>
+<span id="revdate">1970/01/01 00:00</span>
 </div>
 </div>
 <div id="content">
-<div id="preamble">
-<div class="sectionbody">
-<div class="paragraph">
-<p>Эта страница предназначена в качестве справочной коллекции оптимизационных приемов, которые могут быть использованы для ускорения JME3 приложений.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="maintain-low-geometry-count">Maintain low Geometry count</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The more Geometry objects are added to the scene, the harder it gets to handle them in a speedy fashion.
-The reason for this is that a render command must be done for every object, potentially creating a bottleneck between the CPU and the graphics card.</p>
-</div>
-<div class="paragraph">
-<p><strong>Possible optimization techniques</strong></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Use GeometryBatchFactory.optimize(node) to merge the meshes of the geometries contained in the given node into fewer batches, each based on common Materials used.<br>
-You can optimize nodes using the SceneComposer in the SDK as well: Right-click a node and select “Optimize Geometry.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p><strong>Side-effects</strong></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Using GeometryBatchFactory merges individual Geometries into a single mesh. Thereby it becomes hard to apply specific Materials or to remove a single Geometry. Therefore it should be used for static Geometry only that does not require frequent changes or individual materials/texturing.</p>
-</li>
-<li>
-<p>Using a <a href="jme3/advanced/texture_atlas.html">Texture Atlas</a> provides limited individual texturing of batched geometries.</p>
-</li>
-<li>
-<p>Using the still experimental BatchNode allows batching Geometry while keeping the single Geometry objects movable separately (similar to animation, the buffer gets updated per Geometry position).</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="avoid-creating-new-objects">Avoid creating new objects</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Different Java implementations use different garbage collection algorithms, so depending on the platforms you target, different advice applies.</p>
-</div>
-<div class="paragraph">
-<p>The major variants are Oracle&#8217;s JRE, old (pre-Gingerbread) Androids, and newer (Gingerbread or later) Androids.</p>
-</div>
-<div class="paragraph">
-<p>Oracle&#8217;s JRE is a copying collector. This means that it does not need to do any work for objects that have become unreachable, it just keeps copying live objects to new memory areas and recycles the now-unused area as a whole.
-Older objects are copied less often, so the garbage collection overhead is roughly proportional to the rate at which your code creates new objects that survive for, say, more than a minute.</p>
-</div>
-<div class="paragraph">
-<p>Gingerbread and newer Androids use a garbage collector that does some optimization tricks with local variables, but you should avoid creating and forgetting lots of objects in the scene graph.</p>
-</div>
-<div class="paragraph">
-<p>Older Androids use a very naive garbage collector that needs to do real work for every object, both during creation and during collection. Creating local variables can build up a heap of work, particularly if the function is called often.</p>
-</div>
-<div class="paragraph">
-<p>To avoid creating a temporary object, use <em>local methods</em> to overwrite the contents of an existing object instead of creating a new temporary object for the result.</p>
-</div>
-<div class="paragraph">
-<p>E.g. when you use math operations like <code>vectorA.mult(vectorB);</code>, they create new objects for the result.</p>
-</div>
-<div class="paragraph">
-<p>Check your math operations for opportunities to use the <em>local</em> version of the math operations, e.g. <code>vectorA.multLocal(vectorB)</code>. Local methods store the result in vectorA and do not create a new object.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="avoid-large-objects-in-physics">Avoid large objects in physics</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>To offload much computation to the less CPU intense physics broadphase collision check, avoid having large meshes that cover e.g. the whole map of your level. Instead, separate the collision shapes into multiple smaller chunks. Obviously, don&#8217;t exaggerate the chunking, because having excessive amounts of physics objects similarly cause performance problems.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="Проверить-статистику">Проверить статистику</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>SimpleApplication отображает HUD статистику. Используйте <code>app.setDisplayStatView(true);</code> чтобы активировать его, и false, чтобы отключить ее.
-В StatsView считаются Объекты, Формы, Треугольники, Вершины в сцене, и он также подсчитывает, сколько FrameBuffers, Текстуры или Шейдеры:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>… were switched in the last frame (S)</p>
-</li>
-<li>
-<p>… were used during the last frame (F)</p>
-</li>
-<li>
-<p>… exist in OpenGL memory (M)</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Например, <code>Textures (M)</code> расскажет вам, как многие текстур, в настоящее время находится в OpenGL памяти.</p>
-</div>
-<div class="paragraph">
-<p>Как правило, jME3 хорошо оптимизирован и оптимизирует эти вещи правильно. Прочтите <a href="jme3/advanced/statsview.html">statsview</a> чтобы узнать подробности о том, как интерпретировать статистику, как отличить значения off, или же они указывают на проблему.</p>
-</div>
-<div class="paragraph">
-<p>&lt;tags&gt;&lt;tag target="performance" /&gt;&lt;/tags&gt;</p>
-</div>
-</div>
-</div>
+
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-05-22 00:13:35 UTC
+Version <br>
+Last updated 2016-05-22 20:02:33 +02:00
 </div>
 </div>
 </body>

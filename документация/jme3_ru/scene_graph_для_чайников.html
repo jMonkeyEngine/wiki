@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>jMonkeyEngine3 Scene Graph для чайников</title>
+<title>scene_graph_для_чайников</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -509,233 +509,22 @@ table.CodeRay td.code>pre{padding:0}
 .CodeRay .head .head{color:#f4f}
 </style>
 </head>
-<body class="article toc2 toc-left">
+<body class="article">
 <div id="header">
-<div id="toc" class="toc2">
-<div id="toctitle">Table of Contents</div>
-<ul class="sectlevel1">
-<li><a href="#jmonkeyengine3-scene-graph-для-чайников">jMonkeyEngine3 Scene Graph для чайников</a></li>
-<li><a href="#Изучение-основ-jme3-Граф-Древо-Сцены">Изучение основ jME3 Граф(Древо) Сцены.</a></li>
-<li><a href="#Граф-Сцены-Объект-в-виртуальном-пространстве">Граф Сцены Объект в виртуальном пространстве.</a></li>
-<li><a href="#Геометрия-geometry-видимый-объект-в-сцене-Что-такое-Геометрия">Геометрия(Geometry) видимый объект в сцене. Что такое Геометрия?</a></li>
-<li><a href="#Узел-node-Родитель-и-потомок">Узел(Node). Родитель и потомок</a></li>
-<li><a href="#Организация-Узлов">Организация Узлов.</a></li>
-<li><a href="#Отбраковка-culling">Отбраковка(Culling)</a></li>
-<li><a href="#Автоматическая-отбраковка">Автоматическая отбраковка</a></li>
-</ul>
+<h1>scene_graph_для_чайников</h1>
+<div class="details">
+<span id="author" class="author"></span><br>
+<span id="revnumber">version ,</span>
+<span id="revdate">1970/01/01 00:00</span>
 </div>
 </div>
 <div id="content">
-<div class="sect1">
-<h2 id="jmonkeyengine3-scene-graph-для-чайников">jMonkeyEngine3 Scene Graph для чайников</h2>
-<div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p>Вы можете открыть презентацию в <a href="http://hub.jmonkeyengine.org/tutorials/scenegraph">Полноэкранном режим</a>.</p>
-</li>
-<li>
-<p>When using <a href="http://www.apple.com/safari/">Safari</a> as a browser the presentation is animated.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="Изучение-основ-jme3-Граф-Древо-Сцены">Изучение основ jME3 Граф(Древо) Сцены.</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>То, что вы узнаете:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Что такое Граф Сцены и что такое Spatial.</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Что такое Геометрия как определяется ее внешний вид.</p>
-</li>
-<li>
-<p>Что такое Узел и отношение родитель - потомок.</p>
-</li>
-<li>
-<p>Как организовать в Графе сцены визуальное и логическое использование узлов.</p>
-</li>
-<li>
-<p>Как скрыть один Spatial или целые части сцены.</p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="Граф-Сцены-Объект-в-виртуальном-пространстве">Граф Сцены Объект в виртуальном пространстве.</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Что такое Граф Сцены?</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Сцена это виртуальное пространство. Ваша игра происходит в ней.</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Объекты в сцене называются “Spatial.</p>
-</li>
-<li>
-<p>Spatials имеет смещение(с места положения), вращение и масштаб</p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Способ измерения:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Положение в сцене измеряется с использование координат X,Y и Z.</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Y вверх X вправо Z навстречу вам.</p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Spatial с положением и поворотом 0(стр. 6). Вы можете двигать Spatial используя <strong>spatial.move(1,1,0);</strong> . В этом случае Spatial будет передвинут вдоль оси X и Y (стр. 8). Вы можете повернуть Spatial по оси Z используя <strong>spalial.rotate(0,0,FastMath.HALF_PI);</strong> . Spatial будет повернут относительно оси Z (стр. 10). Вы можете маcмасштабировать Spatial с помощью <strong>spatial.scale(2);</strong> . Spatial будет увеличен(стр. 12).</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="Геометрия-geometry-видимый-объект-в-сцене-Что-такое-Геометрия">Геометрия(Geometry) видимый объект в сцене. Что такое Геометрия?</h2>
-<div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p>Геометрия это та часть Spatial, который является видимым на сцене.</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Геометрия имеет Сетку, определяющую ее форму и материал, определяющий её внешний вид.</p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Геометрия с сеткой обезьяны и белым материалом(стр. 15). Вы можете выбрать новый материал для Геометрии используя <strong>geometry.setMaterial(redMaterial);</strong> получится та же геометрия с новым материалом(стр. 17).</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="Узел-node-Родитель-и-потомок">Узел(Node). Родитель и потомок</h2>
-<div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p>Узел это Spatial который может обладает другими Spatial потомками. Например машина пассажир.</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Узел потомок может двигаться и поворачиваться относительно узла родителя.</p>
-</li>
-<li>
-<p>Граф Сцены например использует основной корневой узел к которому подключены все Spatial.</p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>На (стр. 20) узел с 0 положением и поворотом. Вы можете прикрепить Spatial потомка с помощью node.attachChild(spatial); (стр. 22).<br></p>
-</div>
-<div class="paragraph">
-<p>Теперь передвинем Spatial с помощью <strong>spatial.move(0,1,0);</strong> Spatial потомок будет перемещен вдоль оси Y(стр. 24-25). Теперь мы передвинем узел с помощью node.moved(1.5,0,0); узел был смешен относительно оси X(стр. 27). Spatial потомок движется вместе с узлом сохранив смещение относительно узла.<br></p>
-</div>
-<div class="paragraph">
-<p>Теперь мы повернем узел на 90 градусов относительно оси Z используя <strong>node.rotate(0,0,FastMath.HALF_PI);</strong> (стр 30). Spatial потомок повернется вместе с узлом сохранив смещение относительно узла(стр. 31).<br></p>
-</div>
-<div class="paragraph">
-<p>Теперь повернем потомка на -90 градусов по оси Z используя <strong>spatial.rotate(0,0,-FastMath.HALF_PI);</strong> (стр. 33). Spatial потомок теперь повернулся относительно узла.<br></p>
-</div>
-<div class="paragraph">
-<p>Теперь повернем узел обратно на -90 градусов по оси Z <strong>node.rotate(0,0,-FastMath.HALF_PI);</strong> (стр.36). Spatial потомок сохраня свое нынешнее положение повернулся относительно узла(стр. 37).<br></p>
-</div>
-<div class="paragraph">
-<p>Теперь мы изменим масштаб Узла с помощью <strong>node.scale(2);</strong> При этом изменился масштаб и узла и потомка Spatialc39).</p>
-</div>
-<div class="paragraph">
-<p>Теперь мы изменим масштаб потомка <strong>spatial.scale(0.5);</strong> (стр. 42). Масштаб потомка изменился у масштаб узла остался тем же(стр.43). Масштаб родительского узла еще в два раза больше, однако действительный размер мира сейчас такой же, как раньше, потому что масштаб местного узла стал прежним (стр. 44).</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="Организация-Узлов">Организация Узлов.</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Узел используемый для организации графа сцены.</p>
-</div>
-<div class="paragraph">
-<p>Это узел нормальной сцены(стр. 46). Любой ваш узел может иметь и другие Spatial, например, узлы, как потомков(стр. 47). Эти узлы, в свою очередь, могут иметь и другие узлы и Spatial как потомков(стр. 47). Это позволяет организовать графа сцены визуально и Spatially. (стр. 50) пример группового смещения Spatials. Но это так же позволяет организовать Граф сцены логически(рис. 51). В этом случае(стр. 52) смещение и вращение узлов скорее всего будет ноль. Таким образом все значения смещения и вращения для потомков могут использоваться только в локальном пространстве. Но вернемся к конструктивному образу(стр. 54)(узлы по-прежнему имеют ноль месте). При поиске центрального NPC единственного spatials мы должны смотреть потомков NPCs узла например <strong>Spatial enemy = npcNide.getChild(“Enemy);</strong>(стр. 55). При поиске мобильного объекта только spatiall мы должны смотреть потомков Mobile узел например <strong>Spatial enemy=mobileNode.getChild(“Enemy);</strong> (стр. 56). Когда мы хотим сделать например, луч проверки столкновений с объектами мира. Это очень просто, все объекты мира группируются в узел Immobile так <strong>CollisionResults results = immobileNode.collideWith(ray);</strong> (стр. 57).</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="Отбраковка-culling">Отбраковка(Culling)</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Скрываем Spatial и узел.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Очищение означает, что геометрия не оказывает видеокарты.</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Геометрия по-прежнему обрабатываются как часть графа сцены, но вся визуализации и  связанные с ней операции, приостановлены.</p>
-</li>
-<li>
-<p>Spatial может иметь состояние отбраковки “всегда(всегда) “никогда(never) или “наследовать(inherit) (который является по умолчанию)</p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Давайте взглянем на нормальную сцену(стр. 60). Когда мы отбракуем houseOne используя <strong>houseOne.setCullHint(CullHint.Always);</strong> (стр. 62) houseOne будет отбракован и станет невидим. Мы можем сделать houseOne видимым снова используя <strong>houseOne.setCullHint(CullHint.Inherit);</strong> (стр. 64). Мы можем отбраковать immobileNode используя <strong>immobileNode.setCullHint(CullHint.Always);</strong> (стр. 66). Оба  houseOne и immobileNode станут невидимыми потому что их отбраковка установлена по умолчанию “наследовать. Мы можем установить отбраковку houseTwo на никогда используя <strong>houseTwo.setCullHint(CullHint.Never);</strong> (стр. 68). Так мы сделали houseTwo снова видимым и он больше не находится под влиянием своего родителя immobileNode. Мы можем установить отбраковку immobileNode снова наследовать <strong>immobileNode.setCullHint(CullHint.Inherit);</strong> (стр. 70). Что делает оба дома видимыми снова.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="Автоматическая-отбраковка">Автоматическая отбраковка</h2>
-<div class="sectionbody">
-<div class="literalblock">
-<div class="content">
-<pre> В jME3 автоматически отбраковываются Геометрии что не попадают в поле зрения камеры.
-Нормальная сцена(стр. 72). (стр. 73) камера просматривает сцену, все Геометрии видны, нет отбраковки. (стр. 74) камера сдвинулась и теперь только один дом d видимом спектре. (стр. 76) остальные геометрии отбракованы автоматически.</pre>
-</div>
-</div>
-</div>
-</div>
+
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-05-22 00:13:35 UTC
+Version <br>
+Last updated 2016-05-22 20:02:28 +02:00
 </div>
 </div>
 </body>

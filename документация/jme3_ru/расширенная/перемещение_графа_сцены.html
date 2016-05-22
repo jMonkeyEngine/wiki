@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>Traverse the SceneGraph</title>
+<title>перемещение_графа_сцены</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -509,128 +509,22 @@ table.CodeRay td.code>pre{padding:0}
 .CodeRay .head .head{color:#f4f}
 </style>
 </head>
-<body class="article toc2 toc-left">
+<body class="article">
 <div id="header">
-<h1>Traverse the SceneGraph</h1>
-<div id="toc" class="toc2">
-<div id="toctitle">Table of Contents</div>
-<ul class="sectlevel1">
-<li><a href="#Пример-Случаев-использования">Пример Случаев использования</a></li>
-<li><a href="#Пример-Кода">Пример Кода</a></li>
-<li><a href="#См-Также">См. Также</a></li>
-</ul>
+<h1>перемещение_графа_сцены</h1>
+<div class="details">
+<span id="author" class="author"></span><br>
+<span id="revnumber">version ,</span>
+<span id="revdate">1970/01/01 00:00</span>
 </div>
 </div>
 <div id="content">
-<div id="preamble">
-<div class="sectionbody">
-<div class="paragraph">
-<p>Английская версия: <a href="jme3/advanced/traverse_scenegraph.html">Traverse SceneGraph</a></p>
-</div>
-<div class="paragraph">
-<p>Вы можете запустить поиск во всем графе сцены и поиск индивидуальных Spatials (<code>Nodes</code> и <code>Geometry</code>) по специальным критериям, таким как имя Spatials, или класс Spatials, или пользовательские данные Spatials, или Spаtial&#8217;s Controls.  Вы можете сделать это, когда вы хотите изменить найденные узлы (переместить их, вызвать метод, и т.д.) но у вас нет локальной переменной для них.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="Пример-Случаев-использования">Пример Случаев использования</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p><strong>Пример 1:</strong></p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Вы создали процедурно сцену с большим количеством динамически создаваемых элементов.</p>
-</li>
-<li>
-<p>You want to find individual Spatials under ever-changing conditions and modify their state.</p>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p><strong>Пример 2:</strong></p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>You created a mostly static scene in the jMonkeyEngine SDK and exported it as .j3o file.<br>
-Сцена содержит также интерактивные объекты как например источник частицы, spatials с данными пользователя, или spatials с пользовательскими элементами управления.</p>
-</li>
-<li>
-<p>Вы загрузили .j3o сцену с помощью assetManager.</p>
-</li>
-<li>
-<p>You want to interact with one of the loaded interactive scene elements in your Java code.<br>
-For example, you want to call <code>emitAllParticles()</code> on the particle emitter. Or you want to find all NPC&#8217;s Geometries with a custom CivilianControl, and call the CivilianControl method that makes them start acting their role.</p>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p>In this case, you can use a SceneGraphVisitorAdapter to identify and access the Spatials in question.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="Пример-Кода">Пример Кода</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>For each search, you create a <code>com.jme3.scene.SceneGraphVisitorAdapter</code> that defines your search criteria and what you want to do with the found Spatials. Then you call the <code>depthFirstTraversal(visitor)</code> or <code>breadthFirstTraversal(visitor)</code> method of the Spatial (e.g. the rootNode, or better, a subnode) to start the search.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">SceneGraphVisitor visitor = <span class="keyword">new</span> SceneGraphVisitor() {
 
-  <span class="annotation">@Override</span>
-  <span class="directive">public</span> <span class="type">void</span> visit(Spatial spat) {
-    <span class="comment">// search criterion can be control class:</span>
-    MyControl control = spatial.getControl(MyControl.class);
-    <span class="keyword">if</span> (control != <span class="predefined-constant">null</span>) {
-      <span class="comment">// you have access to any method, e.g. name.</span>
-      <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Instance of </span><span class="delimiter">&quot;</span></span> + control.getClass().getName()
-                       + <span class="string"><span class="delimiter">&quot;</span><span class="content"> found for </span><span class="delimiter">&quot;</span></span> + spatial.getName());
-    }
-  }
-
-};
-
-<span class="comment">// Now scan the tree either depth first...</span>
-rootNode.depthFirstTraversal(visitor);
-<span class="comment">// ... or scan it breadth first.</span>
-rootNode.breadthFirstTraversal(visitor);</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Which of the two methods is faster depends on how you designed the scengraph, and what tree element you are looking for. If you are searching for one single Geometry that is a “leaf of the tree, and then stop searching, depth-first may be faster. If you search for a high-level grouping Node, breadth-first may be faster.</p>
-</div>
-<div class="paragraph">
-<p>The choice of depth- vs breadth-first also influences the order in which found elements are returned (children first or parents first). If you want to modify user data that is inherited from the parent node (e.g. transformations), the order of application is important, because the side-effects add up.</p>
-</div>
-<div class="paragraph">
-<p>You can use the SceneGraphVisitorAdapter class to scan separately for Geometry and Nodes.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="См-Также">См. Также</h2>
-<div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p><a href="jme3/the_scene_graph.html">The Scene Graph</a></p>
-</li>
-<li>
-<p><a href="spatial.html">Spatial</a>
-&lt;tags&gt;&lt;tag target="spatial" /&gt;&lt;tag target="node" /&gt;&lt;tag target="mesh" /&gt;&lt;tag target="geometry" /&gt;&lt;tag target="scenegraph" /&gt;&lt;/tags&gt;</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-05-22 00:13:35 UTC
+Version <br>
+Last updated 2016-05-22 20:02:34 +02:00
 </div>
 </div>
 </body>

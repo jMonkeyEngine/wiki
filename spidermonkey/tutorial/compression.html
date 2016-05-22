@@ -512,6 +512,11 @@ table.CodeRay td.code>pre{padding:0}
 <body class="article toc2 toc-left">
 <div id="header">
 <h1>Compression</h1>
+<div class="details">
+<span id="author" class="author"></span><br>
+<span id="revnumber">version ,</span>
+<span id="revdate">2011/07/27 15:39</span>
+</div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel2">
@@ -523,7 +528,7 @@ table.CodeRay td.code>pre{padding:0}
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p><abbr title="Application Programming Interface">API</abbr><a href="jme3/advanced/networking.html">networking</a>
+<p><abbr title="Application Programming Interface">API</abbr><a href="../../jme3/advanced/networking.html">networking</a>
 Now this is going to be a real simply tutorial but still I wanted this in a separate article. Why you may ask? Simply because it&#8217;s a feature that requires some explanation, since it has some caveats that I&#8217;ll discuss. Also, I&#8217;ll cover writing your own compression message.</p>
 </div>
 <div class="paragraph">
@@ -545,7 +550,7 @@ client.send(<span class="keyword">new</span> ZIPCompressedMessage(msg));</code><
 <div class="sect2">
 <h3 id="writing-your-own">Writing your own</h3>
 <div class="paragraph">
-<p>Now of course I&#8217;d love to see more compression methods in SpiderMonkey, so I&#8217;ll discuss how to write your own. Let&#8217;s just take GZIPCompressedMessage as example, since that one is the most straightforward. What I&#8217;ve done, is I&#8217;ve just created a GZIPCompressedMessage which extends CompressedMessage. It does not contain any extra messages, so the GZIPCompressedMessage class is practically 'empty'. The magic happens at the serializer, which is called the GZIPSerializer (you can read about writing your own serializer <a href="spidermonkey/tutorial/serializing.html">here</a>). Then I just registered the GZIPSerializer to GZIPCompressedMessage and presto - you&#8217;re done. Don&#8217;t forget that in the Serializer you need to use writeClassAndObject first and then compress that data, and for read you&#8217;d need to use readClassAndObject after you&#8217;ve uncompressed (inflated) the message. For this to be clear, it may be useful to read <a href="http://code.google.com/p/jmonkeyengine/source/browse/trunk/engine/src/networking/com/jme3/network/serializing/serializers/GZIPSerializer.java">the GZIPSerializer class</a>.</p>
+<p>Now of course I&#8217;d love to see more compression methods in SpiderMonkey, so I&#8217;ll discuss how to write your own. Let&#8217;s just take GZIPCompressedMessage as example, since that one is the most straightforward. What I&#8217;ve done, is I&#8217;ve just created a GZIPCompressedMessage which extends CompressedMessage. It does not contain any extra messages, so the GZIPCompressedMessage class is practically 'empty'. The magic happens at the serializer, which is called the GZIPSerializer (you can read about writing your own serializer <a href="../../spidermonkey/tutorial/serializing.html">here</a>). Then I just registered the GZIPSerializer to GZIPCompressedMessage and presto - you&#8217;re done. Don&#8217;t forget that in the Serializer you need to use writeClassAndObject first and then compress that data, and for read you&#8217;d need to use readClassAndObject after you&#8217;ve uncompressed (inflated) the message. For this to be clear, it may be useful to read <a href="http://code.google.com/p/jmonkeyengine/source/browse/trunk/engine/src/networking/com/jme3/network/serializing/serializers/GZIPSerializer.java">the GZIPSerializer class</a>.</p>
 </div>
 <div class="paragraph">
 <p>That&#8217;s that! Next tutorial we&#8217;re going to discuss how to use the Service system.</p>
@@ -554,7 +559,8 @@ client.send(<span class="keyword">new</span> ZIPCompressedMessage(msg));</code><
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-05-22 00:13:35 UTC
+Version <br>
+Last updated 2016-05-22 20:02:26 +02:00
 </div>
 </div>
 </body>
