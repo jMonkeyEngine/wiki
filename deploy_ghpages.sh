@@ -31,6 +31,6 @@ git config --local user.email "travis@travis-ci.org"
 git config --local user.name "Travis"
 git add -A .
 git commit -m "Travis build $TRAVIS_BUILD_NUMBER pushed to gh-pages at ${rev}"
-git push origin gh-pages
+git push --force --quiet https://${GH_TOKEN}@github.com/${repo} gh-pages
 cd ..
 rm -Rf gh-pages
