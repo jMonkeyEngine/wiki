@@ -22,14 +22,14 @@ echo -e "Starting to update gh-pages of ${repo} at ${rev}\n"
 # travis> "attempt to fetch/clone from a shallow repository"
 # So need to do a full clone
 rm -Rf gh-pages
-git clone -b gh-pages --single-branch https://${GH_TOKEN}@github.com/${repo} gh-pages
+git clone -b gh-pages --single-branch https://${GH_TOKEN}@github.com/${repo} gh-pages > /dev/null
 cd gh-pages
 
 rsync -az --stats --delete --exclude .git --force ../build/asciidoc/html5/ .
 
 git config --local user.email "travis@travis-ci.org"
 git config --local user.name "Travis"
-git add -A .
+git add -A . > /dev/null
 git commit -m "Travis build $TRAVIS_BUILD_NUMBER pushed to gh-pages at ${rev}"
 git push --force --quiet origin gh-pages
 cd ..
