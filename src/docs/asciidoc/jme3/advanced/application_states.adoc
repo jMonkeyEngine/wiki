@@ -1,7 +1,7 @@
 = Application States
-:author: 8Keep123
+:author: 
 :revnumber: 
-:revdate: 2015/02/22 18:16
+:revdate: 2016/03/17 20:48
 :relfileprefix: ../../
 :imagesdir: ../..
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
@@ -85,7 +85,7 @@ JME3 comes with a BulletAppState that implements Physical behaviour (using the j
 
 == AppState
 
-The AppState interface lets you initialize sets of objects, and hook a set of continously executing code into the main loop.
+The AppState interface lets you initialize sets of objects, and hook a set of continuously executing code into the main loop.
 
 [cols="2", options="header"]
 |===
@@ -112,11 +112,11 @@ a|Here you implement the behaviour that you want to hook into the simpleUpdate()
 a|isInitialized()
 a|Your implementations of this interface should return the correct respective boolean value. (See AbstractAppState)
 
-a|setActive(true) +
-setActive(false)
+a|setEnabled(true) +
+setEnabled(false)
 a|Temporarily enables or disables an AppState. (See AbstractAppState) 
 
-a|isActive()
+a|isEnabled()
 a|Test whether AppState is enabled or disabled. Your implementation should consider the boolean. (See AbstractAppState)
 
 a|stateAttached(asm) +
@@ -134,7 +134,7 @@ a|Called after all rendering commands are flushed, including your optional custo
 
 == AbstractAppState
 
-The AbstractAppState class already implements some common methods (`isInitialized(), setActive(), isActive()`) and makes creation of custom AppStates a bit easier. We recommend you extend AbstractAppState and override the remaining AppState methods: `initialize(), setEnabled(), cleanup()`.
+The link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/java/com/jme3/app/state/AbstractAppState.java[AbstractAppState] class already implements some common methods (`isInitialized(), setEnabled(), isEnabled()`) and makes creation of custom AppStates a bit easier. We recommend you extend AbstractAppState and override the remaining AppState methods: `initialize(), setEnabled(), cleanup()`.
 
 
 Definition:

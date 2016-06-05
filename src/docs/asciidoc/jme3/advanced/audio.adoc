@@ -1,7 +1,7 @@
 = Audio in jME3
 :author: 
 :revnumber: 
-:revdate: 2014/03/25 09:09
+:revdate: 2016/03/17 20:48
 :keywords: sound, documentation, environment
 :relfileprefix: ../../
 :imagesdir: ../..
@@ -25,19 +25,19 @@ You cannot loop streamed sounds.
 The main jME audio class to look at is `com.jme3.audio.AudioNode`. When creating a new audio node you need to declare whether how you want to load this sound:
 
 
-*  *Buffered:* By default, a new audio node is buffered. This means jME3 loads the whole file into memory before playing. Use this for short sounds. You create a buffered sound  by setting the boolean to false, or using no boolean at all: 
+*  *Buffered:* By default, a new audio node is buffered. This means jME3 loads the whole file into memory before playing. Use this for short sounds. You create a buffered sound  by setting DataType.Buffer, or using no DataType at all: 
 [source,java]
 
 ----
 AudioNode boom = new AudioNode(assetManager, "Sound/boom.wav");
-AudioNode boom = new AudioNode(assetManager, "Sound/boom.wav", false);
+AudioNode boom = new AudioNode(assetManager, "Sound/boom.wav", DataType.Buffer);
 ----
 
 *  *Streamed:* If it is a long file such as music or a dialog, you stream the audio. Streaming means, you load and play in parallel until the sound is done. You cannot loop streams. You create a streamed sound by setting the boolean to true:
 [source,java]
 
 ----
-AudioNode music = new AudioNode(assetManager, "Sound/music.wav", true);
+AudioNode music = new AudioNode(assetManager, "Sound/music.wav", DataType.Stream);
 ----
 
 
@@ -105,7 +105,7 @@ a|All 3D effects switched off. This sound is global and plays in headspace (it a
 
 a|setLooping(true)
 a|Configures the sound to be a loop: After the sound plays, it repeats from the beginning, until you call stop() or pause(). Good for music and ambient background noises. +
-*Looping does not work on streamed sounds.* 
+*Before 3.1-alpha2, Looping does not work on streamed sounds.* 
 
 |===
 

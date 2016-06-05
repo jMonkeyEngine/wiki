@@ -1,7 +1,7 @@
 = jMonkeyEngine 3 Tutorial (8) - Hello Picking
 :author: 
 :revnumber: 
-:revdate: 2014/02/23 01:48
+:revdate: 2016/03/17 20:48
 :keywords: beginner, documentation, intro, node, ray, click, collision, keyinput, input
 :relfileprefix: ../../
 :imagesdir: ../..
@@ -99,6 +99,7 @@ public class HelloPicking extends SimpleApplication {
         // 2. Aim the ray from cam loc to cam direction.
         Ray ray = new Ray(cam.getLocation(), cam.getDirection());
         // 3. Collect intersections between Ray and Shootables in results list.
+        // DO NOT check collision with the root node, or else ALL collisions will hit the skybox! Always make a separate node for objects you want to collide with.
         shootables.collideWith(ray, results);
         // 4. Print the results
         System.out.println("----- Collisions? " + results.size() + "-----");

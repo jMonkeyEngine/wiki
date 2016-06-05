@@ -1,7 +1,7 @@
 = jMonkeyEngine 3 Tutorial (11) - Hello Audio
 :author: 
 :revnumber: 
-:revdate: 2014/02/02 16:41
+:revdate: 2016/03/17 20:48
 :keywords: sound, documentation, beginner, intro
 :relfileprefix: ../../
 :imagesdir: ../..
@@ -27,6 +27,7 @@ package jme3test.helloworld;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.audio.AudioNode;
+import com.jme3.audio.AudioData.DataType;
 import com.jme3.input.MouseInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.MouseButtonTrigger;
@@ -67,14 +68,14 @@ public class HelloAudio extends SimpleApplication {
   /** We create two audio nodes. */
   private void initAudio() {
     /* gun shot sound is to be triggered by a mouse click. */
-    audio_gun = new AudioNode(assetManager, "Sound/Effects/Gun.wav", false);
+    audio_gun = new AudioNode(assetManager, "Sound/Effects/Gun.wav", DataType.Buffer);
     audio_gun.setPositional(false);
     audio_gun.setLooping(false);
     audio_gun.setVolume(2);
     rootNode.attachChild(audio_gun);
 
     /* nature sound - keeps playing in a loop. */
-    audio_nature = new AudioNode(assetManager, "Sound/Environment/Ocean Waves.ogg", true);
+    audio_nature = new AudioNode(assetManager, "Sound/Environment/Ocean Waves.ogg", DataType.Stream);
     audio_nature.setLooping(true);  // activate continuous playing
     audio_nature.setPositional(true);   
     audio_nature.setVolume(3);
@@ -146,13 +147,13 @@ Look at the custom `initAudio()` method: Here you initialize the sound objects a
 
 ----
 
-audio_gun = new AudioNode(assetManager, "Sound/Effects/Gun.wav", false);
+audio_gun = new AudioNode(assetManager, "Sound/Effects/Gun.wav", DataType.Buffer);
     ...
-audio_nature = new AudioNode(assetManager, "Sound/Environment/Nature.ogg", false);
+audio_nature = new AudioNode(assetManager, "Sound/Environment/Nature.ogg", DataType.Stream);
 
 ----
 
-These two lines create new sound nodes from the given audio files in the AssetManager. The `false` flag means that you want to buffer these sounds before playing. (If you set this flag to true, the sound will be streamed, which makes sense for really long sounds.)
+These two lines create new sound nodes from the given audio files in the AssetManager. The `DataType.Buffer` flag means that you want to buffer these sounds before playing. (If you set this flag to `DataType.Stream`, the sound will be streamed, which makes sense for really long sounds.)
 
 
 You want the gunshot sound to play _once_ (you don't want it to loop). You also specify its volume as gain factor (at 0, sound is muted, at 2, it is twice as loud, etc.).
@@ -293,21 +294,22 @@ Apart from the looping boolean, another difference is where `play().playInstance
 
 == Buffered or Streaming?
 
-The Boolean in the AudioNode constructor defines whether the audio is buffered (false) or streamed (true). For example:
+As of 3.1-alpha2, the Enum in the AudioNode constructor defines whether the audio is buffered or streamed. For example:
 
 
 [source,java]
 
 ----
-audio_gunshot = new AudioNode(assetManager, "Sound/Effects/Gun.wav", false); // buffered
+audio_gunshot = new AudioNode(assetManager, "Sound/Effects/Gun.wav", DataType.Buffer); // buffered
 ...
-audio_nature = new AudioNode(assetManager, "Sound/Environment/Nature.ogg", true); // streamed 
+audio_nature = new AudioNode(assetManager, "Sound/Environment/Nature.ogg", DataType.Stream); // streamed 
 ----
 
 Typically, you stream long sounds, and buffer short sounds.
 
 
-Note that streamed sounds can not loop (i.e. setLooping will not work as you expect). Check the getStatus on the node and if it has stopped recreate the node.
++++<strike>Note that streamed sounds can not loop (i.e. setLooping will not work as you expect). Check the getStatus on the node and if it has stopped recreate the node.</strike>+++ (In 3.1-alpha2, this is wrong).
+If you still run 3.0, the above is still the case aswell as a simple boolean will be used instead of `DataType`
 
 
 
