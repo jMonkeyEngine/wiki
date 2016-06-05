@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>interviews</title>
+<title>Physics : SoftBody</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -511,7 +511,7 @@ table.CodeRay td.code>pre{padding:0}
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>interviews</h1>
+<h1>Physics : SoftBody</h1>
 <div class="details">
 <span id="author" class="author"></span><br>
 <span id="revnumber">version ,</span>
@@ -520,268 +520,295 @@ table.CodeRay td.code>pre{padding:0}
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#es-approaches">ES Approaches</a>
-<ul class="sectlevel2">
-<li><a href="#outline">Outline</a></li>
+<li><a href="#getting-started">Getting Started</a>
+<ul class="sectlevel4">
+<li><a href="#how-to">How to :</a></li>
 </ul>
 </li>
-<li><a href="#es-projects-interviews">ES projects interviews</a>
+<li><a href="#simple-example">Simple Example</a></li>
+<li><a href="#documentation">Documentation</a>
 <ul class="sectlevel2">
-<li><a href="#artemis-general">Artemis: General</a></li>
-<li><a href="#zay-es-pspeed">Zay-ES : @pspeed</a></li>
-<li><a href="#entitymonkey-zzuegg">EntityMonkey : @zzuegg</a></li>
-<li><a href="#private-empire-phoenix">Private : @Empire phoenix</a></li>
-</ul>
-</li>
-<li><a href="#others">Others</a>
-<ul class="sectlevel2">
-<li><a href="#java-java-extension">Java &amp; Java extension</a></li>
-<li><a href="#not-java">Not Java</a></li>
+<li><a href="#ropes">Ropes</a></li>
+<li><a href="#anchors">Anchors</a></li>
+<li><a href="#joints">Joints</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div class="sect1">
-<h2 id="es-approaches">ES Approaches</h2>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Entity System implementations are various!</p>
+<p><a href="http://hub.jmonkeyengine.org/t/bullet-softbody-in-jme3-1/33110">http://hub.jmonkeyengine.org/t/bullet-softbody-in-jme3-1/33110</a>
+what is a soft body ?</p>
 </div>
 <div class="paragraph">
-<p>As said, we are talking about Component oriented programming Entity System, implemented in Object oriented programming language and enviroment like Java!</p>
+<p>how a soft body is simulated ? (  node, link, face ; spring &amp; damper )</p>
 </div>
 <div class="paragraph">
-<p>So,we are</p>
+<p><a href="https://en.wikipedia.org/wiki/Soft_body_dynamics">https://en.wikipedia.org/wiki/Soft_body_dynamics</a></p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>not talking</strong> about Groovy, Scala, Closure.. or any Java extension!</p>
-</li>
-<li>
-<p><strong>not talking</strong> about Entity system in any scope other than in a real-time application!</p>
-</li>
-<li>
-<p><strong>focusing</strong> in 'core' features, which exclude many specific usecases</p>
-</li>
-<li>
-<p><strong>trying</strong> to be unprejudiced , impersonal to make equitable judge.</p>
-</li>
-</ul>
 </div>
-<div class="sect2">
-<h3 id="outline">Outline</h3>
+</div>
+<div class="sect1">
+<h2 id="getting-started">Getting Started</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The dynamics libraries for softbody (.so , .dll …) isn&#8217;t (yet) prebuild for your platform so you have to checkout the entire project from GitHub then build the project.</p>
+</div>
+<div class="sect4">
+<h5 id="how-to">How to :</h5>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Initial philosophy</p>
+<p>checkout the project from <a href="https://github.com/Dokthar/jmonkeyengine/tree/bullet_SoftBody">GitHub</a>.</p>
 </li>
 <li>
-<p>Pure data or not?</p>
+<p>go into the file gradle.propeties and set the line : buildNativeProjecte = true .</p>
 </li>
 <li>
-<p>Multi-threading, concurency enable or not?</p>
+<p>run the command : ./gradlew build</p>
 </li>
 <li>
-<p>Communication: Event messaging enable or not?</p>
+<p>then build the sdk : ant -f ./sdk/ build-zip (or build the sdk installer)</p>
 </li>
 <li>
-<p>Is database (and other kind of persistent) friendly or not?</p>
-</li>
-<li>
-<p>Is enterprise friendly (expanable/ extensible/ modulizable) or not?</p>
-</li>
-<li>
-<p>Script possibilities?</p>
-</li>
-<li>
-<p>Restrictions and limitation</p>
-</li>
-<li>
-<p>Dependencies</p>
-</li>
-<li>
-<p>Current status: Long term, stable, community?</p>
+<p>create a new project and make sure you use the following libraries : jme3-bullet-native and jme3-bullet (instead of jme3-jBullet)</p>
 </li>
 </ol>
-</div>
-<div class="paragraph">
-<p>The comparasions will focus in these below points, follow with the scope, status of each projects
-Detail explanation of abbove points <a href="../../../jme3/contributions/entitysystem/points.html">points</a></p>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="es-projects-interviews">ES projects interviews</h2>
+<h2 id="simple-example">Simple Example</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>These interviews are short but focus dicussion to help you get a clear view of underlying implementation of each project.</p>
-</div>
-<div class="sect2">
-<h3 id="artemis-general">Artemis: General</h3>
-<div class="paragraph">
-<p>GoogleCode: <a href="https://code.google.com/p/artemis-framework/">https://code.google.com/p/artemis-framework/</a></p>
-</div>
-<div class="paragraph">
-<p>Website: <a href="http://gamadu.com/artemis/index.html">http://gamadu.com/artemis/index.html</a></p>
-</div>
-<div class="paragraph">
-<p>Wiki: <a href="http://entity-systems.wikidot.com/artemis-entity-system-framework">http://entity-systems.wikidot.com/artemis-entity-system-framework</a></p>
-</div>
-<div class="paragraph">
-<p><a href="../../../jme3/contributions/entitysystem/interviews/artemis.html">artemis</a></p>
-</div>
-<div class="sect3">
-<h4 id="short-conclusion">Short conclusion</h4>
-<div class="paragraph">
-<p>Artemis approach</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Initial philosophy : Lightweight, small footprint and 1.5+</p>
-</li>
-<li>
-<p>Pure data: No</p>
-</li>
-<li>
-<p>Multi-threading, concurency: with care</p>
-</li>
-<li>
-<p>Communication: Event messaging enable or not? No implementation yet</p>
-</li>
-<li>
-<p>Is database (and other kind of persistent) friendly or not? No implementation yet</p>
-</li>
-<li>
-<p>Is enterprise friendly (expanable/ extensible/ modulizable) or not? Not clear but because not pure data, consider Yes</p>
-</li>
-<li>
-<p>Script possibilities? Yes</p>
-</li>
-<li>
-<p>Restrictions and limitation: Custom System has to be extends base System; Processor base; Aspect base, Has documented about Dependencies between System</p>
-</li>
-<li>
-<p>External library dependencies : No</p>
-</li>
-<li>
-<p>Current status: Long term, stable, community? The most early Java ES, more than 3 years, kind of unactive, has a forum.</p>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p>Read the full review for details</p>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="zay-es-pspeed">Zay-ES : @pspeed</h3>
-<div class="paragraph">
-<p>Forum : <a href="http://hub.jmonkeyengine.org/forum/board/projects/zay-es/">http://hub.jmonkeyengine.org/forum/board/projects/zay-es/</a></p>
-</div>
-<div class="paragraph">
-<p>Wiki: <a href="http://hub.jmonkeyengine.org/wiki/doku.php/jme3:contributions:entitysystem">http://hub.jmonkeyengine.org/wiki/doku.php/jme3:contributions:entitysystem</a></p>
-</div>
-<div class="paragraph">
-<p>Links: <a href="http://hub.jmonkeyengine.org/forum/topic/zay-es-links/">http://hub.jmonkeyengine.org/forum/topic/zay-es-links/</a></p>
-</div>
-<div class="paragraph">
-<p>Interview: <a href="../../../jme3/contributions/entitysystem/interviews/zay-es.html">zay-es</a></p>
-</div>
-<div class="sect3">
-<h4 id="short-conclusion-2">Short conclusion</h4>
-<div class="paragraph">
-<p>Zay-ES approach</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Initial philosophy : Lightweight, small footprint and 1.5+</p>
-</li>
-<li>
-<p>Pure data: Yes</p>
-</li>
-<li>
-<p>Multi-threading, concurency: free, by design, but still <em>need better design contract</em></p>
-</li>
-<li>
-<p>Communication: Event messaging enable or not? No implementation yet</p>
-</li>
-<li>
-<p>Is database (and other kind of persistent) friendly or not? No implementation yet</p>
-</li>
-<li>
-<p>Is enterprise friendly (expanable/ extensible/ modulizable) or not? Not clear, <em>lack of design contract</em></p>
-</li>
-<li>
-<p>Script possibilities? Yes</p>
-</li>
-<li>
-<p>Restrictions and limitation: Free of System implementation, but <em>lack of design contract</em></p>
-</li>
-<li>
-<p>External library dependencies : No</p>
-</li>
-<li>
-<p>Current status: Long term, stable, community? more than 2 years, open source recently, active, has a forum in Jmonkey&#8217;s hub.</p>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p>Read the full review for details</p>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="entitymonkey-zzuegg">EntityMonkey : @zzuegg</h3>
-<div class="paragraph">
-<p>Post: <a href="http://hub.jmonkeyengine.org/forum/topic/entitymonkey-a-simple-entity-system-for-jme/">http://hub.jmonkeyengine.org/forum/topic/entitymonkey-a-simple-entity-system-for-jme/</a></p>
-</div>
-<div class="paragraph">
-<p>Interview: <a href="../../../jme3/contributions/entitysystem/interviews/em-es.html">em-es</a></p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="private-empire-phoenix">Private : @Empire phoenix</h3>
-<div class="paragraph">
-<p>Interview: <a href="../../../jme3/contributions/entitysystem/interviews/emp-es.html">emp-es</a></p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">void</span> simpleInitApp() {
+    softBodyAppState = <span class="keyword">new</span> BulletSoftBodyAppState();
+    getStateManager().attach(softBodyAppState);
+
+    SoftBodyWorldInfo sbwi = softBodyAppState.getPhysicsSoftSpace().getWorldInfo();
+    sbwi.setGravity(Vector3f.UNIT_Y.mult(-<span class="float">0.981f</span>));
+
+    Geometry bunny = <span class="keyword">new</span> Geometry(<span class="string"><span class="delimiter">&quot;</span><span class="content">b</span><span class="delimiter">&quot;</span></span>, StandfordBunny.getMesh().deepClone());
+    Material matN = <span class="keyword">new</span> Material(assetManager, <span class="string"><span class="delimiter">&quot;</span><span class="content">Common/MatDefs/Misc/ShowNormals.j3md</span><span class="delimiter">&quot;</span></span>);
+    bunny.setMaterial(matN);
+    rootNode.attachChild(bunny);
+    bunny.addControl(<span class="keyword">new</span> SoftBodyControl(<span class="predefined-constant">false</span>));
+
+    PhysicsSoftBody soft = bunny.getControl(SoftBodyControl.class);
+    soft.generateClusters(<span class="integer">8</span>);
+    soft.config().setDynamicFrictionCoef(<span class="float">0.8f</span>);
+    soft.config().setPoseMatchingCoef(<span class="float">0.2f</span>);
+
+    soft.config().setCollisionsFlags(PhysicsSoftBody.Config.CL_SS + PhysicsSoftBody.Config.CL_RS);
+
+    soft.setPose(<span class="predefined-constant">false</span>, <span class="predefined-constant">true</span>);
+    soft.setTotalMass(<span class="integer">100</span>, <span class="predefined-constant">true</span>);
+    soft.randomizeConstraints();
+    softBodyAppState.getPhysicsSoftSpace().add(soft);
+
+    <span class="predefined-type">Box</span> floorMesh = <span class="keyword">new</span> <span class="predefined-type">Box</span>(<span class="float">100f</span>, <span class="float">0.5f</span>, <span class="float">100f</span>);
+    Geometry floor = <span class="keyword">new</span> Geometry(<span class="string"><span class="delimiter">&quot;</span><span class="content">floor</span><span class="delimiter">&quot;</span></span>, floorMesh);
+    floor.move(<span class="integer">0</span>, -<span class="float">5f</span>, <span class="integer">0</span>);
+    floor.addControl(<span class="keyword">new</span> RigidBodyControl(<span class="integer">0</span>));
+    softBodyAppState.getPhysicsSpace().add(floor);
+}</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="others">Others</h2>
+<h2 id="documentation">Documentation</h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="java-java-extension">Java &amp; Java extension</h3>
-<div class="sect3">
-<h4 id="spartan-used-for-slick-abandoned">Spartan: [used for Slick. abandoned]</h4>
 <div class="paragraph">
-<p>GoogleCode: <a href="http://code.google.com/p/spartanframework/">http://code.google.com/p/spartanframework/</a></p>
+<p>soft mesh / surface</p>
+</div>
+<div class="paragraph">
+<p>Cluster ?</p>
+</div>
+<div class="paragraph">
+<p>(generate) bending constraint ?</p>
+</div>
+<div class="paragraph">
+<p>config collision flag ?</p>
+</div>
+<div class="sect2">
+<h3 id="ropes">Ropes</h3>
+<div class="paragraph">
+<p>A rope can be created by creating a new SoftBody on a Mesh with Mesh.Mode.Lines.
+More informations on creating <a href="../../jme3/advanced/custom_meshes.html">custom meshes</a>.</p>
+</div>
+<div class="sect3">
+<h4 id="example">Example</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">Mesh ropeMesh = <span class="keyword">new</span> Mesh();
+Vector3f<span class="type">[]</span> vertices = {
+   <span class="keyword">new</span> Vector3f(<span class="float">0.00f</span>, <span class="integer">0</span>, <span class="integer">0</span>),
+   <span class="keyword">new</span> Vector3f(<span class="float">0.50f</span>, <span class="integer">0</span>, <span class="integer">0</span>),
+   <span class="keyword">new</span> Vector3f(<span class="float">1.00f</span>, <span class="integer">0</span>, <span class="integer">0</span>),
+   <span class="keyword">new</span> Vector3f(<span class="float">1.50f</span>, <span class="integer">0</span>, <span class="integer">0</span>),
+   <span class="keyword">new</span> Vector3f(<span class="float">2.00f</span>, <span class="integer">0</span>, <span class="integer">0</span>),
+   <span class="keyword">new</span> Vector3f(<span class="float">2.50f</span>, <span class="integer">0</span>, <span class="integer">0</span>),
+   <span class="keyword">new</span> Vector3f(<span class="float">3.00f</span>, <span class="integer">0</span>, <span class="integer">0</span>),
+   <span class="keyword">new</span> Vector3f(<span class="float">3.50f</span>, <span class="integer">0</span>, <span class="integer">0</span>),
+   <span class="keyword">new</span> Vector3f(<span class="float">4.00f</span>, <span class="integer">0</span>, <span class="integer">0</span>)};
+<span class="type">int</span><span class="type">[]</span> indices = {
+   <span class="integer">0</span>, <span class="integer">1</span>,
+   <span class="integer">1</span>, <span class="integer">2</span>,
+   <span class="integer">2</span>, <span class="integer">3</span>,
+   <span class="integer">3</span>, <span class="integer">4</span>,
+   <span class="integer">4</span>, <span class="integer">5</span>,
+   <span class="integer">5</span>, <span class="integer">6</span>,
+   <span class="integer">6</span>, <span class="integer">7</span>,
+   <span class="integer">7</span>, <span class="integer">8</span>};
+ropeMesh.setBuffer(VertexBuffer.Type.Position, <span class="integer">3</span>, BufferUtils.createFloatBuffer(vertices));
+ropeMesh.setBuffer(VertexBuffer.Type.Index, <span class="integer">2</span>, BufferUtils.createIntBuffer(indices));
+ropeMesh.setMode(Mesh.Mode.Lines);
+ropeMesh.updateBound();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once you have a Line Mesh, you can do as follow :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">Geometry t = <span class="keyword">new</span> Geometry(<span class="string"><span class="delimiter">&quot;</span><span class="content">softRope</span><span class="delimiter">&quot;</span></span>, ropeMesh);
+t.move(<span class="integer">0</span>, <span class="integer">5</span>, <span class="integer">0</span>);
+t.addControl(<span class="keyword">new</span> SoftBodyControl(<span class="predefined-constant">false</span>));</code></pre>
+</div>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="not-java">Not Java</h3>
-<div class="sect3">
-<h4 id="c">C++</h4>
-
+<h3 id="anchors">Anchors</h3>
+<div class="paragraph">
+<p>An Anchors act like a weld between a SoftBody and a RigidBody.
+Adding a anchors to a soft body require to specify the SoftBody&#8217;s node and the RigidBody to weld with.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">soft.appendAnchor(nodeId, rigid);</code></pre>
+</div>
+</div>
+<div class="sect4">
+<h5 id="note">Note</h5>
+<div class="paragraph">
+<p>An anchor bind a SoftBody&#8217;s node (or Vertex) to a RigidBody, the node will be attached to a RigidBody even if there are space in between.</p>
+</div>
 </div>
 <div class="sect3">
-<h4 id="javascript">JavaScript</h4>
+<h4 id="example-2">Example</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">Geometry t = <span class="keyword">new</span> Geometry(<span class="string"><span class="delimiter">&quot;</span><span class="content">softRope</span><span class="delimiter">&quot;</span></span>, ropeMesh);
+<span class="predefined-type">Box</span> box = <span class="keyword">new</span> <span class="predefined-type">Box</span>(<span class="float">1f</span>, <span class="float">1f</span>, <span class="float">1f</span>);
+Geometry b = <span class="keyword">new</span> Geometry(<span class="string"><span class="delimiter">&quot;</span><span class="content">rigidBox</span><span class="delimiter">&quot;</span></span>, box);
+t.move(<span class="integer">0</span>, <span class="integer">5</span>, <span class="integer">0</span>);
+b.move(<span class="float">3f</span>, <span class="integer">5</span>, <span class="integer">0</span>);
 
+t.addControl(<span class="keyword">new</span> SoftBodyControl(<span class="predefined-constant">false</span>));
+soft = t.getControl(SoftBodyControl.class);
+soft.setMass(<span class="integer">0</span>, <span class="integer">0</span>); <span class="comment">// make the first ndoe static</span>
+
+b.addControl(<span class="keyword">new</span> RigidBodyControl(<span class="integer">1</span>));
+rigid = b.getControl(RigidBodyControl.class);
+
+softBodyAppState.getPhysicsSpace().add(rigid);
+softBodyAppState.getPhysicsSoftSpace().add(soft);
+
+soft.appendAnchor(<span class="integer">8</span>, rigid); <span class="comment">//where 8 is the last node of the rope</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Anchors can be removed as below. Note that you have to keep the node and RigidBody bind with.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">soft.removeAnchor(<span class="integer">8</span>,rigid);</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="joints">Joints</h3>
+<div class="paragraph">
+<p>Joints require SoftBodies with Clusters ( see generateClusters(int k) ).</p>
+</div>
+<div class="sect4">
+<h5 id="linearjoint">LinearJoint</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> SoftLinearJoint(Vector3f position, PhysicsSoftBody nodeA, PhysicsRigidBody nodeB, Vector3f pivotA, Vector3f pivotB);
+<span class="directive">public</span> SoftLinearJoint(Vector3f position, PhysicsSoftBody nodeA, PhysicsSoftBody nodeB, Vector3f pivotA, Vector3f pivotB);</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="angularjoint">AngularJoint</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> SoftAngularJoint(Vector3f axis, PhysicsSoftBody nodeA, PhysicsRigidBody nodeB, Vector3f pivotA, Vector3f pivotB);
+<span class="directive">public</span> SoftAngularJoint(Vector3f axis, PhysicsSoftBody nodeA, PhysicsSoftBody nodeB, Vector3f pivotA, Vector3f pivotB);</code></pre>
+</div>
+</div>
 </div>
 <div class="sect3">
-<h4 id="c-2">C#</h4>
+<h4 id="examples">Examples</h4>
+<div class="sect4">
+<h5 id="linearjoint-2">LinearJoint</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="predefined-type">Box</span> box = <span class="keyword">new</span> <span class="predefined-type">Box</span>(<span class="float">3f</span>, <span class="float">1f</span>, <span class="float">3f</span>);
+Geometry b = <span class="keyword">new</span> Geometry(<span class="string"><span class="delimiter">&quot;</span><span class="content">rigidBox</span><span class="delimiter">&quot;</span></span>, box);
+b.move(<span class="integer">0</span>, <span class="float">5f</span>, <span class="integer">0</span>);
+b.addControl(<span class="keyword">new</span> RigidBodyControl(<span class="integer">1</span>));
+rigid = b.getControl(RigidBodyControl.class);
 
+Torus torus = <span class="keyword">new</span> Torus(<span class="integer">20</span>, <span class="integer">10</span>, <span class="float">1f</span>, <span class="float">1.5f</span>);
+Geometry t = <span class="keyword">new</span> Geometry(<span class="string"><span class="delimiter">&quot;</span><span class="content">softTorus</span><span class="delimiter">&quot;</span></span>, torus);
+t.addControl(<span class="keyword">new</span> SoftBodyControl(<span class="predefined-constant">true</span>, <span class="predefined-constant">false</span>));
+soft = t.getControl(SoftBodyControl.class);
+soft.generateBendingConstraints(<span class="integer">4</span>, soft.material());
+soft.generateClusters(<span class="integer">4</span>);
+
+softBodyAppState.getPhysicsSpace().add(rigid);
+softBodyAppState.getPhysicsSoftSpace().add(soft);
+
+joint = <span class="keyword">new</span> SoftLinearJoint(Vector3f.UNIT_X, soft, rigid, <span class="keyword">new</span> Vector3f(<span class="float">0f</span>,<span class="integer">2</span>,<span class="float">0f</span>), <span class="keyword">new</span> Vector3f(<span class="float">0f</span>,-<span class="integer">2</span>,<span class="float">0f</span>));
+softBodyAppState.getPhysicsSoftSpace().add(joint);</code></pre>
 </div>
-<div class="sect3">
-<h4 id="actionscript">ActionScript</h4>
+</div>
+</div>
+<div class="sect4">
+<h5 id="angularjoint-2">AngularJoint</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="predefined-type">Box</span> box = <span class="keyword">new</span> <span class="predefined-type">Box</span>(<span class="float">1f</span>, <span class="float">1f</span>, <span class="float">1f</span>);
+Geometry b = <span class="keyword">new</span> Geometry(<span class="string"><span class="delimiter">&quot;</span><span class="content">rigidBox</span><span class="delimiter">&quot;</span></span>, box);
+b.move(<span class="integer">0</span>, <span class="float">5f</span>, <span class="integer">0</span>);
+b.addControl(<span class="keyword">new</span> RigidBodyControl(<span class="integer">1</span>));
+rigid = b.getControl(RigidBodyControl.class);
 
+ Torus torus = <span class="keyword">new</span> Torus(<span class="integer">20</span>, <span class="integer">10</span>, <span class="float">1f</span>, <span class="float">1.5f</span>);
+Geometry t = <span class="keyword">new</span> Geometry(<span class="string"><span class="delimiter">&quot;</span><span class="content">softTorus</span><span class="delimiter">&quot;</span></span>, torus);
+t.addControl(<span class="keyword">new</span> SoftBodyControl(<span class="predefined-constant">true</span>, <span class="predefined-constant">false</span>));
+soft = t.getControl(SoftBodyControl.class);
+soft.generateBendingConstraints(<span class="integer">4</span>, soft.material());
+soft.generateClusters(<span class="integer">4</span>);
+
+softBodyAppState.getPhysicsSpace().add(rigid);
+softBodyAppState.getPhysicsSoftSpace().add(soft);
+
+joint = <span class="keyword">new</span> SoftAngularJoint(Vector3f.UNIT_X, soft, rigid, <span class="keyword">new</span> Vector3f(<span class="integer">0</span>,<span class="integer">0</span>,<span class="integer">2</span>), <span class="keyword">new</span> Vector3f(<span class="integer">0</span>, <span class="integer">0</span>, <span class="integer">2</span>));
+softBodyAppState.getPhysicsSoftSpace().add(joint);</code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>

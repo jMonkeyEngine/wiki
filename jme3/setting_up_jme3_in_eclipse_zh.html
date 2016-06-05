@@ -5,7 +5,8 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>interviews</title>
+<meta name="keywords" content="documentation, install, eclipse">
+<title>在Eclipse中集成jME3</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -511,7 +512,7 @@ table.CodeRay td.code>pre{padding:0}
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>interviews</h1>
+<h1>在Eclipse中集成jME3</h1>
 <div class="details">
 <span id="author" class="author"></span><br>
 <span id="revnumber">version ,</span>
@@ -520,269 +521,192 @@ table.CodeRay td.code>pre{padding:0}
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#es-approaches">ES Approaches</a>
-<ul class="sectlevel2">
-<li><a href="#outline">Outline</a></li>
-</ul>
-</li>
-<li><a href="#es-projects-interviews">ES projects interviews</a>
-<ul class="sectlevel2">
-<li><a href="#artemis-general">Artemis: General</a></li>
-<li><a href="#zay-es-pspeed">Zay-ES : @pspeed</a></li>
-<li><a href="#entitymonkey-zzuegg">EntityMonkey : @zzuegg</a></li>
-<li><a href="#private-empire-phoenix">Private : @Empire phoenix</a></li>
-</ul>
-</li>
-<li><a href="#others">Others</a>
-<ul class="sectlevel2">
-<li><a href="#java-java-extension">Java &amp; Java extension</a></li>
-<li><a href="#not-java">Not Java</a></li>
-</ul>
-</li>
+<li><a href="#下载jme3">下载jME3</a></li>
+<li><a href="#新建游戏项目">新建游戏项目</a></li>
+<li><a href="#添加jme3依赖">添加jME3依赖</a></li>
+<li><a href="#添加资源">添加资源</a></li>
+<li><a href="#编写一个简单的应用程序">编写一个简单的应用程序</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div class="sect1">
-<h2 id="es-approaches">ES Approaches</h2>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Entity System implementations are various!</p>
+<p>我们建议你使用jMonkeyEngine SDK来开发jMonkeyEngine3项目。</p>
 </div>
 <div class="paragraph">
-<p>As said, we are talking about Component oriented programming Entity System, implemented in Object oriented programming language and enviroment like Java!</p>
+<p>或者，你可以使用你喜好的IDE：本教程将介绍如何下载并安装最新版的jMonkeyEngine 3，并与Eclipse IDE集成。jMonkeyEngine 3与<a href="../jme3/setting_up_netbeans_and_jme3.html">NetBeans IDE</a>同样可以集成。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="下载jme3">下载jME3</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>下载最新的jMonkeyEngine3稳定版JAR包。</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>从 <a href="http://updates.jmonkeyengine.org/stable/3.0/engine">http://updates.jmonkeyengine.org/stable/3.0/engine</a> 下载最新的压缩包(不出意外应该是jME3_2014-06-12.zip)。</p>
+</li>
+<li>
+<p>将其解压到你的工作目录($HOME)下，保存到`jME3_2014-xx-xx`文件夹中，你将会看到下列文件及文件夹：</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>lib/</code> – 编译好的jMonkeyEngine运行库。(重要！不要移动这个文件夹！)</p>
+</li>
+<li>
+<p><code>opt/</code> – 可选运行库，包含android、ios、jogl、gluegen、OpenAL、bullet等JAR包和DLL文件，用户自选使用。(可选)</p>
+</li>
+<li>
+<p><code>javadoc/</code> – jME3 API文档。(可选)</p>
+</li>
+<li>
+<p><code>source/</code> – jME3源代码。(可选)</p>
+</li>
+<li>
+<p><code>TestChooser.exe</code> – 运行这个程序，可以预览大量的DEMO。(可选)</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="../jme3/1_jme3_2014_06_12_zip.png" alt="1_jme3_2014_06_12_zip.png" height="">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="新建游戏项目">新建游戏项目</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>在Eclipse的菜单中，选择 File &gt; New &gt; Java Project</p>
+</li>
+<li>
+<p>项目名：HelloJME3</p>
+</li>
+<li>
+<p>点击Finish</p>
+</li>
+</ul>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="../jme3/2_create_hellojme3_project.png" alt="2_create_hellojme3_project.png" height="">
+</div>
 </div>
 <div class="paragraph">
-<p>So,we are</p>
+<p>项目创建完毕，即可在Package视图中看到这个项目。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="添加jme3依赖">添加jME3依赖</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>你的项目依赖于jMonkeyEngine库文件，需要知道JME3的JAR包都在什么位置。</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>not talking</strong> about Groovy, Scala, Closure.. or any Java extension!</p>
-</li>
-<li>
-<p><strong>not talking</strong> about Entity system in any scope other than in a real-time application!</p>
-</li>
-<li>
-<p><strong>focusing</strong> in 'core' features, which exclude many specific usecases</p>
-</li>
-<li>
-<p><strong>trying</strong> to be unprejudiced , impersonal to make equitable judge.</p>
+<p>右键单击项目名，在弹出菜单中选择`Build Path &gt; Configure Build Path..`</p>
 </li>
 </ul>
 </div>
-<div class="sect2">
-<h3 id="outline">Outline</h3>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="../jme3/3_configure_build_path.png" alt="3_configure_build_path.png" height="">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>打开项目配置窗口后，选择`Java Build Path &gt; Libraries &gt; Add External JARs..`</p>
+</li>
+</ul>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="../jme3/4_add_external_jars.png" alt="4_add_external_jars.png" height="">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>在“JAR selection对话框中，打开`$HOME/jME3_2012-xx-xx`文件夹</p>
+</li>
+<li>
+<p>选中`lib`文件夹中所有的JAR文件，然后点击“Open</p>
+</li>
+</ul>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="../jme3/5_jar_selection.png" alt="5_jar_selection.png" height="">
+</div>
+</div>
+<div class="paragraph">
+<p>现在所有必要的JAR包都已经添加到了项目的classpath，并显示在在Referenced Libraries中。至于每个JAR文件的详细介绍，请查阅<a href="../jme3/jme3_source_structure.html#structure_of_jmonkeyengine3_jars">jME3 JAR文件说明</a>。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="添加资源">添加资源</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>在classpath中创建一个assets文件夹，确保jME3的资源管理器可以正确访问项目资源。</p>
+</div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Initial philosophy</p>
+<p>打开项目配置(Project Properties)窗口</p>
 </li>
 <li>
-<p>Pure data or not?</p>
+<p>选择Java Build Path</p>
 </li>
 <li>
-<p>Multi-threading, concurency enable or not?</p>
+<p>在Source标签页下点击“Add folder</p>
 </li>
 <li>
-<p>Communication: Event messaging enable or not?</p>
-</li>
-<li>
-<p>Is database (and other kind of persistent) friendly or not?</p>
-</li>
-<li>
-<p>Is enterprise friendly (expanable/ extensible/ modulizable) or not?</p>
-</li>
-<li>
-<p>Script possibilities?</p>
-</li>
-<li>
-<p>Restrictions and limitation</p>
-</li>
-<li>
-<p>Dependencies</p>
-</li>
-<li>
-<p>Current status: Long term, stable, community?</p>
+<p>添加Assets文件夹</p>
 </li>
 </ol>
 </div>
-<div class="paragraph">
-<p>The comparasions will focus in these below points, follow with the scope, status of each projects
-Detail explanation of abbove points <a href="../../../jme3/contributions/entitysystem/points.html">points</a></p>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="../jme3/6_new_source_folder.png" alt="6_new_source_folder.png" height="">
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="es-projects-interviews">ES projects interviews</h2>
+<h2 id="编写一个简单的应用程序">编写一个简单的应用程序</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>These interviews are short but focus dicussion to help you get a clear view of underlying implementation of each project.</p>
-</div>
-<div class="sect2">
-<h3 id="artemis-general">Artemis: General</h3>
-<div class="paragraph">
-<p>GoogleCode: <a href="https://code.google.com/p/artemis-framework/">https://code.google.com/p/artemis-framework/</a></p>
-</div>
-<div class="paragraph">
-<p>Website: <a href="http://gamadu.com/artemis/index.html">http://gamadu.com/artemis/index.html</a></p>
-</div>
-<div class="paragraph">
-<p>Wiki: <a href="http://entity-systems.wikidot.com/artemis-entity-system-framework">http://entity-systems.wikidot.com/artemis-entity-system-framework</a></p>
-</div>
-<div class="paragraph">
-<p><a href="../../../jme3/contributions/entitysystem/interviews/artemis.html">artemis</a></p>
-</div>
-<div class="sect3">
-<h4 id="short-conclusion">Short conclusion</h4>
-<div class="paragraph">
-<p>Artemis approach</p>
-</div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Initial philosophy : Lightweight, small footprint and 1.5+</p>
+<p>在项目中新建一个package，例如“hello</p>
 </li>
 <li>
-<p>Pure data: No</p>
-</li>
-<li>
-<p>Multi-threading, concurency: with care</p>
-</li>
-<li>
-<p>Communication: Event messaging enable or not? No implementation yet</p>
-</li>
-<li>
-<p>Is database (and other kind of persistent) friendly or not? No implementation yet</p>
-</li>
-<li>
-<p>Is enterprise friendly (expanable/ extensible/ modulizable) or not? Not clear but because not pure data, consider Yes</p>
-</li>
-<li>
-<p>Script possibilities? Yes</p>
-</li>
-<li>
-<p>Restrictions and limitation: Custom System has to be extends base System; Processor base; Aspect base, Has documented about Dependencies between System</p>
-</li>
-<li>
-<p>External library dependencies : No</p>
-</li>
-<li>
-<p>Current status: Long term, stable, community? The most early Java ES, more than 3 years, kind of unactive, has a forum.</p>
+<p>在hello包中新建一个类，命名为“MyGame，继承于`com.jme3.app.SimpleApplication`</p>
 </li>
 </ol>
 </div>
-<div class="paragraph">
-<p>Read the full review for details</p>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="../jme3/7_create_mygame.png" alt="7_create_mygame.png" height="">
 </div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="zay-es-pspeed">Zay-ES : @pspeed</h3>
-<div class="paragraph">
-<p>Forum : <a href="http://hub.jmonkeyengine.org/forum/board/projects/zay-es/">http://hub.jmonkeyengine.org/forum/board/projects/zay-es/</a></p>
 </div>
 <div class="paragraph">
-<p>Wiki: <a href="http://hub.jmonkeyengine.org/wiki/doku.php/jme3:contributions:entitysystem">http://hub.jmonkeyengine.org/wiki/doku.php/jme3:contributions:entitysystem</a></p>
-</div>
-<div class="paragraph">
-<p>Links: <a href="http://hub.jmonkeyengine.org/forum/topic/zay-es-links/">http://hub.jmonkeyengine.org/forum/topic/zay-es-links/</a></p>
-</div>
-<div class="paragraph">
-<p>Interview: <a href="../../../jme3/contributions/entitysystem/interviews/zay-es.html">zay-es</a></p>
-</div>
-<div class="sect3">
-<h4 id="short-conclusion-2">Short conclusion</h4>
-<div class="paragraph">
-<p>Zay-ES approach</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Initial philosophy : Lightweight, small footprint and 1.5+</p>
-</li>
-<li>
-<p>Pure data: Yes</p>
-</li>
-<li>
-<p>Multi-threading, concurency: free, by design, but still <em>need better design contract</em></p>
-</li>
-<li>
-<p>Communication: Event messaging enable or not? No implementation yet</p>
-</li>
-<li>
-<p>Is database (and other kind of persistent) friendly or not? No implementation yet</p>
-</li>
-<li>
-<p>Is enterprise friendly (expanable/ extensible/ modulizable) or not? Not clear, <em>lack of design contract</em></p>
-</li>
-<li>
-<p>Script possibilities? Yes</p>
-</li>
-<li>
-<p>Restrictions and limitation: Free of System implementation, but <em>lack of design contract</em></p>
-</li>
-<li>
-<p>External library dependencies : No</p>
-</li>
-<li>
-<p>Current status: Long term, stable, community? more than 2 years, open source recently, active, has a forum in Jmonkey&#8217;s hub.</p>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p>Read the full review for details</p>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="entitymonkey-zzuegg">EntityMonkey : @zzuegg</h3>
-<div class="paragraph">
-<p>Post: <a href="http://hub.jmonkeyengine.org/forum/topic/entitymonkey-a-simple-entity-system-for-jme/">http://hub.jmonkeyengine.org/forum/topic/entitymonkey-a-simple-entity-system-for-jme/</a></p>
-</div>
-<div class="paragraph">
-<p>Interview: <a href="../../../jme3/contributions/entitysystem/interviews/em-es.html">em-es</a></p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="private-empire-phoenix">Private : @Empire phoenix</h3>
-<div class="paragraph">
-<p>Interview: <a href="../../../jme3/contributions/entitysystem/interviews/emp-es.html">emp-es</a></p>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="others">Others</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="java-java-extension">Java &amp; Java extension</h3>
-<div class="sect3">
-<h4 id="spartan-used-for-slick-abandoned">Spartan: [used for Slick. abandoned]</h4>
-<div class="paragraph">
-<p>GoogleCode: <a href="http://code.google.com/p/spartanframework/">http://code.google.com/p/spartanframework/</a></p>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="not-java">Not Java</h3>
-<div class="sect3">
-<h4 id="c">C++</h4>
-
-</div>
-<div class="sect3">
-<h4 id="javascript">JavaScript</h4>
-
-</div>
-<div class="sect3">
-<h4 id="c-2">C#</h4>
-
-</div>
-<div class="sect3">
-<h4 id="actionscript">ActionScript</h4>
-
-</div>
+<p>然后你可以接着开发<a href="../jme3/beginner/hello_simpleapplication_zh.html">你的第一个jme3应用程序</a>了！</p>
 </div>
 </div>
 </div>

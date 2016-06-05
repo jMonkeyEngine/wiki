@@ -516,7 +516,7 @@ table.CodeRay td.code>pre{padding:0}
 <div class="details">
 <span id="author" class="author"></span><br>
 <span id="revnumber">version ,</span>
-<span id="revdate">2014/03/25 09:09</span>
+<span id="revdate">2016/03/17 20:48</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -573,14 +573,14 @@ You cannot loop streamed sounds.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Buffered:</strong> By default, a new audio node is buffered. This means jME3 loads the whole file into memory before playing. Use this for short sounds. You create a buffered sound  by setting the boolean to false, or using no boolean at all:</p>
+<p><strong>Buffered:</strong> By default, a new audio node is buffered. This means jME3 loads the whole file into memory before playing. Use this for short sounds. You create a buffered sound  by setting DataType.Buffer, or using no DataType at all:</p>
 </li>
 </ul>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre>AudioNode boom = new AudioNode(assetManager, "Sound/boom.wav");
-AudioNode boom = new AudioNode(assetManager, "Sound/boom.wav", false);</pre>
+AudioNode boom = new AudioNode(assetManager, "Sound/boom.wav", DataType.Buffer);</pre>
 </div>
 </div>
 <div class="ulist">
@@ -592,7 +592,7 @@ AudioNode boom = new AudioNode(assetManager, "Sound/boom.wav", false);</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>AudioNode music = new AudioNode(assetManager, "Sound/music.wav", true);</pre>
+<pre>AudioNode music = new AudioNode(assetManager, "Sound/music.wav", DataType.Stream);</pre>
 </div>
 </div>
 </div>
@@ -737,7 +737,7 @@ setDirectional(false)</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
 <p>Configures the sound to be a loop: After the sound plays, it repeats from the beginning, until you call stop() or pause(). Good for music and ambient background noises.<br>
-<strong>Looping does not work on streamed sounds.</strong></p>
+<strong>Before 3.1-alpha2, Looping does not work on streamed sounds.</strong></p>
 </div></div></td>
 </tr>
 </tbody>
@@ -1143,7 +1143,7 @@ footstepsAudio.setReverbEnabled(true);</pre>
 <div id="footer">
 <div id="footer-text">
 Version <br>
-Last updated 2016-05-28 20:11:36 UTC
+Last updated 2016-06-05 15:58:32 UTC
 </div>
 </div>
 </body>

@@ -516,7 +516,7 @@ table.CodeRay td.code>pre{padding:0}
 <div class="details">
 <span id="author" class="author"></span><br>
 <span id="revnumber">version ,</span>
-<span id="revdate">2014/02/02 16:41</span>
+<span id="revdate">2016/03/17 20:48</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -557,6 +557,7 @@ table.CodeRay td.code>pre{padding:0}
 
 <span class="keyword">import</span> <span class="include">com.jme3.app.SimpleApplication</span>;
 <span class="keyword">import</span> <span class="include">com.jme3.audio.AudioNode</span>;
+<span class="keyword">import</span> <span class="include">com.jme3.audio.AudioData.DataType</span>;
 <span class="keyword">import</span> <span class="include">com.jme3.input.MouseInput</span>;
 <span class="keyword">import</span> <span class="include">com.jme3.input.controls.ActionListener</span>;
 <span class="keyword">import</span> <span class="include">com.jme3.input.controls.MouseButtonTrigger</span>;
@@ -597,14 +598,14 @@ table.CodeRay td.code>pre{padding:0}
   <span class="comment">/** We create two audio nodes. */</span>
   <span class="directive">private</span> <span class="type">void</span> initAudio() {
     <span class="comment">/* gun shot sound is to be triggered by a mouse click. */</span>
-    audio_gun = <span class="keyword">new</span> AudioNode(assetManager, <span class="string"><span class="delimiter">&quot;</span><span class="content">Sound/Effects/Gun.wav</span><span class="delimiter">&quot;</span></span>, <span class="predefined-constant">false</span>);
+    audio_gun = <span class="keyword">new</span> AudioNode(assetManager, <span class="string"><span class="delimiter">&quot;</span><span class="content">Sound/Effects/Gun.wav</span><span class="delimiter">&quot;</span></span>, DataType.Buffer);
     audio_gun.setPositional(<span class="predefined-constant">false</span>);
     audio_gun.setLooping(<span class="predefined-constant">false</span>);
     audio_gun.setVolume(<span class="integer">2</span>);
     rootNode.attachChild(audio_gun);
 
     <span class="comment">/* nature sound - keeps playing in a loop. */</span>
-    audio_nature = <span class="keyword">new</span> AudioNode(assetManager, <span class="string"><span class="delimiter">&quot;</span><span class="content">Sound/Environment/Ocean Waves.ogg</span><span class="delimiter">&quot;</span></span>, <span class="predefined-constant">true</span>);
+    audio_nature = <span class="keyword">new</span> AudioNode(assetManager, <span class="string"><span class="delimiter">&quot;</span><span class="content">Sound/Environment/Ocean Waves.ogg</span><span class="delimiter">&quot;</span></span>, DataType.Stream);
     audio_nature.setLooping(<span class="predefined-constant">true</span>);  <span class="comment">// activate continuous playing</span>
     audio_nature.setPositional(<span class="predefined-constant">true</span>);
     audio_nature.setVolume(<span class="integer">3</span>);
@@ -674,13 +675,13 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="Java">audio_gun = <span class="keyword">new</span> AudioNode(assetManager, <span class="string"><span class="delimiter">&quot;</span><span class="content">Sound/Effects/Gun.wav</span><span class="delimiter">&quot;</span></span>, <span class="predefined-constant">false</span>);
+<pre class="CodeRay highlight"><code data-lang="Java">audio_gun = <span class="keyword">new</span> AudioNode(assetManager, <span class="string"><span class="delimiter">&quot;</span><span class="content">Sound/Effects/Gun.wav</span><span class="delimiter">&quot;</span></span>, DataType.Buffer);
     ...
-audio_nature = <span class="keyword">new</span> AudioNode(assetManager, <span class="string"><span class="delimiter">&quot;</span><span class="content">Sound/Environment/Nature.ogg</span><span class="delimiter">&quot;</span></span>, <span class="predefined-constant">false</span>);</code></pre>
+audio_nature = <span class="keyword">new</span> AudioNode(assetManager, <span class="string"><span class="delimiter">&quot;</span><span class="content">Sound/Environment/Nature.ogg</span><span class="delimiter">&quot;</span></span>, DataType.Stream);</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>These two lines create new sound nodes from the given audio files in the AssetManager. The <code>false</code> flag means that you want to buffer these sounds before playing. (If you set this flag to true, the sound will be streamed, which makes sense for really long sounds.)</p>
+<p>These two lines create new sound nodes from the given audio files in the AssetManager. The <code>DataType.Buffer</code> flag means that you want to buffer these sounds before playing. (If you set this flag to <code>DataType.Stream</code>, the sound will be streamed, which makes sense for really long sounds.)</p>
 </div>
 <div class="paragraph">
 <p>You want the gunshot sound to play <em>once</em> (you don&#8217;t want it to loop). You also specify its volume as gain factor (at 0, sound is muted, at 2, it is twice as loud, etc.).</p>
@@ -835,20 +836,21 @@ audio_nature = <span class="keyword">new</span> AudioNode(assetManager, <span cl
 <h2 id="buffered-or-streaming">Buffered or Streaming?</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The Boolean in the AudioNode constructor defines whether the audio is buffered (false) or streamed (true). For example:</p>
+<p>As of 3.1-alpha2, the Enum in the AudioNode constructor defines whether the audio is buffered or streamed. For example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">audio_gunshot = <span class="keyword">new</span> AudioNode(assetManager, <span class="string"><span class="delimiter">&quot;</span><span class="content">Sound/Effects/Gun.wav</span><span class="delimiter">&quot;</span></span>, <span class="predefined-constant">false</span>); <span class="comment">// buffered</span>
+<pre class="CodeRay highlight"><code data-lang="java">audio_gunshot = <span class="keyword">new</span> AudioNode(assetManager, <span class="string"><span class="delimiter">&quot;</span><span class="content">Sound/Effects/Gun.wav</span><span class="delimiter">&quot;</span></span>, DataType.Buffer); <span class="comment">// buffered</span>
 ...
-audio_nature = <span class="keyword">new</span> AudioNode(assetManager, <span class="string"><span class="delimiter">&quot;</span><span class="content">Sound/Environment/Nature.ogg</span><span class="delimiter">&quot;</span></span>, <span class="predefined-constant">true</span>); <span class="comment">// streamed</span></code></pre>
+audio_nature = <span class="keyword">new</span> AudioNode(assetManager, <span class="string"><span class="delimiter">&quot;</span><span class="content">Sound/Environment/Nature.ogg</span><span class="delimiter">&quot;</span></span>, DataType.Stream); <span class="comment">// streamed</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>Typically, you stream long sounds, and buffer short sounds.</p>
 </div>
 <div class="paragraph">
-<p>Note that streamed sounds can not loop (i.e. setLooping will not work as you expect). Check the getStatus on the node and if it has stopped recreate the node.</p>
+<p><strike>Note that streamed sounds can not loop (i.e. setLooping will not work as you expect). Check the getStatus on the node and if it has stopped recreate the node.</strike> (In 3.1-alpha2, this is wrong).
+If you still run 3.0, the above is still the case aswell as a simple boolean will be used instead of <code>DataType</code></p>
 </div>
 </div>
 </div>
@@ -973,7 +975,7 @@ audio_nature = <span class="keyword">new</span> AudioNode(assetManager, <span cl
 <div id="footer">
 <div id="footer-text">
 Version <br>
-Last updated 2016-05-28 20:11:36 UTC
+Last updated 2016-06-05 15:58:32 UTC
 </div>
 </div>
 </body>

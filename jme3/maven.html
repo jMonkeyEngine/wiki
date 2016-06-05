@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>jME3 with Maven</title>
+<title>Maven</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -511,21 +511,134 @@ table.CodeRay td.code>pre{padding:0}
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>jME3 with Maven</h1>
+<h1>Maven</h1>
 <div class="details">
 <span id="author" class="author"></span><br>
 <span id="revnumber">version ,</span>
-<span id="revdate">2014/10/19 03:20</span>
+<span id="revdate">2016/03/17 20:48</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
+<li><a href="#jme3-1">jME3.1</a></li>
+<li><a href="#jme3-0">jME3.0</a></li>
 <li><a href="#gradle">Gradle</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
 <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>You can use jME3 with maven compatible build systems.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="jme3-1">jME3.1</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Artifacts for jME3.1 releases are available in <a href="https://jcenter.bintray.com/org/jmonkeyengine/">JCenter</a>, as well as the <a href="http://updates.jmonkeyengine.org/maven/">jME3 repository</a> like before.
+The group id for all jME3 libraries is <code>org.jmonkeyengine</code>.
+The following artifacts are currently available (version 3.1.0-alpha2):</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>jme3-core - Core libraries needed for all jME3 projects</p>
+</li>
+<li>
+<p>jme3-effects - Effects libraries for water and other post filters</p>
+</li>
+<li>
+<p>jme3-networking - jME3 networking libraries (aka spidermonkey)</p>
+</li>
+<li>
+<p>jme3-plugins - Loader plugins for OgreXML and jME-XML</p>
+</li>
+<li>
+<p>jme3-jogg - Loader for jogg audio files</p>
+</li>
+<li>
+<p>jme3-terrain - Terrain generation <abbr title="Application Programming Interface">API</abbr></p>
+</li>
+<li>
+<p>jme3-blender - Blender file loader, only works on desktop renderers</p>
+</li>
+<li>
+<p>jme3-jbullet - Physics support using jbullet (desktop only, not available in JCenter) <strong>Only jme3-jbullet OR jme3-bullet can be used</strong></p>
+</li>
+<li>
+<p>jme3-bullet - Physics support using native bullet, needs jme3-bullet-native or jme3-bullet-native-android (beta)</p>
+</li>
+<li>
+<p>jme3-bullet-native - Native libraries needed for bullet (not jbullet) on desktop (beta)</p>
+</li>
+<li>
+<p>jme3-bullet-native-android - Native libraries needed for bullet (not jbullet) on android (beta)</p>
+</li>
+<li>
+<p>jme3-niftygui - NiftyGUI support for jME3 (Not available in JCenter)</p>
+</li>
+<li>
+<p>jme3-desktop - Parts of the jME3 <abbr title="Application Programming Interface">API</abbr> that are only compatible with desktop renderers, needed for image loading on desktop</p>
+</li>
+<li>
+<p>jme3-lwjgl - Desktop renderer for jME3</p>
+</li>
+<li>
+<p>jme3-lwjgl3 - NEW in jME3.1! LWJGL3-based desktop renderer for jME3 (beta)</p>
+</li>
+<li>
+<p>jme3-jogl - JOGL based renderer (optional replacement for lwjgl / lwjgl3)</p>
+</li>
+<li>
+<p>jme3-android - Android renderer for jME3</p>
+</li>
+<li>
+<p>jme3-android-native - Native libraries needed for Android</p>
+</li>
+<li>
+<p>jme3-ios - iOS renderer for jME3 (Not available in JCenter)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For a basic desktop application to work you need to import at least</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>jme3-core</p>
+</li>
+<li>
+<p>jme3-desktop</p>
+</li>
+<li>
+<p>jme3-lwjgl OR jme3-lwjgl3</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For a basic android application to work you need to import at least</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>jme3-core</p>
+</li>
+<li>
+<p>jme3-android</p>
+</li>
+<li>
+<p>jme3-android-native</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="jme3-0">jME3.0</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>You can use jME3 with maven compatible build systems, the official maven repository for jME3 is at
@@ -681,7 +794,7 @@ dependencies {
 <div id="footer">
 <div id="footer-text">
 Version <br>
-Last updated 2016-05-28 20:11:36 UTC
+Last updated 2016-06-05 15:58:32 UTC
 </div>
 </div>
 </body>
