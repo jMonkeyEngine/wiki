@@ -75,7 +75,7 @@ class helper_plugin_asciidoc extends DokuWiki_Plugin {
                     $renderer->doc .= DOKU_LF."====".DOKU_LF;
                     return true;
                   case '3':
-                    $renderer->doc .= $renderer->_xmlEntities($m1);
+                    $renderer->doc .= $m1;//$renderer->_xmlEntities($m1);
                     return true;
                   case '4':
                     $renderer->doc .= DOKU_LF."====".DOKU_LF;
