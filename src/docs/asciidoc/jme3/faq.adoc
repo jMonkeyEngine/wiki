@@ -23,7 +23,6 @@ Write a Java class that extends link:https://github.com/jMonkeyEngine/jmonkeyeng
 === How do I change the background color?
 
 [source,java]
-
 ----
 viewPort.setBackgroundColor(ColorRGBA.Blue);
 ----
@@ -59,7 +58,6 @@ During development, you can switch the severity level of the default logger to n
 
 
 [source,java]
-
 ----
 java.util.logging.Logger.getLogger("").setLevel(Level.WARNING);
 ----
@@ -68,7 +66,6 @@ For the release, switch the severity level of the default logger to print only S
 
 
 [source,java]
-
 ----
 java.util.logging.Logger.getLogger("").setLevel(Level.SEVERE);
 ----
@@ -102,13 +99,11 @@ To make a spatial appear in the scene, you attach it to the rootNode (or to a no
 
 
 [source,java]
-
 ----
 rootNode.attachChild(spatial); // appear in scene
 ----
 
 [source,java]
-
 ----
 rootNode.detachChild(spatial); // remove from scene
 ----
@@ -123,7 +118,6 @@ First check whether the file path of the asset is correct. By default it is rela
 
 
 [source,java]
-
 ----
 // To load .../jMonkeyProjects/MyGame/assets/Models/Ninja/Ninja.j3o
 Spatial ninja = assetManager.loadModel("Models/Ninja/Ninja.j3o");
@@ -133,7 +127,6 @@ If you are not using the default `assets` directory, verify that you have regist
 
 
 [source,java]
-
 ----
 
 this.assetManager.registerLocator("assets/", FileLocator.class); // default
@@ -166,7 +159,6 @@ Use the jMonkeyEngine SDK to convert models from Ogre XML or Wavefront OBJ forma
 
 
 [source,java]
-
 ----
 // To load .../jMonkeyProjects/MyGame/assets/Models/Ninja/Ninja.j3o
 Spatial ninja = assetManager.loadModel("Models/Ninja/Ninja.j3o");
@@ -195,7 +187,6 @@ To move or turn or resize a spatial you use transformations. You can concatenate
 
 
 [source,java]
-
 ----
 spatial.setLocalTranslation(1,-3,2.5f); spatial.rotate(0,3.14f,0); spatial.scale(2,2,2);
 ----
@@ -217,7 +208,6 @@ Change the geometry's translation (position) live in the update loop using setLo
 === How do I access a named sub-mesh in Model?
 
 [source,java]
-
 ----
 Geometry submesh = (Geometry) model.getChild("door 12");
 ----
@@ -243,7 +233,6 @@ The most likely reason is the flipping of textures. You may be using the followi
 
 
 [source,java]
-
 ----
 
   material.setTexture("ColorMap", assetManager.loadTexture("myTexture.jpg"));
@@ -254,7 +243,6 @@ You can set the boolean value in the constructor of TextureKey to flipped or not
 
 
 [source,java]
-
 ----
 
   material.setTexture("ColorMap", this.assetManager.loadTexture(new TextureKey("myTexture.jpg", false)));
@@ -268,7 +256,6 @@ You cannot scale a texture, but you scale the texture coordinates of the mesh th
 
 
 [source,java]
-
 ----
 mesh.scaleTextureCoordinates(new Vector2f(2,2));
 ----
@@ -277,7 +264,6 @@ You can choose among various `com.jme3.texture.Texture.WrapMode`s for individual
 
 
 [source,java]
-
 ----
 material.getTextureParam("DiffuseMap").getTextureValue().setWrap(WrapMode.Repeat);
 ----
@@ -325,7 +311,6 @@ Assign a texture with an alpha channel to a Material and set the Material's blen
 
 
 [source,java]
-
 ----
 material.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
 ----
@@ -340,7 +325,6 @@ While debugging custom meshes, you can switch the `com.jme3.material.RenderState
 
 
 [source,java]
-
 ----
 someMaterial.getAdditionalRenderState().setFaceCullMode(FaceCullMode.Off);
 ----
@@ -349,7 +333,6 @@ You can also deactivate the `com.jme3.scene.Spatial.CullHint` of a whole spatial
 
 
 [source,java]
-
 ----
 someNode.setCullHint(CullHint.Never);
 ----
@@ -364,7 +347,6 @@ Add a renders state to the material's and activate `Wireframe`.
 
 
 [source,java]
-
 ----
 material.getAdditionalRenderState().setWireframe(true);
 ----
@@ -383,7 +365,6 @@ The default camera `cam` is an instance of the `Camera` class. *Learn more:* lin
 
 *  SimpleApplication activates `flyCam` (an instance of `FlyByCamera`) by default. flyCam causes the camera to move with the mouse and the WASD keys. You can disable flyCam as follows:
 [source,java]
-
 ----
 flyCam.setEnabled(false);
 ----
@@ -396,7 +377,6 @@ flyCam.setEnabled(false);
 *Learn more:* <<jme3/beginner/hello_collision#,Hello Collision>>. +
 *Code sample:*  link:http://code.google.com/p/jmonkeyengine/source/browse/trunk/engine/src/core/com/jme3/input/FlyByCam.java[com.jme3.input.FlyByCamera] 
 [source,java]
-
 ----
 flyCam.setEnabled(true);
 ----
@@ -405,7 +385,6 @@ flyCam.setEnabled(true);
 *Learn more:* link:http://code.google.com/p/jmonkeyengine/source/browse/trunk/engine/src/core/com/jme3/input/ChaseCamera.java[com.jme3.input.ChaseCamera] +
 *Code sample:* link:http://code.google.com/p/jmonkeyengine/source/browse/trunk/engine/src/test/jme3test/input/TestChaseCamera.java[jme3test/input/TestChaseCamera.java]. 
 [source,java]
-
 ----
 flyCam.setEnabled(false);
 chaseCam = new ChaseCamera(cam, spatial, inputManager);
@@ -416,7 +395,6 @@ chaseCam = new ChaseCamera(cam, spatial, inputManager);
 === How do I increase camera speed?
 
 [source,java]
-
 ----
 flyCam.setMoveSpeed(50f);
 ----
@@ -485,7 +463,6 @@ Maybe your collision shapes overlap – or they are not where you think they are
 
 
 [source,java]
-
 ----
 bulletAppState.getPhysicsSpace().enableDebug(assetManager);
 ----
@@ -537,7 +514,6 @@ In the application's simpleInitApp() method, call:
 
 
 [source]
-
 ----
 setDisplayFps(false); // to hide the FPS
 setDisplayStatView(false); // to hide the statistics 
@@ -582,7 +558,6 @@ Verify that you include a controls definition file link in your XML: This is the
 
 
 [source,xml]
-
 ----
 <useControls filename="nifty-default-controls.xml"/>
 ----
@@ -659,7 +634,6 @@ Use com.jme3.terrain.*. The JMonkeyEngine also provides you with a Terrain Edito
 
 
 [source,java]
-
 ----
 rootNode.attachChild(SkyFactory.createSky( assetManager,
        "Textures/Sky/Bright/BrightSky.dds", false));
@@ -679,7 +653,6 @@ If your game is heavily using features that older cards do not support, you can 
 
 
 [source,java]
-
 ----
 Collection<com.jme3.renderer.Caps> caps = renderer.getCaps();
 Logger.getLogger(HelloJME3.class.getName()).log(Level.INFO, "Capabilities: {0}", caps.toString());
@@ -692,7 +665,6 @@ In your game, add
 
 
 [source,java]
-
 ----
 settings.setRenderer(AppSettings.LWJGL_OPENGL1)
 ----
@@ -709,7 +681,6 @@ You can batch all Geometries in a scene (or a subnode) that remains static.
 
 
 [source,java]
-
 ----
 jme3tools.optimize.GeometryBatchFactory.optimize(rootNode);
 ----

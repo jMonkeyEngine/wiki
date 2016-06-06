@@ -108,7 +108,6 @@ You can use SkeletonDebugger to show the skeleton on your game in order to check
 
 
 [source,java]
-
 ----
 
     final Material soldier2Mat = assetManager.loadMaterial("Materials/soldier2/soldier2.j3m");
@@ -174,8 +173,18 @@ Models for live rendering should have a low polygon count. To increase the perce
 
 
 
+[NOTE]
+====
+Remember! The actual preview affects the baking output and mesh export!
+====
 
 
+
+
+[NOTE]
+====
+Be careful: The steps above lead to terrible normal maps - use this procedure instead:
+====
 
 
 
@@ -196,6 +205,11 @@ Models for live rendering should have a low polygon count. To increase the perce
 *  use a reasonably high value for “Margin (4+ pixels at least for 1024x1024 maps)
 *  don't forget to safe the normal map image
 
+
+[NOTE]
+====
+Be careful: in the Outliner the camera symbol (Restrict Render) must be on!
+====
 
 
 
@@ -331,7 +345,12 @@ So let's get started
 
 *  That is it for Blender. Open the saved image in some image editor (I use the Gimp from link:http://www.gimp.org[http://www.gimp.org] here).
 
-“
+
+[TIP]
+====
+The SDK also contains an image editor, right-click the image and select “edit image to open it.
+====
+
 
 
 *  You will notice that Blender has taken the 6 sides of the cube and pasted together into one image (3x2). So now we need to cut it up again into 6 separate images. In gimp I usually set the guides to where I want to cut and then go into Filters→Web→Slice and let gimp cut it up for me.
@@ -343,7 +362,6 @@ If you want to do it from code, here is an example:
 
 
 [source,java]
-
 ----
 
 public void simpleInitApp() {
@@ -369,6 +387,11 @@ public void simpleInitApp() {
 }
 ----
 
+
+[TIP]
+====
+This example uses a strange normalScale, this is to flip the image on the X-axis and might not be needed in your case. Hint: the texture is applied on the outside of the cube but we are inside so what do we see?
+====
 
 
 

@@ -14,8 +14,13 @@ In jMonkeyEngine 3, colors and textures are represented as Material objects.
 *  All Geometries must have Materials. To improve performance, reuse Materials for similar models, don't create a new Material object for every Geometry. (E.g. use one bark Material for several tree models.) 
 *  Each Material is based on one of jme3's default Material Definitions (.j3md files) that are included in the engine. Advanced users can create additional custom Material Definitions (see how it's done in the <<jme3/build_from_sources#,jme3 sources>>).
 
-<<jme3/intermediate/how_to_use_materials#,How to Use Materials>>+
-<<jme3/advanced/material_definitions#,How to use Material Definitions>>
+
+[TIP]
+====
+Find out quickly <<jme3/intermediate/how_to_use_materials#,How to Use Materials>>, including the most commonly used code samples and RenderStates. +
+Or find more background info on <<jme3/advanced/material_definitions#,How to use Material Definitions>>.
+====
+
 
 
 
@@ -24,10 +29,15 @@ In jMonkeyEngine 3, colors and textures are represented as Material objects.
 The following Materials table shows you the Material Definitions that jMonkeyEngine 3 supports. 
 
 
-+
-`Unshaded.j3md``Lighting.j3md`+
-<<sdk/material_editing#,the SDK's visual material editor>>+
-<<sdk/code_editor#,SDK's Palette>>
+
+[TIP]
+====
+Looks confusing? +
+1) Start learning about `Unshaded.j3md` and `Lighting.j3md`, they cover 90% of the cases. +
+2) Use <<sdk/material_editing#,the SDK's visual material editor>> to try out and save material settings easily. +
+3) The <<sdk/code_editor#,SDK's Palette>> contains drag&amp;drop code snippets for loading materials. 
+====
+
 
 
 Most Material parameters are optional. For example, it is okay to specify solely the `DiffuseMap` and `NormalMap` when using `Lighting.j3md`, and leave the other texture maps empty. In this case, you are only using a subset of the possible features, but that's fine if it already makes in the material look the way that you want. You can always add more texture maps later.
@@ -312,7 +322,6 @@ If the DiffuseMap has an alpha channel, use:
 
 
 [source,java]
-
 ----
 mat.setBoolean("UseAlpha",true);
 ----
@@ -322,14 +331,12 @@ Later, put the Geometry (not the Material!) in the appropriate render queue
 
 *  
 [source,java]
-
 ----
 geo.setQueueBucket(Bucket.Translucent);
 ----
 
 *  
 [source,java]
-
 ----
 geo.setQueueBucket(Bucket.Transparent);
 ----

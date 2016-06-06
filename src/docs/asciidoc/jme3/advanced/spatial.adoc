@@ -62,7 +62,12 @@ a| rootNode, guiNode, audioNode, a custom grouping node such as vehicleNode or s
 
 |===
 
-`+++<strike>Spatial s = new Spatial();</strike>+++`“`Spatial`_cast_
+
+[IMPORTANT]
+====
+You never create a Spatial with `+++<strike>Spatial s = new Spatial();</strike>+++`! A Spatial is an abstract concept, like a mammal (there is no actual creature called “mammal walking around here). You create either a com.jme3.scene.Node or com.jme3.scene.Geometry instance. Some methods, however, require a `Spatial` type as argument: This is because they are able to accept both Nodes and Geometries as arguments. In this case, you simply _cast_ a Node or Geometry to Spatial.
+====
+
 
 
 
@@ -90,7 +95,12 @@ The second use case is: When you load a model using `loadModel()` from the Asset
 Usually there is no need to manually use any of the `clone()` methods on models. Using the <<jme3/advanced/asset_manager#,Asset Manager>>'s `loadModel()` method will automatically do the right thing for your models.
 
 
-“`Box()`_voxelization_
+
+[NOTE]
+====
+“Box worlds are not made up of statically cloned `Box()` shapes, this would still be too slow for large worlds. To learn how to make real fast box worlds, search the web for _voxelization_ techniques.
+====
+
 
 
 
@@ -99,14 +109,18 @@ Usually there is no need to manually use any of the `clone()` methods on models.
 You can include custom user data –that is, custom Java objects and methods– in Nodes and Geometries. This is very useful for maintaining information about a game element, such as health, budget, ammunition, inventory, equipment, etc for players, or landmark locations for terrains, and much more. 
 
 
-`Node``Geometry`<<jme3/advanced/custom_controls#,Custom Controls>>`Node``Geometry``setUserData()`
+
+[IMPORTANT]
+====
+You want to add custom accessor methods to a spatial? Do not extend `Node` or `Geometry`, use <<jme3/advanced/custom_controls#,Custom Controls>> instead. You want to add custom fields to a spatial? Do not extend `Node` or `Geometry`, use the built-in `setUserData()` method instead. Where ever the Spatial is accessible, you can easily access the object's class fields (user data) and accessors (control methods) this way. 
+====
+
 
 
 This first example adds an integer field named `health` to the Spatial `playerNode`, and initializes it to 100.
 
 
 [source,java]
-
 ----
 playerNode.setUserData("health", 100);
 ----
@@ -115,7 +129,6 @@ The second example adds a set of custom accessor methods to the player object. Y
 
 
 [source,java]
-
 ----
 playerNode.addControl(new PlayerControl());
 ----
@@ -124,7 +137,6 @@ In your PlayerControl() class, you define custom methods that set and get your u
 
 
 [source,java]
-
 ----
 
 public int getHealth() {
@@ -140,7 +152,6 @@ Elsewhere in your code, you can access this data wherever you have access to the
 
 
 [source,java]
-
 ----
 
 health = playerNode.getControl(PlayerControl.class).getHealth();
@@ -157,7 +168,6 @@ This is how you list all data keys that are already defined for one Spatial:
 
 
 [source,java]
-
 ----
 for(String key : spatial.getUserDataKeys()){
     System.out.println(spatial.getName()+"'s keys: "+key);
@@ -178,7 +188,6 @@ In the following example, the Node `house` is the loaded model. The sub-meshes i
 
 
 [source,java]
-
 ----
 
 Geometry submesh = (Geometry) houseScene.getChild("door 12");
@@ -209,7 +218,6 @@ Example:
 
 
 [source,java]
-
 ----
 material.getAdditionalRenderState().setFaceCullMode(FaceCullMode.FrontAndBack);
 ----
@@ -229,7 +237,6 @@ Example:
 
 
 [source,java]
-
 ----
 spatial.setCullHint(CullHint.Never); // always drawn
 ----

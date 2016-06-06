@@ -17,7 +17,6 @@ If you want to support special properties of your objects that are not exposed b
 
 
 [source]
-
 ----
 @org.openide.util.lookup.ServiceProvider(service=SceneExplorerNode.class)
 ----
@@ -37,7 +36,6 @@ The SceneExplorerNode can be used for Spatial and Control type objects.
 === Spatial Example
 
 [source,java]
-
 ----
 
 @org.openide.util.lookup.ServiceProvider(service=SceneExplorerNode.class)
@@ -108,7 +106,6 @@ public class JmeGeometry extends JmeSpatial {
 === Control Example
 
 [source,java]
-
 ----
 
 @org.openide.util.lookup.ServiceProvider(service=SceneExplorerNode.class)
@@ -217,13 +214,17 @@ For adding Spatials, Contols and for general tools theres premade abstract class
 
 
 
+[IMPORTANT]
+====
+Note that the classes you create are singletons which are used across multiple nodes and you should not store any data in local variables!
+====
+
 
 
 To add a new Tool, create a new AbstractToolAction:
 
 
 [source,java]
-
 ----
 
 @org.openide.util.lookup.ServiceProvider(service = ToolAction.class)
@@ -263,7 +264,6 @@ For a new Spatial or Control, use AbstractNewSpatialAction
 
 
 [source,java]
-
 ----
 
 @org.openide.util.lookup.ServiceProvider(service = NewSpatialAction.class)
@@ -286,7 +286,6 @@ or AbstractNewControlAction:
 
 
 [source,java]
-
 ----
 
 @org.openide.util.lookup.ServiceProvider(service = NewControlAction.class)
@@ -324,7 +323,6 @@ A good example is the “Add SkyBox Wizard:
 
 
 [source,java]
-
 ----
 
 @org.openide.util.lookup.ServiceProvider(service = NewSpatialAction.class)
@@ -416,5 +414,10 @@ public class AddSkyboxAction extends AbstractNewSpatialWizardAction {
 
 ----
 
+
+[TIP]
+====
+The abstract spatial and control actions implement undo/redo automatically, for the ToolActions you have to implement it yourself.
+====
 
 

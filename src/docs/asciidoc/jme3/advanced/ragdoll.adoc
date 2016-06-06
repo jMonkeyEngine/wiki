@@ -43,7 +43,6 @@ Since you're just creating the ragdoll for this example, all the limbs have the 
 
 
 [source,java]
-
 ----
 
 private Node createLimb(float width, float height, Vector3f location, boolean rotate) {
@@ -67,7 +66,6 @@ You write a custom helper method to initialize the limbs. Look at the screenshot
 *  The shoulders and hips are _vertical_ cylinders, this is why we set the rotation to true.
 
 [source,java]
-
 ----
 
 Node shoulders = createLimb(0.2f, 1.0f, new Vector3f( 0.00f, 1.5f, 0), true);
@@ -97,7 +95,6 @@ As before, you write a small helper method. This time its purpose is to quickly 
 *  Use a ConeJoint, a special joint that approximates the degree of freedom that limbs typically have. The ConeJoint constructor requires the two nodes, and the two local pivot coordinates that we just determined.
 *  Set the joints limits to allow swinging, but not twisting.
 [source,java]
-
 ----
 private PhysicsJoint join(Node A, Node B, Vector3f connectionPoint) {
         Vector3f pivotA = A.worldToLocal(connectionPoint, new Vector3f());
@@ -115,7 +112,6 @@ Use the helper method to connect all limbs with joints where they belong, at one
 
 
 [source,java]
-
 ----
 
 join(body,  shoulders, new Vector3f( 0.00f,  1.4f, 0));
@@ -140,7 +136,6 @@ We create one (non-physical) Node named ragDoll, and attach all other nodes to i
 
 
 [source,java]
-
 ----
 
 ragDoll.attachChild(shoulders);
@@ -160,7 +155,6 @@ To use the ragdoll in a scene, we attach its main node to the rootNode, and to t
 
 
 [source,java]
-
 ----
 
 rootNode.attachChild(ragDoll);
@@ -175,7 +169,6 @@ To pull the doll up, you could add an input handler that triggers the following 
 
 
 [source,java]
-
 ----
 
 Vector3f upforce = new Vector3f(0, 200, 0);

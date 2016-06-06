@@ -21,7 +21,6 @@ A SimpleApplication with a BulletAppState allows setting the threading type via
 
 
 [source]
-
 ----
 setThreadingType(ThreadingType type);
 ----
@@ -33,7 +32,6 @@ You can activate PARALLEL threading in the simpleInitApp() method:
 
 
 [source,java]
-
 ----
 bulletAppState = new BulletAppState();
 bulletAppState.setThreadingType(BulletAppState.ThreadingType.PARALLEL);
@@ -56,5 +54,10 @@ a|Physics Debug View is rendered accurately.
 
 |===
 
+
+[TIP]
+====
+You can add more physics spaces by using multiple PARALLEL bulletAppStates. You would do that if you have sets physical objects that never collide (for example, underground bolders and flying cannon balls above ground), so you put those into separate physics spaces, which improves performances (less collisions to check!). 
+====
 
 

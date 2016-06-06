@@ -23,14 +23,18 @@ image::jme3/beginner/beginner-terrain.png[beginner-terrain.png,with="360",height
 Note: If you get an error when trying to create your ImageBasedHeightMap object, you may need to update the SDK, click on “Help / “Check for updates
 
 
-““““
+
+[TIP]
+====
+To use the example assets in a new jMonkeyEngine SDK project, right-click your project, select “Properties, go to “Libraries, press “Add Library and add the “jme3-test-data library.
+====
+
 
 
 
 == Sample Code
 
 [source,java]
-
 ----
 package jme3test.helloworld;
 
@@ -193,7 +197,6 @@ It requires an image from a JME Texture.
 .  Load the heightmap.
 
 [source,java]
-
 ----
     AbstractHeightMap heightmap = null;
     Texture heightMapImage = assetManager.loadTexture(
@@ -212,7 +215,12 @@ Previously you learned how to create a material for a simple shape such as a cub
 Texture splatting allows you create a custom material, and “paint textures on it like with a “paint brush. This is very useful for terrains: As you see in the example here, you can paint a grass texture into the valleys, a dirt texture onto the mountains, and free-form roads inbetween.
 
 
-<<sdk/terrain_editor#,TerrainEditor plugin>><<sdk/terrain_editor#,TerrainEditor plugin>>
+
+[TIP]
+====
+The jMonkeyEngine SDK comes with a <<sdk/terrain_editor#,TerrainEditor plugin>>. Using the TerrainEditor plugin, you can sculpt the terrain with the mouse, and save the result as heightmap. You can paint textures on the terrain and the plugin saves the resulting splat textures as alphamap(s). The following paragraphs describe the manual process for you. You can choose to create the terrain by hand, or using the <<sdk/terrain_editor#,TerrainEditor plugin>>.
+====
+
 
 
 Splat textures are based on the `Terrain.j3md` material defintion. If you open the Terrain.j3md file, and look in the Material Parameters section, you see that you have several texture layers to paint on: `Tex1`, `Tex2`, `Tex3`, etc. 
@@ -256,7 +264,6 @@ As usual, you create a Material object. Base it on the Material Definition `Terr
 
 
 [source,java]
-
 ----
 Material mat_terrain = new Material(assetManager, "Common/MatDefs/Terrain/Terrain.j3md");
 ----
@@ -265,7 +272,6 @@ Load four textures into this material. The first one, `Alpha`, is the alphamap t
 
 
 [source,java]
-
 ----
 mat_terrain.setTexture("Alpha",
     assetManager.loadTexture("Textures/Terrain/splat/alphamap.png"));
@@ -275,7 +281,6 @@ The three other textures are the layers that you have previously decided to pain
 
 
 [source,java]
-
 ----
     /** 1.2) Add GRASS texture into the red layer (Tex1). */
     Texture grass = assetManager.loadTexture(
@@ -338,7 +343,6 @@ Here's the code:
 
 
 [source]
-
 ----
 terrain = new TerrainQuad(
   "my terrain",               // name
@@ -353,14 +357,12 @@ You have created the terrain object.
 
 .  Remember to apply the created material: 
 [source,java]
-
 ----
 terrain.setMaterial(mat_terrain);
 ----
 
 .  Remember to attach the terrain to the rootNode.
 [source,java]
-
 ----
 rootNode.attachChild(terrain);
 
@@ -378,7 +380,6 @@ JME3 includes an optimization that adjusts the level of detail (LOD) of the rend
 
 
 [source,java]
-
 ----
 
     TerrainLodControl control = new TerrainLodControl(terrain, getCamera());
@@ -399,7 +400,6 @@ What happens when you swap two layers, for example `Tex1` and `Tex2`?
 
 
 [source,java]
-
 ----
 
 ...
@@ -419,7 +419,6 @@ The following three lines generate the heightmap object based on your user-defin
 
 
 [source,java]
-
 ----
     AbstractHeightMap heightmap = null;
     Texture heightMapImage = assetManager.loadTexture(
@@ -432,7 +431,6 @@ Instead, you can also let JME3 generate a random landscape for you:
 
 .  What result do you get when you replace the above three heightmap lines by the following lines and run the sample?
 [source,java]
-
 ----
 
 HillHeightMap heightmap = null;
@@ -460,6 +458,11 @@ try {
 You see the variety of hilly landscapes that can be generated using this method.
 
 
+
+[TIP]
+====
+For this exercise, you can keep using the splat Material from the sample code above. Just don't be surprised that the Material does not match the shape of the newly randomized landscape. If you want to generate real matching splat textures for randomized heightmaps, you need to write a custom method that, for example, creates an alphamap from the heightmap by replacing certain grayscales with certain RGB values.
+====
 
 
 

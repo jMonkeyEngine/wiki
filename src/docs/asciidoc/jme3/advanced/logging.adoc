@@ -31,7 +31,6 @@ To print comments like a pro, you use the following logger syntax.
 
 .  Declare the logger object once per file. In the following code, replace `HelloWorld` by the name of the class where you are using this line.
 [source,java]
-
 ----
 private static final Logger logger = Logger.getLogger(HelloWorld.class.getName());
 ----
@@ -42,7 +41,6 @@ Example: `Vector3f a = cam.getLocation();`
 .  Add the logger line and specify the log level:
 **  Usecase 1: During debugging, a developer uses a warning to remind himself of a bug:
 [source,java]
-
 ----
 logger.log(Level.WARNING, "why is {0} set to {1} again?!", 
                       new Object[]{a , b});
@@ -50,7 +48,6 @@ logger.log(Level.WARNING, "why is {0} set to {1} again?!",
 
 **  Usecase 2: For the release, you inform the customer of a problem and how to solve it. 
 [source,java]
-
 ----
 logger.log(Level.SEVERE, "MyGame error: {0} must not be {1} after {2}! Adjust flux generator settings.", 
                       new Object[]{a , b , c});
@@ -58,7 +55,12 @@ logger.log(Level.SEVERE, "MyGame error: {0} must not be {1} after {2}! Adjust fl
 
 
 
-“_a reason and a solution_
+
+[IMPORTANT]
+====
+As you see in the examples, you should phrase potentially “customer facing errors in a neutral way and offer _a reason and a solution_ for the error (if you don't, it has no value to your customer). If your deveopment team uses WARNINGs as replacement for casual printlns, make sure you deactivate them for the release.
+====
+
 
 
 More details about link:http://download.oracle.com/javase/6/docs/api/java/util/logging/Level.html[Java log levels] here.
@@ -74,7 +76,6 @@ To deactivate the default logger for a release, you set the log level to only re
 
 
 [source,java]
-
 ----
 Logger.getLogger(””).setLevel(Level.SEVERE);
 ----
@@ -83,7 +84,6 @@ During development or a beta test, you can tune down the default logger, and set
 
 
 [source,java]
-
 ----
 Logger.getLogger(””).setLevel(Level.WARNING);
 ----
@@ -92,7 +92,6 @@ To activate full logging, e.g. for debugging and testing, use the `fine` level:
 
 
 [source,java]
-
 ----
 Logger.getLogger(””).setLevel(Level.FINE);
 ----

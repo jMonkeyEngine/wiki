@@ -20,14 +20,18 @@ image::jme3/beginner/beginner-animation.png[beginner-animation.png,with="",heigh
 
 
 
-““““
+
+[TIP]
+====
+To use the example assets in a new jMonkeyEngine SDK project, right-click your project, select “Properties, go to “Libraries, press “Add Library and add the “jme3-test-data library.
+====
+
 
 
 
 == Sample Code
 
 [source,java]
-
 ----
 
 package jme3test.helloworld;
@@ -114,7 +118,6 @@ Loading an animated model is pretty straight-forward, just as you have learned i
 
 
 [source,java]
-
 ----
 
   public void simpleInitApp() {
@@ -145,7 +148,6 @@ After you load the animated model, you register it to the Animation Controller.
 *  To run several sequences, you create several channels, and set them each to their animation.
 
 [source,java]
-
 ----
 
   private AnimChannel channel;
@@ -163,44 +165,52 @@ After you load the animated model, you register it to the Animation Controller.
 
 ----
 
-*Nehon on the jME forum link:http://jmonkeyengine.org/groups/general-2/forum/topic/helloanimation-animations-seem-to-be-clashing/#post-180994[wrote],*
+
+[NOTE]
+====
+In response to a question about animations on different channels interefering with each other, *Nehon on the jME forum link:http://jmonkeyengine.org/groups/general-2/forum/topic/helloanimation-animations-seem-to-be-clashing/#post-180994[wrote],*
 
 
-“
+“You have to consider channels as part of the skeleton that are animated. The default behavior is to use the whole skeleton for a channel.
+In your example the first channel plays the walk anim, then the second channel plays the dodge animation.
+Arms and feet are probably not affected by the doge animation so you can see the walk anim for them, but the rest of the body plays the dodge animation.
+
+
+Usually multiple channels are used to animate different part of the body. For example you create one channel for the lower part of the body and one for the upper part. This allow you to play a walk animation with the lower part and for example a shoot animation with the upper part. This way your character can walk while shooting.
+
+
+In your case, where you want animations to chain for the whole skeleton, you just have to use one channel.
+
+
+====
 
 
 
 
-
-
-
-
-
-
-
-
+[NOTE]
+====
 
 
 
 [source]
-
 ----
 
 control = player.getControl(AnimControl.class);
 
 ----
 
-“
+This line of code will return NULL if the AnimeControl is not in the main node of your model. To check this, right click your model and click “Edit in SceneComposer You can then see the tree for the model. You can then move everything to the main node. You can also access a subnode with the following code.
 
 
 [source]
-
 ----
 
 player.getChild("Subnode").getControl(AnimControl.class);
 
 ----
 
+
+====
 
 
 
@@ -211,7 +221,6 @@ Add `implements AnimEventListener` to the class declaration. This interface give
 
 
 [source,java]
-
 ----
 
 public class HelloAnimation extends SimpleApplication
@@ -247,7 +256,6 @@ There are ambient animations like animals or trees that you may want to trigger 
 .  Add an input listener for the `Walk` action.
 
 [source,java]
-
 ----
 
   private void initKeys() {
@@ -266,7 +274,6 @@ To use the input controller, you need to implement the actionListener by testing
 *  Optionally, use channel.setTime() to Fast-forward or rewind to a certain moment in time of this animation.
 
 [source,java]
-
 ----
 
   private ActionListener actionListener = new ActionListener() {
@@ -295,7 +302,6 @@ Make a mouse click trigger another animation sequence!
 ..  Create a new key trigger mapping and action (see: <<jme3/beginner/hello_input_system#,Hello Input>>)
 ..  Tip: Do you want to find out what animation sequences are available in the model? Use: 
 [source,java]
-
 ----
 for (String anim : control.getAnimationNames()) { System.out.println(anim); }
 ----
@@ -318,7 +324,6 @@ Add the following import statements for the SkeletonDebugger and Material classe
 
 
 [source,java]
-
 ----
 
      import com.jme3.scene.debug.SkeletonDebugger;
@@ -330,7 +335,6 @@ Add the following code snippet to `simpleInitApp()` to make the bones (that you 
 
 
 [source,java]
-
 ----
 
      SkeletonDebugger skeletonDebug = 

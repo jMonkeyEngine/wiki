@@ -14,7 +14,12 @@ In the <<jme3/beginner/hello_collision#,Hello Collision>> tutorial and the link:
 Other games however require a third-person perspective of the character: In these cases you use a CharacterControl on a Spatial. This example also shows how to set up custom navigation controls, so you can press WASD to make the third-person character walk; and how to implement dragging the mouse to rotate.
 
 
-+++<abbr title="Application Programming Interface">API</abbr>++++++<abbr title="Application Programming Interface">API</abbr>+++
+
+[WARNING]
+====
+Some details on this page still need to be updated from old CharacterControl +++<abbr title="Application Programming Interface">API</abbr>+++ to BetterCharacterControl +++<abbr title="Application Programming Interface">API</abbr>+++.
+====
+
 
 
 
@@ -43,7 +48,6 @@ This code sample creates a simple upright Character:
 
 
 [source,java]
-
 ----
 
 // Load any model
@@ -62,7 +66,6 @@ To use the BetterCharacterControl, you may load your character like this:
 
 
 [source,java]
-
 ----
 
 // Load any model
@@ -90,7 +93,12 @@ rootNode.attachChild(playerNode); // add wrapper to root
 
 ----
 
-“<<jme3/advanced/physics_listeners#,collision listener>>
+
+[IMPORTANT]
+====
+The BulletPhysics CharacterControl only collides with “real PhysicsControls (RigidBody). It does not detect collisions with other CharacterControls! If you need additional collision checks, add GhostControls to your characters and create a custom <<jme3/advanced/physics_listeners#,collision listener>> to respond. (The JME3 team may implement a better CharacterControl one day.)
+====
+
 
 
 A CharacterControl is a special kinematic object with restricted movement. CharacterControls have a fixed “upward axis, this means they do not topple over when walking over an obstacle (as opposed to RigidBodyControls), which simulates a being's ability to balance upright. A CharacterControl can jump and fall along its upward axis, and it can scale steps of a certain height/steepness.
@@ -133,7 +141,6 @@ For best practices on how to use `setWalkDirection()`, see the Navigation Inputs
 === Code Skeleton
 
 [source,java]
-
 ----
 public class WalkingCharacterDemo extends SimpleApplication
         implements ActionListener, AnimEventListener {
@@ -175,7 +182,6 @@ To create a walking character:
 === Activate Physics
 
 [source,java]
-
 ----
 
 private BulletAppState bulletAppState;
@@ -196,7 +202,6 @@ In the simpleInitApp() method you initialize the scene and give it a MeshCollisi
 
 
 [source,java]
-
 ----
 
 public void simpleInitApp() {
@@ -211,7 +216,6 @@ In a real game, you would load a scene model here instead of a test world. You c
 
 
 [source,java]
-
 ----
 
 private Node gameLevel;
@@ -238,7 +242,6 @@ Also, add a light source to be able to see the scene.
 
 
 [source,java]
-
 ----
 
   AmbientLight light = new AmbientLight();
@@ -261,7 +264,6 @@ You create an animated model, such as Oto.mesh.xml.
 .  Attach the visible model to the rootNode.
 
 [source,java]
-
 ----
 
 private CharacterControl character;
@@ -280,7 +282,12 @@ public void simpleInitApp() {
 
 ----
 
-*Did you know?*
+
+[TIP]
+====
+*Did you know?* A CapsuleCollisionShape is a cylinder with rounded top and bottom. A capsule rotated upright is a good collision shape for a humanoid character since its roundedness reduces the risk of getting stuck on obstacles.
+====
+
 
 
 
@@ -290,7 +297,6 @@ Create several AnimChannels, one for each animation that can happen simultaneous
 
 
 [source,java]
-
 ----
 
 private AnimChannel animationChannel;
@@ -317,7 +323,6 @@ The attackChannel only controls one arm, while the walking channels controls the
 === Add ChaseCam / CameraNode
 
 [source,java]
-
 ----
 
 private ChaseCamera chaseCam;
@@ -339,7 +344,6 @@ Configure custom key bindings for WASD keys that you will use to make the charac
 
 
 [source,java]
-
 ----
 
 // track directional input, so we can walk left-forward etc
@@ -367,7 +371,6 @@ Respond to the key bindings by setting variables that track in which direction y
 
 
 [source,java]
-
 ----
 
 @Override
@@ -396,7 +399,6 @@ The player can attack and walk at the same time. `Attack()` is a custom method t
 
 
 [source,java]
-
 ----
 
 private void attack() {
@@ -413,7 +415,6 @@ The variable `airTime` tracks how long the character is off the ground (e.g. whe
 
 
 [source,java]
-
 ----
 
 private Vector3f walkDirection = new Vector3f(0,0,0); // stop
@@ -465,7 +466,6 @@ This method resets the walk animation.
 
 
 [source,java]
-
 ----
 
 public void onAnimCycleDone(AnimControl control, AnimChannel channel, String animName) {

@@ -76,7 +76,6 @@ global structure should look like this :+
 
 
 [source,java]
-
 ----
 
 ShaderNodeDefinitions{
@@ -144,7 +143,6 @@ Here is a typical shader node definition
 
 
 [source,java]
-
 ----
 
 ShaderNodeDefinitions{
@@ -184,7 +182,6 @@ _Example_
 
 
 [source]
-
 ----
 
       float myArray[10]
@@ -204,7 +201,6 @@ _Example_
 
 
 [source]
-
 ----
 
      float myArray[NumberOfElements]
@@ -232,7 +228,6 @@ Here is a the code of the LightMap.frag shader.+
 
 
 [source,java]
-
 ----
 
 void main(){
@@ -259,7 +254,6 @@ Here is how a ShaderNode declaration should look :
 
 
 [source,java]
-
 ----
 
 ShaderNode <ShaderNodeName>{
@@ -293,7 +287,6 @@ ShaderNode <ShaderNodeName>{
 
 
 [source,java]
-
 ----
 
         #if defined(COLOR) || defined(COLORMAP)
@@ -327,10 +320,14 @@ ShaderNode <ShaderNodeName>{
 
 Here is an example of a very simple Material definition that just displays a solid color (controlled by a material parameter) on a mesh.
 
+[IMPORTANT]
+====
+Shader Nodes only work if there is no shader declared in the technique. If you want to bypass the Shader Nodes, you can put a VertexShader and a FragmentShader statement in the technique and the shader nodes will be ignored. 
+====
+
 
 
 [source,java]
-
 ----
 
 MaterialDef Simple {
@@ -379,7 +376,6 @@ here is the definition content (Common/MatDefs/ShaderNodes/Common/CommonVert.j3s
 
 
 [source,java]
-
 ----
 
 ShaderNodesDefinitions {
@@ -418,11 +414,15 @@ ShaderNodesDefinitions {
 ----
 
 
+[TIP]
+====
+Note that texCoord1/2 and vertColor are declared both as input and output. the generator will use the same variables for them
+====
+
 here is the shader Node code ( Common/MatDefs/ShaderNodes/Common/commonVert.vert)
 
 
 [source,java]
-
 ----
 
 void main(){
@@ -444,6 +444,16 @@ here we have the most basic yet mandatory thing in a vertex shader, computing ve
 *  *modelPosition = Global.position.xyz* : the modelPosition (understand the vertex position in the model coordinate space) is assigned with the Global position variable.
 
 
+[TIP]
+====
+As mentioned before Global position is initialized with the attribute inPosition, so this is equivalent to : modelPosition = Attr.inPosition.xyz
+====
+
+
+[TIP]
+====
+also note the swizzle of the Global.position variable. modelPosition is a vec3 and GlobalPosition is a vec4 so we just take the first 3 components.
+====
 
 +++<u>*CommonVert output mapping*</u>++++
 
@@ -452,6 +462,11 @@ here we have the most basic yet mandatory thing in a vertex shader, computing ve
 *  *Global.position = projPosition* : The result of the multiplication of the worldViewProjectionMatrix  and the modelPosition is assigned to the Globale position
 
 
+[TIP]
+====
+The Global.position variable will be assigned to the gl_Position glsl built in output at the end of the shader.
+====
+
 +++<u>*ColorMult Definition*</u>++++
 
 ColorMult is a very basic Shader Node that takes two colors as input and multiply them.
@@ -459,7 +474,6 @@ here is the definition content (Common/MatDefs/ShaderNodes/Basic/ColorMult.j3sn)
 
 
 [source,java]
-
 ----
 
 ShaderNodeDefinitions{
@@ -488,7 +502,6 @@ here is the shader Node code (Common/MatDefs/ShaderNodes/Basic/colorMult.frag)
 
 
 [source,java]
-
 ----
 
 void main(){
@@ -512,17 +525,31 @@ All inputs are mapped here :
 *  *Global.color = outColor* : the resulting color is assigned to the Global color variable.
 
 
+[TIP]
+====
+Note that the Global.color variable will be assigned to gl_FragColor (glsl &lt; 1.5) or declared as a Global ouput of the shader (glsl &gt;= 1.5).
+====
+
+
+[TIP]
+====
+Also note that in case several Global variables are declared, the generator will assign them gl_FragData[i](glsl &lt; 1.5) i being the order the variable has been found in the material def. For glsl &gt;= 1.5 the veriable will just all be declared as shader output in the order they've been found in the declaration
+====
 
 
 
 +++<u>*Generated shader code*</u>++++
 
 
+[IMPORTANT]
+====
+Don't take this code as carved in stone, the generated code can change as optimization of the shader generator goes on
+====
+
 Vertex Shader (glsl 1.0)
 
 
 [source,java]
-
 ----
 
 
@@ -567,7 +594,6 @@ Fragment Shader (glsl 1.0)
 
 
 [source,java]
-
 ----
 
 
@@ -592,6 +618,11 @@ void main(){
 Same as for the Vertex shader. note that the color1 is not declared, because it's directly replaced by the material parameter.
 
 
+
+[IMPORTANT]
+====
+As a rule of thumb you should not assign a value to an input. input are likely to be material paramters or  outputs from other shaders and modifying them may cause unexpected behavior, even failure in your resulting shader.
+====
 
 
 

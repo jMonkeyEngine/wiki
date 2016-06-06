@@ -24,7 +24,6 @@ The Element class only provides a single constructor using all 6 of the common p
 
 
 [source,java]
-
 ----
 
 /**
@@ -56,7 +55,6 @@ All setter provide getters.
 ==== Text/Font Related Methods
 
 [source,java]
-
 ----
 
 element.setFont(String font path)
@@ -75,7 +73,6 @@ element.setText(String text);
 ==== Element Positions/Dimensions Related Methods
 
 [source,java]
-
 ----
 
 element.setPosition(Vector2f position);
@@ -97,7 +94,6 @@ Since position and dimensions are relative to the Element’s parent Element, th
 
 
 [source,java]
-
 ----
 
 element.getAbsoluteX();
@@ -114,7 +110,6 @@ There are additional methods that provide recursive updates to child Elements:
 
 
 [source,java]
-
 ----
 
 element.moveTo(float x, float y);
@@ -126,7 +121,6 @@ element.resize(float diffX, floar diffY, Element.Borders dir);
 ==== Element Display Methods
 
 [source,java]
-
 ----
 
 el.show();
@@ -143,7 +137,6 @@ Overridable hooks are provided for default behavoirs:
 
 
 [source,java]
-
 ----
 
 public void controlResizeHook() {  }
@@ -159,7 +152,6 @@ To have the element be clipped by another element's bounds, use:
 
 
 [source,java]
-
 ----
 
 el.setClippingLayer(Element element);
@@ -170,7 +162,6 @@ To set the clipping layer of the Element and propagate clipping to all children 
 
 
 [source,java]
-
 ----
 
 el.setControlClippingLayer(Element element);
@@ -181,7 +172,6 @@ el.setControlClippingLayer(Element element);
 ==== Accessing the Element's Components
 
 [source,java]
-
 ----
 
 el.getGeometry(); // The element's Geometry
@@ -197,7 +187,6 @@ There are plenty of methods that allow for modifying the look &amp; feel of the 
 
 
 [source,java]
-
 ----
 
 // Accessing the element's material
@@ -223,7 +212,6 @@ el.setGlobalAlpha(float alpha);
 ==== Effect Related Methods
 
 [source,java]
-
 ----
 
 el.addEffect(Effect effect);
@@ -236,7 +224,6 @@ el.populateEffects(String styleName); // Loads all effects associated with a Sty
 ==== Drag & Drop Related Methods
 
 [source,java]
-
 ----
 
 el.setIsDragDropDragElement(boolean isDragElement);
@@ -248,13 +235,17 @@ screen.getDropObject();
 ----
 
 
+[NOTE]
+====
+You must manage your own list of acceptable drop objects as any Element flagged as isDropObject will be returned
+====
+
 
 
 
 ==== Storing & Retrieving  Custom Data
 
 [source,java]
-
 ----
 
 el.setElementUserData(Object data);

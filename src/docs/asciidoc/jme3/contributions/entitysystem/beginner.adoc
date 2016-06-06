@@ -17,7 +17,6 @@ If you are new Entity Systems please read the <<jme3/contributions/entitysystem/
 === Sample Code
 
 [source,java]
-
 ----
 
 import com.simsilica.es.Entity;
@@ -64,7 +63,6 @@ You simply create a component by implementing the EntityComponent interface:
 
 
 [source,java]
-
 ----
 public class TestComponent implements EntityComponent {
     
@@ -87,11 +85,21 @@ Components only have a constructor and getter.
 It is important that you only store pure data in the components because otherwise you would no longer know where you can find the logic and the approach of a clear software design would get lost.
 Besides an entity can only have one component of the same class.
 
+[IMPORTANT]
+====
+
+Beginners tend to add large objects like spatials and geometries to a component.
+This is a big mistake because such objects contain logic and in our approach components are data only. Abstract it to a general level or store it completely in the systems.
+====
 
 
 
 
+[IMPORTANT]
+====
 
+Never subclass Component classes. 
+====
 
 
 
@@ -99,7 +107,6 @@ Besides an entity can only have one component of the same class.
 === Initialize the Entity System
 
 [source,java]
-
 ----
  EntityData entityData = new DefaultEntityData();
 ----
@@ -117,7 +124,6 @@ For every component class a new Hashmap is created which contains the entityId a
 === Creating Entitys and adding Components
 
 [source,java]
-
 ----
 //Creates a new EntityId, the id is handled as an object to prevent botching
 EntityId entityId = entityData.createEntity();
@@ -133,8 +139,13 @@ Ids are not reused because, if they were, they would not be unique anymore, whic
 
 
 
+[TIP]
+====
 
+Often people are scared that they will run out of ids:
+If you create a new entity every nano second, you would need roughly 585 years before it wraps. 
 
+====
 
 
 
@@ -142,7 +153,6 @@ Ids are not reused because, if they were, they would not be unique anymore, whic
 === The Entity Class
 
 [source,java]
-
 ----
 //Get a new Entity Object with TestComponents
 Entity entity = entityData.getEntity(entityId, TestComponent.class);
@@ -157,13 +167,17 @@ You can have multiple Entity objects for the same entity.
 
 
 
+[IMPORTANT]
+====
+The data of this Entity objects will not be updated if other classes change the components for this entity
+====
+
 
 
 
 === Replacing a component
 
 [source,java]
-
 ----
 
 //Overwrite the existing component
@@ -175,7 +189,6 @@ System.out.println(testComponent.getValue());
 === Delete an entity
 
 [source,java]
-
 ----
 
 //Remove the Entity from the data
@@ -190,5 +203,10 @@ The most important feature of Zay-ES are the Entity Sets.
 It is strongly recommended that you read the <<jme3/contributions/entitysystem/entityset#,Entity Set tutorial>> after reading this article.
 
 
-<<jme3/contributions/entitysystem/entityset#,tutorial>>
+
+[IMPORTANT]
+====
+Read the <<jme3/contributions/entitysystem/entityset#,tutorial>> about entity sets
+====
+
 

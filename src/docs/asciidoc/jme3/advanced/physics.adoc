@@ -92,14 +92,12 @@ Do the following once per application to gain access to the `physicsSpace` objec
 .  Make your application extend `com.jme3.app.SimpleApplication`.
 .  Create a BulletAppState field: 
 [source,java]
-
 ----
 private BulletAppState bulletAppState;
 ----
 
 .  Initialize your bulletAppState and attach it to the state manager: 
 [source,java]
-
 ----
 public void simpleInitApp() {
     bulletAppState = new BulletAppState();
@@ -107,15 +105,19 @@ public void simpleInitApp() {
 ----
 
 
-`BulletAppState`
+
+[TIP]
+====
+In your application, you can always access the `BulletAppState` via the ApplicationStateManager: 
 
 
 [source,java]
-
 ----
 BulletAppState bas = app.getStateManager().getState(BulletAppState.class);
 ----
 
+
+====
 
 
 
@@ -229,14 +231,18 @@ The mesh-accurate shapes can use a CollisionShapeFactory as constructor (code sa
 
 
 
+[IMPORTANT]
+====
+Pick the simplest and most applicable shape for the mesh for what you want to do: If you give a box a sphere collision shape, it will roll; if you give a ball a box collision shape, it will sit on a slope. If the shape is too big, the object will seem to float; if the shape is too small it will seem to sink into the ground. During development and debugging, you can make collision shapes visible by adding the following line after the bulletAppState initialization: 
 
 
 [source,java]
-
 ----
 bulletAppState.getPhysicsSpace().enableDebug(assetManager);
 ----
 
+
+====
 
 
 
@@ -245,7 +251,6 @@ bulletAppState.getPhysicsSpace().enableDebug(assetManager);
 
 *  One way of using a constructor and a Geometry's mesh for static Spatials:
 [source,java]
-
 ----
 MeshCollisionShape level_shape = 
     new MeshCollisionShape(level_geo.getMesh());
@@ -253,7 +258,6 @@ MeshCollisionShape level_shape =
 
 *  One way of using a constructor and a Geometry's mesh for dynamic Spatials:
 [source,java]
-
 ----
 HullCollisionShape shape = 
     new HullCollisionShape(katamari_geo.getMesh());
@@ -261,7 +265,6 @@ HullCollisionShape shape =
 
 *  Creating a dynamic compound shape for a whole Node and subnodes:
 [source,java]
-
 ----
 CompoundCollisionShape myComplexShape =
     CollisionShapeFactory.createMeshShape((Node) myComplexGeometry );
@@ -269,7 +272,6 @@ CompoundCollisionShape myComplexShape =
 
 *  Creating a dynamic HullCollisionShape shape (or CompoundCollisionShape with HullCollisionShapes as children) for a Geometry:
 [source,java]
-
 ----
 CollisionShape shape = 
     CollisionShapeFactory.createDynamicMeshShape(spaceCraft);
@@ -277,7 +279,6 @@ CollisionShape shape =
 
 *  An angular, non-mesh-accurate compound shape:
 [source,java]
-
 ----
 CompoundCollisionShape boxShape =
     CollisionShapeFactory.createBoxShape((Node) crate_geo);
@@ -285,7 +286,6 @@ CompoundCollisionShape boxShape =
 
 *  A round, non-mesh-accurate compound shape: 
 [source,java]
-
 ----
 SphereCollisionShape sphereShape =
     new SphereCollisionShape(1.0f);
@@ -346,19 +346,22 @@ The most commonly used physics control is RigidBodyControl.  The RigidBodyContro
 
 
 [source,java]
-
 ----
 RigidBodyControl myThing_phys = 
     new RigidBodyControl( myThing_shape , 123.0f ); // dynamic
 ----
 
 [source,java]
-
 ----
 RigidBodyControl myDungeon_phys = 
     new RigidBodyControl( myDungeon_shape , 0.0f ); // static 
 ----
 
+
+[IMPORTANT]
+====
+If you give your floor a non-zero mass, it will fall out of the scene!
+====
 
 
 
@@ -366,7 +369,6 @@ The following creates a box Geometry with the correct default BoxCollisionShape:
 
 
 [source,java]
-
 ----
 
 Box b = new Box(1,1,1);
@@ -378,12 +380,16 @@ The following creates a MeshCollisionShape for a whole loaded (static) scene:
 
 
 [source,java]
-
 ----
 ...
 gameLevel.addControl(new RigidBodyControl(0.0f)); // explicit zero mass, implicit MeshCollisionShape
 ----
 
+
+[TIP]
+====
+Spheres and Boxes automatically fall back on the correct default CollisionShape if you do not specify a CollisionShape in the RigidBodyControl constructor. Complex static objects can fall back on MeshCollisionShapes, unless it is a Node, in which case it will become a CompoundCollisionShape containing a MeshCollisionShape
+====
 
 
 
@@ -395,7 +401,6 @@ For each physical Spatial in the scene:
 
 .  Add a PhysicsControl to a Spatial. 
 [source,java]
-
 ----
 myThing_geo.addControl(myThing_phys);
 ----
@@ -410,7 +415,6 @@ The PhysicsSpace is an object in BulletAppState that is like a rootNode for Phys
 
 *  Just like you add the Geometry to the rootNode, you add its PhysicsControl to the PhysicsSpace. 
 [source,java]
-
 ----
 bulletAppState.getPhysicsSpace().add(myThing_phys); 
 rootNode.attachChild(myThing_geo); 
@@ -418,14 +422,18 @@ rootNode.attachChild(myThing_geo);
 
 *  When you remove a Geometry from the scene and detach it from the rootNode, also remove the PhysicsControl from the PhysicsSpace: 
 [source,java]
-
 ----
 bulletAppState.getPhysicsSpace().remove(myThing_phys);
 myThing_geo.removeFromParent();
 ----
 
 
-_PhysicsControl__Geometry_
+
+[TIP]
+====
+You can either add the _PhysicsControl_ to the PhysicsSpace, or add the PhysicsControl to the Geometry and then add the _Geometry_ to the PhysicsSpace. jME3 understands both and the outcome is the same.
+====
+
 
 
 
@@ -441,7 +449,6 @@ When you import a model from blender, it often comes as a Node (even if it only 
 
 
 [source,java]
-
 ----
 
 // Doesn't scale
@@ -630,7 +637,12 @@ setKinematic(false);
 *  You can hang kinematics up “in mid-air and attach other PhysicsControls to them using <<jme3/advanced/hinges_and_joints#,hinges and joints>>. Picture them as “air hooks for flying aircraft carriers, floating islands in the clouds, suspension bridges, swings, chains… 
 *  You can use Kinematics to create mobile remote-controlled physical objects, such as moving elevator platforms, flying blimps/airships. You have full control how Kinematics move, they never “fall or “topple over.
 
-`setLocalTranslation()``move()`<<jme3/advanced/motionpath#,MotionPath>>
+
+[IMPORTANT]
+====
+The position of a kinematic RigidBodyControl is updated automatically depending on its spatial's translation. You move Spatials with a kinematic RigidBodyControl programmatically, that means you write translation and rotation code in the update loop. You describe the motion of kinematic objects either by using methods such as `setLocalTranslation()` or `move()`, or by using a <<jme3/advanced/motionpath#,MotionPath>>. 
+====
+
 
 
 
@@ -670,7 +682,12 @@ a|Cancels out all forces (force, torque) etc and stops the motion.
 
 |===
 
-“
+
+[IMPORTANT]
+====
+It is technically possible to position PhysicsControls using setLocalTranslation(), e.g. to place them in their start position in the scene. However you must be very careful not to cause an “impossible state where one physical object overlaps with another! Within the game, you typically use the setters shown here exclusively.
+====
+
 
 
 PhysicsControls also support the following advanced features:
@@ -707,7 +724,12 @@ a|Bullet does not use the full collision shape for continuous collision detectio
 
 |===
 
-`setApplyPhysicsLocal(true)`
+
+[TIP]
+====
+ You can `setApplyPhysicsLocal(true)` for an object to make it move relatively to its local physics space. You would do that if you need a physics space that moves with a node (e.g. a spaceship with artificial gravity surrounded by zero-g space). By default, it's set to false, and all movement is relative to the world.
+====
+
 
 
 
@@ -722,7 +744,6 @@ a|Bullet does not use the full collision shape for continuous collision detectio
 *  *Eject?* If you have physical nodes jittering wildy and being ejected “for no apparent reason, it means you have created an impossible state – solid objects overlapping. This can happen when you position solid spatials too close to other solid spatials, e.g. when moving them with setLocalTranslation(). +
 *Solution:* Use the debug mode to make CollisionShapes visible and verify that CollisionShapes do not overlap. 
 [source,java]
-
 ----
 bulletAppState.getPhysicsSpace().enableDebug(assetManager);
 ----

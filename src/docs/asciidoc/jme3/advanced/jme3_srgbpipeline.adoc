@@ -67,6 +67,11 @@ image:http://i.imgur.com/uNL7vw8.png[uNL7vw8.png,with="",height=""]
 
 Gamma Correction in jME 3.0 is based on those three statements.
 
+[IMPORTANT]
+====
+Note that Gamma Correction is only available on desktop with LWJGL or JOGL renderer. They are not yet supported on Android or iOS renderers
+====
+
 
 
 
@@ -77,7 +82,6 @@ use this in the main() method of your application :
 
 
 [source,java]
-
 ----
 
 AppSettings settings = new AppSettings(true);
@@ -91,7 +95,12 @@ This setting is also exposed in the Settings dialog displayed when you launch a 
 image:http://i.imgur.com/Lya1ldH.png[Lya1ldH.png,with="400",height=""]
 
 
-* But both can be enabled separately*
+
+[IMPORTANT]
+====
+This is a short hand to enable both linearization of input textures and Gamma correction of the rendered output on screen.* But both can be enabled separately*.
+
+====
 
 
 
@@ -102,7 +111,6 @@ You can enable or disable the Gamma correction of the rendered output by using
 
 
 [source,java]
-
 ----
 renderer.setMainFrameBufferSrgb(boolean srgb)
 ----
@@ -125,12 +133,16 @@ You can enable or disable texture linearization by using
 
 
 [source,java]
-
 ----
 renderer.setLinearizeSrgbImages(boolean linearize)
 ----
 
 This will be ignored if the hardware doesn't have the GL_ARB_framebuffer_sRGB or the GL_EXT_texture_sRGB.
+
+[IMPORTANT]
+====
+Toggling this setting at runtime will produce unexpected behavior for now. A change in this setting would need a proper reload of the context to work.
+====
 
 
 
@@ -156,13 +168,23 @@ Here is an exhaustive list of the supported format and there equivalent :
 *  DXT5 : GL_COMPRESSED_SRGB_ALPHA_S3TC_DXT5  
 
 
+[IMPORTANT]
+====
+Conventionally only the rgb channels are gamma corrected, as the alpha channel does not a represent a color value
+====
+
 
 
 
 ==== Excluding images from the sRGB pipeline
 
-+
 
+[IMPORTANT]
+====
+Only loaded images will be marked as in sRGB color space, when using assetManager.loadTexture or loadAsset.+
+
+The color space of an image created by code will have to be specified in the constructor or will be assumed as Linear if not specified. 
+====
 
 
 
@@ -180,7 +202,6 @@ For example here is how the NormalMap parameter is declared in the lighting mate
 
 
 [source]
-
 ----
 
  // Normal map
@@ -198,7 +219,12 @@ This can sound complicated, but you just have to answer this question :  Does my
 
 ==== ColorRGBA as sRGB
 
-*ALWAYS*
+
+[IMPORTANT]
+====
+The r, g, b attributes of a ColorRGBA object are *ALWAYS* assumed in Linear color space.
+
+====
 
 
 

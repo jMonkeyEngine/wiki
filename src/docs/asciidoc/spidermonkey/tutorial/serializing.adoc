@@ -7,7 +7,12 @@
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
-+++<abbr title="Application Programming Interface">API</abbr>+++<<jme3/advanced/networking#,networking>>
+
+[WARNING]
+====
+This article covers a deprecated +++<abbr title="Application Programming Interface">API</abbr>+++! See <<jme3/advanced/networking#,networking>> for current documentation.
+====
+
 In this lesson you'll learn about a pretty advanced system of SpiderMonkey. Why so early, you may ask; it's because it is an important aspect of SpiderMonkey, that you need to understand to effectively network your games.
 
 
@@ -21,7 +26,6 @@ There is going to be a situation where you need to serialize something yourself,
 
 
 [source,java]
-
 ----
 
 public class Inet4AddressSerializer extends Serializer {
@@ -40,7 +44,6 @@ As you can see, you have to extend Serializer and implement the methods T readOb
 
 
 [source,java]
-
 ----
 
 public class Inet4AddressSerializer extends Serializer {
@@ -64,7 +67,6 @@ So now you've got this serializer, and you don't know what to do with it. Well, 
 
 
 [source]
-
 ----
 
 Serializer.registerClass(Inet4Address.class, new Inet4AddressSerializer());
@@ -75,7 +77,6 @@ And now you can use the Inet4Address anywhere in a Message! Now we'll test this 
 
 
 [source,java]
-
 ----
 
 public class AddressMessage extends Message {
@@ -91,7 +92,6 @@ Results in a message being received, which prints out as:
 
 
 [source]
-
 ----
 
 /66.102.13.106

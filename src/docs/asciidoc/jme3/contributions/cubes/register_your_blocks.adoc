@@ -14,15 +14,19 @@ After initialising your object, you have to register it in the BlockManager:
 
 
 [source,java]
-
 ----
 BlockManager.register(myBlockObject);
 ----
 
-_should_*CubesTestAssets.BLOCK_GRASS*
+
+[TIP]
+====
+Using own blocks _should_ work at the moment, if you encounter problems you can test your code using the default blocks (e.g. *CubesTestAssets.BLOCK_GRASS*).
 
 
-`CubesTestAssets.registerBlocks();`
+You can register them by calling `CubesTestAssets.registerBlocks();`.
+====
+
 
 
 
@@ -35,7 +39,6 @@ Let's say, you want to add a simple block, which uses the same texture on every 
 
 
 [source,java]
-
 ----
 //The stone texture is in the 10th column and 1st row in the texture atlas
 Block blockStone = new Block(new BlockSkin(new BlockSkin_TextureLocation(9, 0), false));
@@ -52,7 +55,6 @@ Now it's time to get prettier blocks - The wood block as known in Minecraft has 
 
 
 [source,java]
-
 ----
 Block blockWood = new Block(new BlockSkin[]{
     new BlockSkin(new BlockSkin_TextureLocation(4, 0), false),
@@ -79,7 +81,6 @@ Special behaviours like this can be achieved by overwriting the *getSkinIndex* m
 
 
 [source,java]
-
 ----
 Block blockGrass = new Block(new BlockSkin[]{
         //We specify the 3 skins we need:

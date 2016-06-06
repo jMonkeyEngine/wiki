@@ -14,14 +14,18 @@ Previous: <<jme3/beginner/hello_terrain#,Hello Terrain>>, Next: <<jme3/beginner/
 This tutorial explains how to add 3D sound to a game, and how to make sounds play together with events, such as clicking. You learn how to use an Audio Listener and Audio Nodes. You also make use of an Action Listener and a MouseButtonTrigger from the previous <<jme3/beginner/hello_input_system#,Hello Input>> tutorial to make a mouse click trigger a gun shot sound.
 
 
-““““
+
+[TIP]
+====
+To use the example assets in a new jMonkeyEngine SDK project, right-click your project, select “Properties, go to “Libraries, press “Add Library and add the “jme3-test-data library.
+====
+
 
 
 
 == Sample Code
 
 [source,java]
-
 ----
 package jme3test.helloworld;
 
@@ -132,7 +136,6 @@ For each sound, you create an AudioNode. You can use an AudioNode like any node 
 
 
 [source,java]
-
 ----
 
   private AudioNode audio_gun;
@@ -144,7 +147,6 @@ Look at the custom `initAudio()` method: Here you initialize the sound objects a
 
 
 [source,Java]
-
 ----
 
 audio_gun = new AudioNode(assetManager, "Sound/Effects/Gun.wav", DataType.Buffer);
@@ -160,7 +162,6 @@ You want the gunshot sound to play _once_ (you don't want it to loop). You also 
 
 
 [source,java]
-
 ----
 
     audio_gun.setPositional(false);
@@ -171,13 +172,17 @@ You want the gunshot sound to play _once_ (you don't want it to loop). You also 
 ----
 
 
+[IMPORTANT]
+====
+Note that setPositional(false) is pretty important when you use stereo sounds. Positional sounds must always be mono audio files, otherwise the engine will remind it to you with a crash.
+====
+
 
 
 The nature sound is different: You want it to loop _continuously_ as background sound. This is why you set looping to true, and immediately call the play() method on the node. You also choose to set its volume to 3.
 
 
 [source,java]
-
 ----
 
     audio_nature.setLooping(true); // activate continuous playing
@@ -192,7 +197,6 @@ Here you make audio_nature a positional sound that comes from a certain place. F
 
 
 [source,java]
-
 ----
 
     ...
@@ -215,7 +219,6 @@ Let's have a closer look at `initKeys()`: As you learned in previous tutorials, 
 
 
 [source,java]
-
 ----
 
   /** Declaring "Shoot" action, mapping it to a trigger (mouse left click). */
@@ -230,7 +233,6 @@ Setting up the ActionListener should also be familiar from previous tutorials. Y
 
 
 [source,java]
-
 ----
 
   /** Defining the "Shoot" action: Play a gun sound. */
@@ -268,7 +270,6 @@ Apart from the looping boolean, another difference is where `play().playInstance
 
 *  You start playing the background nature sound right after you have created it, in the initAudio() method.
 [source,java]
-
 ----
     audio_nature.play(); // play continuously!
 
@@ -276,7 +277,6 @@ Apart from the looping boolean, another difference is where `play().playInstance
 
 *  The gunshot sound, however, is triggered situationally, once, only as part of the `Shoot` input action that you defined in the ActionListener.
 [source,java]
-
 ----
 
   /** Defining the "Shoot" action: Play a gun sound. */
@@ -298,7 +298,6 @@ As of 3.1-alpha2, the Enum in the AudioNode constructor defines whether the audi
 
 
 [source,java]
-
 ----
 audio_gunshot = new AudioNode(assetManager, "Sound/Effects/Gun.wav", DataType.Buffer); // buffered
 ...
@@ -341,7 +340,6 @@ In order to make the most of the 3D audio effect, you must use the `simpleUpdate
 
 
 [source,java]
-
 ----
 
   public void simpleUpdate(float tpf) {

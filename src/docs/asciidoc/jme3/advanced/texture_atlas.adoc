@@ -91,6 +91,11 @@ You reference textures by their *asset key name*, this is what their “id is. F
 *  The TextureAtlas lets you change the texture coordinates of a mesh or geometry to point at the new locations of its texture inside the atlas (if the texture exists inside the atlas). ??
 
 
+[IMPORTANT]
+====
+Note that models that use texture coordinates outside the 0-1 range (that is, they use repeating/wrapping textures) do not work correctly as their new coordinates leak into other parts of the atlas and thus display other textures instead of repeating the texture!
+====
+
 
 
 
@@ -100,7 +105,6 @@ Use `makeAtlasBatch` to turn several geometries that are loaded from a j3o file 
 
 
 [source,java]
-
 ----
 
  // scene contains many geometries ared attached to one node:
@@ -115,7 +119,6 @@ Create a texture atlas and change the texture coordinates of one geometry:
 
 
 [source,java]
-
 ----
 
  Node scene = assetManager.loadModel("Scenes/MyScene.j3o");

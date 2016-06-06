@@ -25,7 +25,6 @@ Advanced users can write a custom build and packaging script, and can register c
 ==== Context
 
 [source]
-
 ----
 
 jMonkeyProjects/MyGame/assets/    # You store assets in subfolders here! <------
@@ -55,7 +54,6 @@ Here is an example how you load assets using the AssetManager. This lines loads 
 
 
 [source,java]
-
 ----
 Material mat = (Material) assetManager.loadAsset(
     new AssetKey("Common/Materials/RedColor.j3m"));
@@ -73,14 +71,18 @@ Additionally, you can configure the Asset Manager and add any path to its root. 
 By default, jME3 searches for models in a directory named `assets`. 
 
 
-`assets``assets`
+
+[IMPORTANT]
+====
+In Java projects created with the jMonkeyEngine SDK, an `assets` folder is created by default in your project directory. If you are using any other IDE, or the command line, you simply create an `assets` directory manually (see the Codeless Project tip below).
+====
+
 
 
 This is our recommended directory structure for storing assets:
 
 
 [source]
-
 ----
 
 jMonkeyProjects/MyGame/src/...           # Packages, .java source code.
@@ -99,14 +101,24 @@ jMonkeyProjects/MyGame/assets/Textures/    # .jpg, .png; also .mesh.xml+.materia
 These subdirectories are just the most common examples. 
 
 
-`assets`
+
+[IMPORTANT]
+====
+You can rename/delete/add (sub)directories inside the `assets` directory in any way you like. Note however that there is no automatic refactoring for asset paths in the SDK, so if you modify them late in the development process, you have to refactor all paths manually.
+====
+
 
 
 *Examples:* You can rename `assets/Sounds` to `assets/Audio`, you can delete `assets/MatDefs` if you don't use it, you can create `assets/AIscripts`, etc. You can rename/move the `assets/Textures` directory or its subdirectories, but then you have to re-export all models, and re-convert them all to .j3o, so plan ahead!
 
 
-`assets/Textures/``assets/Textures/``assets/Textures`+
-`assets/Models/``assets/Scenes/``assets/Models``assets/Scenes`
+
+[IMPORTANT]
+====
+Store textures in `assets/Textures/` before you work with them in a mesh editor! Export and save 3D model files (.mesh.xml+.material, .mtl+.obj, .blend) into the `assets/Textures/` (!) before you convert the model to binary format (.j3o)! This ensures that texture paths correctly point to the `assets/Textures` directory. +
+After the conversion, you move the .j3o file into the `assets/Models/` or `assets/Scenes/` directories. This way, you can reuse textures, your binaries consistently link the correct textures, and the `assets/Models` and `assets/Scenes` directories don't become cluttered.
+====
+
 
 
 
@@ -116,7 +128,6 @@ Creating a material instance with the definition “Unshaded.j3md:
 
 
 [source,java]
-
 ----
 
 Material mat_brick = new Material( 
@@ -128,7 +139,6 @@ Applying a texture to the material:
 
 
 [source,java]
-
 ----
 
 mat_brick.setTexture("ColorMap", 
@@ -140,7 +150,6 @@ Loading a font:
 
 
 [source,java]
-
 ----
 
 guiFont = assetManager.loadFont("Interface/Fonts/Default.fnt");
@@ -151,7 +160,6 @@ Loading a model:
 
 
 [source,java]
-
 ----
 
 Spatial ninja = assetManager.loadModel("Models/Ninja/Ninja.mesh.xml");
@@ -162,7 +170,6 @@ Loading a scene from an Ogre3D dotScene file stored inside a zip:
 
 
 [source,java]
-
 ----
 
 assetManager.registerLocator("town.zip", ZipLocator.class);
@@ -175,7 +182,6 @@ Alternatively to ZipLocator, there is also a HttpZipLocator that can stream mode
 
 
 [source,java]
-
 ----
 
 assetManager.registerLocator("http://jmonkeyengine.googlecode.com/files/wildhouse.zip", 
@@ -188,7 +194,12 @@ rootNode.attachChild(scene);
 jME3 also offers a ClasspathLocator, ZipLocator, FileLocator, HttpZipLocator, and UrlLocator (see `com.jme3.asset.plugins`). 
 
 
-“
+
+[IMPORTANT]
+====
+The custom build script does not automatically include all ZIP files in the executable build. See “Cannot Locate Resource solution below.
+====
+
 
 
 
@@ -202,14 +213,12 @@ a| Solution!
 a| Load a model with materials 
 a| Use the asset manager's `loadModel()` method and attach the Spatial to the rootNode. 
 [source,java]
-
 ----
 Spatial elephant = assetManager.loadModel("Models/Elephant/Elephant.mesh.xml");
 rootNode.attachChild(elephant);
 ----
 
 [source,java]
-
 ----
 Spatial elephant = assetManager.loadModel("Models/Elephant/Elephant.j3o");
 rootNode.attachChild(elephant);
@@ -219,7 +228,6 @@ rootNode.attachChild(elephant);
 a| Load a model without materials 
 a| If you have a model without materials, you have to add a default material to make it visible. 
 [source,java]
-
 ----
 Spatial teapot = assetManager.loadModel("Models/Teapot/Teapot.obj");
 Material mat = new Material(assetManager, "Common/MatDefs/Misc/ShowNormals.j3md");
@@ -231,7 +239,6 @@ rootNode.attachChild(teapot);
 a| Load a scene 
 a| You load scenes just like you load models: 
 [source,java]
-
 ----
 Spatial scene = assetManager.loadModel("Scenes/house/main.scene");
 rootNode.attachChild(scene);
@@ -250,7 +257,6 @@ My game runs fine when I run it right from the jMonkeyEngine SDK. But when I run
 
 
 [source]
-
 ----
 com.jme3.asset.DesktopAssetManager loadAsset
 WARNING: Cannot locate resource: Scenes/town/main.scene
@@ -283,7 +289,12 @@ Before building the executable, you must use the jMonkeyEngine SDK's context men
 This ensures that the model's Texture paths keep working between your 3D mesh editor and JME3.
 
 
-<<sdk/default_build_script#,default build script>>
+
+[IMPORTANT]
+====
+If you must load custom assets from a non-.j3o ZIP file, you must manually ammend the <<sdk/default_build_script#,default build script>> to copy ZIP files into your distribution. ZIPs are skipped by default.
+====
+
 
 
 
@@ -310,8 +321,18 @@ Store your assets there as described above.
 .  You can now open this (Eclipse or whatever) project in the jMonkeyEngine SDK. +
 Convert assets as described above.
 
-<<jme3/advanced/save_and_load#,BinaryExporter>>
+
+[IMPORTANT]
+====
+If you don't use the SDK for some reason, you can still convert models to j3o format: Load any model in Ogre3D or Wavefront format with the AssetManager.loadModel() as a spatial. Then save the spatial as j3o file using <<jme3/advanced/save_and_load#,BinaryExporter>>.
+====
 
 
+
+
+[TIP]
+====
+Use file version control and let team members check out the project. Your developers open the project in Eclipse (etc) as they are used to. Additionally to their graphic tools, ask your graphic designers to install the jMonkeyEngine SDK, and to check out the codeless project that you just prepared. This makes it easy for non-coding team member to browse and preview game assets, to arrange scenes, and to convert files. At the same time, non-coders don't accidentally mess with code, and developers don't accidentally mess with assets. :)
+====
 
 

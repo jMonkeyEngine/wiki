@@ -11,7 +11,6 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 === Initialize the Entity System
 
 [source,java]
-
 ----
 
 EntitySystem entitySystem = new EntitySystem(new DefaultEntityData());
@@ -22,7 +21,6 @@ EntitySystem entitySystem = new EntitySystem(new DefaultEntityData());
 === Writing an own Component
 
 [source,java]
-
 ----
 
 public class MovementComponent extends Component {
@@ -45,7 +43,6 @@ public class MovementComponent extends Component {
 === Adding a new Entity
 
 [source,java]
-
 ----
 
 Component[] components = new Component[6];
@@ -65,7 +62,6 @@ entitySystem.newEntity(components);
 === Creating a new EntitySet
 
 [source,java]
-
 ----
 
 Entity Set entitySet = entitySystem.getEntitySet(MovementComponent.class, PositionComponent.class);
@@ -79,7 +75,6 @@ For the single parts of your programm who deal with special components it is rec
 === Loop through all entities
 
 [source,java]
-
 ----
 
 entitySet.applyChanges()
@@ -96,7 +91,6 @@ while (iterator.hasNext()) {
 === Only get changed Entities
 
 [source,java]
-
 ----
 
 if(entitySet.applyChanges())
@@ -112,7 +106,6 @@ if(entitySet.applyChanges())
 === Update a component
 
 [source,java]
-
 ----
 
 entity.setComponent(new PositionComponent(new Vector3f()));
@@ -123,7 +116,6 @@ entity.setComponent(new PositionComponent(new Vector3f()));
 === Destroy an entity
 
 [source,java]
-
 ----
 
 entity.destroy();

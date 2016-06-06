@@ -18,7 +18,6 @@ The most common Material Definitions are included in the engine, advanced users 
 
 
 [source,java]
-
 ----
 Spatial myGeometry = assetManager.loadModel("Models/Teapot/Teapot.j3o");
 Material mat = new Material(assetManager,  // Create new material and...
@@ -28,7 +27,12 @@ myGeometry.setMaterial(mat);               // Use material on this Geometry.
 
 ----
 
-<<jme3/advanced/j3m_material_files#,j3m Material Files>><<sdk/material_editing#,use the jMonkeyEngine SDK to create .j3m files>><<jme3/advanced/j3m_material_files#,write .j3m files in a text editor>>
+
+[TIP]
+====
+If you use one custom material with certain settings very often, learn about storing material settings in <<jme3/advanced/j3m_material_files#,j3m Material Files>>. You either <<sdk/material_editing#,use the jMonkeyEngine SDK to create .j3m files>> (user-friendly), or you <<jme3/advanced/j3m_material_files#,write .j3m files in a text editor>> (IDE-independent).
+====
+
 
 
 
@@ -56,28 +60,24 @@ In your Java code,
 
 .  Create a Material object based on the chosen Material Definition (.j3md file): 
 [source,java]
-
 ----
 Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
 ----
 
 .  Configure your Material by setting the appropriate values listed in the <<jme3/advanced/materials_overview#,Materials Overview>> table. 
 [source,java]
-
 ----
 mat.setColor("Color", ColorRGBA.Yellow ); // and more
 ----
 
 .  Apply your prepared Material to a Geometry: 
 [source,java]
-
 ----
 myGeometry.setMaterial(mat);
 ----
 
 .  (Optional) Adjust the texture scale of the mesh: 
 [source,java]
-
 ----
 myGeometryMesh.scaleTextureCoordinates(new Vector2f(2f, 2f));
 ----
@@ -102,7 +102,6 @@ A simpled textured material.
 
 
 [source,java]
-
 ----
 
 Material mat = new Material(assetManager, 
@@ -116,7 +115,6 @@ A textured material with a color bleeding through transparent areas.
 
 
 [source,java]
-
 ----
 
 Material mat = new Material(assetManager, 
@@ -131,7 +129,6 @@ You can test these examples within the following code snippet. It creates a box 
 
 
 [source,java]
-
 ----
  Box b = new Box(Vector3f.ZERO, 1, 1, 1);
 Geometry geom = new Geometry("Box", b);
@@ -141,6 +138,11 @@ rootNode.attachChild(geom);
 
 ----
 
+
+[TIP]
+====
+You can find these and other common code snippets in the jMonkeyEngine SDK Code Palette. Drag and drop them into your source code.
+====
 
 
 

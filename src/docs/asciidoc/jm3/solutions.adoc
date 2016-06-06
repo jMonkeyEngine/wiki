@@ -27,7 +27,6 @@ First, one must declare another Geometry, for example, a red cube:
 
 
 [source,java]
-
 ----
 
 protected Geometry redCube;
@@ -57,7 +56,6 @@ To have the red cube spin twice as fast as the other cube, simply make it rotate
 
 
 [source,java]
-
 ----
 
 public void simpleUpdate(float tpf) {
@@ -77,7 +75,6 @@ One possible solution is to shrink or grow depending on current size. The cube m
 
 
 [source,java]
-
 ----
 
 private boolean grow = true;
@@ -106,7 +103,6 @@ Another approach is to switch between shrinking and growing every chosen unit of
 
 
 [source,java]
-
 ----
 
 // Time passed
@@ -132,7 +128,6 @@ Another approach is to set the cube scale as the result of a sine wave. This res
 
 
 [source,java]
-
 ----
 
 public void simpleUpdate(float tpf) {
@@ -160,7 +155,6 @@ Same logic! Use a timeVar, and make the Material declaration + initialization li
 
 
 [source,java]
-
 ----
 
 protected Material mat;
@@ -171,7 +165,6 @@ As global var, then the initialization cuts off the Material bit:
 
 
 [source,java]
-
 ----
 
 mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
@@ -182,7 +175,6 @@ And then the simpleUpdate()
 
 
 [source,java]
-
 ----
 
 public void simpleUpdate(float tpf) {
@@ -202,7 +194,6 @@ A possible solution is to change the rotation axis of player from y to x, and ma
 
 
 [source,java]
-
 ----
 
 public void simpleUpdate(float tpf) {
@@ -226,7 +217,6 @@ First, add the mappings for the Up and Down actions to the initKeys() method:
 
 
 [source,java]
-
 ----
 
 private void initKeys() {
@@ -243,7 +233,6 @@ Then implement the actions in the onAnalog() method:
 
 
 [source,java]
-
 ----
 
 public void onAnalog(String name, float value, float tpf) {
@@ -274,7 +263,6 @@ Following the proposed solution 1, add new mappings for the mouse wheel in the i
 
 
 [source,java]
-
 ----
 
 private void initKeys() {
@@ -307,7 +295,6 @@ You can jump right off and obtain the hit object's material, by acessing the “
 
 
 [source,java]
-
 ----
 
 Material g = closest.getGeometry().getMaterial();
@@ -322,7 +309,6 @@ The lines can be added anywhere within the `if (results.size() &gt; 0)` block, a
 
 
 [source,java]
-
 ----
 
 Material material = closest.getGeometry().getMaterial();
@@ -338,7 +324,6 @@ Then, declare a `Spatial golem` variable outside of methods. Then initialize gol
 
 
 [source,java]
-
 ----
 
 golem = assetManager.loadModel("Models/Oto/Oto.mesh.xml");
@@ -349,7 +334,6 @@ Now we need him to show up! So we need to attach him: but the rootNode won't do,
 
 
 [source,java]
-
 ----
 
 shootables.attachChild(golem);
@@ -363,7 +347,6 @@ Here is my code, it works and it is well commented.
 
 
 [source,java]
-
 ----
 
 package jme3test.helloworld;

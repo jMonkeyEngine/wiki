@@ -37,7 +37,6 @@ The camera's default behaviour in SimpleApplication is to capture the mouse, whi
 
 
 [source,java]
-
 ----
 
 public void simpleInitApp() {
@@ -61,7 +60,6 @@ In the SwingCanvasTest's main() method, create a queued runnable(). It will cont
 
 
 [source,java]
-
 ----
 
   public static void main(String[] args) {
@@ -75,6 +73,11 @@ In the SwingCanvasTest's main() method, create a queued runnable(). It will cont
 ----
 
 
+[IMPORTANT]
+====
+Note that you have to use app.enqueue() when modifying objects in the scene from the AWT Event Queue like you have to use java.awt.EventQueue.invokeLater() from other threads (e.g. the update loop) when changing swing elements. This can get hairy quickly if you don’t have a proper threading model planned so you might want to use NiftyGUI as it is embedded in the update loop thread and is also cross-platform compatible (e.g. android etc.).
+====
+
 
 
 
@@ -87,7 +90,6 @@ Specify the com.jme3.system.AppSettings so jME knows the size of the Swing panel
 
 
 [source,java]
-
 ----
 AppSettings settings = new AppSettings(true);
 settings.setWidth(640);
@@ -98,7 +100,6 @@ We create our canvas application SwingCanvasTest, and give it the settings. We m
 
 
 [source,java]
-
 ----
 SwingCanvasTest canvasApplication = new SwingCanvasTest();
 canvasApplication.setSettings(settings);
@@ -120,7 +121,6 @@ Which ever you do, let's call the jFrame `window`.
 
 
 [source,java]
-
 ----
 JFrame window = new JFrame("Swing Application");
 window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -133,7 +133,6 @@ The important step is to add() the canvas component into the panel, like all the
 
 
 [source,java]
-
 ----
 JPanel panel = new JPanel(new FlowLayout()); // a panel
 // add all your Swing components ...
@@ -148,7 +147,6 @@ OK, the jFrame and the panel are ready. We add the panel into the jFrame, and pa
 
 
 [source,java]
-
 ----
 
 window.add(panel);
@@ -160,7 +158,6 @@ Remember that we haven't called start() on the jME appliation yet? For the canva
 
 
 [source,java]
-
 ----
 canvasApplication.startCanvas();
 ----

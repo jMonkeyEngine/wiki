@@ -70,7 +70,12 @@ All the behaviours extend from the `AbstractSteeringBehavior` class.
 Create instances from the steer behavior classes, They are located in the `com.jme3.ai.agents.behaviors.npc.steering` package. 
 
 
-If we want to add more than one steer behavior, we need to create a container: `SimpleMainBehavior`
+If we want to add more than one steer behavior, we need to create a container: 
+[WARNING]
+====
+If you add more than one steer behavior to a `SimpleMainBehavior` it will cause problems in the rotation of the agents. 
+====
+
 
 [cols="2", options="header"]
 |===
@@ -90,7 +95,6 @@ Once we know which container fits better for our agent, We create a new instance
 
 
 [source,java]
-
 ----
 
 SimpleMainBehaviour mainBehavior = new SimpleMainBehavior(myAgent);
@@ -104,10 +108,14 @@ myAgent.setMainBehavior(mainBehavior);
 ----
 
 
+[NOTE]
+====
+Note that you can have nested containers, like is shown in the following example:
+====
+
 
 
 [source,java]
-
 ----
 
 SimpleMainBehaviour mainBehavior = new SimpleMainBehavior(myAgent);
@@ -135,6 +143,16 @@ To assign priority layers add behaviors with the following function:
 ....
 
 
+[TIP]
+====
+To optimize the process speed add the behaviors with the lowest priority first. 
+====
+
+
+[NOTE]
+====
+The layer and the min length to consider the behavior invalid are 0 by default.
+====
 
 
 
@@ -151,7 +169,6 @@ Example:
 
 
 [source,java]
-
 ----
 
     Plane horizontalPlane = new Plane(new Vector3f(0,1,0), 0);
@@ -172,7 +189,6 @@ The responsible for the agent's acceleration is the vector returned in the `calc
 
 
 [source,java]
-
 ----
 
     @Override
@@ -190,7 +206,6 @@ In addition, you can change a brake factor which will reduce the resultant veloc
 
 
 [source,java]
-
 ----
 
     @Override
@@ -202,6 +217,16 @@ In addition, you can change a brake factor which will reduce the resultant veloc
 ----
 
 
+[WARNING]
+====
+The braking force must be a float contained in the [0,1] interval
+====
+
+
+[NOTE]
+====
+0 means the maximum braking force and 1 No braking force
+====
 
 
 
@@ -215,7 +240,6 @@ Example:
 
 
 [source,java]
-
 ----
 
     public class CustomSteeringExceptions extends SteeringExceptions  {
@@ -230,7 +254,6 @@ Example:
 ----
 
 [source,java]
-
 ----
 
     public SteerBehaviorConstructor(Agent agent, int value, Spatial spatial) {

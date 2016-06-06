@@ -18,14 +18,18 @@ image::jme3/beginner/beginner-materials.png[beginner-materials.png,with="320",he
 
 
 
-““““
+
+[TIP]
+====
+To use the example assets in a new jMonkeyEngine SDK project, right-click your project, select “Properties, go to “Libraries, press “Add Library and add the “jme3-test-data library.
+====
+
 
 
 
 == Sample Code
 
 [source,java]
-
 ----
 package jme3test.helloworld;
 
@@ -125,7 +129,6 @@ Typically you want to give objects in your scene textures: It can be rock, grass
 
 
 [source,java]
-
 ----
 
     /** A simple textured cube -- in good MIP map quality. */
@@ -166,7 +169,6 @@ For a partially translucent/transparent texture, you need:
 This bucket ensures that the transparent object is drawn on top of objects behind it, and they show up correctly under the transparent parts. 
 
 [source,java]
-
 ----
 
     /** A translucent/transparent texture, similar to a window frame. */
@@ -214,7 +216,6 @@ Let's have a look at the part of the code example where you create the shiny bum
 
 .  Create a Geometry from a Sphere shape. Note that this shape is a normal smooth sphere mesh. 
 [source,java]
-
 ----
 
     Sphere sphereMesh = new Sphere(32,32, 2f);
@@ -223,7 +224,6 @@ Let's have a look at the part of the code example where you create the shiny bum
 
 ..  (Only for Spheres) Change the sphere's TextureMode to make the square texture project better onto the sphere.
 [source,java]
-
 ----
 
     sphereMesh.setTextureMode(Sphere.TextureMode.Projected);
@@ -231,7 +231,6 @@ Let's have a look at the part of the code example where you create the shiny bum
 
 ..  You must generate TangentBinormals for the mesh so you can use the NormalMap layer of the texture.
 [source,java]
-
 ----
 
     TangentBinormalGenerator.generate(sphereMesh);
@@ -240,7 +239,6 @@ Let's have a look at the part of the code example where you create the shiny bum
 
 .  Create a material based on the `Lighting.j3md` default material.
 [source,java]
-
 ----
 
     Material sphereMat = new Material(assetManager, 
@@ -252,7 +250,6 @@ Let's have a look at the part of the code example where you create the shiny bum
 image::http://jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Textures/Terrain/Pond/Pond.jpg[Pond.jpg,with="64",height="64",align="right"]
 
 [source,java]
-
 ----
 
     sphereMat.setTexture("DiffuseMap", 
@@ -264,7 +261,6 @@ image::http://jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Textures/T
 image::http://jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Textures/Terrain/Pond/Pond_normal.png[Pond_normal.png,with="64",height="64",align="right"]
  
 [source,java]
-
 ----
 
     sphereMat.setTexture("NormalMap", 
@@ -273,7 +269,6 @@ image::http://jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Textures/T
 
 ..  Set the Material's Shininess to a value between 1 and 128. For a rock, a low fuzzy shininess is appropriate. Use material colors to define the shiny Specular color. 
 [source,java]
-
 ----
 
     sphereMat.setBoolean("UseMaterialColors",true);    
@@ -285,7 +280,6 @@ image::http://jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Textures/T
 
 .  Assign your newly created material to the Geometry.
 [source,java]
-
 ----
 
     sphereGeo.setMaterial(sphereMat);
@@ -293,7 +287,6 @@ image::http://jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Textures/T
 
 .  Let's move and rotate the geometry a bit to position it better. 
 [source,java]
-
 ----
 
     sphereGeo.setLocalTranslation(0,2,-2); // Move it a bit
@@ -360,7 +353,6 @@ You create a j3m file as follows:
 
 .  Create a plain text file `assets/Materials/MyCustomMaterial.j3m` in your project directory, with the following content:
 [source]
-
 ----
 Material My shiny custom material : Common/MatDefs/Light/Lighting.j3md {
      MaterialParameters {
@@ -382,7 +374,6 @@ Material My shiny custom material : Common/MatDefs/Light/Lighting.j3md {
 .  In the code sample, comment out the eight lines that have `sphereMat` in them.
 .  Below this line, add the following line: 
 [source,java]
-
 ----
 sphereGeo.setMaterial((Material) assetManager.loadMaterial( 
     "Materials/MyCustomMaterial.j3m"));

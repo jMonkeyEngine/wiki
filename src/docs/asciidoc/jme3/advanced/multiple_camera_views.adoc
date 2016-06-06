@@ -24,7 +24,6 @@ Imagine the window as a 1.0f x 1.0f rectangle. The default cam's viewPort is set
 
 
 [source,java]
-
 ----
 cam.setViewPort(0f, 1f, 0f, 1f);
 ----
@@ -36,7 +35,6 @@ The four values are read in the following order:
 
 
 [source,java]
-
 ----
 cam.setViewPort(x1,x2 , y1,y2);
 ----
@@ -48,7 +46,6 @@ Here are a few examples:
 
 
 [source,java]
-
 ----
 
 cam1.setViewPort( 0.0f , 1.0f   ,   0.0f , 1.0f );
@@ -60,7 +57,6 @@ These viewport parameters are, (in this order) the left-right extend, and the bo
 
 
 [source]
-
 ----
 
 0.0 , 1.0       1.0 , 1.0
@@ -77,7 +73,12 @@ These viewport parameters are, (in this order) the left-right extend, and the bo
 Example: Cam2's rectangle is in the bottom right: It extends from mid (x1=0.5f) bottom (y1=0.0f), to right (x2=1.0f) mid (y2=0.5f)
 
 
-`Camera cam5 = new Camera(100,100);`
+
+[IMPORTANT]
+====
+If you scale the views in a way so that the aspect ratio of a ViewPort is different than the window's aspect ratio, then the ViewPort appears distorted. In these cases, you must recreate (not clone) the ViewPort's cam object with the right aspect ratio. For example: `Camera cam5 = new Camera(100,100);` 
+====
+
 
 
 
@@ -93,7 +94,6 @@ You use the preconfigured Camera `cam` and `viewPort` from `SimpleApplication` f
 
 
 [source,java]
-
 ----
 
 cam.setViewPort(.5f, 1f, 0f, 0.5f); // Resize the viewPort to half its size, bottom right.
@@ -104,7 +104,6 @@ Optionally, place the main camera in the scene and rotate it in its start positi
 
 
 [source,java]
-
 ----
 cam.setLocation(new Vector3f(3.32f, 4.48f, 4.28f));
 cam.setRotation(new Quaternion (-0.07f, 0.92f, -0.25f, -0.27f));
@@ -129,7 +128,6 @@ Here is the abstract code sample for camera `n`:
 
 
 [source,java]
-
 ----
 
 Camera cam_n    = cam.clone();
@@ -148,7 +146,6 @@ To visualize what you do, use the following drawing of the viewport positions:
 
 
 [source]
-
 ----
 
 0.0 , 1.0       1.0 , 1.0
@@ -166,7 +163,6 @@ This are the lines of code that set the four cameras to create a four-times spli
 
 
 [source,java]
-
 ----
 
 cam1.setViewPort( 0.5f , 1.0f  ,  0.0f , 0.5f);
@@ -186,7 +182,6 @@ The following code snippet sets up two views, one covers the whole screen, and t
 
 
 [source]
-
 ----
 
        +-----+-----+
@@ -200,7 +195,6 @@ The following code snippet sets up two views, one covers the whole screen, and t
 ----
 
 [source,java]
-
 ----
 
 // Setup first full-window view
@@ -226,7 +220,6 @@ You can customize the camera and the viewPort of each view individually. For exa
 
 
 [source,java]
-
 ----
 viewPort.setBackgroundColor(ColorRGBA.Blue);
 ----
@@ -235,7 +228,6 @@ You have full control to determine which Nodes the camera can see! It can see th
 
 
 [source,java]
-
 ----
 viewPort1.attachScene(rootNode);
 ----
@@ -244,7 +236,6 @@ viewPort1.attachScene(rootNode);
 
 
 [source,java]
-
 ----
 viewPort2.attachScene(spookyGhostDetectorNode);
 ----

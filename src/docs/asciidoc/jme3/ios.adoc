@@ -15,12 +15,22 @@ To use iOS deployment you need a computer running MacOSX and a version of Xcode 
 
 
 
+[WARNING]
+====
+Note that at the moment iOS deployment is in alpha state.
+====
+
 
 
 iOS deployment works via cross-compilation to native iOS ARM code, there is no virtual machine running on the device. The Avian JVM supports this feature while maintaining general compatibility to OpenJDK and JNI for native access. The minimum compatible iOS deployment target is 4.3.
 
 
-→““
+
+[TIP]
+====
+To install the iOS deployment plugin, go to Tools→Plugins and under “Available plugins select the “iOS Support plugin.
+====
+
 
 
 
@@ -35,6 +45,11 @@ image:jme3/ios-deployment.png[ios-deployment.png,with="",height=""]
 After enabling deployment, a new `ios` directory is created in the project root that contains a `project` and a `src` folder. The `ios/project` folder contains an Xcode project that you will use to build and run the final iOS application for both iPhone and iOS. The `ios/src` folder contains java and native source files for bridging iOS and native code, you can add .java and .m files with your own iOS code here.
 
 
+
+[IMPORTANT]
+====
+When you enable iOS deployment for the first time or any time that the Avian library and OpenJDK is updated, they will be extracted to your SDK settings folder, wait until it has been extracted before building an iOS-enabled project.
+====
 
 
 
@@ -57,6 +72,11 @@ If an error occurs about jni.h not being found, either install the SDK for 10.9 
 === Running and deploying the application
 
 To run the application, open the Xcode project under `ios/project` in Xcode and press the run button. You can make changes to the UI and native invocation classes in the Xcode project as well. From here you can also deploy the application to your devices or the App Store.
+
+[TIP]
+====
+Note that you should also adapt the project settings like application name and registration package in Xcode before deploying the final application.
+====
 
 
 

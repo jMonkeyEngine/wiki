@@ -7,7 +7,12 @@
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
-+++<abbr title="Application Programming Interface">API</abbr>+++<<jme3/advanced/networking#,networking>>
+
+[WARNING]
+====
+This article covers a deprecated +++<abbr title="Application Programming Interface">API</abbr>+++! See <<jme3/advanced/networking#,networking>> for current documentation.
+====
+
 
 
 This very first tutorial is going to teach you how to open a server and a client, and connect them to eachother. I'll also discuss how connection registration works. Since this is a very simple process in SpiderMonkey, this tutorial will be quite short.
@@ -20,7 +25,6 @@ Creating a server is as simple as doing this:
 
 
 [source,java]
-
 ----
 
 Server myServer = new Server(4040, 5050);
@@ -32,7 +36,6 @@ This initializes and starts a server on TCP port 4040 and UDP port 5050. Now it'
 
 
 [source,java]
-
 ----
 
 Client client = new Client("localhost", 4040, 5050);
@@ -44,7 +47,6 @@ This initializes and starts a client, and it will immediately connect to localho
 
 
 [source]
-
 ----
 
 Sep 16, 2010 11:52:16 AM com.jme3.network.connection.TCPConnection bind
@@ -74,7 +76,6 @@ You can also filter connections (or connectors as I call them) in SpiderMonkey. 
 
 
 [source,java]
-
 ----
 
 public class MyConnectorFilter implements ConnectorFilter {
@@ -96,7 +97,6 @@ SpiderMonkey Clients are also able to discover hosts running in the +++<abbr tit
 
 
 [source,java]
-
 ----
 
 Client client = new Client();
@@ -108,7 +108,6 @@ This starts the host discovery on port 5050, and listens for servers for 5 secon
 
 
 [source,java]
-
 ----
 
 for (InetAddress host : foundHosts) {

@@ -71,15 +71,19 @@ This is how you use the guiNode for HUDs:
 The BitmapTexts and Pictures appear as 2 dimensional element on the screen.
 
 
-+++<abbr title="Graphical User Interface">GUI</abbr>+++
+
+[TIP]
+====
+By default, the guiNode has some scene graph statistics attached. To clear the guiNode before you attach your own +++<abbr title="Graphical User Interface">GUI</abbr>+++ elements, use the following methods: 
 
 
 [source,java]
-
 ----
 setDisplayStatView(false); setDisplayFps(false);
 ----
 
+
+====
 
 
 
@@ -90,7 +94,6 @@ A simple image can be displayed using `com.jme3.ui.Picture`.
 
 
 [source,java]
-
 ----
 Picture pic = new Picture("HUD Picture");
 pic.setImage(assetManager, "Textures/ColoredTex/Monkey.png", true);
@@ -111,7 +114,6 @@ You use `com.jme3.font.BitmapText` to display text on the screen.
 
 
 [source,java]
-
 ----
 
 BitmapText hudText = new BitmapText(guiFont, false);          
@@ -127,7 +129,6 @@ The BitmapFont object `guiFont` is a default font provided by SimpleApplication.
 
 
 [source]
-
 ----
 BitmapFont myFont = assetManager.loadFont("Interface/Fonts/Console.fnt");
 hudText = new BitmapText(myFont, false);
@@ -146,7 +147,12 @@ hudText = new BitmapText(myFont, false);
 It is technically possible to attach Quads and 3D Geometries to the HUD. They show up as flat, static +++<abbr title="Graphical User Interface">GUI</abbr>+++ elements. The size unit for the guiNode is pixels, not world units. If you attach a Geometry that uses a lit Material, you must add a light to the guiNode. 
 
 
-+++<abbr title="Graphical User Interface">GUI</abbr>+++
+
+[IMPORTANT]
+====
+If you don't see an attached object in the +++<abbr title="Graphical User Interface">GUI</abbr>+++, check it's position and material (add a light to guiNode). Also verify whether it is not too tiny to be seen. For comparison: A 1 world-unit wide cube is only 1 pixel wide when attached to the guiNode! You may need to scale it bigger.
+====
+
 
 
 
@@ -156,7 +162,6 @@ Use the update loop to keep the content up-to-date.
 
 
 [source,java]
-
 ----
 public void simpleUpdate(float tpf) {
   ...

@@ -14,7 +14,12 @@ Spatials (that is Nodes and Geometries) can contain audio and light nodes, parti
 The jMonkeyEngine's binary file format is called `.j3o`. You can convert, view and edit .j3o files and their materials in the jMonkeyEngine <<sdk#,SDK>> and compose scenes (this does not include editing meshes). For the conversion, you can either use the BinaryExporters, or a context menu in the SDK.
 
 
-`com.jme3.export.Savable`<<jme3/advanced/spatial#,spatial's user data>>“
+
+[IMPORTANT]
+====
+The jMonkeyEngine's serialization system is the `com.jme3.export.Savable` interface. JME3's BinaryExporter can write standard Java objects, JME3 objects, and primitive data types that are included in a <<jme3/advanced/spatial#,spatial's user data>>. If you use custom game data classes, see below how to make them “Savable.
+====
+
 
 
 There is also a com.jme3.export.xml.XMLExporter and com.jme3.export.xml.XMLImporter that similarly converts jme3 spatials to an XML format. But you wouldn't use that to load models at runtime (quite slow).
@@ -31,11 +36,15 @@ There is also a com.jme3.export.xml.XMLExporter and com.jme3.export.xml.XMLImpor
 The following example overrides `stop()` in SimpleApplication to save the rootNode to a file when the user quits the application. The saved rootNode is a normal .j3o binary file that you can open in the <<sdk#,SDK>>.
 
 
-`assets`
+
+[WARNING]
+====
+Note that when you save a model that has textures, the references to those textures are stored as absolute paths, so when loading the j3o file again, the textures have to be accessible at the exact location (relative to the assetmanager root, by default the `assets` directory) they were loaded from. This is why the SDK manages the conversion on the project level.
+====
+
 
 
 [source,java]
-
 ----
 
   /* This is called when the user quits the app. */
@@ -60,7 +69,6 @@ The following example overrides `simpleInitApp()` in SimpleApplication to load `
 
 
 [source,java]
-
 ----
   @Override
   public void simpleInitApp() {
@@ -73,7 +81,12 @@ The following example overrides `simpleInitApp()` in SimpleApplication to load `
    
 ----
 
-–
+
+[TIP]
+====
+Here you see why we save user data inside spatials – so it can be saved and loaded together with the .j3o file. If you have game data outside Spatials, you have to remember to save() and load(), and get() and set() it yourself.
+====
+
 
 
 
@@ -94,7 +107,6 @@ So every time you create a custom Control or custom user data class, remember to
 
 
 [source,java]
-
 ----
 
 import com.jme3.export.InputCapsule;
@@ -145,5 +157,10 @@ To make a custom class savable:
 
 
 
+
+[IMPORTANT]
+====
+As with all serialization, remember that if you ever change data types in custom classes, the updated read() methods will no longer be able to read your old files. Also there has to be a constructor that takes no Parameters.
+====
 
 

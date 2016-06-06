@@ -86,7 +86,6 @@ ColorRGBA defines a few static color values for ease of use. That is, rather tha
 
 
 [source,java]
-
 ----
 
 ColorRGBA red = new ColorRGBA(1,0,0,1);
@@ -98,7 +97,6 @@ you can simply say:
 
 
 [source,java]
-
 ----
 
 object.setSomeColor(ColorRGBA.red)
@@ -426,7 +424,6 @@ You might wish to represent your rotations as Angle Axis pairs. That is, you def
 ==== Example - Rotate a Spatial Using fromAngleAxis
 
 [source,java]
-
 ----
 
 //rotate about the Y-Axis by approximately 1 pi
@@ -447,7 +444,6 @@ You can also represent a rotation by defining three angles. The angles represent
 ==== Example - Rotate a Spatial Using fromAngles
 
 [source,java]
-
 ----
 
 //rotate 1 radian on the x, 3 on the y and 0 on z
@@ -466,7 +462,6 @@ If you have three axes that define your rotation, where the axes define the left
 ==== Example - Rotate a Spatial Using fromAxes
 
 [source,java]
-
 ----
 
 //rotate a spatial to face up ~45 degrees
@@ -489,7 +484,6 @@ Commonly you might find yourself with a <<jme3/matrix#,Matrix>> defining a rotat
 ==== Example - Rotate a Spatial Using a Rotation Matrix
 
 [source,java]
-
 ----
 
 
@@ -515,7 +509,6 @@ One of the biggest advantages to using Quaternions is allowing interpolation bet
 ==== Example - Use Slerp to Rotate Between two Quaternions
 
 [source,java]
-
 ----
 
 /*
@@ -543,7 +536,6 @@ You can concatenate (add) rotations: This means you turn the object first around
 
 
 [source,java]
-
 ----
 Quaternion myRotation = pitch90.mult(roll45); /* pitch and roll */
 ----
@@ -552,7 +544,6 @@ To rotate a Vector3f around its origin by the Quaternion amount, use the multLoc
 
 
 [source,java]
-
 ----
 Quaternion myRotation = pitch90;
 Vector3f myVector = new Vector3f(0,0,-1);
@@ -653,7 +644,6 @@ jME defines a Line class that is defined by an origin and direction. In reality,
 === Example 1 - Find a Random Point on a Line
 
 [source,java]
-
 ----
 
 Line l = new Line(new Vector3f(0,1,0), new Vector3f(3,2,1));
@@ -714,7 +704,6 @@ These values are returned on a call to `whichSide`.
 === Example 1 - Determining if a Point is On the Positive Side of a Plane
 
 [source,java]
-
 ----
 
 Vector3f normal = new Vector3f(0,1,0);
@@ -736,7 +725,6 @@ Using the standard constructor Plane(Vector3f normal, float constant), here is w
 
 
 [source,java]
-
 ----
 
 package test;
@@ -823,7 +811,6 @@ This Ray is used extensively in jME for <<jme3/picking#,Picking>>. A Ray is cast
 === Example 1 - Create a Ray That Represents Where the Camera is Looking
 
 [source,java]
-
 ----
 
 Ray ray = new Ray(cam.getLocation(), cam.getDirection());
@@ -852,7 +839,6 @@ Rectangle is a straight forward data class that simply maintains values that def
 === Example 1 : Define a Rectangle and Get a Point From It
 
 [source,java]
-
 ----
 
 Vector3f v1 = new Vector3f(1,0,0);
@@ -885,7 +871,6 @@ jME's Triangle class is a simple data class. It contains three <<jme3/vector#,Ve
 === Example 1 - Creating a Triangle
 
 [source,java]
-
 ----
 
 //the three points that make up the triangle
@@ -906,7 +891,6 @@ Cast the spatial to com.jme3.bounding.BoundingBox to be able to use getExtent().
 
 
 [source,java]
-
 ----
 Vector3f extent = ((BoundingBox) spatial.getWorldBound()).getExtent(new Vector3f());
 float x = ( (BoundingBox)spatial.getWorldBound()).getXExtent();
@@ -919,7 +903,6 @@ float z = ( (BoundingBox)spatial.getWorldBound()).getZExtent();
 == How do I position the center of a Geomtry?
 
 [source,java]
-
 ----
 geo.center().move(pos);
 ----

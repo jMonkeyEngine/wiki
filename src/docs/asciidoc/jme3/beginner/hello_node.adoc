@@ -32,7 +32,6 @@ You will learn that the scene graph represents the 3D world, and why the rootNod
 == Code Sample
 
 [source,java]
-
 ----
 package jme3test.helloworld;
 
@@ -159,7 +158,6 @@ What happens in the code snippet? You use the `simpleInitApp()` method that was 
 **  Create a blue material. 
 **  Apply the blue material to the Box Geometry. 
 [source,java]
-
 ----
 
     Box box1 = new Box(1,1,1);
@@ -178,7 +176,6 @@ What happens in the code snippet? You use the `simpleInitApp()` method that was 
 **  Create a red material. 
 **  Apply the red material to the Box Geometry. 
 [source,java]
-
 ----
 
     Box box2 = new Box(1,1,1);
@@ -197,7 +194,6 @@ What happens in the code snippet? You use the `simpleInitApp()` method that was 
 **  Attach the Node to the rootNode.
 **  The Node has no visible appearance in the scene. 
 [source,java]
-
 ----
 
     Node pivot = new Node("pivot");
@@ -210,7 +206,6 @@ If you run the application with only the code up to here, the scene appears empt
 
 .  Attach the two boxes to the pivot node. 
 [source,java]
-
 ----
 
         pivot.attachChild(blue);
@@ -222,7 +217,6 @@ If you run the app with only the code up to here, you see two cubes: A red cube 
 
 .  Rotate the pivot node.
 [source,java]
-
 ----
         pivot.rotate( 0.4f , 0.4f , 0.0f );
 ----
@@ -253,7 +247,6 @@ a| Solution!
 a| Create a Spatial 
 a| Create a Mesh shape, wrap it into a Geometry, and give it a Material. For example: 
 [source,java]
-
 ----
 Box mesh = new Box(Vector3f.ZERO, 1, 1, 1); // a cuboid default mesh
 Geometry thing = new Geometry("thing", mesh); 
@@ -266,7 +259,6 @@ thing.setMaterial(mat);
 a| Make an object appear in the scene 
 a| Attach the Spatial to the `rootNode`, or to any node that is attached to the rootNode. 
 [source,java]
-
 ----
 rootNode.attachChild(thing);
 ----
@@ -275,13 +267,11 @@ rootNode.attachChild(thing);
 a| Remove objects from the scene 
 a| Detach the Spatial from the `rootNode`, and from any node that is attached to the rootNode. 
 [source,java]
-
 ----
 rootNode.detachChild(thing);
 ----
 
 [source,java]
-
 ----
 rootNode.detachAllChildren();
 ----
@@ -290,19 +280,16 @@ rootNode.detachAllChildren();
 a| Find a Spatial in the scene by the object's name, or ID, or by its position in the parent-child hierarchy. 
 a| Look at the node's children or parent: 
 [source,java]
-
 ----
 Spatial thing = rootNode.getChild("thing");
 ----
 
 [source,java]
-
 ----
 Spatial twentyThird = rootNode.getChild(22);
 ----
 
 [source,java]
-
 ----
 Spatial parent = myNode.getParent();
 ----
@@ -329,7 +316,6 @@ a| Z-axis
 a| Specify the new location in three dimensions: How far away is it from the origin going right-up-forward? +
 To move a Spatial _to_ specific coordinates, such as (0,40.2f,-2), use: 
 [source,java]
-
 ----
 thing.setLocalTranslation( new Vector3f( 0.0f, 40.2f, -2.0f ) );
 ----
@@ -338,7 +324,6 @@ thing.setLocalTranslation( new Vector3f( 0.0f, 40.2f, -2.0f ) );
 
 
 [source,java]
-
 ----
 thing.move( 0.0f, 40.2f, -2.0f );
 ----
@@ -361,7 +346,6 @@ A value between 0.0f and 1.0f shrinks the Spatial; bigger than 1.0f stretches it
 Using the same value for each dimension scales proportionally, different values stretch it. +
 To scale a Spatial 10 times longer, one tenth the height, and keep the same width: 
 [source,java]
-
 ----
 thing.scale( 10.0f, 0.1f, 1.0f );
 ----
@@ -382,7 +366,6 @@ a| Z-axis
 a|3-D rotation is a bit tricky (<<jme3/rotate#,learn details here>>). In short: You can rotate around three axes: Pitch, yaw, and roll. You can specify angles in degrees by multiplying the degrees value with `FastMath.DEG_TO_RAD`. +
 To roll an object 180° around the z axis: 
 [source,java]
-
 ----
 thing.rotate( 0f , 0f , 180*FastMath.DEG_TO_RAD );
 ----
@@ -391,7 +374,6 @@ thing.rotate( 0f , 0f , 180*FastMath.DEG_TO_RAD );
 
 
 [source,java]
-
 ----
 thing.setLocalRotation( 
   new Quaternion().fromAngleAxis(180*FastMath.DEG_TO_RAD, new Vector3f(1,0,0)));
@@ -446,7 +428,6 @@ For example, to add a custom id number to a node, you would use:
 
 
 [source,java]
-
 ----
 pivot.setUserData( "pivot id", 42 );
 ----
@@ -455,7 +436,6 @@ To read this Node's id number elsewhere, you would use:
 
 
 [source,java]
-
 ----
 int id = pivot.getUserData( "pivot id" ); 
 ----

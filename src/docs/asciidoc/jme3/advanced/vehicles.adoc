@@ -67,7 +67,6 @@ Every physical object must have a collision shape, that we prepare first. For th
 
 
 [source,java]
-
 ----
 
 CompoundCollisionShape compoundShape = new CompoundCollisionShape();
@@ -79,7 +78,6 @@ BoxCollisionShape box = new BoxCollisionShape(new Vector3f(1.2f, 0.5f, 2.4f));
 
 
 [source,java]
-
 ----
 compoundShape.addChildShape(box, new Vector3f(0, 1, 0));
 ----
@@ -88,7 +86,6 @@ Any kind of geometry can make up the visible part of the vehicle, here we use a 
 
 
 [source,java]
-
 ----
 Node vehicleNode=new Node("vehicleNode");
 vehicle = new VehicleControl(compoundShape, 400);
@@ -99,7 +96,6 @@ We initialize the Vehicle Control with the compound shape, and set its mass to a
 
 
 [source,java]
-
 ----
 vehicle = new VehicleControl(compoundShape, 400);
 ----
@@ -108,7 +104,6 @@ Finally we add the behaviour (VehicleControl) to the visible Geometry (node).
 
 
 [source,java]
-
 ----
 vehicleNode.addControl(vehicle);
 ----
@@ -117,7 +112,6 @@ We configure the physical properties of the vehicle's suspension: Compresion, Da
 
 
 [source,java]
-
 ----
 float stiffness = 60.0f;//200=f1 car
 float compValue = .3f; //(should be lower than damp)
@@ -152,7 +146,6 @@ We initialize a few variables that we will reuse when we add the four wheels. yO
 
 
 [source,java]
-
 ----
 
 Vector3f wheelDirection = new Vector3f(0, -1, 0);
@@ -169,7 +162,6 @@ We create a Cylinder mesh shape that we use to create the four visible wheel geo
 
 
 [source,java]
-
 ----
 Cylinder wheelMesh = new Cylinder(16, 16, radius, radius * 0.6f, true);
 ----
@@ -178,7 +170,6 @@ For each wheel, we create a Node and a Geometry. We attach the Cylinder Geometry
 
 
 [source,java]
-
 ----
 
 Node node1 = new Node("wheel 1 node");
@@ -196,7 +187,6 @@ The three next wheels are created in the same fashion, only the offsets are diff
 
 
 [source,java]
-
 ----
 
 ...
@@ -215,7 +205,6 @@ Attach the wheel Nodes to the vehicle Node to group them, so they move together.
 
 
 [source,java]
-
 ----
 
 vehicleNode.attachChild(node1);
@@ -229,7 +218,6 @@ As always, attach the vehicle Node to the rootNode to make it visible, and add t
 
 
 [source,java]
-
 ----
 
 rootNode.attachChild(vehicleNode);
@@ -259,7 +247,6 @@ In the ActionListener, we implement the actions that control the vehicle's direc
 `vehicle.applyImpulse(jumpForce, Vector3f.ZERO);`
 
 [source,java]
-
 ----
 public void onAction(String binding, boolean value, float tpf) {
   if (binding.equals("Lefts")) {
@@ -299,7 +286,6 @@ For your reference, this is how we initialized the constants for this example:
 
 
 [source,java]
-
 ----
 
 private final float accelerationForce = 1000.0f;

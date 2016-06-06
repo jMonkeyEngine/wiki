@@ -22,7 +22,6 @@ W tym tutorialu rzucimy okiem na prostą scenę trójwymiarową.  3D world is re
 == Kod źródłowy
 
 [source,java]
-
 ----
 
 package jme3test.helloworld;
@@ -96,7 +95,6 @@ So what exactly happens in this code snippet? Note that we are using the `simple
 **  We place the box at (1,-1,1)
 **  We give it a solid blue material. 
 [source,java]
-
 ----
 
         Box box1 = new Box( new Vector3f(1,-1,1), 1,1,1);
@@ -112,7 +110,6 @@ So what exactly happens in this code snippet? Note that we are using the `simple
 **  We place the second box at (1,3,1). This is straight above the blue box, with a gap of 2 world units inbetween.
 **  We give it a solid red material
 [source,java]
-
 ----
 
         Box box2 = new Box( new Vector3f(1,3,1), 1,1,1);
@@ -128,7 +125,6 @@ So what exactly happens in this code snippet? Note that we are using the `simple
 **  We attach the Node to the rootNode.
 **  An attached Node has no visible appearance in the scene. 
 [source,java]
-
 ----
 
         Node pivot = new Node("pivot");
@@ -142,7 +138,6 @@ So what exactly happens in this code snippet? Note that we are using the `simple
 .  We attach the two boxes to the node.
 **  _If we ran the app now, we would see two boxes: one straight above the other._ 
 [source,java]
-
 ----
 
         pivot.attachChild(blue);
@@ -153,7 +148,6 @@ So what exactly happens in this code snippet? Note that we are using the `simple
 .  Now, we rotate the node.
 **  _When we run the application now, we see two boxes on top of each other – but both are tilted at the same angle._ 
 [source,java]
-
 ----
 
         pivot.rotate( 0.4f , 0.4f , 0.0f );
@@ -201,7 +195,6 @@ a| Solution!
 a| Create a Spatial 
 a| Create a shape and give it a Material. For instance a box shape: 
 [source,java]
-
 ----
 Box mesh = new Box(Vector3f.ZERO, 1, 1, 1);
 Geometry thing = new Geometry("thing", mesh);
@@ -213,7 +206,6 @@ thing.setMaterial(mat);
 a| Make an object appear in the scene 
 a| Attach the Spatial to the `rootNode`, or to any node that is attached to the rootNode. 
 [source,java]
-
 ----
 rootNode.attachChild(thing);
 ----
@@ -222,13 +214,11 @@ rootNode.attachChild(thing);
 a| Remove objects from the scene 
 a| Detach the Spatial from the `rootNode`, and from any node that is attached to the rootNode. 
 [source,java]
-
 ----
 rootNode.detachChild(thing);
 ----
 
 [source,java]
-
 ----
 rootNode.detachAllChildren();
 ----
@@ -237,13 +227,11 @@ rootNode.detachAllChildren();
 a| Find a Spatial in the scene by the object's name or ID 
 a| Look at the node's children. 
 [source,java]
-
 ----
 Spatial thing = rootNode.getChild("thing");
 ----
 
 [source,java]
-
 ----
 Spatial twentyThird = rootNode.getChild(22);
 ----
@@ -272,7 +260,6 @@ a| Position and move objects
 a| *Translation:* Specify the new location in three dimensions: right/left, up/down, forward/backward. +
 Example 1. To move an object _to_ specific coordinates, such as (0,40.2f,-2), use: 
 [source,java]
-
 ----
 thing.setLocalTranslation( new Vector3f( 0.0f, 40.2f, -2.0f ) );
 ----
@@ -282,7 +269,6 @@ Example 2: To move an object _by_ a certain amount, e.g. higher up (y=40.2f) and
 
 
 [source,java]
-
 ----
 thing.move( 0.0f, 40.2f, -2.0f );
 ----
@@ -295,13 +281,11 @@ a| Resize objects
 a| *Scaling:* To resize a Spatial, specify the scale factor in each dimension: length, height, width. A value between 0.0f and 1.0f will shrink the object; a value bigger than 1.0f will make it grow; and 1.0f will keep this dimension the same. Using the same value for each dimension scales an object proportionally, using different values stretches it. +
 Example: Make it 10 times longer, one tenth of the height, same width: 
 [source,java]
-
 ----
 thing.setLocalScale( 10.0f, 0.1f, 1.0f  );
 ----
 
 [source,java]
-
 ----
 thing.scale( 10.0f, 0.1f, 1.0f );
 ----
@@ -315,7 +299,6 @@ a| *Rotation:* 3-D rotation is a bit tricky (<<jme2/rotate#,learn details here>>
 Important: *You do not specify the rotation in degrees from 0° to 360°, but in radians from 0.0f to 6.28f (FastMath.PI*2) !* +
 Example: To roll an object 180° around the z axis: 
 [source,java]
-
 ----
 thing.rotate( 0f , 0f , FastMath.PI );
 ----
@@ -325,7 +308,6 @@ Example:
 
 
 [source,java]
-
 ----
 thing.rotate( 0f , 0f , 180*FastMath.DEG_TO_RAD );
 ----
@@ -334,7 +316,6 @@ thing.rotate( 0f , 0f , 180*FastMath.DEG_TO_RAD );
 
 
 [source,java]
-
 ----
 thing.setLocalRotation( new Quaternion(). fromAngleAxis(FastMath.PI/2, new Vector3f(1,0,0)));
 ----

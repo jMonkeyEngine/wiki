@@ -16,7 +16,12 @@ While you do not have to create a project of each type to use Eclipse and this g
 The code samples provided in this guide should work for any IDE, but setting up/configuring your IDE to do what Eclipse does in this particular guide may require some creative workarounds.
 
 
-*can not*<<jme3/android#,this page>>*that can also be edited in the Eclipse IDE*
+
+[WARNING]
+====
+Please note that projects that use Android UI elements or are created using Eclipse *can not* be ported to iOS. See <<jme3/android#,this page>> on how to create a cross-platform project using the jME SDK *that can also be edited in the Eclipse IDE*. This saves you the setup work outlined below.
+====
+
 
 
 
@@ -25,6 +30,11 @@ The code samples provided in this guide should work for any IDE, but setting up/
 I will assume you already have downloaded (and built, if necessary) the JME3 binaries. If not, either download the link:http://hub.jmonkeyengine.org/downloads/[latest SDK release], link:http://updates.jmonkeyengine.org/stable/3.0/engine[engine build] (recommended for new users), or take a quick detour over to link:http://hub.jmonkeyengine.org/wiki/doku.php/jme3:build_from_sources[this guide] to build from source (recommended for advanced users).
 
 
+
+[NOTE]
+====
+One directory you should have on hand (or know where to find) is the location of the resulting library (JAR) files.
+====
 
 
 
@@ -35,7 +45,12 @@ For the various methods of obtaining the libraries (as described above), the pat
 *  *Nightly*: /libs
 *  *Source*: [SDK Dir]/sdk/build/cluster/libs
 
-*do not copy JAR files*
+
+[TIP]
+====
+Throughout the course of this guide, *do not copy JAR files* to any project directory - leave them in their original spots so they can be easily updated for when a JME3 update comes out or when you rebuild the source.
+====
+
 
 
 
@@ -76,7 +91,12 @@ First, we need to configure our build path. Right click the new project entry an
 There are a number of libraries you're going to need to include, as the 'core' JME3 system requires them.
 
 
-`libs``libs`
+
+[IMPORTANT]
+====
+There will be many libraries in the previously identified `libs` folder that aren't initially used. Certain aspects of JME3 (for instance, collision detection) will require the appropriate JAR if your code requires that functionality. However, it is highly recommended you do NOT include every JAR in the `libs` folder due to the fact that exporting them all when they are not needed will result in a huge jar file (~60MB).
+====
+
 
 
 Click _Add External JARs…_, navigate to the JME3 `libs` folder (see _Setting up JME3_ if you're not sure where this is), and select each of the following:
@@ -103,7 +123,12 @@ The rule for assets is that their files *must be on the build path*. This means 
 Alternatively, you can keep them in the local directory if you do not wish to package them with the JAR, though this may not be desirable for certain deployments (such as applets, Android apps, or JNLPs).
 
 
-_Assets_
+
+[NOTE]
+====
+To include your assets within your base project, follow the _Assets_ section without creating a new project. However, do note that this will make the process of including these assets in your Android project, if you create one, much harder.
+====
+
 
 
 Finally, the SDK creates a base source file for you that ends up being the main JME3 entry point. Since we're using Eclipse, we'll have to manually create that file.
@@ -123,7 +148,6 @@ Finally, create a `main` function as the Java entry point:
 
 
 [source,java]
-
 ----
 
 public static void main(String[] args) {
@@ -161,6 +185,11 @@ First, create another *generic* project by going to _File → New → Project…
 
 
 
+[TIP]
+====
+We create a General (non-Java) project for cleanliness because our assets will not require any special build settings or the like.
+====
+
 
 
 For new users, it's a good idea to add the initial JME3 folders that the SDK creates, as they are referenced by many other guides on the web. To do this, for each of the following right click on the assets project and go to _New → Folder_, type in the name listed, and hit _Finish_:
@@ -187,7 +216,12 @@ Packaging your assets is also a simple process. Right click the assets project a
 Check _Export generated class files and resources_, select a destination for the JAR file, and check _Compress the contents of the JAR file_, _Add directory entries_, and _Overwrite existing files without warning_. Click _Finish_.
 
 
-_Next_`.jardesc`_Save the description of this JAR in the workspace_`.jardesc``.jardesc`
+
+[TIP]
+====
+Optionally, you can click _Next_ and specify a `.jardesc` file by checking _Save the description of this JAR in the workspace_ and specifying a location for a `.jardesc` file. That way you can simply double-click the `.jardesc` file and easily re-export your assets when they change (remember, always refresh your project before exporting!).
+====
+
 
 
 
@@ -217,6 +251,11 @@ Fill out the following information and then click Next:
 *  *Minimum Required SDK*: +++<abbr title="Application Programming Interface">API</abbr>+++ 8 (Must be AT LEAST SDK 8 for OpenGLES2 and JNI)
 
 
+[NOTE]
+====
+Most of the lower options are defaulted based off of your ADT configuration and should work as-is.
+====
+
 
 
 After clicking _Next_, uncheck _Create activity_ (JME3 provides a base activity class). You can check/uncheck _Create custom launcher icon_ at your own preference.
@@ -240,7 +279,12 @@ For each of the following, right click the `libs` folder within your Android pro
 *  jME3-android.jar
 *  jME3-core.jar
 
-`libs``libs`
+
+[IMPORTANT]
+====
+There will be many libraries in the previously identified `libs` folder that aren't initially used. Certain aspects of JME3 (for instance, collision detection) will require the appropriate JAR if your code requires that functionality. However, it is highly recommended you do NOT include every JAR in the `libs` folder due to the fact that exporting them all when they are not needed will result in a huge jar file (~60MB).
+====
+
 
 
 As well, repeat the above step for your compiled assets JAR (see _Packaging_ under _Assets_).
@@ -269,7 +313,6 @@ This will create a new activity class. In the resulting file, create a default c
 
 
 [source,java]
-
 ----
 
 public JMEclipseActivity()
@@ -296,7 +339,12 @@ public JMEclipseActivity()
 
 ----
 
-`appClass``SimpleApplication``com.jme3.app.Application`
+
+[TIP]
+====
+Pay close attention to the values above; `appClass` MUST be the full package + class name of the class in your base project that extends `SimpleApplication` (for advanced users, this is actually a subclass of `com.jme3.app.Application`).
+====
+
 
 
 
@@ -331,6 +379,11 @@ Packaging your Android project is too vast to entirely cover in this guide. As t
 *  Optional: link:http://tools.android.com/recent/usingthendkplugin[NDK Eclipse plugin] installed (although I haven't seen a real need for it quite yet - it's mainly for building/launching native Activities)
 
 
+[WARNING]
+====
+It should be mentioned that this section will not go into C/C++ best practices, sample code, or any details about the inner workings of JNI; instead, this section simply shows you how to set up the environment/configurations to create a near-seamless build environment for including your native code in both your base project as well as your Android project (if you've created one).
+====
+
 
 
 Building JNI is actually quite straightforward (assuming you know how the C/C++ build process works). Even for Android, the NDK provides a slick system for building/including your compiled binaries in your project.
@@ -342,7 +395,12 @@ First, create a new C/C++ project by going to _File → New → Project… → C
 Next, we need to configure our build settings. Right click the native project, click _Properties_ and go to _C/C++ Build → Settings_. Select the _Build Artifact_ tab, ensure the drop down menu says _Shared Library_, and change the _Artifact name_ field to what you want to call your eventual JNI module.
 
 
-“
+
+[WARNING]
+====
+What you call your artifact is VERY important to how Java loads your library. For instance, linux dynamic library (.SO) objects require that the library have the “lib prefix. Keep this in mind when specifying an artifact name.
+====
+
 
 
 If you plan on building for Android, you must include an Android makefile in your project. In order for the build process to be as seamless as possible, this guide sets it up unlike most tutorials instruct.
@@ -351,12 +409,22 @@ If you plan on building for Android, you must include an Android makefile in you
 To do this, simply create a new file in your native project called `Android.mk` and link:http://www.kandroid.org/ndk/docs/ANDROID-MK.html[set it up accordingly].
 
 
-`LOCAL_PATH``my-dir`
+
+[IMPORTANT]
+====
+Even though the native project is not the Android project's directory, keep the `LOCAL_PATH` variable set to `my-dir`. This is important!
+====
+
 
 
 Next, we need to create a configuration for the Android target.
 
 
+
+[NOTE]
+====
+This step is only relevant/possible if you have the NDK Eclipse plugin installed. Otherwise, you will need to install awk/make (using Cygwin if on Windows) and build through the command line manually.
+====
 
 
 
@@ -375,7 +443,12 @@ The last step in the Android setup is to create a symlink called `jni` (case sen
 *  *Windows*: CMD prompt → `cd path\to\Android\project` → `mklink /J jni path\to\native\project`
 *  *Linux/Mac*: Terminal → `cd path/to/Android/project` → `ln -sv path/to/native/project jni`
 
-`jni``jni`
+
+[TIP]
+====
+What this has essentially done is created a separate project for C/C++ building while tricking the Android project into thinking the source files are located directly in the Android project itself. With this configuration scheme, you can easily build regular shared libraries for desktop platforms as well as build/install the Android libraries using the NDK without the need to have a copy of the source code inside of the `jni` folder of an Android project. By setting the workspace for the Android builder and creating a link, it executes the NDK builder inside your Android project while serving the source files as if they existed in the `jni` folder.
+====
+
 
 
 Lastly, some additional include paths need to be added. Within the properties window, go to _C/C++ General → Paths and Symbols_ and select the _Includes_ tab.
@@ -384,7 +457,12 @@ Lastly, some additional include paths need to be added. Within the properties wi
 Under _Languages_, select _GNU C++_ (or the correct C++ equivalent) and then _Add…_. Specify the absolute path to your JDK's `include` folder, check _Add to all configurations_, and hit _OK_.
 
 
-`win32``include`
+
+[TIP]
+====
+For Windows platforms, repeat the above step for the `win32` directory within the JDK's `include` folder.
+====
+
 
 
 After hitting _OK_, you are now set to write your JNI code.

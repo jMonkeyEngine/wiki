@@ -131,8 +131,13 @@ Learn details about the <<jme3/intermediate/multi-media_asset_pipeline#,Multi-Me
 
 == Development Phase
 
-“+
-…“–
+
+[NOTE]
+====
+Many game developers dream of creating their very own “MMORPG with full-physics, AI, post-rendering effects, multi-player networking, procedurally generated maps, and customizable characters. So why aren't there tons of MMORPGs out there? +
+Even for large experienced game producers, the creation of such a complex game is time-intensive and failure-prone. How familiar are you with multi-threading, persistence, optimization, client-server synchonization, …? Unless your answer is “very!, then start with a single-player desktop game, and work your way up – just as the pros did when they started.
+====
+
 
 
 
@@ -141,13 +146,23 @@ Learn details about the <<jme3/intermediate/multi-media_asset_pipeline#,Multi-Me
 Every jME3 game is centered around one main class that (directly or indirectly) extends com.jme3.app.<<jme3/intermediate/simpleapplication#,SimpleApplication>>. 
 
 
-““
+
+[IMPORTANT]
+====
+Note that although the “SimpleApplication name might be misleading, all jME3 applications, including very large projects, are based on this class. The name only implies that this class itself is a simple application already. You make it “non-simple by extending it!
+====
+
 
 
 For your future game releases, you will want to rely on your own framework (based on jME): Your custom framework extends jME's SimpleApplication, and includes your custom methods for loading, saving, and arranging your scenes, your custom navigation methods, your inputs for pausing and switching your custom screens, your custom user interface (options screen, HUD, etc), your custom NPC factory, your custom physics properties, your custom networking synchronization, etc. 
 
 
-+
+
+[TIP]
+====
+Writing and reusing (extending) your own base framework saves you time. When you update your generic base classes, all your games that extend them benefit from improvements to the base (just as all jME-based games benefit of improvements to the jME framework). +
+Also, your own framework gives all your games a common look and feel.
+====
 
 
 
@@ -163,15 +178,25 @@ You have a list of features that you want in game, but which one do you implemen
 .  Implement low-complexity decorations (audio and visual effects) last.
 .  Test for side-effects on existing code after you add a new feature (regression test).
 
-““_drop_
+
+[TIP]
+====
+Acknowledge whether you want a feature because it is necessary for gameplay, or simply because “everyone else has it. Your goal should be to bring out the essence of your game idea. Don't water down gameplay by attempting to make it “do everything, but better. Successful high-performance games are the ones where someone made smart decisions what to keep and what to _drop_.
+====
+
 
 
 
 === The Smart Way to Add Custom Methods and Fields
 
-*Avoid the Anti-Pattern:*+
-`Node`–`MyMobileNode`–`MyNPC``MyFighterNPC``MyShopKeeperNPC``MyNPC`+
-“““
+
+[WARNING]
+====
+*Avoid the Anti-Pattern:* Don't design complex role-based classes using Java inheritance, it will result in an unmaintainable mess. +
+Example: You start extending `Node` –&gt; `MyMobileNode` –&gt; `MyNPC`. Then you extend `MyFighterNPC` (defends, attacks) and `MyShopKeeperNPC` (trades) from `MyNPC`. What if you need an NPC that trades and defends itself, but doesn't attack? Do you extend MyShopKeeperNPC and copy and paste the defensive methods from MyFighterNPC? Or do you extend MyFighterNPC and override the attacking methods of its parent? Neither is a clean solution. +
+Wouldn't it be better if behaviours were a separate “system, and attributes were separate “components that you add to the “entity that needs them?
+====
+
 
 
 You write Java classes named `Controls` to implement your Game Entities, and define an Entity's visuals, attributes, and behaviours. In jME, `Spatial`s (`Nodes` or `Geometry`s) are the visual representation of the game entity in the scene graph.
@@ -182,12 +207,17 @@ Example: Players have *class fields* for `id, health, coins, inventory, equipmen
 *  Game entities have *behaviours* – Behaviour systems communicate about the game state and modify attributes. In jME, these game mechanics are implemented in modular `update()` methods that all hook into the main update loop. +
 Example: Players have *methods* such as `walk(), addGold(), getHealth(), pickUpItem(), dropItem(), useItem(), attack()`.
 
-*Follow the Best Practice:*““
+
+[TIP]
+====
+ *Follow the Best Practice:* In general, use composition over inheritance and keep “what an entity does (behaviour system) separate from “what this entity is (attributes).
 
 
 *  Use `<<jme3/advanced/spatial#,setUserData()>>` to add custom attributes to Spatials.
 *  Use <<jme3/advanced/custom_controls#,Controls>> and <<jme3/advanced/application_states#,Application States>> to define custom behaviour systems.
 
+
+====
 
 
 
@@ -211,7 +241,6 @@ An AppState has access to all game features in the SimpleApplication via the `th
 
 
 [source,java]
-
 ----
 Spatial sky = SkyFactory.createSky(this.app.getAssetManager(), "sky.dds", false);
 ...
@@ -241,11 +270,21 @@ As your SimpleApplication-based game grows more advanced, you find yourself putt
 
 
 
+[NOTE]
+====
+A game contains algorithms that do not directly affect spatials (for example, AI pathfinding code that calculates and chooses paths, but does not actually move spatials). You do not need to put such non-spatial code in controls, you can run thse things in a new thread. Only the tranformation code that actually modifies the spatial must be called from a control, or must be enqueue()ed.
+====
+
 
 
 Controls and AppStates often work together: An AppState can reach up to the application and `get` all Spatials from the rootNode that carry a specific Control, and perform a global action on them. Example: In BulletPhysics, all physical Spatials that carry RigidBodyControls are steered by the overall BulletAppState.
 
 
+
+[TIP]
+====
+AppStates and Controls are extensions to a SimpleApplication. They are your modular building blocks to build a more complex game. In the ideal case, you move all init/update code into Controls and AppStates, and your simpleInitApp() and simpleUpdate() could end up virtually empty. This powerful and modular approach cleans up your code considerably. 
+====
 
 
 

@@ -45,7 +45,6 @@ This gives the ScreenController access to the application object and to the upda
 
 
 [source,java]
-
 ----
 
 public class StartScreenState extends AbstractAppState {
@@ -93,10 +92,14 @@ public StartScreenState(SimpleApplication app){
 ----
 
 
+[IMPORTANT]
+====
+It is not sufficient to just inherit from AbstractAppState. You need to instantiate your controller class, register it with app's stateManager and then pass it to nifty. See code sample below.
+====
+
 
 
 [source,java]
-
 ----
 
 public class TestNiftyGui extends SimpleApplication {
@@ -172,7 +175,6 @@ Here is an example that moves a panel when the startScreen opens. You place an &
 
 
 [source,xml]
-
 ----
 
 <panel height="25%" width="35%" ...>
@@ -195,7 +197,6 @@ Playing sounds using Nifty is also possible with a `playSound` effect as trigger
 
 
 [source,xml]
-
 ----
 
 <registerSound id="myclick" filename="Interface/sounds/ButtonClick.ogg" />
@@ -218,7 +219,6 @@ To pass the clickLoc as two ints, you can use the special `(int x, int y)` synta
 
 
 [source,java]
-
 ----
 
   public void clicked(int x, int y) {
@@ -231,7 +231,6 @@ In the Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++ screen code
 
 
 [source,xml]
-
 ----
 
 <interact onClick="clicked()"/>  
@@ -249,7 +248,6 @@ The following code sample shows how you can load several XML files into one nift
 
 
 [source,java]
-
 ----
 
 NiftyJmeDisplay niftyDisplay = new NiftyJmeDisplay(assetManager, inputManager, audioRenderer, viewPort);
@@ -275,7 +273,6 @@ The following code sample shows how you can explicitly attach several screen con
 
 
 [source,java]
-
 ----
 
 NiftyJmeDisplay niftyDisplay = NiftyJmeDisplay.newNiftyJmeDisplay(assetManager, inputManager, audioRenderer, viewPort);
@@ -293,7 +290,6 @@ By default, your Nifty XML screens use the built.in styles:
 
 
 [source,xml]
-
 ----
  <useStyles filename="nifty-default-styles.xml" /> 
 ----
@@ -302,7 +298,6 @@ But you can switch to a set of custom styles in your game project's asset direct
 
 
 [source,xml]
-
 ----
  <useStyles filename="Interface/Styles/myCustomStyles.xml" /> 
 ----
@@ -311,7 +306,6 @@ Inside myCustomStyles.xml you define styles like this:
 
 
 [source,xml]
-
 ----
 	
 <?xml version="1.0" encoding="UTF-8"?>

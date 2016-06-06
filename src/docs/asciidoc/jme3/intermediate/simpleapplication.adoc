@@ -14,14 +14,18 @@ The base class of the jMonkeyEngine3 is `com.jme3.app.SimpleApplication`. Your f
 SimpleApplication gives you access to standard game features, such as a scene graph (rootNode), an asset manager, a user interface (guiNode), input manager, audio manager, a physics simulation, and a fly-by camera. You call app.start() and app.stop() on your game instance to start or quit the application. 
 
 
-<<jme3/advanced/application_states#,AbstractAppState>>
+
+[IMPORTANT]
+====
+For each game, you (directly or indirectly) extend SimpleApplication exactly once as the central class. If you need access to any SimpleApplication features from another game class, make the other class extend <<jme3/advanced/application_states#,AbstractAppState>> (don't extend SimpleApplication once more).
+====
+
 
 
 The following code sample shows the typical base structure of a jME3 game:
 
 
 [source,java]
-
 ----
 
 import com.jme3.app.SimpleApplication;
@@ -226,7 +230,12 @@ a|*Optional:* Advanced developers can override this method if the need to modify
 
 |===
 
-`app.setShowSettings(true);``app.setShowSettings(false);``app.start()``main()`<<jme3/intermediate/appsettings#,AppSettings>>
+
+[TIP]
+====
+Use `app.setShowSettings(true);` to present the user with a splashscreen and the built-in display settings dialog when starting the game; or use `app.setShowSettings(false);` to hide the buil-in screen (in this case, you may want to provide a custom splashscreen and settings panel). Set this boolean before calling `app.start()` in the `main()` method of the SimpleApplication. See also <<jme3/intermediate/appsettings#,AppSettings>>.
+====
+
 
 
 
@@ -314,7 +323,6 @@ The following example shows how you can remove one of the default AppStates, in 
 
 *  Either, in your application's contructor, you create the SimpleApplication with only the AppStates you want to keep: 
 [source,java]
-
 ----
 public MyAppliction() {
   super( new StatsAppState(), new DebugKeysAppState() );
@@ -323,7 +331,6 @@ public MyAppliction() {
 
 *  Or, in the `simpleInitApp()` method, you remove the ones you do not want to keep: 
 [source,java]
-
 ----
   public void simpleInitApp() {
     stateManager.detach( stateManager.getState(FlyCamAppState.class));

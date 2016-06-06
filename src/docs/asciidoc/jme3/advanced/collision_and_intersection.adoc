@@ -83,7 +83,6 @@ The following code snippet can be triggered by listeners (e.g. after an input ac
 
 
 [source,java]
-
 ----
 
   // Calculate detection results
@@ -108,7 +107,6 @@ You can also loop over all results and trigger different reactions depending on 
 
 
 [source,java]
-
 ----
 
   // Calculate Results
@@ -157,7 +155,12 @@ image::http://www.jmonkeyengine.com/jme/wiki-data/userref/capsule.png[Capsule,wi
 *  Type.OBB = Oriented bounding box. This bounding box is more precise because it can rotate with its content, but is computationally more expensive. (Currently not supported.)
 *  Type.Capsule = Cylinder with rounded ends, also called “swept sphere. Typically used for mobile characters. (Currently not supported.)
 
-<<jme3/advanced/physics#,CollisionShapes>>
+
+[NOTE]
+====
+Note: If you are looking for bounding volumes for physical objects, use <<jme3/advanced/physics#,CollisionShapes>>.
+====
+
 
 
 
@@ -167,7 +170,6 @@ For example you can use Bounding Volumes on custom meshes, or complex non-physic
 
 
 [source,java]
-
 ----
 mesh.setBound(new BoundingSphere());
 mesh.updateBound();
@@ -191,7 +193,12 @@ Rays are used to perform line-of-sight calculations. This means you can detect w
 *  *Click to select:* You can determine what a user has clicked by casting a ray from the camera forward in the direction of the camera. Now identify the closest collision of the ray with the rootNode, and you have the clicked object.
 *  *Line of sight:* Cast a ray from a player in the direction of another player. Then you detect all collisions of this ray with other entities (walls versus foliage versus window panes) and use this to calculate how likely it is that one can see the other.
 
-–
+
+[TIP]
+====
+These simple but powerful ray-surface intersection tests are called Ray Casting. As opposed to the more advanced Ray Tracing technique, Ray Casting does not follow the ray's reflection after the first hit – the ray just goes straight on.
+====
+
 
 
 Learn the details of how to implement <<jme3/advanced/mouse_picking#,Mouse Picking>> here.

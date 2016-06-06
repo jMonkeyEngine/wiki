@@ -50,7 +50,12 @@ Each AppState has its own update loop, which hooks into the main simpleUpdate() 
 *  *The AppState has been disabled (paused):* This toggles a boolean isEnabled() to false. Here you switch all objects to their specific “paused behaviour. 
 *  *The AppState is cleaned up:* Here you decide what happens when the AppState is detached. Save this AppState's game state, unregister Controls and InputHandlers, detach related AppStates, detach nodes from the rootNode, etc.
 
-+++<abbr title="Graphical User Interface">GUI</abbr>++++++<abbr title="Graphical User Interface">GUI</abbr>+++
+
+[TIP]
+====
+Tip: AppStates are extremely handy to swap out, or pause/unpause whole sets of other AppStates. For example, an InGameState (loads in-game +++<abbr title="Graphical User Interface">GUI</abbr>+++, activates click-to-shoot input mappings, inits game content, starts game loop) versus MainScreenState (stops game loop, saves and detaches game content, switches to menu screen +++<abbr title="Graphical User Interface">GUI</abbr>+++, switches to click-to-select input mappings).
+====
+
 
 
 
@@ -96,7 +101,6 @@ a|Usage
 a|initialize(asm,app)
 a|When this AppState is added to the game, the RenderThread initializes the AppState and then calls this method. You can modify the scene graph from here (e.g. attach nodes). To get access to the main app, call: 
 [source,java]
-
 ----
 super.initialize(stateManager, app);
 this.app = (SimpleApplication) app;
@@ -141,7 +145,6 @@ Definition:
 
 
 [source,java]
-
 ----
 public class MyAppState extends AbstractAppState {
 
@@ -240,7 +243,6 @@ You can use custom accessors to get data from AppStates, to set data in AppState
 
 
 [source,java]
-
 ----
 this.app.getStateManager().getState(MyAppState.class).doSomeCustomStuffInThisState();
 ----
@@ -252,7 +254,6 @@ To access class fields of the SimpleApplication the way you are used to, initial
 
 
 [source,java]
-
 ----
 
 private SimpleApplication app;

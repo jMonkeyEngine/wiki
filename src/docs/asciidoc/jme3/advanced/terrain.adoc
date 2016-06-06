@@ -85,7 +85,12 @@ When you “slap a texture on a mesh, the whole mesh looks the same. For big mes
 The default material for TerraMonkey is TerrainLighting.j3md. This material combines several texture maps to produce the final custom texture. Remember, Diffuse Maps are the main textures that define the look; optionally, each Diffuse Map can be enhanced with a Normal Map; Alpha Maps describe the opacity of each Diffuse Map used (one color –red, green, blue, or alpha– stands for one Diffuse Map's opacity); Glow and Specular Maps define optional effects. 
 
 
-link:http://jmonkeyengine.org/wiki/doku.php/sdk:terrain_editor[create and edit Splat Textures for terrains visually in the jMonkeyEngine SDK]
+
+[IMPORTANT]
+====
+We recommend to link:http://jmonkeyengine.org/wiki/doku.php/sdk:terrain_editor[create and edit Splat Textures for terrains visually in the jMonkeyEngine SDK], and not do it manually. If you are simply curious about how the SDK's terrain texture plugin works, or if you indeed want to generate materials manually, then read on for the implementation details.
+====
+
 
 
 Here are the names of TerrainLighting.j3md's material properties:
@@ -164,7 +169,6 @@ First, we load our textures and the heightmap texture for the terrain
 
 
 [source,java]
-
 ----
 
 // Create material from Terrain Material Definition
@@ -195,7 +199,6 @@ We create the heightmap from the `heightMapImage`.
 
 
 [source,java]
-
 ----
 
 AbstractHeightMap heightmap = null;
@@ -212,7 +215,6 @@ Next we create the actual terrain.
 *  It uses the heightmap to generate the height values.
 
 [source,java]
-
 ----
 
 terrain = new TerrainQuad("terrain", 65, 513, heightmap.getHeightMap());
@@ -230,7 +232,6 @@ PS: As an alternative to an image-based height map, you can also generate a Hill
 
 
 [source,java]
-
 ----
 
 heightmap = new HillHeightMap(1025, 1000, 50, 100, (byte) 3);

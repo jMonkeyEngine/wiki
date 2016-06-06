@@ -56,7 +56,6 @@ The game server is a “headless com.jme3.app.SimpleApplication:
 
 
 [source,java]
-
 ----
 
 public class ServerMain extends SimpleApplication {
@@ -68,14 +67,18 @@ public class ServerMain extends SimpleApplication {
 
 ----
 
-`Headless`
+
+[TIP]
+====
+A `Headless` SimpleApplication executes the simpleInitApp() method and runs the update loop normally. But the application does not open a window, and it does not listen to user input. This is the typical behavior for a server application.
+====
+
 
 
 Create a com.jme3.network.Server in the `simpleInitApp()` method and specify a communication port, for example 6143.
 
 
 [source,java]
-
 ----
 
   public void simpleInitApp() {
@@ -97,7 +100,6 @@ A game client is a standard com.jme3.app.SimpleApplication.
 
 
 [source,java]
-
 ----
 
 public class ClientMain extends SimpleApplication {
@@ -109,14 +111,18 @@ public class ClientMain extends SimpleApplication {
 
 ----
 
-`Display`
+
+[TIP]
+====
+A standard SimpleApplication in `Display` mode executes the simpleInitApp() method, runs the update loop, opens a window for the rendered video output, and listens to user input. This is the typical behavior for a client application.
+====
+
 
 
 Create a com.jme3.network.Client in the `simpleInitApp()` method and specify the servers IP address, and the same communication port as for the server, here 6143.
 
 
 [source,java]
-
 ----
 
 public void simpleInitApp() {
@@ -181,7 +187,6 @@ Each message represents data that you want to transmit between client and server
 
 
 [source,java]
-
 ----
 
 @Serializable
@@ -197,7 +202,6 @@ You must register each message type to the com.jme3.network.serializing.Serializ
 
 
 [source,java]
-
 ----
 Serializer.registerClass(HelloMessage.class);
 ----
@@ -215,7 +219,6 @@ Create one ClientListener.java and make it extend `com.jme3.network.MessageListe
 
 
 [source,java]
-
 ----
 public class ClientListener implements MessageListener<Client> {
   public void messageReceived(Client source, Message message) {
@@ -231,7 +234,6 @@ For each message type, register a client listener to the client.
 
 
 [source,java]
-
 ----
 myClient.addMessageListener(new ClientListener(), HelloMessage.class);
 ----
@@ -243,7 +245,6 @@ Create one ServerListener.java and make it extend `com.jme3.network.MessageListe
 
 
 [source,java]
-
 ----
 public class ServerListener implements MessageListener<HostedConnection> {
   public void messageReceived(HostedConnection source, Message message) {
@@ -259,7 +260,6 @@ For each message type, register a server listener to the server:
 
 
 [source,java]
-
 ----
 myServer.addMessageListener(new ServerListener(), HelloMessage.class);
 ----
@@ -271,7 +271,6 @@ Let's create a new message of type HelloMessage:
 
 
 [source,java]
-
 ----
 Message message = new HelloMessage("Hello World!");
 ----
@@ -280,7 +279,6 @@ Now the client can send this message to the server:
 
 
 [source,java]
-
 ----
 myClient.send(message);
 ----
@@ -289,7 +287,6 @@ Or the server can broadcast this message to all HostedConnection (clients):
 
 
 [source,java]
-
 ----
 Message message = new HelloMessage("Welcome!");
 myServer.broadcast(message);
@@ -299,7 +296,6 @@ Or the server can send the message to a specific subset of clients (e.g. to Host
 
 
 [source,java]
-
 ----
 myServer.broadcast( Filters.in( conn1, conn2, conn3 ), message );
 ----
@@ -308,7 +304,6 @@ Or the server can send the message to all but a few selected clients (e.g. to al
 
 
 [source,java]
-
 ----
 myServer.broadcast( Filters.notEqualTo( conn4 ), message );
 ----
@@ -323,7 +318,6 @@ The ID of the Client and HostedConnection are the same at both ends of a connect
 
 
 [source,java]
-
 ----
 ... myClient.getId() ...
 ----
@@ -331,6 +325,11 @@ The ID of the Client and HostedConnection are the same at both ends of a connect
 A server has a game version and game name property. Each client expects to communicate with a server with a certain game name and version. Test first whether the game name matches, and then whether game version matches, before sending any messages! If they do not match, SpiderMoney will reject it for you, you have no choice in the mater. This is so the client and server can avoid miscommunication.
 
 
+
+[TIP]
+====
+Typically, your networked game defines its own attributes (such as player ID) based on whatever criteria you want. If you want to look up player/client-specific information beyond the game version, you can set this information directly on the Client/HostedConnection object (see Getting Info About a Client).
+====
 
 
 
@@ -344,7 +343,6 @@ You must override the client's destroy() method to close the connection cleanly 
 
 
 [source,java]
-
 ----
 
   @Override
@@ -362,7 +360,6 @@ You must override the server's destroy() method to close the connection when the
 
 
 [source,java]
-
 ----
 
   @Override
@@ -380,7 +377,6 @@ The server can kick a HostedConnection to make it disconnect. You should provide
 
 
 [source,java]
-
 ----
 conn.close("We kick cheaters.");
 ----
@@ -397,6 +393,11 @@ The server and clients are notified about connection changes.
 The com.jme3.network.ClientStateListener notifies the Client when the Client has fully connected to the server (including any internal handshaking), and when the Client is kicked (disconnected) from the server.
 
 
+
+[TIP]
+====
+The ClientStateListener when it receives a network exception applies the default close action. This just stops the client and you'll have to build around it so your application knows what to do. If you need more control when a network exception happens and the client closes, you may want to investigate in a ErrorListener.
+====
 
 
 [cols="2", options="header"]
@@ -417,7 +418,6 @@ First implement the ClientStateListener interface in the Client class. Then regi
 
 
 [source,java]
-
 ----
 myClient.addClientStateListener(this);
 ----
@@ -445,7 +445,6 @@ First implement the ConnectionListener interface in the Server class. Then regis
 
 
 [source,java]
-
 ----
 myServer.addConnectionListener(this);
 ----
@@ -456,7 +455,12 @@ myServer.addConnectionListener(this);
 The com.jme3.network.ErrorListener is a listener for when network exception happens. This listener is built so that you can override the default actions when a network exception happens.
 
 
-*don't*
+
+[IMPORTANT]
+====
+If you intend on using the default network mechanics, *don't* use this!
+If you do override this, make sure you add a mechanic that can close the client otherwise your client will get stuck open and cause errors.
+====
 
 
 [cols="2", options="header"]
@@ -471,13 +475,17 @@ a| Implemenent here what happens after a exception affects the network .
 |===
 
 
+[TIP]
+====
+This interface was built for the client and server, but the code has never been put on the server to handle this listener.
+====
+
 
 
 First implement the ErrorListener interface in the client class. Then you need to register it to myClient in MyGameClients's simpleInitApp() method.
 
 
 [source,java]
-
 ----
 myClient.addErrorListener(this);
 ----
@@ -486,7 +494,6 @@ In the class that implements the ErrorListener, a method would of been added cal
 
 
 [source,java]
-
 ----
 if(t instanceof exception) {
      //Add your own code here
@@ -503,7 +510,6 @@ SpiderMonkey supports both UDP (unreliable, fast) and TCP (reliable, slow) trans
 
 
 [source,java]
-
 ----
 message1.setReliable(true); // TCP
 message2.setReliable(false); // UDP
@@ -515,14 +521,18 @@ message2.setReliable(false); // UDP
 
 == Important: Use Multi-Threading
 
-*You cannot modify the scenegraph directly from the network thread.*
+
+[IMPORTANT]
+====
+*You cannot modify the scenegraph directly from the network thread.* A common example for such a modification is when you synchronize the player's position in the scene. You have to use Java Multithreading.
+====
+
 
 
 Multithreading means that you create a Callable. A Callable is a Java class representing any (possibly time-intensive) self-contained task that has an impact on the scene graph (such as positioning the player). You enqueue the Callable in the Executor of the client's OpenGL thread. The Callable ensures to executes the modification in sync with the update loop.
 
 
 [source,java]
-
 ----
 app.enqueue(callable);
 ----

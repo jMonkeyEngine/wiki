@@ -33,7 +33,12 @@ image::jme3/beginner/beginner-physics.png[beginner-physics.png,with="360",height
 
 
 
-““““
+
+[TIP]
+====
+To use the example assets in a new jMonkeyEngine SDK project, right-click your project, select “Properties, go to “Libraries, press “Add Library and add the “jme3-test-data library.
+====
+
 
 
 
@@ -43,7 +48,6 @@ Thanks to double1984 for contributing this fun sample!
 
 
 [source,java]
-
 ----
 package jme3test.helloworld;
 
@@ -254,7 +258,6 @@ As always, start with a standard com.jme3.app.SimpleApplication. To activate phy
 
 
 [source,java]
-
 ----
 
 public class HelloPhysics extends SimpleApplication {
@@ -282,7 +285,6 @@ In this “shoot at the wall example, you use Geometries such as cannon balls an
 
 
 [source,java]
-
 ----
 
   /** Prepare geometries and physical nodes for bricks and cannon balls. */
@@ -313,7 +315,6 @@ We want to create brick Geometries from those boxes. For each Geometry with phys
 
 
 [source,java]
-
 ----
 
   private RigidBodyControl brick_phy;
@@ -327,7 +328,6 @@ The custom `makeBrick(loc)` methods creates individual bricks at the location `l
 *  It has physical properties `brick_phy` (RigidBodyControl)
 
 [source,java]
-
 ----
 
   public void makeBrick(Vector3f loc) {
@@ -370,7 +370,6 @@ You notice that the cannon ball is created in the same way, using the custom `ma
 *  It has physical properties `ball_phy` (RigidBodyControl)
 
 [source,java]
-
 ----
 
     /** Create a cannon ball geometry and attach to scene graph. */
@@ -418,7 +417,6 @@ As before, you write a custom `initFloor()` method that creates a flat box with 
 *  It has physical properties `floor_phy` (RigidBodyControl)
 
 [source,java]
-
 ----
 
   public void initFloor() {
@@ -469,7 +467,6 @@ In the `initInputs()` method, you add an input mapping that triggers a shoot act
 
 
 [source,java]
-
 ----
 
   private void initInputs() {
@@ -483,7 +480,6 @@ You define the actual action of shooting a new cannon ball as follows:
 
 
 [source,java]
-
 ----
 
     private ActionListener actionListener = new ActionListener() {
@@ -524,7 +520,6 @@ Add the following line after the bulletAppState initialization.
 
 
 [source,java]
-
 ----
 bulletAppState.getPhysicsSpace().enableDebug(assetManager);
 ----
@@ -556,5 +551,10 @@ Using physics everywhere in a game sounds like a cool idea, but it is easily ove
 You have learned how to activate the jBullet PhysicsSpace in an application by adding a `BulletAppState`. You have created PhysicsControls for simple Shape-based Geometries (for more complex shapes, read up on <<jme3/advanced/physics#,CollisionShapes>>). You have learned that physical objects are not only attached to the rootNode, but also registered to the PhysicsSpace. You know that it makes a difference whether a physical object has a mass (dynamic) or not (static). You are aware that overusing physics has a huge performance impact.
 
 
-–<<jme3#,combining what you have learned>>link:http://hub.jmonkeyengine.org/c/user-code-projects[User Code &amp; Projects Forum]
+
+[TIP]
+====
+Congratulations! – You have completed the last beginner tutorial. Now you are ready to start <<jme3#,combining what you have learned>>, to create a cool 3D game of your own. Show us what you can do, and feel free to share your demos, game videos, and screenshots on the link:http://hub.jmonkeyengine.org/c/user-code-projects[User Code &amp; Projects Forum]!
+====
+
 

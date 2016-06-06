@@ -12,7 +12,12 @@ You cannot create a 3D model for delicate things like fire, smoke, or explosions
 Creating an effect involves some trial and error to get the settings _just right_, and it's worth exploring the expressiveness of the options described below. 
 
 
-<<sdk/scene_explorer#,Scene Explorer>><<sdk#,SDK>>
+
+[TIP]
+====
+Use the <<sdk/scene_explorer#,Scene Explorer>> in the <<sdk#,SDK>> to design and preview effects.
+====
+
 
 
 image:jme3/advanced/explosion-5.png[explosion-5.png,with="150",height="100"]  image:jme3/advanced/particle.png[particle.png,with="150",height="100"]  image:jme3/beginner/beginner-effect-fire.png[beginner-effect-fire.png,with="150",height="100"] image:jme3/advanced/butterfly-particle-emitter.png[butterfly-particle-emitter.png,with="150",height="100"]
@@ -23,7 +28,6 @@ image:jme3/advanced/explosion-5.png[explosion-5.png,with="150",height="100"]  im
 
 .  Create one emitter for each effect: 
 [source,java]
-
 ----
 ParticleEmitter explosion = new ParticleEmitter(
 "My explosion effect", Type.Triangle, 30);
@@ -31,7 +35,6 @@ ParticleEmitter explosion = new ParticleEmitter(
 
 .  Attach the emitter to the rootNode and position it in the scene: 
 [source,java]
-
 ----
 rootNode.attachChild(explosion);
 explosion.setLocalTranslation(bomb.getLocalTranslation());
@@ -39,14 +42,12 @@ explosion.setLocalTranslation(bomb.getLocalTranslation());
 
 .  Trigger the effect by calling 
 [source,java]
-
 ----
 explosion.emitAllParticles()
 ----
 
 .  End the effect by calling 
 [source,java]
-
 ----
 explosion.killAllParticles()
 ----
@@ -168,7 +169,6 @@ Use the common Particle.j3md Material Definition and a texture to specify the sh
 
 
 [source,java]
-
 ----
 
     Material flash_mat = new Material(
@@ -245,7 +245,6 @@ a| image:http://jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Effects/
 == Usage Example
 
 [source,java]
-
 ----
 
     ParticleEmitter fire = new ParticleEmitter("Emitter", Type.Triangle, 30);

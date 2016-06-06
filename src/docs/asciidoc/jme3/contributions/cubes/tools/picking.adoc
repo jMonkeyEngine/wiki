@@ -20,7 +20,6 @@ The `BlockNavigator` class contains various methods to help you navigate through
 
 
 [source,java]
-
 ----
 public static Vector3Int getPointedBlockLocation(BlockTerrain blockTerrain, Vector3f collisionContactPoint, boolean getNeighborLocation){
     //Some mysterious code that returns the location
@@ -38,14 +37,18 @@ public static Vector3Int getPointedBlockLocation(BlockTerrain blockTerrain, Vect
 So, the above method needs a collisionContactPoint - This is the point you've clicked in your world. Luckily, jMonkeyEngine offers raycasting, which lets you get exactly this point.
 
 
-<<jme3/beginner/hello_picking#,Hello Picking>>“
+
+[IMPORTANT]
+====
+I recommend to read the <<jme3/beginner/hello_picking#,Hello Picking>> tutorial first, since the rest of this chapter has nothing to do with the “Cubes framework itself.
+====
+
 
 
 This is a method I've created while creating a test case for mouse picking in the blockworld - It returns the CollisionResults of the mouse cursor and a specified node: (Generally, this will be the BlockTerrain's node)
 
 
 [source,java]
-
 ----
 private CollisionResults getRayCastingResults(Node node){
     Vector3f origin = cam.getWorldCoordinates(new Vector2f((settings.getWidth() / 2), (settings.getHeight() / 2)), 0.0f);
@@ -62,7 +65,6 @@ You can use the closest CollisionResult to receive the collisionContactPoint wit
 
 
 [source,java]
-
 ----
 private Vector3Int getCurrentPointedBlockLocation(boolean getNeighborLocation){
     CollisionResults results = getRayCastingResults(terrainNode);
@@ -84,7 +86,6 @@ One nice example would be to register a mouse-listener (See <<jme3/beginner/hell
 
 
 [source,java]
-
 ----
 //Get the free block gap, to which the user is loooking...
 Vector3Int blockLocation = getCurrentPointedBlockLocation(true);

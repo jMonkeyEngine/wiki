@@ -27,7 +27,6 @@ This can be done one of two ways.+
 
 
 [source,java]
-
 ----
 
 // this = any JME Application
@@ -40,7 +39,6 @@ guiNode.addControl(screen);
 
 
 [source,java]
-
 ----
 
 // this = any JME Application
@@ -49,6 +47,11 @@ guiNode.addControl(screen);
 
 ----
 
+
+[NOTE]
+====
+style_map.xml consists of a list of xml documents containing varied styles for varied use. You can copy the default style map and replace one, many, all with project specific style (Covered later in this tutorial).
+====
 
 
 
@@ -65,7 +68,6 @@ Here are the three contrustor choices for creating the window:
 
 
 [source,java]
-
 ----
 
 /** Parameters:
@@ -89,7 +91,6 @@ The second adds a 4th parameter to specify the windows dimensions, like such:
 
 
 [source,java]
-
 ----
 
 /** Additional Parameter:
@@ -108,7 +109,6 @@ The third option adds 2 more parameters and looks like this:
 
 
 [source,java]
-
 ----
 
 /** Additional Parameters:
@@ -125,11 +125,21 @@ screen.addElement(win);
 ----
 
 
+[NOTE]
+====
+3 new constructor options have been added recently.  They are the same as the 3 above minus the UID parameter.
+====
+
 
 
 Any parameters not specified are derived from the defaults specified in the Window style information.
 
 
+
+[NOTE]
+====
+The occasional control extends this contructor format, adding an additional Orientation parameter or possibly a boolean flag for controls that provide multiple configurable layouts.
+====
 
 
 
@@ -145,13 +155,17 @@ The Button class is one of the only +++<abbr title="Graphical User Interface">GU
 
 
 
+[NOTE]
+====
+The button control (like many controls) is abstract and provides methods for handling user input.
+====
+
 
 
 First, lets setup a method to create new windows:
 
 
 [source,java]
-
 ----
 
 private int winCount = 0;
@@ -173,7 +187,6 @@ Now we can add the button will call our create window method.
 
 
 [source,java]
-
 ----
 
 /** Parameters:
@@ -195,6 +208,11 @@ win.addChild(makeWindow);
 ----
 
 
+[TIP]
+====
+For layout purposes, it is suggested that you add all child Elements to a control PRIOR to adding the control to the screen… so, create a window, add a button, add window to screen.
+====
+
 
 
 *A Bit More Info:*+
@@ -206,7 +224,6 @@ All controls are based on the Element class which has access to all default beha
 === A Few of the Common Behaviors:
 
 [source,java]
-
 ----
 
 // Makes control resizable from defined borders
@@ -240,13 +257,17 @@ element.setIgnoreMouse(boolean);
 ----
 
 
+[NOTE]
+====
+There are more behaviors, however, these are the most critical when creating custom controls to ensure that nested Elements react as you would like when a parent Element is altered.
+====
+
 
 
 
 === Quick Start Example In Full
 
 [source,java]
-
 ----
 
 public int winCount = 0;

@@ -17,6 +17,11 @@ Light and Shadow are two separate things in 3D engines, although we percieve the
 *  Lighting does not mean that objects cast a shadow on the floor or other objects: Activating shadow processing is an additional step described here. Since casting shadows has an impact on performance, drop shadows and ambient occlusion shading are not activated by default.
 
 
+[IMPORTANT]
+====
+A light source with a direction or location is required for all Geometries with Lighting.j3md-based Materials. An ambient light is not sufficient. In a scene with no appropriate light sources, Geometries with Lighting.j3md-based Materials do not render. Only Geometries with Unshaded.j3md-based Materials are visible independent of any light sources.
+====
+
 
 
 
@@ -62,7 +67,6 @@ A PointLight has a location and shines from there in all directions as far as it
 
 
 [source,java]
-
 ----
 PointLight lamp_light = new PointLight();
 lamp_light.setColor(ColorRGBA.Yellow);
@@ -86,7 +90,6 @@ A DirectionalLight has no position, only a direction. It sends out parallel beam
 
 
 [source,java]
-
 ----
 DirectionalLight sun = new DirectionalLight();
 sun.setColor(ColorRGBA.White);
@@ -109,7 +112,6 @@ A SpotLight sends out a distinct beam or cone of light. A SpotLight has a direct
 
 
 [source,java]
-
 ----
 SpotLight spot = new SpotLight();
 spot.setSpotRange(100f);                           // distance
@@ -134,15 +136,19 @@ An AmbientLight simply influences the brightness and color of the scene globally
 
 
 [source,java]
-
 ----
 AmbientLight al = new AmbientLight();
 al.setColor(ColorRGBA.White.mult(1.3f));
 rootNode.addLight(al);
 ----
 
-+
-`mylight.setColor(ColorRGBA.White.mult(1.3f));`
+
+[TIP]
+====
+You can increase the brightness of a light source gradually by multiplying the light color to values greater than 1.0f. +
+Example: `mylight.setColor(ColorRGBA.White.mult(1.3f));`
+====
+
 
 
 
@@ -152,7 +158,6 @@ You can use a `com.jme3.scene.control.LightControl` to make a SpotLight or Point
 
 
 [source,java]
-
 ----
 
 PointLight myLight = new PointLight();
@@ -213,7 +218,6 @@ Shadow calculations (cast and receive) have a performance impact, so use them sp
 
 
 [source,java]
-
 ----
 
 spatial.setShadowMode(ShadowMode.Inherit);     // This is the default setting for new spatials.
@@ -237,7 +241,6 @@ Here is the key code fragment:
 
 
 [source,java]
-
 ----
 
         DirectionalLight sun = new DirectionalLight();
@@ -287,7 +290,6 @@ image::jme3/advanced/shadow.png[A lit scene with PSSM drop shadows,with="300",he
 
 
 [source,java]
-
 ----
 private PssmShadowRenderer pssmRenderer;
 ...
@@ -316,7 +318,6 @@ In JME3, SSAO is implemented by adding an instance of `com.jme3.post.SSAOFilter`
 
 
 [source,java]
-
 ----
 
 FilterPostProcessor fpp = new FilterPostProcessor(assetManager);

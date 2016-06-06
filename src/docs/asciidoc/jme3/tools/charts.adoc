@@ -35,7 +35,6 @@ Let's think about how we are going to get JME to display our terrain. The easies
 
 
 [source,java]
-
 ----
 
 Texture heightMapImage = assetManager.loadTexture(DEFAULT_HEIGHTMAP);
@@ -55,6 +54,11 @@ In essence, 3D chart visualization is achieved by converting the polygons compos
 As <<jme3/tools/navigation#,previously discussed>>, the distortion in latitude is derived by using the difference in meridional parts between the chart’s centre and the current position as a baseline; through converting the difference to world units by dividing it by the number of world units contained within one minute, a latitude’s y-coordinate can be obtained. Calculating a position’s x-coordinate is somewhat easier as the distortion only applies to latitude, not longitude. Therefore x merely equals the sum or difference between itself and the viewport’s centre coordinate, depending on the relative location of the position itself and the chart’s centre. Despite being able to convert between the two coordinate systems, slight precision problems remain once the chart projection is scaled down past a level of 6 meters. This is caused by the pixel referencing system of modern displays being integer based; once the ratio of minutes to pixels exceeds the aforementioned threshold, slight inaccuracies are introduced into the display. However this is of little relevance to most GIS (such as Debrief) as a) the inaccuracies are a matter of meters (or even centimetres) and b) it is impossible to notice this variation as GPS exposes a much higher inaccuracy (between 10 - 100 meters).
 
 
+
+[TIP]
+====
+To lessen the computational load, coordinate system conversion should only takes place when either the chart is re-centered or a change in scale / resolution is requested. Once converted, the coordinate sets are rendered to a buffer whose contents is then drawn for every UI update cycle.
+====
 .
 
 
@@ -65,7 +69,6 @@ There are two ways to create your heightmaps (also referred to as 'tiles' as eac
 
 
 [source,java]
-
 ----
 
 public class TileGenerator {
@@ -304,7 +307,6 @@ public class TileGenerator {
 
 
 [source]
-
 ----
 
 51.79188150756147+-8.25435369629442
@@ -344,7 +346,6 @@ Essentially, this algorithm can be summarized as follows:
 
 
 [source]
-
 ----
 
 Constructor ( files ): 
@@ -382,7 +383,6 @@ A tile tree is our way of keeping track of individual tiles. All that it is, is 
 == Creating a tile tree
 
 [source,java]
-
 ----
 
 try {
@@ -413,7 +413,6 @@ image:jme3/tools/slide2.jpg[Looking inside a node...,with="",height=""]
 
 
 [source,java]
-
 ----
 
 /*
@@ -626,7 +625,6 @@ public class TileTree {
 
 
 [source,java]
-
 ----
 
 package util.datastructure;
@@ -750,7 +748,6 @@ Loading a new chart is simple: all that we need to do is get the TileTree to fin
 
 
 [source,java]
-
 ----
 
 Node node = tileTree.find(chartID);
@@ -761,7 +758,6 @@ We then use the returned node, to adjust our zoom-level:
 
 
 [source,java]
-
 ----
 
 mapModel.calculateMinutesPerWorldUnit(node.getLongitudeLevel());
@@ -776,7 +772,6 @@ A mercator grid reflects the ”stretching” of the flat Mercator chart through
 
 
 [source,java]
-
 ----
 
 public void createGrid(double longitudeLevel, float increment) {

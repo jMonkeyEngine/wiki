@@ -34,7 +34,6 @@ The coordinate axes (com.jme3.scene.debug.Arrow) help you see the cardinal direc
 
 
 [source,java]
-
 ----
 
 private void attachCoordinateAxes(Vector3f pos){
@@ -69,7 +68,6 @@ Use a wireframe grid (com.jme3.scene.debug.Grid) as a ruler or simple floor.
 
 
 [source,java]
-
 ----
 
 private Geometry attachGrid(Vector3f pos, float size, ColorRGBA color){
@@ -91,7 +89,6 @@ Use a wireframe cube (com.jme3.scene.debug.WireBox) as a stand-in object to see 
 
 
 [source,java]
-
 ----
 
 public Geometry attachWireBox(Vector3f pos, float size, ColorRGBA color){
@@ -113,7 +110,6 @@ Use a wireframe sphere (com.jme3.scene.debug.WireSphere) as a stand-in object to
 
 
 [source,java]
-
 ----
 
 private Geometry attachWireSphere(Vector3f pos, float size, ColorRGBA color){
@@ -135,7 +131,6 @@ You can display a wireframe of the (usually invisible) collision shape around al
 
 
 [source,java]
-
 ----
 physicsSpace.enableDebug(assetManager);
 ----
@@ -156,7 +151,6 @@ Making the skeleton visible inside animated models can be handy for debugging an
 
 
 [source,java]
-
 ----
 
      SkeletonDebugger skeletonDebug = 
@@ -179,7 +173,6 @@ Then you can add a switch to toggle the model's wireframe on and off, like this:
 
 .  Create a key input trigger that switches between the two materials: E.g. we toggle when the T key is pressed: 
 [source,java]
-
 ----
     inputManager.addMapping("toggle wireframe", new KeyTrigger(KeyInput.KEY_T));
     inputManager.addListener(actionListener, "toggle wireframe");
@@ -187,7 +180,6 @@ Then you can add a switch to toggle the model's wireframe on and off, like this:
 
 .  Now add the toggle action to the action listener 
 [source,java]
-
 ----
 
   private ActionListener actionListener = new ActionListener() {
@@ -205,7 +197,6 @@ Then you can add a switch to toggle the model's wireframe on and off, like this:
 
 .  Alternatively you could traverse over the whole scene and toggle for all Geometry objects in there if you don't want to create a new SceneProcessor 
 [source,java]
-
 ----
 
   private ActionListener actionListener = new ActionListener() {
@@ -239,7 +230,6 @@ To display the wireframe of the entire scene instead on one material at a time, 
 
 
 [source,java]
-
 ----
 public class WireProcessor implements SceneProcessor {    
     
@@ -286,7 +276,6 @@ Then attach the scene processor to the +++<abbr title="Graphical User Interface"
 
 
 [source,java]
-
 ----
 getViewPort().addProcessor(new WireProcessor());
 ----

@@ -27,7 +27,6 @@ For example, one NPC can be controlled by a PhysicsControl instance and an AICon
 
 .  Add an instance of the Control to a spatial to give it this behavior. The spatial's game state is updated automatically from now on. 
 [source,java]
-
 ----
 spatial.addControl(myControl);
 ----
@@ -80,6 +79,11 @@ Existing examples in the code base include:
 == AbstractControl Class
 
 
+[TIP]
+====
+The most common way to create a Control is to create a class that extends AbstractControl.
+====
+
 
 
 The AbstractControl can be found under `com.jme3.scene.control.AbstractControl`. This is a default abstract class that implements the Control interface.
@@ -95,7 +99,6 @@ Usage: Your custom subclass implements the three methods `controlUpdate()`, `con
 
 
 [source,java]
-
 ----
 
 public class MyControl extends AbstractControl implements Savable, Cloneable {
@@ -175,6 +178,11 @@ See also:
 == The Control Interface
 
 
+[TIP]
+====
+In the less common case that you want to create a Control that also extends another class, create a custom interface that  extends jME3's Control interface. Your class can become a Control by implementing the Control interface, and at the same time extending another class.
+====
+
 
 
 The Control interface can be found under `com.jme3.scene.control.Control`. It has the following method signatures:
@@ -191,7 +199,6 @@ Usage example:
 
 
 [source,java]
-
 ----
 public interface MyControlInterface extends Control {
     public void setSomething(int x); // optionally, add custom methods
@@ -202,7 +209,6 @@ public interface MyControlInterface extends Control {
 
 
 [source,java]
-
 ----
 public class MyControl extends MyCustomClass implements MyControlInterface {
 
@@ -280,7 +286,6 @@ Here an example from the link:http://code.google.com/p/monkeyzone/[MonkeyZone] c
 
 
 [source,java]
-
 ----
 
 public class CharacterAnimControl implements Control {
@@ -298,7 +303,6 @@ public class CharacterAnimControl implements Control {
 
 
 [source,java]
-
 ----
 public interface ManualControl extends Control {
     public void steerX(float value);
@@ -314,7 +318,6 @@ Then you create custom sub-Controls and implement the methods accordingly to the
 
 
 [source,java]
-
 ----
 public class ManualVehicleControl   extends ManualControl {...}
 ----
@@ -323,7 +326,6 @@ public class ManualVehicleControl   extends ManualControl {...}
 
 
 [source,java]
-
 ----
 public class ManualCharacterControl extends ManualControl {...}
 ----
@@ -332,7 +334,6 @@ Then add the appropriate controls to spatials:
 
 
 [source,java]
-
 ----
 
 characterSpatial.addControl(new ManualCharacterControl());
@@ -345,7 +346,6 @@ vehicleSpatial.addControl(new ManualVehicleControl());
 
 
 [source,java]
-
 ----
 ManualControl c = mySpatial.getControl(ManualControl.class);
 c.steerX(steerX);

@@ -29,7 +29,6 @@ If you don't have it yet, link:http://jmonkeyengine.googlecode.com/svn/trunk/eng
 
 
 [source]
-
 ----
 jMonkeyProjects$ ls -1 BasicGame
 assets/
@@ -42,7 +41,6 @@ Place town.zip in the root directory of your JME3 project. Here is the code:
 
 
 [source,java]
-
 ----
 
 package jme3test.helloworld;
@@ -217,7 +215,6 @@ Let's start with the class declaration:
 
 
 [source,java]
-
 ----
 public class HelloCollision extends SimpleApplication
         implements ActionListener { ... }
@@ -227,7 +224,6 @@ You already know that SimpleApplication is the base class for all jME3 games. Yo
 
 
 [source,java]
-
 ----
 
   private Spatial sceneModel;
@@ -264,7 +260,6 @@ As usual, you initialize the game in the `simpleInitApp()` method.
 
 
 [source,java]
-
 ----
 
     viewPort.setBackgroundColor(new ColorRGBA(0.7f,0.8f,1f,1f));
@@ -286,7 +281,6 @@ The first thing you do in every physics game is create a BulletAppState object. 
 
 
 [source,java]
-
 ----
 
     bulletAppState = new BulletAppState();
@@ -298,7 +292,6 @@ For the scene, you load the `sceneModel` from a zip file, and adjust the size.
 
 
 [source,java]
-
 ----
 
     assetManager.registerLocator("town.zip", ZipLocator.class);
@@ -311,7 +304,6 @@ The file `town.zip` is included as a sample model in the JME3 sources – you ca
 
 
 [source,java]
-
 ----
 
     CollisionShape sceneShape =
@@ -343,7 +335,6 @@ So let's set up collision detection for the first-person player.
 
 
 [source,java]
-
 ----
 
     CapsuleCollisionShape capsuleShape = new CapsuleCollisionShape(1.5f, 6f, 1);
@@ -357,22 +348,25 @@ Again, you create a CollisionShape: This time you choose a CapsuleCollisionShape
 *  The final integer argument specifies the orientation of the cylinder: 1 is the Y-axis, which fits an upright person. For animals which are longer than high you would use 0 or 2 (depending on how it is rotated).
 
 [source,java]
-
 ----
 
     player = new CharacterControl(capsuleShape, 0.05f);
 
 ----
 
-“
+
+[TIP]
+====
+“Does that CollisionShape make me look fat? If you ever get confusing physics behaviour, remember to have a look at the collision shapes. Add the following line after the bulletAppState initialization to make the shapes visible: 
 
 
 [source,java]
-
 ----
 bulletAppState.getPhysicsSpace().enableDebug(assetManager);
 ----
 
+
+====
 
 
 
@@ -380,7 +374,6 @@ Now you use the CollisionShape to create a `CharacterControl` that represents th
 
 
 [source,java]
-
 ----
 
     player.setJumpSpeed(20);
@@ -393,7 +386,6 @@ Apart from step height and character size, the `CharacterControl` lets you confi
 
 
 [source,java]
-
 ----
 
     player.setPhysicsLocation(new Vector3f(0, 10, 0));
@@ -410,7 +402,6 @@ Remember, in physical games, you must register all solid objects (usually the ch
 
 
 [source,java]
-
 ----
 
     bulletAppState.getPhysicsSpace().add(landscape);
@@ -440,7 +431,6 @@ In the `simpleInitApp()` method, you re-configure the familiar WASD inputs for w
 
 
 [source,java]
-
 ----
 private void setUpKeys() {
     inputManager.addMapping("Left", new KeyTrigger(KeyInput.KEY_A));
@@ -467,7 +457,6 @@ Remember that this class implements the `ActionListener` interface, so you can c
 
 
 [source,java]
-
 ----
 
   public void onAction(String binding, boolean value, float tpf) {
@@ -501,7 +490,6 @@ This last and most important code snippet goes into the `simpleUpdate()` method.
 
 
 [source,java]
-
 ----
 
  public void simpleUpdate(float tpf) {
@@ -532,7 +520,6 @@ This is how the walking is triggered:
 ..  Add to `walkDirection` the recent motion vectors that you polled from the camera. This way it is posible for a character to move forward and to the left simultaneously, for example! 
 ..  This one last line does the “walking magic: 
 [source,java]
-
 ----
 player.setWalkDirection(walkDirection);
 ----
@@ -542,7 +529,6 @@ player.setWalkDirection(walkDirection);
 
 ..  Make the first-person camera object follow along with the physics-controlled player:
 [source,java]
-
 ----
 cam.setLocation(player.getPhysicsLocation());
 ----

@@ -53,7 +53,6 @@ Store your assets in subfolders of your project's `assets` directory. The `asset
 
 
 [source]
-
 ----
 
 jMonkeyProjects/MyGame/assets/Interface/ # .font, .jpg, .png, .xml
@@ -106,6 +105,11 @@ Storing the textures inside your project directory is necessary for the paths in
 
 
 
+[IMPORTANT]
+====
+It is imperative to keep the same directory structure from beginning to end. If you ever change the assets directory structure, you have to do manual refactoring (just as for Java package name changes): Re-export all affected models, regenerate all affected .j3o files, and manually update all affected path Strings in your code.
+====
+
 
 
 
@@ -114,6 +118,11 @@ Storing the textures inside your project directory is necessary for the paths in
 Install a mesh editor such as <<jme3/external/blender#,Blender>> or 3D Studio MAX. Reuse textures and materials as much as possible. *Consult the mesh editor's documentation for specific details how to do the following tasks.*
 
 
+
+[TIP]
+====
+Note that UV coords are part of the mesh and not part of the material, so if you import your mesh successfully, you can later apply the texture again and it will map correctly.
+====
 
 
 
@@ -132,8 +141,13 @@ Don't use multiple separate texture files with one model, it will break the mode
 See also: link:http://www.gamasutra.com/view/feature/2530/practical_texture_atlases.php[Texture Atlases on gamasutra]
 
 
-*When I load the model in JME3, why does it look different than in the 3D editor?*+
-<<jme3/advanced/materials_overview#,focus on features that game engines support>>
+
+[IMPORTANT]
+====
+*When I load the model in JME3, why does it look different than in the 3D editor?* +
+3D models will never look identical in a game engine and in a mesh editor. Mesh editors are optimized for high-quality offline rendering, and many of the material and texture options simply do not work in a live rendering context such as games. Also, the shaders that render the materials in JME3 are different implementations than in your mesh editor's renderer. Remind your graphic designers to <<jme3/advanced/materials_overview#,focus on features that game engines support>>.
+====
+
 
 
 
@@ -164,7 +178,12 @@ The .j3o file format is an optimized format to store parts of a jME3 scene graph
 Use Java commands, or use the <<sdk/scene_composer#,jMonkeyEngine SDK SceneComposer>> as a user-friendly interface to add these properties.
 *  The default Ant build script copies .j3o files, .j3m files, sounds, and textures, into the distributable JAR automatically.
 
-`dist`*Runtime Error*–
+
+[IMPORTANT]
+====
+Important: Unoptimized external model files (.mesh.xml, .material, .obj, .mat, .blend, etc) are not bundled by the default build script into the final game builds in the `dist` directory! If you or your customers try to run games containing code that loads non-.j3o models, you get a AssetNotFoundException *Runtime Error* (resource not found). Your final application code should only reference .j3o files. – Note that your developers will not get this runtime error when running development builds straight from the SDK.
+====
+
 
 
 

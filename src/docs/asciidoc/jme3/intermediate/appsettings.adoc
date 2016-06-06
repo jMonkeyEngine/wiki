@@ -10,7 +10,12 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 Every class that extends jme3.app.SimpleApplication has properties that can be configured by customizing a `com.jme3.system.AppSettings` object. 
 
 
-`main()``app.start()``simpleInitApp()``app.restart()`
+
+[IMPORTANT]
+====
+Configure application settings in `main()`, before you call `app.start()` on the application object. If you change display settings during runtime, for example in `simpleInitApp()`, you must call `app.restart()` to make them take effect.
+====
+
 
 
 *Note:* Other runtime settings are covered in <<jme3/intermediate/simpleapplication#,SimpleApplication>>.
@@ -23,7 +28,6 @@ Specify settings for a game (here called `MyGame`, or whatever you called your S
 
 
 [source,java]
-
 ----
 public static void main(String[] args) {
   AppSettings settings = new AppSettings(true);
@@ -42,7 +46,6 @@ This example toggles the settings to fullscreen while the game is already runnin
 
 
 [source,java]
-
 ----
 public void toggleToFullscreen() {
   GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
@@ -178,7 +181,12 @@ a|“/com/jme3/app/Monkey.png
 
 |===
 
-`app.setShowSettings(true);``setSettingsDialogImage(“Interface/mysplashscreen.png)``app.setShowSettings(false);``app.start()`
+
+[TIP]
+====
+You can use `app.setShowSettings(true);` and `setSettingsDialogImage(“Interface/mysplashscreen.png)` to present the user with jme3's default display settings dialog when starting the game. Use `app.setShowSettings(false);` to hide the default settings screen. Set this boolean before calling `app.start()` on the SimpleApplication.
+====
+
 
 
 
@@ -220,7 +228,6 @@ Provide the unique name of your jME3 application as the String argument. For exa
 
 
 [source,java]
-
 ----
 
     try { settings.save("com.foo.MyCoolGame3"); } 

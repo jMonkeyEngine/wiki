@@ -41,11 +41,21 @@ It is important that you only store pure data in the components because otherwis
 
 
 
+[IMPORTANT]
+====
+
+Beginners tend to add large objects like spatials and geometries to a component.
+This is a big mistake because such objects contain logic and in our approach components are data only. Abstract it to a general level or store it completely in the systems.
+====
 
 
 
 
+[IMPORTANT]
+====
 
+Never subclass Component classes. 
+====
 
 
 
@@ -56,6 +66,11 @@ Simply all objects that use entities/components can be called a system.
 For example <<jme3/advanced/application_states#,AppStates>> can deal with different components and can easily be added to the Application.
 
 
+
+[IMPORTANT]
+====
+Never modify the same component from different systems.
+====
 
 If two systems are modifying the same components then there is a design flaw. 
 This is a sign that there is a missing component or system.
@@ -106,7 +121,12 @@ Ids are not reused because afterward they would not be unique anymore which woul
 
 
 
+[TIP]
+====
 
+Often people are scared that they would ran out of ids:
+If you create a new entity every nano second you would need roughly 585 years before it wraps. 
 
+====
 
 
