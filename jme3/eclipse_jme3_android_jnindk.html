@@ -560,8 +560,19 @@ table.CodeRay td.code>pre{padding:0}
 <div class="paragraph">
 <p>The code samples provided in this guide should work for any IDE, but setting up/configuring your IDE to do what Eclipse does in this particular guide may require some creative workarounds.</p>
 </div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p><strong>can not</strong><a href="../jme3/android.html">this page</a>*that can also be edited in the Eclipse IDE*</p>
+<p>Please note that projects that use Android UI elements or are created using Eclipse <strong>can not</strong> be ported to iOS. See <a href="../jme3/android.html">this page</a> on how to create a cross-platform project using the jME SDK <strong>that can also be edited in the Eclipse IDE</strong>. This saves you the setup work outlined below.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -570,6 +581,20 @@ table.CodeRay td.code>pre{padding:0}
 <div class="sectionbody">
 <div class="paragraph">
 <p>I will assume you already have downloaded (and built, if necessary) the JME3 binaries. If not, either download the <a href="http://hub.jmonkeyengine.org/downloads/">latest SDK release</a>, <a href="http://updates.jmonkeyengine.org/stable/3.0/engine">engine build</a> (recommended for new users), or take a quick detour over to <a href="http://hub.jmonkeyengine.org/wiki/doku.php/jme3:build_from_sources">this guide</a> to build from source (recommended for advanced users).</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>One directory you should have on hand (or know where to find) is the location of the resulting library (JAR) files.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>For the various methods of obtaining the libraries (as described above), the path is usually in one of the following places:</p>
@@ -587,8 +612,19 @@ table.CodeRay td.code>pre{padding:0}
 </li>
 </ul>
 </div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p><strong>do not copy JAR files</strong></p>
+<p>Throughout the course of this guide, <strong>do not copy JAR files</strong> to any project directory - leave them in their original spots so they can be easily updated for when a JME3 update comes out or when you rebuild the source.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -646,8 +682,19 @@ If you don&#8217;t see <em>Java Project</em>, you are more than likely in a pers
 <div class="paragraph">
 <p>There are a number of libraries you&#8217;re going to need to include, as the 'core' JME3 system requires them.</p>
 </div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p><code>libs``libs</code></p>
+<p>There will be many libraries in the previously identified <code>libs</code> folder that aren&#8217;t initially used. Certain aspects of JME3 (for instance, collision detection) will require the appropriate JAR if your code requires that functionality. However, it is highly recommended you do NOT include every JAR in the <code>libs</code> folder due to the fact that exporting them all when they are not needed will result in a huge jar file (~60MB).</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>Click <em>Add External JARs…</em>, navigate to the JME3 <code>libs</code> folder (see <em>Setting up JME3</em> if you&#8217;re not sure where this is), and select each of the following:</p>
@@ -692,8 +739,19 @@ If you don&#8217;t see <em>Java Project</em>, you are more than likely in a pers
 <div class="paragraph">
 <p>Alternatively, you can keep them in the local directory if you do not wish to package them with the JAR, though this may not be desirable for certain deployments (such as applets, Android apps, or JNLPs).</p>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p><em>Assets</em></p>
+<p>To include your assets within your base project, follow the <em>Assets</em> section without creating a new project. However, do note that this will make the process of including these assets in your Android project, if you create one, much harder.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>Finally, the SDK creates a base source file for you that ends up being the main JME3 entry point. Since we&#8217;re using Eclipse, we&#8217;ll have to manually create that file.</p>
@@ -757,6 +815,20 @@ If you don&#8217;t see <em>Java Project</em>, you are more than likely in a pers
 <div class="paragraph">
 <p>First, create another <strong>generic</strong> project by going to <em>File → New → Project… → General → Project</em> and giving it a name (we&#8217;ll call ours <code>JMEclipse-Assets</code>).</p>
 </div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>We create a General (non-Java) project for cleanliness because our assets will not require any special build settings or the like.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>For new users, it&#8217;s a good idea to add the initial JME3 folders that the SDK creates, as they are referenced by many other guides on the web. To do this, for each of the following right click on the assets project and go to <em>New → Folder</em>, type in the name listed, and hit <em>Finish</em>:</p>
 </div>
@@ -799,8 +871,19 @@ If you don&#8217;t see <em>Java Project</em>, you are more than likely in a pers
 <div class="paragraph">
 <p>Check <em>Export generated class files and resources</em>, select a destination for the JAR file, and check <em>Compress the contents of the JAR file</em>, <em>Add directory entries</em>, and <em>Overwrite existing files without warning</em>. Click <em>Finish</em>.</p>
 </div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p><em>Next</em>`.jardesc`<em>Save the description of this JAR in the workspace</em>`.jardesc``.jardesc`</p>
+<p>Optionally, you can click <em>Next</em> and specify a <code>.jardesc</code> file by checking <em>Save the description of this JAR in the workspace</em> and specifying a location for a <code>.jardesc</code> file. That way you can simply double-click the <code>.jardesc</code> file and easily re-export your assets when they change (remember, always refresh your project before exporting!).</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -855,6 +938,20 @@ If you don&#8217;t see <em>Java Project</em>, you are more than likely in a pers
 </li>
 </ul>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Most of the lower options are defaulted based off of your ADT configuration and should work as-is.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>After clicking <em>Next</em>, uncheck <em>Create activity</em> (JME3 provides a base activity class). You can check/uncheck <em>Create custom launcher icon</em> at your own preference.</p>
 </div>
@@ -883,8 +980,19 @@ If you don&#8217;t see <em>Java Project</em>, you are more than likely in a pers
 </li>
 </ul>
 </div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p><code>libs``libs</code></p>
+<p>There will be many libraries in the previously identified <code>libs</code> folder that aren&#8217;t initially used. Certain aspects of JME3 (for instance, collision detection) will require the appropriate JAR if your code requires that functionality. However, it is highly recommended you do NOT include every JAR in the <code>libs</code> folder due to the fact that exporting them all when they are not needed will result in a huge jar file (~60MB).</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>As well, repeat the above step for your compiled assets JAR (see <em>Packaging</em> under <em>Assets</em>).</p>
@@ -945,8 +1053,19 @@ If you don&#8217;t see <em>Java Project</em>, you are more than likely in a pers
 }</code></pre>
 </div>
 </div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p><code>appClass<code>SimpleApplication</code>com.jme3.app.Application</code></p>
+<p>Pay close attention to the values above; <code>appClass</code> MUST be the full package + class name of the class in your base project that extends <code>SimpleApplication</code> (for advanced users, this is actually a subclass of <code>com.jme3.app.Application</code>).</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="sect2">
 <h3 id="running-2">Running</h3>
@@ -1003,6 +1122,20 @@ If you don&#8217;t see <em>Java Project</em>, you are more than likely in a pers
 </li>
 </ul>
 </div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>It should be mentioned that this section will not go into C/C++ best practices, sample code, or any details about the inner workings of JNI; instead, this section simply shows you how to set up the environment/configurations to create a near-seamless build environment for including your native code in both your base project as well as your Android project (if you&#8217;ve created one).</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>Building JNI is actually quite straightforward (assuming you know how the C/C++ build process works). Even for Android, the NDK provides a slick system for building/including your compiled binaries in your project.</p>
 </div>
@@ -1012,8 +1145,19 @@ If you don&#8217;t see <em>Java Project</em>, you are more than likely in a pers
 <div class="paragraph">
 <p>Next, we need to configure our build settings. Right click the native project, click <em>Properties</em> and go to <em>C/C++ Build → Settings</em>. Select the <em>Build Artifact</em> tab, ensure the drop down menu says <em>Shared Library</em>, and change the <em>Artifact name</em> field to what you want to call your eventual JNI module.</p>
 </div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p>“</p>
+<p>What you call your artifact is VERY important to how Java loads your library. For instance, linux dynamic library (.SO) objects require that the library have the “lib prefix. Keep this in mind when specifying an artifact name.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>If you plan on building for Android, you must include an Android makefile in your project. In order for the build process to be as seamless as possible, this guide sets it up unlike most tutorials instruct.</p>
@@ -1021,11 +1165,36 @@ If you don&#8217;t see <em>Java Project</em>, you are more than likely in a pers
 <div class="paragraph">
 <p>To do this, simply create a new file in your native project called <code>Android.mk</code> and <a href="http://www.kandroid.org/ndk/docs/ANDROID-MK.html">set it up accordingly</a>.</p>
 </div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p><code>LOCAL_PATH``my-dir</code></p>
+<p>Even though the native project is not the Android project&#8217;s directory, keep the <code>LOCAL_PATH</code> variable set to <code>my-dir</code>. This is important!</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>Next, we need to create a configuration for the Android target.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This step is only relevant/possible if you have the NDK Eclipse plugin installed. Otherwise, you will need to install awk/make (using Cygwin if on Windows) and build through the command line manually.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>To do this, right click your native project, click <em>Properties</em>, and go to <em>C/C++ Build → Tool Chain Editor</em>. For the configuration, click <em>Manage Configurations…</em> and create new configuration(s) based on the current default configurations, putting “Android in the name. Lastly, click <em>OK</em>.</p>
@@ -1049,8 +1218,19 @@ If you don&#8217;t see <em>Java Project</em>, you are more than likely in a pers
 </li>
 </ul>
 </div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p><code>jni``jni</code></p>
+<p>What this has essentially done is created a separate project for C/C++ building while tricking the Android project into thinking the source files are located directly in the Android project itself. With this configuration scheme, you can easily build regular shared libraries for desktop platforms as well as build/install the Android libraries using the NDK without the need to have a copy of the source code inside of the <code>jni</code> folder of an Android project. By setting the workspace for the Android builder and creating a link, it executes the NDK builder inside your Android project while serving the source files as if they existed in the <code>jni</code> folder.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>Lastly, some additional include paths need to be added. Within the properties window, go to <em>C/C++ General → Paths and Symbols</em> and select the <em>Includes</em> tab.</p>
@@ -1058,8 +1238,19 @@ If you don&#8217;t see <em>Java Project</em>, you are more than likely in a pers
 <div class="paragraph">
 <p>Under <em>Languages</em>, select <em>GNU C_ (or the correct C equivalent) and then _Add…</em>. Specify the absolute path to your JDK&#8217;s <code>include</code> folder, check <em>Add to all configurations</em>, and hit <em>OK</em>.</p>
 </div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p><code>win32``include</code></p>
+<p>For Windows platforms, repeat the above step for the <code>win32</code> directory within the JDK&#8217;s <code>include</code> folder.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>After hitting <em>OK</em>, you are now set to write your JNI code.</p>
@@ -1088,7 +1279,7 @@ If you don&#8217;t see <em>Java Project</em>, you are more than likely in a pers
 <div id="footer">
 <div id="footer-text">
 Version <br>
-Last updated 2016-06-05 15:58:32 UTC
+Last updated 2016-06-06 21:14:31 UTC
 </div>
 </div>
 </body>

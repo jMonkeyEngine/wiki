@@ -836,23 +836,57 @@ If you don&#8217;t know which to choose, Subversion is a good choice for starter
 <div class="sect1">
 <h2 id="development-phase">Development Phase</h2>
 <div class="sectionbody">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p>“+
-…“–</p>
+<p>Many game developers dream of creating their very own “MMORPG with full-physics, AI, post-rendering effects, multi-player networking, procedurally generated maps, and customizable characters. So why aren&#8217;t there tons of MMORPGs out there?<br>
+Even for large experienced game producers, the creation of such a complex game is time-intensive and failure-prone. How familiar are you with multi-threading, persistence, optimization, client-server synchonization, …? Unless your answer is “very!, then start with a single-player desktop game, and work your way up – just as the pros did when they started.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="sect2">
 <h3 id="extend-simpleapplication">Extend SimpleApplication</h3>
 <div class="paragraph">
 <p>Every jME3 game is centered around one main class that (directly or indirectly) extends com.jme3.app.<a href="../../jme3/intermediate/simpleapplication.html">SimpleApplication</a>.</p>
 </div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p>““</p>
+<p>Note that although the “SimpleApplication name might be misleading, all jME3 applications, including very large projects, are based on this class. The name only implies that this class itself is a simple application already. You make it “non-simple by extending it!</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>For your future game releases, you will want to rely on your own framework (based on jME): Your custom framework extends jME&#8217;s SimpleApplication, and includes your custom methods for loading, saving, and arranging your scenes, your custom navigation methods, your inputs for pausing and switching your custom screens, your custom user interface (options screen, HUD, etc), your custom NPC factory, your custom physics properties, your custom networking synchronization, etc.</p>
 </div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p>+</p>
+<p>Writing and reusing (extending) your own base framework saves you time. When you update your generic base classes, all your games that extend them benefit from improvements to the base (just as all jME-based games benefit of improvements to the jME framework).<br>
+Also, your own framework gives all your games a common look and feel.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -879,16 +913,38 @@ If you don&#8217;t know which to choose, Subversion is a good choice for starter
 </li>
 </ol>
 </div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p>““<em>drop</em></p>
+<p>Acknowledge whether you want a feature because it is necessary for gameplay, or simply because “everyone else has it. Your goal should be to bring out the essence of your game idea. Don&#8217;t water down gameplay by attempting to make it “do everything, but better. Successful high-performance games are the ones where someone made smart decisions what to keep and what to <em>drop</em>.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
 <h3 id="the-smart-way-to-add-custom-methods-and-fields">The Smart Way to Add Custom Methods and Fields</h3>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p><strong>Avoid the Anti-Pattern:</strong>+
-<code>Node</code>–<code>MyMobileNode</code>–<code>MyNPC<code>MyFighterNPC</code>MyShopKeeperNPC``MyNPC</code>+
-“““</p>
+<p><strong>Avoid the Anti-Pattern:</strong> Don&#8217;t design complex role-based classes using Java inheritance, it will result in an unmaintainable mess.<br>
+Example: You start extending <code>Node</code> –&gt; <code>MyMobileNode</code> –&gt; <code>MyNPC</code>. Then you extend <code>MyFighterNPC</code> (defends, attacks) and <code>MyShopKeeperNPC</code> (trades) from <code>MyNPC</code>. What if you need an NPC that trades and defends itself, but doesn&#8217;t attack? Do you extend MyShopKeeperNPC and copy and paste the defensive methods from MyFighterNPC? Or do you extend MyFighterNPC and override the attacking methods of its parent? Neither is a clean solution.<br>
+Wouldn&#8217;t it be better if behaviours were a separate “system, and attributes were separate “components that you add to the “entity that needs them?</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>You write Java classes named <code>Controls</code> to implement your Game Entities, and define an Entity&#8217;s visuals, attributes, and behaviours. In jME, <code>Spatial`s (`Nodes</code> or `Geometry`s) are the visual representation of the game entity in the scene graph.</p>
@@ -905,8 +961,17 @@ Example: Players have <strong>methods</strong> such as <code>walk(), addGold(), 
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p><strong>Follow the Best Practice:</strong>““</p>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="literalblock">
+<div class="content">
+<pre>*Follow the Best Practice:* In general, use composition over inheritance and keep “what an entity does (behaviour system) separate from “what this entity is (attributes).</pre>
+</div>
 </div>
 <div class="ulist">
 <ul>
@@ -917,6 +982,10 @@ Example: Players have <strong>methods</strong> such as <code>walk(), addGold(), 
 <p>Use <a href="../../jme3/advanced/custom_controls.html">Controls</a> and <a href="../../jme3/advanced/application_states.html">Application States</a> to define custom behaviour systems.</p>
 </li>
 </ul>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>If your game is even more complex, you may want to learn about “real Entity Systems, which form a quite different programming paradigm from object oriented coding but are scalable to very large proportions. Note however that this topic is very unintuitive to handle for an OOP programmer and you should really decide on a case basis if you really need this or not and gather some experiences before diving head first into a MMO project emoji:smiley</p>
@@ -1013,8 +1082,36 @@ this.app.getRootNode().attachChild( sky );</code></pre>
 </li>
 </ul>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>A game contains algorithms that do not directly affect spatials (for example, AI pathfinding code that calculates and chooses paths, but does not actually move spatials). You do not need to put such non-spatial code in controls, you can run thse things in a new thread. Only the tranformation code that actually modifies the spatial must be called from a control, or must be enqueue()ed.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>Controls and AppStates often work together: An AppState can reach up to the application and <code>get</code> all Spatials from the rootNode that carry a specific Control, and perform a global action on them. Example: In BulletPhysics, all physical Spatials that carry RigidBodyControls are steered by the overall BulletAppState.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>AppStates and Controls are extensions to a SimpleApplication. They are your modular building blocks to build a more complex game. In the ideal case, you move all init/update code into Controls and AppStates, and your simpleInitApp() and simpleUpdate() could end up virtually empty. This powerful and modular approach cleans up your code considerably.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>Read all about <a href="../../jme3/advanced/custom_controls.html">Custom Controls</a> and <a href="../../jme3/advanced/application_states.html">Application States</a> here.</p>
@@ -1244,7 +1341,7 @@ this.app.getRootNode().attachChild( sky );</code></pre>
 <div id="footer">
 <div id="footer-text">
 Version <br>
-Last updated 2016-06-05 15:58:32 UTC
+Last updated 2016-06-06 21:14:31 UTC
 </div>
 </div>
 </body>

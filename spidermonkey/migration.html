@@ -539,8 +539,19 @@ table.CodeRay td.code>pre{padding:0}
 <div id="content">
 <div id="preamble">
 <div class="sectionbody">
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p><abbr title="Application Programming Interface">API</abbr><a href="../jme3/advanced/networking.html">networking</a></p>
+<p>This article covers how to move away from an older, deprecated <abbr title="Application Programming Interface">API</abbr>! If you just start with JME3 networking, see <a href="../jme3/advanced/networking.html">networking</a> for current documentation.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>This document provides an overview of the new versus  the old SpiderMonkey <abbr title="Application Programming Interface">API</abbr>, and a path for migrating from the old, now deprecated, <abbr title="Application Programming Interface">API</abbr> to the newer version.  Much has changed.
@@ -743,8 +754,21 @@ Depending on whether your MessageListener is being added to the Client or the Se
 </div>
 </div>
 <div class="paragraph">
-<p>Your listeners will fall into one of those three categories.
-<abbr title="Application Programming Interface">API</abbr></p>
+<p>Your listeners will fall into one of those three categories.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Several of the old MessageListener&#8217;s methods have gone away.  The object-based methods didn&#8217;t fit with the new <abbr title="Application Programming Interface">API</abbr> and messageSent() seemed of little utility.  It could be resurrected if there is demand.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect3">
@@ -810,8 +834,21 @@ Depending on whether your MessageListener is being added to the Client or the Se
 <div class="sect3">
 <h4 id="no-ioexceptions">No IOExceptions</h4>
 <div class="paragraph">
-<p>After you&#8217;ve done all of that, the compiler will be complaining about the fact that send(), broadcast(), etc. no longer throw IOException.  So remove all of those try/catch blocks.
-<abbr title="Application Programming Interface">API</abbr><abbr title="Application Programming Interface">API</abbr></p>
+<p>After you&#8217;ve done all of that, the compiler will be complaining about the fact that send(), broadcast(), etc. no longer throw IOException.  So remove all of those try/catch blocks.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The truth is that even in the old <abbr title="Application Programming Interface">API</abbr>, expecting a real IOException from these methods was unreasonable because often times the message was queued and actually sent later by a separate thread.  The new <abbr title="Application Programming Interface">API</abbr> assumes that all underlying transports will operate this way and so forgoes the artificial annoyance or sense of security provided by these 'throws' clauses.  It also simplifies the calling code a great deal.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>Only <abbr title="Application Programming Interface">API</abbr> methods that actually perform direct IO (such as the Network.connectToServer() and NetworkClient.connectToServer() methods) will ever be declared to throw IOException.</p>
@@ -828,6 +865,20 @@ Depending on whether your MessageListener is being added to the Client or the Se
 <h3 id="client-id-and-player-id">Client ID and Player ID</h3>
 <div class="paragraph">
 <p>The ID of the Client and HostedConnection are now the same at both ends of a connection and the ID is given out authoritatively by the hosting Server.  This removes some of the inconsistency on when to use the old player ID and when to use the old client ID as the new client ID serves both purposes.  This leaves the game to be able to define its own player ID based on whatever user criteria it wants.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Many of the reasons for accessing the client ID on the server can now be taken care of using the session attributes on HostedConnection.  It seems like a common use-case for these IDs was to look-up player/client-specific information in a java.util.Map.  This information can now be set directly on the HostedConnection.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -886,7 +937,7 @@ There will certainly be some growing pains as we work the kinks out of the new s
 <div id="footer">
 <div id="footer-text">
 Version <br>
-Last updated 2016-06-05 15:58:32 UTC
+Last updated 2016-06-06 21:14:31 UTC
 </div>
 </div>
 </body>

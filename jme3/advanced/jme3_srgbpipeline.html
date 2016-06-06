@@ -609,6 +609,20 @@ This only apply to textures that will render colors on screen (basically diffuse
 <div class="paragraph">
 <p>Gamma Correction in jME 3.0 is based on those three statements.</p>
 </div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Note that Gamma Correction is only available on desktop with LWJGL or JOGL renderer. They are not yet supported on Android or iOS renderers</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="sect3">
 <h4 id="turning-gamma-correction-on-off">Turning Gamma Correction on/off</h4>
 <div class="paragraph">
@@ -628,12 +642,19 @@ app.setSettings(settings);</code></pre>
 <div class="paragraph">
 <p><span class="image"><img src="http://i.imgur.com/Lya1ldH.png" alt="Lya1ldH.png" height=""></span></p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>But both can be enabled separately*</p>
-</li>
-</ul>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This is a short hand to enable both linearization of input textures and Gamma correction of the rendered output on screen.* But both can be enabled separately*.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="sect4">
 <h5 id="enabling-output-gamma-correction">Enabling output Gamma Correction</h5>
@@ -671,6 +692,20 @@ This can be toggled at run time.</p>
 </div>
 <div class="paragraph">
 <p>This will be ignored if the hardware doesn&#8217;t have the GL_ARB_framebuffer_sRGB or the GL_EXT_texture_sRGB.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Toggling this setting at runtime will produce unexpected behavior for now. A change in this setting would need a proper reload of the context to work.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>All images marked as in sRGB color space will be uploaded to the GPU using a sRGB image format.
@@ -717,12 +752,40 @@ Here is an exhaustive list of the supported format and there equivalent :</p>
 </li>
 </ul>
 </div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Conventionally only the rgb channels are gamma corrected, as the alpha channel does not a represent a color value</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 <div class="sect3">
 <h4 id="excluding-images-from-the-srgb-pipeline">Excluding images from the sRGB pipeline</h4>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p>+</p>
+<p>Only loaded images will be marked as in sRGB color space, when using assetManager.loadTexture or loadAsset.+</p>
+</div>
+<div class="paragraph">
+<p>The color space of an image created by code will have to be specified in the constructor or will be assumed as Linear if not specified.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>Not all images need to be linearized. Some images don&#8217;t represent color information that will be displayed on screen, but more different sort of data packed in a texture.+</p>
@@ -754,8 +817,19 @@ So if you make your own material and want to use Gamma Correction, make sure you
 </div>
 <div class="sect3">
 <h4 id="colorrgba-as-srgb">ColorRGBA as sRGB</h4>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p><strong>ALWAYS</strong></p>
+<p>The r, g, b attributes of a ColorRGBA object are <strong>ALWAYS</strong> assumed in Linear color space.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>If you want to set a color that you hand picked in a color picker, you should use the setAsSRGB method of ColorRGBA. This will convert the given values to linear color space by using the same formula as before : color = pow (color, gamma) where gamma = 2.2;</p>
@@ -809,7 +883,7 @@ That&#8217;s why we kept a way to turn it off, for backward compatibility.</p>
 <div id="footer">
 <div id="footer-text">
 Version <br>
-Last updated 2016-06-05 15:58:32 UTC
+Last updated 2016-06-06 21:14:31 UTC
 </div>
 </div>
 </body>

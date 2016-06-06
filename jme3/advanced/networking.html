@@ -653,8 +653,19 @@ table.CodeRay td.code>pre{padding:0}
 }</code></pre>
 </div>
 </div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p><code>Headless</code></p>
+<p>A <code>Headless</code> SimpleApplication executes the simpleInitApp() method and runs the update loop normally. But the application does not open a window, and it does not listen to user input. This is the typical behavior for a server application.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>Create a com.jme3.network.Server in the <code>simpleInitApp()</code> method and specify a communication port, for example 6143.</p>
@@ -688,8 +699,19 @@ table.CodeRay td.code>pre{padding:0}
 }</code></pre>
 </div>
 </div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p><code>Display</code></p>
+<p>A standard SimpleApplication in <code>Display</code> mode executes the simpleInitApp() method, runs the update loop, opens a window for the rendered video output, and listens to user input. This is the typical behavior for a client application.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>Create a com.jme3.network.Client in the <code>simpleInitApp()</code> method and specify the servers IP address, and the same communication port as for the server, here 6143.</p>
@@ -937,6 +959,20 @@ myServer.broadcast(message);</code></pre>
 <div class="paragraph">
 <p>A server has a game version and game name property. Each client expects to communicate with a server with a certain game name and version. Test first whether the game name matches, and then whether game version matches, before sending any messages! If they do not match, SpiderMoney will reject it for you, you have no choice in the mater. This is so the client and server can avoid miscommunication.</p>
 </div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Typically, your networked game defines its own attributes (such as player ID) based on whatever criteria you want. If you want to look up player/client-specific information beyond the game version, you can set this information directly on the Client/HostedConnection object (see Getting Info About a Client).</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -997,6 +1033,20 @@ myServer.broadcast(message);</code></pre>
 <h3 id="clientstatelistener">ClientStateListener</h3>
 <div class="paragraph">
 <p>The com.jme3.network.ClientStateListener notifies the Client when the Client has fully connected to the server (including any internal handshaking), and when the Client is kicked (disconnected) from the server.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The ClientStateListener when it receives a network exception applies the default close action. This just stops the client and you&#8217;ll have to build around it so your application knows what to do. If you need more control when a network exception happens and the client closes, you may want to investigate in a ErrorListener.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
@@ -1086,8 +1136,20 @@ myServer.broadcast(message);</code></pre>
 <div class="paragraph">
 <p>The com.jme3.network.ErrorListener is a listener for when network exception happens. This listener is built so that you can override the default actions when a network exception happens.</p>
 </div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p><strong>don&#8217;t</strong></p>
+<p>If you intend on using the default network mechanics, <strong>don&#8217;t</strong> use this!
+If you do override this, make sure you add a mechanic that can close the client otherwise your client will get stuck open and cause errors.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
@@ -1111,6 +1173,20 @@ myServer.broadcast(message);</code></pre>
 </tr>
 </tbody>
 </table>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This interface was built for the client and server, but the code has never been put on the server to handle this listener.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>First implement the ErrorListener interface in the client class. Then you need to register it to myClient in MyGameClients&#8217;s simpleInitApp() method.</p>
 </div>
@@ -1162,8 +1238,19 @@ message2.setReliable(<span class="predefined-constant">false</span>); <span clas
 <div class="sect1">
 <h2 id="important-use-multi-threading">Important: Use Multi-Threading</h2>
 <div class="sectionbody">
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p><strong>You cannot modify the scenegraph directly from the network thread.</strong></p>
+<p><strong>You cannot modify the scenegraph directly from the network thread.</strong> A common example for such a modification is when you synchronize the player&#8217;s position in the scene. You have to use Java Multithreading.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>Multithreading means that you create a Callable. A Callable is a Java class representing any (possibly time-intensive) self-contained task that has an impact on the scene graph (such as positioning the player). You enqueue the Callable in the Executor of the client&#8217;s OpenGL thread. The Callable ensures to executes the modification in sync with the update loop.</p>
@@ -1193,7 +1280,7 @@ message2.setReliable(<span class="predefined-constant">false</span>); <span clas
 <div id="footer">
 <div id="footer-text">
 Version <br>
-Last updated 2016-06-05 15:58:32 UTC
+Last updated 2016-06-06 21:14:31 UTC
 </div>
 </div>
 </body>

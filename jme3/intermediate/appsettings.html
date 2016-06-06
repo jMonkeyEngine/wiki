@@ -533,8 +533,19 @@ table.CodeRay td.code>pre{padding:0}
 <div class="paragraph">
 <p>Every class that extends jme3.app.SimpleApplication has properties that can be configured by customizing a <code>com.jme3.system.AppSettings</code> object.</p>
 </div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p><code>main()<code>app.start()</code>simpleInitApp()``app.restart()</code></p>
+<p>Configure application settings in <code>main()</code>, before you call <code>app.start()</code> on the application object. If you change display settings during runtime, for example in <code>simpleInitApp()</code>, you must call <code>app.restart()</code> to make them take effect.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p><strong>Note:</strong> Other runtime settings are covered in <a href="../../jme3/intermediate/simpleapplication.html">SimpleApplication</a>.</p>
@@ -861,8 +872,19 @@ ImageIO.read(new File(“)), …});</p>
 </tr>
 </tbody>
 </table>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p><code>app.setShowSettings(true);<code>setSettingsDialogImage(“Interface/mysplashscreen.png)</code>app.setShowSettings(false);``app.start()</code></p>
+<p>You can use <code>app.setShowSettings(true);</code> and <code>setSettingsDialogImage(“Interface/mysplashscreen.png)</code> to present the user with jme3&#8217;s default display settings dialog when starting the game. Use <code>app.setShowSettings(false);</code> to hide the default settings screen. Set this boolean before calling <code>app.start()</code> on the SimpleApplication.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -970,7 +992,7 @@ ImageIO.read(new File(“)), …});</p>
 <div id="footer">
 <div id="footer-text">
 Version <br>
-Last updated 2016-06-05 15:58:32 UTC
+Last updated 2016-06-06 21:14:31 UTC
 </div>
 </div>
 </body>

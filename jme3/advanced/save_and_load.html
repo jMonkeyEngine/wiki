@@ -537,8 +537,19 @@ table.CodeRay td.code>pre{padding:0}
 <div class="paragraph">
 <p>The jMonkeyEngine&#8217;s binary file format is called <code>.j3o</code>. You can convert, view and edit .j3o files and their materials in the jMonkeyEngine <a href="../../sdk.html">SDK</a> and compose scenes (this does not include editing meshes). For the conversion, you can either use the BinaryExporters, or a context menu in the SDK.</p>
 </div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p><code>com.jme3.export.Savable</code><a href="../../jme3/advanced/spatial.html">spatial&#8217;s user data</a>“</p>
+<p>The jMonkeyEngine&#8217;s serialization system is the <code>com.jme3.export.Savable</code> interface. JME3&#8217;s BinaryExporter can write standard Java objects, JME3 objects, and primitive data types that are included in a <a href="../../jme3/advanced/spatial.html">spatial&#8217;s user data</a>. If you use custom game data classes, see below how to make them “Savable.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>There is also a com.jme3.export.xml.XMLExporter and com.jme3.export.xml.XMLImporter that similarly converts jme3 spatials to an XML format. But you wouldn&#8217;t use that to load models at runtime (quite slow).</p>
@@ -563,8 +574,19 @@ table.CodeRay td.code>pre{padding:0}
 <div class="paragraph">
 <p>The following example overrides <code>stop()</code> in SimpleApplication to save the rootNode to a file when the user quits the application. The saved rootNode is a normal .j3o binary file that you can open in the <a href="../../sdk.html">SDK</a>.</p>
 </div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p><code>assets</code></p>
+<p>Note that when you save a model that has textures, the references to those textures are stored as absolute paths, so when loading the j3o file again, the textures have to be accessible at the exact location (relative to the assetmanager root, by default the <code>assets</code> directory) they were loaded from. This is why the SDK manages the conversion on the project level.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -603,8 +625,19 @@ table.CodeRay td.code>pre{padding:0}
   }</code></pre>
 </div>
 </div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p>–</p>
+<p>Here you see why we save user data inside spatials – so it can be saved and loaded together with the .j3o file. If you have game data outside Spatials, you have to remember to save() and load(), and get() and set() it yourself.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -707,13 +740,27 @@ Example: You used something like <code>mySpatial.setUserData(“inventory, myInv
 </li>
 </ol>
 </div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>As with all serialization, remember that if you ever change data types in custom classes, the updated read() methods will no longer be able to read your old files. Also there has to be a constructor that takes no Parameters.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version <br>
-Last updated 2016-06-05 15:58:32 UTC
+Last updated 2016-06-06 21:14:31 UTC
 </div>
 </div>
 </body>

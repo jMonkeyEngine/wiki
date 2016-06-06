@@ -1016,6 +1016,20 @@ Of course there can be several ShaderNode declaration in those block.+</p>
 <div class="paragraph">
 <p>Here is an example of a very simple Material definition that just displays a solid color (controlled by a material parameter) on a mesh.</p>
 </div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Shader Nodes only work if there is no shader declared in the technique. If you want to bypass the Shader Nodes, you can put a VertexShader and a FragmentShader statement in the technique and the shader nodes will be ignored.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="java">MaterialDef Simple {
@@ -1100,6 +1114,20 @@ here is the definition content (Common/MatDefs/ShaderNodes/Common/CommonVert.j3s
 }</code></pre>
 </div>
 </div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Note that texCoord1/2 and vertColor are declared both as input and output. the generator will use the same variables for them</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>here is the shader Node code ( Common/MatDefs/ShaderNodes/Common/commonVert.vert)</p>
 </div>
@@ -1129,6 +1157,34 @@ here is the definition content (Common/MatDefs/ShaderNodes/Common/CommonVert.j3s
 </li>
 </ul>
 </div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>As mentioned before Global position is initialized with the attribute inPosition, so this is equivalent to : modelPosition = Attr.inPosition.xyz</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>also note the swizzle of the Global.position variable. modelPosition is a vec3 and GlobalPosition is a vec4 so we just take the first 3 components.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p><u>*CommonVert output mapping*</u>+</p>
 </div>
@@ -1138,6 +1194,20 @@ here is the definition content (Common/MatDefs/ShaderNodes/Common/CommonVert.j3s
 <p><strong>Global.position = projPosition</strong> : The result of the multiplication of the worldViewProjectionMatrix  and the modelPosition is assigned to the Globale position</p>
 </li>
 </ul>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The Global.position variable will be assigned to the gl_Position glsl built in output at the end of the shader.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p><u>*ColorMult Definition*</u>+</p>
@@ -1205,8 +1275,50 @@ here is the definition content (Common/MatDefs/ShaderNodes/Basic/ColorMult.j3sn)
 </li>
 </ul>
 </div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Note that the Global.color variable will be assigned to gl_FragColor (glsl &lt; 1.5) or declared as a Global ouput of the shader (glsl &gt;= 1.5).</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Also note that in case several Global variables are declared, the generator will assign them gl_FragData[i](glsl &lt; 1.5) i being the order the variable has been found in the material def. For glsl &gt;= 1.5 the veriable will just all be declared as shader output in the order they&#8217;ve been found in the declaration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p><u>*Generated shader code*</u>+</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Don&#8217;t take this code as carved in stone, the generated code can change as optimization of the shader generator goes on</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>Vertex Shader (glsl 1.0)</p>
@@ -1276,6 +1388,20 @@ Note that most glsl compiler will optimize this when compiling the shader on the
 <div class="paragraph">
 <p>Same as for the Vertex shader. note that the color1 is not declared, because it&#8217;s directly replaced by the material parameter.</p>
 </div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>As a rule of thumb you should not assign a value to an input. input are likely to be material paramters or  outputs from other shaders and modifying them may cause unexpected behavior, even failure in your resulting shader.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>For more explanations and design decisions please refer to the <abbr title="specification">spec</abbr> here
 <a href="https://docs.google.com/document/d/1S6xO3d1TBz0xcKe_MPTqY9V-QI59AKdg1OGy3U-HeVY/edit?usp=sharing">https://docs.google.com/document/d/1S6xO3d1TBz0xcKe_MPTqY9V-QI59AKdg1OGy3U-HeVY/edit?usp=sharing</a></p>
@@ -1288,7 +1414,7 @@ Note that most glsl compiler will optimize this when compiling the shader on the
 <div id="footer">
 <div id="footer-text">
 Version <br>
-Last updated 2016-06-05 15:58:32 UTC
+Last updated 2016-06-06 21:14:31 UTC
 </div>
 </div>
 </body>

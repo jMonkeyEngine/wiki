@@ -573,12 +573,55 @@ Besides after this method call you have a direct access to all added,changed and
 <p>Because components have no other methods except the getter, changes are made by replacing the component of an entity with a new one. Therefore an entity can only have one component of the same class. If a component would have a setter no event would fired and parallel processing would not be possible anymore.
 It is important that you only store pure data in the components because otherwise you would no longer know where you can find the logic and the approach of a clear software design would get lost.</p>
 </div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Beginners tend to add large objects like spatials and geometries to a component.
+This is a big mistake because such objects contain logic and in our approach components are data only. Abstract it to a general level or store it completely in the systems.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Never subclass Component classes.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 </div>
 <div class="sect2">
 <h3 id="what-are-systems">What are Systems?</h3>
 <div class="paragraph">
 <p>Simply all objects that use entities/components can be called a system.
 For example <a href="../../../jme3/advanced/application_states.html">AppStates</a> can deal with different components and can easily be added to the Application.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Never modify the same component from different systems.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>If two systems are modifying the same components then there is a design flaw.
@@ -632,12 +675,27 @@ To keep both benefits there is the Hybrid approach:</p>
 <p>Every entity has a unique id which is a long.
 Ids are not reused because afterward they would not be unique anymore which would cause a huge penalty.</p>
 </div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Often people are scared that they would ran out of ids:
+If you create a new entity every nano second you would need roughly 585 years before it wraps.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version <br>
-Last updated 2016-06-05 15:58:32 UTC
+Last updated 2016-06-06 21:14:31 UTC
 </div>
 </div>
 </body>

@@ -552,8 +552,19 @@ Next: <a href="../../jme3/beginner/hello_picking.html">Hello Picking</a></p>
 <img src="../../jme3/beginner/beginner-animation.png" alt="beginner-animation.png" height="">
 </div>
 </div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p>““““</p>
+<p>To use the example assets in a new jMonkeyEngine SDK project, right-click your project, select “Properties, go to “Libraries, press “Add Library and add the “jme3-test-data library.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -701,24 +712,54 @@ Next: <a href="../../jme3/beginner/hello_picking.html">Hello Picking</a></p>
     ...</code></pre>
 </div>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p><strong>Nehon on the jME forum <a href="http://jmonkeyengine.org/groups/general-2/forum/topic/helloanimation-animations-seem-to-be-clashing/#post-180994">wrote</a>,</strong></p>
+<p>In response to a question about animations on different channels interefering with each other, <strong>Nehon on the jME forum <a href="http://jmonkeyengine.org/groups/general-2/forum/topic/helloanimation-animations-seem-to-be-clashing/#post-180994">wrote</a>,</strong></p>
 </div>
 <div class="paragraph">
-<p>“</p>
+<p>“You have to consider channels as part of the skeleton that are animated. The default behavior is to use the whole skeleton for a channel.
+In your example the first channel plays the walk anim, then the second channel plays the dodge animation.
+Arms and feet are probably not affected by the doge animation so you can see the walk anim for them, but the rest of the body plays the dodge animation.</p>
 </div>
+<div class="paragraph">
+<p>Usually multiple channels are used to animate different part of the body. For example you create one channel for the lower part of the body and one for the upper part. This allow you to play a walk animation with the lower part and for example a shoot animation with the upper part. This way your character can walk while shooting.</p>
+</div>
+<div class="paragraph">
+<p>In your case, where you want animations to chain for the whole skeleton, you just have to use one channel.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code>control = player.getControl(AnimControl.class);</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>“</p>
+<p>This line of code will return NULL if the AnimeControl is not in the main node of your model. To check this, right click your model and click “Edit in SceneComposer You can then see the tree for the model. You can then move everything to the main node. You can also access a subnode with the following code.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code>player.getChild("Subnode").getControl(AnimControl.class);</code></pre>
 </div>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -925,7 +966,7 @@ Next: <a href="../../jme3/beginner/hello_picking.html">Hello Picking</a></p>
 <div id="footer">
 <div id="footer-text">
 Version <br>
-Last updated 2016-06-05 15:58:32 UTC
+Last updated 2016-06-06 21:14:31 UTC
 </div>
 </div>
 </body>

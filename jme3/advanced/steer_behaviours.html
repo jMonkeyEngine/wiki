@@ -663,7 +663,21 @@ table.CodeRay td.code>pre{padding:0}
 <p>Create instances from the steer behavior classes, They are located in the <code>com.jme3.ai.agents.behaviors.npc.steering</code> package.</p>
 </div>
 <div class="paragraph">
-<p>If we want to add more than one steer behavior, we need to create a container: <code>SimpleMainBehavior</code></p>
+<p>If we want to add more than one steer behavior, we need to create a container:</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If you add more than one steer behavior to a <code>SimpleMainBehavior</code> it will cause problems in the rotation of the agents.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
@@ -709,6 +723,20 @@ mainBehaviour.addBehavior(steer);
 myAgent.setMainBehavior(mainBehavior);</code></pre>
 </div>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Note that you can have nested containers, like is shown in the following example:</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="java">SimpleMainBehaviour mainBehavior = <span class="keyword">new</span> SimpleMainBehavior(myAgent);
@@ -736,6 +764,34 @@ myAgent.setMainBehavior(mainBehavior);</code></pre>
 <div class="content">
 <pre>  addSteerBehavior (AbstractSteeringBehavior behavior, int priority, float minLengthToInvalidSteer)</pre>
 </div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>To optimize the process speed add the behaviors with the lowest priority first.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The layer and the min length to consider the behavior invalid are 0 by default.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -795,6 +851,34 @@ myAgent.setMainBehavior(mainBehavior);</code></pre>
     }</code></pre>
 </div>
 </div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The braking force must be a float contained in the [0,1] interval</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>0 means the maximum braking force and 1 No braking force</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="sect2">
 <h3 id="strict-arguments">Strict arguments</h3>
 <div class="paragraph">
@@ -839,7 +923,7 @@ myAgent.setMainBehavior(mainBehavior);</code></pre>
 <div id="footer">
 <div id="footer-text">
 Version <br>
-Last updated 2016-06-05 15:58:32 UTC
+Last updated 2016-06-06 21:14:31 UTC
 </div>
 </div>
 </body>

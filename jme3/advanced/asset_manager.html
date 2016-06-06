@@ -608,8 +608,19 @@ jMonkeyProjects/MyGame/test/      # You store test classes here (optional)
 <div class="paragraph">
 <p>By default, jME3 searches for models in a directory named <code>assets</code>.</p>
 </div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p><code>assets``assets</code></p>
+<p>In Java projects created with the jMonkeyEngine SDK, an <code>assets</code> folder is created by default in your project directory. If you are using any other IDE, or the command line, you simply create an <code>assets</code> directory manually (see the Codeless Project tip below).</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>This is our recommended directory structure for storing assets:</p>
@@ -631,15 +642,37 @@ jMonkeyProjects/MyGame/assets/Textures/    # .jpg, .png; also .mesh.xml+.materia
 <div class="paragraph">
 <p>These subdirectories are just the most common examples.</p>
 </div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p><code>assets</code></p>
+<p>You can rename/delete/add (sub)directories inside the <code>assets</code> directory in any way you like. Note however that there is no automatic refactoring for asset paths in the SDK, so if you modify them late in the development process, you have to refactor all paths manually.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p><strong>Examples:</strong> You can rename <code>assets/Sounds</code> to <code>assets/Audio</code>, you can delete <code>assets/MatDefs</code> if you don&#8217;t use it, you can create <code>assets/AIscripts</code>, etc. You can rename/move the <code>assets/Textures</code> directory or its subdirectories, but then you have to re-export all models, and re-convert them all to .j3o, so plan ahead!</p>
 </div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p><code>assets/Textures/<code>assets/Textures/</code>assets/Textures</code>+
-<code>assets/Models/<code>assets/Scenes/</code>assets/Models``assets/Scenes</code></p>
+<p>Store textures in <code>assets/Textures/</code> before you work with them in a mesh editor! Export and save 3D model files (.mesh.xml+.material, .mtl+.obj, .blend) into the <code>assets/Textures/</code> (!) before you convert the model to binary format (.j3o)! This ensures that texture paths correctly point to the <code>assets/Textures</code> directory.<br>
+After the conversion, you move the .j3o file into the <code>assets/Models/</code> or <code>assets/Scenes/</code> directories. This way, you can reuse textures, your binaries consistently link the correct textures, and the <code>assets/Models</code> and <code>assets/Scenes</code> directories don&#8217;t become cluttered.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -704,8 +737,19 @@ rootNode.attachChild(scene);</code></pre>
 <div class="paragraph">
 <p>jME3 also offers a ClasspathLocator, ZipLocator, FileLocator, HttpZipLocator, and UrlLocator (see <code>com.jme3.asset.plugins</code>).</p>
 </div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p>“</p>
+<p>The custom build script does not automatically include all ZIP files in the executable build. See “Cannot Locate Resource solution below.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -836,8 +880,19 @@ java.lang.NullPointerException</code></pre>
 <div class="paragraph">
 <p>This ensures that the model&#8217;s Texture paths keep working between your 3D mesh editor and JME3.</p>
 </div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p><a href="../../sdk/default_build_script.html">default build script</a></p>
+<p>If you must load custom assets from a non-.j3o ZIP file, you must manually ammend the <a href="../../sdk/default_build_script.html">default build script</a> to copy ZIP files into your distribution. ZIPs are skipped by default.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -880,8 +935,33 @@ Convert assets as described above.</p>
 </li>
 </ol>
 </div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p><a href="../../jme3/advanced/save_and_load.html">BinaryExporter</a></p>
+<p>If you don&#8217;t use the SDK for some reason, you can still convert models to j3o format: Load any model in Ogre3D or Wavefront format with the AssetManager.loadModel() as a spatial. Then save the spatial as j3o file using <a href="../../jme3/advanced/save_and_load.html">BinaryExporter</a>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Use file version control and let team members check out the project. Your developers open the project in Eclipse (etc) as they are used to. Additionally to their graphic tools, ask your graphic designers to install the jMonkeyEngine SDK, and to check out the codeless project that you just prepared. This makes it easy for non-coding team member to browse and preview game assets, to arrange scenes, and to convert files. At the same time, non-coders don&#8217;t accidentally mess with code, and developers don&#8217;t accidentally mess with assets. :)</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -889,7 +969,7 @@ Convert assets as described above.</p>
 <div id="footer">
 <div id="footer-text">
 Version <br>
-Last updated 2016-06-05 15:58:32 UTC
+Last updated 2016-06-06 21:14:31 UTC
 </div>
 </div>
 </body>

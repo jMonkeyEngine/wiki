@@ -616,6 +616,35 @@ Components only have a constructor and getter.
 It is important that you only store pure data in the components because otherwise you would no longer know where you can find the logic and the approach of a clear software design would get lost.
 Besides an entity can only have one component of the same class.</p>
 </div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Beginners tend to add large objects like spatials and geometries to a component.
+This is a big mistake because such objects contain logic and in our approach components are data only. Abstract it to a general level or store it completely in the systems.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Never subclass Component classes.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 </div>
 <div class="sect2">
 <h3 id="initialize-the-entity-system">Initialize the Entity System</h3>
@@ -651,6 +680,21 @@ entityData.setComponent(entityId, <span class="keyword">new</span> TestComponent
 <p>Every entity has a unique id which is a long.
 Ids are not reused because, if they were, they would not be unique anymore, which would cause a huge penalty.</p>
 </div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Often people are scared that they will run out of ids:
+If you create a new entity every nano second, you would need roughly 585 years before it wraps.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 </div>
 <div class="sect2">
 <h3 id="the-entity-class">The Entity Class</h3>
@@ -667,6 +711,20 @@ TestComponent testComponent = entity.get(TestComponent.class);
 <p>If you want to work with entities, the EntityData is able to create Entity objects. This objects contains
 all the Components of the classes you are interested in. In this example it is only the TestComponent.class.
 You can have multiple Entity objects for the same entity.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The data of this Entity objects will not be updated if other classes change the components for this entity</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -697,8 +755,19 @@ entityData.removeEntity(entity.getId());</code></pre>
 <p>The most important feature of Zay-ES are the Entity Sets.
 It is strongly recommended that you read the <a href="../../../jme3/contributions/entitysystem/entityset.html">Entity Set tutorial</a> after reading this article.</p>
 </div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p><a href="../../../jme3/contributions/entitysystem/entityset.html">tutorial</a></p>
+<p>Read the <a href="../../../jme3/contributions/entitysystem/entityset.html">tutorial</a> about entity sets</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -706,7 +775,7 @@ It is strongly recommended that you read the <a href="../../../jme3/contribution
 <div id="footer">
 <div id="footer-text">
 Version <br>
-Last updated 2016-06-05 15:58:32 UTC
+Last updated 2016-06-06 21:14:31 UTC
 </div>
 </div>
 </body>

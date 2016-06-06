@@ -747,6 +747,20 @@ Example: For car models, create <code>Textures/vehicles/car1/</code>, <code>Mate
 <div class="paragraph">
 <p>Storing the textures inside your project directory is necessary for the paths in JME&#8217;s binary model files (.j3o) to work. Treat the paths of your assets like class names of java classes, they define a specific asset. When you later generate .j3o files, and compile class files, and distribute the application, all paths and files need to be available in their final, absolute form.</p>
 </div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>It is imperative to keep the same directory structure from beginning to end. If you ever change the assets directory structure, you have to do manual refactoring (just as for Java package name changes): Re-export all affected models, regenerate all affected .j3o files, and manually update all affected path Strings in your code.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -754,6 +768,20 @@ Example: For car models, create <code>Textures/vehicles/car1/</code>, <code>Mate
 <div class="sectionbody">
 <div class="paragraph">
 <p>Install a mesh editor such as <a href="../../jme3/external/blender.html">Blender</a> or 3D Studio MAX. Reuse textures and materials as much as possible. <strong>Consult the mesh editor&#8217;s documentation for specific details how to do the following tasks.</strong></p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Note that UV coords are part of the mesh and not part of the material, so if you import your mesh successfully, you can later apply the texture again and it will map correctly.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -793,9 +821,20 @@ Don&#8217;t use multiple separate texture files with one model, it will break th
 <div class="paragraph">
 <p>See also: <a href="http://www.gamasutra.com/view/feature/2530/practical_texture_atlases.php">Texture Atlases on gamasutra</a></p>
 </div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p><strong>When I load the model in JME3, why does it look different than in the 3D editor?</strong>+
-<a href="../../jme3/advanced/materials_overview.html">focus on features that game engines support</a></p>
+<p><strong>When I load the model in JME3, why does it look different than in the 3D editor?</strong><br>
+3D models will never look identical in a game engine and in a mesh editor. Mesh editors are optimized for high-quality offline rendering, and many of the material and texture options simply do not work in a live rendering context such as games. Also, the shaders that render the materials in JME3 are different implementations than in your mesh editor&#8217;s renderer. Remind your graphic designers to <a href="../../jme3/advanced/materials_overview.html">focus on features that game engines support</a>.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -850,8 +889,19 @@ Use Java commands, or use the <a href="../../sdk/scene_composer.html">jMonkeyEng
 </li>
 </ul>
 </div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p><code>dist</code><strong>Runtime Error</strong>–</p>
+<p>Important: Unoptimized external model files (.mesh.xml, .material, .obj, .mat, .blend, etc) are not bundled by the default build script into the final game builds in the <code>dist</code> directory! If you or your customers try to run games containing code that loads non-.j3o models, you get a AssetNotFoundException <strong>Runtime Error</strong> (resource not found). Your final application code should only reference .j3o files. – Note that your developers will not get this runtime error when running development builds straight from the SDK.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -875,7 +925,7 @@ Use Java commands, or use the <a href="../../sdk/scene_composer.html">jMonkeyEng
 <div id="footer">
 <div id="footer-text">
 Version <br>
-Last updated 2016-06-05 15:58:32 UTC
+Last updated 2016-06-06 21:14:31 UTC
 </div>
 </div>
 </body>
