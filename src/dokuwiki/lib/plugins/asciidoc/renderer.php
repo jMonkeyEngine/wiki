@@ -356,8 +356,8 @@ class renderer_plugin_asciidoc extends Doku_Renderer {
     function code($text, $lang = null, $file = null) {
       $this->doc .= DOKU_LF.'[source';
       if ($lang != null) $this->doc .= ',' . $lang;
-      $this->doc .= ']'.DOKU_LF;
-      if ($file != null) $this->doc .= '.' . $file;
+      $this->doc .= ']';
+      if ($file != null) $this->doc .= DOKU_LF.'.' . $file;
       $this->doc .= DOKU_LF.'----'.DOKU_LF;
       $this->doc .= $text;
       $this->doc .= DOKU_LF.'----'.DOKU_LF;
