@@ -12,12 +12,15 @@ if [ "$TRAVIS_BRANCH" != "master" ] ; then
   exit 0
 fi
 
+if [ "$GH_TOKEN" == "" ] ; then
+  echo "GH_TOKEN is not defined"
+  exit 1
+fi
 
 rev=$(git rev-parse --short HEAD)
 repo=$(git config --local --get-all remote.origin.url | awk -F'[:/]' 'NF && NF-1 {print ($(NF-1)"/"$NF)}')
 
 echo -e "Starting to update gh-pages of ${repo} at ${rev}\n"
-
 # on Travis, can't optimize by cloning itself and define remote as upstream
 # travis> "attempt to fetch/clone from a shallow repository"
 # So need to do a full clone
