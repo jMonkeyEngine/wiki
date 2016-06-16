@@ -9,9 +9,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 A MotionPath describes the motion of a spatial between waypoints. The path can be linear or rounded. You use MotionPaths to remote-control a spatial, or the camera.
 
-
 *Tip:* If you want to remote-control a whole cutscene with several spatials moving at various times, then we recommened you use MotionPaths together with <<jme3/advanced/cinematics#,Cinematics>>.
-
 
 
 == Sample Code
@@ -24,9 +22,7 @@ A MotionPath describes the motion of a spatial between waypoints. The path can b
 
 When shooting a movie scene, the director tells actors where to walk, for example, by drawing a series of small crosses on the floor. Cameramen often mount the camera on rails (so called dolly track) so they can follow along complex scenes more easily. 
 
-
 In JME3, you use MotionPaths to specify a series of positions for a character or the camera. The MotionPath automatically updates the transformation of the spatial in each frame to make it move from one point to the next.
-
 
 *  *A way point* is one positions on a path. 
 *  *A MotionPath* contains a list of all way points of one path. 
@@ -34,11 +30,9 @@ In JME3, you use MotionPaths to specify a series of positions for a character or
 The final shape of the path is computed using a linear interpolation or a link:http://www.mvps.org/directx/articles/catmull/[Catmull-Rom] spline interpolation on the way points. 
 
 
-
 == Create a MotionPath
 
 Create a Motionpath object and add way points to it.
-
 
 [source,java]
 ----
@@ -50,7 +44,6 @@ path.addWayPoint(new Vector3f(8, -2, 1));
 ----
 
 You can configure the path as follows.
-
 [cols="2", options="header"]
 |===
 
@@ -63,8 +56,7 @@ a|Sets whether the motion along this path should be closed (true) or open-ended 
 a|path.addWayPoint(vector)
 a|Adds individual waypoints to this path. The order is relevant.
 
-a|path.removeWayPoint(vector) +
-removeWayPoint(index)
+a|path.removeWayPoint(vector) +removeWayPoint(index)
 a|Removes a way point from this path. You can specify the point that you want to remove as vector or as integer index.
 
 a|path.setCurveTension(0.83f)
@@ -86,9 +78,7 @@ a|Hides the line that visualizes the path. Use this for the release build.
 
 You can hook interactions into a playing MotionPath. Register a MotionPathListener to the MotionPath to track whether way points have been reached, and then trigger a custom action. The onWayPointReach() method of the interface gives you access to the MotionTrack object `control`, and an integer value representing the current wayPointIndex.
 
-
 In this example, you just print the status at every way point. In a game you could trigger actions here: Transformations, animations, sounds, game actions (attack, open door, etc).
-
 
 [source,java]
 ----

@@ -9,12 +9,9 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 It's a fact of life, math is hard. Unfortunately, 3D graphics require a fair bit of knowledge about the subject. Fortunately, jME is able to hide the majority of the details away from the user. Vectors are the fundamental type in the 3D environment, and it is used extensively. Matrices are also a basic necessity of 3D for representing linear systems. <<jme3/quaternion#,Quaternion>>s are perhaps the most powerful and complicated of the basic types and are used for rotation in jME. 
 
-
 I'll discuss how these are used in the system for the core functionality. Including Transforming, Visibility Determination, Collision Detection, and the Coordinate System. Note, that these are low level details. Further chapters will discuss how to use these various systems from a high level perspective.
 
-
 To get a visual introduction to math in jME3 for the absolute beginner, check out our <<jme3/math_for_dummies#,Math for Dummies>> introduction class.
-
 
 
 == Coordinate System
@@ -24,16 +21,12 @@ To get a visual introduction to math in jME3 for the absolute beginner, check ou
 
 A _coordinate system_ consists of an origin (single point in space) and three coordinate axes that are each unit length and mutually perpendicular. The axes can be written as the column of a Matrix, R = [U1|U2|U3]. In fact, this is exactly how CameraNode works. The coordinate system defined by Camera is stored in a Matrix.
 
-
 jME uses a Right-Handed coordinate system (as OpenGL does).
-
 
 The definition of a coordinate system is defined in jME by the properties sent to Camera. There are no error checks to insure that: 1) the coordinate system is right-handed and 2) The axes are mutually perpendicular. Therefore, if the user sets the axes incorrectly, they are going to experience very odd rendering artifacts (random culling, etc).
 
 
-
 image::jme3/intermediate/coordinate-system.png[coordinate-system.png,with="235",height="210",align="center"]
-
 
 
 
@@ -41,16 +34,12 @@ image::jme3/intermediate/coordinate-system.png[coordinate-system.png,with="235",
 
 Homogenous coordinates have an additional _W_ value tacked on to the end. The XYZ values are to be divided by W to give the true coordinates.
 
-
 This has several advantages, one technical, some relevant to application programmers:
-
 
 Technically, it simplifies some formulae used inside the vector math. For example, some operations need to apply the same factor to the XYZ coordinates. Chain multiple operations of that kind (and vector math tends to do that), and you can save a lot of multiplications by simply keeping the scaling factor around and doing the multiplication to XYZ at the end of the pipeline, in the 3D card (which does accept homogenous coordinates).
 It also simplifies some formulae, in particular anything that is related to rotations.
 
-
 For application programmers, this means you can express infinitely long vectors that still have a direction - these tend to be used in lighting. Just use a W value of 0.0.
-
 
 
 == Transformations
@@ -58,14 +47,12 @@ For application programmers, this means you can express infinitely long vectors 
 Transformations define an operation that converts points from one coordinate system to another. This includes translation, rotation and scaling. In jME, local transforms are used to represent the positioning of objects relative to a parent coordinate system. While, world transforms are used to represent the positioning of objects in a global coordinate system.
 
 
-
 == Visibility Determination
 
 Visibility Determination concerns itself with minimizing the amount of data that is sent to the graphics card for rendering. Specifically, we do not want to send data that will not be seen. Data not sent to the graphics card is said to be culled. The primary focus of this section is Frustum Culling based on the Camera's view frustum. In essence, this frustum creates six standard view planes. The BoundingVolume of an object is tested against the frustum planes to determine if it is contained in the frustum. If at any point the object's bounding is outside of the plane, it is tossed out and no longer processed for rendering. This also includes any children that it managed, allowing fast culling of large sections of the scene.
 
 
-
-= Fundamental Types
+==== Fundamental Types
 
 
 == ColorRGBA
@@ -75,15 +62,12 @@ Visibility Determination concerns itself with minimizing the amount of data that
 
 ColorRGBA defines a color value in the jME library. The color value is made of three components, red, green and blue. A fourth component defines the alpha value (transparent) of the color. Every value is set between [0, 1]. Anything less than 0 will be clamped to 0 and anything greater than 1 will be clamped to 1.
 
-
 *Note:* If you would like to “convert an ordinary RGB value (0-255) to the format used here (0-1), simply multiply it with: 1/255.
-
 
 
 === jME Class
 
 ColorRGBA defines a few static color values for ease of use. That is, rather than:
-
 
 [source,java]
 ----
@@ -95,7 +79,6 @@ object.setSomeColor(red);
 
 you can simply say:
 
-
 [source,java]
 ----
 
@@ -106,25 +89,19 @@ object.setSomeColor(ColorRGBA.red)
 ColorRGBA will also handle interpolation between two colors. Given a second color and a value between 0 and 1, a the owning ColorRGBA object will have its color values altered to this new interpolated color.
 
 
-
 == Matrix
 
 See link:http://www.jmonkeyengine.com/doc/com/jme/math/Matrix3f.html[Matrix3f Javadoc]+
-
 and link:http://www.jmonkeyengine.com/doc/com/jme/math/Matrix4f.html[Matrix4f Javadoc]
-
 
 
 === Definition
 
 A Matrix is typically used as a _linear transformation_ to map vectors to vectors. That is: Y = MX where X is a Vector and M is a Matrix applying any or all transformations (scale, <<jme3/rotate#,rotate>>, translate). 
 
-
 There are a few special matrices: 
 
-
 _zero matrix_ is the Matrix with all zero entries.
-
 [cols="3", options="header"]
 |===
 
@@ -143,7 +120,6 @@ a|0
 |===
 
 The _Identity Matrix_ is the matrix with 1 on the diagonal entries and 0 for all other entries.
-
 [cols="3", options="header"]
 |===
 
@@ -163,9 +139,7 @@ a|1
 
 A Matrix is _invertible_ if there is a matrix _M^-1^_ where _MM^-1^ = M^-1^M = I_. 
 
-
 The _transpose_ of a matrix _M = [m~ij~]_ is _M^T^ = [m~ji~]_. This causes the rows of _M_ to become the columns of _M^T^_.
-
 [cols="7", options="header"]
 |===
 
@@ -196,7 +170,6 @@ a|3
 |===
 
 A Matrix is symmetric if _M_ = _M^T^_.
-
 [cols="3", options="header"]
 |===
 
@@ -216,9 +189,7 @@ a|X
 
 Where X, A, B, and C equal numbers 
 
-
 jME includes two types of Matrix classes: Matrix3f and Matrix4f. Matrix3f is a 3x3 matrix and is the most commonly used (able to handle scaling and rotating), while Matrix4f is a 4x4 matrix that can also handle translation.
-
 
 
 === Transformations
@@ -226,17 +197,14 @@ jME includes two types of Matrix classes: Matrix3f and Matrix4f. Matrix3f is a 3
 Multiplying a vector with a Matrix allows the vector to be transformed. Either rotating, scaling or translating that vector.
 
 
-
-==== Scaling
+===== Scaling
 
 If a _diagonal Matrix_, defined by D = [d~ij~] and d~ij~ = 0 for i != j, has all positive entries it is a _scaling matrix_. If d~i~ is greater than 1 then the resulting vector will grow, while if d~i~ is less than 1 it will shrink.
 
 
-
-==== Rotation
+===== Rotation
 
 A _rotation matrix_ requires that the transpose and inverse are the same matrix (R^-1^ = R^T^). The _rotation matrix_ R can then be calculated as: R = I + (sin(angle)) S + (1 - cos(angle)S^2^ where S is:
-
 [cols="3", options="header"]
 |===
 
@@ -255,10 +223,9 @@ a|0
 |===
 
 
-==== Translation
+===== Translation
 
 Translation requires a 4x4 matrix, where the vector (x,y,z) is mapped to (x,y,z,1) for multiplication. The _Translation Matrix_ is then defined as:
-
 [cols="2", options="header"]
 |===
 
@@ -273,92 +240,72 @@ a|1
 where M is the 3x3 matrix (containing any rotation/scale information), T is the translation vector and S^T^ is the transpose Vector of T. 1 is just a constant.
 
 
-
 === jME Class
 
 Both Matrix3f and Matrix4f store their values as floats and are publicly available as (m00, m01, m02, …, mNN) where N is either 2 or 3. 
 
-
 Most methods are straight forward, and I will leave documentation to the Javadoc. 
-
 
 
 == Vector
 
 See link:http://www.jmonkeyengine.com/doc/com/jme/math/Vector3f.html[Vector3f Javadoc]+
-
 and link:http://www.jmonkeyengine.com/doc/com/jme/math/Vector2f.html[Vector2f Javadoc]
-
 
 
 === Definition
 
 Vectors are used to represent a multitude of things in jME, points in space, vertices in a triangle mesh, normals, etc. These classes (Vector3f in particular) are probably the most used class in jME.
 
-
 A Vector is defined by an n-tuple of real numbers. *V* = &lt;V~1~, V~2~,…, V~n~&gt;.
 
-
 We have two Vectors (2f and 3f) meaning we have tuples of 2 float values or 3 float values.
-
 
 
 === Operations
 
 
-==== Multiplication by Scalar
+===== Multiplication by Scalar
 
 A Vector can be multiplied by a scalar value to produce a second Vector with the same proportions as the first. a*V* = *V*a = &lt;aV~1~, aV~2~,…,aV~n~&gt;
 
 
-
-==== Addition and Subtraction
+===== Addition and Subtraction
 
 Adding or subtracting two Vectors occurs component-wise. That is the first component is added (subtracted) with the first component of the second Vector and so on.
-
 
 *P* + *Q* = &lt;P~1~+Q~1~, P~2~+Q~2~, …, P~n~+Q~n~&gt;
 
 
-
-==== Magnitude
+===== Magnitude
 
 The _magnitude_ defines the length of a Vector. A Vector of magnitude 1 is _unit length_.
 
-
 For example, if *V* = (x, y, z), the magnitude is the square root of (x^2^ + y^2^ + z^2^).
-
 
 A Vector can be _normalized_ or made _unit length_ by multiplying the Vector by (1/magnitude).
 
 
-
-==== Dot Products
+===== Dot Products
 
 The dot product of two vectors is defined as: 
 *P* dot *Q* = P~x~Q~x~ + P~y~Q~y~ + P~z~Q~z~
 
-
 Using the dot product allows us to determine how closely two Vectors are pointing to the same point. If the dot product is negative they are facing in relatively opposite directions, while postive tells us they are pointing in the relative same direction.
-
 
 If the dot product is 0 then the two Vectors are _orthogonal_ or 90 degrees off.
 
 
-
-==== Cross Product
+===== Cross Product
 
 The Cross Product of two Vectors returns a third Vector that is prependicular to the two Vectors. This is very useful for calculating surface normals.
-
 
 *P* X *Q* = &lt;P~y~Q~z~ - P~z~Q~y~, P~z~Q~x~ - P~x~Q~z~, P~x~Q~y~ - P~y~Q~x~&gt;
 
 
-
-==== jME Class
+===== jME Class
 
 Vector3f and Vector2f store their values (x, y, z) and (x, y) respectively as floats. Most methods are straight forward, and I will leave documentation to the Javadoc.
-
 
 
 == Quaternion
@@ -366,53 +313,36 @@ Vector3f and Vector2f store their values (x, y, z) and (x, y) respectively as fl
 See link:http://www.jmonkeyengine.com/doc/com/jme/math/Quaternion.html[Quaternion Javadoc]
 
 
-
 === Definition
 
 Quaternions define a subset of a hypercomplex number system. Quaternions are defined by (i^2^ = j^2^ = k^2^ = ijk = -1). jME makes use of Quaternions because they allow for compact representations of rotations, or correspondingly, orientations, in 3D space. With only four float values, we can represent an object's orientation, where a rotation matrix would require nine. They also require fewer arithmetic operations for concatenation. 
 
-
 Additional benefits of the Quaternion is reducing the chance of link:http://en.wikipedia.org/wiki/Gimbal_lock[Gimbal Lock] and allowing for easily interpolation between two rotations (spherical linear interpolation or slerp).
-
 
 While Quaternions are quite difficult to fully understand, there are an exceeding number of convenience methods to allow you to use them without having to understand the math behind it. Basically, these methods involve nothing more than setting the Quaternion's x,y,z,w values using other means of representing rotations. The Quaternion is then contained in the <<jme3/advanced/spatial#,Spatial>> as its local rotation component.
 
-
 Quaternion *q* has the form
-
 
 *q* = &lt;_w,x,y,z_&gt; = _w + xi + yj + zk_
 
-
 or alternatively, it can be written as:
-
 
 *q* = *s* + *v*, where *s* represents the scalar part corresponding to the w-component of *q*, and *v* represents the vector part of the (x, y, z) components of *q*.
 
-
 Multiplication of Quaternions uses the distributive law and adheres to the following rules with multiplying the imaginary components (i, j, k):
 
-
 `i^2^ = j^2^ = k^2^ = -1`+
-
 `ij = -ji = k`+
-
 `jk = -kj = i`+
-
 `ki = -ik = j`
-
 
 However, Quaternion multiplication is _not_ commutative, so we have to pay attention to order.
 
-
 *q~1~q~2~* = s~1~s~2~ - *v~1~* dot *v~2~* + s~1~*v~2~* + s~2~*v~1~* + *v~1~* X *v~2~*
-
 
 Quaternions also have conjugates where the conjugate of *q* is (s - *v*)
 
-
 These basic operations allow us to convert various rotation representations to Quaternions.
-
 
 
 === Angle Axis
@@ -420,8 +350,7 @@ These basic operations allow us to convert various rotation representations to Q
 You might wish to represent your rotations as Angle Axis pairs. That is, you define a axis of rotation and the angle with which to <<jme3/rotate#,rotate>> about this axis. <<jme3/quaternion#,Quaternion>> defines a method `fromAngleAxis` (and `fromAngleNormalAxis`) to create a Quaternion from this pair. This is acutally used quite a bit in jME demos to continually rotate objects. You can also obtain a Angle Axis rotation from an existing Quaternion using `toAngleAxis`.
 
 
-
-==== Example - Rotate a Spatial Using fromAngleAxis
+===== Example - Rotate a Spatial Using fromAngleAxis
 
 [source,java]
 ----
@@ -440,8 +369,7 @@ s.getLocalRotation().fromAngleAxis(angle, axis);
 You can also represent a rotation by defining three angles. The angles represent the rotation about the individual axes. Passing in a three-element array of floats defines the angles where the first element is X, second Y and third is Z. The method provided by Quaternion is `fromAngles` and can also fill an array using `toAngles`
 
 
-
-==== Example - Rotate a Spatial Using fromAngles
+===== Example - Rotate a Spatial Using fromAngles
 
 [source,java]
 ----
@@ -458,8 +386,7 @@ s.getLocalRotation().fromAngles(angles);
 If you have three axes that define your rotation, where the axes define the left axis, up axis and directional axis respectively) you can make use of `fromAxes` to generate the Quaternion. It should be noted that this will generate a new <<jme3/matrix#,Matrix>> object that is then garbage collected, thus, this method should not be used if it will be called many times. Again, `toAxes` will populate a Vector3f array.
 
 
-
-==== Example - Rotate a Spatial Using fromAxes
+===== Example - Rotate a Spatial Using fromAxes
 
 [source,java]
 ----
@@ -480,8 +407,7 @@ s.getLocalRotation().fromAxes(axes);
 Commonly you might find yourself with a <<jme3/matrix#,Matrix>> defining a rotation. In fact, it's very common to contain a rotation in a <<jme3/matrix#,Matrix>> create a Quaternion, rotate the Quaternion, and then get the <<jme3/matrix#,Matrix>> back. Quaternion contains a `fromRotationMatrix` method that will create the appropriate Quaternion based on the give <<jme3/matrix#,Matrix>>. The `toRotationMatrix` will populate a given <<jme3/matrix#,Matrix>>.
 
 
-
-==== Example - Rotate a Spatial Using a Rotation Matrix
+===== Example - Rotate a Spatial Using a Rotation Matrix
 
 [source,java]
 ----
@@ -499,14 +425,12 @@ s.getLocalRotation().fromRotationMatrix(mat);
 As you can see there are many ways to build a Quaternion. This allows you to work with rotations in a way that is conceptually easier to picture, but still build Quaternions for internal representation.
 
 
-
 === Slerp
 
 One of the biggest advantages to using Quaternions is allowing interpolation between two rotations. That is, if you have an initial Quaternion representing the original orientation of an object, and you have a final Quaternion representing the orientation you want the object to face, you can do this very smoothly with slerp. Simply supply the time, where time is [0, 1] and 0 is the initial rotation and 1 is the final rotation.
 
 
-
-==== Example - Use Slerp to Rotate Between two Quaternions
+===== Example - Use Slerp to Rotate Between two Quaternions
 
 [source,java]
 ----
@@ -534,14 +458,12 @@ geom2.setLocalRotation(halfBetweenXroll45Yroll45);
 
 You can concatenate (add) rotations: This means you turn the object first around one axis, then around the other, in one step.
 
-
 [source,java]
 ----
 Quaternion myRotation = pitch90.mult(roll45); /* pitch and roll */
 ----
 
 To rotate a Vector3f around its origin by the Quaternion amount, use the multLocal method of the Quaternion:
-
 
 [source,java]
 ----
@@ -552,10 +474,9 @@ myRotation.multLocal(myVector);
 ----
 
 
-= Utility Classes
+==== Utility Classes
 
 Along with the base Math classes, jME provides a number of Math classes to make development easier (and, hopefully, faster). Most of these classes find uses throughout the jME system internally. They can also prove beneficial to users as well.
-
 
 
 == Fast Math
@@ -563,30 +484,26 @@ Along with the base Math classes, jME provides a number of Math classes to make 
 See link:http://www.jmonkeyengine.com/doc/com/jme/math/FastMath.html[FastMath Javadoc]
 
 
-
 === Definition
 
 FastMath provides a number of convience methods, and where possible faster versions (although this can be at the sake of accuracy). 
-
 
 
 === Usage
 
 FastMath provides a number of constants that can help with general math equations. One important attribute is `USE_FAST_TRIG` if you set this to true, a look-up table will be used for trig functions rather than Java's standard Math library. This provides significant speed increases, but might suffer from accuracy so care should be taken.
 
-
 There are five major categories of functions that FastMath provides.
 
 
-
-==== Trig Functions
+===== Trig Functions
 
 * cos and acos - provide link:http://en.wikipedia.org/wiki/cosine[cosine] and link:http://en.wikipedia.org/wiki/arc cosine[arc cosine] values (make use of the look-up table if `USE_FAST_TRIG` is true)
 * sin and asin - provide link:http://en.wikipedia.org/wiki/sine[sine] and link:http://en.wikipedia.org/wiki/arc sine[arc sine] values (make use of the look-up table if `USE_FAST_TRIG` is true)
 * tan and atan - provide link:http://en.wikipedia.org/wiki/tangent[tangent] and link:http://en.wikipedia.org/wiki/arc tangent[arc tangent] values
 
 
-==== Numerical Methods
+===== Numerical Methods
 
 * ceil - provides the ceiling (smallest value that is greater than or equal to a given value and an integer)of a value.
 * floor - provides the floor (largest value that is less than or equal to a given value and an integer) of a value.
@@ -601,13 +518,13 @@ There are five major categories of functions that FastMath provides.
 * invSqrt - provides the inverse link:http://en.wikipedia.org/wiki/square root[square root] of a value (1 / sqrt(value).
 
 
-==== Linear Algebra
+===== Linear Algebra
 
 * LERP - calculate the link:http://en.wikipedia.org/wiki/Linear interpolation[linear interpolation] of two points given a time between 0 and 1.
 * determinant - calculates the link:http://en.wikipedia.org/wiki/determinant[determinant] of a 4x4 matrix.
 
 
-==== Geometric Functions
+===== Geometric Functions
 
 * counterClockwise - given three points (defining a triangle), the winding is determined. 1 if counter-clockwise, -1 if clockwise and 0 if the points define a line.
 * pointInsideTriangle - calculates if a point is inside a triangle.
@@ -615,7 +532,7 @@ There are five major categories of functions that FastMath provides.
 * cartesianToSpherical - converts a point from link:http://en.wikipedia.org/wiki/cartesian coordinates[cartesian coordinates] to link:http://en.wikipedia.org/wiki/spherical coordinates[spherical coordinates].
 
 
-==== Misc.
+===== Misc.
 
 * newRandomFloat - obtains a random float.
 
@@ -625,20 +542,16 @@ There are five major categories of functions that FastMath provides.
 See link:http://www.jmonkeyengine.com/doc/com/jme/math/Line.html[Line Javadoc]
 
 
-
 === Definition
 
 A line is a straight one-dimensional figure having no thickness and extending infinitely in both directions. A line is defined by two points *A* and *B* with the line passing through both.
-
 
 
 === Usage
 
 jME defines a Line class that is defined by an origin and direction. In reality, this Line class is typically used as a _line segment_. Where the line is finite and contained between these two points.
 
-
 `random` provides a means of generate a random point that falls on the line between the origin and direction points.
-
 
 
 === Example 1 - Find a Random Point on a Line
@@ -657,48 +570,36 @@ Vector3f randomPoint = l.random();
 See link:http://www.jmonkeyengine.com/doc/com/jme/math/Plane.html[Plane Javadoc]
 
 
-
 === Definition
 
 A plane is defined by the equation *N* . (*X* - *X~0~*) = 0 where *N* = (a, b, c) and passes through the point *X~0~* = (x~0~, y~0~, z~0~). *X* defines another point on this plane (x, y, z).
 
-
 *N* . (*X* - *X~0~*) = 0 can be described as (*N* . *X*) + (*N* . -*X~0~*) = 0 
-
 
 or 
 
-
 (ax + by + cz) + (-ax~0~-by~0~-cz~0~) = 0
-
 
 where (-ax~0~-by~0~-cz~0~) = d 
 
-
 Where d is the negative value of a point in the plane times the unit vector describing the orientation of the plane.
 
-
 This gives us the general equation: (ax + by + cz + d = 0)
-
 
 
 === Usage in jME
 
 jME defines the Plane as ax + by + cz = -d. Therefore, during creation of the plane, the normal of the plane (a,b,c) and the constant d is supplied.
 
-
 The most common usage of Plane is <<jme3/introduction_to_the_camera#,Camera>> frustum planes. Therefore, the primary purpose of Plane is to determine if a point is on the positive side, negative side, or intersecting a plane.
 
-
 Plane defines the constants:
-
 
 * `NEGATIVE_SIDE` - represents a point on the opposite side to which the normal points.
 * `NO_SIDE` - represents a point that lays on the plane itself.
 * `POSITIVE_SIDE` - represents a point on the side to which the normal points.
 
 These values are returned on a call to `whichSide`.
-
 
 
 === Example 1 - Determining if a Point is On the Positive Side of a Plane
@@ -722,7 +623,6 @@ if(side == Plane.NO_SIDE) {
 === Example 2 - For the Layperson
 
 Using the standard constructor Plane(Vector3f normal, float constant), here is what you need to do to create a plane, and then use it to check which side of the plane a point is on.
-
 
 [source,java]
 ----
@@ -798,14 +698,11 @@ public class TestPlanes
 See link:http://www.jmonkeyengine.com/doc/com/jme/math/Ray.html[Ray Javadoc]
 
 
-
 === Definition
 
 Ray defines a line that starts at a point *A* and continues in a direction through *B* into infinity. 
 
-
 This Ray is used extensively in jME for <<jme3/picking#,Picking>>. A Ray is cast from a point in screen space into the scene. Intersections are found and returned. To create a ray supply the object with two points, where the first point is the origin.
-
 
 
 === Example 1 - Create a Ray That Represents Where the Camera is Looking
@@ -823,17 +720,14 @@ Ray ray = new Ray(cam.getLocation(), cam.getDirection());
 See link:http://www.jmonkeyengine.com/doc/com/jme/math/Rectangle.html[Rectangle Javadoc]
 
 
-
 === Definition
 
 Rectangle defines a finite plane within three dimensional space that is specified via three points (A, B, C). These three points define a triangle with the forth point defining the rectangle ( (B + C) - A ).
 
 
-
 === jME Usage
 
 Rectangle is a straight forward data class that simply maintains values that defines a Rectangle in 3D space. One interesting use is the `random` method that will create a random point on the Rectangle. The <<jme3/particle_system#,Particle System>> makes use of this to define an area that generates <<jme3/particles#,Particles>>.
-
 
 
 === Example 1 : Define a Rectangle and Get a Point From It
@@ -855,17 +749,14 @@ Vector3f point = r.random();
 See link:http://www.jmonkeyengine.com/doc/com/jme/math/Triangle.html[Triangle Javadoc]
 
 
-
 === Definition
 
 A triangle is a 3-sided polygon. Every triangle has three sides and three angles, some of which may be the same. If the triangle is a right triangle (one angle being 90 degrees), the side opposite the 90 degree angle is the hypotenuse, while the other two sides are the legs. All triangles are link:http://en.wikipedia.org/wiki/Convex_polygon[convex] and link:http://mathworld.wolfram.com/BicentricPolygon.html[bicentric].
 
 
-
 === Usage
 
 jME's Triangle class is a simple data class. It contains three <<jme3/vector#,Vector3f>> objects that represent the three points of the triangle. These can be retrieved via the `get` method. The `get` method, obtains the point based on the index provided. Similarly, the values can be set via the `set` method.
-
 
 
 === Example 1 - Creating a Triangle
@@ -882,13 +773,12 @@ Triangle t = new Triangle(p1, p2, p3);
 ----
 
 
-= Tips and Tricks
+==== Tips and Tricks
 
 
 == How do I get height/width of a spatial?
 
 Cast the spatial to com.jme3.bounding.BoundingBox to be able to use getExtent().
-
 
 [source,java]
 ----

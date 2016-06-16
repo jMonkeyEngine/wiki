@@ -9,17 +9,13 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 +
 
-
-
 Here is an example for how you add a static horizon (a background landscape and a sky) to a scene.
 Having a discernable horizon with a suitable landscape (or space, or ocean, or whatever) in the background makes scenes look more realistic than just a single-colored “sky background.
-
 
 
 == Adding the Sky
 
 Adding a sky is extremely easy using the `com.jme3.util.SkyFactory`.
-
 
 [source,java]
 ----
@@ -31,14 +27,11 @@ rootNode.attachChild(SkyFactory.createSky(
 
 To add a sky you need to supply:
 
-
 .  The assetManager object to use
 .  A cube or sphere map texture of the sky
-.  Set the boolean to true if you are using a sphere map texture. For a cube map, use false. +
-Tip: Cube map is the default. You would know if you had created a sphere map.
+.  Set the boolean to true if you are using a sphere map texture. For a cube map, use false. +Tip: Cube map is the default. You would know if you had created a sphere map.
 
 Internally, the SkyFactory calls the following methods:
-
 
 .  `sky.setQueueBucket(Bucket.Sky);` makes certain the sky is rendered in the right order, behind everything else.
 .  `sky.setCullHint(Spatial.CullHint.Never);` makes certain that the sky is never culled.
@@ -49,19 +42,14 @@ Internally, the SkyFactory calls the following methods:
 
 As the sky texture we use the sample BrightSky.dds file from jme3test-test-data. 
 
-
 How to create a sky textures?
 
-
-*  There are many tools out there that generate cube and sphere maps. +
-Examples for landscape texture generators are Terragen or Bryce.
-*  The actual texture size does not matter, as long as you add the Sky Geometry to the Sky bucket: Everything in the sky bucket will always be infinitely far away behind everything else, and never intersect with your scene. +
-Of course the higher the resolution, the better it will look. On the other hand, if the graphic is too big, it will slow the game down. 
+*  There are many tools out there that generate cube and sphere maps. +Examples for landscape texture generators are Terragen or Bryce.
+*  The actual texture size does not matter, as long as you add the Sky Geometry to the Sky bucket: Everything in the sky bucket will always be infinitely far away behind everything else, and never intersect with your scene. +Of course the higher the resolution, the better it will look. On the other hand, if the graphic is too big, it will slow the game down. 
 *  A box or sphere map is the simplest solution. But you can use any Node as sky, even complex sets of geometries and quads with animated clouds, blinking stars, city skylines, etc.
 *  JME3 supports cube maps in PNG, JPG, or (compressed) DDS format.
 
 Box or Sphere?
-
 
 *  If you have access to cube map textures, then use a SkyBox
 **  link:http://1.bp.blogspot.com/_uVsWqMqIGQU/SN0IZEE117I/AAAAAAAAAPs/4lfHx1Erdqg/s1600/skybox[SkyBox examples]

@@ -39,6 +39,8 @@ class renderer_plugin_asciidoc extends Doku_Renderer {
         $this->listKindStack      = array();
         $this->quoteStack      = array();
         $this->relfileprefix = '';
+        $this->levelMap = array();
+        $this->levelMaxReached = 1;
 
         $this->smiley_to_emoticon = array(
           '>:(' => 'angry', '>:-(' => 'angry',
@@ -134,12 +136,17 @@ class renderer_plugin_asciidoc extends Doku_Renderer {
     }
 
     function header($text, $level, $pos) {
-      //echo "header :" . $level . " // " . $this->sectionlevel . "\n";
         if (!$text) return; //skip empty headlines
         if ($level == 1 && empty($this->doctitle)) {
-            $this->doctitle = $text;
+          $this->doctitle = $text;
         } else {
-            $this->doc .= DOKU_LF . DOKU_LF . str_repeat("=", $level) . ' ' . $text. DOKU_LF;
+          $l = $this->levelMap[$level];
+          if (!$l) {
+            $this->levelMaxReached += 1;
+            $l = $this->levelMaxReached;
+            $this->levelMap[$level] = $l;
+          }
+          $this->doc .= DOKU_LF . DOKU_LF . str_repeat("=", $l) . ' ' . $text. DOKU_LF;
         }
     }
 
@@ -173,11 +180,11 @@ class renderer_plugin_asciidoc extends Doku_Renderer {
 
     function p_close() {
         $this->_closeTags($this, __FUNCTION__);
-        $this->doc .= DOKU_LF.DOKU_LF;
+        if ($this->doc[-1] != DOKU_LF) $this->doc .= DOKU_LF;
     }
 
     function linebreak() {
-        $this->doc .= '+'.DOKU_LF;
+        $this->doc .= '+';
     }
 
     function hr() {
@@ -313,34 +320,33 @@ class renderer_plugin_asciidoc extends Doku_Renderer {
         $this->doc .= '+++';
     }
 
+    function unsupportedblock($text, $kind) {
+        fwrite(STDERR, "unsupportedblock:'". $kind ."' text: '". var_export($text, TRUE) ."'\n");
+        $this->code($text, $kind);
+    }
+
     function php($text) {
-        $this->doc .= '<php>';
-        $this->doc .= $this->_xmlEntities($text);
-        $this->doc .= '</php>';
+        $this->unsupportedblock($text, 'php');
     }
 
     function phpblock($text) {
-        $this->doc .= '<phpblock>';
-        $this->doc .= $this->_xmlEntities($text);
-        $this->doc .= '</phpblock>'.DOKU_LF;
+        $this->unsupportedblock($text, 'phpblock');
     }
 
     function html($text) {
-        $this->doc .= '<html>';
-        $this->doc .= $this->_xmlEntities($text);
-        $this->doc .= '</html>';
+        $this->unsupportedblock($text, 'html');
     }
 
     function htmlblock($text) {
-        $this->doc .= '<htmlblock>';
-        $this->doc .= $this->_xmlEntities($text);
-        $this->doc .= '</htmlblock>'.DOKU_LF;
+        $this->unsupportedblock($text, 'htmlblock');
     }
 
     function preformatted($text) {
-      $this->doc .= DOKU_LF.'....'.DOKU_LF;
+      if ($this->doc[-1] != DOKU_LF) $this->doc .= DOKU_LF;
+      $this->doc .= '....'.DOKU_LF;
       $this->doc .= $text;
-      $this->doc .= DOKU_LF.'....'.DOKU_LF;
+      if ($text[-1] != DOKU_LF) $this->doc .= DOKU_LF;
+      $this->doc .= '....'.DOKU_LF;
     }
 
     function quote_open() {
@@ -350,24 +356,24 @@ class renderer_plugin_asciidoc extends Doku_Renderer {
 
     function quote_close() {
         $this->_closeTags($this, __FUNCTION__);
-        $this->doc .= DOKU_LF.'____'.DOKU_LF;
+        if ($this->doc[-1] != DOKU_LF) $this->doc .= DOKU_LF;
+        $this->doc .= '____'.DOKU_LF;
     }
 
     function code($text, $lang = null, $file = null) {
-      $this->doc .= DOKU_LF.'[source';
+      if ($this->doc[-1] != DOKU_LF) $this->doc .= DOKU_LF;
+      $this->doc .= '[source';
       if ($lang != null) $this->doc .= ',' . $lang;
       $this->doc .= ']';
       if ($file != null) $this->doc .= DOKU_LF.'.' . $file;
       $this->doc .= DOKU_LF.'----'.DOKU_LF;
       $this->doc .= $text;
-      $this->doc .= DOKU_LF.'----'.DOKU_LF;
+      if ($text[-1] != DOKU_LF) $this->doc .= DOKU_LF;
+      $this->doc .= '----'.DOKU_LF;
     }
 
     function file($text, $lang = null, $file = null) {
       $this->code($text, $lang, $file);
-        // $this->doc .= '<file lang="' . $lang . '" file="' . $file . '">';
-        // $this->doc .= $this->_xmlEntities($text);
-        // $this->doc .= '</file>'.DOKU_LF;
     }
 
     function acronym($acronym) {
@@ -625,7 +631,7 @@ class renderer_plugin_asciidoc extends Doku_Renderer {
         } else {
             $url = $src;
         }
-        
+
         //$out = 'image:' . $url. '['. $name . ',with="'. $width .'",height="'. $height . '",align="' . $align . '", link="'. $linking .'"]';
         if (stripos($url, '.mp4') !== false || stripos($url, '.webm') !== false || stripos($url, '.ogv') !== false) {
           $out = DOKU_LF.'video::' . $url . '[]'.DOKU_LF;
@@ -676,7 +682,7 @@ class renderer_plugin_asciidoc extends Doku_Renderer {
                               $img['height'],
                               $img['cache']);
     }
-    
+
     function _openTag($class, $func, $data=null) {
         $this->tagStack[] = array($class, $func, $data);
     }

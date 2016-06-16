@@ -10,21 +10,17 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 This document introduces you to the SpiderMonkey networking +++<abbr title="Application Programming Interface">API</abbr>+++. You use this +++<abbr title="Application Programming Interface">API</abbr>+++ when you develop games where several players compete with one another in real time. A multi-player game is made up of several clients connecting to a server:
 
-
 *  The central server (one headless SimpleApplication) coordinates the game in the background.
 *  Each player runs a game client (a standard SimpleApplication) and connects to the central server.
 
 Each Client keeps the Server informed about its player's moves and actions. The Server centrally maintains the game state and broadcasts the state info back to all connected clients. This network synchronization allows all clients to share the same game world. Each client then displays the game state to one player from this player's perspective.
 
 
-
 == SpiderMonkey API Overview
 
 The SpiderMonkey +++<abbr title="Application Programming Interface">API</abbr>+++ is a set of interfaces and helper classes in the 'com.jme3.network' package.  For most users, this package and the 'message' package is all they need to worry about.  (The 'base' and 'kernel' packages only come into play when implementing custom network transports or alternate client/server protocols, which is now possible).
 
-
 The SpiderMonkey +++<abbr title="Application Programming Interface">API</abbr>+++ assists you in creating a Server, Clients, and Messages. Once a Server instance is created and started, the Server accepts remote connections from Clients, and you can send and receive Messages. Client objects represent the client-side of the client-server connection.  Within the Server, these Client objects are referred to as HostedConnections. HostedConnections can hold application-defined client-specific session attributes that the server-side listeners and services can use to track player information, etc.
-
 [cols="3", options="header"]
 |===
 
@@ -40,7 +36,6 @@ a| com.jme3.network.HostedConnection
 
 You can register several types of listeners to be notified of changes.
 
-
 *  MessageListeners on both the Client and the Server are notified when new messages arrive.  You can use MessageListeners to be notified about only specific types of messages.
 *  ClientStateListeners inform the Client of changes in its connection state, e.g. when the client gets kicked from the server.
 *  ConnectionListeners inform the Server about HostedConnection arrivals and removals, e.g. if a client joins or quits.
@@ -53,7 +48,6 @@ You can register several types of listeners to be notified of changes.
 === Creating a Server
 
 The game server is a “headless com.jme3.app.SimpleApplication:
-
 
 [source,java]
 ----
@@ -74,9 +68,7 @@ A `Headless` SimpleApplication executes the simpleInitApp() method and runs the 
 ====
 
 
-
 Create a com.jme3.network.Server in the `simpleInitApp()` method and specify a communication port, for example 6143.
-
 
 [source,java]
 ----
@@ -93,11 +85,9 @@ Create a com.jme3.network.Server in the `simpleInitApp()` method and specify a c
 When you run this app on a host, the server is ready to accept clients. Let's create a client next.
 
 
-
 === Creating a Client
 
 A game client is a standard com.jme3.app.SimpleApplication.
-
 
 [source,java]
 ----
@@ -118,9 +108,7 @@ A standard SimpleApplication in `Display` mode executes the simpleInitApp() meth
 ====
 
 
-
 Create a com.jme3.network.Client in the `simpleInitApp()` method and specify the servers IP address, and the same communication port as for the server, here 6143.
-
 
 [source,java]
 ----
@@ -135,15 +123,12 @@ public void simpleInitApp() {
 
 The server address can be in the format “localhost or “127.0.0.1 (for local testing), or an IP address of a remote host in the format “123.456.78.9”. In this example, we assume the server is running on the localhost.
 
-
 When you run this client, it connects to the server.
-
 
 
 === Getting Info About a Client
 
 The server refers to a connected client as com.jme3.network.HostedConnection objects. The server can get info about clients as follows:
-
 [cols="2", options="header"]
 |===
 
@@ -162,7 +147,6 @@ a|Server gets the first (0), second (1), etc, connected HostedConnection object 
 |===
 
 Your game can define its own game data based on whatever criteria you want, typically these include player ID and state. If the server needs to look up player/client-specific information, you can store this information directly on the HostedConnection object. The following examples read and write a custom Java object `MyState` in the HostedConnection object `conn`:
-
 [cols="2", options="header"]
 |===
 
@@ -185,7 +169,6 @@ a| Server can read an attribute of the HostedConnection.
 
 Each message represents data that you want to transmit between client and server. Common message examples include transformation updates or game actions. For each message type, create a message class that extends com.jme3.network.AbstractMessage. Use the @Serializable annotation from com.jme3.network.serializing.Serializable and create an empty default constructor. Custom constructors, fields, and methods are up to you and depend on the message data that you want to transmit.
 
-
 [source,java]
 ----
 
@@ -200,7 +183,6 @@ public class HelloMessage extends AbstractMessage {
 
 You must register each message type to the com.jme3.network.serializing.Serializer, in both server and client!
 
-
 [source,java]
 ----
 Serializer.registerClass(HelloMessage.class);
@@ -212,11 +194,9 @@ Serializer.registerClass(HelloMessage.class);
 After a Message was received, a Listener responds to it. The listener can access fields of the message, and send messages back, start new threads, etc. There are two listeners, one on the server, one on the client. For each message type, you implement the responses in either Listeners’ `messageReceived()` method.
 
 
-
 ==== ClientListener.java
 
 Create one ClientListener.java and make it extend `com.jme3.network.MessageListener`.
-
 
 [source,java]
 ----
@@ -232,7 +212,6 @@ public class ClientListener implements MessageListener<Client> {
 
 For each message type, register a client listener to the client.
 
-
 [source,java]
 ----
 myClient.addMessageListener(new ClientListener(), HelloMessage.class);
@@ -242,7 +221,6 @@ myClient.addMessageListener(new ClientListener(), HelloMessage.class);
 ==== ServerListener.java
 
 Create one ServerListener.java and make it extend `com.jme3.network.MessageListener`.
-
 
 [source,java]
 ----
@@ -258,7 +236,6 @@ public class ServerListener implements MessageListener<HostedConnection> {
 
 For each message type, register a server listener to the server:
 
-
 [source,java]
 ----
 myServer.addMessageListener(new ServerListener(), HelloMessage.class);
@@ -269,7 +246,6 @@ myServer.addMessageListener(new ServerListener(), HelloMessage.class);
 
 Let's create a new message of type HelloMessage:
 
-
 [source,java]
 ----
 Message message = new HelloMessage("Hello World!");
@@ -277,14 +253,12 @@ Message message = new HelloMessage("Hello World!");
 
 Now the client can send this message to the server:
 
-
 [source,java]
 ----
 myClient.send(message);
 ----
 
 Or the server can broadcast this message to all HostedConnection (clients):
-
 
 [source,java]
 ----
@@ -294,14 +268,12 @@ myServer.broadcast(message);
 
 Or the server can send the message to a specific subset of clients (e.g. to HostedConnection conn1, conn2, and conn3): 
 
-
 [source,java]
 ----
 myServer.broadcast( Filters.in( conn1, conn2, conn3 ), message );
 ----
 
 Or the server can send the message to all but a few selected clients (e.g. to all HostedConnections but conn4):
-
 
 [source,java]
 ----
@@ -311,11 +283,9 @@ myServer.broadcast( Filters.notEqualTo( conn4 ), message );
 The last two broadcasting methods use com.jme3.network.Filters to select a subset of recipients. If you know the exact list of recipients, always send the messages directly to them using the Filters; avoid flooding the network with unnecessary broadcasts to all.
 
 
-
 == Identification and Rejection
 
 The ID of the Client and HostedConnection are the same at both ends of a connection. The ID is given out authoritatively by the Server.
-
 
 [source,java]
 ----
@@ -325,12 +295,10 @@ The ID of the Client and HostedConnection are the same at both ends of a connect
 A server has a game version and game name property. Each client expects to communicate with a server with a certain game name and version. Test first whether the game name matches, and then whether game version matches, before sending any messages! If they do not match, SpiderMoney will reject it for you, you have no choice in the mater. This is so the client and server can avoid miscommunication.
 
 
-
 [TIP]
 ====
 Typically, your networked game defines its own attributes (such as player ID) based on whatever criteria you want. If you want to look up player/client-specific information beyond the game version, you can set this information directly on the Client/HostedConnection object (see Getting Info About a Client).
 ====
-
 
 
 
@@ -340,7 +308,6 @@ Typically, your networked game defines its own attributes (such as player ID) ba
 === Closing a Client
 
 You must override the client's destroy() method to close the connection cleanly when the player quits the client:
-
 
 [source,java]
 ----
@@ -358,7 +325,6 @@ You must override the client's destroy() method to close the connection cleanly 
 
 You must override the server's destroy() method to close the connection when the server quits:
 
-
 [source,java]
 ----
 
@@ -375,7 +341,6 @@ You must override the server's destroy() method to close the connection when the
 
 The server can kick a HostedConnection to make it disconnect. You should provide a String with further info (an explanation to the user what happened, e.g. “Shutting down for maintenance) for the server to send along. This info message can be used (displayed to the user) by a ClientStateListener. (See below)
 
-
 [source,java]
 ----
 conn.close("We kick cheaters.");
@@ -387,18 +352,15 @@ conn.close("We kick cheaters.");
 The server and clients are notified about connection changes.
 
 
-
 === ClientStateListener
 
 The com.jme3.network.ClientStateListener notifies the Client when the Client has fully connected to the server (including any internal handshaking), and when the Client is kicked (disconnected) from the server.
-
 
 
 [TIP]
 ====
 The ClientStateListener when it receives a network exception applies the default close action. This just stops the client and you'll have to build around it so your application knows what to do. If you need more control when a network exception happens and the client closes, you may want to investigate in a ErrorListener.
 ====
-
 
 [cols="2", options="header"]
 |===
@@ -416,7 +378,6 @@ a| Implement here what happens after the server kicks this client. For example, 
 
 First implement the ClientStateListener interface in the Client class. Then register it to myClient in MyGameClient's simpleInitApp() method:
 
-
 [source,java]
 ----
 myClient.addClientStateListener(this);
@@ -426,7 +387,6 @@ myClient.addClientStateListener(this);
 === ConnectionListener
 
 The com.jme3.network.ConnectionListener notifies the Server whenever new HostedConnections (clients) come and go.  The listener notifies the server after the Client connection is fully established (including any internal handshaking).
-
 [cols="2", options="header"]
 |===
 
@@ -443,7 +403,6 @@ a| Implement here what happens after a HostedConnection has left. E.g. a player 
 
 First implement the ConnectionListener interface in the Server class. Then register it to myServer in MyGameServer's simpleInitApp() method. 
 
-
 [source,java]
 ----
 myServer.addConnectionListener(this);
@@ -455,13 +414,11 @@ myServer.addConnectionListener(this);
 The com.jme3.network.ErrorListener is a listener for when network exception happens. This listener is built so that you can override the default actions when a network exception happens.
 
 
-
 [IMPORTANT]
 ====
 If you intend on using the default network mechanics, *don't* use this!
 If you do override this, make sure you add a mechanic that can close the client otherwise your client will get stuck open and cause errors.
 ====
-
 
 [cols="2", options="header"]
 |===
@@ -481,9 +438,7 @@ This interface was built for the client and server, but the code has never been 
 ====
 
 
-
 First implement the ErrorListener interface in the client class. Then you need to register it to myClient in MyGameClients's simpleInitApp() method.
-
 
 [source,java]
 ----
@@ -491,7 +446,6 @@ myClient.addErrorListener(this);
 ----
 
 In the class that implements the ErrorListener, a method would of been added call handleError(Client s, Throwable t). Inside this method to get you started, you going to want to listen for an error. To do this you're going to want a bit of code like this.
-
 
 [source,java]
 ----
@@ -503,11 +457,9 @@ if(t instanceof exception) {
 Replace *exception* part in the *if* statement for the type of exception that you would like it to handle.
 
 
-
 == UDP versus TCP
 
 SpiderMonkey supports both UDP (unreliable, fast) and TCP (reliable, slow) transport of messages.
-
 
 [source,java]
 ----
@@ -528,9 +480,7 @@ message2.setReliable(false); // UDP
 ====
 
 
-
 Multithreading means that you create a Callable. A Callable is a Java class representing any (possibly time-intensive) self-contained task that has an impact on the scene graph (such as positioning the player). You enqueue the Callable in the Executor of the client's OpenGL thread. The Callable ensures to executes the modification in sync with the update loop.
-
 
 [source,java]
 ----
@@ -539,12 +489,9 @@ app.enqueue(callable);
 
 Learn more about using <<jme3/advanced/multithreading#,multithreading>> in jME3 here.
 
-
 For general advice, see the articles link:https://developer.valvesoftware.com/wiki/Source_Multiplayer_Networking[MultiPlayer Networking] and link:https://developer.valvesoftware.com/wiki/Latency_Compensating_Methods_in_Client/Server_In-game_Protocol_Design_and_Optimization[Latency Compensating Methods in Client/Server In-game Protocol Design and Optimization] by the Valve Developer Community.
-
 
 
 == Troubleshooting
 
 If you have set up a server in your home network, and the game clients cannot reach the server from the outside, it's time to learn about link:http://portforward.com/[port forwarding].
-

@@ -11,12 +11,9 @@ When you create a SimpleApplication, you see the default StatsView and FpsView i
 The StatsView displays object statistics that are used during development, for example for debugging and optimization.
 Below the StatsView is the FpsView that displays the frames that jMonkeyEngine can render per second. 
 
-
 The main use case of these statistics is to find out why the application may be running slow and where to start fixing the performance.
 
-
 The StatsView + FpsView look like this example:
-
 
 [source]
 ----
@@ -43,7 +40,6 @@ Frames per Second: 30
 
 You switch the StatsView on an off in the simpleInitApp() method by setting a boolean:
 
-
 [source,java]
 ----
  
@@ -57,7 +53,6 @@ setDisplayStatView(false);  // to hide the statistics
 
 Types of items counted:
 
-
 *  FrameBuffers: Total number of rendering surfaces used for off-screen rendering and render-to-texture functionality. 
 *  Textures: Total number of distinct textures used in the scene.
 *  Shaders: Total number of shaders used for effects (shading, blur, lighting, glow, etc).
@@ -68,7 +63,6 @@ Types of items counted:
 
 Types of statistics:
 
-
 *  *(M) = Memory* – Number of items currently in OpenGL memory.
 *  *(F) = Frame * – Number of items used by current frame (visible).
 *  *(S) = Switches* – Number of items that were state switched in the last frame.
@@ -76,17 +70,13 @@ Types of statistics:
 The StatsView does not include any Physics statistics.
 
 
-
 == How to Interpret the FPS when Optimizing
 
 The FPS (frames per second) shows you how fast jME runs the update loop. If the FPS values goes below 30, the game slows down and runs jerky, which makes the game either frustrating or impossible to play. You need either decrease the number of operations in the update loop, or decrease memory usage (object count). 
 
-
 If your application grows more and more sluggish, deactivate or decrease one feature set at a time: Deactivate drop shadows, physics, anti-aliasing… Try fewer light sources, fewer NPCs, fewer samples in spheres (i.e. less smooth spheres). Temporarily replace the scene (or parts of it) with a simpler test scene to check whether the scene has to many triangles, etc. 
 
-
 Keep an eye on FPS and the StatsView and find out which element has the biggest impact on performance. This is where you start optimizing.
-
 
 
 == How to Interpret The Statistics
@@ -98,9 +88,7 @@ To interpret the numbers correctly, consider that the 14 lines of text themselve
 ====
 
 
-
 What do you want to avoid?
-
 
 .  FrameBuffers: If you don't use any post-processing effects (FilterPostProcessor), this count should be zero. The more effects you use, the more FrameBuffers are in use. If this value is high while others are normal, and your game is sluggish, you can speed up the application by using fewer post-processing effects.
 .  The Object Count (Batch Count) is a very important value that indicates how many geometries were rendered in the last frame. In general, if you keep the object count around 100-200, your game will be fast and responsive. If the count is permanently higher, hand-code rules that detach remote objects, or optimize a complex multi-material scene using: `GeometryBatchFactory.optimize(complexNode, true);` or a <<jme3/advanced/texture_atlas#,Texture Atlas>>.
@@ -115,7 +103,6 @@ What do you want to avoid?
 
 What goal are you trying to achieve in general?
 
-
 .  The values for (M) and (F) should be within the same order of magnitude. This means your code only loads objects that it actually needs, and that the hardware can actually handle.
 .  It's okay if Switches (S) are lower than Used in Current Frame (F).
 .  The FPS should be 30 or more on the slowest hardware that you target.
@@ -123,7 +110,6 @@ What goal are you trying to achieve in general?
 '''
 
 See also:
-
 
 *  link:http://hub.jmonkeyengine.org/forum/topic/good-triangles-count/[What's a good triangle count?] Forum discussion
 *  <<jme3/advanced/level_of_detail#,Level of Detail>>

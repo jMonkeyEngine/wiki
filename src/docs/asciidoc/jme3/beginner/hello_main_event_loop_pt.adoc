@@ -11,9 +11,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 Anterior: <<jme3/beginner/hello_asset-pt#, Hello Assets pt>>,
 Next: <<jme3/beginner/hello_input_system-pt#, Hello Input System pt>>
 
-
 Agora que você sabe como carregar ativos, como modelos 3D, você quer implementar alguma jogabilidade que usa estes ativos. Neste tutorial nós olhamos no loop de atualização. O loop de atualização de seu jogo é onde a ação acontece.
-
 
 
 == Amostra de Código
@@ -65,14 +63,11 @@ public class HelloLoop extends SimpleApplication {
 Compile e execute o arquivo: Você vê um cubo rotacionando constantemente.
 
 
-
 == Entendendo o Código
 
 Comparado a nossos exemplos de código anteriores você nota que a geometria (Geometry) do jogador é agora um campo (atributo) de classe. Isto é porque nós queremos que o loop de atualização seja capaz de acessar e transformar esta geometria (Geometry). Como notmal, nós inicializamos o objeto jogador no método `simpleInitApp()`.
 
-
 Agora dê uma olhada mais de perto no método `simpleUpdate()` – este é o loop de atualização.
-
 
 *  A linha `player.rotate(0, 2*tpf, 0);` muda a rotação do objeto jogador.
 *  Nós usamos a variável `tpf` (tempo por quadro) (“time per frame) para temporizar esta ação dependendo da taxa atual de quadros por segundo. Isto simplesmente significa que o cubo rotaciona com a mesma velocidade em máquinas rápidas e lentas, e o jogo permanece jogável.
@@ -82,7 +77,6 @@ Agora dê uma olhada mais de perto no método `simpleUpdate()` – este é o loo
 == Usando o Loop de Atualização
 
 Um objeto rotacionando é apenas um exemplo simples. No loop de atualização, você tipicamente tem muitos testes e dispara várias ações de jogo. Isto é onde você atualiza a pontuação e pontos de vida, checa por colisões, faz os inimigos calcularem o próximo movimento deles, rola os dados se uma armadilha foi colocada, toca sons ambiente aleatórios, e muito mais.
-
 
 *  O método `simpleUpdate()` inicia sua execução após o método `simpleInitApp()` ter inicializado o grafo de cena e as variáveis de estado.
 *  JME3 executa tudo no método simpleUpdate() repetidamente, tão rápido quanto possível.
@@ -96,23 +90,19 @@ Um objeto rotacionando é apenas um exemplo simples. No loop de atualização, v
 
 Note o contraste:
 
-
 *  O método `simpleInitApp()` é executado somente uma vez, imediatamente no início;
 *  O método `simpleUpdate()` executa repetidamente, durante o jogo.
 *  Depois de toda atualização a jMonkeyEngine automaticamente redesenha (renderiza) a tela para você!
 
 Desde que rendering é automático e, inicialização e a atualiação são os dois conceitos mais importantes em uma SimpleApplication para você imediatamente. Estes métodos são onde você carrega e cria dados do jogo (uma vez), e (repetidamente) muda as propriedades deles para atualizar o estado do jogo:
 
-
 *  `simpleInitApp()` é a “primeira respiração da aplicação.
-*  `simpleUpdate()` é a batida de coração da aplicação. +
-A unidade de tempo de atualização é chamada `tiques (ticks)`.
+*  `simpleUpdate()` é a batida de coração da aplicação. +A unidade de tempo de atualização é chamada `tiques (ticks)`.
 
 
 [TIP]
 ====
 Tudo em um jogo acontece ou durante a inicialização ou durante o loop de atualização. Isto significa que estes dois métodos crescem muito com o tempo. Há duas estratégias como desenvolvedores experientes espalham o código de atualização e inicialização em várias classes Java:
-
 
 *  Mova os blocos de código do método simpleInitApp() para <<jme3/advanced/application_states#, AppStates>>.
 *  Mova os blocos de código do método simpleUpdate() para <<jme3/advanced/custom_controls#,Custom Controls>>.
@@ -123,11 +113,9 @@ mantenha isto em mente pata depois quando sua aplicação crescer.
 
 
 
-
 == Exercícios
 
 Aqui estão algumas coisas divertidas para experimentar:
-
 
 .  O que acontece se você dar ao método rotate() números negativos?
 .  Você pode criar duas geometrias (Geometries) uma próxima a outra, e fazer uma rotacionar duas vezes mais rápido que a outra? (use a varuável `tpf`)
@@ -138,7 +126,6 @@ Aqui estão algumas coisas divertidas para experimentar:
 Olhe de volta no tutorial <<jme3/beginner/hello_node#,Hello Node>> se você não lembra os métodos de transformação para escalonar, transladar, e rotacionar.
 
 
-
 [IMPORTANT]
 ====
 Link para soluções propostas pelos usuário: link:http://jmonkeyengine.org/wiki/doku.php/jm3:solutions[http://jmonkeyengine.org/wiki/doku.php/jm3:solutions]
@@ -147,17 +134,13 @@ Link para soluções propostas pelos usuário: link:http://jmonkeyengine.org/wik
 
 
 
-
 == Conclusão
 
 Agora você está ouvindo ao loop de atualização, “a batida do coração do jogo, e você pode adicionar todos os tipos de ação a ele.
 
-
 A próxima coisa que o jogo precisa é alguma interação! Continue aprendendo a como <<jme3/beginner/hello_input_system-pt#, responder a entrada do usuário pt>>.
-
 '''
 
 Veja também:
-
 
 *  Desenvolvedores jME3 avançados usam <<jme3/advanced/application_states#, Estados da Aplicação (Application States)>> e <<jme3/advanced/custom_controls#, Controles Personalizados (Custom Controls)>> para implementar mecânicas de jogo no loop de atualização deles. Você topará nestes tópicos de novo mais tarde quando você proceder para documentação mais avançada.

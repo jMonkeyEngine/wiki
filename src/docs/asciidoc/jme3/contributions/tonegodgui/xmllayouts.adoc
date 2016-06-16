@@ -8,13 +8,11 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
 
-=== Using XML to Define Layouts
+== Using XML to Define Layouts
 
 XML Screens leverage the AbstractAppState class for managing your grouped UI components.
 
-
 AppState example:
-
 
 [source,java]
 ----
@@ -73,10 +71,9 @@ public class XMLScreenSample extends AbstractAppState {
 ----
 
 
-==== A Look at the XML Layout
+=== A Look at the XML Layout
 
 Below is a rather large XML layout with a bunch of different components, method calls, event methods, etc.  It is relative nonsense and just there to show the basic structure.
-
 
 [source,xml]
 ----
@@ -181,7 +178,6 @@ Below is a rather large XML layout with a bunch of different components, method 
 
 In the above example, you'll see that many components have defined an eventMethod tag.  The eventMethod tag defines the AppState method that will be used as a passthrough from the defined control event method.  There is no need to define parameters for these methods, as they simply forward the event methods parameters directly to the defined app state method.  Like so:
 
-
 [source,xml]
 ----
 
@@ -190,7 +186,6 @@ In the above example, you'll see that many components have defined an eventMetho
 ----
 
 Now we'll need to add the invSubmitButtonClick method to the AbstractAppState that called the parseLayout method, like so:
-
 
 [source,java]
 ----
@@ -203,4 +198,3 @@ public void invSubmitButtonClick(MouseButtonEvent evt, boolean isToggled) {
 ----
 
 The quickest way of getting the definition of the event method you are creating, is to create a new instance of the class the event is being passed from, implementing it's abstract methods &amp; cutt/paste the needed method.  Then you simply rename it.
-

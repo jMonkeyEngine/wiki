@@ -13,7 +13,6 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 *Start:* July 1st - August 1st 
 *Tasks:*
 
-
 .  Search for free and open assets
 .  Setup MORPG engine Arriane 
 ..  Port from 2D to 3D
@@ -23,9 +22,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 *Features:*
 *Bugs:*
 
-
 Google code Issues tracker: 
-
 
 
 == Detail
@@ -39,18 +36,14 @@ image::http://stendhalgame.org/wiki/images/3/34/Stendhal_0_65_fuzzy.png[Stendhal
 Another framework which is much small scale than Three rings is Arianne. 
 link:http://sourceforge.net/projects/arianne/[http://sourceforge.net/projects/arianne/]
 
-
 In the phase Zero, I decided to use Arianne instead of Three rings. Why?
 
-
 As I'm working in a game company, I've learnt by heart the importance of Game Design document and Workflow. And I also have fews failure attempts in the past as hobbist game developer with small team try to make BIG thing due to lack of these.
-
 
 
 ==== So Why Arianne?
 
 Because it's Open source, simple, have enough features, easy to deploy, test, and most important very well documented compare to Three rings.
-
 
 
 ==== Features
@@ -72,20 +65,15 @@ It's wiki with a lot of tutorials of making Quest and NPC, scripting:
 link:http://stendhalgame.org/wiki/[http://stendhalgame.org/wiki/]
 
 
-
 === Marauroa and Stendhal base architecture
 
 link:https://stendhalgame.org/wiki/Marauroa_Core_API[https://stendhalgame.org/wiki/Marauroa_Core_API]
 
-
 link:https://stendhalgame.org/wiki/RolePlayingDesign[https://stendhalgame.org/wiki/RolePlayingDesign]
-
 
 link:https://stendhalgame.org/wiki/NetworkDesign[https://stendhalgame.org/wiki/NetworkDesign]
 
-
 link:https://stendhalgame.org/wiki/HowToWriteAdventureGamesUsingArianne#Multiplayer_fun[https://stendhalgame.org/wiki/HowToWriteAdventureGamesUsingArianne#Multiplayer_fun]
-
 
 
 [IMPORTANT]
@@ -95,11 +83,9 @@ Copy from Stendhal wiki
 
 
 
-
 ==== Main entities
 
 The main entities you should know about are:
-
 
 *  Attributes
 *  RPAction
@@ -115,9 +101,7 @@ The main entities you should know about are:
 
 is the determining factor on how easy is to create a new game for Arianne. We had to choose easing the creation of turn time limited based games. Arianne will work better with this kind of games (also known as realtime games).
 
-
  Role Playing Design tries to be generic and game agnostic (independant of the game being made). The very basic idea behind RPManager is:
-
 
 ....
 forever
@@ -130,45 +114,33 @@ forever
 
 To achieve this we use several classes:
 
-
 *RPManager* is coded in Marauroa and doesn't need to be modified.
-
 
 *IRPRuleProcessor* is the interface that you need to modify in order to personalize the actions that your game will execute.
 
-
 *RPWorld* is the class that you need to extend inorder to implement the onInit and onFinish methods which personalize what happens when you initialise the server and what happens when you close the server.
 
-
 *IRPZone* is an interface that you could implement if you wanted to achive the highest personalization possible of the engine, however, I would use MarauroaRPZone instead as that uses our great *Delta2* feature. 
-
 
 
 ==== Actions
 
 To express the willingness of a client to do something it must send the server a MessageC2SAction message.
 
-
 An action is composed of several attributes. (an attribute is similar to a variable in that it has a name and contains a value).
-
 
 There are optional and mandatory attributes. If a mandatory attribute is not found, the message is skipped by the RPServerManager.
 
-
 Mandatory Action Attributes are action_id and type.
 
-
 The action_id is used to identify the action when a resulting response comes in a perception
-
 
 
 ==== Perceptions
 
 The basic structure for sending world updates to clients is called perceptions.
 
-
 There are two types of perception:
-
 
 ....
   Sync perceptions: these are used to synchronize clients with the server world representation. This is the only valid way of knowing world's status.
@@ -178,28 +150,20 @@ There are two types of perception:
 Our actual Perception system is called Delta2. It is heavily attached to the Marauroa core, so I recommend you to use it :)
 How Perceptions and Actions work
 
-
 Actions are sent from the client to the server in order to make the character perform an action. In order for the client to know the result of the action the Server needs to send a reply to the client. How will this be done?
-
 
 In a first attempt, we send clients back an action that was the result of their action. However, this made the code really hard because we had to update two different things, perceptions and actions. Instead the solution appears intuitively: Why not join action reply and perceptions.
 
-
 So the action reply is stored inside each object (that executed the action ) with a set of attributes that determine the action return status and the attributes. This way of doing replies makes it a bit harder on RPManager but it simplifies the creation of new clients a lot.
-
 
 See Actions reply in the Objects documentation to know exactly what is returned. However, keep in mind that the return result depends of each particular game.
 Delta2 perception Algorithm
 
-
 The idea behind the DPA is to avoid sending ALL the objects to a client each time, but only those that have been modified.
-
 
 Imagine that we have 1000 objects, and only O1 and O505 are active objects that are modified each turn.
 
-
 The Traditional method:
-
 
 *  - Get objects that our player should see ( 1000 objects )
 *  - Send them to player ( 1000 objects )
@@ -210,12 +174,9 @@ The Traditional method:
 
 …
 
-
 I hope you see the problem… we are sending objects that haven't changed each turn.
 
-
 The delta perception algorithm:
-
 
 *  Get objects that our player should see ( 1000 objects )
 *  Reduce the list to the modified ones ( 1000 objects )
@@ -231,9 +192,7 @@ The delta perception algorithm:
 
 The next step of the delta perception algorithm is pretty clear: delta2 The idea is to send only what changes of the objects that changed. This way we save even more bandwidth, making perceptions around 20% of the original delta perception size.
 
-
 The delta2 algorithm is based on four containers:
-
 
 *      List of added objects
 *      List of modified added attributes of objects
@@ -246,22 +205,18 @@ The delta2 algorithm is based on four containers:
 My initial plan for the phase Zero is to create a port to 3d version of the existed game Stendhal with free 3d models and 3d gameplay. Then I let the team go in, try and discuss, learn, design as much as possible before we going futher.
 
 
-
 ==== Assets
 
 In the first attempt, 3d enviroment and models will use open art website such as: 
 Blendswap link:http://blendswap.com[http://blendswap.com]
 OpengameArt link:http://opengameart.com[http://opengameart.com]
 
-
 and other resources to quick made up a workable game (client and server) to test and enjoy.
-
 
 
 ==== From Arianne to jME3
 
 The reusable:
-
 
 *      Network: Good for small scale game
 *      DB: MySQL or integrated H2
@@ -269,7 +224,6 @@ The reusable:
 *      They also have a complete website for the game with tutorials, wiki 
 
 The different between a 2d and 3d, Arianne an jME3 engine:
-
 
 *  
 *      Replace the Arianne game loop with jME3 states and update loop.
@@ -285,9 +239,7 @@ The different between a 2d and 3d, Arianne an jME3 engine:
 
 Pictures
 
-
 Videos
-
 
 
 == Assets

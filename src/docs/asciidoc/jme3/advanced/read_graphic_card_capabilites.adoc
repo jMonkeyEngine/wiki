@@ -9,9 +9,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 When different people test your new game, you may get feedback that the game doesn't run on their hardware, or that some details don't look as expected. You need to detect which fetaures the user's hardware supports, and offer a replacement for non-supported features on olde hardware (or deactivate them automatically).
 
-
 You can read (and print) the capabilities of the user's graphic card using the `com.jme3.renderer.Caps` class:
-
 
 [source,java]
 ----
@@ -23,11 +21,9 @@ Logger.getLogger(HelloWorld.class.getName()).log(Level.INFO, “Caps: {0}”, ca
 *Note:* Replace `HelloWorld` by the name of the class where you are using this line.
 
 
-
 == Examples
 
 A newer graphic card has modern capabilities, for example OpenGL 2.1 and NonPowerOfTwoTextures: 
-
 
 [source]
 ----
@@ -52,7 +48,6 @@ TextureCompressionLATC, NonPowerOfTwoTextures, MeshInstancing]
 
 Here is an example of the capabilities of an semi-old graphic card that only supports OpenGL 2.0. If you use OpenGL 2.1 features you need to decide whether to branch to a low-quality replacement of the unsupported features (if you still want to support this card); or whether the game will not start at all and displays an error message explaining the user what capabilities his hardware is missing to be able to play the game.
 
-
 [source]
 ----
 INFO: Running on jMonkey Engine 3 
@@ -73,7 +68,6 @@ TextureCompressionLATC, NonPowerOfTwoTextures]
 ----
 
 This next example is lacking `NonPowerOfTwoTextures`, this tells you that this user's graphic card cannot handle textures with sizes that are not square powers of two (such as “128x128).
-
 
 [source]
 ----

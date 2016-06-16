@@ -9,7 +9,6 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 This page is a short list of best practices that you should know of when starting to use Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++. The JME3 tutorials focus on JME3-Nifty integration related details. You will find more features in the link:http://sourceforge.net/projects/nifty-gui/files/nifty-gui/nifty-gui-the-manual-v1.0.pdf/download[Nifty GUI Manual].
 
-
 .  <<jme3/advanced/nifty_gui#,Nifty GUI Concepts>>
 .  *Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++ Best Practices*
 .  <<jme3/advanced/nifty_gui_xml_layout#,Nifty GUI XML Layout>> or <<jme3/advanced/nifty_gui_java_layout#,Nifty GUI Java Layout>>
@@ -20,7 +19,6 @@ This page is a short list of best practices that you should know of when startin
 == XML or Java?
 
 You can build Nifty GUIs using XML or Java syntax. Which one should you choose? The XML and Java syntax are equivalent, so is it an either-or choice? Not quite. You typically use XML and Java together.
-
 
 *  Build your basic static UI layout using XML - it's cleaner to write and read. 
 *  Use Java syntax to control the dynamic parts of the +++<abbr title="Graphical User Interface">GUI</abbr>+++ at runtime - it's easier to interact with object-oriented code.
@@ -36,11 +34,9 @@ You can build Nifty GUIs using XML or Java syntax. Which one should you choose? 
 Tip: The +++<abbr title="Graphical User Interface">GUI</abbr>+++ category in the New File wizard also contains Nifty code samples.
 
 
-
 == Validate the XML before loading
 
 The link:http://nifty-gui.sourceforge.net/projects/nifty/apidocs/de/lessvoid/nifty/Nifty.html[Nifty class] has _validateXml()_ method that takes the same input XML argument as _fromXml()_. Nifty does not validate the Xml by default, and will blow up in surprising ways if your XML does not conform to the schema. Adding the validation step will save you debugging time. You can validate right before loading, or in your unit tests. 
-
 
 
 == Use Code Completion
@@ -77,17 +73,13 @@ The link:http://nifty-gui.sourceforge.net/projects/nifty/apidocs/de/lessvoid/nif
 
 Screens, layers, and panels…
 
-
-*  … can have an RGBA background color. +
-You can use temporary colors during the design phase to highlight which container is which.
-*  … can be transparent. +
-In the finished +++<abbr title="Graphical User Interface">GUI</abbr>+++, screens, layers, and panels are typically transparent; the visible elements are the images, text fields, and controls, inside the panels.
+*  … can have an RGBA background color. +You can use temporary colors during the design phase to highlight which container is which.
+*  … can be transparent. +In the finished +++<abbr title="Graphical User Interface">GUI</abbr>+++, screens, layers, and panels are typically transparent; the visible elements are the images, text fields, and controls, inside the panels.
 
 
 [TIP]
 ====
 During development (and during a tutorial), the following debug code makes all panels visible. This helps you arrange them and find errors. 
-
 
 [source,java]
 ----
@@ -96,5 +88,4 @@ nifty.setDebugOptionPanelColors(true);
 
 Before the release, and during testing, set the debug view to false again.
 ====
-
 

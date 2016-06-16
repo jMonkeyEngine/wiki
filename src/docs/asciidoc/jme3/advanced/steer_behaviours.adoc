@@ -9,33 +9,25 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 Steer behaviors allows you to control the locomotion of “characters”, this can reduce drastically the time needed to develop a game since for almost every game we need to set how these “characters” will be moving around the scene.
 +
-
 +
-
 *Steer behaviors in action:*
 image:jme3/advanced/youtube_yyztntsgv00[youtube_yyztntsgv00,with="",height=""]
 +
-
 Be sure that you have checked the demos: They can be downloaded here: link:http://localhost/jmeSteerTesting/downloads.php[jmesteer.bdevel.org]
-
 
 
 == First steps
 
 The steer behaviors AI is integrated with MonkeyBrains so before start coding be sure that you have checked the link:http://hub.jmonkeyengine.org/wiki/doku.php/jme3:advanced:monkey_brains[monkey brains documentation]
 
-
 Be sure to create a reference to MonkeyBrains from your project.
 
-
 Finally, do not forget to import the `com.jme3.ai.agents.behaviors.npc.steering` package.
-
 
 
 == Overview
 
 *Avaliable behaviours:*
-
 
 *  Move
 *  Seek
@@ -64,18 +56,15 @@ Finally, do not forget to import the `com.jme3.ai.agents.behaviors.npc.steering`
 All the behaviours extend from the `AbstractSteeringBehavior` class.
 
 
-
 == Adding a steer behavior
 
 Create instances from the steer behavior classes, They are located in the `com.jme3.ai.agents.behaviors.npc.steering` package. 
-
 
 If we want to add more than one steer behavior, we need to create a container: 
 [WARNING]
 ====
 If you add more than one steer behavior to a `SimpleMainBehavior` it will cause problems in the rotation of the agents. 
 ====
-
 
 [cols="2", options="header"]
 |===
@@ -92,7 +81,6 @@ a| BalancedCompoundSteeringBehavior
 |===
 
 Once we know which container fits better for our agent, We create a new instance and add all the behaviors that we need:
-
 
 [source,java]
 ----
@@ -114,7 +102,6 @@ Note that you can have nested containers, like is shown in the following example
 ====
 
 
-
 [source,java]
 ----
 
@@ -134,9 +121,7 @@ myAgent.setMainBehavior(mainBehavior);
 
 You can assign priority layers: The steering controller first checks the higher layer to see if all the behaviors returns a value higher than `minLengthToInvalidSteer`, if so it uses that layer. Otherwise, it moves on to the second layer, and so on.
 
-
 To assign priority layers add behaviors with the following function:
-
 
 ....
   addSteerBehavior (AbstractSteeringBehavior behavior, int priority, float minLengthToInvalidSteer)
@@ -156,17 +141,13 @@ The layer and the min length to consider the behavior invalid are 0 by default.
 
 
 
-
 == Setting up forces
 
 If a behavior extends from the `AbstractStrengthSteeringBehavior` class, you can manage how the produced forces will work.
 
-
 Use `setupStrengthControl(float scalar)` to increase/decrease the steer force produced by a behavior or `setupStrengthControl(Plane plane)` If you want to work with 2D behaviors.
 
-
 Example:
-
 
 [source,java]
 ----
@@ -184,9 +165,7 @@ Example:
 
 To benefit from all the features, you have to create a new class that extends from `AbstractStrengthSteeringBehavior`.
 
-
 The responsible for the agent's acceleration is the vector returned in the `calculateRawSteering()` method:
-
 
 [source,java]
 ----
@@ -203,7 +182,6 @@ The responsible for the agent's acceleration is the vector returned in the `calc
 ----
 
 In addition, you can change a brake factor which will reduce the resultant velocity for the agent:
-
 
 [source,java]
 ----
@@ -230,14 +208,11 @@ The braking force must be a float contained in the [0,1] interval
 
 
 
-
 === Strict arguments
 
 To ensure that the behavior will work as you had planned it to work It's recommended to create your own link:http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html[IllegalArgumentException] class. To do this, create your own container class extending from `com.jme3.ai.agents.behaviors.npc.steering.SteeringExceptions`; Each exception inside the container class extends from `SteeringBehaviorException`. Furthermore, It will help users to recognize better which is the origin of any problem.
 
-
 Example:
-
 
 [source,java]
 ----
@@ -268,4 +243,3 @@ Example:
 == Useful links
 
 java steer behaviors project: link:http://jmesteer.bdevel.org/[jmesteer.bdevel.org]
-

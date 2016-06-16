@@ -9,18 +9,14 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 This is the wiki page for the Forester grass/tree loading system. It contains information on how to add vegetation to a scene, and how to manage it. Grass and trees are treated differently, but the approaches are very similar.
 
-
 Topics are flagged as (basic) or (advanced). Advanced topics can be skipped.
-
 
 
 == The Forester (Basic)
 
 The Forester class is the root class of this lib. You can use it to create grass/treeloaders, and a few other things. It also manages random number tables and a few other things. 
 
-
 It is a singleton class, so it can be used anywhere for easy access to Forester data.
-
 
 
 == The grass
@@ -28,11 +24,9 @@ It is a singleton class, so it can be used anywhere for easy access to Forester 
 Proceed to the grass section: link:http://jmonkeyengine.org/wiki/doku.php/jme3:contributions:vegetationsystem:grass[http://jmonkeyengine.org/wiki/doku.php/jme3:contributions:vegetationsystem:grass]
 
 
-
 == The trees
 
 Proceed to the tree section: link:http://jmonkeyengine.org/wiki/doku.php/jme3:contributions:vegetationsystem:trees[http://jmonkeyengine.org/wiki/doku.php/jme3:contributions:vegetationsystem:trees]
-
 
 
 == Tuning the paging engine (Advanced)
@@ -40,20 +34,15 @@ Proceed to the tree section: link:http://jmonkeyengine.org/wiki/doku.php/jme3:co
 All tree/grassloaders use a paging engine to load/unload data. There are some things you can do that affects performance and memory usage for both trees and grass.
 
 
-
 === Manipulating the cache
 
 The cache saves expired tiles for some time before disposing of them. This makes it possible for the engine to re-use pages instead of having to load and prepare them again. 
 
-
 An example: Lets say you walk across the border between two tiles. Passing the border between two tiles prompts the engine to load new tiles in the direction you are moving, and toss old ones away. Lets say you then walk back directly. Or keep walking back and forth across that border. Without the cache, you'd be loading and unloading tiles all the time. 
-
 
 There is no point in turning it off, unless maybe if you use extremely small tiles. You can change the cache timer however. Default time is 2 seconds (2000 ms actually, the value is in ms). After 2 seconds the tiles are dropped from the cache.
 
-
 To change the value, do this:
-
 
 [source,java]
 ----
@@ -65,21 +54,16 @@ grassLoader.getPagingManager().setCacheTime(6000);
 That would increase the cache time to 6 seconds.
 
 
-
 === Changing the tile size & resolution
 
 The tile size determines how much geometry is being loaded at the same time. The resolution determines how many sub-geometries are in a tile.
 If you increase resolution from 2 to 4, it would change the amount of geometries in a tile from 4 to 16. You can think of resolution as being the height/width of an image. If you double it, the size of the image is squared.
 
-
 Having few but large geometries is more efficient when rendering, however. That is how GPUs work; they rather take a few large blocks of data then many small ones. It also leads to less java objects, less overhead etc.
-
 
 Having many geometries, on the other side, ensures more geometry is culled on average. If you use one mega-block of 512x512 square units, you'd have to render the entire block even if you can only see a tiny fraction of it. Also, when massive blocks are pushed in and out of the rendering queue you might get noticeable increases/drops in frame-rate.
 
-
 It is very hard to say what is the correct resolution in an application, because it depends on very much, but it is possible to try a few different settings and see which is best. This may have an effect on performance; particularly if you're using massive amounts of grass. 
-
 
 
 [TIP]
@@ -88,6 +72,4 @@ It is very hard to say what is the correct resolution in an application, because
 ====
 
 
-
 More to come.
-

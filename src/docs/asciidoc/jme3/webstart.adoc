@@ -10,26 +10,20 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 When you <<sdk/application_deployment#,use the jMonkeyEngine SDK to deploy your application>>, you can configure the project to build files required for WebStart automatically. If you use another IDE, or work on the command line, use the following tips to set up WebStart correctly:
 
 
-
 == Problem Statement
 
 *Problem:*
 
-
 When running under WebStart, jMonkeyEngine may not have permission to extract the native libraries to the current directory. 
-
 
 *Solution: *
 
-
 You can instruct WebStart to load the native libraries itself using the JNLP file, and then instruct jME3 not to try to do so itself.
-
 
 
 == Simple way
 
 You can import the LWJGL JNLP extension directly into your extension, however be aware that your application will break whenever they update their jars. Simply add this line to your JNLP:
-
 
 [source,xml]
 ----
@@ -45,7 +39,6 @@ You can import the LWJGL JNLP extension directly into your extension, however be
 === Native jars
 
 You can download the LWJGL native jars from their site, or to ensure you're using the exact same version as bundled with your jME3 release, make your own:
-
 
 [source]
 ----
@@ -63,7 +56,6 @@ done
 ----
 
 For Windows:
-
 
 [source]
 ----
@@ -85,11 +77,9 @@ cd ..
 Remember to sign all the jar files and move them into the right place from the tmp directory.
 
 
-
 === JNLP file
 
 Add the following to your JNLP file:
-
 
 [source,xml]
 ----
@@ -117,7 +107,6 @@ Add the following to your JNLP file:
 === Set low-permissions mode
 
 In your main() method, if running under WebStart, tell jME3 it is running in a low-permission environment so that it doesn't try to load the natives itself:
-
 
 [source,java]
 ----

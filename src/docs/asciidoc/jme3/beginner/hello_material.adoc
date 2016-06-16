@@ -11,11 +11,9 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 Previous: <<jme3/beginner/hello_input_system#,Hello Input System>>,
 Next: <<jme3/beginner/hello_animation#,Hello Animation>>
 
-
 The term Material includes everything that influences what the surface of a 3D model looks like: The color, texture, shininess, and opacity/transparency. Plain coloring is covered in <<jme3/beginner/hello_node#,Hello Node>>. Loading models that come with materials is covered in <<jme3/beginner/hello_asset#,Hello Asset>>. In this tutorial you learn to create and use custom JME3 Material Definitions.
 
 image::jme3/beginner/beginner-materials.png[beginner-materials.png,with="320",height="240",align="center"]
-
 
 
 
@@ -23,7 +21,6 @@ image::jme3/beginner/beginner-materials.png[beginner-materials.png,with="320",he
 ====
 To use the example assets in a new jMonkeyEngine SDK project, right-click your project, select “Properties, go to “Libraries, press “Add Library and add the “jme3-test-data library.
 ====
-
 
 
 
@@ -115,18 +112,15 @@ public class HelloMaterial extends SimpleApplication {
 
 You should see
 
-
 *  Left – A cube with a brown monkey texture.
 *  Right – A translucent monkey picture in front of a shiny bumpy rock.
 
 Move around with the WASD keys to have a closer look at the translucency, and the rock's bumpiness.
 
 
-
 == Simple Unshaded Texture
 
 Typically you want to give objects in your scene textures: It can be rock, grass, brick, wood, water, metal, paper… A texture is a normal image file in JPG or PNG format. In this example, you create a box with a simple unshaded Monkey texture as material.
-
 
 [source,java]
 ----
@@ -147,7 +141,6 @@ Typically you want to give objects in your scene textures: It can be rock, grass
 
 Here is what we did: to create a textured box:
 
-
 .  Create a Geometry `cube1Geo` from a Box mesh `cube1Mesh`. 
 .  Create a Material `cube1Mat` based on jME3's default `Unshaded.j3md` material definition.
 .  Create a texture `cube1Tex` from the `Monkey.jpg` file in the `assets/Interface/Logo/` directory of the project. 
@@ -159,14 +152,11 @@ Here is what we did: to create a textured box:
 
 `Monkey.png` is the same texture as `Monkey.jpg`, but with an added alpha channel. The alpha channel allows you to specify which areas of the texture you want to be opaque or transparent: Black areas of the alpha channel remain opaque, gray areas become translucent, and white areas become transparent. 
 
-
 For a partially translucent/transparent texture, you need:
-
 
 *  A Texture with alpha channel
 *  A Texture with blend mode of `BlendMode.Alpha`
-*  A Geometry in the `Bucket.Transparent` render bucket.  +
-This bucket ensures that the transparent object is drawn on top of objects behind it, and they show up correctly under the transparent parts. 
+*  A Geometry in the `Bucket.Transparent` render bucket.  +This bucket ensures that the transparent object is drawn on top of objects behind it, and they show up correctly under the transparent parts. 
 
 [source,java]
 ----
@@ -187,9 +177,7 @@ This bucket ensures that the transparent object is drawn on top of objects behin
 
 For non-transparent objects, the drawing order is not so important, because the z-buffer already keeps track of whether a pixel is behind something else or not, and the color of an opaque pixel doesn't depend on the pixels under it, this is why opaque Geometries can be drawn in any order.
 
-
 What you did for the transparent texture is the same as before, with only one added step for the transparency.
-
 
 .  Create a Geometry `cube2Geo` from a Box mesh `cube2Mesh`. This Box Geometry is flat upright box (because z=0.01f).
 .  Create a Material `cube2Mat` based on jME3's default `Unshaded.j3md` material definition.
@@ -202,17 +190,13 @@ What you did for the transparent texture is the same as before, with only one ad
 *Tip:* Learn more about creating PNG images with an alpha layer in the help system of your graphic editor.
 
 
-
 == Shininess and Bumpiness
 
 But textures are not all. Have a close look at the shiny sphere – you cannot get such a nice bumpy material with just a plain texture. You see that JME3 also supports so-called Phong-illuminated materials:
 
-
 In a lit material, the standard texture layer is refered to as _DiffuseMap_, any material can use this layer. A lit material can additionally have lighting effects such as _Shininess_ used together with the _SpecularMap_ layer and _Specular_ color. And you can even get a realistically bumpy or cracked surface with help of the _NormalMap_ layer.
 
-
 Let's have a look at the part of the code example where you create the shiny bumpy rock.
-
 
 .  Create a Geometry from a Sphere shape. Note that this shape is a normal smooth sphere mesh. 
 [source,java]
@@ -246,7 +230,6 @@ Let's have a look at the part of the code example where you create the shiny bum
 ----
 
 ..  Set a standard rocky texture in the `DiffuseMap` layer. +
-
 image::http://jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Textures/Terrain/Pond/Pond.jpg[Pond.jpg,with="64",height="64",align="right"]
 
 [source,java]
@@ -297,15 +280,12 @@ image::http://jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Textures/T
 
 Remember that any Lighting.j3md-based material requires a light source, as shown in the full code sample above.
 
-
 *Tip:* To deactivate Shininess, do not set `Shininess` to 0, but instead set the `Specular` color to `ColorRGBA.Black`.
-
 
 
 == Default Material Definitions
 
 As you have seen, you can find the following default materials in `jme/core-data/Common/…`.
-
 [cols="3", options="header"]
 |===
 
@@ -314,22 +294,16 @@ a| Usage
 <a| Parameters  
 
 a| `Common/MatDefs/Misc/Unshaded.j3md` 
-a| Colored: Use with mat.setColor() and ColorRGBA. +
-Textured: Use with mat.setTexture() and Texture. 
-a| Color : Color +
-ColorMap : Texture2D 
+a| Colored: Use with mat.setColor() and ColorRGBA. +Textured: Use with mat.setTexture() and Texture. 
+a| Color : Color +ColorMap : Texture2D 
 
 <a| `Common/MatDefs/Light/Lighting.j3md`      
-a| Use with shiny Textures, Bump- and NormalMaps textures. +
-Requires a light source. 
-a| Ambient, Diffuse, Specular : Color +
-DiffuseMap, NormalMap, SpecularMap : Texture2D +
-Shininess : Float 
+a| Use with shiny Textures, Bump- and NormalMaps textures. +Requires a light source. 
+a| Ambient, Diffuse, Specular : Color +DiffuseMap, NormalMap, SpecularMap : Texture2D +Shininess : Float 
 
 |===
 
 For a game, you create custom Materials based on these existing MaterialDefintions – as you have just seen in the example with the shiny rock's material.
-
 
 
 == Exercises
@@ -339,7 +313,6 @@ For a game, you create custom Materials based on these existing MaterialDefintio
 
 Look at the shiny rocky sphere above again. It takes several lines to create and set the Material.
 
-
 *  Note how it loads the `Lighting.j3md` Material definition.
 *  Note how it sets the `DiffuseMap` and `NormalMap` to a texture path.
 *  Note how it activates `UseMaterialColors` and sets `Specular` and `Diffuse` to 4 float values (RGBA color).
@@ -347,9 +320,7 @@ Look at the shiny rocky sphere above again. It takes several lines to create and
 
 If you want to use one custom material for several models, you can store it in a .j3m file, and save a few lines of code every time. 
 
-
 You create a j3m file as follows:
-
 
 .  Create a plain text file `assets/Materials/MyCustomMaterial.j3m` in your project directory, with the following content:
 [source]
@@ -385,11 +356,9 @@ sphereGeo.setMaterial((Material) assetManager.loadMaterial(
 Using this new custom material `MyCustomMaterial.j3m` only takes one line. You have replaced the eight lines of an on-the-fly material definition with one line that loads a custom material from a file. Using .j3m files is very handy if you use the same material often. 
 
 
-
 === Exercise 2: Bumpiness and Shininess
 
 Go back to the bumpy rock sample above:
-
 
 .  Comment out the DiffuseMap line, and run the app. (Uncomment it again.)
 **  Which property of the rock is lost?
@@ -406,16 +375,12 @@ Go back to the bumpy rock sample above:
 
 You have learned how to create a Material, specify its properties, and use it on a Geometry. You know how to load an image file (.png, .jpg) as texture into a material. You know to save texture files in a subfolder of your project's `assets/Textures/` directory.
 
-
 You have also learned that a material can be stored in a .j3m file. The file references a built-in MaterialDefinition and specifies values for properties of that MaterialDefinition. You know to save your custom .j3m files in your project's `assets/Materials/` directory.
 
-
 Now that you know how to load models and how to assign good-looking materials to them, let's have a look at how to animate models in the next chapter, <<jme3/beginner/hello_animation#,Hello Animation>>.
-
 '''
 
 See also
-
 
 *  <<jme3/intermediate/how_to_use_materials#,How to Use Materials>>
 *  <<sdk/material_editing#,Material Editing>>

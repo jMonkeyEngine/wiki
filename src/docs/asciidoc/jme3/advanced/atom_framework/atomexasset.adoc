@@ -13,7 +13,6 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 The future assets pipeline for JME3 games!
 
 
-
 === Features
 
 *  Real pipeline
@@ -24,15 +23,11 @@ The future assets pipeline for JME3 games!
 
 Pipeline is a common term in computing and also asset making. From sattelite view, pipeline is progresses between input and output.
 
-
 image:http://storm.incubator.apache.org/images/topology.png[400px,with="",height=""]
-
 
 Here in game we talking about Assets aspect, mostly! 
 
-
 In real world, converting-processing data and assets also require amount of times, efforts and cause headaches, almost comparable to making data and assets.
-
 
 
 [TIP]
@@ -42,11 +37,9 @@ Some of the problems and solutions here can also be applied to other situation a
 
 
 
-
 ==== Converting
 
 Converting between things is a hard problem:
-
 
 *  Semantic: “things are different “in contexts. 
 *  Incompatible: Converting almost one-direction only. Converter programs sometime not reliable and not support your data
@@ -58,7 +51,6 @@ Converting between things is a hard problem:
 
 Processing again is require a lot power:
 
-
 *  Time: Did you ever generate lightmap or PVS? - It may take a long long wait and easy to fail.
 *  Power and units: Did you ever render a movie? - It may require a render farm.
 *  Connections: Is there anything has to transfer between units? - It may delay the whole progress.
@@ -69,11 +61,9 @@ Processing again is require a lot power:
 AtomExAsset try to leverage pipelines from ideas inspired:
 
 
-
 ===== From Preon
 
 Bit stream language
-
 
 
 ===== From DataTurbine
@@ -81,23 +71,18 @@ Bit stream language
 Real-time data over network
 
 
-
 ===== From Distributed computing
 
 link:http://storm.incubator.apache.org/[http://storm.incubator.apache.org/] -
-
 
 
 ===== From Other CCDs and Engines
 
 3DSMax and Autodesk programs: Render farm integrated.
 
-
 Blender: DNA structure
 
-
 Unity: Metadata and SVN integrated
-
 
 
 === Multi sources & Multi targets
@@ -108,8 +93,7 @@ Unity: Metadata and SVN integrated
 
 === Slides
 
-iframe:https://docs.google.com/presentation/d/1gvh00FBoSYgvryw7Czbcjxrt5TmlK12P14QRdjKo4NA/embed?start=false&loop=false&delayms=3000[width="100%", height="600px", alt="", scroll="true",border="true",align="false"]
-
+iframe::https://docs.google.com/presentation/d/1gvh00FBoSYgvryw7Czbcjxrt5TmlK12P14QRdjKo4NA/embed?start=false&loop=false&delayms=3000[width="100%", height="600px", alt="", scroll="true",border="true",align="false"]
 
 
 
@@ -126,9 +110,7 @@ iframe:https://docs.google.com/presentation/d/1gvh00FBoSYgvryw7Czbcjxrt5TmlK12P1
 
 “Unified Format (use one format to encoded, decoded all kind of assets) is actually a nice idea but it's not real useful in real life situtations (or not even possible?)
 
-
 AtomExAsset in other hand has unified pipeline via: Codecs, Flows, EntryPoints. Its “unified data are actually a temporial data which has meta-data embeded.
-
 
 
 ==== Temporial scene data
@@ -138,27 +120,20 @@ AtomExAsset in other hand has unified pipeline via: Codecs, Flows, EntryPoints. 
 
 Models
 
-
 Textures
-
 
 Animations
 
-
 Basic usages
-
 
 
 ==== EntryPoints
 
 EntryPoint is a higher abstract level of AssetKey where we accept the fact that Assets is not actually separated but reference in nested way, via each other and form a topology. We are talking about batch solutions which are very popular in real-life gamedev, and a way to integrate the flow of assets to the normal pipeline…
 
-
 A lot of AAA games of big company relied on packed and streaming assets (online, from disks..). This assets usually get loaded by chunks instead of a whole at a time, make it possible to process as fast and smooth as possible.
 
-
 You can see one simple example of the situation when:
-
 
 *  We reference to a Texture assetkey of a single Tile: assetManager.load(“tile1.png);
 *  We later make a texture atlas of Tiles: tiles.png
@@ -166,9 +141,7 @@ You can see one simple example of the situation when:
 
 Texture atlas for ex and all kind of batching assets (pack, atlas, uber …) are techniques to optimize/boost  load time and real-time performance. Obfucasion, encoding add an extra layer technique that hide the real data from the back-end user; who shouldn't touch that data and modify them.
 
-
 Also the always processing nature of the the asset in Atom pipeline require “dynamic entry point which AssetKey's abstraction is not enough. EntryPoint and Flow are two new concept in the playground that you should take time to get familiar with.
-
 
 
 ==== Flows
@@ -178,20 +151,17 @@ Also the always processing nature of the the asset in Atom pipeline require “d
 
 .j3a (see, it looks like j3o) stand for “Alternate Automatic Assets is not actually format, but a meta-data or entry point in the asset system. One can use .j3a as entry point to load what ever he want with just the name, for ex:
 
-
 ....
  assetManager.load("monkey.j3o")
 ....
 
 is equal with:
 
-
 ....
  assetManager.load("monkey.j3a")
 ....
 
 but the later has extra effects:
-
 
 *  It put a update watcher over the entry point 
 **  the file in filesystem
@@ -210,23 +180,19 @@ but the later has extra effects:
 You can see the Atom's asset pipeline as a replacement of the official one. In fact, you can also let them work together seamlessly because Atom pipeline just bypass JME3's assetManager in a few special case.
 
 
-
 [WARNING]
 ====
 Remember Atom's asset pipeline is better for “not-well formed assets. In normal situation, you can use JME3's asset without a doubt!
 ====
 
 
-
 Way1 - Atom over JME3: Put assetManager under an entry point, let call it “SEP - StaticEntryPoint.
-
 
 ....
  assetManager.load("SEP\")
 ....
 
 Way2 - Atom with JME#:
-
 
 ....
  assetManager.load(".j3a")
@@ -240,21 +206,15 @@ Way2 - Atom with JME#:
 
 Models
 
-
 Textures
-
 
 Animations
 
-
 Basic usage
-
 
 Preon reference:
 
-
 link:http://preon.codehaus.org/preon-binding/apidocs/1.1-SNAPSHOT/nl/flotsam/preon/codec/package-summary.html[http://preon.codehaus.org/preon-binding/apidocs/1.1-SNAPSHOT/nl/flotsam/preon/codec/package-summary.html]
-
 
 
 === Manage dataflow & turbine
@@ -264,12 +224,8 @@ link:http://preon.codehaus.org/preon-binding/apidocs/1.1-SNAPSHOT/nl/flotsam/pre
 
 AtomExAssets ultimately use Building tools and Framework to help Java developer doing Game assets!
 
-
 Beside of Defacto of the building tools: Ant &amp; Maven, the new rising star Gradle. AtomExAssets also use the powerful framework:
-
 
 link:http://www.go.cd/[http://www.go.cd/]
 
-
 image:http://www.go.cd/images/home-image1.png[home-image1.png,with="",height=""]
-

@@ -17,19 +17,15 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 You can “draw the +++<abbr title="Graphical User Interface">GUI</abbr>+++ to the screen by writing XML code (alternatively you can also use Java).
 
 
-
 == Plan Your GUI Layout
 
 
 image::jme3/advanced/gui-layout-draft.png[gui-layout-draft.png,with="",height="",align="right"]
 
 
-
 In this tutorial, you want to create two game screens: An out-of-game StartScreen that the players see before the game starts; and an in-game link:http://en.wikipedia.org/wiki/HUD_%28video_gaming%29[HUD] that displays info during the game. Before writing code, you plan the +++<abbr title="Graphical User Interface">GUI</abbr>+++ layout, either on paper or in a graphic application.
 
-
 The StartScreen contains:
-
 
 *  The background layer has a centered layout and contains an image.
 *  The top layer has a vertical layout, containing 3 panels: 
@@ -42,7 +38,6 @@ The StartScreen contains:
 
 
 The HUD contains:
-
 
 *  The background layer has a centered layout, and contains the partially transparent HUD image.
 *  The top layer has a horizontal layout, containing 2 panels: 
@@ -57,19 +52,15 @@ The HUD contains:
 image::jme3/advanced/nifty-screen-layer-panel.png[nifty-screen-layer-panel.png,with="366",height="136",align="right"]
 
 
-
 Create an empty *screen*.xml file in the `assets/Interface/` directory of your project. ( Rightclick on Interface → New → Other… → +++<abbr title="Graphical User Interface">GUI</abbr>+++ → Empty NiftyGui file)
 Afterwards create the directory `assets/Interface/Fonts` and add a new font e.g. Arial. ( *Rightclick on Interface → New → Other… →* Other → Folder and +++<abbr title="Graphical User Interface">GUI</abbr>+++ → Font)
 
-
 One XML file can contain several, or even all screens. As a reminder: Nifty displays one screen at a time; a screen contains several layers on top of one another; each layer contains panels that are embedded into another; the panels contain the actual content (text, images, or controls).
-
 
 
 === Make Screens
 
 The following minimal XML file contains a start screen and a HUD screen. (Neither has been defined yet.)
-
 
 [source,xml]
 ----
@@ -89,16 +80,13 @@ The following minimal XML file contains a start screen and a HUD screen. (Neithe
 
 Every Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++ must have a start screen. The others (in this example, the HUD screen) are optional. 
 
-
 *Note:* In the following examples, the XML schema header is abbreviated to just `&lt;nifty&gt;`.
-
 
 
 === Make Layers
 
 The following minimal XML file shows how we added layers to the start screen and HUD screen.
 Delete all from the file and add following code:
-
 
 [source,xml]
 ----
@@ -127,11 +115,9 @@ Delete all from the file and add following code:
 In a layer, you can now add panels and arrange them. Panels are containers that mark the areas where you want to display text, images, or controls (buttons etc) later. 
 
 
-
 === Make Panels
 
 A panel is the inner-most container (that will contain the actual content: text, images, or controls). You place panels inside layers. The following panels go into in the `start` screen's `foreground` layer:
-
 
 [source,xml]
 ----
@@ -155,7 +141,6 @@ A panel is the inner-most container (that will contain the actual content: text,
 ----
 
 The following panels go into in the `hud` screen's `foreground` layer:
-
 
 [source,xml]
 ----
@@ -182,9 +167,7 @@ The following panels go into in the `hud` screen's `foreground` layer:
 The result should look as follows:
 
 
-
 image::jme3/advanced/nifty-gui-panels.png[nifty-gui-panels.png,with="",height="",align="center"]
-
 
 
 
@@ -193,11 +176,9 @@ image::jme3/advanced/nifty-gui-panels.png[nifty-gui-panels.png,with="",height=""
 See also link:http://sourceforge.net/apps/mediawiki/nifty-gui/index.php?title=Layout_Introduction[Layout Introduction] on the Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++ site.
 
 
-
 === Add Images
 
 The link:http://hub.jmonkeyengine.org/wiki/lib/exe/fetch.php/jme3:advanced:start-background.png[start-background.png] image is a fullscreen background picture. Add it to `Interface`. In the `start` screen, add the following image element:
-
 
 [source,xml]
 ----
@@ -210,7 +191,6 @@ The link:http://hub.jmonkeyengine.org/wiki/lib/exe/fetch.php/jme3:advanced:start
 
 The link:http://hub.jmonkeyengine.org/wiki/lib/exe/fetch.php/jme3:advanced:hud-frame.png[hud-frame.png] image is a transparent frame that we use as HUD decoration. Add it to `Interface`. In the `hud` screen, add the following image element:
 
-
 [source,xml]
 ----
 
@@ -221,7 +201,6 @@ The link:http://hub.jmonkeyengine.org/wiki/lib/exe/fetch.php/jme3:advanced:hud-f
 ----
 
 In order to make the hud-frame.png independent of the screen resolution you are using, you could use the `imageMode` attribute on the image element link:http://sourceforge.net/apps/mediawiki/nifty-gui/index.php?title=Resizable_Images_(ImageMode%3Dresize)_explained[ Resizable Images (ImageMode=resize) explained]
-
 
 [source,xml]
 ----
@@ -234,7 +213,6 @@ In order to make the hud-frame.png independent of the screen resolution you are 
 
 The link:http://hub.jmonkeyengine.org/wiki/lib/exe/fetch.php/jme3:advanced:face1.png[face1.png] image is an image that you want to use as a status icon. Add it to `Interface`.
 In the `hud` screen's `foreground` layer, add the following image element:
-
 
 [source,xml]
 ----
@@ -249,11 +227,9 @@ In the `hud` screen's `foreground` layer, add the following image element:
 This image is scaled to use 50% of the height and 30% of the width of its container.
 
 
-
 === Add Static Text
 
 The game title is a typical example of static text. In the `start` screen, add the following text element:
-
 
 [source,xml]
 ----
@@ -265,7 +241,6 @@ The game title is a typical example of static text. In the `start` screen, add t
 ----
 
 For longer pieces of static text, such as an introduction, you can use wrap=“true. Add the following text element to the `Start screen`:
-
 
 [source,xml]
 ----
@@ -282,11 +257,9 @@ The font used is jME3's default font “Interface/Fonts/Default.fnt which is inc
 Adjust the path to your font-name.
 
 
-
 === Add Controls
 
 Before you can use any control, you must load a Control Definition first. Add the following two lines _before_ your screen definitions:
-
 
 [source,xml]
 ----
@@ -299,12 +272,10 @@ Before you can use any control, you must load a Control Definition first. Add th
 Note that the useStyles tag must be the first child of the nifty tag, otherwise you will see an error in design view.
 
 
-
 ==== Label Control
 
 Use label controls for text that you want to edit dynamically from Java. One example for this is the score display.
 In the `hud` screen's `foreground` layer, add the following text element:
-
 
 [source,xml]
 ----
@@ -318,11 +289,9 @@ In the `hud` screen's `foreground` layer, add the following text element:
 Note that the width and height do not scale the bitmap font, but indirectly make certain it is centered. If you want a different size for the font, you need to provide an extra bitmap font (they come with fixed sizes and don't scale well).
 
 
-
 ==== Button Control
 
 Our +++<abbr title="Graphical User Interface">GUI</abbr>+++ plan asks for two buttons on the start screen. You add the Start and Quit buttons to the bottom panel of the `start` screen using the `&lt;control&gt;` element:
-
 
 [source,xml]
 ----
@@ -340,12 +309,9 @@ Our +++<abbr title="Graphical User Interface">GUI</abbr>+++ plan asks for two bu
 
 Note that these controls don't do anything yet – we'll get to that soon.
 
-
 Now remove all *backgroundColor=““* tags from your code. They were only needed to show the layout.
 
-
 Your screen.xml should look like this:
-
 
 [source,xml]
 ----
@@ -402,25 +368,20 @@ Your screen.xml should look like this:
 Nifty additionally offers many customizable controls such as check boxes, text fields, menus, chats, tabs, … See also link:http://sourceforge.net/apps/mediawiki/nifty-gui/index.php?title=Elements[Elements] on the Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++ site.
 
 
-
 == Intermediate Result
 
 When you preview this code in the jMonkeyEngine SDK, our tutorial demo should looks as follows: A start screen with two buttons, and a game screen with a simple HUD frame and a blue cube (which stands for any jME3 game content).
 
 
-
 image::jme3/advanced/nifty-gui-simple-demo.png[nifty-gui-simple-demo.png,with="",height="",align="center"]
-
 
 
 Compare this result with the layout draft above.
 
 
-
 == Next Steps
 
 Integrate the +++<abbr title="Graphical User Interface">GUI</abbr>+++ into the game. Typically, you will overlay the +++<abbr title="Graphical User Interface">GUI</abbr>+++.
-
 
 *  <<jme3/advanced/nifty_gui_overlay#,Nifty GUI Overlay>> (recommended)
 *  <<jme3/advanced/nifty_gui_projection#,Nifty GUI Projection>> (optional)

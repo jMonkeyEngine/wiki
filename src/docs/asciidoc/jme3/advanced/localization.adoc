@@ -12,27 +12,21 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 Localizing an application can mean several things: 
 
-
 *  At minimum you translate all messages and dialogs in the user interface to your target languages.
 *  You should also translate the “read me, help, and other documentation.
 *  Also translating web content related to the application makes sure international users find out about your localized game.
-*  If you go the whole way of internationalization, you also “translate metaphors in icons or symbols used. +
-E.g. For localizations to right-to-left languages, you must also adjust the whole flow of the UI (order of menus and buttons).
+*  If you go the whole way of internationalization, you also “translate metaphors in icons or symbols used. +E.g. For localizations to right-to-left languages, you must also adjust the whole flow of the UI (order of menus and buttons).
 
 There are tools that assist you with localizing Java Swing GUIs. jME3 applications do not typically have a Swing +++<abbr title="Graphical User Interface">GUI</abbr>+++, so those tools are not of much help. Just stick to the normal Java rules about using Bundle Properties:
-
 
 
 == Preparing the Localization
 
 *Tip:* The jMonkeyEngine SDK supports opening and editing Bundle.properties files. Also note the Tools &gt; Localization menu.
 
-
 To prepare the application for localization, you have to first identify all hard-coded messages.
 
-
 .  Find every line in your jME3 game where you hard-coded message strings, e.g. +
-
 [source,java]
 ----
 System.out.print("Hello World!");
@@ -41,7 +35,6 @@ UiText.setText("Score: "+score);
 
 .  Create one file named `Bundle.properties` in each directory where there are Java file that contain messages.
 .  For every hard-coded message, you add one line to the `Bundle.properties` file: First specify a unique key that identifies this string; then an equal sign; and the literal string itself. +
-
 [source]
 ----
 greeting=Hello World!
@@ -59,14 +52,11 @@ UiText.setText(ResourceBundle.getBundle("Bundle").getString("score.display")+sco
 The language used in the Bundle.properties files will be the default language for your game.
 
 
-
 == Translating the Messages
 
 Each additional language comes in a set of files that is marked with a (usually) two-letter suffix. Common locales are de for German, en for English, fr for French, ja for Japanese, pt for Portuguese, etc.
 
-
 To translate the messages to another language, for example, German:
-
 
 .  Make a copy of the `Bundle.properties` files.
 .  Name the copy `Bundle_de.properties` for German. Note the added suffix _de.
@@ -79,14 +69,11 @@ score.display=Spielstand:
 
  *Important:* Do not modify any of the keys (text to the left of the equal sign)!
 
-
 .  To test the German localization, start the application from the command line with `-Duser.language=de`. Note the parameter `de`.
 
 *Tip:* In the jMonkeyEngine SDK, you set this VM Option in the Project properties under Run. Here you can also save individual run configuraions for each language you want to test.
 
-
 To get the full list of language suffixes use 
-
 
 [source,java]
 ----
@@ -97,7 +84,6 @@ System.out.println(Arrays.toString(Locale.getISOLanguages()));
 == Which Strings Not to Translate
 
 *Important:* In the Bundle.properties file, do not include any strings that are asset paths, node or geometry names, input mappings, or material layers.
-
 
 *  Keep material layers: 
 [source,java]
@@ -129,11 +115,9 @@ inputManager.addListener(actionListener, "Shoot");
 Only localize messages and UI text!
 
 
-
 == Common Localization Problems
 
 Typical problems include:
-
 
 *  Localized strings will be of vastly different lengths and will totally break your UI layout. ⇒ Test every localization.
 *  Strings with variable text or numbers don't work the same in different languages. ⇒ Either work in grammatical cases/numbers/gender for each language, or use link:http://www.gnu.org/software/gettext/manual/gettext.html#Plural-forms[gettext] or link:http://userguide.icu-project.org/formatparse/messages[ICU4J].
@@ -146,6 +130,4 @@ Typical problems include:
 
 link:http://java.sun.com/developer/technicalArticles/Intl/ResourceBundles/[http://java.sun.com/developer/technicalArticles/Intl/ResourceBundles/]
 
-
 link:http://sourceforge.net/apps/mediawiki/nifty-gui/index.php?title=Localisation[http://sourceforge.net/apps/mediawiki/nifty-gui/index.php?title=Localisation]
-

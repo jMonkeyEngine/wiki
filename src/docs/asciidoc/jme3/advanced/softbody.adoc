@@ -15,12 +15,9 @@ Writing in progress, checkout the forum for additional infos link:http://hub.jmo
 
 what is a soft body ?
 
-
 how a soft body is simulated ? (  node, link, face ; spring &amp; damper )
 
-
 link:https://en.wikipedia.org/wiki/Soft_body_dynamics[https://en.wikipedia.org/wiki/Soft_body_dynamics]
-
 
 
 == Getting Started
@@ -28,8 +25,7 @@ link:https://en.wikipedia.org/wiki/Soft_body_dynamics[https://en.wikipedia.org/w
 The dynamics libraries for softbody (.so , .dll …) isn't (yet) prebuild for your platform so you have to checkout the entire project from GitHub then build the project.
 
 
-
-===== How to :
+=== How to :
 
 .   checkout the project from link:https://github.com/Dokthar/jmonkeyengine/tree/bullet_SoftBody[GitHub].
 .   go into the file gradle.propeties and set the line : buildNativeProjecte = true .
@@ -82,25 +78,20 @@ public void simpleInitApp() {
 
 soft mesh / surface 
 
-
 Cluster ?
 
-
 (generate) bending constraint ?
-
 
 config collision flag ?
 
 
-
-=== Ropes
+==== Ropes
 
 A rope can be created by creating a new SoftBody on a Mesh with Mesh.Mode.Lines.
 More informations on creating <<jme3/advanced/custom_meshes#,custom meshes>>.
 
 
-
-==== Example
+===== Example
 
 [source,java]
 ----
@@ -134,7 +125,6 @@ ropeMesh.updateBound();
 
 Once you have a Line Mesh, you can do as follow :
 
-
 [source,java]
 ----
 
@@ -145,11 +135,10 @@ t.addControl(new SoftBodyControl(false));
 ----
 
 
-=== Anchors
+==== Anchors
 
 An Anchors act like a weld between a SoftBody and a RigidBody.
 Adding a anchors to a soft body require to specify the SoftBody's node and the RigidBody to weld with. 
-
 
 [source,java]
 ----
@@ -159,10 +148,9 @@ soft.appendAnchor(nodeId, rigid);
 ----
 
 
-===== Note
+=== Note
 
 An anchor bind a SoftBody's node (or Vertex) to a RigidBody, the node will be attached to a RigidBody even if there are space in between.
-
 
 
 [WARNING]
@@ -172,8 +160,7 @@ An anchor bind a SoftBody's node (or Vertex) to a RigidBody, the node will be at
 
 
 
-
-==== Example
+===== Example
 
 [source,java]
 ----
@@ -200,7 +187,6 @@ soft.appendAnchor(8, rigid); //where 8 is the last node of the rope
 
 Anchors can be removed as below. Note that you have to keep the node and RigidBody bind with.
 
-
 [source,java]
 ----
 
@@ -209,10 +195,9 @@ soft.removeAnchor(8,rigid);
 ----
 
 
-=== Joints
+==== Joints
 
 Joints require SoftBodies with Clusters ( see generateClusters(int k) ). 
-
 
 
 [WARNING]
@@ -222,8 +207,7 @@ Joints require SoftBodies with Clusters ( see generateClusters(int k) ).
 
 
 
-
-===== LinearJoint
+=== LinearJoint
 
 [source,java]
 ----
@@ -234,7 +218,7 @@ public SoftLinearJoint(Vector3f position, PhysicsSoftBody nodeA, PhysicsSoftBody
 ----
 
 
-===== AngularJoint
+=== AngularJoint
 
 [source,java]
 ----
@@ -245,10 +229,10 @@ public SoftAngularJoint(Vector3f axis, PhysicsSoftBody nodeA, PhysicsSoftBody no
 ----
 
 
-==== Examples
+===== Examples
 
 
-===== LinearJoint
+=== LinearJoint
 
 [source,java]
 ----
@@ -275,7 +259,7 @@ softBodyAppState.getPhysicsSoftSpace().add(joint);
 ----
 
 
-===== AngularJoint
+=== AngularJoint
 
 [source,java]
 ----

@@ -9,12 +9,10 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 jNavigation is Java jME port for Recast Navigation written in C++. The project has two parts:
 
-
 .  link:https://github.com/QuietOne/jNavigation-native[jNavigationNative] contains Recast Navigation library and C++ wrapper for java
 .  link:https://github.com/QuietOne/jNavigation[jNavigation] is Java project that uses jNavigationNative and is the project that the end user will use
 
 If there is need for updating Recast Navigation from native side, there are two kinds of updating bindings:
-
 
 .  only updating methods as the Recast made more efficient or more precise
 .  adding new methods for Recast use
@@ -24,11 +22,9 @@ If there is need for updating Recast Navigation from native side, there are two 
 
 Only updating methods are easy. The requirements needed:
 
-
 *  C++ compiler
 
 The jNavigationNative that has following folders and files (it has more, but these are the most important for now):
-
 
 *  Recast
 **  Include
@@ -39,9 +35,7 @@ The jNavigationNative that has following folders and files (it has more, but the
 
 Updating the methods is only the matter of putting all headers from Recast Navigation to Include folder, source to Source folders, and then building the project.
 
-
 As author of this project used the NetBeans 7.4 for building the project, the following instruction is included, if the building from terminal doesn't work.
-
 
 .  Setting link:https://netbeans.org/kb/docs/cnd/beginning-jni-linux.html[ parameters for NetBeans compiler]
 .  Remove all headers from Header Files
@@ -57,7 +51,6 @@ As author of this project used the NetBeans 7.4 for building the project, the fo
 
 This is more complicated process and it includes the all work done in NetBeans mentioned in previous section. After that, there are two ways to add new function:
 
-
 *  manually adding code to wrapper
 *  creating new wrapper with link:http://swig.org/[SWIG]
 
@@ -65,7 +58,6 @@ This is more complicated process and it includes the all work done in NetBeans m
 ==== Manually adding code to wrapper
 
 Example of method in wrapper:
-
 
 [source,java]
 ----
@@ -78,19 +70,15 @@ SWIGEXPORT jint JNICALL Java_com_jme3_ai_navigation_utils_RecastJNI_rcIntArray_1
 
 The Recast_wrap.cxx uses SWIG wrapper so for declaring method in wrapper you must first use the keyword `SWIGEXPORT` then returning type (for more information on returning types see link:http://docs.oracle.com/javase/1.5.0/docs/guide/jni/spec/types.html[link]), then again keyword `JNICALL` and then as the name of method `Java_com_jme3_ai_navigation_utils_RecastJNI_` + `name of class` + `name of method`, after that, there goes list of parameters needed for the function (for more information see link:http://docs.oracle.com/javase/7/docs/technotes/guides/jni/spec/functions.html[link]). In body of method write how the function should be used.
 
-
 After adding method to wrapper, compile project and add it to jNavigation.
 In jNavigation project in class `com.jme3.ai.navigation.utils.RecastJNI.java` add native method, and after that add in class from which you would like to use this method to call this native method. It seems a little bit more complicated than it should be, but this also for support for updating native side with SWIG.
-
 
 
 ==== Creating new wrapper with SWIG
 
 In some temporary folder add all headers. It shouldn't contain any subfolders.
 
-
 The following script was used for generating wrapper:
-
 
 [source]
 ----
@@ -160,7 +148,6 @@ The following script was used for generating wrapper:
 ----
 
 If there are more headers at some moment, include them in both places.
-
 
 .  Save script as Recast.i into temp folder with rest of the headers
 .  Install SWIG if not already

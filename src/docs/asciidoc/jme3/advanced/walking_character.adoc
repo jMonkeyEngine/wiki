@@ -10,9 +10,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 In the <<jme3/beginner/hello_collision#,Hello Collision>> tutorial and the link:http://code.google.com/p/jmonkeyengine/source/browse/trunk/engine/src/test/jme3test/bullet/TestQ3.java[TestQ3.java] code sample you have seen how to create collidable landscapes and walk around in a first-person perspective. The first-person camera is enclosed by a collision shape and is steered by the BetterCharacterControl. 
 
-
 Other games however require a third-person perspective of the character: In these cases you use a CharacterControl on a Spatial. This example also shows how to set up custom navigation controls, so you can press WASD to make the third-person character walk; and how to implement dragging the mouse to rotate.
-
 
 
 [WARNING]
@@ -22,11 +20,9 @@ Some details on this page still need to be updated from old CharacterControl +++
 
 
 
-
 == Sample Code
 
 Several related code samples can be found here:
-
 
 *  link:http://code.google.com/p/jmonkeyengine/source/browse/trunk/engine/src/test/jme3test/bullet/TestPhysicsCharacter.java[TestPhysicsCharacter.java] (third-person view)
 *  link:http://code.google.com/p/jmonkeyengine/source/browse/trunk/engine/src/test/jme3test/bullet/TestWalkingChar.java[TestWalkingChar.java] (third-person view)
@@ -38,14 +34,11 @@ Several related code samples can be found here:
 The code in this tutorial is a combination of these samples.
 
 
-
 == BetterCharacterControl
 
 Motivation: When you load a character model, give it a RigidBodyControl, and use forces to push it around, you do not get the desired behaviour: RigidBodyControl'ed objects (such as cubes and spheres) roll or tip over when pushed by physical forces. This is not the behaviour that you expect of a walking character. JME3's BulletPhysics integration offers a BetterCharacterControl with a `setWalkDirection()` method. You use it to create simple characters that treat floors and walls as solid, and always stays locked upright while moving.
 
-
 This code sample creates a simple upright Character:
-
 
 [source,java]
 ----
@@ -63,7 +56,6 @@ bulletAppState.getPhysicsSpace().add(myCharacter_phys);
 ----
 
 To use the BetterCharacterControl, you may load your character like this:
-
 
 [source,java]
 ----
@@ -100,9 +92,7 @@ The BulletPhysics CharacterControl only collides with “real PhysicsControls (R
 ====
 
 
-
 A CharacterControl is a special kinematic object with restricted movement. CharacterControls have a fixed “upward axis, this means they do not topple over when walking over an obstacle (as opposed to RigidBodyControls), which simulates a being's ability to balance upright. A CharacterControl can jump and fall along its upward axis, and it can scale steps of a certain height/steepness.
-
 [cols="2", options="header"]
 |===
 
@@ -110,8 +100,7 @@ a| CharacterControl Method
 a| Property 
 
 a| setUpAxis(1)
-a| Fixed upward axis. Values: 0 = X axis , 1 = Y axis , 2 = Z axis. +
-Default: 1, because for characters and vehicles, up is typically along the Y axis.
+a| Fixed upward axis. Values: 0 = X axis , 1 = Y axis , 2 = Z axis. +Default: 1, because for characters and vehicles, up is typically along the Y axis.
 
 a| setJumpSpeed(10f) 
 a| Jump speed (movement along upward-axis) 
@@ -126,13 +115,11 @@ a| How steep the slopes and steps are that the character can climb without consi
 a| The intensity of gravity for this CharacterControl'ed entity. Tip: To change the direction of gravity for a character, modify the up axis.
 
 a| setWalkDirection(new Vector3f(0f,0f,0.1f))
-a| (CharacterControl only) Make a physical character walk continuously while checking for floors and walls as solid obstacles. This should probably be called “setPositionIncrementPerSimulatorStep. This argument is neither a direction nor a velocity, but the amount to increment the position each physics tick: vector length = accuracy*speed in m/s. +
-Use `setWalkDirection(Vector3f.ZERO)` to stop a directional motion. 
+a| (CharacterControl only) Make a physical character walk continuously while checking for floors and walls as solid obstacles. This should probably be called “setPositionIncrementPerSimulatorStep. This argument is neither a direction nor a velocity, but the amount to increment the position each physics tick: vector length = accuracy*speed in m/s. +Use `setWalkDirection(Vector3f.ZERO)` to stop a directional motion. 
 
 |===
 
 For best practices on how to use `setWalkDirection()`, see the Navigation Inputs example below.
-
 
 
 == Walking Character Demo
@@ -167,7 +154,6 @@ public class WalkingCharacterDemo extends SimpleApplication
 
 To create a walking character:
 
-
 .  (Unless you already have it) Activate physics in the scene by adding a <<jme3/advanced/physics#,BulletAppState>>.
 .  Init the scene by loading the game level model (terrain or floor/buildings), and giving the scene a MeshCollisionShape.
 .  Create the animated character:
@@ -200,7 +186,6 @@ public void simpleInitApp() {
 
 In the simpleInitApp() method you initialize the scene and give it a MeshCollisionShape. The sample in the jme3 sources uses a custom helper class that simply creates a flat floor and drops some cubes and spheres on it:
 
-
 [source,java]
 ----
 
@@ -213,7 +198,6 @@ public void simpleInitApp() {
 ----
 
 In a real game, you would load a scene model here instead of a test world. You can load a model from a local or remote zip file, and scale and position it:
-
 
 [source,java]
 ----
@@ -240,7 +224,6 @@ public void simpleInitApp() {
 
 Also, add a light source to be able to see the scene.
 
-
 [source,java]
 ----
 
@@ -254,7 +237,6 @@ Also, add a light source to be able to see the scene.
 === Create the Animated Character
 
 You create an animated model, such as Oto.mesh.xml.
-
 
 .  Place the “Oto model into the `assets/Models/Oto/` directory of your project.
 .  Create the CollisionShape and adjust the capsule radius and height to fit your character model.
@@ -290,11 +272,9 @@ public void simpleInitApp() {
 
 
 
-
 === Set Up AnimControl and AnimChannels
 
 Create several AnimChannels, one for each animation that can happen simultaneously. In this example, you create one channel for walking and one for attacking. (Because the character can attack with its arms and walk with the rest of the body at the same time.)
-
 
 [source,java]
 ----
@@ -319,7 +299,6 @@ public void simpleInitApp() {
 The attackChannel only controls one arm, while the walking channels controls the whole character.
 
 
-
 === Add ChaseCam / CameraNode
 
 [source,java]
@@ -341,7 +320,6 @@ public void simpleInitApp() {
 === Handle Navigation
 
 Configure custom key bindings for WASD keys that you will use to make the character walk. Then calculate the vector where the user wants the character to move. Note the use of the special `setWalkDirection()` method below.
-
 
 [source,java]
 ----
@@ -368,7 +346,6 @@ public void simpleInitApp() {
 ----
 
 Respond to the key bindings by setting variables that track in which direction you will go. This allows us to steer the character forwards and to the left at the same time. *Note that no actual walking happens here yet!* We just track the input.
-
 
 [source,java]
 ----
@@ -397,7 +374,6 @@ public void onAction(String binding, boolean value, float tpf) {
 
 The player can attack and walk at the same time. `Attack()` is a custom method that triggers an attack animation in the arms. Here you should also add custom code to play an effect and sound, and to determine whether the hit was successful.
 
-
 [source,java]
 ----
 
@@ -410,9 +386,7 @@ private void attack() {
 
 Finally, the update loop looks at the directional variables and moves the character accordingly. Since this is a special kinematic CharacterControl, we use the `setWalkDirection()` method. 
 
-
 The variable `airTime` tracks how long the character is off the ground (e.g. when jumping or falling) and adjusts the walk and stand animations acccordingly.
-
 
 [source,java]
 ----
@@ -463,7 +437,6 @@ public void simpleUpdate(float tpf) {
 ----
 
 This method resets the walk animation.
-
 
 [source,java]
 ----

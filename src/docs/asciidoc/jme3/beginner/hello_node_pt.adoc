@@ -11,22 +11,18 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 Anterior: <<jme3/beginner/hello_simpleapplication_pt#,Hello SimpleApplication pt>>,
 Próximo: <<jme3/beginner/hello_asset_pt#,Hello Assets pt>>. 
 
-
 Neste tutorial nós daremos uma olhada na criação de uma cena 3D.
-
 
 *  Este tutorial assume que você save o que o <<jme3/the_scene_graph#, grafo de cena>> é. is.
 *  Para uma introdução visual, cheque o <<jme3/scenegraph_for_dummies#, Grafo de Cena para Novatos>>.
 
 Quando criando um jogo 3D
 
-
 .  Você cria alguns objetos como jogadores, edifícios, etc.
 .  Você adiciona os objetos para a cena.
 .  Você move, redimensiona, rotaciona, colore, e anima eles.
 
 Você aprendera que o grafo de cena representa o mundo 3D, e porque o nó raiz (rootNode) é importante. Você aprenderá como criar objetos simples, como deixá-los transportar dados customizados (como, por exemplo, pontos de saúde), e como “transformá-los por mover, escalonar e rotacionar. Você compreenderá a diferença entre os dois tipos de “Espaciais no grafo de cena: nós (Nodes) e geometrias (Geometries).
-
 
 
 == Amostra de código
@@ -91,11 +87,9 @@ public class HelloNode extends SimpleApplication {
 Construa e execute a amostra de código. Você deveria ver duas caixas coloridas inclinadas no mesmo ângulo.
 
 
-
 == Entendendo a Terminologia
 
 Neste tutorial você aprenderá alguns novos termos:
-
 [cols="2", options="header"]
 |===
 
@@ -120,7 +114,6 @@ a| Transladar, ou rotacionar, ou escalar um objeto = transformar um objeto
 |===
 
 Toda aplicação JME3 tem um nó raiz (rootNode): Seu jogo automaticamente herda o objeto `rootNode` de SimpleApplication. Tudo anexado ao nó raiz (rootNode) é parte do grafo de cena. Os elementos do grafo de cena são os espaciais (Spatials).
-
 
 *  Um Spatial contém a localização, rotação e escala de um objeto.
 *  Um Spatial pode ser carregado, transformado, e salvo.
@@ -150,7 +143,6 @@ a| O `nó raiz (rootNode)`, um nó de chão agrupando vários terrenos, um nó v
 == Entendendo o Código
 
 O que acontece no trecho de código? Você usa o método `simpleInitApp()` que foi introduzido no primeiro tutorial para inicializar a cena.
-
 
 .  Você cria a primeira geometria caixa.
 **  Crie uma forma caixa (Box) com extensões de (1,1,1), isto faz a caixa 2x2x2 unidades do mundo grande.
@@ -205,7 +197,6 @@ O que acontece no trecho de código? Você usa o método `simpleInitApp()` que f
 Se você executar a aplicação somente com o código dado até aqui, a cena parece vazia. Isto é porque o nó (Node) está invisível, e você não tem ainda anexado quaisquer geometrias (Geometries) visíveis para o nó raiz (rootNode).. 
 
 
-
 .  Anexe as duas caixas para o nó pivô 
 [source,java]
 ----
@@ -215,7 +206,6 @@ Se você executar a aplicação somente com o código dado até aqui, a cena par
 ----
 
 Se você executar o aplicativo com somente o código dado até aqui, você vê dois cubos: Um vermelho imediatamente acima de um azul.
-
 
 .  Rotacione o nó pivô.
 [source,java]
@@ -227,19 +217,15 @@ Se você executar o aplicativo com somente o código dado até aqui, você vê d
 
 
 
-
 === O que é um nó pivô (Pivot Node)?
 
 Você pode transformar (e.g. rotacionar) geometrias (Geometries) ao redor do próprio centro delas, ou ao redor de um ponto central definido pelo usuário. Um ponto central definido pelo usuário para um ou mais geometrias (Geometries) é chamado pivô.
-
 
 *  Neste exemplo, você agrupou duas geometrias (Geometries) por anexá-las para um nó pivô (Node). Você vê o nó (Node) pivô como um instrumento para rotacionar as duas geometrias (Geometries) ao mesmo tempo ao redor de um centro em comum. Rotacionar o nó (Node) pivô rotaciona todas as geometrias (Geometries) anexadas, de uma única vez. O nó pivô é o centro da rotação. Antes de anexar as outras geometrias (Geometries), tenha certeza que o nó pivô está em (0,0,0). Transformar um nó (Node) pai para transformar todas as crianças espaciais (Spatials) anexadas é uma tarefa comum. Você usará este método muito em seus jogos quando você mover espaciais (Spatials).
 
 Exemplos: Um veículo e seu motorista movem juntos; um planeta com sua lua orbitam o sol.
 
-
-*  Contraste este caso com a outra opção: Se você não criar um nó pivô extra e transformar uma geometria (Geometry), então toda transformação é feita relativa a origem da geometria (Geometry) (tipicamente o centro dela). +
-*Exemplos:*  Se você rotacionar cada cubo diretamente (usando `red.rotate(0.1f , 0.2f , 0.3f);` e `blue.rotate(0.5f , 0.0f , 0.25f);`), então cada cubo é rotacionado individualmente ao redor do seu centro. Isto é similar a um planeta rotacionando ao redor de seu próprio centro.
+*  Contraste este caso com a outra opção: Se você não criar um nó pivô extra e transformar uma geometria (Geometry), então toda transformação é feita relativa a origem da geometria (Geometry) (tipicamente o centro dela). +*Exemplos:*  Se você rotacionar cada cubo diretamente (usando `red.rotate(0.1f , 0.2f , 0.3f);` e `blue.rotate(0.5f , 0.0f , 0.25f);`), então cada cubo é rotacionado individualmente ao redor do seu centro. Isto é similar a um planeta rotacionando ao redor de seu próprio centro.
 
 
 == Como eu Populo o Grafo de Cena?
@@ -309,7 +295,6 @@ a| Tudo que você inicializa e anexa ao `nó raiz (rootNode)` no método `simple
 == Como eu transformo espaciais (Spatials)?
 
 Há três tipos de transformação 3D: Translação, Escalonamento, e Rotação.
-
 [cols="4", options="header"]
 |===
 
@@ -327,7 +312,6 @@ a|
 
 Para mover um espacial (Spatial) para coordenadas específicas, tais como (0,40.2f,-2), use:  
 
-
 [source,java]
 ----
 thing.setLocalTranslation( new Vector3f( 0.0f, 40.2f, -2.0f ) );
@@ -335,14 +319,12 @@ thing.setLocalTranslation( new Vector3f( 0.0f, 40.2f, -2.0f ) );
 
  Para mover um espacial (Spatial) por uma certa quantia, e.g. mais acima (y=40.2f) e mais atrás (z=-2.0f): 
 
-
 [source,java]
 ----
 thing.move( 0.0f, 40.2f, -2.0f );
 ----
 
  |+right -left|+up -down|+forward -backward|
-
 [cols="4", options="header"]
 |===
 
@@ -351,10 +333,7 @@ a| eixo X-
 a| eixo Y 
 a| eixo Z 
 
-a|Especifique o fator de escalonamento em cada dimensão: tamanho, altura, comprimento. +
- um valor entre 0.0f e 1.0f diminue o espacial (Spatial); maior que 1.0f estica ele; 1.0f mantém ele o mesmo. +
- Usando o mesmo valor para cada dimensão escalona proporcionalmente, valor diferentes esticam ele. +
- Para escalonar um espacial (Spatial) 10 vezes mais longo, um décimo da altura, e manter o mesmo comprimento:  
+a|Especifique o fator de escalonamento em cada dimensão: tamanho, altura, comprimento. + um valor entre 0.0f e 1.0f diminue o espacial (Spatial); maior que 1.0f estica ele; 1.0f mantém ele o mesmo. + Usando o mesmo valor para cada dimensão escalona proporcionalmente, valor diferentes esticam ele. + Para escalonar um espacial (Spatial) 10 vezes mais longo, um décimo da altura, e manter o mesmo comprimento:  
 [source,java]
 ----
 thing.scale( 10.0f, 0.1f, 1.0f );
@@ -373,15 +352,13 @@ a| eixo X-
 a| eixo Y 
 a| eixo Z 
 
-a|Rotação 3-D é um pouco complicado (<<jme3/rotate#,aprenda os detalhes aqui>>)). em breve: Você pode rotacionar ao redor de três eixos: Pitch (X), yaw (Y), e roll (Z). Você pode especificar ângulos em graus por multiplicar o valor de graus com `FastMath.DEG_TO_RAD`. +
- Para rolar um objeto 180° ao redor do z axis: : 
+a|Rotação 3-D é um pouco complicado (<<jme3/rotate#,aprenda os detalhes aqui>>)). em breve: Você pode rotacionar ao redor de três eixos: Pitch (X), yaw (Y), e roll (Z). Você pode especificar ângulos em graus por multiplicar o valor de graus com `FastMath.DEG_TO_RAD`. + Para rolar um objeto 180° ao redor do z axis: : 
 [source,java]
 ----
 thing.rotate( 0f , 0f , 180*FastMath.DEG_TO_RAD );
 ----
 
  Tip: Dica: Se sua idéia de jogo pede uma quantidade séria de rotações, é merecedor dar uma olhada em <<jme3/quaternion#,quaternion>>s, uma estrutura de dado que pode combinar e armazenar rotações eficientemente. 
-
 
 [source,java]
 ----
@@ -399,7 +376,6 @@ a|roll = inclinar sua cabeça
 == Como eu Resolvo Problemas com espaciais (Spatials)?
 
 Se você obtém resultados inesperados, cheque se você fez os seguintes enganos frequentes:
-
 [cols="2", options="header"]
 |===
 
@@ -407,17 +383,10 @@ a| Problema?
 a| Solução! 
 
 a| Geometria (Geometry) criada não aparece na cena. 
-a| Você anexou ela a (um nó que está vinculado a) o nó raiz (rootNode)? +
- Ela tem um Material? +
- Qual é sua translação (posição)? Ela está atrás da câmera ou coberta por uma outra geometria (Geometry)? +
- Ela é tão minúscula ou tão gigante para ver? +
- Ela está tão distante da câmera? (Tente link:http://jmonkeyengine.org/javadoc/com/jme3/renderer/Camera.html#setFrustumFar%28float%29[cam.setFrustumFar](111111f); para ver mais distante) 
+a| Você anexou ela a (um nó que está vinculado a) o nó raiz (rootNode)? + Ela tem um Material? + Qual é sua translação (posição)? Ela está atrás da câmera ou coberta por uma outra geometria (Geometry)? + Ela é tão minúscula ou tão gigante para ver? + Ela está tão distante da câmera? (Tente link:http://jmonkeyengine.org/javadoc/com/jme3/renderer/Camera.html#setFrustumFar%28float%29[cam.setFrustumFar](111111f); para ver mais distante) 
 
 a| Um espacial (Spatial) rotaciona em maneiras inesperadas. 
-a| Você usou os valores em radianos, e não em graus? (Se você usou graus, multiplique eles com FastMath.DEG_TO_RAD para convertê-los para radianos) +
- Você criou o espacial (Spatial) na origem (Vector.ZERO) antes de movê-lo? +
- Você rotacionou ao redor do nó pivô ou ao redor de algo mais? +
- Você rotacionou ao redor do eixo certo? 
+a| Você usou os valores em radianos, e não em graus? (Se você usou graus, multiplique eles com FastMath.DEG_TO_RAD para convertê-los para radianos) + Você criou o espacial (Spatial) na origem (Vector.ZERO) antes de movê-lo? + Você rotacionou ao redor do nó pivô ou ao redor de algo mais? + Você rotacionou ao redor do eixo certo? 
 
 a| Uma geometria (Geometry) tem cor (Color) ou Material inepserado. 
 <a| Você reusou um Material de uma outra geometria (Geometry) e tem inadvertidamente mudado suas propriedades? (Se sim, considere cloná-lo: mat2 = mat.clone(); )  
@@ -429,15 +398,11 @@ a| Uma geometria (Geometry) tem cor (Color) ou Material inepserado.
 
 Muitos espaciais (Spatials) representam personagens ou outras entidades que o jogador pode interagir. O código acima que rotaciona as duas caixas ao redor de um centro em comum (pivô) poderia ser usado para uma espaçonave estacionada em uma estação espacial orbital, por exemplo.
 
-
 Dependendo do seu jogo, entidades de jogo não somente mudam a posição delas, rotação ou escala (as transformações que você aprendeu). Entidades de jogo também têm propriedades personalizadas, como saúde, inventário carregado, equipamento usado para um personagem, ou força do casco e combustível restante para uma aeronave. Em Java, você representa dados de entidade como variáveis de classe, e.g. floats, Strings, ou Arrays.
-
 
 Você pode adicionar dados personalizados diretamente para qualquer nó (Node) ou geometria (Geometry). * Você não precisa estender a classe nó (Node) para incluir variáveis! *
 
-
 Por exemplo, para adicionar um número de id customizado para um nó, você usaria:
-
 
 [source,java]
 ----
@@ -445,7 +410,6 @@ pivot.setUserData( "pivot id", 42 );
 ----
 
 Para ler o id do nó (Node) em outro lugar, você usaria:
-
 
 [source,java]
 ----
@@ -455,11 +419,8 @@ int id = pivot.getUserData( "pivot id" );
 Por usar diferentes chaves de Strings (aqui a chave é o `id do pivô`), você pode recuperar e configurar vários valores para quaisquer dados que o espacial (Spatial) precisa carregar. Quando você iniciar a escrever seu jogo, você talvez adicione um valor de combustível para um nó carro, valor de velocidade para um nó avião, ou número de moedas douradas para um nó jogador, e muito mais. Entretanto, deve-se notar que somente objetos customizados que implementam Savable podem ser passados.
 
 
-
 == Conclusão
 
 Você aprenderu que sua cena 3D é um grafo de cena composto de espaciais (Spatials): Geometrias (Geometries) visíveis e nós (Nodes) invisíveis. Você pode transformar espaciais (Spatials), ou anexá-los a nós e transformar os nós. Você sabe a maneira mais fácil de como adicionar propriedades de entidade customizadas (tais como a saúde do jogador ou a velocidade do veículo) para espaciais (Spatials).
 
-
 Desde que formas padrões como esferas e caixas ficam velhas rápido, continue com o próximo capítulo onde você aprenderá a <<jme3/beginner/hello_asset#, carregar ativos, como por exemplo, modelos 3-D>>.
-

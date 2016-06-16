@@ -9,16 +9,13 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 In this article we explain how the JMonkey Entity System looks like and why.
 
-
 If you are new to this subject please read the <<jme3/contributions/entitysystem/introduction#,Entity System Introduction>> first.
 
 
-
-= Multithreading
+== Multithreading
 
 One difference between the JMonkey Entity System and other Entity Systems is that you are allowed to access the system from various threads. This can give your game a huge performance boost because costly task can easily separated in an own thread.
 This leads to an unique design of the components and the introduction to Entity Sets.
-
 
 
 === Entity Sets
@@ -33,12 +30,10 @@ With the method applyChanges() this entity Set will update all of their entities
 Besides after this method call you have a direct access to all added,changed and removed entities separately and there is no need to loop through all entities.
 
 
-
 === Components
 
 Because components have no other methods except the getter, changes are made by replacing the component of an entity with a new one. Therefore an entity can only have one component of the same class. If a component would have a setter no event would fired and parallel processing would not be possible anymore. 
 It is important that you only store pure data in the components because otherwise you would no longer know where you can find the logic and the approach of a clear software design would get lost.
-
 
 
 [IMPORTANT]
@@ -50,7 +45,6 @@ This is a big mistake because such objects contain logic and in our approach com
 
 
 
-
 [IMPORTANT]
 ====
 
@@ -59,12 +53,10 @@ Never subclass Component classes.
 
 
 
-
 === What are Systems?
 
 Simply all objects that use entities/components can be called a system.
 For example <<jme3/advanced/application_states#,AppStates>> can deal with different components and can easily be added to the Application.
-
 
 
 [IMPORTANT]
@@ -76,11 +68,9 @@ If two systems are modifying the same components then there is a design flaw.
 This is a sign that there is a missing component or system.
 
 
-
-= The Back End
+== The Back End
 
 There are two different ways of storing the information:
-
 
 
 === Hashmaps
@@ -89,17 +79,14 @@ For every component class a new Hashmap is created which contains the entityId a
 certain type the system will search in these Hashmaps for same entityIds.
 
 
-
 === SQL
 
 All information of the components are stored in an SQL Database, this is done via reflection.
 Therefore all Components need an empty constructor when they are stored in a database.
 Otherwise it is not possible to load the Component.
 
-
 Because SQL librarys can be different this Entity System only concentrate on working with hsqldb.
 link:http://hsqldb.org/[http://hsqldb.org/]
-
 
 
 === Hybrid
@@ -107,7 +94,6 @@ link:http://hsqldb.org/[http://hsqldb.org/]
 Because saving/loading the component objects from a SQL Database is slow this does not work for components who are changed recently. (PositionComponent)
 On the other hand checking weather an entity owns a special component ist faster in a SQL database.
 To keep both benefits there is the Hybrid approach:
-
 
 *  Components are put into a Hashmap.
 
@@ -120,7 +106,6 @@ Every entity has a unique id which is a long.
 Ids are not reused because afterward they would not be unique anymore which would cause a huge penalty.
 
 
-
 [TIP]
 ====
 
@@ -128,5 +113,4 @@ Often people are scared that they would ran out of ids:
 If you create a new entity every nano second you would need roughly 585 years before it wraps. 
 
 ====
-
 

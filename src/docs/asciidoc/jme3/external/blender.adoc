@@ -10,23 +10,19 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 This section discusses how to create and import models from Blender3D (2.62+, see bottom of page for Blender 2.49 and before) to jME3. Furthermore it explains how you can create various typical game-related assets like normal maps of high-poly models and baked lighting maps.
 
 
-
-=== Asset Management
+== Asset Management
 
 For the managing of assets in general, be sure to read the <<jme3/intermediate/multi-media_asset_pipeline#,Asset Pipeline Documentation>>. It contains vital information on how to manage your asset files.
 
 
-
-=== Creating Models
+== Creating Models
 
 Game-compatible models are models that basically only consist of a mesh and UV-mapped textures, in some cases animations. All other material parameters or effects (like particles etc.) can not be expected to be transferred properly and probably would not translate to live rendering very well anyway.
 
 
-
-== UV Mapped Textures
+=== UV Mapped Textures
 
 To successfully import a texture, the texture *has to* be UV-mapped to the model. Heres how to assign diffuse, normal and specular maps:
-
 
 *  image:jme3/external/blender-material-4.png[blender-material-4.png,with="300",height=""] image:jme3/external/blender-material-3.png[blender-material-3.png,with="350",height=""]
 **  image:jme3/external/blender-material-2.png[blender-material-2.png,with="300",height=""] image:jme3/external/blender-material-1.png[blender-material-1.png,with="150",height=""]
@@ -34,14 +30,11 @@ To successfully import a texture, the texture *has to* be UV-mapped to the model
 Its important to note that each used texture will create one separate geometry. So its best to either combine the UV maps or use a premade atlas with different texture types from the start and then map the uv coords of the models to the atlas instead of painting on the texture. This works best for large models like cities and space ships.
 
 
-
-== Animations
+=== Animations
 
 Animations for jME3 have to be bone animations, simple object movement is supported by the blender importer, mesh deformation or other forms of animation are not supported.
 
-
 To create an animation from scratch do the following:
-
 
 *  Create the model
 **  Make sure your models location, rotation and scale is applied and zero / one (see “Model Checklist below)
@@ -78,13 +71,11 @@ To create an animation from scratch do the following:
 
 
 
-=== Model Checklist
+== Model Checklist
 
 Sometimes you do not create the model yourself and often times models from the web are not really made for OpenGL live rendering or not completely compatible with the bone system in jME.
 
-
 To export an animated model in Blender make sure the following conditions are met:
-
 
 *  The animation has to be a *bone animation*
 *  Apply Location, Rotation and Scale to the mesh on Blender: On 3D View editor on Blender, select the mesh in Object Mode and go to the 3D View Editor’s header → Object Menu → Apply → Location / Rotation / Scale.
@@ -105,7 +96,6 @@ To export an animated model in Blender make sure the following conditions are me
 
 
 You can use SkeletonDebugger to show the skeleton on your game in order to check if the mesh and the skeleton are loaded correctly:
-
 
 [source,java]
 ----
@@ -137,19 +127,17 @@ You can use SkeletonDebugger to show the skeleton on your game in order to check
 
 Also check out these videos and resources:
 
-
 *  link:http://jmonkeyengine.org/groups/import-assets/forum/topic/blender-2-61-animation-issues/?topic_page=2&num=15[Forum: How to import animated models from Blender 2.6 correctly] (link:https://www.youtube.com/watch?v=QiLCs4AKh28[Video])
 *  link:http://www.youtube.com/watch?v=NdjC9sCRV0s[Video tutorial for animated models from Blender 2.6]
 *  link:https://docs.google.com/fileview?id=0B9hhZie2D-fENDBlZDU5MzgtNzlkYi00YmQzLTliNTQtNzZhYTJhYjEzNWNk&hl=en[Exporting OgreXML scenes from Blender 2.49 to jME]
 
 
-== NormalMap baking
+=== NormalMap baking
 
 Models for live rendering should have a low polygon count. To increase the perceived detail of a model normal maps are commonly used in games. This tutorial will show how to create a normalmap from a highpoly version of your model that you can apply to a lowpoly version of the model in your game.
 
 
-
-=== Blender modeling lowPoly & highPoly
+== Blender modeling lowPoly & highPoly
 
 *  If you use the multiresolution modifier you only need one object. Lets look at this example:
 **  image:jme3/external/1.gif[1.gif,with="150",height=""]
@@ -180,12 +168,10 @@ Remember! The actual preview affects the baking output and mesh export!
 
 
 
-
 [NOTE]
 ====
 Be careful: The steps above lead to terrible normal maps - use this procedure instead:
 ====
-
 
 
 *  uncheck “[ ] Bake from Multires
@@ -213,14 +199,11 @@ Be careful: in the Outliner the camera symbol (Restrict Render) must be on!
 
 
 
-
-=== Fixing the normal colors in Blender
+== Fixing the normal colors in Blender
 
 Blender has its own normal colors standard. We need to fix the colors to prepare the normalmap for using it with the JME Lighting Material.
 
-
 To do this, go to the Blender Node Window
-
 
 *  Here is Blender Node example. It fixes the normal colors:
 **  image:jme3/external/5.gif[5.gif,with="500",height=""]
@@ -238,13 +221,12 @@ To do this, go to the Blender Node Window
 
 
 
-== LightMap baking
+=== LightMap baking
 
 The goal of this tutorial is to explain briefly how to bake light map in blender with a separate set of texture coordinates and then export a model using this map in jME3.
 
 
-
-=== Blender modeling + texturing
+== Blender modeling + texturing
 
 *  create a mesh in blender and unwrap it to create uvs
 **  image:jme3/advanced/1.jpg[1.jpg,with="600",height=""]
@@ -269,10 +251,9 @@ The goal of this tutorial is to explain briefly how to bake light map in blender
 
 
 
-=== Importing the model in the SDK and creating the appropriate material
+== Importing the model in the SDK and creating the appropriate material
 
 Once this is done, export your model with the ogre exporter (or import it directly via the blend importer), and turn it into J3o with the SDK.
-
 
 *  Create material for it using the lighting definition.
 *  Add the colorMap in the diffuse map slot and the lightMap in the light map slot.
@@ -285,43 +266,34 @@ Once this is done, export your model with the ogre exporter (or import it direct
 
 The blend file, the ogre xml files and the textures can be found in the download section of the google code repo
 
-
 link:http://code.google.com/p/jmonkeyengine/downloads/detail?name=LightMap.zip&can=2&q=#makechanges[http://code.google.com/p/jmonkeyengine/downloads/detail?name=LightMap.zip&amp;can=2&amp;q=#makechanges]
 
 
-
-== Modelling racing tracks and cars
+=== Modelling racing tracks and cars
 
 Follow the link below to a pdf tutorial by rhymez where I guide you to modelling a car and importing it to the jMonkeyengine correctly and edit it in the vehicle editor.Plus how to model a simple racing track.
 link:http://www.indiedb.com/games/street-rally-3d/downloads/modelling-in-blender-to-the-jmonkeyengine[http://www.indiedb.com/games/street-rally-3d/downloads/modelling-in-blender-to-the-jmonkeyengine]
 
 
-
-== Optimizing Models for 3D games
+=== Optimizing Models for 3D games
 
 Follow the link below to a pdf tutorial by rhymez where I guide you on how you can optimize your models for faster rendering.
 link:http://www.indiedb.com/games/street-rally-3d/downloads/optimizing-3d-models-for-games[http://www.indiedb.com/games/street-rally-3d/downloads/optimizing-3d-models-for-games]
 
 
-
-== SkyBox baking
+=== SkyBox baking
 
 There are several ways to create static images to use for a sky in your game. This will describe the concepts used in blender and create an ugly sky emoji:smiley Check the links below for other ways and prettier skies.
 
-
 A sky box is a texture mapped cube, it can also, loosely, be called en EnvMap or a CubeMap. The camera is inside the cube and the clever thing that jME does is to draw the sky so it is always behind whatever else is in your scene. Imagine the monkey is the camera in the picture.
-
 
 *  image:jme3/external/skybox-concept.png[skybox-concept.png,with="",height=""]
 
 But a real sky is not a box around our heads, it is more like a sphere. So if we put any old image in the sky it will look strange and might even look like a box. This is not what we want. The trick is to distort the image so that it will _look_ like a sphere even if it in fact is a picture pasted on a box. Luckily blender can do that tricky distortion for us.
 
-
 The screenshots are from Blender 2.63 but the equivalent operations have been in blender for years so with minor tweaks should work for almost any version.
 
-
 So let's get started
-
 
 *  Fire up blender and you'll see something like this.
 **  image:jme3/external/start-screen2.png[start-screen2.png,with="",height=""]
@@ -352,14 +324,12 @@ The SDK also contains an image editor, right-click the image and select “edit 
 ====
 
 
-
 *  You will notice that Blender has taken the 6 sides of the cube and pasted together into one image (3x2). So now we need to cut it up again into 6 separate images. In gimp I usually set the guides to where I want to cut and then go into Filters→Web→Slice and let gimp cut it up for me.
 **  image:jme3/external/post-slice.png[post-slice.png,with="",height=""]
 
 *  Next up is to move the image files into your assets directory and create the sky in jME. You can do that in the Scene Composer by right clicking the scene node, select `Add Spatial` and then select `Skybox`.
 
 If you want to do it from code, here is an example:
-
 
 [source,java]
 ----
@@ -395,8 +365,7 @@ This example uses a strange normalScale, this is to flip the image on the X-axis
 
 
 
-
-=== Further reading
+== Further reading
 
 *  <<jme3/external/blender-example#,Warg - from cube to animated and textured game model Example>>
 *  <<jme3/advanced/sky#,How to add a Sky to your Scene>>

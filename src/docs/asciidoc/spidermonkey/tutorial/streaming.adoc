@@ -14,15 +14,11 @@ This article covers a deprecated +++<abbr title="Application Programming Interfa
 ====
 
 
-
 The streaming service is meant for situations where you want to transfer files, or other types of data to clients. In this tutorial we'll discuss how it works, and how to use it.
-
 
 Let's start off with how it works; streaming service uses messages to transfer data. This is done so it doesn't block other messages from being sent, while transferring. First a message is sent the describes the stream. The peer can now choose whether to accept or reject the stream. When the peer accepts, the data will be sent. You have to handle this data yourself. At the end of the stream you get the same message as when the stream was offered, to indicate the end of the stream.
 
-
 Let's transfer a file to a client:
-
 
 [source,java]
 ----
@@ -38,9 +34,7 @@ sService.offerStream(receiver, new StreamMessage(), new FileInputStream("test.tx
 
 As you can see, this system uses the Service system. First, we get the client's StreamingService, and register ourselves as a listener. Then we get the server's version of the StreamingService, from which you can stream things. Then we get a connector client (the first one), and send the file via an InputStream.
 
-
 Now to receive this stuff is simple;
-
 
 [source,java]
 ----
@@ -64,4 +58,3 @@ public void streamCompleted(StreamMessage message) {
 ----
 
 That was all; simple right?
-

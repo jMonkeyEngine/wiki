@@ -16,7 +16,6 @@ audio as a result. A better way is to record video and audio directly
 from the game while it is running using VideoRecorderAppState.
 
 
-
 [TIP]
 ====
 Combine this method with jMonkeyEngine's 
@@ -26,16 +25,13 @@ feature to record high-quality game trailers!
 
 
 
-
 == Simple Way
 
 First off, if all you need is to record video at 30fps with no sound, then look
 no further than jMonkeyEngine 3's built in `VideoRecorderAppState`
 class.
 
-
 Add the following code to your `simpleInitApp()` method. 
-
 
 [source,java]
 ----
@@ -48,14 +44,11 @@ The game will run slow, but the recording will be in high-quality and
 normal speed. Recording starts when the state is
 attached, and ends when the application quits or the state is detached.
 
-
 The video files will be stored in your *user home directory*. 
 If you want to save to another path, specify a File object in the
 VideoRecorderAppState constructor. 
 
-
 That's all!
-
 
 
 == Advanced Way
@@ -70,25 +63,19 @@ if something isn't clear, please link:http://jmonkeyengine.org/members/bortreb/[
 ====
 
 
-
 If you want to record audio as well, record at different framerates,
 or record from multiple viewpoints at once, then there's a full
 solution for doing this already made for you here:
 
-
 link:http://www.aurellem.com/releases/jmeCapture-latest.zip[http://www.aurellem.com/releases/jmeCapture-latest.zip]
 
-
 link:http://www.aurellem.com/releases/jmeCapture-latest.tar.bz2[http://www.aurellem.com/releases/jmeCapture-latest.tar.bz2]
-
 
 Download the archive in your preferred format, extract,
 add the jars to your project, and you are ready to go.
 
-
 The javadoc is here:
 link:http://www.aurellem.com/jmeCapture/docs/[http://www.aurellem.com/jmeCapture/docs/]
-
 
 To capture video and audio you use the
 `com.aurellem.capture.Capture` class, which has two methods,
@@ -96,9 +83,7 @@ To capture video and audio you use the
 `com.aurellem.capture.IsoTimer` class, which sets the audio and
 video framerate.
 
-
 The steps are:
-
 
 [source,java]
 ----
@@ -113,7 +98,6 @@ speed up and slow down depending on how computationally demanding your
 game is, but the final recorded audio and video will be perfectly
 sychronized and will run at exactly the fps which you specified.
 
-
 [source,java]
 ----
 
@@ -127,14 +111,12 @@ Audio and video will stop being recorded when the app stops. Your
 audio will be recorded as a 44,100 Hz linear PCM wav file, while the
 video will be recorded according to the following rules:
 
-
 1.) (Preferred) If you supply an empty directory as the file, then
 the video will be saved as a sequence of .png files, one file per
 frame.  The files start at 0000000.png and increment from there.
 You can then combine the frames into your preferred
 container/codec. If the directory is not empty, then writing
 video frames to it will fail, and nothing will be written.
-
 
 2.) If the filename ends in “.avi then the frames will be encoded as
 a RAW stream inside an AVI 1.0 container.  The resulting file
@@ -147,24 +129,20 @@ with them.)  Thanks to
 link:http://www.randelshofer.ch/blog/2008/08/writing-avi-videos-in-pure-java/[Werner Randelshofer]
 for his excellent work which made the AVI file writer option possible.
 
-
 3.) Any non-directory file ending in anything other than “.avi will
 be processed through Xuggle.  Xuggle provides the option to use
 many codecs/containers, but you will have to install it on your
 system yourself in order to use this option. Please visit
 link:http://www.xuggle.com/[http://www.xuggle.com/] to learn how to do this.
 
-
 Note that you will not hear any sound if you choose to record sound to
 a file.
-
 
 
 === Basic Example
 
 Here is a complete example showing how to capture both audio and video
 from one of jMonkeyEngine3's advanced demo applications.
-
 
 [source,java]
 ----
@@ -226,7 +204,6 @@ through the floor or obstacles due to inaccurate physics simulation,
 but after the end of one user-hour, that ball will have traveled one
 game-mile.
 
-
 When we're recording video, we don't care if the game-time syncs with
 user-time, but instead whether the time in the recorded video
 (video-time) syncs with user-time. To continue the analogy, if we
@@ -236,13 +213,11 @@ video later, we would want to see 30 fps video of the ball rolling at
 took to simulate that hour of game-time to make the high-quality
 recording.
 
-
 The IsoTimer ignores real-time and always reports that the same amount
 of time has passed every time it is called. That way, one can put code
 to write each video/audio frame to a file without worrying about that
 code itself slowing down the game to the point where the recording
 would be useless.
-
 
 
 === Advanced Example
@@ -251,21 +226,16 @@ The package from aurellem.com was made for AI research and can do more
 than just record a single stream of audio and video. You can use it
 to:
 
-
 1.) Create multiple independent listeners that each hear the world
 from their own perspective.
 
-
 2.) Process the sound data in any way you wish.
 
-
 3.) Do the same for visual data.
-
 
 Here is a more advanced example, which can also be found along with
 other examples in the jmeCapture.jar file included in the
 distribution.
-
 
 [source,java]
 ----
@@ -583,11 +553,9 @@ public class Advanced extends SimpleApplication {
 image:http://www.youtube.com/v/oCEfK0yhDrY?.swf[oCEfK0yhDrY?.swf,with="400",height=""]
 
 
-
 === Using Advanced features to Record from more than one perspective at once
 
 image:http://www.youtube.com/v/WIJt9aRGusc?.swf[WIJt9aRGusc?.swf,with="400",height=""]
-
 
 
 == More Information
@@ -595,19 +563,13 @@ image:http://www.youtube.com/v/WIJt9aRGusc?.swf[WIJt9aRGusc?.swf,with="400",heig
 This is the old page showing the first version of this idea
 link:http://aurellem.org/cortex/html/capture-video.html[http://aurellem.org/cortex/html/capture-video.html]
 
-
 All source code can be found here:
-
 
 link:http://hg.bortreb.com/audio-send[http://hg.bortreb.com/audio-send]
 
-
 link:http://hg.bortreb.com/jmeCapture[http://hg.bortreb.com/jmeCapture]
-
 
 More information on the modifications to OpenAL to support multiple
 listeners can be found here.
 
-
 link:http://aurellem.org/audio-send/html/ear.html[http://aurellem.org/audio-send/html/ear.html]
-

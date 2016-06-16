@@ -11,9 +11,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 The jMonkeyEngine3 has built-in support for link:http://jbullet.advel.cz[jBullet physics] via the `com.jme3.bullet` package. Physics are not only responsible for handing collisions, but they also make <<jme3/advanced/hinges_and_joints#,hinges and joints>> possible. One special example of physical joints are ragdoll physics, shown here.
 
 
-
 image::jme3/advanced/ragdoll.png[ragdoll.png,with="",height="",align="center"]
-
 
 
 
@@ -36,11 +34,9 @@ image::jme3/advanced/ragdoll.png[ragdoll.png,with="",height="",align="center"]
 A ragdoll is a simple “person (dummy) that you build out of cylinder collision shapes. The ragdoll has 11 limbs: 1 for shoulders, 1 for the body, 1 for hips; plus 2 arms and 2 legs that are made up of two limbs each. In your game, you will likely replace the cylinders with your own (better looking) limb models. In this example here we just use simple cylinders.
 
 
-
 === Limbs
 
 Since you're just creating the ragdoll for this example, all the limbs have the same shape, and you can write a simple helper method to create them. The function returns a PhysicsControl with CollisionShape with the width, height, location, and rotation (vertical or horizontal) that you specify. You choose a CapsuleCollisionShape (a cylinder with rounded top and bottom) so the limbs collide smoothly against one another.
-
 
 [source,java]
 ----
@@ -58,7 +54,6 @@ private Node createLimb(float width, float height, Vector3f location, boolean ro
 ----
 
 You write a custom helper method to initialize the limbs. Look at the screenshot above for orientation.
-
 
 *  All cylinders have the same diameter, 0.2f.
 *  You make the body and shoulders longer than the other limbs, 1.0f instead of 0.5f.
@@ -85,11 +80,9 @@ Node     lLegR = createLimb(0.2f, 0.5f, new Vector3f( 0.25f,-2.2f, 0), false);
 You now have the outline of a person. But if you ran the application now, the individual limbs would fall down independently of one another – the ragdoll is still lacking joints.
 
 
-
 === Joints
 
 As before, you write a small helper method. This time its purpose is to quickly join two limbs A and B at the connection point that we specify.
-
 
 *  Convert A's and B's connectionPoint vector from world coordinate space to local coordinate space.
 *  Use a ConeJoint, a special joint that approximates the degree of freedom that limbs typically have. The ConeJoint constructor requires the two nodes, and the two local pivot coordinates that we just determined.
@@ -110,7 +103,6 @@ private PhysicsJoint join(Node A, Node B, Vector3f connectionPoint) {
 
 Use the helper method to connect all limbs with joints where they belong, at one end of the limb.
 
-
 [source,java]
 ----
 
@@ -129,11 +121,9 @@ join(uLegR,     lLegR, new Vector3f( 0.25f, -1.7f, 0));
 Now the ragdoll is connected. If you ran the app now, the doll would collapse, but the limbs would stay together.
 
 
-
 === Attaching Everything to the Scene
 
 We create one (non-physical) Node named ragDoll, and attach all other nodes to it.
-
 
 [source,java]
 ----
@@ -153,7 +143,6 @@ ragDoll.attachChild(lLegR);
 
 To use the ragdoll in a scene, we attach its main node to the rootNode, and to the PhysicsSpace.
 
-
 [source,java]
 ----
 
@@ -167,7 +156,6 @@ bulletAppState.getPhysicsSpace().addAll(ragDoll);
 
 To pull the doll up, you could add an input handler that triggers the following action:
 
-
 [source,java]
 ----
 
@@ -179,14 +167,11 @@ shoulders.applyContinuousForce(true, upforce);
 We can use the action to pick the doll up and put it back on its feet, or what ever. Read more about <<jme3/advanced/physics#forcesmoving_physical_objects,Forces>> here.
 
 
-
 == Detecting Collisions
 
 Read the <<jme3/advanced/physics#responding_to_a_physicscollisionevent,Responding to a PhysicsCollisionEvent>> chapter in the general physics documentation on how to detect collisions. You can detect collisions between limbs or between limbs and the floor, and trigger game events.
 
 
-
 == Best Practices
 
 If you experience weird behaviour in a ragdoll – such as exploding into pieces and then reassembling – check your collision shapes. Verify you did not position the limbs too close to one another when assmebling the ragdoll. You typically see physical nodes being ejected when their collision shapes intersect, which puts physics in an impossible state.
-

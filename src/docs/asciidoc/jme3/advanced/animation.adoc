@@ -10,14 +10,11 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 In 3D games, you do not only load static 3D models, you also want to be able to trigger animations in the model from the Java code. 
 
 
-
 == Requirements
 
 JME3 only loads and plays animated models, it does not create them. 
 
-
 What is required for an animated model? (<<jme3/terminology#Animation,See also: Animation terminology>>)
-
 
 .  For each model, you have to segment the model into a skeleton (*bone rigging*). 
 .  For each motion, you have to specify how the animation distorts parts of the model (*skinning*).  
@@ -25,7 +22,6 @@ What is required for an animated model? (<<jme3/terminology#Animation,See also: 
 .  One model can contain several animations. You give every animation a name when you save it in the mesh editor.
 
 Unless you download free models, or buy them from a 3D artist, you must create your animated models in an *external mesh editor* (for example, Blender) yourself.
-
 
 *  <<sdk/blender#,Converting Blender Models to JME3 (.J3o files)>>
 *  link:http://www.youtube.com/user/aramakara[Video Series: Creating models in Blender, OgreMax, 3dsMax]
@@ -35,7 +31,6 @@ Unless you download free models, or buy them from a 3D artist, you must create y
 *  link:http://www.youtube.com/watch?v=IDHMWsu_PqA[Video: Creating Worlds with Instances in Blender]
 
 What is required in your JME3-based Java class?
-
 
 *  One Animation Control per animated model
 *  As many Animation Channels per Control as you need to play your animations. In simple cases one channel is enough, sometimes you need two or more Channels per model to play gestures and motions in parallel.
@@ -58,7 +53,6 @@ What is required in your JME3-based Java class?
 
 Create one `com.jme3.animation.AnimControl` object in your JME3 application for each animated model that you want to control. You have to register each animated model to one of these Animation Controls. The control object gives you access to the available animation sequences in the model.  
 
-
 [source,java]
 ----
 
@@ -74,9 +68,7 @@ Create one `com.jme3.animation.AnimControl` object in your JME3 application for 
 
 An Animation Control has several Animation Channels (`com.jme3.animation.AnimChannel`). Each channel can play one animation sequence at a time. 
 
-
 There often are situations where you want to run several animation sequences at the same time, e.g. “shooting while walking or “boxing while jumping. In this case, you create several channels, assign an animation to each, and play them in parallel. 
-
 
 [source,java]
 ----
@@ -90,11 +82,9 @@ There often are situations where you want to run several animation sequences at 
 To reset a Control, call `control.clearChannels();`
 
 
-
 == Animation Control Properties
 
 The following information is available for an AnimControl.
-
 [cols="2", options="header"]
 |===
 
@@ -113,9 +103,7 @@ a|Gets individual channels by index number. At most `getNumChannels()`.
 a|clearChannels()
 a|Clear all channels in this control.
 
-a|addListener(animEventListener) +
-removeListener(animEventListener) +
-clearListeners() 
+a|addListener(animEventListener) +removeListener(animEventListener) +clearListeners() 
 a|Adds or removes listeners to receive animation related events.
 
 |===
@@ -128,8 +116,7 @@ a|Usage
 a|setAnimations(aniHashMap)
 a|Sets the animations that this AnimControl is capable of playing. The animations must be compatible with the skeleton given in the constructor.
 
-a|addAnim(boneAnim) +
-removeAnim(boneAnim)
+a|addAnim(boneAnim) +removeAnim(boneAnim)
 a|Adds or removes an animation from this Control.
 
 a|getAnimationNames()
@@ -163,7 +150,6 @@ a|Returns the attachment node of a bone. Attach models and effects to this node 
 == Animation Channel Properties
 
 The following properties are set per AnimChannel.
-
 [cols="2", options="header"]
 |===
 
@@ -188,7 +174,6 @@ a| Fast-forward or rewind to a certain moment in time of this animation.
 |===
 
 The following information is available for a channel.
-
 [cols="2", options="header"]
 |===
 
@@ -213,7 +198,6 @@ a|The AnimControl that belongs to this AnimChannel.
 |===
 
 Use the following methods to add or remove individual bones to an AnimChannel. This is useful when you play two animations in parallel on two channels, and each controls a subset of the bones (e.g. one the arms, and the other the legs).
-
 [cols="2", options="header"]
 |===
 
@@ -223,16 +207,13 @@ a|Usage
 a|addAllBones()
 a|Add all the bones of the model's skeleton to be influenced by this animation channel. (default)
 
-a|addBone(“bone1) +
-addBone(bone1)
+a|addBone(“bone1) +addBone(bone1)
 a|Add a single bone to be influenced by this animation channel.
 
-a|addToRootBone(“bone1) +
-addToRootBone(bone1) 
+a|addToRootBone(“bone1) +addToRootBone(bone1) 
 a|Add a series of bones to be influenced by this animation channel: Add all bones, starting from the given bone, to the root bone.
 
-a|addFromRootBone(“bone1) +
-addFromRootBone(bone1) 
+a|addFromRootBone(“bone1) +addFromRootBone(bone1) 
 a|Add a series of bones to be influenced by this animation channel: Add all bones, starting from the given root bone, going towards the children bones.
 
 |===
@@ -241,7 +222,6 @@ a|Add a series of bones to be influenced by this animation channel: Add all bone
 == Playing Animations
 
 Animations are played by channel. *Note:* Whether the animation channel plays continuously or only once, depends on the Loop properties you have set.
-
 [cols="2", options="header"]
 |===
 
@@ -249,19 +229,16 @@ a|Channel Method
 a|Usage
 
 a|channel_walk.setAnim(“Walk,0.50f); 
-a| Start the animation named “Walk on channel channel_walk. +
-The float value specifies the time how long the animation should overlap with the previous one on this channel. If set to 0f, then no blending will occur and the new animation will be applied instantly.
+a| Start the animation named “Walk on channel channel_walk. +The float value specifies the time how long the animation should overlap with the previous one on this channel. If set to 0f, then no blending will occur and the new animation will be applied instantly.
 
 |===
 
 *Tip:* Use the AnimEventLister below to react at the end or start of an animation cycle.
 
 
-
 === Usage Example
 
 In this short example, we define the space key to trigger playing the “Walk animation on channel2.
-
 
 [source,java]
 ----
@@ -291,7 +268,6 @@ In this short example, we define the space key to trigger playing the “Walk an
 
 A jME3 application that contains animations can implement the `com.jme3.animation.AnimEventListener` interface.
 
-
 [source,java]
 ----
 public class HelloAnimation extends SimpleApplication
@@ -301,14 +277,11 @@ public class HelloAnimation extends SimpleApplication
 This optional Listener enables you to respond to animation start and end events, onAnimChange() and onAnimCycleDone().
 
 
-
 === Responding to Animation End
 
 The onAnimCycleDone() event is invoked when an animation cycle has ended. For non-looping animations, this event is invoked when the animation is finished playing. For looping animations, this event is invoked each time the animation loop is restarted.
 
-
 You have access to the following objects:
-
 
 *  The Control to which the listener is assigned.
 *  The animation channel being played.
@@ -332,9 +305,7 @@ You have access to the following objects:
 
 The onAnimChange() event is invoked every time before an animation is set by the user to be played on a given channel (`channel.setAnim()`).
 
-
 You have access to the following objects
-
 
 *  The Control to which the listener is assigned.
 *  The animation channel being played.

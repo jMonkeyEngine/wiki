@@ -14,7 +14,6 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 This tutorial expands the HelloTerrain tutorial and makes the terrain solid. You combine what you learned in <<jme3/beginner/hello_terrain#,Hello Terrain>> and <<jme3/beginner/hello_collision#,Hello Collision>> and add a CollisionShape to the terrain. The terrain's CollisionShape lets the first-person player (who is also a CollisionShape) collide with the terrain, i.e. walk on it and stand on it. 
 
 
-
 == Sample Code
 
 [source,java]
@@ -212,9 +211,7 @@ public class HelloTerrainCollision extends SimpleApplication
 
 To try this code, create a New Project → JME3 → BasicGame using the default settings. Paste the sample code over the pregenerated Main.java class. Chnage the package to “mygame if necessary. Open the Project Properties, Libraries, and add the `jme3-test-data` library to make certain you have all the files. 
 
-
 Compile and run the code. You should see a terrain. You can use the WASD keys and the mouse to run up and down the hills.
-
 
 
 == Understanding the Code
@@ -224,7 +221,6 @@ Compile and run the code. You should see a terrain. You can use the WASD keys an
 
 Read <<jme3/beginner/hello_terrain#,Hello Terrain>> for details of the following parts that we reuse:
 
-
 .  The `AbstractHeightMap` is an efficient way to describe the shape of the terrain.
 .  The `Terrain.j3md`-based Material and its texture layers let you colorize rocky mountain, grassy valleys, and a paved path criss-crossing over the landscape. 
 .  The TerrainQuad is the finished `terrain` Spatial that you attach to the rootNode.
@@ -233,7 +229,6 @@ Read <<jme3/beginner/hello_terrain#,Hello Terrain>> for details of the following
 === The Collision Detection Code
 
 Read <<jme3/beginner/hello_collision#,Hello Collision>> for details of the following parts that we reuse:
-
 
 .  The `BulletAppState` lines activate physics.
 .  The `ActionListener` (`onAction()`) lets you reconfigure the input handling for the first-person player, so it takes collision detection into account.
@@ -252,7 +247,6 @@ player.setWalkDirection(walkDirection);
 
 Here are the changed parts to combine the two:
 
-
 .  You create a static (zero-mass) RigidBodyControl. 
 .  Add the control to the `terrain` to make it physical.
 
@@ -264,7 +258,6 @@ Here are the changed parts to combine the two:
 ----
 
 You attach the `terrain` and the first-person `player` to the rootNode, and to the physics space, to make them appear in the game world.
-
 
 [source,java]
 ----
@@ -279,13 +272,10 @@ You attach the `terrain` and the first-person `player` to the rootNode, and to t
 
 You see that you can combine snippets of sample code (such as HelloTerrain and HelloCollision), and create a new application from it that combines two features into soemthing new.
 
-
 You should spawn high up in the area and fall down to the map, giving you a few seconds to survey the area.  Then walk around and see how you like the lay of the land.
-
 '''
 
 See also:
-
 
 *  <<jme3/beginner/hello_terrain#,Hello Terrain>>,
 *  <<jme3/advanced/terrain#,Terrain>>

@@ -15,12 +15,9 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 This wiki is dedicated to who want to do research about Entity System.
 
-
 You should 've read a brief introduction here: link:http://hub.jmonkeyengine.org/wiki/doku.php/jme3:contributions:entitysystem:introduction[http://hub.jmonkeyengine.org/wiki/doku.php/jme3:contributions:entitysystem:introduction]
 
-
 And if you still have some concerning you are in the right place! 
-
 
 
 [IMPORTANT]
@@ -30,11 +27,9 @@ This wiki is a collection of known sources, authors from internet and our forum.
 
 
 
-
 === Why you here?
 
 'Cause:
-
 
 .  You may read famous T-machine article about entity systems in mmorpg.
 .  You may come from Unity, UDK, or other engine used it
@@ -43,13 +38,11 @@ This wiki is a collection of known sources, authors from internet and our forum.
 
 But:
 
-
 .  You still un sure/ clear about OOP ,COP, data driven…
 .  You doubt ES concept, find its impossible to do ES right
 .  You want to learn more
 
 I hope this page will help you 30% the way to reach the destination. It's the place where we concern about the design wisdoms of ES, and consider its detailed implementation in Java, eventually integrate in JME3 for a real-time game.
-
 
 
 [IMPORTANT]
@@ -59,18 +52,15 @@ Before you start, I also want to mention that there are fews implementation of E
 
 
 
-
 === Scope & Structure of this page
 
 1) Introduction:
-
 
 .  Basic idea of ES : Entity, Processor(System), other terms.
 .  Core elements and its alternative
 .  What is NOT an ES…
 
 2) Why, when, where ES matter.
-
 
 .  Pros – cons?
 .  Know issues
@@ -82,9 +72,7 @@ Before you start, I also want to mention that there are fews implementation of E
 
 Entity System in turn is the Core and fundamental and most obvious implementation design of COP (Component oriented programming) in real-time application scale!!!
 
-
 In fact the implementation detail of Entity system is various, some may resembling database core, some may have troubles with OOP incompatibility, some may appear to get all the good of Functional language…
-
 
 but note that Entity System really stand on its own terminology on this single page:
 
@@ -93,7 +81,6 @@ but note that Entity System really stand on its own terminology on this single p
 We are talking about the ES within COP, but implemented by an pure OOP like Java.
 
 ====
-
 
 
 
@@ -107,15 +94,12 @@ We are talking about the ES within COP, but implemented by an pure OOP like Java
 
 Slides
 
-
 Pictures
-
 
 
 === Core elements and its alternative
 
 NOTE: Definition notations:
-
 
 *  Normal is clearly/no doubt in the definition. 
 *  *Bold* is keywork.
@@ -129,7 +113,6 @@ NOTE: Definition notations:
 An Entity is simply *an unique Id*. _Every Unit, Item, Bullet, etc. in your game will be represented by one of there entity Ids_.
 
 
-
 ==== Component
 
 A Component is a class which only contains data. +++<strike>This means it has a constructor and only getter methods</strike>+++. 
@@ -138,31 +121,24 @@ _Examples for Components can be:
   * MovementComponent
   * CollsisionComponent_
 
-
 Components are *added* to the Entities.
-
 
 There can *only exists one component* of the same class for one entity at the same time.
 
-
 As you can see *Entities are made flexible up of different Components*. _You need your Armored Robot?_ No Problem, you only need to combine the right components. Besides you are able to remove/change/add components during the game +++<strike>which is a huge benefit of Entity Systems.</strike>+++
-
 
 
 ==== Systems
 
 Simply all other classes *except the components and the entities* can we consider as systems. You need to pay attention when you read about other Entity Systems because they can have different ideas of what a system is.
 
-
 In the systems you can request all Entities which have special components. 
 _For example you can say that you want all entities who have a position and a movement component and now calculate the new position for these Entities +++<strike>by overwriting the old position component with a new one</strike>+++._
-
 
 
 === Ideas similarity:
 
 from Component oriented architecture:
-
 
 .  Decoupling
 .  Reusable
@@ -170,11 +146,9 @@ from Component oriented architecture:
 
 from Data driven architecture:
 
-
 .  Data who decide
 
 from Data oriented architecture:
-
 
 .  Everything is data
 .  Repository existence
@@ -183,7 +157,6 @@ from Data oriented architecture:
 .  Simple dataflow
 
 Short explanation
-
 
 .  Decoupling : each piece can work together without aware of each other.
 .  Resuable : can be easily bring to use again somewhere else
@@ -209,7 +182,6 @@ Here is some terms will be mentioned below but ussually have misunderstaned or m
 ====
 
 
-
 *  Object Oriented Programming
 *  Data Oriented Programming
 *  Component Oriented Programming
@@ -219,12 +191,10 @@ Here is some terms will be mentioned below but ussually have misunderstaned or m
 Here is a short one to help you get start quickly : <<jme3/contributions/entitysystem/terms#,terms>>
 
 
-
 == What is NOT an ES ?
 
 From more 'open' perspective the core elements can be viewed as, but remember the name as a noun can be mislead: 
 _This resulted as a dicussion of @pspeed and toolforger, eventually is form a skeptical question, it's really interesting by how we all see this problem confused at first!!_
-
 
 ....
   Entity -> ID. It just binds the components together, in the sense that there is one function that creates a bunch of components with the same ID, and one function to destroy all components for an ID. An entity is the set of objects that have the same ID, entities don’t exist as coherent objects inside the code.
@@ -237,7 +207,6 @@ _This resulted as a dicussion of @pspeed and toolforger, eventually is form a sk
 This often result in mislead skepticism about the design. So get back to read it carefully one more time and some gotchas and practical wisdom below.
 
 
-
 == Gotchas & Practical wisdoms
 
 
@@ -245,7 +214,6 @@ This often result in mislead skepticism about the design. So get back to read it
 ====
 This area contain some best gotchas and practical wisdom when working with ES. I change this to upper position in the page be cause I think practical works save us more than theories. This page can be called a “Design course after all without this section!!! emoji: emoji:
 ====
-
 
 
 
@@ -258,26 +226,21 @@ This area contain some best gotchas and practical wisdom when working with ES. I
 System = everything that isn’t an Entity or a Component but uses Entities and Components.
 
 
-
 === Entity ~ GameObject?
 
 Entity should just be interpreted as a bunch of its Component. GameObject or anything else represented by an Entity is by accident. So no force to represent “all-every” gameobject as Entity; and no force that “all-every” Entity is gameobject.
-
 
 
 === Has ~ Is?
 
 From software designer POV, Relationship in COP is a sensitive topic; by nature, Component is against (or overide) Relation.
 
-
 The deception ‘Has’ relationship between Entity and its Component actually represent everything in various meaning from the literature ‘Is’ , or literature ‘Has’.. to ‘related to’. BUT keep in mind, this is blury and its almost always implemented as indirect acess, not like a property in an object but envolve processing-lookup under the curtain! So you may find this difficult to extract and detect these different from your tranditional OOP software design!
-
 
 
 === Some insights
 
 This is the place to share the “real world difficuties when working with ES, here in JME3 or in other engines. In Practical wisdoms will raise some known solutions for them. This section may revive some part of the Cons or known issues sections but practically.
-
 
 
 === Practical wisdoms
@@ -288,20 +251,16 @@ This is the place to share the “real world difficuties when working with ES, h
 Because this topic is so debatable, there is no solid candidate for ES done right now in my POV, but Zay-ES and Artemis are closest one, Zay-ES a little bit better as its the later born.
 
 
-
 ==== Why debatable [Short]?
 
 Because apply to each game, the scenarios and usecases are vary difference. Situation changes, a design which should be right can be a failure!  You may see the point.
 
-
 This topic start flame in almost every dicussions I've come through, someone should be like OOP versus COP, ES is not for all,..etc. At first, the debate should focus into a specific scope, specific genre. Here (this page) we still arrange the statements like general scope. But later in the interviews you can see some “real applications and implementations.
-
 
 
 ==== Should be?
 
 Theoricaly an Java ES done right should be:
-
 
 .  Pure data : very debatable
 ..  – Mutable : as bean with setter and getter
@@ -340,7 +299,6 @@ Theoricaly an Java ES done right should be:
 Detailed explaination : <<jme3/contributions/entitysystem/points#,points>>
 
 
-
 == Design
 
 
@@ -354,7 +312,6 @@ In Design phase, even don't know any of implementation detail, we judge upon the
 ====
 This is a short checklist that help you open your mind before going to design an ES. It's short and trusted; the Pos and cons section needed previewing and under heavy concerning!
 ====
-
 
 
 
@@ -409,12 +366,10 @@ needed previewing and under heavy concerning!
 
 
 
-
 [IMPORTANT]
 ====
 You can see I try as the one who repeat sentences that speak out by others in various sources as a short manner! So this list and information need clarification of correction afterward!
 ====
-
 
 
 
@@ -424,9 +379,7 @@ You can see I try as the one who repeat sentences that speak out by others in va
 
 Read: link:http://gamearchitect.net/Articles/GameObjects1.html[http://gamearchitect.net/Articles/GameObjects1.html]
 
-
 A lot of good things come if done “right”!
-
 
 .  Simple, intuitive
 .  Communication made simple
@@ -438,7 +391,6 @@ A lot of good things come if done “right”!
 link:http://piemaster.net/2011/07/entity-component-primer/[http://piemaster.net/2011/07/entity-component-primer/]
 
 
-
 === Cons:
 
 
@@ -446,7 +398,6 @@ link:http://piemaster.net/2011/07/entity-component-primer/[http://piemaster.net/
 ====
 'Problem' here means the 'problem' to solve not a bad situation!
 ====
-
 
 
 .  No OOP: COP Done “right” means forget about almost all OOP things: Pure data, Class become Type, no inheritance, encapsulation…etc , no best of both world!
@@ -467,7 +418,6 @@ Because a lot of people find interests about the down side of ES, I've listed th
 
 
 
-
 === ES consider good design in real-time app?
 
 
@@ -477,12 +427,9 @@ Of course, ES has its mising features!!!!
 ====
 
 
-
 But for some reason its design ‘s consider good for real=time application like a “common” video Game, or “common” simmulation; especially common in MMO world.
 
-
 Here is a short of ‘why’ answers from a software architecture designer view, explain based on its borrowed ideas: [This is very different from various source you've read, because it's not embeded any implementation details!!!]
-
 
 .  Decoupling : each piece can work together without aware of each other.
 .  Resuable : can be easily bring to use again somewhere else.
@@ -490,14 +437,11 @@ Here is a short of ‘why’ answers from a software architecture designer view,
 
 have fundamental relationship with decoupling.
 
-
 .  Primitive unit : each piece from a simplest form which contain, fullfil it self.
 
 have fundamental relationship with decoupling.
 
-
 (*) These lead to advantages in development:
-
 
 .  do it in one place only when doing implementation (coding, configs…), .
 .  intuitive and ease of development jobs (compose entity with component drag and drop)
@@ -508,14 +452,12 @@ have fundamental relationship with decoupling.
 
 ——————————————————————————————
 
-
 .  Data who decide: data decide each and every result, activities of the software
 .  Everything is Data: all piece in the software system is Data
 .  Repository existence: exist a place to keep all the data, the one door to reach them
 
 (*) These open the world of complex gameplay and distributed persistent like seen in MMO. A single data change can result in change in the gameplay; a
 ——————————————————————————————
-
 
 .  Homogeneous data : data is treat the same
 .  Regular workload : software that run at regular rate, kind of ballance trade off between performance and complexity
@@ -524,11 +466,9 @@ have fundamental relationship with decoupling.
 (*) These lead to a lot of simple but efficient algorithm to get high performance in runtime for a software such like a “common” video game, which run in console, GPU, CPU which envolve and share the same model with cache and batch intructions, an a certain hearbeat…Notice the bottleneck of CPU-GPU and between different processing unit, platform is the most headache of Game designer for decade is ease with the regular workload; let the game run smoothly and stable, result into nice visual representation..
 
 
-
 === ES consider bad design in …?
 
 From @pspeed:
-
 
 ....
   It is a bad design choice where:
@@ -543,9 +483,7 @@ From @pspeed:
 
 Even if done right, the ES also have it underlying issues which noticed by its authors, (that means annoying things)! 
 
-
 *Why this section havs things from the Cons section but consider differrently?*
-
 
 ....
 In Cons section descible problem should be concerned, likely to be done wrong, or the limit of the design they can be solve in implementations or not is not important!
@@ -561,7 +499,6 @@ Known issue is the problem persist in even the well designed; or persist due to 
 Happen in non pure data solution, when Components don’t function independently of each other. Some means of communication is necessary
 • Two approaches (both viable):
 
-
 ....
 – Direct communication using dynamic cast and function calls
 – Indirect communication using message passing
@@ -569,30 +506,24 @@ Happen in non pure data solution, when Components don’t function independently
 
 In pure data solution, by not query or just loop through interested component at one update cycle, the Processor eases out the need of other communication, but in complex scenario, such as combine with outter event handling such as Network, where message passing is nature, the problem still persist!
 
-
 as decribled in reference [6]
 Read: link:http://acmantwerp.acm.org/wp-content/uploads/2010/10/componentbasedprogramming.pdf[http://acmantwerp.acm.org/wp-content/uploads/2010/10/componentbasedprogramming.pdf]
 ———————————————————–
-
 
 
 ==== Script
 
 The “script problem” happen by the same reason with the “communication problem” mixed with “pure data or not” problem. When an component is hard to inspect, its outter relationship hard to define and its property is rejected to change, how can you script it?
 
-
 Read: link:http://blog.gemserk.com/2011/11/13/scripting-with-artemis/[http://blog.gemserk.com/2011/11/13/scripting-with-artemis/]
-
 
 Nearly one end up back to half ass solution, not a pure data ES if their really need scripting in.
 ———————————————————–
 
 
-
 ==== Arbitrary Routine and Query
 
 link:http://hub.jmonkeyengine.org/forum/topic/in-range-detection-with-lots-of-entities/[http://hub.jmonkeyengine.org/forum/topic/in-range-detection-with-lots-of-entities/]
-
 
 
 == Implementation Approaches
@@ -602,21 +533,15 @@ link:http://hub.jmonkeyengine.org/forum/topic/in-range-detection-with-lots-of-en
 
 +++<u>@atomix POV:</u>+++
 
-
 As said, as a long term java developer and also an artist. I can not see a strong, confident reason why we should switch over to COP at the moment.
-
 
 BLOB is not a problem with a carefully designed software, same as hard as split your components… Deep inheritance even multi inheritance problem can not be reached in an indie project, and even it reached, maintain it always easier than redesign a 3D model to change the export pipeline!!!
 
-
 Also the tangled wires between inheritance form the nature of programming and matter in the universal. :p 
-
 
 *BUT* They have IDE support, profiler, proved technologies, lot more… We talking about a no IDE support paradigm with plain text editor, table and some black magic, tell me more about the company will approve your plan?
 
-
 Some alternate solution may solve almost your design goal when you likely to use an ES:
-
 
 .  Smart bean framework : try Spring, EJB. For Enterprise, if you've known EJB and Spring, you will not bet in home grown ES, dont you? 
 .  Actor framework: try AKKA
@@ -627,7 +552,6 @@ Some alternate solution may solve almost your design goal when you likely to use
 ====
 So, my last advice is: If you are not doing MMO *Take a look in other alternative technologies.* !!!!
 ====
-
 
 
 .  Take a look at reference [7] and link:http://lambdor.net/?p=171[http://lambdor.net/?p=171] , the guy suggest you to switch to Functional reactive programming :p
@@ -645,9 +569,7 @@ I think this should be in another page or even in a book! :p
 This chapter dedicated to people still who really want to *switch to this new paradigm* after all the warning and awarenesses.
 So this chapter will mainly answer the BIG question:
 
-
 *What should be change to adapt to this new paradigm?*
-
 
 
 === What will we face
@@ -667,17 +589,13 @@ So this chapter will mainly answer the BIG question:
 Some open source Entity System implementation projects:
 
 
-
 ==== Artemis: General
 
 GoogleCode: link:https://code.google.com/p/artemis-framework/[https://code.google.com/p/artemis-framework/]
 
-
 Website: link:http://gamadu.com/artemis/index.html[http://gamadu.com/artemis/index.html]
 
-
 Wiki: link:http://entity-systems.wikidot.com/artemis-entity-system-framework[http://entity-systems.wikidot.com/artemis-entity-system-framework]
-
 
 
 [IMPORTANT]
@@ -687,12 +605,10 @@ Review: HERE! <<jme3/contributions/entitysystem/interviews/artemis#,artemis>> be
 
 
 
-
 ==== Spartan: [used for Slick. abandoned]
 
 GoogleCode: link:http://code.google.com/p/spartanframework/[http://code.google.com/p/spartanframework/]
 ————————————————————-
-
 
 
 === JME integrated
@@ -702,18 +618,13 @@ GoogleCode: link:http://code.google.com/p/spartanframework/[http://code.google.c
 
 Post: link:http://hub.jmonkeyengine.org/forum/topic/my-es-in-contrib-zay-es/[http://hub.jmonkeyengine.org/forum/topic/my-es-in-contrib-zay-es/]
 
-
 Forum : link:http://hub.jmonkeyengine.org/forum/board/projects/zay-es/[http://hub.jmonkeyengine.org/forum/board/projects/zay-es/]
-
 
 Wiki: link:http://hub.jmonkeyengine.org/wiki/doku.php/jme3:contributions:entitysystem[http://hub.jmonkeyengine.org/wiki/doku.php/jme3:contributions:entitysystem]
 
-
 Links: link:http://hub.jmonkeyengine.org/forum/topic/zay-es-links/[http://hub.jmonkeyengine.org/forum/topic/zay-es-links/]
 
-
 Interview:
-
 
 
 ==== EntityMonkey : @zzuegg
@@ -721,17 +632,14 @@ Interview:
 Post: link:http://hub.jmonkeyengine.org/forum/topic/entitymonkey-a-simple-entity-system-for-jme/[http://hub.jmonkeyengine.org/forum/topic/entitymonkey-a-simple-entity-system-for-jme/]
 
 
-
 ==== Private : @Empire phoenix
 
 Interview:
 
 
-
 === Implementation, and scope of each projects:
 
 The comparasions will focus in these below points, follow with the scope, status of each projects
-
 
 .  Initial philosophy
 .  Pure data or not?
@@ -748,76 +656,53 @@ The comparasions will focus in these below points, follow with the scope, status
 ———————————————————————————————
 
 
-
 [IMPORTANT]
 ====
 The Comparasion table is in Google doc: Help me fill it!!!!
 ====
 
 
-
 link:https://docs.google.com/document/d/1pRTZPFtHz7pUzYcoFiSTm-mUCA-BVYvFpUp6diIsuEo/edit?usp=sharing[https://docs.google.com/document/d/1pRTZPFtHz7pUzYcoFiSTm-mUCA-BVYvFpUp6diIsuEo/edit?usp=sharing]
-
 
 
 == Researches & Articles
 
 Link to articles, researches and papers you should read:
 
-
 *Start of the wave*
-
 
 [1] link:http://t-machine.org/index.php/2007/09/03/entity-systems-are-the-future-of-mmog-development-part-1/[http://t-machine.org/index.php/2007/09/03/entity-systems-are-the-future-of-mmog-development-part-1/]
 
-
 *Sploreg ES in JME introduction in indiedb*
-
 
 [2] link:http://www.indiedb.com/games/attack-of-the-gelatinous-blob/news/the-entity-system[http://www.indiedb.com/games/attack-of-the-gelatinous-blob/news/the-entity-system]
 
-
 *Worth to read, pspeed conversation with Michael Leahy, also lead another ES project TyphonRT*
-
 
 [3] link:http://t-machine.org/index.php/2011/06/24/using-an-entity-system-with-jmonkeyengine-mythruna/[http://t-machine.org/index.php/2011/06/24/using-an-entity-system-with-jmonkeyengine-mythruna/]
 
-
 *Our wiki link*
-
 
 [4] link:http://hub.jmonkeyengine.org/wiki/doku.php/jme3:contributions:entitysystem:introduction[http://hub.jmonkeyengine.org/wiki/doku.php/jme3:contributions:entitysystem:introduction]
 
-
 *Beside of BLOB anti pattern, explain why ES suite as data in modern GPU, CPU!*
-
 
 [5] link:http://gamesfromwithin.com/data-oriented-design[http://gamesfromwithin.com/data-oriented-design]
 
-
 *Worth to read, paper of another C++ ES leader of cistron project link:http://code.google.com/p/cistron[http://code.google.com/p/cistron]*
-
 
 [6] link:http://acmantwerp.acm.org/wp-content/uploads/2010/10/componentbasedprogramming.pdf[http://acmantwerp.acm.org/wp-content/uploads/2010/10/componentbasedprogramming.pdf]
 
-
 *Stack over flow topic, links, texts and especially interesting recommendation to switch form CBSE , COP to functional programming!*
-
 
 [7] link:http://stackoverflow.com/questions/1901251/component-based-game-engine-design[http://stackoverflow.com/questions/1901251/component-based-game-engine-design]
 
-
 *Link to other entitiy system approaches in its own wikidot!*
-
 
 [8] link:http://entity-systems.wikidot.com/es-approaches[http://entity-systems.wikidot.com/es-approaches]
 
-
 [9] An interesting write up in GDD about ES and Events in a game engine. And some production,workflow concerns
-
 
 link:http://stefan.boxbox.org/2012/11/14/game-development-design-1-the-component-system/[http://stefan.boxbox.org/2012/11/14/game-development-design-1-the-component-system/]
 
-
 *[More?]*
-

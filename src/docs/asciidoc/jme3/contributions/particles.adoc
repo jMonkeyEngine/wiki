@@ -10,27 +10,21 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 This is a new particle system for jME3 posted for review and comments. This is an opportunity for people to comment on and request changes to the +++<abbr title="Application Programming Interface">API</abbr>+++ or the internal functionality of the system.
 The code for this particle system can be found link:https://code.google.com/p/jmonkeyplatform-contributions/source/browse/#svn%2Ftrunk%2FParticleController[here]
 
-
 Apologies for the slight jitter in some of the videos, the VideoRecorderState seems to be causing some issues which are not present when the application is running normally.
 
 
-
-=== Credits
+== Credits
 
 These particle emitters are inspired by and use some code from t0neg0ds particle emitters as described link:http://hub.jmonkeyengine.org/t/influencer-based-particleemitter-candidate-mesh-based-animated-particles/25831[here]
-
 
 Those in turn were based on the original jME3 particle system by Kirill Vainer
 
 
-
-=== The Big Picture
+== The Big Picture
 
 The core of all Particle Emitters is a ParticleController. That is used to manage all of the particles, the behaviour of the particles themselves though is controlled though a number of other classes that are plugged in to the ParticleController to provide the required functionality. You can think of the ParticleController as providing the central hub into which you plug all the modules you need to get the desired behaviour.
 
-
 An easy way to see what you need is to create a new ParticleController and then look at the constructor, you can see what parameters need to be supplied there.
-
 [cols="2", options="header"]
 |===
 
@@ -62,15 +56,12 @@ a| Zero or more ParticleInfluencers, each of which changes the behaviour of the 
 
 By selecting the behaviour you desire for each option you can configure up a virtually infinite array of possible particle emitters.
 
-
 We will now walk through some common examples and possible uses, and then in the end we will document all of the possible choices for these options.
-
 
 For a full reference of the standard options available see the <<jme3/contributions/particles/reference#,Reference Page>>.
 
 
-
-=== Simple Fire
+== Simple Fire
 
 [source,java]
 ----
@@ -123,12 +114,10 @@ public class HelloParticles1_SimpleFire extends SimpleApplication {
 
 Run that and the result should look something like:
 
-
 image:jme3/particles1.jpg[particles1.jpg,with="",height=""]
 
 
-
-=== Simple Fire and Smoke
+== Simple Fire and Smoke
 
 [source,java]
 ----
@@ -178,21 +167,16 @@ image:jme3/particles1.jpg[particles1.jpg,with="",height=""]
 
 You can see that the only change is to make the particles last a little longer and to change the ColorInfluencer for a MultiColorInfluencer, and yet the results look quite different:
 
-
 image:jme3/particles2.jpg[particles2.jpg,with="",height=""]
-
 
 This isn't a very convincing fire yet, but it is very simple to get up and running. One problem with this approach is that particles are done using an alpha-additive material, they can only make things brighter but never darker. That is not ideal for smoke which should be able to make them darker too. We will look at this again later but for now we will move on to some different mesh types.
 
 
-
-=== Quad Meshes and Billboarding
+== Quad Meshes and Billboarding
 
 Point Meshes are extremely fast, but they have a number of limitations. The main ones being that the sprites must always be facing towards the screen and that on certain graphics cards the maximum number of pixels a sprite can occupy on the screen is limited.
 
-
 While PointMesh is recommended for basic particles for more advanced options there is the QuadMesh, this constructs each particle using a quad and as a result can allow any size on the screen and any orientation. The following example combines two separate particle emitters to produce a spell-like effect.
-
 
 
 [NOTE]
@@ -200,11 +184,9 @@ While PointMesh is recommended for basic particles for more advanced options the
 
 The flame image from before is used for the second emitter, the first emitter uses this image which you can download and use:
 
-
 image:jme3/runecircle.png[runecircle.png,with="256",height=""]
 
 ====
-
 
 
 [source,java]
@@ -285,11 +267,9 @@ The result should look something like:
 image:jme3/contributions/youtube_spjqag99hy[youtube_spjqag99hy,with="",height=""]
 
 
-
-=== Using a mesh as the particle source
+== Using a mesh as the particle source
 
 There is a model of a monkeys head in the test data that is used in this example, although you can use any other model you like. Just make sure you can find the geometry within the model for the next step.
-
 
 [source,java]
 ----
@@ -313,12 +293,9 @@ There is a model of a monkeys head in the test data that is used in this example
 
 The result should look something like:
 
-
 image:jme3/particles3.jpg[particles3.jpg,with="",height=""]
 
-
 Now lets set fire to the monkey! (No monkeys were harmed during the making of this particle system!).
-
 
 [source,java]
 ----
@@ -370,18 +347,14 @@ Now lets set fire to the monkey! (No monkeys were harmed during the making of th
 
 Again this is just a very simple example, much more sophisticated fire effects are possible with the use of the right textures and mixture of emitters and influencers. The result though should look something like this:
 
-
 image:jme3/contributions/youtube_w_zgjhz2au[youtube_w_zgjhz2au,with="",height=""]
 
 
-
-=== Meshes and Weighted Meshes
+== Meshes and Weighted Meshes
 
 The previous example uses a MeshSource, this picks a random triangle from the mesh without any regard given to the size of different triangles. This means areas with small triangles are actually more likely to emit particles than areas with large triangles. For most meshes this is not visible, however there is a WeightedMeshSource available if this should be a problem.
 
-
 The WeightedMeshSource scans the mesh and works out a weight for each triangle based on its relative size, so that the result is an even spread of particles even with very large differences in triangle sizes. There are some limitations with this though:
-
 
 .  The WeightedMeshSource consumes more memory as it needs to remember the weights
 .  The WeightedMeshSource is slower as it needs to do more work to pick a triangle
@@ -390,11 +363,9 @@ The WeightedMeshSource scans the mesh and works out a weight for each triangle b
 There is a method available to cause the weights to be recalculated which can be used if changing the mesh, but really if possible a non-weighted MeshSource should be used for dynamic meshes.
 
 
-
-=== 3d Particles - TemplateMesh
+== 3d Particles - TemplateMesh
 
 The previous mesh examples all use simple 2d quads to display images. There is another mesh type though, the TemplateMesh, which allows fully featured 3d particles to be used.
-
 
 
 [NOTE]
@@ -403,7 +374,6 @@ The previous mesh examples all use simple 2d quads to display images. There is a
 There is a rock texture available in the jME3 test data, or you can substitute any other suitable texture. The model for this example is: link:http://www.zero-separation.com/particles/FracturedCube.j3o[FracturedCube.j3o]
 
 ====
-
 
 
 [source,java]
@@ -477,18 +447,14 @@ There is a rock texture available in the jME3 test data, or you can substitute a
 The result should look like:
 image:jme3/contributions/youtube_a7y53uf8giw[youtube_a7y53uf8giw,with="",height=""]
 
-
 Any number and mixture of models can be used, although as it is all a single mesh the same material must be used for all of them. It is recommended to keep a similar number of vertices for each of the models but that is not a strict requirement.
 
 
-
-=== Emitting Particles from Particles
+== Emitting Particles from Particles
 
 To add more dramatic effects sometimes you want to emit particles from particles, this could be done simply by attaching a MeshSource for the second controller to the mesh from the first controller. There are a number of limitations to this approach though, which will be demonstrated now:
 
-
 Adding the following code:
-
 
 [source,java]
 ----
@@ -519,18 +485,13 @@ Adding the following code:
 
 Results in something that looks like this:
 
-
 image:jme3/contributions/youtube_wgr5rzf9apg[youtube_wgr5rzf9apg,with="",height=""]
-
 
 You can see that while dramatic the fire is left behind each particle, this is because although it is emitted from the face of the particle at its current position it has no knowledge of how that particle is moving.
 
-
 To allow for this we also offer a different emitter, this allows one ParticleController to act as the source for another. The emitted particles are then able to start with the same velocity and rotation of the particle they are being emitted from and then move onwards from there as appropriate.
 
-
 Leave everything else the same but change the MeshSource into
-
 
 [source,java]
 ----
@@ -542,12 +503,9 @@ Leave everything else the same but change the MeshSource into
 You can see that this gives much better results:
 image:jme3/contributions/youtube_2blbzvm0ezq[youtube_2blbzvm0ezq,with="",height=""]
 
-
 There is a lot of falling rocks and fire here, but not much in the way of smoke. That could be added using a multi-colour emitter as previously, but the standard particle material is additive. That means it can only make colours brighter, never darker. For smoke it should be able to darken as well as lighten.
 
-
 To add smoke we can add a third emitter after the other two:
-
 
 [source,java]
 ----
@@ -594,9 +552,7 @@ To add smoke we can add a third emitter after the other two:
 The results look something like:
 image:jme3/contributions/youtube_01qcbgbvf-c[youtube_01qcbgbvf-c,with="",height=""]
 
-
 To complete the effect one final line of code adds a skybox (using another texture that can be find in the test data):
-
 
 [source,java]
 ----
@@ -607,6 +563,4 @@ To complete the effect one final line of code adds a skybox (using another textu
 
 Now we have the final effect which looks like:
 
-
 image:jme3/contributions/youtube_udewajw4lxu[youtube_udewajw4lxu,with="",height=""]
-

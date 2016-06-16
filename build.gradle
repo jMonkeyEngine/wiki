@@ -8,7 +8,7 @@ apply plugin: 'org.asciidoctor.convert'
 version = '3.1.0-SNAPSHOT'
 
 asciidoctorj {
-    version = '1.5.4'
+	version = '1.5.4'
 }
 
 asciidoctor {
@@ -18,16 +18,37 @@ asciidoctor {
 	resources {
 		from('src/docs/resources')
 	}
-	attributes	'build-gradle': file('build.gradle'),
-				'sourcedir': project.sourceSets.main.java.srcDirs[0],
-				'endpoint-url': 'http://davidb.github.io/sandbox_wiki_jme',
-				'source-highlighter' : 'coderay',
-				//'imagesdir':'/images',
-				'toc':'left',
-				'icons': 'font',
-				'setanchors':'true',
-				'idprefix':'',
-				'idseparator':'-',
-				'docinfo1':'true',
-				'orgname':'jMonkeyEngine'
+	attributes 'build-gradle': file('build.gradle'),
+		'sourcedir': project.sourceSets.main.java.srcDirs[0],
+		'endpoint-url': 'http://davidb.github.io/sandbox_wiki_jme',
+		'source-highlighter' : 'coderay',
+		'linkcss': 'true',
+		//'imagesdir':'/images',
+		'toc':'left',
+		'icons': 'font',
+		'setanchors':'true',
+		'idprefix':'',
+		'idseparator':'-',
+		'docinfo1':'true',
+		'orgname':'jMonkeyEngine'
+	options header_footer: true,
+		template_dirs: [file('src/templates/slim').absolutePath]
+/*
+	extensions {
+		block_macro(name: 'iframe') {
+			parent, target, attributes ->
+			String content = """<iframe src="${target}"></iframe>""";
+			createBlock(parent, "pass", [content], attributes, config);
+		}
+	}
+*/
+}
+
+asciidoctor.doLast {
+	copy {
+		from 'build/asciidoc/html5'
+		into 'build/asciidoc/html5'
+		rename { String fileName -> 'index.html'}
+		include 'documentation.html'
+	}
 }

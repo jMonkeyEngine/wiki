@@ -11,7 +11,6 @@ This is a user-proposed group of solutions for some or all of the exercises pres
 There are several ways to do them, so take what you see with a grain of salt, and actually try to do them yourself instead of jumping to the solution, for it is the best way to learn!
 
 
-
 == Hello Update Loop
 
 
@@ -20,11 +19,9 @@ There are several ways to do them, so take what you see with a grain of salt, an
 It will spin the other way around.
 
 
-
 === Exercise 2
 
 First, one must declare another Geometry, for example, a red cube:
-
 
 [source,java]
 ----
@@ -54,7 +51,6 @@ public void simpleInitApp() {
 
 To have the red cube spin twice as fast as the other cube, simply make it rotate on the same axis but with double the value:
 
-
 [source,java]
 ----
 
@@ -72,7 +68,6 @@ public void simpleUpdate(float tpf) {
 === Exercise 3
 
 One possible solution is to shrink or grow depending on current size. The cube may start by either growing or shrinking. If the cube is growing, it will start shrinking instead only when it reaches a size large enough. If the cube is shrinking, it will start growing again, only when the size is small enough. In short, the cube should switch between growing and shrinking when it reaches a specified maximum and minimum sizes. The following code is an example of this solution:
-
 
 [source,java]
 ----
@@ -98,9 +93,7 @@ public void simpleUpdate(float tpf) {
 
 The cube starts by growing, and when it reaches a size larger than 120% its original size, it starts shrinking instead. The cube will then keep shrinking, until it reaches a size smaller than 80% its original size, which will make it start growing again, and so on.
 
-
 Another approach is to switch between shrinking and growing every chosen unit of time. The tpf variable stores the time per frame rendered, so if you sum every tpf at the simpleUpdate method, you get the time passed since the game started. Using time like a stopwatch, one may grow the cube for some time, and then shrink the cube for the same amount of time, and start over again. The following code shows an example of this solution:
-
 
 [source,java]
 ----
@@ -123,9 +116,7 @@ public void simpleUpdate(float tpf) {
 
 The cube grows for 2 two seconds, then shrinks for another 2 seconds, and repeats indefinitely.
 
-
 Another approach is to set the cube scale as the result of a sine wave. This results in a smooth repetitive oscillating scale. Note however that this approach is computational expensive due to the use of the sine function. One may create a sine wave by calculating sine as a function of time. As such, for each iteration of the simpleUpdate method, the scale is set as the result of sine as function of time plus the original cube scale. The following code shows an example of this approach:
-
 
 [source,java]
 ----
@@ -143,7 +134,6 @@ public void simpleUpdate(float tpf) {
 
 The cube should repeatedly and smoothly grow and shrink and have maximum and minimum scale of 0.5 and 1.5 its original size. The following variables can change the scale behavior:
 
-
 *  initScale - Sets the initial scale of cube
 *  amplitude - Increases minimum and maximum scale
 *  angularFrequency - Increases scale speed
@@ -152,7 +142,6 @@ The cube should repeatedly and smoothly grow and shrink and have maximum and min
 === Exercise 4
 
 Same logic! Use a timeVar, and make the Material declaration + initialization line we had @ simpleInitApp() into only the initialization, with the Material mat; going as a global variable, so we can access it on the simpleUpdate()! Like so:
-
 
 [source,java]
 ----
@@ -163,7 +152,6 @@ protected Material mat;
 
 As global var, then the initialization cuts off the Material bit:
 
-
 [source,java]
 ----
 
@@ -172,7 +160,6 @@ mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
 ----
 
 And then the simpleUpdate()
-
 
 [source,java]
 ----
@@ -192,7 +179,6 @@ public void simpleUpdate(float tpf) {
 
 A possible solution is to change the rotation axis of player from y to x, and make it move along the z axis:
 
-
 [source,java]
 ----
 
@@ -207,14 +193,12 @@ public void simpleUpdate(float tpf) {
 The above code should make the player roll towards the camera.
 
 
-
 == Hello Input
 
 
 === Exercise 1
 
 First, add the mappings for the Up and Down actions to the initKeys() method:
-
 
 [source,java]
 ----
@@ -230,7 +214,6 @@ private void initKeys() {
 ----
 
 Then implement the actions in the onAnalog() method:
-
 
 [source,java]
 ----
@@ -256,11 +239,9 @@ public void onAnalog(String name, float value, float tpf) {
 This should enable cube to move upwards, if the H key is pressed, and downwards, if the L key is pressed.
 
 
-
 === Exercise 2
 
 Following the proposed solution 1, add new mappings for the mouse wheel in the initKeys() method:
-
 
 [source,java]
 ----
@@ -279,11 +260,9 @@ private void initKeys() {
 Now you should be able to scroll the cube up or down with the mouse wheel.
 
 
-
 === Exercise 3
 
 When the controls are user-chosen.
-
 
 
 == Hello Picking
@@ -292,7 +271,6 @@ When the controls are user-chosen.
 === Exercise 1
 
 You can jump right off and obtain the hit object's material, by acessing the “closest object we previously acquired, obtain it's geometry through .getGeometry(), and then get the Geometry's material through .getMaterial(), like so: 
-
 
 [source,java]
 ----
@@ -304,9 +282,7 @@ Material g = closest.getGeometry().getMaterial();
 It's the same as going through the two steps hinted in the tips: `Geometry g = closest.getGeometry(); Material material = g.getMaterial();`
 Finally, you need only add this line: `material.setColor(“Color, ColorRGBA.randomColor())` , which will change the material from the hit object to a random color!
 
-
 The lines can be added anywhere within the `if (results.size() &gt; 0)` block, after declaring the closest object. End result is as so:
-
 
 [source,java]
 ----
@@ -322,7 +298,6 @@ material.setColor("Color", ColorRGBA.randomColor());
 First of all, we need some light shed to make the model visible! Add a simple DirectionalLight like previously showed.
 Then, declare a `Spatial golem` variable outside of methods. Then initialize golem to load his model: 
 
-
 [source,java]
 ----
 
@@ -331,7 +306,6 @@ golem = assetManager.loadModel("Models/Oto/Oto.mesh.xml");
 ----
 
 Now we need him to show up! So we need to attach him: but the rootNode won't do, because we're checking collision with it's child, the shootables node! So we attach it to shootables!
-
 
 [source,java]
 ----
@@ -344,7 +318,6 @@ shootables.attachChild(golem);
 === Exercise 3
 
 Here is my code, it works and it is well commented.
-
 
 [source,java]
 ----
