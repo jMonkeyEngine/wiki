@@ -39,6 +39,8 @@ class renderer_plugin_asciidoc extends Doku_Renderer {
         $this->listKindStack      = array();
         $this->quoteStack      = array();
         $this->relfileprefix = '';
+        $this->levelMap = array();
+        $this->levelMaxReached = 1;
 
         $this->smiley_to_emoticon = array(
           '>:(' => 'angry', '>:-(' => 'angry',
@@ -134,12 +136,17 @@ class renderer_plugin_asciidoc extends Doku_Renderer {
     }
 
     function header($text, $level, $pos) {
-      //echo "header :" . $level . " // " . $this->sectionlevel . "\n";
         if (!$text) return; //skip empty headlines
         if ($level == 1 && empty($this->doctitle)) {
-            $this->doctitle = $text;
+          $this->doctitle = $text;
         } else {
-            $this->doc .= DOKU_LF . DOKU_LF . str_repeat("=", $level) . ' ' . $text. DOKU_LF;
+          $l = $this->levelMap[$level];
+          if (!$l) {
+            $this->levelMaxReached += 1;
+            $l = $this->levelMaxReached;
+            $this->levelMap[$level] = $l;
+          }
+          $this->doc .= DOKU_LF . DOKU_LF . str_repeat("=", $l) . ' ' . $text. DOKU_LF;
         }
     }
 
@@ -625,7 +632,7 @@ class renderer_plugin_asciidoc extends Doku_Renderer {
         } else {
             $url = $src;
         }
-        
+
         //$out = 'image:' . $url. '['. $name . ',with="'. $width .'",height="'. $height . '",align="' . $align . '", link="'. $linking .'"]';
         if (stripos($url, '.mp4') !== false || stripos($url, '.webm') !== false || stripos($url, '.ogv') !== false) {
           $out = DOKU_LF.'video::' . $url . '[]'.DOKU_LF;
@@ -676,7 +683,7 @@ class renderer_plugin_asciidoc extends Doku_Renderer {
                               $img['height'],
                               $img['cache']);
     }
-    
+
     function _openTag($class, $func, $data=null) {
         $this->tagStack[] = array($class, $func, $data);
     }
