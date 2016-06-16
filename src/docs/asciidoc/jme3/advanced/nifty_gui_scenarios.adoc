@@ -10,15 +10,12 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 This document contains typical NiftyGUI usecase scenarios, such as adding effects, game states, and creating typical game screens. 
 
-
 Requirements: These tips assume that you have read and understood the <<jme3/advanced/nifty_gui#,Creating JME3 User Interfaces with Nifty GUI>> tutorial, and have already laid out a basic +++<abbr title="Graphical User Interface">GUI</abbr>+++ that interacts with your JME3 application. Here you learn how you integrate the +++<abbr title="Graphical User Interface">GUI</abbr>+++ better, and add effects and advanced controls.
-
 
 
 == Switch Game States
 
 In a JME game, you typically have three game states:
-
 
 .  Stopped: The game is stopped, a StartScreen is displayed. 
 .  Running: The game is running, the in-game HudScreen is displayed. 
@@ -26,9 +23,7 @@ In a JME game, you typically have three game states:
 
 (Aside: Additionally, the Stopped state often contains a LoadScreen, LogonScreen, OptionsScreen, CharacterCreationScreen, HighScoreScreen, CreditsScreen, etc. Some games let you access the OptionsScreen in the Paused state as well. The Running state can also contain an InventoryScreen, ItemShopScreen, StatsScreen, SkillScreen, etc.)
 
-
 In JME, game states are implemented as custom <<jme3/advanced/application_states#,AppState>> objects. Write each AppState so it brings its own input mappings, rootNode content, update loop behaviour, etc with it.
-
 
 .  Stopped: StartScreen AppState + GuiInputs AppState
 .  Paused: PausedScreen AppState + GuiInputs AppState
@@ -37,12 +32,10 @@ In JME, game states are implemented as custom <<jme3/advanced/application_states
 When the player switches between game states, you detach one set of AppStates, and attach another. For example, when the player pauses the running game, you use a boolean switch to pause the game loop and deactivate the game inputs (shooting, navigation). The screen is overlayed with a PausedScreen, which contains a visible mouse pointer and a Continue button. When the player clicks Continue, the mouse pointer is deactivated, the in-game input and navigational mappings are activated, and the game loop continues.
 
 
-
 == Get Access to Application and Update Loop
 
 Since you are writing a jME3 application, you can additionally make any ScreenController class extend the <<jme3/advanced/application_states#,AbstractAppState>> class. 
 This gives the ScreenController access to the application object and to the update loop!
-
 
 [source,java]
 ----
@@ -98,7 +91,6 @@ It is not sufficient to just inherit from AbstractAppState. You need to instanti
 ====
 
 
-
 [source,java]
 ----
 
@@ -138,14 +130,11 @@ a| looks up `key` in the Nifty properties. Use Nifty.setGlobalproperties(propert
 See also: link:http://sourceforge.net/apps/mediawiki/nifty-gui/index.php?title=MarkUp[http://sourceforge.net/apps/mediawiki/nifty-gui/index.php?title=MarkUp]
 
 
-
 == Use ScreenControllers for Mutally Exclusive Functionality
 
 Technically you are free to create one ScreenController class for each screen, or reuse the same ScreenController for all or some of them. In the end it may be best to create individual ScreenControllers for functionality that is mutually exclusive.
 
-
 For example, create a `MyHudScreen.java` for the `hud` screen, and a `MyStartScreen.java` for the `start` screen.
-
 
 *  Include all user interface methods that are needed during the game (while the HUD is up) in `MyHudScreen.java`. Then make this class control all screens that can be up during the game (the HUD screen, a MiniMap screen, an Inventory screen, an Abilities or Skills screen, etc). All these screens possibly share data (game data, player data), so it makes sense to control them all with methods of the same `MyHudScreen.java` class.
 *  The start screen, however, is mostly independent of the running game. Include all user interface methods that are needed outside the game (while you are on the start screen) in `MyStartScreen.java`. Then make this class control all screens that can be up outside the game (the Start screen, a Settings/Options screen, a HighScore screen, etc). All these classes need to read and write saved game data, so it makes sense to control them all with methods of the same `MyStartScreen.java` class.
@@ -156,23 +145,19 @@ For example, create a `MyHudScreen.java` for the `hud` screen, and a `MyStartScr
 Get the full <<jme3/advanced/loading_screen#,Loading Screen>> tutorial here.
 
 
-
 == Create a Popup Menu
 
 Get the full <<jme3/advanced/nifty_gui_popup_menu#,Nifty GUI PopUp Menu>> tutorial here.
-
 
 
 == Add Visual Effects
 
 You can register effects to screen elements.
 
-
 *  Respond to element events such as onStartScreen, onEndScreen, onHover, onFocus, onActive,
 *  Trigger effects that change movement, blending, size, color, fading, and much more.
 
 Here is an example that moves a panel when the startScreen opens. You place an &lt; effect &gt; tag inside the element that you want to  be affected.
-
 
 [source,xml]
 ----
@@ -187,14 +172,12 @@ Here is an example that moves a panel when the startScreen opens. You place an &
 
 Learn more from the NiftyGUI page:
 
-
 *  link:http://sourceforge.net/apps/mediawiki/nifty-gui/index.php?title=Effects[http://sourceforge.net/apps/mediawiki/nifty-gui/index.php?title=Effects]
 
 
 == Add Sound Effects
 
 Playing sounds using Nifty is also possible with a `playSound` effect as trigger. Remember to first register the sound that you want to play:
-
 
 [source,xml]
 ----
@@ -214,9 +197,7 @@ Playing sounds using Nifty is also possible with a `playSound` effect as trigger
 
 After a mouse click, you may want to record the 2D clickLoc and send this info to your Java application. Typical ScreenController methods however only have a String argument. You'd have to convert the String to ints.
 
-
 To pass the clickLoc as two ints, you can use the special `(int x, int y)` syntax in the ScreenController:
-
 
 [source,java]
 ----
@@ -229,7 +210,6 @@ To pass the clickLoc as two ints, you can use the special `(int x, int y)` synta
 
 In the Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++ screen code (e.g. XML file) you must call the `(int x, int y)` method _without_ any parameters! 
 
-
 [source,xml]
 ----
 
@@ -240,12 +220,10 @@ In the Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++ screen code
 You can name the method (here `clicked`) what ever you like, as long as you keep the argument syntax.
 
 
-
 == Load Several XML Files
 
 The basic Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++ example showed how to use the `nifty.fromXML()` method to load one XML file containing all Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++ screens.
 The following code sample shows how you can load several XML files into one nifty object. Loading several files with `nifty.addXml()` allows you to split up each screen into one XML file, instead of all into one hard-to-read XML file. 
-
 
 [source,java]
 ----
@@ -268,9 +246,7 @@ guiViewPort.addProcessor(niftyDisplay);
 
 In addition to the `nifty.addXml()` methods to attach many nifty XML files, there exists a `nifty.registerScreenController()` method to explicitly attach more screen controllers. 
 
-
 The following code sample shows how you can explicitly attach several screen controllers before adding the XML file to nifty, which would otherwise cause nifty to implicitly instantiate the screen controller class. 
-
 
 [source,java]
 ----
@@ -288,7 +264,6 @@ nifty.addXml("Interface/Screens/OptionsScreen.xml");
 
 By default, your Nifty XML screens use the built.in styles:
 
-
 [source,xml]
 ----
  <useStyles filename="nifty-default-styles.xml" /> 
@@ -296,14 +271,12 @@ By default, your Nifty XML screens use the built.in styles:
 
 But you can switch to a set of custom styles in your game project's asset directory like this:
 
-
 [source,xml]
 ----
  <useStyles filename="Interface/Styles/myCustomStyles.xml" /> 
 ----
 
 Inside myCustomStyles.xml you define styles like this:
-
 
 [source,xml]
 ----
@@ -319,10 +292,8 @@ Inside myCustomStyles.xml you define styles like this:
 ----
 
 Learn more about how to create styles by looking at the link:http://sourceforge.net/apps/mediawiki/nifty-gui/index.php?title=Build_from_Source[Nifty GUI source code] for “nifty-style-black”. Copy it as a template and change it to create your own style.
-
 '''
 
 Learn more from the NiftyGUI page:
-
 
 *  link:http://sourceforge.net/apps/mediawiki/nifty-gui/index.php?title=Effects[http://sourceforge.net/apps/mediawiki/nifty-gui/index.php?title=Effects]

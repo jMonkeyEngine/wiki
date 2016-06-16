@@ -15,18 +15,15 @@ This article covers how to move away from an older, deprecated +++<abbr title="A
 ====
 
 
-
 This document provides an overview of the new versus  the old SpiderMonkey +++<abbr title="Application Programming Interface">API</abbr>+++, and a path for migrating from the old, now deprecated, +++<abbr title="Application Programming Interface">API</abbr>+++ to the newer version.  Much has changed.
 The <<spidermonkey#,original SpiderMonkey>> implementation was a good concept and a clever implementation but suffered under the weight of rapid patches and some creeping design deficit.  In the end, there were enough small problems, long-term maintenance issues, and limitations that a newer design was warranted.
 Some things will be very similar but others have changed very much. Hopefully for the better.
-
 
 
 == Overview
 
 Most of the new SpiderMonkey +++<abbr title="Application Programming Interface">API</abbr>+++ now exists as a set of interfaces and helper classes in the 'com.jme3.network' package.  For most users, this package and the 'message' package will be all they need to worry about.  The 'base' and 'kernel' packages only come into play when implementing custom network transports or alternate client/server protocols (_which are now possible_).
 Clients and Servers can be created from the factory methods on the Network helper class.  Once a Server instance is created and started, it can accept remote connections from Clients.  The Client objects represent the client-side of a client→server connection.  Within the Server, these are HostedConnections.  This is a distinct change from the old +++<abbr title="Application Programming Interface">API</abbr>+++.
-
 [cols="3", options="header"]
 |===
 
@@ -47,11 +44,9 @@ ClientStateListeners can be registered with a Client to detect changes in connec
 ConnectionListeners can be registered with a Server to be notified about HostedConnection arrivals and removals.
 
 
-
 == What's Gone?
 
 All of 'connection', 'events', 'queue', 'service', 'streaming', and 'sync' are now deprecated.  The 'service', 'streaming', and 'sync' packages were too difficult to easily port to the new +++<abbr title="Application Programming Interface">API</abbr>+++ and would have required additional code review for thread-related issues.  Since the service manager model has _not_ been ported and will likely live on in a different way, it was better to let these go until better solutions evolve.  For example, streaming is probably better done more tightly integrated with the core +++<abbr title="Application Programming Interface">API</abbr>+++ and as actual java.io streams.
-
 
 
 == Migration
@@ -60,7 +55,6 @@ All of 'connection', 'events', 'queue', 'service', 'streaming', and 'sync' are n
 === Package/Class Imports
 
 As a first pass, use the following table for conversion and then see specific class notes.
-
 [cols="2", options="header"]
 |===
 
@@ -93,13 +87,11 @@ a| if used as a reference and not a superclass, com.jme3.network.Message.  The b
 Doing all of those changes will certainly break your build… so now let's fix it.
 
 
-
 === Client and MessageListener
 
 This class is the hardest migration to perform.  Do not get discouraged.
 The old version used com.jme3.network.connection.Client for both client side and server side.  So, depending on context, these references will either change to com.jme3.network.Client or com.jme3.network.HostedConnection.  In the case where calling code is not client or server specific, then there is also the common com.jme3.network.MessageConnection interface.
 In general, the actual client changes are of one of the following to types:
-
 
 [source,java]
 ----
@@ -111,7 +103,6 @@ In general, the actual client changes are of one of the following to types:
 ----
 
 In the delayed connection case:
-
 
 [source,java]
 ----
@@ -130,12 +121,10 @@ NetworkClient is a Client.  The rest of your code can just refer to Client.
 Those are the easy changes.  The trickier ones are related to the MessageListeners.
 
 
-
 ==== MessageListener
 
 By now you've figured out that all of your MessageListeners are broken because the new method signature is different.  The source of a message is no longer stored with the message and is instead provided to the MessageListener.
 Depending on whether your MessageListener is being added to the Client or the Server, it will need to refer to either com.jme3.network.Client or com.jme3.network.HostedConnection in its messageReceived(), respectively.  The MessageListener interface is generically typed to help make sure the right listener goes where it's supposed to and so the listener implementations don't have to cast all the time.
-
 
 [source,java]
 ----
@@ -170,11 +159,9 @@ Several of the old MessageListener's methods have gone away.  The object-based m
 
 
 
-
 ==== Client method changes
 
 Some of the methods on the old Client class have changed or been removed.  Here is a basic summary:
-
 [cols="2", options="header"]
 |===
 
@@ -212,11 +199,9 @@ The truth is that even in the old +++<abbr title="Application Programming Interf
 Only +++<abbr title="Application Programming Interface">API</abbr>+++ methods that actually perform direct IO (such as the Network.connectToServer() and NetworkClient.connectToServer() methods) will ever be declared to throw IOException.
 
 
-
 === Message.getClient() and Message.getConnection()
 
 This is important enough to deserve its own sub-heading because your code *will* break if you use these as they now return null.  Any reason for calling them is now provided directly to the MessageListener in the form of the source Client or source HostedConnection.
-
 
 
 === Client ID and Player ID
@@ -230,13 +215,11 @@ Many of the reasons for accessing the client ID on the server can now be taken c
 
 
 
-
 === com.jme3.network.event.ConnectionListener
 
 Along with the shift from not using the same object at both ends of the client connection was a shift in the interfaces that are notified about those ends.
 On the client, there is now com.jme3.network.ClientStateListener which is notified when the client fully connects to the server (including any internal handshaking) and when the client is disconnected.
 On the server, com.jme3.network.ConnectionListener will be notified whenever new HostedConnections are added or removed.  This listener isn't notified until the connection is fully setup (including any internal handshaking).
-
 [cols="2", options="header"]
 |===
 
@@ -259,4 +242,3 @@ The bottom line is that the old architecture had threading and stability issues 
 Moreover, the lack of thread safety meant that user code sometimes had to do some strange and/or complicated work-arounds.  The goal should be that the +++<abbr title="Application Programming Interface">API</abbr>+++ should just work like it looks like it will with a minimum of hassle.
 The new architecture is built from the ground up for threading stability and for a clean separation between the public +++<abbr title="Application Programming Interface">API</abbr>+++, the message passing layer, and the underlying network transport implementations.  You should be able to throw all kinds of stuff at it that would make the old system fall over and it should just hum along.
 There will certainly be some growing pains as we work the kinks out of the new system but it is already much more stable in even the most basic of stress tests.
-

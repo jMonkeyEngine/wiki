@@ -10,27 +10,20 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 A physics simulation is used in games and applications where objects are exposed to physical forces: Think of games like pool billiard and car racing simulators. Massive objects are pulled by gravity, forces cause objects to gain momentum, friction slows them down, solid objects collide and bounce off one another, etc. Action and Adventure games also make use of physics to implement solid obstacles, falling, and jumping.
 
-
 The jMonkeyEngine3 has built-in support for link:http://jbullet.advel.cz[jBullet Physics] (based on link:http://bulletphysics.org[Bullet Physics]) via the `com.jme3.bullet` package. This article focuses mostly on the RigidBodyControl, but also introduces you to others. 
 
-
 If you are looking for info on how to respond to physics events such as collisions, read about <<jme3/advanced/physics_listeners#,Physics Listeners>>.
-
 
 
 == Technical Overview
 
 jME3 has a complete, slightly adapted but fully wrapped Bullet +++<abbr title="Application Programming Interface">API</abbr>+++ that uses normal jME math objects (Vector3f, Quaternion etc) as input/output data. All normal bullet objects like RigidBodies, Constraints (called “Joints in jME3) and the various collision shapes are available, all mesh formats can be converted from jME to bullet.
 
-
 The PhysicsSpace object is the central object in bullet and all objects have to be added to it so they are physics-enabled. You can create multiple physics spaces as well to have multiple independent physics simulations or to run simulations in the background that you step at a different pace. You can also create a Bullet PhysicsSpace in jME3 with a `com.jme3.bullet.BulletAppState` which runs a PhysicsSpace along the update loop, which is the easiest way to instantiate a physics space. It can be run in a mode where it runs in parallel to rendering, yet syncs to the update loop so you can apply physics changes safely during the update() calls of Controls and SimpleApplication.
-
 
 The base bullet objects are also available as simple to use controls that can be attached to spatials to directly control these by physics forces and influences. The RigidBodyControl for example includes a simple constructor that automatically creates a hull collision shape or a mesh collision shape based on the given input mass and the mesh of the spatial it is attached to. This makes enabling physics on a Geometry as simple as “spatial.addControl(new RigidBodyControl(1));
 
-
 Due to some differences in how bullet and jME handle the scene and other objects relations there is some things to remember about the controls implementation:
-
 
 *  The collision shape is not automatically updated when the spatial mesh changes
 **  You can update it by reattaching the control or by using the CollisionShapeFactory yourself.
@@ -53,16 +46,13 @@ Due to some differences in how bullet and jME handle the scene and other objects
 
 When you use this physics simulation, values correspond to the following units:
 
-
 *  1 length unit (1.0f) equals 1 meter, 
 *  1 weight unit (1.0f) equals 1 kilogram,
 *  most torque and rotation values are expressed in radians.
 
 Bullet physics runs internally at 60fps by default. This rate is not dependent on the actual framerate and it does not lock the framerate at 60fps. Instead, when the actual fps is higher than the physics framerate the system will display interpolated positions for the physics objects. When the framerate is lower than the physics framerate, the physics space will be stepped multiple times per frame to make up for the missing calculations. 
 
-
 Internally, the updating and syncing of the actual physics objects in the BulletAppState happens in the following way:
-
 
 .  collision callbacks (`BulletAppState.update()`)
 .  user update (`simpleUpdate` in main loop, `update()` in Controls and AppStates)
@@ -74,7 +64,6 @@ Internally, the updating and syncing of the actual physics objects in the Bullet
 
 Full code samples are here:
 
-
 *  link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/bullet/TestBrickWall.java[TestBrickWall.java]
 *  link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/bullet/TestQ3.java[TestQ3.java]
 *  link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/bullet/TestSimplePhysics.java[TestSimplePhysics.java]
@@ -85,9 +74,7 @@ Full code samples are here:
 
 A short overview of how to write a jME application with Physics capabilities:
 
-
 Do the following once per application to gain access to the `physicsSpace` object:
-
 
 .  Make your application extend `com.jme3.app.SimpleApplication`.
 .  Create a BulletAppState field: 
@@ -110,7 +97,6 @@ public void simpleInitApp() {
 ====
 In your application, you can always access the `BulletAppState` via the ApplicationStateManager: 
 
-
 [source,java]
 ----
 BulletAppState bas = app.getStateManager().getState(BulletAppState.class);
@@ -120,9 +106,7 @@ BulletAppState bas = app.getStateManager().getState(BulletAppState.class);
 ====
 
 
-
 For each Spatial that you want to be physical:
-
 
 .  Create a CollisionShape.
 .  Create the PhysicsControl from the CollisionShape and a mass value.
@@ -134,14 +118,11 @@ For each Spatial that you want to be physical:
 Let's look at the details: 
 
 
-
 == Create a CollisionShape
 
 A CollisionShape is a simplified shape for which physics are easier to calculate than for the true shape of the model. This simplication approach speeds up the simulation greatly.
 
-
 Before you can create a Physics Control, you must create a CollisionShape from the `com.jme3.bullet.collision.shapes` package. (Read the tip under “PhysicsControls Code Samples how to use default CollisionShapes for Boxes and Spheres.)
-
 [cols="3", options="header"]
 |===
 
@@ -159,8 +140,7 @@ a| Compact objects like apples, soccer balls, cannon balls, compact spaceships.
 
 <a| CylinderCollisionShape()    
 a| Tube-shaped and disc-shaped behaviour, can roll on one side. 
-a| Oblong objects like pillars. +
-Disc-shaped objects like wheels, plates. 
+a| Oblong objects like pillars. +Disc-shaped objects like wheels, plates. 
 
 <a| CompoundCollisionShape()    
 a| A CompoundCollisionShape allows custom combinations of shapes. Use the `addChildShape()` method on the compound object to add other shapes to it and position them relative to one another. 
@@ -181,7 +161,6 @@ a| Flat solid floor or wall.
 |===
 
 All non-mesh CollisionShapes can be used for dynamic, kinematic, as well as static Spatials. (Code samples see below)
-
 [cols="3", options="header"]
 |===
 
@@ -190,29 +169,24 @@ All non-mesh CollisionShapes can be used for dynamic, kinematic, as well as stat
 a| Examples 
 
 <a| MeshCollisionShape        
-a| A mesh-accurate shape for static or kinematic Spatials. Can have complex shapes with openings and appendages. +
-*Limitations:* Collisions between two mesh-accurate shapes cannot be detected, only non-mesh shapes can collide with this shape. This Shape does not work with dynamic Spatials. 
+a| A mesh-accurate shape for static or kinematic Spatials. Can have complex shapes with openings and appendages. +*Limitations:* Collisions between two mesh-accurate shapes cannot be detected, only non-mesh shapes can collide with this shape. This Shape does not work with dynamic Spatials. 
 a| A whole static game level model. 
 
 <a| HullCollisionShape        
-a| A less accurate shape for dynamic Spatials that cannot easily be represented by a CompoundShape. +
-*Limitations:* The shape is convex (behaves as if you gift-wrapped the object), i.e. openings, appendages, etc, are not individually represented. 
+a| A less accurate shape for dynamic Spatials that cannot easily be represented by a CompoundShape. +*Limitations:* The shape is convex (behaves as if you gift-wrapped the object), i.e. openings, appendages, etc, are not individually represented. 
 a| A dynamic 3D model. 
 
 <a| GImpactCollisionShape     
-a| A mesh-accurate shape for dynamic Spatials. It uses link:http://gimpact.sourceforge.net/[http://gimpact.sourceforge.net/]. +
-*Limitations:* CPU intensive, use sparingly! We recommend using HullCollisionShape (or CompoundShape) instead to improve performance. Collisions between two mesh-accurate shapes cannot be detected, only non-mesh shapes can collide with this shape. 
+a| A mesh-accurate shape for dynamic Spatials. It uses link:http://gimpact.sourceforge.net/[http://gimpact.sourceforge.net/]. +*Limitations:* CPU intensive, use sparingly! We recommend using HullCollisionShape (or CompoundShape) instead to improve performance. Collisions between two mesh-accurate shapes cannot be detected, only non-mesh shapes can collide with this shape. 
 a| Complex dynamic objects (like spiders) in Virtual Reality or scientific simulations. 
 
 a| HeightfieldCollisionShape 
-a| A mesh-accurate shape optimized for static terrains. This shape is much faster than other mesh-accurate shapes. +
-*Limitations:* Requires heightmap data. Collisions between two mesh-accurate shapes cannot be detected, only non-mesh shapes can collide with this shape.
+a| A mesh-accurate shape optimized for static terrains. This shape is much faster than other mesh-accurate shapes. +*Limitations:* Requires heightmap data. Collisions between two mesh-accurate shapes cannot be detected, only non-mesh shapes can collide with this shape.
 a|Static terrains.
 
 |===
 
 On a CollisionShape, you can apply a few properties
-
 [cols="3", options="header"]
 |===
 
@@ -222,19 +196,16 @@ a| Examples
 
 a| setScale(new Vector3f(2f,2f,2f)) 
 a| You can change the scale of collisionshapes (whether it be, Simple or Mesh). You cannot change the scale of a CompoundCollisionShape however. A sphere collision shape, will change its radius based on the X component of the vector passed in. You must scale a collision shape before attaching it to the physicsSpace, or you must readd it to the physicsSpace each time the scale changes. 
-a| Scale a player in the Y axis by 2: +
-`new Vector3f(1f,2f,1f)`
+a| Scale a player in the Y axis by 2: +`new Vector3f(1f,2f,1f)`
 
 |===
 
 The mesh-accurate shapes can use a CollisionShapeFactory as constructor (code samples see below).
 
 
-
 [IMPORTANT]
 ====
 Pick the simplest and most applicable shape for the mesh for what you want to do: If you give a box a sphere collision shape, it will roll; if you give a ball a box collision shape, it will sit on a slope. If the shape is too big, the object will seem to float; if the shape is too small it will seem to sink into the ground. During development and debugging, you can make collision shapes visible by adding the following line after the bulletAppState initialization: 
-
 
 [source,java]
 ----
@@ -243,7 +214,6 @@ bulletAppState.getPhysicsSpace().enableDebug(assetManager);
 
 
 ====
-
 
 
 
@@ -296,7 +266,6 @@ SphereCollisionShape sphereShape =
 == Create PhysicsControl
 
 BulletPhysics are available in jME3 through PhysicsControls classes from the com.jme3.bullet.control package. jME3's PhysicsControl classes directly extend BulletPhysics objects and are the recommended way to use physics in a jME3 application. PhysicsControls are flexible and can be added to any Spatial to make it act according to physical properties. 
-
 [cols="3", options="header"]
 |===
 
@@ -306,8 +275,7 @@ a| Examples
 
 a|RigidBodyControl
 a|The most commonly used PhysicsControl. You can use it for dynamic objects (solid objects that freely affected by collisions, forces, or gravity), for static objects (solid but not affected by any forces), or kinematic objects (remote-controlled solid objects). 
-a|Impacting projectiles, moving obstacles like crates, rolling and bouncing balls, elevators, flying aircaft or space ships. +
-Solid immobile floors, walls, static obstacles.
+a|Impacting projectiles, moving obstacles like crates, rolling and bouncing balls, elevators, flying aircaft or space ships. +Solid immobile floors, walls, static obstacles.
 
 a|GhostControl
 a|Use for collision and intersection detection between physical objects. A GhostControl itself is _non-solid_ and invisible. GhostControl moves with the Spatial it is attached to. Use GhostControls to <<jme3/advanced/physics_listeners#,implement custom game interactions>> by adding it to a visible Geometry. 
@@ -321,8 +289,7 @@ a|Special PhysicsControls
 a| Usage
 a| Examples 
 
-a|VehicleControl +
-PhysicsVehicleWheel
+a|VehicleControl +PhysicsVehicleWheel
 a| Special Control used for <<jme3/advanced/vehicles#,&quot;terrestrial&quot;  vehicles with suspension and wheels>>. 
 a|Cars, tanks, hover crafts, ships, motorcycles…
 
@@ -339,11 +306,9 @@ a|Falling persons, animals, robots, “Rag dolls
 Click the links for details on the special PhysicsControls. This article is about RigidBodyControl.
 
 
-
 === Physics Control Code Samples
 
 The most commonly used physics control is RigidBodyControl.  The RigidBodyControl constructor takes up to two parameters:  a collision shape and a mass (a float in kilograms).  The mass parameter also determines whether the object is dynamic (movable) or static (fixed). For a static object such as a floor or wall, specify zero mass. 
-
 
 [source,java]
 ----
@@ -364,9 +329,7 @@ If you give your floor a non-zero mass, it will fall out of the scene!
 ====
 
 
-
 The following creates a box Geometry with the correct default BoxCollisionShape:
-
 
 [source,java]
 ----
@@ -377,7 +340,6 @@ box_geo.addControl(new RigidBodyControl( 1.0f )); // explicit non-zero mass, imp
 ----
 
 The following creates a MeshCollisionShape for a whole loaded (static) scene:
-
 
 [source,java]
 ----
@@ -393,11 +355,9 @@ Spheres and Boxes automatically fall back on the correct default CollisionShape 
 
 
 
-
 == Add PhysicsControl to Spatial
 
 For each physical Spatial in the scene:
-
 
 .  Add a PhysicsControl to a Spatial. 
 [source,java]
@@ -411,7 +371,6 @@ myThing_geo.addControl(myThing_phys);
 == Add PhysicsControl to PhysicsSpace
 
 The PhysicsSpace is an object in BulletAppState that is like a rootNode for Physics Controls. 
-
 
 *  Just like you add the Geometry to the rootNode, you add its PhysicsControl to the PhysicsSpace. 
 [source,java]
@@ -436,17 +395,13 @@ You can either add the _PhysicsControl_ to the PhysicsSpace, or add the PhysicsC
 
 
 
-
 == Changing the Scale of a PhysicsControl
 
 To change the scale of a PhysicsControl you must change the scale of the collisionshape which belongs to it.
 
-
 MeshCollisionShapes can have a scale correctly set, but it only works when being constructed on a geometry (not a node). CompoundCollisionShapes cannot be scaled at this time(the type obtained when creating a CollisionShape from a Node i.e using imported models).
 
-
 When you import a model from blender, it often comes as a Node (even if it only contains 1 mesh), which is by de-facto automatically converted to a CompoundCollisionShape. So when you try to scale this it won't work! Below illustrates an example, of how to scale an imported model:
-
 
 [source,java]
 ----
@@ -474,11 +429,9 @@ link:http://i.imgur.com/fAXlF.png[External Link]
 link:http://i.imgur.com/Josua.png[External Link]
 
 
-
 === PhysicsSpace Code Samples
 
 The PhysicsSpace also manages global physics settings. Typically, you can leave the defaults, and you don't need to change the following settings, but it's good to know what they are for:
-
 [cols="2", options="header"]
 |===
 
@@ -494,8 +447,7 @@ a|Specifies physics accuracy. The higher the accuracy, the slower the game. Decr
 a|setMaxSubSteps(4);
 a|Compensates low FPS: Specifies the maximum amount of extra steps that will be used to step the physics when the game fps is below the physics fps. This maintains determinism in physics in slow (low-fps) games. For example a maximum number of 2 can compensate for framerates as low as 30 fps (physics has a default accuracy of 60 fps). Note that setting this value too high can make the physics drive down its own fps in case its overloaded.
 
-a|setWorldMax(new Vector3f(10000f, 10000f, 10000f)); +
-setWorldMin(new Vector3f(-10000f, -10000f, -10000f));
+a|setWorldMax(new Vector3f(10000f, 10000f, 10000f)); +setWorldMin(new Vector3f(-10000f, -10000f, -10000f));
 a|Specifies the size of the physics space as two opposite corners (only applies to AXIS_SWEEP broadphase).
 
 |===
@@ -505,9 +457,7 @@ a|Specifies the size of the physics space as two opposite corners (only applies 
 
 After you have registered, attached, and added everything, you can adjust physical properties or apply forces.
 
-
 On a RigidBodyControl, you can set the following physical properties.
-
 [cols="3", options="header"]
 |===
 
@@ -516,30 +466,20 @@ a| Property
 a| Examples 
 
 a| setGravity(new Vector3f(0f,-9.81f,0f)) 
-a| You can change the gravity of individual physics objects after they were added to the PhysicsSpace. Gravity is a vector pointing from this Spatial towards the source of gravity. The longer the vector, the stronger is gravity. +
-If gravity is the same absolute direction for all objects (e.g. on a planet surface), set this vector globally on the PhysicsSpace object and not individually. +
-If the center of gravity is relative (e.g. towards a black hole) then setGravity() on each Spatial to constantly adjust the gravity vectors at each tick of their update() loops.
-a|For planet earth: +
-`new Vector3f(0f,-9.81f,0f)`
+a| You can change the gravity of individual physics objects after they were added to the PhysicsSpace. Gravity is a vector pointing from this Spatial towards the source of gravity. The longer the vector, the stronger is gravity. +If gravity is the same absolute direction for all objects (e.g. on a planet surface), set this vector globally on the PhysicsSpace object and not individually. +If the center of gravity is relative (e.g. towards a black hole) then setGravity() on each Spatial to constantly adjust the gravity vectors at each tick of their update() loops.
+a|For planet earth: +`new Vector3f(0f,-9.81f,0f)`
 
 a| setMass(1f) 
-a| Sets the mass in kilogram. Dynamic objects have masses &gt; 0.0f. Heavy dynamic objects need more force to be moved and light ones move with small amounts of force. +
-Static immobile objects (walls, floors, including buildings and terrains) must have a mass of zero! 
-a| Person: 60f, ball: 1.0f +
-Floor: 0.0f (!)
+a| Sets the mass in kilogram. Dynamic objects have masses &gt; 0.0f. Heavy dynamic objects need more force to be moved and light ones move with small amounts of force. +Static immobile objects (walls, floors, including buildings and terrains) must have a mass of zero! 
+a| Person: 60f, ball: 1.0f +Floor: 0.0f (!)
 
 a| setFriction(1f) 
-a| Friction. +
-Slippery objects have low friction. The ground has high friction. 
-a| Ice, slides: 0.0f +
-Soil, concrete, rock: 1.0f 
+a| Friction. +Slippery objects have low friction. The ground has high friction. 
+a| Ice, slides: 0.0f +Soil, concrete, rock: 1.0f 
 
 a| setRestitution(0.0f) 
-a| Bounciness. By default objects are not bouncy (0.0f). For a bouncy rubber object set this &gt; 0.0f. +
-Both the object and the surface must have non-zero restitution for bouncing to occur. +
-This setting has an impact on performance, so use it sparingly. 
-a| Brick: 0.0f +
-Rubber ball: 1.0f 
+a| Bounciness. By default objects are not bouncy (0.0f). For a bouncy rubber object set this &gt; 0.0f. +Both the object and the surface must have non-zero restitution for bouncing to occur. +This setting has an impact on performance, so use it sparingly. 
+a| Brick: 0.0f +Rubber ball: 1.0f 
 
 a|setCcdMotionThreshold()
 a|The amount of motion in 1 physics tick to trigger the continuous motion detection in moving objects that push one another. Rarely used, but necessary if your moving objects get stuck or roll through one another.
@@ -548,7 +488,6 @@ a|around 0.5 to 1 * object diameter
 |===
 
 On a RigidBodyControl, you can apply the following physical forces:
-
 [cols="2", options="header"]
 |===
 
@@ -562,8 +501,7 @@ a| setPhysicsRotation()
 a|Rotates the object. Do not use setLocalRotate() for physical objects.
 
 a| setKinematic(true) 
-a| By default, RigidBodyControls are dynamic (kinematic=false) and are affected by forces. If you set kinematic=true, the object is no longer affected by forces, but it still affects others. A kinematic is solid, and must have a mass. +
-(See detailed explanation below.) 
+a| By default, RigidBodyControls are dynamic (kinematic=false) and are affected by forces. If you set kinematic=true, the object is no longer affected by forces, but it still affects others. A kinematic is solid, and must have a mass. +(See detailed explanation below.) 
 
 |===
 
@@ -571,7 +509,6 @@ a| By default, RigidBodyControls are dynamic (kinematic=false) and are affected 
 === Kinematic vs Dynamic vs Static
 
 All physical objects…
-
 
 *  must not overlap. 
 *  can detect collisions and report several values about the impact.
@@ -597,35 +534,27 @@ a|yes, &gt;0.0f
 a| How does it move?
 a|never
 a|setLocalTranslation();
-a|setLinearVelocity(); applyForce(); +
-setWalkDirection(); for CharacterControl
+a|setLinearVelocity(); applyForce(); +setWalkDirection(); for CharacterControl
 
 a| How to place in scene?
-a|setPhysicsLocation(); +
-setPhysicsRotation()
-a|setLocalTranslation(); +
-setLocalRotation();
-a|setPhysicsLocation(); +
- setPhysicsRotation()
+a|setPhysicsLocation(); +setPhysicsRotation()
+a|setLocalTranslation(); +setLocalRotation();
+a|setPhysicsLocation(); + setPhysicsRotation()
 
 a| Can it move and push others?
 a|no
 a|yes
 a|yes
 
-a| Is is affected by forces? +
-(Falls when it mid-air? Can be pushed by others?)
+a| Is is affected by forces? +(Falls when it mid-air? Can be pushed by others?)
 a|no
 a|no
 a|yes
 
 a| How to activate this behaviour? 
-a|setMass(0f); +
-setKinematic(false); 
-a|setMass(1f); +
-setKinematic(true);
-a|setMass(1f); +
-setKinematic(false);
+a|setMass(0f); +setKinematic(false); 
+a|setMass(1f); +setKinematic(true);
+a|setMass(1f); +setKinematic(false);
 
 |===
 
@@ -645,11 +574,9 @@ The position of a kinematic RigidBodyControl is updated automatically depending 
 
 
 
-
 == Forces: Moving Dynamic Objects
 
 Use the following methods to move dynamic physical objects.
-
 [cols="2", options="header"]
 |===
 
@@ -689,9 +616,7 @@ It is technically possible to position PhysicsControls using setLocalTranslation
 ====
 
 
-
 PhysicsControls also support the following advanced features:
-
 [cols="2", options="header"]
 |===
 
@@ -701,10 +626,7 @@ a| Property
 a| setCollisionShape(collisionShape)
 a|Changes the collision shape after creation.
 
-a| setCollideWithGroups() +
-setCollisionGroup() +
-addCollideWithGroup(COLLISION_GROUP_01) +
-removeCollideWithGroup(COLLISION_GROUP_01)
+a| setCollideWithGroups() +setCollisionGroup() +addCollideWithGroup(COLLISION_GROUP_01) +removeCollideWithGroup(COLLISION_GROUP_01)
 a|Collision Groups are integer bit masks – enums are available in the CollisionObject. All physics objects are by default in COLLISION_GROUP_01. Two objects collide when the collideWithGroups set of one contains the Collision Group of the other. Use this to improve performance by grouping objects that will never collide in different groups (the the engine saves times because it does not need to check on them).
 
 a| setDamping(float, float)
@@ -732,25 +654,19 @@ a|Bullet does not use the full collision shape for continuous collision detectio
 
 
 
-
 == Best Practices
 
-*  *Multiple Objects Too Slow?* Do not overuse PhysicsControls. Although PhysicsControls are put to “sleep” when they are not moving, creating a world solely out of dynamic physics objects will quickly bring you to the limits of your computer's capabilities. +
-*Solution:* Improve performance by replacing some physical Spatials with non-physical Spatials. Use the non-physical ones for non-solid things for which you do not need to detect collisions – foliage, plants, effects, ghosts, all remote or unreachable objects.
+*  *Multiple Objects Too Slow?* Do not overuse PhysicsControls. Although PhysicsControls are put to “sleep” when they are not moving, creating a world solely out of dynamic physics objects will quickly bring you to the limits of your computer's capabilities. +*Solution:* Improve performance by replacing some physical Spatials with non-physical Spatials. Use the non-physical ones for non-solid things for which you do not need to detect collisions – foliage, plants, effects, ghosts, all remote or unreachable objects.
 
-*  *Complex Shape Too Slow?* Breaking the level into manageable pieces helps the engine improve performance: The less CPU-intensive link:http://en.wikipedia.org/wiki/Sweep_and_prune[broadphase] filters out parts of the scene that are out of reach. It only calculates the collisions for objects that are actually close to the action. +
-*Solution:* A huge static city or terrain model should never be loaded as one huge mesh. Divide the scene into multiple physics objects, with each its own CollisionShape. Choose the most simple CollisionShape possible; use mesh-accurate shapes only for the few cases where precision is more important than speed. For example, you can use the very fast `PlaneCollisionShape` for flat streets, floors and the outside edge of the scene, if you keep these pieces separate.
+*  *Complex Shape Too Slow?* Breaking the level into manageable pieces helps the engine improve performance: The less CPU-intensive link:http://en.wikipedia.org/wiki/Sweep_and_prune[broadphase] filters out parts of the scene that are out of reach. It only calculates the collisions for objects that are actually close to the action. +*Solution:* A huge static city or terrain model should never be loaded as one huge mesh. Divide the scene into multiple physics objects, with each its own CollisionShape. Choose the most simple CollisionShape possible; use mesh-accurate shapes only for the few cases where precision is more important than speed. For example, you can use the very fast `PlaneCollisionShape` for flat streets, floors and the outside edge of the scene, if you keep these pieces separate.
 
-*  *Eject?* If you have physical nodes jittering wildy and being ejected “for no apparent reason, it means you have created an impossible state – solid objects overlapping. This can happen when you position solid spatials too close to other solid spatials, e.g. when moving them with setLocalTranslation(). +
-*Solution:* Use the debug mode to make CollisionShapes visible and verify that CollisionShapes do not overlap. 
+*  *Eject?* If you have physical nodes jittering wildy and being ejected “for no apparent reason, it means you have created an impossible state – solid objects overlapping. This can happen when you position solid spatials too close to other solid spatials, e.g. when moving them with setLocalTranslation(). +*Solution:* Use the debug mode to make CollisionShapes visible and verify that CollisionShapes do not overlap. 
 [source,java]
 ----
 bulletAppState.getPhysicsSpace().enableDebug(assetManager);
 ----
 
 
-*  *Buggy?* If you get weird behaviour, such as physical nodes passing through one another, or getting stuck for no reason. +
-*Solution:* Look at the physics space accessors and change the acuracy and other parameters.
+*  *Buggy?* If you get weird behaviour, such as physical nodes passing through one another, or getting stuck for no reason. +*Solution:* Look at the physics space accessors and change the acuracy and other parameters.
 
-*  *Need more interactivity?* You can actively _control_ a physical game by triggering forces. You may also want to be able _respond_ to collisions, e.g. by substracting health, awarding points, or by playing a sound. +
-*Solution:* To specify how the game responds to collisions, you use <<jme3/advanced/physics_listeners#,Physics Listeners>>.
+*  *Need more interactivity?* You can actively _control_ a physical game by triggering forces. You may also want to be able _respond_ to collisions, e.g. by substracting health, awarding points, or by playing a sound. +*Solution:* To specify how the game responds to collisions, you use <<jme3/advanced/physics_listeners#,Physics Listeners>>.

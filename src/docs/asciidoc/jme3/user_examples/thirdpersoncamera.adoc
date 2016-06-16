@@ -9,12 +9,9 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 image:jme3/user_examples/thirdpersoncamera/3p.png[3p.png,with="",height=""]
 
-
 (by Berzee) (see a video demonstration here: link:https://www.youtube.com/watch?v=phu52hmIoYU[https://www.youtube.com/watch?v=phu52hmIoYU])
 
-
 Here is a small example of a self-contained Third Person Character (with camera). It uses the familiar Green Ninja model to demonstrate the following controls and animations:
-
 
 *  “WASD movement
 *  “SPACE to jump
@@ -23,7 +20,6 @@ Here is a small example of a self-contained Third Person Character (with camera)
 *  Left Mouse Button to attack
 
 To try this example for yourself, you can copy the classes from this page. Then you will be able to create a Third-Person Character in your apps like so:
-
 
 [source,java]
 ----
@@ -41,15 +37,11 @@ bulletAppState.getPhysicsSpace().add(player);
 
 Most of the code in the example files should be relatively self-explanatory, but mouselook deserves a lovely pictograph of its own. It's easy to make <<jme3/advanced/making_the_camera_follow_a_character#,a camera that follows an object and always looks at the back of it>>, and thus it's easy to account for horizontal mouse movement by simple rotating the entire Player character left or right.
 
-
 But what if we want to be able to move the camera angle up or down, while the Player stays firmly upright? We can accomplish this with minimal Horrible Maths by adding an invisible “pivot node to the Player, and instructing the camera to follow that “pivot instead. Then we can independently rotate the *pivot* instead of the Player, and do things like this:
-
 
 image:jme3/user_examples/thirdpersoncamera/pivot2.png[pivot2.png,with="",height=""]
 
-
 Now you know the mystical secrets, and are ready to see the code itself.
-
 
 
 == Source Code
@@ -58,7 +50,6 @@ Now you know the mystical secrets, and are ready to see the code itself.
 === ThirdPersonPlayerNode.java
 
 ThirdPersonPlayerNode.java contains the bulk of the logic for keyboard, mouse, physics, and animation. Most of this is lifted straight from the Tutorials for Beginners and can safely be ignored. However, pay particular attention to the “onAnalog() method – that's where all of the mouse movement is processed to turn the player left and right, and the camera up and down.
-
 
 [source,java]
 ----
@@ -328,7 +319,6 @@ public class ThirdPersonPlayerNode extends Node implements ActionListener, Analo
 
 ThirdPersonCamera.java sets up a CameraNode to follow behind the player. It uses the same “ControlDirection.SpatialToCamera approach as <<jme3/advanced/making_the_camera_follow_a_character#,the advanced tutorial about 3rd-person cameras>>, but also adds a pivot node for easy mouselook. (See the scientific diagram above, and the comments in the class, for more explanation).
 
-
 [source,java]
 ----
 
@@ -419,7 +409,6 @@ public class ThirdPersonCamera
 === Main.java
 
 Here is an example Main.java project that you can use to see the ThirdPersonPlayerNode in action. Just make sure to add the jme3-test-data.jar library to your project so it can access the Ninja model and ManyLights scene (In the SDK: Project Explorer → Right Click on “Libraries → Add Library → jme3-test-data.jar).
-
 
 [source,java]
 ----

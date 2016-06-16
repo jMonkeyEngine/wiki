@@ -11,19 +11,14 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 Previous: <<jme3/beginner/hello_animation#,Hello Animation>>,
 Next: <<jme3/beginner/hello_collision#,Hello Collision>>
 
-
 Typical interactions in games include shooting, picking up objects, and opening doors. From an implementation point of view, these apparently different interactions are surprisingly similar: The user first aims and selects a target in the 3D scene, and then triggers an action on it. We call this process picking.
 
-
 You can pick something by either pressing a key on the keyboard, or by clicking with the mouse. In either case, you identify the target by aiming a ray –a straight line– into the scene. This method to implement picking is called _ray casting_ (which is not the same as _ray tracing_).
-
 
 This tutorial relies on what you have learned in the <<jme3/beginner/hello_input_system#,Hello Input>> tutorial. You find more related code samples under <<jme3/advanced/mouse_picking#,Mouse Picking>> and <<jme3/advanced/collision_and_intersection#,Collision and Intersection>>.
 
 
-
 image::jme3/beginner/beginner-picking.png[beginner-picking.png,with="",height="",align="center"]
-
 
 
 
@@ -185,15 +180,12 @@ public class HelloPicking extends SimpleApplication {
 
 You should see four colored cubes floating over a gray floor, and cross-hairs. Aim the cross-hairs and click, or press the spacebar to shoot. The hit spot is marked with a red dot.
 
-
 Keep an eye on the application's output stream, it will give you more details: The name of the mesh that was hit, the coordinates of the hit, and the distance.
-
 
 
 == Understanding the Helper Methods
 
 The methods `makeCube()`,  `makeFloor()`, `initMark()`, and `initCrossHairs`, are custom helper methods. We call them from  `simpleInitApp()` to initialize the scenegraph with sample content.
-
 
 .  `makeCube()` creates simple colored boxes for “target practice.
 .  `makeFloor()` creates a gray floor node for “target practice.
@@ -207,14 +199,11 @@ The methods `makeCube()`,  `makeFloor()`, `initMark()`, and `initCrossHairs`, ar
 In this example, we attached all “shootable objects to one custom node, `Shootables`. This is an optimization so the engine only has to calculate intersections with objects we are actually interested in.  The `Shootables` node is attached to the `rootNode` as usual.
 
 
-
 == Understanding Ray Casting for Hit Testing
 
 Our goal is to determine which box the user “shot (picked). In general, we want to determine which mesh the user has selected by aiming the cross-hairs at it. Mathematically, we draw a line from the camera and see whether it intersects with objects in the 3D scene. This line is called a ray.
 
-
 Here is our simple ray casting algorithm for picking objects:
-
 
 .  Reset the results list.
 .  Cast a ray from cam location into the cam direction.
@@ -232,7 +221,6 @@ Here is our simple ray casting algorithm for picking objects:
 === Loading the scene
 
 First initialize some shootable nodes and attach them to the scene. You will use the `mark` object later.
-
 
 [source,java]
 ----
@@ -261,7 +249,6 @@ First initialize some shootable nodes and attach them to the scene. You will use
 
 Next you declare the shooting action. It can be triggered either by clicking, or by pressing the space bar. The `initKeys()` method is called from `simpleInitApp()` to set up these input mappings.
 
-
 [source,java]
 ----
 
@@ -280,7 +267,6 @@ Next you declare the shooting action. It can be triggered either by clicking, or
 
 Next we implement the ActionListener that responds to the Shoot trigger with an action. The action follows the ray casting algorithm described above:
 
-
 .  For every click or press of the spacebar, the `Shoot` action is triggered.
 .  The action casts a ray forward and determines intersections with shootable objects (= ray casting).
 .  For any target that has been hit, it prints name, distance, and coordinates of the hit.
@@ -288,7 +274,6 @@ Next we implement the ActionListener that responds to the Shoot trigger with an 
 .  When nothing was hit, the results list is empty, and the red mark is removed.
 
 Note how it prints a lot of output to show you which hits were registered.
-
 
 [source,java]
 ----
@@ -332,11 +317,9 @@ Note how it prints a lot of output to show you which hits were registered.
 *Tip:* Notice how you use the provided method `results.getClosestCollision().getContactPoint()` to determine the _closest_ hit's location. If your game includes a “weapon or “spell that can hit multiple targets, you could also loop over the list of results, and interact with each of them.
 
 
-
 === Picking Action Using Mouse Pointer
 
 The above example assumes that the player is aiming crosshairs (attached to the center of the screen) at the target. But you can change the picking code to allow you to freely click at objects in the scene with a visible mouse pointer. In order to do this you have to convert the 2d screen coordinates of the click to 3D world coordinates to get the start point of the picking ray.
-
 
 .  Reset result list.
 .  Get 2D click coordinates.
@@ -360,9 +343,7 @@ shootables.collideWith(ray, results);
 
 Use this together with `inputManager.setCursorVisible(true)` to make certain the cursor is visible. 
 
-
 Note that since you now use the mouse for picking, you can no longer use it to rotate the camera. If you want to have a visible mouse pointer for picking in your game, you have to redefine the camera rotation mappings.
-
 
 
 == Exercises
@@ -371,12 +352,9 @@ After a hit was registered, the closest object is identified as target, and mark
 Modify the code sample to solve these exercises:
 
 
-
 === Exercise 1: Magic Spell
 
-Change the color of the closest clicked target! +
-Here are some tips:
-
+Change the color of the closest clicked target! +Here are some tips:
 
 .  Go to the line where the closest target is indentified, and add your changes after that.
 .  To change an object's color, you must first know its Geometry. Identify the node by identifying the target's name.
@@ -391,7 +369,6 @@ Here are some tips:
 
 Shooting boxes isn't very exciting – can you add code that loads and positions a model in the scene, and shoot at it?
 
-
 *  Tip: You can use `Spatial golem = assetManager.loadModel(“Models/Oto/Oto.mesh.xml);` from the engine's jme3-test-data.jar.
 *  Tip: Models are shaded! You need some light!
 
@@ -399,7 +376,6 @@ Shooting boxes isn't very exciting – can you add code that loads and positions
 === Exercise 3: Pick up into Inventory
 
 Change the code as follows to simulate the player picking up objects into the inventory: When you click once, the closest target is identified and detached from the scene. When you click a second time, the target is reattached at the location that you have clicked. Here are some tips:
-
 
 .  Create an inventory node to store the detached nodes temporarily.
 .  The inventory node is not attached to the rootNode.
@@ -418,24 +394,19 @@ Link to user-proposed solutions: link:http://jmonkeyengine.org/wiki/doku.php/jm3
 
 
 
-
 == Conclusion
 
 You have learned how to use ray casting to solve the task of determining what object a user selected on the screen. You learned that this can be used for a variety of interactions, such as shooting, opening, picking up and dropping items, pressing a button or lever, etc.
 
-
 Use your imagination from here:
-
 
 *  In your game, the click can trigger any action on the identified Geometry: Detach it and put it into the inventory, attach something to it, trigger an animation or effect, open a door or crate, – etc.
 *  In your game, you could replace the red mark with a particle emitter, add an explosion effect, play a sound, calculate the new score after each hit depending on what was hit – etc.
 
 Now, wouldn't it be nice if those targets and the floor were solid objects and you could walk around between them? Let's continue to learn about <<jme3/beginner/hello_collision#,Collision Detection>>.
-
 '''
 
 See also:
-
 
 *  <<jme3/beginner/hello_input_system#,Hello Input>>
 *  <<jme3/advanced/mouse_picking#,Mouse Picking>>

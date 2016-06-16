@@ -8,17 +8,14 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
 
-=== Creating a new Theme
+== Creating a new Theme
 
 
-==== Understanding Styles
+=== Understanding Styles
 
 The Style class is set up to be as open ended as possible for creating custom controls.+
-
 +
-
 Each property of a style can be one of the following data type:
-
 
 *  String
 *  float
@@ -33,7 +30,6 @@ Each property of a style can be one of the following data type:
 
 To retrieve a tag from a style you must use the get method for the data type you trying to retrieve like so:
 
-
 [source,java]
 ----
 
@@ -42,78 +38,78 @@ screen.getStyle(“StyleName”).getColorRGBA(“TagNameInStyle”);
 ----
 
 These can be used as flags for configuring you control, or style specific info for default Look &amp; Feel+
-
 +
-
 Lets look at the Button.xml file as an example:
 
-<htmlblock>
-&lt;root&gt;
-    &lt;element name=”Button”&gt;
-        &lt;font&gt;
-            &lt;property name=”fontSize” type=”float” value=”18″ /&gt;
-            &lt;property name=”fontColor” type=”ColorRGBA”&gt;
-                &lt;r value=”0.8″ /&gt;
-                &lt;g value=”0.8″ /&gt;
-                &lt;b value=”0.8″ /&gt;
-                &lt;a value=”1.0″ /&gt;
-            &lt;/property&gt;
-            &lt;property name=”textAlign” type=”String” value=”Center” /&gt;
-            &lt;property name=”textVAlign” type=”String” value=”Center” /&gt;
-            &lt;property name=”textWrap” type=”String” value=”Clip” /&gt;
-            &lt;property name=”hoverColor” type=”ColorRGBA”&gt;
-                &lt;r value=”1.0″ /&gt;
-                &lt;g value=”1.0″ /&gt;
-                &lt;b value=”1.0″ /&gt;
-                &lt;a value=”1.0″ /&gt;
-            &lt;/property&gt;
-            &lt;property name=”pressedColor” type=”ColorRGBA”&gt;
-                &lt;r value=”0.6″ /&gt;
-                &lt;g value=”0.6″ /&gt;
-                &lt;b value=”0.6″ /&gt;
-                &lt;a value=”1.0″ /&gt;
-            &lt;/property&gt;
-        &lt;/font&gt;
-        &lt;attributes&gt;
-            &lt;property name=”resizeBorders” type=”Vector4f”&gt;
-                &lt;x value=”5″ /&gt;
-                &lt;y value=”5″ /&gt;
-                &lt;z value=”5″ /&gt;
-                &lt;w value=”5″ /&gt;
-            &lt;/property&gt;
-            &lt;property name=”defaultSize” type=”Vector2f”&gt;
-                &lt;x value=”100″ /&gt;
-                &lt;y value=”30″ /&gt;
-            &lt;/property&gt;
-        &lt;/attributes&gt;
-        &lt;images&gt;
-            &lt;property name=”defaultImg” type=”String” value=”tonegod/gui/style/def/Button/button_x_u.png” /&gt;
-            &lt;property name=”hoverImg” type=”String” value=”tonegod/gui/style/def/Button/button_x_h.png” /&gt;
-            &lt;property name=”pressedImg” type=”String” value=”tonegod/gui/style/def/Button/button_x_d.png” /&gt;
-        &lt;/images&gt;
-        &lt;effects&gt;
-            &lt;property name=”event0″ type=”Effect”&gt;
-                &lt;event value=”Hover” /&gt;
-                &lt;effect value=”Pulse” /&gt;
-                &lt;speed value=”3″ /&gt;
-            &lt;/property&gt;
-            &lt;property name=”event1″ type=”Effect”&gt;
-                &lt;event value=”Press” /&gt;
-                &lt;effect value=”ImageSwap” /&gt;
-                &lt;speed value=”0″ /&gt;
-            &lt;/property&gt;
-            &lt;property name=”event2″ type=”Effect”&gt;
-                &lt;event value=”LoseFocus” /&gt;
-                &lt;effect value=”ImageSwap” /&gt;
-                &lt;speed value=”0″ /&gt;
-            &lt;/property&gt;
-        &lt;/effects&gt;
-    &lt;/element&gt;
-&lt;/root&gt;
-</htmlblock>
+[source,htmlblock]
+----
+
+<root>
+    <element name=”Button”>
+        <font>
+            <property name=”fontSize” type=”float” value=”18″ />
+            <property name=”fontColor” type=”ColorRGBA”>
+                <r value=”0.8″ />
+                <g value=”0.8″ />
+                <b value=”0.8″ />
+                <a value=”1.0″ />
+            </property>
+            <property name=”textAlign” type=”String” value=”Center” />
+            <property name=”textVAlign” type=”String” value=”Center” />
+            <property name=”textWrap” type=”String” value=”Clip” />
+            <property name=”hoverColor” type=”ColorRGBA”>
+                <r value=”1.0″ />
+                <g value=”1.0″ />
+                <b value=”1.0″ />
+                <a value=”1.0″ />
+            </property>
+            <property name=”pressedColor” type=”ColorRGBA”>
+                <r value=”0.6″ />
+                <g value=”0.6″ />
+                <b value=”0.6″ />
+                <a value=”1.0″ />
+            </property>
+        </font>
+        <attributes>
+            <property name=”resizeBorders” type=”Vector4f”>
+                <x value=”5″ />
+                <y value=”5″ />
+                <z value=”5″ />
+                <w value=”5″ />
+            </property>
+            <property name=”defaultSize” type=”Vector2f”>
+                <x value=”100″ />
+                <y value=”30″ />
+            </property>
+        </attributes>
+        <images>
+            <property name=”defaultImg” type=”String” value=”tonegod/gui/style/def/Button/button_x_u.png” />
+            <property name=”hoverImg” type=”String” value=”tonegod/gui/style/def/Button/button_x_h.png” />
+            <property name=”pressedImg” type=”String” value=”tonegod/gui/style/def/Button/button_x_d.png” />
+        </images>
+        <effects>
+            <property name=”event0″ type=”Effect”>
+                <event value=”Hover” />
+                <effect value=”Pulse” />
+                <speed value=”3″ />
+            </property>
+            <property name=”event1″ type=”Effect”>
+                <event value=”Press” />
+                <effect value=”ImageSwap” />
+                <speed value=”0″ />
+            </property>
+            <property name=”event2″ type=”Effect”>
+                <event value=”LoseFocus” />
+                <effect value=”ImageSwap” />
+                <speed value=”0″ />
+            </property>
+        </effects>
+    </element>
+</root>
+
+----
 
 The Style XML file for any given control can contain as many element tags as you would like.  Each becomes another style that can be retrieved via:
-
 
 [source,java]
 ----
@@ -124,40 +120,41 @@ screen.getStyle("styleName");
 
 Each element tag is divided into 4 sections:
 
-
 *  fonts
 *  attributes
 *  images
 *  effects
 
 The first 3 are interchangeable and only there for organizational purposes.+
-
 +
-
 The 4th (effects) is more specific, as the effects are stored and retrieved via the EffectManage of the Screen.+
-
 +
-
 The tags for storing properties are fomatted as follows:
 
-
 *  if the data type has a single value, the value is stored in the single property tag:
-<htmlblock>
-&lt;property name=&quot;ID&quot; type=&quot;float&quot; value=&quot;0.5&quot; /&gt;
-</htmlblock>
+
+[source,htmlblock]
+----
+
+<property name="ID" type="float" value="0.5" />
+
+----
 
 *  If the data type has multiple value, the property tag would contain inner tags named after the value, like such:
-<htmlblock>
-&lt;property name=&quot;ID&quot; type=&quot;Vector4f /&gt;
-    &lt;x value=&quot;0.5 /&gt; 
-    &lt;y value=&quot;0.5 /&gt; 
-    &lt;z value=&quot;0.5 /&gt; 
-    &lt;w value=&quot;0.5 /&gt; 
-&lt;/property&gt;
-</htmlblock>
+
+[source,htmlblock]
+----
+
+<property name="ID" type="Vector4f />
+    <x value="0.5 /> 
+    <y value="0.5 /> 
+    <z value="0.5 /> 
+    <w value="0.5 /> 
+</property>
+
+----
 
 Again, to retrieve this you would call:
-
 
 [source,java]
 ----
@@ -167,33 +164,36 @@ screen.getStyle("styleName").getVector4f("ID");
 ----
 
 
-==== The 'effects' Tag
+=== The 'effects' Tag
 
 To add a default effect to a control, you would add a property tag under the 'effects' tag, like so:
 
-<htmlblock>
-&lt;property name=”event0″ type=”Effect”&gt;
-    &lt;event value=”Hover” /&gt;
-    &lt;effect value=”Pulse” /&gt;
-    &lt;speed value=”3″ /&gt;
-&lt;/property&gt;
-</htmlblock>
+[source,htmlblock]
+----
+
+<property name=”event0″ type=”Effect”>
+    <event value=”Hover” />
+    <effect value=”Pulse” />
+    <speed value=”3″ />
+</property>
+
+----
 
 Using Effects can be found HERE.
 
 
-
-==== style_map.xml
+=== style_map.xml
 
 The style_map.xml file consists of a list of all other XML documents that contain style information for controls. All other XMLdocs could very well could be a single XML document containing all styles, however, for organization purposes, I read in as many from this list as you would like to add.+
-
 +
-
 Each entry in the style_map.xml file are formatted as follows:
 
-<htmlblock>
-&lt;style control=”CustomControl” path=”somePath/MyNewControl.xml” /&gt;
-</htmlblock>
+[source,htmlblock]
+----
+
+<style control=”CustomControl” path=”somePath/MyNewControl.xml” />
+
+----
 
 
 [NOTE]
@@ -203,32 +203,35 @@ The control= property is not enforced, it is their for you to keep track of what
 
 
 
-
-==== To set up a custom global Look & Feel for your UI
-
-
-===== STEP 1: Copy the style_map.xml file to a local directory in your Project Assets folder.
-<htmlblock>
-&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;root&gt;
-	&lt;cursors path=&quot;somePath/Cursors.xml&quot; /&gt;
-	&lt;audio path=&quot;somePath/Audio.xml&quot; /&gt;
-	&lt;style control=&quot;Font&quot; path=&quot;somePath/Fonts.xml&quot; /&gt;
-	&lt;style control=&quot;Common&quot; path=&quot;somePath/Common.xml&quot; /&gt;
-	&lt;style control=&quot;Scrolling&quot; path=&quot;somePath/Scrolling.xml&quot; /&gt;
-	&lt;style control=&quot;Window&quot; path=&quot;somePath/Window.xml&quot; /&gt;
-	&lt;style control=&quot;Button&quot; path=&quot;somePath/Button.xml&quot; /&gt;
-	&lt;style control=&quot;Menu&quot; path=&quot;somePath/Menu.xml&quot; /&gt;
-	&lt;style control=&quot;Label&quot; path=&quot;somePath/Label.xml&quot; /&gt;
-	&lt;style control=&quot;Slider&quot; path=&quot;somePath/Slider.xml&quot; /&gt;
-	&lt;style control=&quot;TextField&quot; path=&quot;somePath/TextField.xml&quot; /&gt;
-	&lt;style control=&quot;ChatBox&quot; path=&quot;somePath/ChatBox.xml&quot; /&gt;
-	&lt;style control=&quot;Indicator&quot; path=&quot;somePath/Indicator.xml&quot; /&gt;
-&lt;/root&gt;
-</htmlblock>
+=== To set up a custom global Look & Feel for your UI
 
 
-===== STEP 2: Point your Screen class to the new style_map.xml file.
+==== STEP 1: Copy the style_map.xml file to a local directory in your Project Assets folder.
+
+[source,htmlblock]
+----
+
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<cursors path="somePath/Cursors.xml" />
+	<audio path="somePath/Audio.xml" />
+	<style control="Font" path="somePath/Fonts.xml" />
+	<style control="Common" path="somePath/Common.xml" />
+	<style control="Scrolling" path="somePath/Scrolling.xml" />
+	<style control="Window" path="somePath/Window.xml" />
+	<style control="Button" path="somePath/Button.xml" />
+	<style control="Menu" path="somePath/Menu.xml" />
+	<style control="Label" path="somePath/Label.xml" />
+	<style control="Slider" path="somePath/Slider.xml" />
+	<style control="TextField" path="somePath/TextField.xml" />
+	<style control="ChatBox" path="somePath/ChatBox.xml" />
+	<style control="Indicator" path="somePath/Indicator.xml" />
+</root>
+
+----
+
+
+==== STEP 2: Point your Screen class to the new style_map.xml file.
 
 [source,java]
 ----
@@ -238,14 +241,11 @@ Screen screen = new Screen(this, "somePath/style_map.xml");
 ----
 
 +
-
 You can now copy the existing XML docs for each listed in the style_map.xml file and make the adjustments you would like as default styles.
-
 
 
 [IMPORTANT]
 ====
 Don't forget to update the path in the style_map.xml file to point to your local copy for each control XML file you copy/edit.
 ====
-
 

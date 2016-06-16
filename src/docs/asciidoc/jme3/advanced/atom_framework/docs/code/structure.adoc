@@ -8,10 +8,10 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
 
-=== How can I structure my code?
+== How can I structure my code?
 
 
-==== The question
+=== The question
 
 ....
 How can I structure my code?
@@ -21,21 +21,17 @@ How can I structure my code?
 link:http://hub.jmonkeyengine.org/forum/topic/how-to-structure-the-game-code/[http://hub.jmonkeyengine.org/forum/topic/how-to-structure-the-game-code/]
 
 
-
-==== The pattern
+=== The pattern
 
 Read the explain about some design patterns in Design <<jme3/advanced/atom_framework/design#,design>>
-
 
 This queston evolve several patterns like Singleton, Manager, Factory and related directly to the Central idiom of Atom's framework!
 
 
-
-==== The central
+=== The central
 
 Now talking about the long “getManager().getSubManager().getItsManagedObject().doSomeThing()”
 Consider asking your self this when you code:
-
 
 .  Can singleton help?
 .  Can hierarchy actually help?
@@ -43,7 +39,6 @@ Consider asking your self this when you code:
 .  How perfomance sensitive your game is?
 
 For this particular example, related to “Law of Demeter” that @zanval88 mentioned is about “communicating range scope” and “hiding information”, appear as “encapsulation” and “reference” in Java.
-
 
 .  If all your Manager classes is public, and referenced every where chances that they can be Singleton (read more about singleton for its downside).
 .  If not, you should nest your Manager and its ManagedObject it arbitrary order and way. Consider this for a game, it’s almost always not necessary!
@@ -60,16 +55,13 @@ For this particular example, related to “Law of Demeter” that @zanval88 ment
 
 
 
-==== The structure
+=== The structure
 
 I have a strong conceptual POV about video game, which affected by cinematography a lot. Because English is not my native language I can misunderstood the real meaning of the noun but I’ve tried to find the right words in decade.
 
-
 This one is mine, maybe only me but noone else :p :
 
-
 So consider this 5 level of separation:
-
 
 .  Main : The main entry, have everything only relate to this single game, single application. Also game specific Configs should be here
 .  Core : The shared part can be used in almost every application share the same base
@@ -78,7 +70,6 @@ So consider this 5 level of separation:
 .  State : Even your game routine can be modeled by something else not States, I introduced State to be more friendly with JME3′s AppState concept. I ultilized it and leveraged it, and you should also.
 
 Others optional:
-
 
 .  *Network : For network game, blending between state, sub-routine and arbitrary events is difficult and may require other kind of paradigm, that’s why is not in Stage, but elsewhere outside.
 .  *Services: If your game use external services such as Web or IAP or something like that.
@@ -90,10 +81,8 @@ Others optional:
 
 …
 
-
 The directory :
  * src
-
 
 * my.game.name
 ** main
@@ -108,4 +97,3 @@ The directory :
 
 More detailed, You can find a better example here in my game examples:
 <<jme3/atomixtuts#,atomixtuts>>
-

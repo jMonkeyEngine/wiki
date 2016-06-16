@@ -11,7 +11,6 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 The jMonkeyEngine SDK makes it easy to get started with developing 3-D games based on the jMonkeyEngine.
 
 
-
 == Creating a New jMonkeyEngine Project
 
 .  Choose File &gt; New Project from the main menu.
@@ -23,25 +22,22 @@ The jMonkeyEngine SDK makes it easy to get started with developing 3-D games bas
 
 
 
-==== Project Structure
+=== Project Structure
 
 
 image::sdk/jmonkeyplatform-docu-4.png[jmonkeyplatform-docu-4.png,with="421",height="298",align="right"]
 
 
-
 Let's have a look at the abstract project structure in the Project Explorer (ctrl-1).
-
 
 *  *Project Assets node:* These directories have been created for you to store your games assets, such as fonts, materials, models, shaders, sounds, and textures. For a newly created project, these directories are empty.
 *  *Source Packages node:* This is where you manage your packages and classes. For a newly created project, it contains one package and one class, `Main.java`. Double click `Main.java` to open it in the editor.
 *  *Libraries node:* An overview of all libraies on your game's classpath. The classpath is already set-up for the jme3 framework (including LWJGL, Bullet, Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++, etc).
 
 
-==== Directory Structure
+=== Directory Structure
 
 Now let's have a look at the project's file structure in the File Explorer (ctrl-2). This explorer shows the physical directory structure on your hard drive.
-
 
 *  *assets* – This directory corresponds to the Project Assets node. It is needed for the assetManager. This is the recommended internal structure:
 **  `assets/Interface`
@@ -62,9 +58,7 @@ Now let's have a look at the project's file structure in the File Explorer (ctrl
 
 Project Configuration
 
-
 Right-Click the project to open the Project properties.
-
 
 In the Run section, specify the main class of your project. (Pressing F6 runs this main class.)
 In the Run section, you can optionally configure JVM options and command line parameters *(in most cases set the-Xms VMOption [NUMBER] m for the memory usage. for example (-Xms500m). see link:http://performance.netbeans.org/howto/jvmswitches/[http://performance.netbeans.org/howto/jvmswitches/])*.
@@ -72,11 +66,9 @@ In the Application section, specify the game title (by default the game will be 
 In the Application section, specify the vendor name (your name), a short description, your project's homepage, and a splash screen.
 
 
-
-=== Project Configuration
+==== Project Configuration
 
 Right-Click the project to open the Project properties.
-
 
 *  In the Run section, specify the main class of your project. (Pressing F6 runs this main class.) 
 *  In the Run section, you can optionally configure JVM options and command line parameters.
@@ -84,20 +76,17 @@ Right-Click the project to open the Project properties.
 *  In the Application section, specify the vendor name (your name), a short description, your project's homepage, and a splash screen.
 
 
-=== Clean, Build and Run Cycle
+==== Clean, Build and Run Cycle
 
 
 image::sdk/jmonkeyplatform-docu-5.png[jmonkeyplatform-docu-5.png,with="421",height="298",align="right"]
 
 
 
-
 [IMPORTANT]
 ====
-Pressing *F6 builds &amp; runs* the _main_ class of the _main project_. If there are several classes, or several projects, you have to specify which one you want F6 to run. Right-click a project and choose Set As Main Project, then right-click the project again and choose Properties > Run and choose a Main Class. +
-To build and run the main() of _any file that is open in the editor_, press *Shift-F6* !
+Pressing *F6 builds &amp; runs* the _main_ class of the _main project_. If there are several classes, or several projects, you have to specify which one you want F6 to run. Right-click a project and choose Set As Main Project, then right-click the project again and choose Properties > Run and choose a Main Class. +To build and run the main() of _any file that is open in the editor_, press *Shift-F6* !
 ====
-
 
 
 *  Right-Click the project and use the context-menu to clean all generated classes and JARs.
@@ -106,9 +95,7 @@ To build and run the main() of _any file that is open in the editor_, press *Shi
 
 *More than one project open?* The toolbar buttons and the F-keys are bound to the main project, which is shown in bold in the Project Explorer. Right-click a project and select Set As Main Project to make it respond to the toolbar buttons and F-keys.
 
-
 *Worried About Proprietary Lock-in?* You are never locked into the jMonkeyEngine SDK: At any time, you can change into your project directory on the command line, and clean, build, and run your project, using non-proprietary Apache Ant commands: 
-
 
 [source]
 ----
@@ -116,7 +103,7 @@ ant clean; ant jar; ant run;
 ----
 
 
-=== Development Process
+==== Development Process
 
 *  *Creating new files and packages:* Select the Source Packages node (or any of its subnodes), and press ctrl-N (File→New File): Use the New File wizard to create new Java classes, Java packages, Java beans, Swing forms, JUnit files, j3m Materials, j3o scenes, j3f filters, and many more.
 *  *Editing files:* Open the Projects Explorer and double-click a Java file from the Source Packages to open it in the Editor. The <<sdk/code_editor#,jMonkeyEngine SDK Code Editor>> assists you in many ways, including syntactic and semantic code coloring, code completion, and javadoc. <<sdk/code_editor#,(More...)>>
@@ -124,17 +111,20 @@ ant clean; ant jar; ant run;
 **  You can <<sdk/model_loader_and_viewer#,import models, scenes, and materials>> as assets into your project.
 **  To add sound files and images, use your operating system's file explorer and copy the files into your project's asset directory.
 
-*  *ToDo List:* The tasks window automatically lists all lines containing errors and warnings, and all lines that you have marked with the comment keywords <html>FIXME</html>, @todo, or TODO.
+*  *ToDo List:* The tasks window automatically lists all lines containing errors and warnings, and all lines that you have marked with the comment keywords 
+[source,html]
+----
+FIXME
+----
+, @todo, or TODO.
 *  *Integrated tools:* <<sdk/debugging_profiling_testing#,Debugging, Testing, Profiling>>.
 
 
-=== Adding external jar libraries
+==== Adding external jar libraries
 
 You may want to use external Java libraries in your jME project, for example content generators or artificial intelligence implementations.
 
-
 Add the library to the global library list:
-
 
 *  Select Tools→Libraries in the main menu.
 *  Click “New Library, enter a name for the library, and press OK
@@ -145,7 +135,6 @@ Add the library to the global library list:
 
 Add the library to a project:
 
-
 *  Right-Click your project and select “Properties
 *  Select “Libaries on the left and then press “Add Library
 *  Select the library from the list and press OK
@@ -153,8 +142,7 @@ Add the library to a project:
 That's it, your project can now use the external library. If you also linked the javadoc and sources, the SDK will assist you with javadoc popups, code completion (ctrl-space) and source navigation (ctrl-click).
 
 
-
-=== Application Deployment
+==== Application Deployment
 
 *  You can <<sdk/application_deployment#,deploy>> your game as desktop application (JAR), browser applet, WebStart (JNLP), or on the Android platform. <<sdk/application_deployment#,(More...)>> 
 
@@ -163,11 +151,8 @@ That's it, your project can now use the external library. If you also linked the
 
 The SDK contains <<sdk/sample_code#,Sample Code>> (read more).
 
-
 Open the Source Packages node of the JmeTests project.
 
-
-*  Right-click the `JME3Tests` project and choose Run. +
-Choose samples from the TestChooser and try out the included demos.
+*  Right-click the `JME3Tests` project and choose Run. +Choose samples from the TestChooser and try out the included demos.
 *  Browse a demo's source code in the SDK's Project window to learn how a feature is implemented and used.
 *  Feel free to modify the code samples and experiment! If you break something, you can always recreate the packaged samples from the `JME3 Tests` template.

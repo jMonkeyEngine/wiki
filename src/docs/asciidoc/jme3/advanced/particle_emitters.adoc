@@ -12,16 +12,13 @@ You cannot create a 3D model for delicate things like fire, smoke, or explosions
 Creating an effect involves some trial and error to get the settings _just right_, and it's worth exploring the expressiveness of the options described below. 
 
 
-
 [TIP]
 ====
 Use the <<sdk/scene_explorer#,Scene Explorer>> in the <<sdk#,SDK>> to design and preview effects.
 ====
 
 
-
 image:jme3/advanced/explosion-5.png[explosion-5.png,with="150",height="100"]  image:jme3/advanced/particle.png[particle.png,with="150",height="100"]  image:jme3/beginner/beginner-effect-fire.png[beginner-effect-fire.png,with="150",height="100"] image:jme3/advanced/butterfly-particle-emitter.png[butterfly-particle-emitter.png,with="150",height="100"]
-
 
 
 == Create an Emitter
@@ -55,7 +52,6 @@ explosion.killAllParticles()
 
 Choose one of the following mesh shapes
 
-
 *  Type.Triangle
 *  Type.Point
 
@@ -63,7 +59,6 @@ Choose one of the following mesh shapes
 == Configure Parameters
 
 Not all of these parameters are required for all kinds of effects. If you don't specify one of them, a default value will be used.
-
 [cols="4", options="header"]
 |===
 
@@ -80,22 +75,17 @@ a| The maximum number of particles visible at the same time. Specified by user i
 <a| emission rate       
 a| `setParticlesPerSec()` 
 a| 20 
-a| Density of the effect, how many new particles are emitted per second. +
-Set to zero to control the start/end of the effect. +
-Set to a number for a constantly running effect. 
+a| Density of the effect, how many new particles are emitted per second. +Set to zero to control the start/end of the effect. +Set to a number for a constantly running effect. 
 
 <a| size                
 a| `setStartSize()`, `setEndSize()` 
 a| 0.2f, 2f 
-a| The radius of the scaled sprite image. Set both to same value for constant size effect. +
-Set to different values for shrink/grow effect. 
+a| The radius of the scaled sprite image. Set both to same value for constant size effect. +Set to different values for shrink/grow effect. 
 
 <a| color               
 a| `setStartColor()`, `setEndColor()` 
 a| gray 
-a| Controls how the opaque (non-black) parts of the texture are colorized. +
-Set both to the same color for single-colored effects (e.g. fog, debris). +
-Set both to different colors for a gradient effect (e.g. fire). 
+a| Controls how the opaque (non-black) parts of the texture are colorized. +Set both to the same color for single-colored effects (e.g. fog, debris). +Set both to different colors for a gradient effect (e.g. fire). 
 
 <a| direction/velocity  
 a| `getParticleInfluencer(). setInitialVelocity(initialVelocity)` 
@@ -105,24 +95,17 @@ a| A vector specifying the initial direction and speed of particles. The longer 
 <a| fanning out         
 a| `getParticleInfluencer(). setVelocityVariation(variation)` 
 a| 0.2f 
-a| How much the direction (`setInitialVelocity()`) can vary among particles. Use a value between 1 and 0 to create a directed swarm-like cloud of particles. +
-1 = Maximum variation, particles emit in random 360° directions (e.g. explosion, butterflies). +
-0.5f = particles are emitted within 180° of the initial direction. +
-0 = No variation, particles fly in a straight line in direction of start velocity (e.g. lasergun blasts). 
+a| How much the direction (`setInitialVelocity()`) can vary among particles. Use a value between 1 and 0 to create a directed swarm-like cloud of particles. +1 = Maximum variation, particles emit in random 360° directions (e.g. explosion, butterflies). +0.5f = particles are emitted within 180° of the initial direction. +0 = No variation, particles fly in a straight line in direction of start velocity (e.g. lasergun blasts). 
 
-a| direction +
-(pick one)
+a| direction +(pick one)
 a| `setFacingVelocity()` 
 a| false 
-a| true = Flying particles pitch in the direction they're flying (e.g. missiles). +
-false = Particles keep flying rotated the way they started (e.g. debris). 
+a| true = Flying particles pitch in the direction they're flying (e.g. missiles). +false = Particles keep flying rotated the way they started (e.g. debris). 
 
-a| direction +
-(pick one)
+a| direction +(pick one)
 a| `setFaceNormal()` 
 a| Vector3f.NAN 
-a| Vector3f = Flying particles face in the given direction (e.g. horizontal shockwave faces up = Vector3f.UNIT_Y). +
-Vector3f.NAN = Flying particles face the camera. 
+a| Vector3f = Flying particles face in the given direction (e.g. horizontal shockwave faces up = Vector3f.UNIT_Y). +Vector3f.NAN = Flying particles face the camera. 
 
 <a| lifetime  
 a| `setLowLife()`, `setHighLife()` 
@@ -132,20 +115,17 @@ a| The time period before a particle fades is set to a random value between mini
 <a| spinning          
 a| `setRotateSpeed()` 
 a| 0f 
-a| 0 = Flying particles don't spin while flying (e.g. smoke, insects, controlled projectiles). +
-&gt; 0 = How fast particle spins while flying (e.g. debris, shuriken, missiles out of control). 
+a| 0 = Flying particles don't spin while flying (e.g. smoke, insects, controlled projectiles). +&gt; 0 = How fast particle spins while flying (e.g. debris, shuriken, missiles out of control). 
 
 <a| rotation          
 a| `setRandomAngle()` 
 a| false 
-a| true = The particle sprite is rotated at a random angle when it is emitted (e.g. explosion, debris). +
-false = Particles fly straight like you drew them in the sprite texture (e.g. insects). 
+a| true = The particle sprite is rotated at a random angle when it is emitted (e.g. explosion, debris). +false = Particles fly straight like you drew them in the sprite texture (e.g. insects). 
 
 <a| gravity           
 a| `setGravity()` 
 a| Vector3f(0.0f,0.1f,0.0f) 
-a| Particles fall in the direction of the vector (e.g. debris, sparks). +
-(0,0,0) = Particles keep flying in start direction (e.g. flames, zero-gravity explosion.) 
+a| Particles fall in the direction of the vector (e.g. debris, sparks). +(0,0,0) = Particles keep flying in start direction (e.g. flames, zero-gravity explosion.) 
 
 <a| start area        
 a|`setShape(new EmitterSphereShape( Vector3f.ZERO, 2f));`
@@ -157,16 +137,13 @@ a|By default, particles are emitted from the emitters location (a point). You ca
 Build up you effect by specifying one parameter after the other. If you change several parameters at the same time, it's difficult to tell which of the values caused which outcome.
 
 
-
 == Create an Effect Material
 
 
 image::http://jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Effects/Explosion/flash.png[flash.png,with="128",height="128",align="right"]
 
 
-
 Use the common Particle.j3md Material Definition and a texture to specify the shape of the particles. The shape is defined by the texture you provide and can be anything – debris, flames, smoke, mosquitoes, leaves, butterflies… be creative.
-
 
 [source,java]
 ----
@@ -184,19 +161,16 @@ Use the common Particle.j3md Material Definition and a texture to specify the sh
 
 The effect texture can be one image, or contain a sprite animation – a series of slightly different pictures in equally spaced rows and columns. If you choose the sprite animation:
 
-
 *  Specify the number of rows and columns using setImagesX(2) and setImagesY().
 *  Specify whether you want to play the sprite series in order (animation), or at random (explosion, flame), by setting setSelectRandomImage() true or false.
 
 *Examples:* Have a look at the following default textures and you will see how you can create your own sprite textures after the same fashion.
 
 
-
 === Default Particle Textures
 
 The Material is used together with grayscale texture: The black parts will be transparent and the white parts will be opaque (colored).
 The following effect textures are available by default from `test-data.jar`. You can also load your own textures from your assets directory.
-
 [cols="3", options="header"]
 |===
 
@@ -241,7 +215,6 @@ a| image:http://jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Effects/
 *Tip:* Use the `setStartColor()`/`setEndColor()` settings described above to colorize the white and gray parts of textures.
 
 
-
 == Usage Example
 
 [source,java]
@@ -266,8 +239,6 @@ a| image:http://jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Effects/
 ----
 
 Browse the full source code of all link:https://github.com/jMonkeyEngine/jmonkeyengine/tree/master/jme3-examples/src/main/java/jme3test/effect[effect examples] here.
-
 '''
 
 See also: <<jme3/advanced/effects_overview#,Effects Overview>>
-

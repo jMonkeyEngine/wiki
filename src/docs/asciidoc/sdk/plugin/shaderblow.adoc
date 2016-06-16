@@ -9,14 +9,11 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 image:sdk/plugin/shaderblow_intro_01.jpg[shaderblow_intro_01.jpg,with="",height=""]
 
-
  Collections of effects for jMonkeyEngine 3. To install the ShaderBlow plugin into the jMonkeyEngine SDK, go to Tools→Plugins→Available Plugins. 
  You can always get the source of ShaderBlow project here:  
 link:http://code.google.com/p/jmonkeyplatform-contributions/source/browse/#svn%2Ftrunk%2Fshaderblowlib%2FShaderBlow[ShaderBlow project SVN]
 
-
 The source has many examples and tests to explain the capacity of shaders much better.
-
 
 *  Filters:
 **  Basic SSAO
@@ -44,17 +41,14 @@ Official Forum: link:http://hub.jmonkeyengine.org/forum/topic/shaderblow-project
 Or you can use the forum threads of shaders.
 ====
 
-
 '''
 
 
-=== ColorScale Filter
+== ColorScale Filter
 
 The ColorScale filter applys a color to the render image. You can use this filter to tint the render according to one particular color without change any material (underwater scene, night scene, fire scene) or to achieve fade-in/fade-out effect.
 
-
 Features:
-
 
 *  Allow to set the color to apply. Default is red.
 *  Allow to set intensity of the color. Default is 0.7f. Frag shader clamps color intensity between 0 and 1.
@@ -70,10 +64,9 @@ a|image:sdk/plugin/colorfilter4.png[ColorScale Filter,with="400",height=""]
 |===
 
 
-==== Usage
+=== Usage
 
 Add a link:http://code.google.com/p/jmonkeyplatform-contributions/source/browse/trunk/ShaderBlow/src/com/shaderblow/filter/colorscale/ColorScaleFilter.java[ColorScaleFilter] instance to a FilterPostProccesor instance. Set color and color intensity. Then add the FilterPostProccesor instance to Application's viewPort attribute.
-
 
 [source,java]
 ----
@@ -92,16 +85,13 @@ Add a link:http://code.google.com/p/jmonkeyplatform-contributions/source/browse/
 
 link:http://code.google.com/p/jmonkeyplatform-contributions/source/browse/trunk/ShaderBlow/test-src/com/shaderblow/test/filter/color/TestColorScale.java[TestCase]
 
-
 link:http://jmonkeyengine.org/groups/contribution-depot-jme3/forum/topic/colorscale-filter/[Forum threat]
-
 '''
 
 
-=== GrayScale Filter
+== GrayScale Filter
 
 The GrayScale filter converts the render image to grayscale.
-
 [cols="2", options="header"]
 |===
 
@@ -114,10 +104,9 @@ a|image:sdk/plugin/grayscalefilter-on.png[GrayScale Filter ON,with="400",height=
 |===
 
 
-==== Usage
+=== Usage
 
 Add a link:http://code.google.com/p/jmonkeyplatform-contributions/source/browse/trunk/ShaderBlow/src/com/shaderblow/filter/grayscale/GrayScaleFilter.java[GrayScaleFilter] instance to a FilterPostProccesor instance. Then add the FilterPostProccesor instance to Application's viewPort attribute.
-
 
 [source,java]
 ----
@@ -131,19 +120,15 @@ Add a link:http://code.google.com/p/jmonkeyplatform-contributions/source/browse/
 
 link:http://code.google.com/p/jmonkeyplatform-contributions/source/browse/trunk/ShaderBlow/test-src/com/shaderblow/test/filter/grayscale/TestGrayScale.java[TestCase]
 
-
 link:http://jmonkeyengine.org/forum/topic/solved-grayscale-filter/[Forum thread]
-
 '''
 
 
-=== Old Film Effect Filter
+== Old Film Effect Filter
 
 Old Film filter simulate the effect of a classic looking film effect. It's a port of this link:http://devmaster.net/posts/2989/shader-effects-old-film[shader effect].
 
-
 Features:
-
 
 *  Allow to set the *filter's color*. Default is sepia (ColorRGBA(112f / 255f, 66f / 255f, 20f / 255f, 1.0f)).
 *  Allow to set the *color's density*. Default is 0.7. Shader clamps this value between 0 to 1. The color image gets grayscale when color's densite is set to 0.
@@ -152,7 +137,6 @@ Features:
 *  Allow to set the *vignetting's diameter*. Default is 0.9. Shader clamps this value between 0 to 1.4. Vignetting effect is made using two circles. The inner circle represents the region untouched by vignetting. The region between the inner and outer circle represent the area where vignetting starts to take place, which is a gradual fade to black from the inner to outer ring. Any part of the frame outside of the outer ring would be completely black.
 
 *NOTE*: I chose to clamp this value inside the frag shader code instead of using java code because I thought this way is faster (better from preformace point of view). You can clamp this values using java code if you want.
-
 [cols="2", options="header"]
 |===
 
@@ -162,10 +146,9 @@ a|
 |===
 
 
-==== Usage
+=== Usage
 
 Add a link:http://code.google.com/p/jmonkeyplatform-contributions/source/browse/trunk/shaderblowlib/ShaderBlow/src/com/shaderblow/filter/oldfilm/OldFilmFilter.java[OldFilmFilter] instance to a FilterPostProccesor instance. Then add the FilterPostProccesor instance to Application's viewPort attribute.
-
 
 [source,java]
 ----
@@ -179,16 +162,13 @@ Add a link:http://code.google.com/p/jmonkeyplatform-contributions/source/browse/
 
 link:http://code.google.com/p/jmonkeyplatform-contributions/source/browse/trunk/shaderblowlib/ShaderBlow/test-src/com/shaderblow/test/filter/oldfilm/TestOldFilm.java[TestCase]
 
-
 link:http://jmonkeyengine.org/forum/topic/old-film-effect-filter/[Forum thread]
-
 '''
 
 
-=== LightBlow Shader
+== LightBlow Shader
 
 The Lightblow shader is an improved Lighting shader for JME. 
-
 
 Features: 
  * Improved lighting calculations. 
@@ -209,12 +189,10 @@ Features:
  * Fog is added. Fog is used without post-processing! 
  * Texture Blending: 4 diffuse, 4 normal textures can be blended (Like Terrain System). 
 
-
 Forum: link:http://jmonkeyengine.org/forum/topic/lightblow-shader/[http://jmonkeyengine.org/forum/topic/lightblow-shader/]
 Software for NormalMaps? making: link:http://shadermap.com/shadermap_pro.php[http://shadermap.com/shadermap_pro.php]
 Software for CubeMaps? editing: link:http://developer.amd.com/archive/gpu/cubemapgen/pages/default.aspx[http://developer.amd.com/archive/gpu/cubemapgen/pages/default.aspx]
 Watch following videos:
-
 [cols="1", options="header"]
 |===
 
@@ -223,19 +201,16 @@ a|image:sdk/plugin/youtube_knroh_3o2uo[youtube_knroh_3o2uo,with="",height=""]
 |===
 
 link:http://jmonkeyengine.org/forum/topic/lightblow-shader/[Forum thread]
-
 '''
 
 
-=== Dissolver Shader
+== Dissolver Shader
 
 The Dissolve Shader uses a simple grey scale image as an animated mask to hide a material.
-
 
 The shader incrementally clamps off the colour value, dark to light, and uses that for a masking texture to discard pixels.
 It is currently capped for convenience at 255 frames of animation and is only using one colour channel.
 In simple terms, in starts by only discarding the darkest parts of the texture map, then the slightly lighter parts, then the slightly lighter again and again until it eventually cant get any lighter (white), at which point the proccess is complete.
-
 [cols="2", options="header"]
 |===
 
@@ -248,9 +223,7 @@ Starting at the top left we have: simple linear dissolve, organic dissolve and p
 And bottom row: organic growth, texture masking, organic burn.
 Mask texture maps on the second image.
 
-
 The test is occolating the dissolve amount between 0 and 1. It demonstrates 6 different uses for the shader, all running at the same speed. The top row are straight forward dissolves. The bottom row shows 3 potential applications:
-
 
 .  Organic Growth (bottom left) over a mesh, this could work both animating rapidly for a fast grow effect, or set to a fixed value e.g. set to 0.5f is “50% covered in growth”;
 .  Texture Masking (bottom middle) , I see this is probably where the most practical applications will come from. The demonstration shows a poorely photoshoped clean street, peices of garbage are then scattered around dependant on the dissolve amount, this would work best with a fixed value eg set to .75 is “75% dirty”. Texture Masking could be also be used for:
@@ -261,7 +234,6 @@ The test is occolating the dissolve amount between 0 and 1. It demonstrates 6 di
 .  Organic Burn (bottom right) is comprised of 2 cubes, one blue, one orange, both with the same organic dissolve, however the orange one is slightly offset ahead of the blue so it shows first (ie the dissolve amount is always slight advanced).
 
 Watch following videos:
-
 [cols="2", options="header"]
 |===
 
@@ -271,10 +243,9 @@ a|image:sdk/plugin/youtube_wufmcn1uv48[youtube_wufmcn1uv48,with="",height=""]
 |===
 
 
-==== Usage
+=== Usage
 
 The shader requires 2 parameters:
-
 
 *  a Texture2D texture map to use as the dissolve map; and
 *  a Vector2 of internal params params:
@@ -287,7 +258,6 @@ The shader requires 2 parameters:
 ====
 Dissolver is based on Common/MatDefs/Lighting.j3md. So, all Common/MatDefs/Lighting.j3md features should be available on the dissolver too.
 ====
-
 
 
 [source,java]
@@ -315,19 +285,15 @@ Dissolver is based on Common/MatDefs/Lighting.j3md. So, all Common/MatDefs/Light
 
 link:http://code.google.com/p/jmonkeyplatform-contributions/source/browse/trunk/ShaderBlow/test-src/com/shaderblow/test/dissolve/TestDissolve.java[TestCase]
 
-
 link:http://jmonkeyengine.org/groups/user-code-projects/forum/topic/dissolve-shader-1/[Forum thread]
-
 '''
 
 
-=== FakeParticleBlow Shader
+== FakeParticleBlow Shader
 
  Effect for fire or engine of a ship. Such an effect is used in the “Eve Online game for ship engines.
 
-
 Features:
-
 
 .  GPU animation (now you don’t need simpleUpdate(float tpf) for the shader). Animation is made displacing the texture according to X and/or Y axis.
 .  X and/or Y animation direction. No animation is supported also.
@@ -348,24 +314,20 @@ a|
 |===
 
 
-==== Usage
+=== Usage
 
 Create a material (by SDK or by code) using link:http://code.google.com/p/jmonkeyplatform-contributions/source/browse/trunk/ShaderBlow/assets/ShaderBlow/MatDefs/FakeParticleBlow/FakeParticleBlow.j3md[FakeParticleBlow.j3md].
 Set material's parameters and set the material to a spatial.
 
-
 Most of the cases the spatial will be 4 to 10 planes in the same location but rotated on Y axis using different angles for each plane. Something similar to this:
 
-
 image:sdk/plugin/fakeobject.png[fakeobject.png,with="100",height=""]
-
 
 
 [IMPORTANT]
 ====
 Remenber to set the queue bucket to transparent for the spatial.
 ====
-
 
 
 [source,java]
@@ -409,7 +371,6 @@ Remenber to set the queue bucket to transparent for the spatial.
 
 To get green/yellow/blue fog (not transparency):
 
-
 [source,java]
 ----
 
@@ -420,28 +381,22 @@ To get green/yellow/blue fog (not transparency):
 
 Several planes geometries will be required as there will be AlphaAdditive material.
 
-
 link:http://code.google.com/p/jmonkeyplatform-contributions/source/browse/trunk/ShaderBlow/test-src/com/shaderblow/test/fakeparticleblow/TestFakeParticleBlow.java[TestCase 1]
 link:http://code.google.com/p/jmonkeyplatform-contributions/source/browse/trunk/ShaderBlow/test-src/com/shaderblow/test/fakeparticleblow/TestFakeParticleBlow2.java[TestCase 2]
 
-
 link:http://jmonkeyengine.org/groups/contribution-depot-jme3/forum/topic/fakeparticleblow-shader/[Forum thread]
-
 '''
 
 
-=== Forceshield Shader
+== Forceshield Shader
 
 Forcefield shader adds shield effect to a spatial.
 The spatial will be a sphere most of the cases, but box or oval should be possible to use. Only problem is that it has to be higher-poly because distace is calculated from vertex.
 
-
 Hits are registred as contact point position using this control and effect animation is based on distance from contact point and time.
 Max number of hits displayed is 4.
 
-
 Features:
-
 
 *  Allow to set texture of the shield.
 *  Allow to set color of the shield.
@@ -458,18 +413,16 @@ a|image:sdk/plugin/youtube_urzmiuehscc[youtube_urzmiuehscc,with="",height=""]
 |===
 
 
-==== Usage
+=== Usage
 
 Create a Spatial instance. Create a link:http://code.google.com/p/jmonkeyplatform-contributions/source/browse/trunk/ShaderBlow/src/com/shaderblow/forceshield/ForceShieldControl.java[ForceShieldControl] instance.
 Add the control instance to the spatial.
-
 
 
 [IMPORTANT]
 ====
 If you experience problems, try higher polygon object.
 ====
-
 
 
 [source,java]
@@ -496,7 +449,6 @@ If you experience problems, try higher polygon object.
 
 Use _forceShieldControl.registerHit(final Vector3f position)_ method to register a hit.
 
-
 [source,java]
 ----
 
@@ -513,20 +465,16 @@ Use _forceShieldControl.registerHit(final Vector3f position)_ method to register
 
 link:http://code.google.com/p/jmonkeyplatform-contributions/source/browse/trunk/ShaderBlow/test-src/com/shaderblow/test/forceshield/TestShield.java[TestCase]
 
-
 link:http://jmonkeyengine.org/groups/user-code-projects/forum/topic/forceshield-my-very-first-shader/[Forum thread]
-
 '''
 
 
-=== MatCap Shader
+== MatCap Shader
 
 MatCap shader will be very useful for scrollshooters to imitate different materials like glass, gold, metals.
 The shader does not use any lights, only one texture.
 
-
 Features:
-
 
 *  Fog color and fog skybox.
 *  Toon edge effect.
@@ -544,17 +492,15 @@ a|image:sdk/plugin/matcap2.png[Fog effect,with="400",height=""]
 |===
 
 
-==== Usage
+=== Usage
 
 Create a material (by SDK or by code) using link:http://code.google.com/p/jmonkeyplatform-contributions/source/browse/trunk/ShaderBlow/assets/ShaderBlow/MatDefs/MatCap/MatCap.j3md[MatCap.j3md]. Set material's parameters and set the material to a spatial.
-
 
 
 [IMPORTANT]
 ====
 Remember to add a DirectionalLight if you want to use toon edge effect.
 ====
-
 
 
 [source]
@@ -582,16 +528,13 @@ Material My Material : ShaderBlow/MatDefs/MatCap/MatCap.j3md {
 
 link:http://code.google.com/p/jmonkeyplatform-contributions/source/browse/trunk/ShaderBlow/test-src/com/shaderblow/test/matcap/TestMatCap.java[TestCase]
 
-
 link:http://jmonkeyengine.org/groups/graphics/forum/topic/glsl-matcap-shader-advice-needed/[Forum thread]
-
 '''
 
 
-=== Glass Shader
+== Glass Shader
 
 Features:
-
 
 *  Fog color and fog skybox.
 *  Toon edge effect.
@@ -606,17 +549,15 @@ a|image:sdk/plugin/glass-shader2.png[Glass Shader and Fog Color effect,with="400
 |===
 
 
-==== Usage
+=== Usage
 
 Create a material (by SDK or by code) using link:http://code.google.com/p/jmonkeyplatform-contributions/source/browse/trunk/ShaderBlow/assets/ShaderBlow/MatDefs/Glass/Glass.j3md[Glass.j3md]. Set material's parameters and set the material to a spatial.
-
 
 
 [IMPORTANT]
 ====
 Remember to add a DirectionalLight if you want to use toon edge effect.
 ====
-
 
 
 [source]
@@ -647,16 +588,13 @@ Material My Material : ShaderBlow/MatDefs/Glass/Glass.j3md {
 
 link:http://code.google.com/p/jmonkeyplatform-contributions/source/browse/trunk/ShaderBlow/test-src/com/shaderblow/test/glass/TestGlass.java[TestCase]
 
-
 link:http://jmonkeyengine.org/groups/graphics/forum/topic/glsl-glass-shader-advice-is-needed/[Forum thread]
-
 '''
 
 
-=== SimpleRefraction PostProcessor/Filter
+== SimpleRefraction PostProcessor/Filter
 
 Features:
-
 
 *  Cool refraction effect
 [cols="1", options="header"]
@@ -667,20 +605,17 @@ a|image:sdk/plugin/youtube_eaukcu5grmc[youtube_eaukcu5grmc,with="",height=""]
 |===
 
 
-==== Usage
+=== Usage
 
 link:http://code.google.com/p/jmonkeyplatform-contributions/source/browse/trunk/shaderblowlib/ShaderBlow/test-src/com/shaderblow/test/simplerefraction/TestSimpleRefraction.java[TestCase for PostProcessor]
 
-
 link:http://code.google.com/p/jmonkeyplatform-contributions/source/browse/trunk/shaderblowlib/ShaderBlow/test-src/com/shaderblow/test/filter/simplerefractionfilter/TestSimpleRefractionFilter.java[TestCase for Filter]
-
 '''
 
 
-=== BasicSSAO Filter
+== BasicSSAO Filter
 
 Features:
-
 
 *  Cool Shadows.
 [cols="1", options="header"]
@@ -691,20 +626,17 @@ a|image:sdk/plugin/shaderblow_ssao.png[Glass shader,with="400",height=""]
 |===
 
 
-==== Usage
+=== Usage
 
 link:http://code.google.com/p/jmonkeyplatform-contributions/source/browse/trunk/shaderblowlib/ShaderBlow/test-src/com/shaderblow/test/filter/basicssao/TestBasicSSAO.java[TestCase]
 
-
 link:http://jmonkeyengine.org/groups/user-code-projects/forum/topic/wip-custom-ambient-occlusion-filter/[Forum thread]
-
 '''
 
 
-=== Electricity Shaders
+== Electricity Shaders
 
 Features:
-
 
 *  Cool Electricity effect
 [cols="1", options="header"]
@@ -715,14 +647,12 @@ a|image:sdk/plugin/youtube_jdtes95hnpe[youtube_jdtes95hnpe,with="",height=""]
 |===
 
 link:http://jmonkeyengine.org/forum/topic/electricity-shaders/[Forum thread]
-
 '''
 
 
-=== SimpleSprite Shader
+== SimpleSprite Shader
 
 Features:
-
 
 *  GPU animated texture.
 [cols="1", options="header"]
@@ -739,14 +669,12 @@ a|image:sdk/plugin/youtube_7xfxbt-dw3i[youtube_7xfxbt-dw3i,with="",height=""]
 |===
 
 link:http://jmonkeyengine.org/groups/graphics/forum/topic/texture-animation-shader-help-needed/[Forum thread]
-
 '''
 
 
-=== Bubble Shader
+== Bubble Shader
 
 Features:
-
 
 *  Cool nice bubble.
 [cols="1", options="header"]
@@ -757,29 +685,24 @@ a|image:sdk/plugin/youtube_rkfblz1eohg[youtube_rkfblz1eohg,with="",height=""]
 |===
 
 link:http://jmonkeyengine.org/forum/topic/bubble-shader/[Forum thread]
-
 '''
 
 
-=== SimpleSpriteParticle Shader
+== SimpleSpriteParticle Shader
 
 Features:
 static sprite speed: can render 1500000 sprites at 149 fps ( 0% cpu load, speed limited only by graphics card ). As long as you don’t change them (add, move, delete, change image). 
 FULL LIBRARY PLUGIN: link:http://code.google.com/p/petomancer/downloads/detail?name=SpriteLibrary.zip&can=2&q=[http://code.google.com/p/petomancer/downloads/detail?name=SpriteLibrary.zip&amp;can=2&amp;q=]
 
-
 image:sdk/plugin/shaderblow_simplespriteparticle_shader.png[shaderblow_simplespriteparticle_shader.png,with="400",height=""]
 
-
 link:http://jmonkeyengine.org/groups/contribution-depot-jme3/forum/topic/spritelibrary-efficient-render-of-sprites/[Forum thread]
-
 '''
 
 
-=== Texture Bombing
+== Texture Bombing
 
 Features:
-
 
 *  Applying random images from a texture atlas to a model by dividing up the model's UV textures into cells.
 [cols="1", options="header"]
@@ -790,20 +713,17 @@ a|image:sdk/plugin/youtube_3lbhu2c5v8o[youtube_3lbhu2c5v8o,with="",height=""]
 |===
 
 
-==== Usage
+=== Usage
 
 link:https://code.google.com/p/jmonkeyplatform-contributions/source/browse/trunk/shaderblowlib/ShaderBlow/test-src/com/shaderblow/test/texturebombing/TestTextureBombing.java[TestCase]
 
-
 link:http://hub.jmonkeyengine.org/forum/topic/textureglyph-bombing-shader/[Forum thread]
-
 '''
 
 
-=== Night Vision
+== Night Vision
 
 Features:
-
 
 *  Apply a mask (Binoculars) and color to emulate night vision mode.
 [cols="1", options="header"]
@@ -814,20 +734,17 @@ a|image:sdk/plugin/youtube_mnsjavutdps[youtube_mnsjavutdps,with="",height=""]
 |===
 
 
-==== Usage
+=== Usage
 
 link:https://code.google.com/p/jmonkeyplatform-contributions/source/browse/trunk/shaderblowlib/ShaderBlow/test-src/com/shaderblow/test/filter/nightvision/TestNightVision.java[TestCase]
 
-
 link:http://hub.jmonkeyengine.org/forum/topic/night-vision-filter-available-in-shaderblow-plugin/[Forum thread]
-
 '''
 
 
-=== Predator Thermal Vision
+== Predator Thermal Vision
 
 Features:
-
 
 *  Changes the color in the scene to emulate the predator thermal vision effect
 [cols="1", options="header"]
@@ -838,20 +755,17 @@ a|image:sdk/plugin/youtube_dqbwcwvwtfq[youtube_dqbwcwvwtfq,with="",height=""]
 |===
 
 
-==== Usage
+=== Usage
 
 link:https://code.google.com/p/jmonkeyplatform-contributions/source/browse/trunk/shaderblowlib/ShaderBlow/test-src/com/shaderblow/test/filter/predatorvision/TestPredatorVision.java?spec=svn1097&r=1097[TestCase]
 
-
 link:http://hub.jmonkeyengine.org/forum/topic/predator-thermal-vision-filter-available-in-the-shaderblow-plugin/[Forum thread]
-
 '''
 
 
-=== Frosted glass effect
+== Frosted glass effect
 
 Features:
-
 
 *  Displays a frosted glass effect over the current scene
 [cols="1", options="header"]
@@ -862,11 +776,9 @@ a|image:sdk/plugin/youtube_bb0jvjqvurw[youtube_bb0jvjqvurw,with="",height=""]
 |===
 
 
-==== Usage
+=== Usage
 
 link:https://code.google.com/p/jmonkeyplatform-contributions/source/browse/trunk/shaderblowlib/ShaderBlow/test-src/com/shaderblow/test/filter/frostedglass/TestFrostedGlass.java[TestCase]
 
-
 link:http://hub.jmonkeyengine.org/forum/topic/frosted-glass-filter-available-in-the-shaderblow-plugin/[Forum thread]
-
 '''

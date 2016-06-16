@@ -18,7 +18,6 @@ It was important to have always the lates version of the script that is compatib
 Now we have an opportunity to simplify the import process by loading data directly from blender binary files: *.blend.
 
 
-
 [IMPORTANT]
 ====
 Before you try to import models, make sure you <<jme3/external/blender#,created them properly>>.
@@ -26,12 +25,10 @@ Before you try to import models, make sure you <<jme3/external/blender#,created 
 
 
 
-
 == Usage
 
 To use it in your game or the SDK you should follow the standard asset loading instructions.
 By default a BlenderModelLoader is registered with your assetManager to load blend files. This means you can load and convert .blend model files to .j3o format, just like any other supported model format.
-
 
 
 == Currently supported features
@@ -123,7 +120,6 @@ By default a BlenderModelLoader is registered with your assetManager to load ble
 
 You have two loaders available.
 
-
 *  BlenderLoader that loads the whole scene. It returns an instance of  LoadingResults that contains all the data loaded from the scene.
 
 [source,java]
@@ -155,7 +151,6 @@ public static class LoadingResults extends Spatial {
 
 To register the model do the following:
 
-
 [source,java]
 ----
 
@@ -164,7 +159,6 @@ assetManager.registerLoader(BlenderLoader.class, "blend");
 ----
 
 or
-
 
 [source,java]
 ----
@@ -181,7 +175,6 @@ It has many differens settings descibing the blender file more precisely, but al
 You can use ModelKey as well. This will give the same result as using default BlenderKey.
 
 
-
 == How does it work?
 
 BlenderLoader (as well as BlenderModelLoader) is looking for all kinds of known assets to load.
@@ -189,9 +182,7 @@ It's primary use is of course to load the models withon the files.
 Each blender object is imported as scene Node. The node should have applied textures and materials as well.
 If you define animations in your BlenderKey the animations will as well be imported and attached to the model.
 
-
 Here is the list of how blender features are mapped into jme.
-
 [cols="3", options="header"]
 |===
 
@@ -243,33 +234,25 @@ Currently blender 2.49 and 2.5+ are supported (only the stable versions).
 Probably versions before 2.49 will work pretty well too, but I never checked that :)
 
 
-
 == Notes
 
 I know that the current version of loader is not yet fully functional, but belive me – Blender is a very large issue ;)
 Hope I will meet your expectations.
 
-
 Be mindful of the result model vertices amount. The best results are achieved when the model is smooth and has no texture. Then the vertex amount is equal to the vertex amount in blender. If the model is not smooth or has a generated texture applied then the amount of vertices is 3 times larger than mesh's triangles amount. If a 2d texture is applied with UV mapping then the vertex count will vary depending on how much the UV map is fragmented.
-
 
 When using polygon meshes in blender 2.5 and newer, better add and apply the triangulation modifier (if available in your version) or save the file with convertion from polygons to triangles.
 Even though the importer supports loading of polygons as the mesh faces, if your face isn't convex, the results might contain errors.
 
-
 Not all modifiers are supported. If your model has modifiers and looks not the way you want in the jme scene - try to apply them and load again.
-
 
 Cheers,
 Marcin Roguski (Kaelthas)
 
-
 P.S.
 This text might be edited in a meantime if I forgot about something ;)
-
 '''
 
 See also:
-
 
 *  <<sdk/3ds_to_blender_to_jmp#,3DS to Blender to j3o>>

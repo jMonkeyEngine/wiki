@@ -8,10 +8,9 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
 
-=== Motivations
+== Motivations
 
 jME3 material system is entirely based on shaders. While it's pretty powerful, this system has some issues and limitations : 
-
 
 *  Monolithic shaders have a serious lack of flexibility, and it can be daunting to get into the code for inexperienced users.
 *  Maintenance ease of such shaders is poor. (for example the whole lighting shaders represent around 500 lines of code, and it could be a lot worse with more features)
@@ -19,27 +18,18 @@ jME3 material system is entirely based on shaders. While it's pretty powerful, t
 *  Users can't add their own feature to the shader unless they fork it, and fall back to the same issues explained in previous points.
 
 Shader Nodes were designed with this in mind and are the fruit of many long discussions in the core chat balancing the pros and cons of this or that pattern.+
-
 At first this system was referred to as “Shader injection. The basic idea was to allow users to inject code into shaders with a tag replacement system.+
-
 We finally came with a different concept called Shader Nodes, that is inspired from blender nodes system for textures and post process.+
-
 *The final shader is generated at run time by the system by assembling shader nodes together.*
 
 
-
-=== What is a Shader Node?
+== What is a Shader Node?
 
 Conceptually, it's just a self sufficient piece of glsl code that accepts inputs and produce some outputs.+
-
 Inputs are glsl variables that may be fed by previous nodes output values.+
-
 Outputs are glsl variables fed with values computed in the shader node code.+
 
-
-
 In practice it's a bit more than that.A shader node is declined in several parts :
-
 
 *  A shader node definition, defining : 
 **  The type of shader node (Vertex or Fragment for now)
@@ -59,21 +49,15 @@ In practice it's a bit more than that.A shader node is declined in several parts
 
 
 
-=== Shader Node definition
+== Shader Node definition
 
 First ShaderNodes have to be defined either in a separate file (j3sn for jme3 shader node) or directly embed in the Technique block of the j3md file.+
-
 Please refer to this documentation for global structure of a j3md file 
 <<jme3/advanced/material_specification#,jMonkeyEngine3 Material Specification>>
 
-
 All is included in a *ShaderNodeDefinitions* bloc. This block can have several nodes defined (it's recommended to define nodes that have strong dependencies with each other in the same j3sn file).+
-
 A ShaderNode is declared in a *ShaderNodeDefinition* block.+
-
 global structure should look like this :+
-
-
 
 [source,java]
 ----
@@ -108,8 +92,6 @@ ShaderNodeDefinitions{
 
 All that is not between [] is mandatory.+
 
-
-
 *  +++<u>ShaderNodeDefinition</u>+++ : the definition block. You can have several definition in the same ShaderNodeDefinitions block.
 **  *NodeDefName* : The name of this ShaderNodeDefinition
 
@@ -136,11 +118,9 @@ All that is not between [] is mandatory.+
 * Note that if you use the same name for an input and an ouput, the generator will consider them as the SAME variable so they should be of the same glsl type.*
 
 
-
-==== Example
+=== Example
 
 Here is a typical shader node definition
-
 
 [source,java]
 ----
@@ -170,16 +150,12 @@ ShaderNodeDefinitions{
 ----
 
 
-==== Declare an array
+=== Declare an array
 
 To declare an array you have to specify its size between square brackets.+
-
 *Constant size*+
-
 The size can be an int constant+
-
 _Example_
-
 
 [source]
 ----
@@ -191,14 +167,9 @@ _Example_
 this will declare a float array with 10 elements.
 Any material parameter mapped with this array should be of FloatArray type and it's size will be assumed as 10 when the shader is generated.+
 
-
-
 *Material parameter driven size*+
-
 The size can be dynamic and driven by a material parameter. GLSL does not support non constant values for array declaration so this material parameter will be mapped to a define.+
-
 _Example_
-
 
 [source]
 ----
@@ -208,24 +179,17 @@ _Example_
 ----
 
 This declares a float array with the size depending on the value of the NumberOfElement material parameter.+
-
 NumberOfElement *HAS* to be declared in the material definition as a material parameter. It will be mapped to a define and used in the shader.
 Not that if this value change the shader will have to be recompiled, due to the fact that it's mapped to a define.
 
 
-
-=== Shader Node code
+== Shader Node code
 
 The shader code associated with a Shader node is similar to any shader code.+
-
 the code for a Vertex shader node should be in a .vert file and the code for a Fragment shader node should be in a .frag file.
 It has a declarative part containing variable declaration, function declaration and so on… And a main part that is embed in a “void main(){} block.+
-
 Input and output variables declared in the shader node definition can be used *without* being declared in the shader code. ( they shouldn't even or you'll have issues).+
-
 Here is a the code of the LightMap.frag shader.+
-
-
 
 [source,java]
 ----
@@ -237,21 +201,16 @@ void main(){
 ----
 
 Very simple, it's just a texture fetch, but of course anything can be done.+
-
 *Do not declare uniforms, attributes or varyings in a shader node code*, the Generator will handle this, just use the inputs and outputs and optional local variables you may need.
 
 
-
-=== Shader Node declaration
+== Shader Node declaration
 
 To create a shader we need to plug shader nodes to each other, but also interact with built in glsl inputs and outputs.
 Shader nodes are declared inside the Technique block. The vertex nodes are declared in the VertexShaderNodes block and the fragment nodes are declared in the FragmentShaderNodes block.+
-
 Note that if the j3md has ember shader nodes definition (in a ShaderNodesDefinitions block) it *must* be declared before the VertexShaderNodes and FragmentShaderNodes blocks.
 Of course there can be several ShaderNode declaration in those block.+
-
 Here is how a ShaderNode declaration should look :
-
 
 [source,java]
 ----
@@ -282,9 +241,7 @@ ShaderNode <ShaderNodeName>{
 **  *Activationcondition* : The condition for this node to be used. Today we use Defines to use different blocks of code used depending on the state of a Material Parameter. The condition here use the exact same paradigm. A valid condition must be the name of a material parameter or any combinations using logical operators “||,“&amp;&amp;,“! or grouping characters “( and “). The generator will create the corresponding define and the shader node code will be embed into and #ifdef statement.+
 
 
-
     For example, let's say we have a Color and ColorMap material parameter, this condition “Color || ColorMap will generate this statement :
-
 
 [source,java]
 ----
@@ -316,7 +273,7 @@ ShaderNode <ShaderNodeName>{
 
 
 
-=== Complete material definition and Shader Nodes example
+== Complete material definition and Shader Nodes example
 
 Here is an example of a very simple Material definition that just displays a solid color (controlled by a material parameter) on a mesh.
 
@@ -324,7 +281,6 @@ Here is an example of a very simple Material definition that just displays a sol
 ====
 Shader Nodes only work if there is no shader declared in the technique. If you want to bypass the Shader Nodes, you can put a VertexShader and a FragmentShader statement in the technique and the shader nodes will be ignored. 
 ====
-
 
 
 [source,java]
@@ -368,12 +324,9 @@ MaterialDef Simple {
 ----
 
 This Material definition has one Default technique with 2 node declarations.+
-
 +++<u>*CommonVert Definition*</u>++++
-
 CommonVert is a vertex shader node that has commonly used input and outputs of a vertex shader. It also computes the position of the vertex in projection space
 here is the definition content (Common/MatDefs/ShaderNodes/Common/CommonVert.j3sn) : 
-
 
 [source,java]
 ----
@@ -421,7 +374,6 @@ Note that texCoord1/2 and vertColor are declared both as input and output. the g
 
 here is the shader Node code ( Common/MatDefs/ShaderNodes/Common/commonVert.vert)
 
-
 [source,java]
 ----
 
@@ -433,12 +385,8 @@ void main(){
 
 As you can see all the inputs and outputs are not used. that's because most of them are attributes meant to be passed to the fragment shader as varyings. all the wiring will be handled by the generator only if those variables are used in an input or output mapping.+
 
-
-
 +++<u>*CommonVert input mapping*</u>++++
-
 here we have the most basic yet mandatory thing in a vertex shader, computing vertex position in projection space. for this we have 2 mapping :
-
 
 *  *worldViewProjectionMatrix = WorldParam.WorldViewProjectionMatrix* : the input parameter worldViewProjectionMatrix is assigned with the WorldViewProjectionMatrix World parameter declared in the WorlParameters block of the technique.
 *  *modelPosition = Global.position.xyz* : the modelPosition (understand the vertex position in the model coordinate space) is assigned with the Global position variable.
@@ -457,8 +405,6 @@ also note the swizzle of the Global.position variable. modelPosition is a vec3 a
 
 +++<u>*CommonVert output mapping*</u>++++
 
-
-
 *  *Global.position = projPosition* : The result of the multiplication of the worldViewProjectionMatrix  and the modelPosition is assigned to the Globale position
 
 
@@ -468,10 +414,8 @@ The Global.position variable will be assigned to the gl_Position glsl built in o
 ====
 
 +++<u>*ColorMult Definition*</u>++++
-
 ColorMult is a very basic Shader Node that takes two colors as input and multiply them.
 here is the definition content (Common/MatDefs/ShaderNodes/Basic/ColorMult.j3sn) : 
-
 
 [source,java]
 ----
@@ -500,7 +444,6 @@ ShaderNodeDefinitions{
 
 here is the shader Node code (Common/MatDefs/ShaderNodes/Basic/colorMult.frag)
 
-
 [source,java]
 ----
 
@@ -511,16 +454,12 @@ void main(){
 ----
 
 +++<u>*ColorMult input mapping*</u>++++
-
 All inputs are mapped here :
-
 
 *  *color1 = MatParam.Color* : The first color is assigned to the Color Material parameter declared in the MaterialParameter block of the material definition  
 *  *color2 = Global.color* : The second color is assigned with the Global color variable. this is defaulted to vec4(1.0) (opaque white). Note that in a much complex material def this variable could already have been assigned with a previous Shader Node output
 
 +++<u>*ColorMult output mapping*</u>++++
-
-
 
 *  *Global.color = outColor* : the resulting color is assigned to the Global color variable.
 
@@ -537,9 +476,7 @@ Also note that in case several Global variables are declared, the generator will
 ====
 
 
-
 +++<u>*Generated shader code*</u>++++
-
 
 [IMPORTANT]
 ====
@@ -547,7 +484,6 @@ Don't take this code as carved in stone, the generated code can change as optimi
 ====
 
 Vertex Shader (glsl 1.0)
-
 
 [source,java]
 ----
@@ -577,21 +513,14 @@ void main(){
 ----
 
 All materials parameter, world parameters, attributes varying are declared first. then for each shader node, the declarative part is appended.+
-
 For the main function, for each shader node, the input mappings are declared and assigned, the output are declared.+
-
 Then the variable names are replaced in the sahder node code with there complete name (NameSpace_varName), material parameters are replaced in the shader code as is.+
-
 Then, the output are mapped.+
-
-
 
 As you can see texCoord1/2 and vertColor are declared but never used. That's because the generator is not aware of that. By default it will declare all inputs in case they are used in the shaderNode code.
 Note that most glsl compiler will optimize this when compiling the shader on the GPU.
 
-
 Fragment Shader (glsl 1.0)
-
 
 [source,java]
 ----
@@ -618,17 +547,13 @@ void main(){
 Same as for the Vertex shader. note that the color1 is not declared, because it's directly replaced by the material parameter.
 
 
-
 [IMPORTANT]
 ====
 As a rule of thumb you should not assign a value to an input. input are likely to be material paramters or  outputs from other shaders and modifying them may cause unexpected behavior, even failure in your resulting shader.
 ====
 
 
-
 For more explanations and design decisions please refer to the +++<abbr title="specification">spec</abbr>+++ here 
 link:https://docs.google.com/document/d/1S6xO3d1TBz0xcKe_MPTqY9V-QI59AKdg1OGy3U-HeVY/edit?usp=sharing[https://docs.google.com/document/d/1S6xO3d1TBz0xcKe_MPTqY9V-QI59AKdg1OGy3U-HeVY/edit?usp=sharing]
 
-
 Thank you for the brave ones that came through all this reading. i'm not gonna offer you a prize in exchange of a password, because we ran out of JME thongs…
-

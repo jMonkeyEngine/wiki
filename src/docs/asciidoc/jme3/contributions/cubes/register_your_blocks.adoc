@@ -9,9 +9,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 To add blocks to the framework, you just have to add them to the BlockManager - This happens by specifying a block object (has to extend *cubes.Block*, by overriding methods you can specify own behaviours). Each block needs at least one “skin, which you have to pass in the constructor of the *cubes.Block* class). A “skin contains all information to display the block - Texture-Index in the Atlas, Transparency and so on.
 
-
 After initialising your object, you have to register it in the BlockManager:
-
 
 [source,java]
 ----
@@ -23,10 +21,8 @@ BlockManager.register(myBlockObject);
 ====
 Using own blocks _should_ work at the moment, if you encounter problems you can test your code using the default blocks (e.g. *CubesTestAssets.BLOCK_GRASS*).
 
-
 You can register them by calling `CubesTestAssets.registerBlocks();`.
 ====
-
 
 
 
@@ -36,7 +32,6 @@ You can register them by calling `CubesTestAssets.registerBlocks();`.
 image::http://destroflyer.mania-community.de/other/imagehost/cubes/block_stone.png[block_stone.png,with="150",height="",align="right"]
 
 Let's say, you want to add a simple block, which uses the same texture on every face. The framework recognizes, when only one texture is specified and therefore uses this for each face:
-
 
 [source,java]
 ----
@@ -52,7 +47,6 @@ BlockManager.register(blockStone);
 image::http://destroflyer.mania-community.de/other/imagehost/cubes/block_wood.png[block_wood.png,with="150",height="",align="right"]
 
 Now it's time to get prettier blocks - The wood block as known in Minecraft has two textures: Top/Bottom (cross-section) and Left/Right/Front/Back (bark). A simple way to set the texture for each face is to just give 6 textures to the skin (in the right order :P):
-
 
 [source,java]
 ----
@@ -73,12 +67,10 @@ BlockManager.register(blockWood);
 Last but not least: What if a block wants to change its texture according to its environment?
 
 
-
 image::http://destroflyer.mania-community.de/other/imagehost/cubes/block_grass.png[block_grass.png,with="150",height="",align="right"]
 
 A nice example would be a grass block - If it's on the surface, it contains a nice grass texture at the top face and a little earth-grass-transition at the sides. Otherwise, all 6 sides should display an earth texture.
 Special behaviours like this can be achieved by overwriting the *getSkinIndex* method:
-
 
 [source,java]
 ----

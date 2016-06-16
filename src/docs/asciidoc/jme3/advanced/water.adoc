@@ -9,9 +9,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 jMonkeyEngine offers a SimpleWaterProcessor that turns any quad (flat rectangle) into a reflective water surface with waves. You can use this quad for simple limited water surfaces such as water troughs, shallow fountains, puddles, shallow water in channels. The SimpleWaterProcessor has less performance impact on your game than the full featured <<jme3/advanced/post-processor_water#,SeaMonkey WaterFilter>>; the main difference is that the SimpleWaterProcessor does not include under-water effects. 
 
-
 Here is some background info for JME3's basic water implementation:
-
 
 *  link:http://www.jmonkeyengine.com/forum/index.php?topic=14740.0[http://www.jmonkeyengine.com/forum/index.php?topic=14740.0]
 *  link:http://www.bonzaisoftware.com/water_tut.html[http://www.bonzaisoftware.com/water_tut.html]
@@ -22,14 +20,11 @@ image::http://www.jmonkeyengine.com/wp-content/uploads/2010/10/simplewaterdemo.j
 
 
 
-
 == SimpleWaterProcessor
 
 A JME3 scene with water can use a `com.jme3.water.SimpleWaterProcessor` (which implements the SceneProcessor interface).
 
-
 To achieve a water effect, JME3 uses shaders and a special material, `Common/MatDefs/Water/SimpleWater.j3md`. The water surface is a quad, and we use normal map and dU/dV map texturing to simulate the waves. 
-
 
 .  Every frame, we render to three texture maps:
 **  For the water surface (reflection), we take a snapshot of the environment, flip it upside down, and clip it to the visible water surface. Note that we do not actually use a “water texture color map: The “texture of the water is solely a distorted reflection.
@@ -48,7 +43,6 @@ To achieve a water effect, JME3 uses shaders and a special material, `Common/Mat
 
 
 image::jme3/advanced/simplewater.png[simplewater.png,with="384",height="288",align="right"]
-
 
 
 .  Create a `mainScene` Node
@@ -81,9 +75,7 @@ image::jme3/advanced/simplewater.png[simplewater.png,with="384",height="288",ali
 
 The sample code can be found in `jme3/src/jme3test/water/TestSimpleWater.java` and `jme3/src/jme3test/water/TestSceneWater.java`.
 
-
 Here is the most important part of the code:
-
 
 [source,java]
 ----
@@ -121,14 +113,12 @@ rootNode.attachChild(water);
 
 You can lower the render size to gain higher performance:
 
-
 [source,java]
 ----
 waterProcessor.setRenderSize(128,128);
 ----
 
 The deeper the water, the more transparent. (?) 
-
 
 [source,java]
 ----
@@ -137,14 +127,12 @@ waterProcessor.setWaterDepth(40);
 
 A higher distortion scale makes bigger waves.
 
-
 [source,java]
 ----
 waterProcessor.setDistortionScale(0.05f);
 ----
 
 A lower wave speed makes calmer water.
-
 
 [source,java]
 ----
@@ -153,14 +141,12 @@ waterProcessor.setWaveSpeed(0.05f);
 
 If your scene does not have a lightsource, you can set the light direction for the water:
 
-
 [source,java]
 ----
 waterProcessor.setLightDirection( new Vector3f(0.55f, -0.82f, 0.15f));
 ----
 
 Instead of creating a quad and specifying a plane, you can get a default waterplane from the processor:
-
 
 [source,java]
 ----
@@ -171,4 +157,3 @@ waterPlane.setMaterial(waterProcessor.getMaterial());
 ----
 
 You can offer a switch to set the water Material to a static texture – for users with slow PCs.
-

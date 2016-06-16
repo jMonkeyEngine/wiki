@@ -12,9 +12,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 If your plugin brings in its own SceneGraph objects you can still have them work like any other SceneExplorer item, including its special properties.
 
-
 If you want to support special properties of your objects that are not exposed by the SDK automatically, you will have to create your own class that extends org.openide.nodes.Node and implement the interface com.jme3.gde.core.sceneexplorer.nodes.AbstractSceneExplorerNode. Then you register that class by adding 
-
 
 [source]
 ----
@@ -23,12 +21,9 @@ If you want to support special properties of your objects that are not exposed b
 
  above the body of your class. Thats all, your Spatial type will automatically be used and displayed in the SceneExplorer. Make sure you register a jar with the used classes in the plugin preferences under “wrapped libraries, otherwise the IDE cannot access those classes.
 
-
 AbstractSceneExplorerNode brings some other useful features you might want to include like automatic creation of properly threaded properties etc. JmeSpatial for example bases on it. A simple SceneExplorerNode example for an object extending Spatial would be JmeGeometry (see below). Editors for special variable types can be added using the SceneExplorerPropertyEditor interface, which can be registered as a ServiceProvider as well.
 
-
 The SceneExplorerNode can be used for Spatial and Control type objects.
-
 
 * _Add the “Nodes +++<abbr title="Application Programming Interface">API</abbr>+++ and “Lookup +++<abbr title="Application Programming Interface">API</abbr>+++ libraries to your project when you want to use this_
 
@@ -213,16 +208,13 @@ public class JmeGhostControl extends AbstractSceneExplorerNode {
 For adding Spatials, Contols and for general tools theres premade abstract classes that you can use to extend the options. Undo/Redo is handled by the abstract class. AbstractNewSpatial*Wizard*Action allows you to show an AWT wizard before creating the Spatial. You can also just implement the base ServiceProvider class and return any kind of action (such as a wizard), in this case you have to handle the threading yourself!
 
 
-
 [IMPORTANT]
 ====
 Note that the classes you create are singletons which are used across multiple nodes and you should not store any data in local variables!
 ====
 
 
-
 To add a new Tool, create a new AbstractToolAction:
-
 
 [source,java]
 ----
@@ -262,7 +254,6 @@ public class GenerateTangentsTool extends AbstractToolAction {
 
 For a new Spatial or Control, use AbstractNewSpatialAction
 
-
 [source,java]
 ----
 
@@ -283,7 +274,6 @@ public class NewSpecialSpatialAction extends AbstractNewSpatialAction {
 ----
 
 or AbstractNewControlAction:
-
 
 [source,java]
 ----
@@ -318,9 +308,7 @@ public class NewRigidBodyAction extends AbstractNewControlAction {
 
 You can create a new wizard using the wizard template in the SDK (New File→Module Development→Wizard). The Action that the template creates can easily be changed to one for adding a Control or Spatial or for applying a Tool. Note that we extend AbstractNewSpatial*Wizard*Action here.
 
-
 A good example is the “Add SkyBox Wizard:
-
 
 [source,java]
 ----
@@ -419,5 +407,4 @@ public class AddSkyboxAction extends AbstractNewSpatialWizardAction {
 ====
 The abstract spatial and control actions implement undo/redo automatically, for the ToolActions you have to implement it yourself.
 ====
-
 

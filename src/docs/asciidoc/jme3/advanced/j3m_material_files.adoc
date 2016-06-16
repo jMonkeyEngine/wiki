@@ -10,9 +10,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 In the <<jme3/advanced/material_definitions#,Material Definitions>> article you learned how to configure <<jme3/advanced/materials_overview#,Materials>>  programmatically in Java code. If you have certain commonly used Materials that never change, you can clean up the amount of Java code that clutters your init method, by moving material settings into .j3m files. Then later in your code, you only need to call one setter instead of several to apply the material.
 
-
 If you want to colorize simple shapes (one texture all around), then .j3m are the most easily customizable solution. J3m files can contain texture mapped materials, but as usual you have to create the textures in an external editor, especially if you use UV-mapped textures. 
-
 
 
 == Writing the .j3m File
@@ -39,7 +37,6 @@ Material shiny bumpy rock : Common/MatDefs/Light/Lighting.j3md {
 
 How to this file is structured:
 
-
 .  Header
 ..  `Material` is a fixed keyword, keep it.
 ..  `shiny bumpy rock` is a descriptive string that you can make up. Choose a name to help you remember for what you intend to use this material.
@@ -58,11 +55,9 @@ In the jMonkeyEngine SDK, use File→New File→Material→Empty Material File t
 
 
 
-
 == How to Use .j3m Materials
 
 This is how you use the prepared .j3m Material on a Spatial. Since you have saved the .j3m file to your project's Assets directory, the .j3m path is relative to `MyGame/src/assets/…`.
-
 
 [source,java]
 ----
@@ -72,7 +67,6 @@ myGeometry.setMaterial(assetManager.loadMaterial("Materials/SimpleBump.j3m"));
 *Tip:* In the jMonkeyEngine SDK, open Windows&gt;Palette and drag the `JME Material: Set J3M` snippet into your code.
 
 
-
 == Syntax Reference for .j3m Files
 
 
@@ -80,18 +74,14 @@ myGeometry.setMaterial(assetManager.loadMaterial("Materials/SimpleBump.j3m"));
 
 Make sure to get the paths to the textures (.png, .jpg) and material definitions (.j3md) right. 
 
-
-*  The paths to the built-in .j3md files are relative to jME3's Core Data directory. Just copy the path stated in the <<jme3/advanced/materials_overview#,Material>> table. +
-`Common/MatDefs/Misc/Unshaded.j3md` is resolved to `jme3/src/src/core-data/Common/MatDefs/Misc/Unshaded.j3md`.
-*  The paths to your textures are relative to your project's assets directory. +
-`Textures/bump_rock_normal.png` is resolved to `MyGame/src/assets/Textures/bump_rock_normal.png`
+*  The paths to the built-in .j3md files are relative to jME3's Core Data directory. Just copy the path stated in the <<jme3/advanced/materials_overview#,Material>> table. +`Common/MatDefs/Misc/Unshaded.j3md` is resolved to `jme3/src/src/core-data/Common/MatDefs/Misc/Unshaded.j3md`.
+*  The paths to your textures are relative to your project's assets directory. +`Textures/bump_rock_normal.png` is resolved to `MyGame/src/assets/Textures/bump_rock_normal.png`
 
 
 === Data Types
 
 All data types (except Color) are specified in com.jme3.shader.VarType.
 “Color is specified as Vector4 in J3MLoader.java.
-
 [cols="3", options="header"]
 |===
 
@@ -196,7 +186,6 @@ a| (Currently not supported in J3M)
 *  Enum - values depend on the enum
 
 See the link:http://jmonkeyengine.org/javadoc/com/jme3/material/RenderState.html[RenderState] javadoc for a detailed explanation of render states.
-
 [cols="3", options="header"]
 |===
 
@@ -262,7 +251,6 @@ rootNode.attachChild(signpost);
 
 The file `assets/Models/Sign Post/Sign Post.j3m` contains:
 
-
 [source]
 ----
 
@@ -284,7 +272,6 @@ Material Signpost : Common/MatDefs/Light/Lighting.j3md {
 The JPG files are in the same directory, `assets/Models/Sign Post/…`.
 
 
-
 === Example 2: Repeating Texture
 
 [source,java]
@@ -299,7 +286,6 @@ mat.setBoolean("UseMaterialColors", true);
 ----
 
 The file `assets/Textures/Terrain/Pond/Pond.j3m` contains:
-
 
 [source]
 ----
@@ -317,11 +303,9 @@ Material Pong Rock : Common/MatDefs/Light/Lighting.j3md {
 The PNG files are in the same directory, `assets/Textures/Terrain/Pond/`
 
 
-
 === Example 3: Transparent
 
 The file `assets/Models/Tree/Leaves.j3m` contains:
-
 
 [source]
 ----
@@ -350,7 +334,6 @@ Material Leaves : Common/MatDefs/Light/Lighting.j3md {
 ----
 
 The PNG file is in the same directory, `assets/Models/Tree/…`
-
 
 
 == Related Links

@@ -9,12 +9,10 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 In this article we explain the first steps how to work with Zay-ES and what you should know about the background.
 
-
 If you are new Entity Systems please read the <<jme3/contributions/entitysystem/introduction#,Entity System Introduction>> first.
 
 
-
-=== Sample Code
+== Sample Code
 
 [source,java]
 ----
@@ -54,13 +52,12 @@ public class Main {
 ----
 
 
-== Description of the sample
+=== Description of the sample
 
 
-=== Create a Component Class
+== Create a Component Class
 
 You simply create a component by implementing the EntityComponent interface:
-
 
 [source,java]
 ----
@@ -94,7 +91,6 @@ This is a big mistake because such objects contain logic and in our approach com
 
 
 
-
 [IMPORTANT]
 ====
 
@@ -103,8 +99,7 @@ Never subclass Component classes.
 
 
 
-
-=== Initialize the Entity System
+== Initialize the Entity System
 
 [source,java]
 ----
@@ -113,15 +108,12 @@ Never subclass Component classes.
 
 The EntityData is the main class of the entity system.  All the data are stored here.
 
-
 How the entityData works:
-
 
 For every component class a new Hashmap is created which contains the entityId as a key and the component as a value. Therefore, if you need to know all entities which own a component of a certain type, the system will search in these Hashmaps for the required entityIds.
 
 
-
-=== Creating Entitys and adding Components
+== Creating Entitys and adding Components
 
 [source,java]
 ----
@@ -133,10 +125,8 @@ entityData.setComponent(entityId, new TestComponent("Hello World"));
 
 EntityIds are a objects which contain a long value. Zay-ES uses this objects to prevent users from writing dirty code.
 
-
 Every entity has a unique id which is a long.
 Ids are not reused because, if they were, they would not be unique anymore, which would cause a huge penalty.
-
 
 
 [TIP]
@@ -149,8 +139,7 @@ If you create a new entity every nano second, you would need roughly 585 years b
 
 
 
-
-=== The Entity Class
+== The Entity Class
 
 [source,java]
 ----
@@ -166,7 +155,6 @@ all the Components of the classes you are interested in. In this example it is o
 You can have multiple Entity objects for the same entity.
 
 
-
 [IMPORTANT]
 ====
 The data of this Entity objects will not be updated if other classes change the components for this entity
@@ -174,8 +162,7 @@ The data of this Entity objects will not be updated if other classes change the 
 
 
 
-
-=== Replacing a component
+== Replacing a component
 
 [source,java]
 ----
@@ -186,7 +173,7 @@ System.out.println(testComponent.getValue());
 ----
 
 
-=== Delete an entity
+== Delete an entity
 
 [source,java]
 ----
@@ -197,16 +184,14 @@ entityData.removeEntity(entity.getId());
 ----
 
 
-== Entity Sets
+=== Entity Sets
 
 The most important feature of Zay-ES are the Entity Sets.
 It is strongly recommended that you read the <<jme3/contributions/entitysystem/entityset#,Entity Set tutorial>> after reading this article.
-
 
 
 [IMPORTANT]
 ====
 Read the <<jme3/contributions/entitysystem/entityset#,tutorial>> about entity sets
 ====
-
 

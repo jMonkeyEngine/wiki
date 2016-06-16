@@ -15,12 +15,9 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 This is the section descibled the detail process of Programming the card game in Java, Groovy
 
-
 Almost the tasks are trivial and suite for beginers and newbies to JME3. 
 
-
 FYI, some part require knowledge:
-
 
 .  advanced Java concept such as multi-threading, serialize … Groovy such as Closure
 .  JME3 like …AppState, picking… 
@@ -28,17 +25,14 @@ FYI, some part require knowledge:
 
 which you should read before start here. The links help you can revise your knowledges:
 
-
 <<jme3#, JME3 Advanced>>
 <<jme3/scripting#, JME3 Scripting>>
 <<jme3/advanced/atom_framework#, AtomFramework >>
 
 
-
 === Short list
 
 Checklist of what we going to implementation in this tutorial:
-
 
 *  GameStage and Gameplay
 **  Card gameplay elements (Game, Turn, Phase,..)
@@ -71,33 +65,23 @@ Checklist of what we going to implementation in this tutorial:
 
 Here is where you clean up your game design, and write down a few most obvious Classes that build up the game.
 
-
 *CardGame* : obvious
-
 
 *Card* : represent a Card in the game
 
-
 *CardPlayer* extends *Player*: a Player in Atom framework have basic ID, name, character…, already have built-in mechanism to go online -multiplayers if need!
-
 
 *CardTable* extends *GameLevel*: represent the Table where two opponent sit and duel. Of course we can have different levels (in different Modes) like when Player traveling around and play in the future!
 
-
 *CardMatch* : a Match can be held between two CardPlayer opponents
-
 
 *Turn* : a Turn represent a Turn in this card game. Has index number and a point to a Player take that Turn. a Turn has 6 TurnPhase (s)
 
-
 *TurnPhase* : DrawPhase, MainPhase, MainPhase2… contains a bunch of CardAction
-
 
 *CardAction* : obvious. action taken of Player, like : add one more card in his hand and summon etc…
 
-
 see the full implementation in the source code. Detailed explanation below!
-
 
 
 === Entities
@@ -108,16 +92,13 @@ see the full implementation in the source code. Detailed explanation below!
 Consider the a Card as a most basic Entity.
 [ Warning: Don't mistake I'm going to use any kind of Composing Entity System here! ].
 
-
 An Card Entity should contains infomations relate to a real card in a card game, it also has a representation, which is a 3D Model in JME scenegraph. That’s why Card class extends SpatialEntity.
-
 
 ....
   SpatialEntity This is the handy parent class for classes in Atom framework which also holding Entity data, and has a Spatial as representation. Atom use a built-in two-way connection between the Entity – Spatial, a mechanism which helps you do almost anything you want with SpatialEntity (select-picking,enable/disable…ect)
 ....
 
 Information relate to the orginal Magic card game:
-
 
 [source,java]
 ----
@@ -136,13 +117,10 @@ String attribute = “”
 
 […full in the source code.The meanings are obvious.] 
 
-
 If you declare like this in Groovy, that mean each of these fields are a Property, which have basic generated Setter/Getter by Groovy compiler. We need one more attribute:
 Card orgCard
 
-
 This hold a link to the orginal Card in the CardLibrary, which keeps information of every card avaiable in this game. We will implement this class later. Card.groovy
-
 
 [source,java]
 ----
@@ -205,12 +183,9 @@ public class Card  extends SpatialEntity{
 
 According to the Atom framework, the representation part of a Card should be provided by a EntityFactory. In this implementation, I just ask the GameLevel – The CardTable, to made it up, cause it’s really simple.
 
-
 Now consider a Card spatial built from a flatten 3d box and 2 sides: front &amp; back with approriate textures title FrontTexture and BackTexture. In YugiGame, BackTexture are the same for all the Card, remember that we already set it in the SceneEditor! Now our job is to load the Card model and change the FrontTexture to the path in card.picture.
 
-
 This is a part of the CardTable class which create and “attach” the Card spatial to the levelNode, add two more controls for movement handle and select handle. Simple isn’t it?
-
 
 [source,java]
 ----
@@ -248,7 +223,6 @@ This is a part of the CardTable class which create and “attach” the Card spa
 
 By basic movement forms, I want to talk about: 
 
-
 ....
 – MOVETO: Move smoothly in a straight line from one point to another. 
 – ROTTO: Rotate smoothly by Quaternion from one angle to another. 
@@ -257,7 +231,6 @@ By basic movement forms, I want to talk about:
 ....
 
 These 3 basic movement types are already enough to compose quite fascinated effects if you know how to. See by your self in the video in the first post! The most normal and obvious way to put movements into a Spatial in JME3 is to make an Control, name it CardSpatialControl. 
-
 
 [source,java]
 ----
@@ -366,10 +339,8 @@ public class CardSpatialControl extends SpatialEntityControl{
 
 First consider the Table a GameLevel. In that specific enviroment, cards are showed, moved rotated…etc..
 
-
 *Explanation:*
 The CardTable take care of 3 things: 
-
 
 ....
   
@@ -393,9 +364,7 @@ The CardTable take care of 3 things:
 
 We need the world to calculate postions the card place and for the translating: the target position of which the card will head to. Remember that we made a Table texture from a 4×4 Grid. Now use that and do simple math ;O :
 
-
 This part
-
 
 *  load the level 
 *  create a deck
@@ -561,7 +530,6 @@ return spatial.getControl(CardSpatialControl.class)
 ----
 
 These pieces help to find the exact location of card in each situation:
-
 
 *  ArrangeDeck
 *  ArrangHand
@@ -733,7 +701,6 @@ return center.add(0f,-8f,20f)
 
 This is the update hook of the Level. We update it by clean up and execute delayed actions!!!
 
-
 [source,java]
 ----
 
@@ -753,7 +720,6 @@ it.remove();
 ----
 
 Make a cool explosion effect by calling the Atom's ParticleFactory, play it when a card destroyed
-
 
 [source,java]
 ----
@@ -802,7 +768,6 @@ explosionPrefab.getControl(ExplosionNodeControl.class).setMaxTime(2f)
 
 Load the card character 3d model for a specific card
 
-
 [source,java]
 ----
 
@@ -843,15 +808,11 @@ levelNode.addLight(lamp);
 For a card game, select is a very important game mechanic, in fact, you are nearly ask to select/choose somethings almost everytime. In Atom, I introduce a generic way to hook your select function into your code game mechanic. 
 This section is quite advance for who don’t familiar with groovy but keep your self cheerful cause you going to enjoy Groovy as much as I do! 
 
-
 Short: 
-
 
 Detailed: 
 
-
 For this card game, we will implement a few things in this designed mechanic:
-
 
 
 ==== Select function:
@@ -1041,9 +1002,7 @@ isHighlight = false;
 
 We use a Groovy Map cardSelectRules to save all rule in form of Closure that determine if a Card is selected or not. More about rules in the scripting part <<jme3/atomixtuts/cardsgame/scripting#,scripting>>
 
-
 …part of CardGamePlay.groovy
-
 
 [source,java]
 ----

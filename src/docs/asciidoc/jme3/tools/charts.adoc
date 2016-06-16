@@ -9,30 +9,23 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 Previous: <<jme3/tools/navigation#,Navigation>>
 
-
 In this tutorial we will have a look at creating a simple 3D cartography application that allows you to display 3D charts at different zoom levels.
 
-
 This tutorial assumes that you know:
-
 
 *  About the <<jme3/tools/navigation#,Navigation package>>.
 *  How to create a <<jme3/beginner/hello_terrain#,3D landscape>> using image-based heightmaps.
 
 image:jme3/tools/mercator_grid_3d_small.png[mercator_grid_3d_small.png,with="",height=""]
 
-
 You will learn that how to account for distortions that arise when mapping of one coordinate system into (i.e. when converting longitude/latitude into JME's World Units), how to construct a tile tree and how to render a dynamic mercator grid.
 
-
 *This article was sponsored by link:http://planetmayo.com/[PlanetMayo Ltd]*
-
 
 
 == Displaying your first chart
 
 Let's think about how we are going to get JME to display our terrain. The easiest way is to use JME's`ImageBasedHeightMap`. Recall from the <<jme3/beginner/hello_terrain#,Hello Terrain>> tutorial that these are grayscale images which JME uses to create a terrain quad. So, in order to display a chart, we need an image of a (two-dimensional) mercator projection (such as the one depicted below), which we then load using:
-
 
 [source,java]
 ----
@@ -47,12 +40,9 @@ applyDefaultTexture();
 
 image:jme3/tools/globe.png[A 256x256 mercator projection of planet earth.,with="",height=""]
 
-
 In essence, 3D chart visualization is achieved by converting the polygons composing planet earth's landmass into float matrices whereby each value within the matrix represents a specific terrain height. For example, given a terrain of 100 x 100 world units, we construct a heightmap by creating a 100 x 100 matrix. Each cell within the matrix corresponds to a terrain coordinate; each cell’s value to that coordinate’s desired height. But you already knew that, so where's the tricky part? Well, when visualizing a chart an accurate projection requires a translation of latitude/longitude coordinates into their equivalent world unit (x,y,z) counterparts. This translation however is not a straight forward mapping of one coordinate system into the other due to the distortion arising from projecting an oblate spheroid onto a flat surface (see my previous wiki article <<jme3/tools/navigation#,here>>). This means that if one would adhere to a linear scale, the Mercator projection would distort the size and shape of objects as the object distances itself from the equator, eventually resulting in infinite scaling as the pole is reached. So the first task at hand, is to construct accurate 2D projections of planet earth which we can then use as heightmaps. We can achieve this using the jme3.tools.navigation package and co-ordinate sets available at link:http://www.ngdc.noaa.gov/mgg/coast/[noaa.gov]. 
 
-
 As <<jme3/tools/navigation#,previously discussed>>, the distortion in latitude is derived by using the difference in meridional parts between the chart’s centre and the current position as a baseline; through converting the difference to world units by dividing it by the number of world units contained within one minute, a latitude’s y-coordinate can be obtained. Calculating a position’s x-coordinate is somewhat easier as the distortion only applies to latitude, not longitude. Therefore x merely equals the sum or difference between itself and the viewport’s centre coordinate, depending on the relative location of the position itself and the chart’s centre. Despite being able to convert between the two coordinate systems, slight precision problems remain once the chart projection is scaled down past a level of 6 meters. This is caused by the pixel referencing system of modern displays being integer based; once the ratio of minutes to pixels exceeds the aforementioned threshold, slight inaccuracies are introduced into the display. However this is of little relevance to most GIS (such as Debrief) as a) the inaccuracies are a matter of meters (or even centimetres) and b) it is impossible to notice this variation as GPS exposes a much higher inaccuracy (between 10 - 100 meters).
-
 
 
 [TIP]
@@ -62,11 +52,9 @@ To lessen the computational load, coordinate system conversion should only takes
 .
 
 
-
 == Creating your heightmaps
 
 There are two ways to create your heightmaps (also referred to as 'tiles' as each heightmap is a tile that composes our chart of the world). One is to use third-party software such as link:http://geotools.org/[GeoTools]. The other is to use the jme3.tools.navigation package to write a tile generator:
-
 
 [source,java]
 ----
@@ -305,7 +293,6 @@ public class TileGenerator {
 
 …where  .out file contains longitude / latitude coordinate pairs defining landmass contours. Here an extract:
 
-
 [source]
 ----
 
@@ -340,10 +327,8 @@ public class TileGenerator {
 
 (-1 acts as a separator, denoting the end of one polygon and the beginning of another).
 
-
 So what's happening here? Well, we basically read the contents of all specified files, whereby each line is broken up into longitude/latitude pairs, converted into pixel (x,y) coordinates and used to construct a polygon which is added to a polygon container once a polygon separator is encountered. Once the object’s paint method is called, this polygon container is iterated and any polygons falling within the canvas (aka viewport) bounds are painted to the graphics context.
 Essentially, this algorithm can be summarized as follows:
-
 
 [source]
 ----
@@ -367,17 +352,14 @@ Paint ( graphics context ):
 image:jme3/tools/heightmap_modelling.png[Summarizing process of visualizing a chart. From left to right: We draw the coordinates downloaded from noaa.gov. Ideally, each polygon should be filled in a light colour, whilst the surrounding ocean remains dark. JME uses these images to create an internal representation of the terrain (a float matrix).,with="",height=""]
 *Above:* Summarizing process of visualizing a chart. From left to right: We draw the coordinates downloaded from noaa.gov. Ideally, each polygon should be filled in a light colour, whilst the surrounding ocean remains dark. JME uses these images to create an internal representation of the terrain (a float matrix).
 
-
 The heightmaps produced by the `TileGenerator` are essentially arrays containing float values ranging from 0 to 255. For convenience and efficiency, JME treats these arrays as Portable Network Graphic (PNG) images (again, see the Hello Terrain tutorial). This allows us to store each tile as an image, meaning that each tile will only need to be constructed once. Essentially what the tile generator therefore does is draw a greyscale image of each tile whereby dark colours (i.e. low values from 0 - 50) are valleys and high values (200 - 255) become mountains or hills. In order to maintain scale, these values are scaled by dividing the seabed’s maximum height (in meters) by the meters per pixel of the current chart.
 With only a few specified points, JME interpolates the rest, making terrain construction using heightmaps more efficient than defining individual vertices for each pixel on the chart.
 A tile’s texture is defined by its ”Alphamap”. This is a copy of its heightmap, but instead of defining height values, the floats composing the alphamap image define textures. For this purpose, a method known as ”texture splatting” is employed, whereby texture data is colour coded. That is, assuming that a spatial has two texture layers (let’s call them Tex1 and Tex2), each layer is associated with a colour: in the case of Debrief 3D, blue refers to a sand texture and red refers to dirt/grass textures. Although such an approach to texturing may sound confusing at first, it has the advantages that both heightmaps and alphamaps can be created in one go, and, as they are based on the same principle, can easily be modified in batch rather than individually.
 
 
-
 == What's all this talk about tiles?
 
 A tile tree is our way of keeping track of individual tiles. All that it is, is a set of nested sub-directories that holds charts. The top-level directory (our root) contains a chart of the entire world, and each sub-directory an enlarged area of our planet. For example, inside the root, we may have folders that contain a chart just for Ireland, the UK and France. As we traverse the tree further, we get the individual counties or provinces for each country. One way for us to represent this mess of directories, is via a link:http://en.wikipedia.org/wiki/Search_tree[Search Tree]. 
-
 
 
 == Creating a tile tree
@@ -400,17 +382,13 @@ try {
 
 Upon initialization, these tiles are read into memory by the `TileTree` object which treats, as the name suggests, the tiles composing the chart as a tree whereby the root node refers to the entire globe. Its children refer to sub-sections of the globe, and its children in turn to sub-sections of that sub-section. For example, the ”Ireland” node is a direct child of the root node. The ”Cork Harbour” node in turn is a direct child of the ”Ireland” node and represents an enlarged version of a sub-section of the Irish coast. Each such Node consists of a unique ID (used to identify the node), a list of child nodes, a path to the heightmap (tile) that it represents, the zoom level (referred to as the longitude level as the zoom is defined by minutes of longitude per pixel) and a latitude/longitude pair denoting the tile’s centre.
 
-
 Each heightmap is rendered depending on which ID the user selects (where each node in the tree is listed by its unique ID). As an ID is selected, the tree is traversed to find the node matching the given ID. The path to its heightmap is extracted and the heightmap is rendered by extracting the float array from the loaded image (that is, a texture object is created and loaded with the heightmap. A ImageBasedHeightMap object is then used to convert the heightmap and alphamap into corresponding height and texture arrays). → again, see JME tutorial on terrain.
 
-
 The Tile Tree’s contents is stored in assets/Heightmaps, and each directory level is composed of one descriptor file, one heightmap (in the form of a PNG image) and one alphamap (also in the form of a PNG image). The descriptor files end in a.desc filename extension and contain the geo-coordinate centre of the tile as well as the resolution of the node that they are representing (as always, the resolution is represented in minutes per pixel (mpp)). A descriptor file’s sole purpose is to allow the re-construction of the tile tree upon application initialization. Specifically, this is achieved by the ChartModel object which instantiates the TileTree, passing a reference to _assets/Heightmaps_, which `TileTree` then recursively scans, constructing the tree by interpreting the descriptor files. It is worth noting that all files per level should be named according to the heightmap tile that it represents. That is, if your level represents a chart of Ireland and your heightmap is named Ireland.png then your descriptor file should be named _Ireland.desc_, while your alphamap should be named _Ireland.png.Alphamap.png_.
-
 
 image:jme3/tools/slide1.jpg[The Tile Tree,with="",height=""]
 image:jme3/tools/slide2.jpg[Looking inside a node...,with="",height=""]
 *Above:* A look inside the “Ireland node. We can see the heightmap, descriptor file and alphamap.
-
 
 [source,java]
 ----
@@ -623,7 +601,6 @@ public class TileTree {
 
 ..and the Node:
 
-
 [source,java]
 ----
 
@@ -746,7 +723,6 @@ public class Node {
 
 Loading a new chart is simple: all that we need to do is get the TileTree to find the chart for us (it'll handle loading the descriptor file and just return a node):
 
-
 [source,java]
 ----
 
@@ -755,7 +731,6 @@ Node node = tileTree.find(chartID);
 ----
 
 We then use the returned node, to adjust our zoom-level:
-
 
 [source,java]
 ----
@@ -769,7 +744,6 @@ mapModel.setCentre(node.getCentre());
 == Drawing the Mercator Grid
 
 A mercator grid reflects the ”stretching” of the flat Mercator chart through the widening of the longitude / latitude lines. Using JME’s Mesh class, a 3D representation of the grid can be drawn procedurally (as opposed to pre-defining the mesh’s vertices using a 3D modelling tool such as Blender). This is achieved by defining a vector of positions, whereby each entry i within the vector denotes the starting point of a grid line, and i + 1 defining the line’s end-point. Next, the the order in which the mesh is constructed from these coordinates is defined. These are basically index pairs as the mesh consists of a set of lines, each having a start and end point. Finally, the coordinates vector and the indices are added to the mesh, which in turn is used to define the Geometry that is added to the scene graph:
-
 
 [source,java]
 ----
@@ -851,4 +825,3 @@ public void createGrid(double longitudeLevel, float increment) {
 ----
 
 image:jme3/tools/screen_shot_2011-12-18_at_13.12.01.png[screen_shot_2011-12-18_at_13.12.01.png,with="",height=""]
-

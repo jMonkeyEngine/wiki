@@ -10,8 +10,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 Note that the creation of a Module Suite is only necessary if you want to upload your plugin to the contribution update center.
 
 
-
-=== Using jMonkeyEngine SDK for development
+== Using jMonkeyEngine SDK for development
 
 *  Install the “Netbeans Plugin Development and “NetBeans +++<abbr title="Application Programming Interface">API</abbr>+++ Documentation plugins via Tools→Plugins
 *  Create a new “Module Suite project (can be any name, this will be your local “collection of plugins that you create)
@@ -28,19 +27,16 @@ Note that the creation of a Module Suite is only necessary if you want to upload
 *  Write your plugin (e.g. <<sdk/development#,create a new editor>> or <<sdk/development/extension_library#,wrap a jar library>>)
 
 
-=== jMonkeyEngine SDK Contributions Update Center
+== jMonkeyEngine SDK Contributions Update Center
 
 If you want your plugin to appear in the “jMonkeyEngine SDK Contributions Update Center so users can download, install and update it easily via the plugin manager, you can host your plugin in the contributions update center svn repository. The contributions update center is based on a googlecode project for contributed plugins which will be automatically compiled, version-labeled and added to the contributions update center like the core jMonkeyEngine SDK plugins.
-
 
 Effectively its one large module suite with multiple modules which each represent one plugin, extension library.
 
 
-
-==== Adding your plugin to the repository
+=== Adding your plugin to the repository
 
 To add your plugin to the repository, do the following:
-
 
 *  Make sure the plugin is part of a “Module Suite and that its located in the folder of the suite (this saves you from problems with the svn and local version not being configured the same)
 *  In “Module Properties→Sources
@@ -74,14 +70,11 @@ To add your plugin to the repository, do the following:
 And thats it, from now on each time you commit changes to your module it will be built and added to the contributions center automatically and the version number will be extended by the svn revision number (e.g. 0.8.1.1234)
 
 
-
-==== Building wrapped library jar files on the server
+=== Building wrapped library jar files on the server
 
 You can just build your library locally and update and commit the jar file and javadoc/sources zip files to the `release/libs` folder of your plugin in the contrib repo. The users plugins will automatically be updated with the new jar files. You can however also build the library project on the server.
 
-
 As normally only the module project is being built on the server, any projects that create the actual jar files for library plugins (“normal projects from the SDK/NetBeans) have to be built from the module build file. To do that simply add the following ant targets to the module build file (adapt to your project file and folder names):
-
 
 [source,xml]
 ----
@@ -99,4 +92,3 @@ As normally only the module project is being built on the server, any projects t
 ----
 
 *Note that for the module version number to increase automatically on a commit to the library project, the library project has to be a subfolder of the main module project.*
-

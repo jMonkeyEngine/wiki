@@ -17,23 +17,17 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 In the previous parts of the tutorial, you created a two-screen user interface. But it is still static, and when you click the buttons, nothing happens yet. The purpose of the +++<abbr title="Graphical User Interface">GUI</abbr>+++ is to communicate with your Java classes: Your game needs to know what the users clicked, which settings they chose, which values they entered into a field, etc. Similarly, the user needs to know what the currently game state is (score, health, etc). 
 
 
-
 == Connect GUI to Java Controller
 
 To let a Nifty screen communicate with the Java application, you register a `ScreenController` to every NiftyGUI screen. You create a ScreenController by creating a Java class that implements the `de.lessvoid.nifty.screen.ScreenController` interface and its abstract methods.
 
-
 Create an AppState *MyStartScreen*.java file in your package. ( Rightclick on your package → New → Other… → JME3 Classes → New AppState)
-
 
 *Pro Tip:* Since you are writing a jME3 application, you can additionally make the ScreenController class extend the <<jme3/advanced/application_states#,AbstractAppState>> class! This gives the ScreenController access to the application object and to the update loop!
 
-
 Now add *implements ScreenController* to _public class MyStartScreen extends AbstractAppState{_ and add *import de.lessvoid.nifty.screen.ScreenController;*
 
-
 Continue with adding:
-
 
 [source,java]
 ----
@@ -110,7 +104,6 @@ public class MyStartScreen extends AbstractAppState implements ScreenController 
 
 The name and package of your custom ScreenController class (here `mygame.MyStartScreen`) goes into the controller parameter of the respective XML screen it belongs to. For example:
 
-
 [source,xml]
 ----
 
@@ -124,7 +117,6 @@ The name and package of your custom ScreenController class (here `mygame.MyStart
 
 Or the same in a Java syntax, respectively:
 
-
 [source,java]
 ----
 
@@ -136,36 +128,28 @@ Or the same in a Java syntax, respectively:
 Now the Java class `MyStartScreen` and this +++<abbr title="Graphical User Interface">GUI</abbr>+++ screen (`start`) are connected. For this example you can also connect the `hud` screen to MyStartScreen.
 
 
-
 == Make GUI and Java Interact
 
 In most cases, you will want to pass game data in and out of the ScreenController. Note that you can pass any custom arguments from your Java class into your ScreenController constructor (`public MyStartScreen(GameData data) {}`).
 
-
 Use any combination of the three following approaches to make Java classes interact with the +++<abbr title="Graphical User Interface">GUI</abbr>+++.
-
 
 
 === GUI Calls a Void Java Method
 
 This is how you respond to an +++<abbr title="Graphical User Interface">GUI</abbr>+++ interaction such as clicks in XML GUIs:
 
-
 .  Add `visibleToMouse=“true` to the parent element!
 .  Embed the `&lt;interact /&gt;` element into the parent element. 
-.  Specify the Java methods that you want to call when the users performs certain actions, such as clicking. +
-Example: `&lt;interact onClick=“startGame(hud) /&gt;`
+.  Specify the Java methods that you want to call when the users performs certain actions, such as clicking. +Example: `&lt;interact onClick=“startGame(hud) /&gt;`
 
 Or this is how you respond to an +++<abbr title="Graphical User Interface">GUI</abbr>+++ interaction such as clicks in Java GUIs:
 
-
 .  Add `visibleToMouse(true);` to the parent element!
 .  Embed one of the `interact…()` elements into the parent element
-.  Specify the Java method that you want to call after the interaction. +
-Example: `interactOnClick(“startGame(hud));`
+.  Specify the Java method that you want to call after the interaction. +Example: `interactOnClick(“startGame(hud));`
 
 In the following example, we call the `startGame()` method when the player clicks the Start button, and `quitGame()` when the player clicks the Quit button.
-
 
 [source,xml]
 ----
@@ -187,7 +171,6 @@ In the following example, we call the `startGame()` method when the player click
 ----
 
 Or the same in a Java syntax, respectively:
-
 
 [source,java]
 ----
@@ -215,7 +198,6 @@ control(new ButtonBuilder("QuitButton", "Quit") {{
 
 Back in the MyStartScreen class, you specify what the `startGame()` and `quitGame()` methods do. As you see, you can pass String arguments (here `hud`) in the method call. You also see that you have access to the app object.
 
-
 [source,java]
 ----
 
@@ -239,18 +221,14 @@ public class MyStartScreen implements ScreenController {
 
 The startGame() example simply switches the +++<abbr title="Graphical User Interface">GUI</abbr>+++ to the `hud` screen when the user clicks Start. Of course, in a real game, you would perform more steps here: Load the game level, switch to in-game input and navigation handling, set a custom `running` boolean to true, attach custom in-game AppStates – and lots more.
 
-
 The quitGame() example shows that you have access to the application `app` object because you made the ScreenController extend AbstractAppState.  (If you're creating code from this example, note that you'll need to make sure `app` is initialized before you can successfully call its methods.)
-
 
 
 === GUI Gets Return Value from Java Method
 
 When the Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++ is initialized, you can get data from Java. In this example, the Java class `getPlayerName()` in `MyStartScreen` defines the Text that is displayed in the textfield before the words `'s Cool Game`. 
 
-
 First define a Java method in the screen controller, in this example, `getPlayerName()`.
-
 
 [source,java]
 ----
@@ -266,7 +244,6 @@ public class MySettingsScreen implements ScreenController {
 
 Nifty uses `${CALL.getPlayerName()}` to get the return value of the getPlayerName() method from your ScreenController Java class.
 
-
 [source,xml]
 ----
 
@@ -275,7 +252,6 @@ Nifty uses `${CALL.getPlayerName()}` to get the return value of the getPlayerNam
 ----
 
 Or the same in a Java syntax, respectively:
-
 
 [source,java]
 ----
@@ -291,14 +267,11 @@ text(new TextBuilder() {{
 You can use this for Strings and numeric values (e.g. when you read settings from a file, you display the results in the +++<abbr title="Graphical User Interface">GUI</abbr>+++) and also for methods with side effects.
 
 
-
 === Java Modifies Nifty Elements and Events
 
 You can also alter the appearance and functions of your nifty elements from Java. Make certain that the element that you want to alter has its `id=“name` attribute set, so you can identy and address it.
 
-
 Here's an example of how to change an image called `playerhealth`:
-
 
 [source,java]
 ----
@@ -314,7 +287,6 @@ niftyElement.getRenderer(ImageRenderer.class).setImage(img);
 
 The same is valid for other elements, for example a text label “score:
 
-
 [source,java]
 ----
 
@@ -327,7 +299,6 @@ niftyElement.getRenderer(TextRenderer.class).setText("124");
 
 Similarly, to change the onClick() event of an element, create an `ElementInteraction` object:
 
-
 [source,java]
 ----
 
@@ -338,7 +309,6 @@ niftyElement.getElementInteraction().getPrimary().setOnMouseOver(new NiftyMethod
 
 For this to work, there already needs to be a (possibly inactive) `&lt;interact /&gt;` tag inside your xml element:
 
-
 [source,xml]
 ----
 <interact onClick="doNothing()"/>
@@ -348,7 +318,6 @@ For this to work, there already needs to be a (possibly inactive) `&lt;interact 
 == Next Steps
 
 You're done with the basic Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++ for jME3 tutorial. You can proceed to advanced topics and learn how add controls and effects:
-
 
 *  <<jme3/advanced/nifty_gui_scenarios#, Nifty GUI Scenarios>>
 *  link:http://sourceforge.net/projects/nifty-gui/files/nifty-gui/nifty-gui-the-manual-v1.0.pdf/download[Nifty GUI - the Manual]

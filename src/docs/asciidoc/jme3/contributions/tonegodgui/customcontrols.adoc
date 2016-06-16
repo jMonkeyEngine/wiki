@@ -8,28 +8,23 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
 
-=== Creating Custom Controls
+== Creating Custom Controls
 
 In this section, I'm going to walk you through creating a custom control and hopefully pass along a few tip and help standardize how controls are built.  This way (if you feel so inclined) you can share your controls with other and all will know exactly how to use your control.+
-
 +
 
 
-
-
-==== A Reusable Contextual Menu
+=== A Reusable Contextual Menu
 
 We're going to be building a reusable contextual right-click menu that will:
-
 
 *  lock and unlock certain features of a standard window/panel
 *  Allow you to add/remove menu items specific to each window as it is called.
 
 
-===== STEP 1: Adding the framework for the new class.
+==== STEP 1: Adding the framework for the new class.
 
 First, we'll set up the class and add the three standard constructors.  We'll be using the default Menu style information.  The class will remain abstract to leverage the existing callback method of the super class Menu.
-
 
 [source,java]
 ----
@@ -63,10 +58,9 @@ public abstract class ContextualMenu extends Menu {
 ----
 
 
-===== STEP 2: Adding a public method for building standard options
+==== STEP 2: Adding a public method for building standard options
 
 This method will be used by calling windows to ensure the menu starts with only the default options.  If the particular calling window needs extra options, we can add them once this method is called.
-
 
 [source,java]
 ----
@@ -89,7 +83,7 @@ public void resetMenuOptions() {
 ----
 
 
-==== Adding Our New Control to the Screen
+=== Adding Our New Control to the Screen
 
 [source,java]
 ----
@@ -109,16 +103,13 @@ screen.add(rcMenu);
 ----
 
 
-==== Extending the Window Class to Utilize Our Control
+=== Extending the Window Class to Utilize Our Control
 
 
-===== STEP 1: Extend the window class and add a few methods
+==== STEP 1: Extend the window class and add a few methods
 
 We need to entend the window class in order to add right-click event handling and handle the setOption() method call from our ContextualMenu class.+
-
 +
-
-
 
 [source,java]
 ----

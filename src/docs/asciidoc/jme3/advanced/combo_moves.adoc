@@ -10,12 +10,9 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 The ComboMoves class allows you to define combinations of inputs that trigger special actions. Entering an input combo correctly can bring the player incremental rewards, such as an increased chance to hit, an increased effectiveness, or decreased change of being blocked, whatever the game designer chooses. link:http://en.wikipedia.org/wiki/Combo_%28video_gaming%29[More background info]
 
-
 Combos are usually a series of inputs, in a fixed order: For example a keyboard combo can look  like: “press Down, then Down+Right together, then Right. 
 
-
 Usage:
-
 
 .  Create input triggers 
 .  Define combos
@@ -23,7 +20,6 @@ Usage:
 .  Execute combos in update loop 
 
 Copy the two classes ComboMoveExecution.java and ComboMove.java into your application and adjust them to your package paths.
-
 
 
 == Example Code
@@ -37,9 +33,7 @@ Copy the two classes ComboMoveExecution.java and ComboMove.java into your applic
 
 First you <<jme3/advanced/input_handling#,define your game's inputs>> as you usually do: Implement the com.jme3.input.controls.ActionListener interface for your class, and add triggers mappings such as com.jme3.input.controls.KeyTrigger and com.jme3.input.KeyInput. 
 
-
 For example:
-
 
 [source,java]
 ----
@@ -59,9 +53,7 @@ inputManager.addListener(this, "Left", "Right", "Up", "Down", "Attack1");
 
 For each of  your combo moves, you specify the series of inputs that will trigger it. The order in which you define them is the order the player has to press them for the step to be recorded. When all steps have been recorded, the combo is triggered. 
 
-
 The following example shows how a fireball combo move is triggered by pressing the navigation keys for “down, down+right, right, in this order.
-
 
 [source,java]
 ----
@@ -77,7 +69,6 @@ fireball.setUseFinalState(false);
 
 Also create a ComboMoveExecution object for each ComboMove. You need it later to execute the detected combo.
 
-
 [source,java]
 ----
 
@@ -89,46 +80,35 @@ ComboMoveExecution fireballExec = new ComboMoveExecution(fireball);
 === ComboMove Class Methods
 
 Use the following ComboMove methods to specify the combo:
-
 [cols="2", options="header"]
 |===
 
 a|ComboMove Method
 a|Description
 
-a|press(“A).done(); +
-press(“A,“B).done();
-a|Combo step is recorded if A is entered. +
-Combo step is recorded if A and B are entered simultaneously.
+a|press(“A).done(); +press(“A,“B).done();
+a|Combo step is recorded if A is entered. +Combo step is recorded if A and B are entered simultaneously.
 
-a|notPress(“A).done(); +
-notPress(“A,“B).done();
-a|Combo step is recorded if A is released. +
-Combo step is recorded if A and B are both released.
+a|notPress(“A).done(); +notPress(“A,“B).done();
+a|Combo step is recorded if A is released. +Combo step is recorded if A and B are both released.
 
 a|press(“A).notPress(“B).done();
 a|Combo step is recorded if A is entered, and not B
 
 a|press(“A).notPress(“B).timeElapsed(0.11f).done();
-a|Combo step is recorded a certain time after A and not B is entered. +
-etc, etc …
+a|Combo step is recorded a certain time after A and not B is entered. +etc, etc …
 
 a|setPriority(0.5f);
 a|If there is an ambiguity, a high-priority combo will trigger instead of a low-priority combo. This prevents that a similar looking combo step “hijacks another Combo. Use only once per ComboMove.
 
-a|setUseFinalState(false); +
-setUseFinalState(true);
-a|This is the final command of the series. +
-False: Do not wait on a final state, chain combo steps. (?) +
-True: This is the final state, do not chain combo steps. (?)
+a|setUseFinalState(false); +setUseFinalState(true);
+a|This is the final command of the series. +False: Do not wait on a final state, chain combo steps. (?) +True: This is the final state, do not chain combo steps. (?)
 
 |===
 
 The `press()` and `notPress()` methods accept sets of Input Triggers, e.g. `fireball.press(“A,“B,“C).done()`.
 
-
 The following getters give you more information about the game state:
-
 [cols="2", options="header"]
 |===
 
@@ -151,12 +131,9 @@ a|Returns the priority of this move
 
 Now that you have specified the combo steps, you want to detect them. You do that in the onAction() method that you get from the ActionListener interface.
 
-
 Create a HashSet `pressMappings` to track curently pressed mappings, and a ComboMove object `currentMove` to track the current move. 
 
-
 We also track the cast time of a combo to determine if it has timed out (see update loop below).
-
 
 [source,java]
 ----
@@ -210,7 +187,6 @@ public void onAction(String name, boolean isPressed, float tpf) {
 
 Now that you have detected the current move, you want to execute it. You do that in the update loop.
 
-
 [source,java]
 ----
 
@@ -235,11 +211,9 @@ public void simpleUpdate(float tpf){
 Test `currentMove.getMoveName()` and proceed to call methods that implement any special actions and bonuses. This is up to you and depends individually on your game.
 
 
-
 == Why Combos?
 
 Depending on the game genre, the designer can reward the players' intrinsical or extrinsical skills:
-
 
 *  (intrinsical:) RPGs typically calculate the success of an attack from the character's in-game training level: The player plays the role of a character whose skill level is defined in numbers. RPGs typically do not offer any Combos.
 *  (extrinsical:) Sport and fighter games typically choose to reward the player's “manual skills: The success of a special move solely depends on the player's own dexterity. These games typically offer optional Combos.

@@ -8,28 +8,22 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
 
-=== Nifty Loading Screen (Progress Bar)
+== Nifty Loading Screen (Progress Bar)
 
 There is a good tutorial about creating a nifty progress bar here:
 link:http://sourceforge.net/apps/mediawiki/nifty-gui/index.php?title=Create_your_own_Control_%28A_Nifty_Progressbar%29[http://sourceforge.net/apps/mediawiki/nifty-gui/index.php?title=Create_your_own_Control_%28A_Nifty_Progressbar%29]
 
-
 This example will use the existing hello terrain as an example.
 It will require these 2 images inside Assets/Interface/ (save them as border.png and inner.png respectively)
-
 
 image:jme3/advanced/inner1.png[inner1.png,with="",height=""]
 image:jme3/advanced/border1.png[border1.png,with="",height=""]
 
-
 This is the progress bar at 90%:
-
 
 image:jme3/advanced/loadingscreen.png[loadingscreen.png,with="",height=""]
 
-
 nifty_loading.xml
-
 
 [source,xml]
 ----
@@ -76,11 +70,10 @@ nifty_loading.xml
 ----
 
 
-==== Understanding Nifty XML
+=== Understanding Nifty XML
 
 The progress bar and text is done statically using nifty XML.
 A custom control is created, which represents the progress bar.
-
 
 [source,xml]
 ----
@@ -96,7 +89,6 @@ A custom control is created, which represents the progress bar.
 ----
 
 This screen simply displays a button in the middle of the screen, which could be seen as a simple main menu UI.
-
 
 [source,xml]
 ----
@@ -116,7 +108,6 @@ This screen simply displays a button in the middle of the screen, which could be
 
 This screen displays our custom progress bar control with a text control
 
-
 [source,xml]
 ----
 
@@ -133,13 +124,11 @@ This screen displays our custom progress bar control with a text control
 ----
 
 
-=== Creating the bindings to use the Nifty XML
+== Creating the bindings to use the Nifty XML
 
 There are 3 main ways to update a progress bar. To understand why these methods are necessary, an understanding of the graphics pipeline is needed. 
 
-
 Something like this in a single thread will not work:
-
 
 [source,java]
 ----
@@ -155,18 +144,15 @@ update_bar(100%);
 
 If you do all of this in a single frame, then it is sent to the graphics card only after the whole code block has executed. By this time the bar has reached 100% and the game has already begun – for the user, the progressbar on the screen would not have visibly changed.
 
-
 The 2 main good solutions are:
-
 
 .  Updating explicitly over many frames
 .  Multi-threading
 
 
-==== Updating progress bar over a number of frames
+=== Updating progress bar over a number of frames
 
 The idea is to break down the loading of the game into discrete parts
-
 
 [source,java]
 ----
@@ -349,17 +335,14 @@ public class TestLoadingScreen extends SimpleApplication implements ScreenContro
 
 Note:
 
-
 *  Try and add all controls near the end, as their update loops may begin executing
 
 
-==== Using multithreading
+=== Using multithreading
 
 For more info on multithreading: <<jme3/advanced/multithreading#,The jME3 Threading Model>>
 
-
 Make sure to change the XML file to point the controller to TestLoadingScreen*1*
-
 
 [source,java]
 ----

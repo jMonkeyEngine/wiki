@@ -11,25 +11,20 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 先看: <<jme3/the_scene_graph#,Hello SimpleApplication>>,
 在看: <<jme3/beginner/hello_asset#,Hello Assets>>. 
 
-
 我的中文不是呢么好，请你们帮我咻咻他。谢谢。
 
-
 在这一课，你会学怎么去盖一个3D场景。
-
 
 *  学这一棵前，你先好知道什么是link:http://jmonkeyengine.org/wiki/doku.php/jme3:setting_up_jme3_in_eclipse[Scene Graph]，
 *  如果你不知道他是什么，就看<<jme3/scenegraph_for_dummies#,Scene Graph for Dummies>>.
 
 盖3D游戏时：
 
-
 .  你要雕塑3D人，房子，ect。
 .  你要方静你的模型在游戏场景里
 .  你要动，便形，转，图上颜色，和动画他们。
 
 你会学怎么用 Scene Graph 做什么，学为什么 RootNode 呢么重要，学怎么放变量比如活力或钱经一个 Node，学怎么动，转或变你的模型的形状，和你会学 Node 和 Geometry 有什么分别。
-
 
 
 == 例子
@@ -93,11 +88,9 @@ public class HelloNode extends SimpleApplication {
 开始 Hello Node 后，你会看到两个一样斜的立方体。
 
 
-
 == 口语到 JME 语
 
 在这一个，你学到了几个东西:
-
 [cols="2", options="header"]
 |===
 
@@ -122,7 +115,6 @@ a|Translate, or rotate, or scale an object = transform an object.
 |===
 
 Every JME3 application has a rootNode: Your game automatically inherits the `rootNode` object from SimpleApplication. Everything attached to the rootNode is part of the scene graph. The elements of the scene graph are Spatials.
-
 
 *  A Spatial contains the location, rotation, and scale of an object.
 *  A Spatial can be loaded, transformed, and saved.
@@ -152,7 +144,6 @@ a| The `rootNode`, a floor node grouping several terrains, a custom vehicle-with
 == Understanding the Code
 
 What happens in the code snippet? You use the `simpleInitApp()` method that was introduced in the first tutorial to initialize the scene.
-
 
 .  You create the first box Geometry.
 **  Create a Box shape with a radius of (1,1,1), that makes the box 2x2x2 world units big.
@@ -207,7 +198,6 @@ What happens in the code snippet? You use the `simpleInitApp()` method that was 
 If you run the application with only the code up to here, the scene appears empty. This is because a Node is invisible, and you have not yet attached any visible Geometries to the rootNode. 
 
 
-
 .  Attach the two boxes to the pivot node. 
 [source,java]
 ----
@@ -217,7 +207,6 @@ If you run the application with only the code up to here, the scene appears empt
 ----
 
 If you run the app with only the code up to here, you see two cubes: A red cube straight above a blue cube.
-
 
 .  Rotate the pivot node.
 [source,java]
@@ -229,16 +218,12 @@ If you run the app with only the code up to here, you see two cubes: A red cube 
 
 
 
-
 === What is a Pivot Node?
 
 You can transform (e.g. rotate) Geometries around their own center, or around a user defined center point. A user defined center point for one or more Geometries is called pivot.
 
-
-*  In this example, you have grouped two Geometries by attaching them to one pivot Node. You use the pivot Node as a handle to rotate the two Geometries together around one common center. Rotating the pivot Node rotates all attached Geometries, in one step. The pivot node is the center of the rotation. Before attaching the other Geometries, make certain that the pivot node is at (0,0,0). Transforming a parent Node to transform all attached child Spatials is a common task. You will use this method a lot in your games when you move Spatials around. +
-*Examples:* A vehicle and its driver move together; a planet with its moon orbits the sun. 
-*  Contrast this case with the other option: If you don't create an extra pivot node and transform a Geometry, then every transformation is done relative to the Geometry's origin (typically the center). +
-*Examples:* If you rotate each cube directly (using `red.rotate(0.1f , 0.2f , 0.3f);` and `blue.rotate(0.5f , 0.0f , 0.25f);`), then each cube is rotated individually around its center. This is similar to a planet rotating around its own center.
+*  In this example, you have grouped two Geometries by attaching them to one pivot Node. You use the pivot Node as a handle to rotate the two Geometries together around one common center. Rotating the pivot Node rotates all attached Geometries, in one step. The pivot node is the center of the rotation. Before attaching the other Geometries, make certain that the pivot node is at (0,0,0). Transforming a parent Node to transform all attached child Spatials is a common task. You will use this method a lot in your games when you move Spatials around. +*Examples:* A vehicle and its driver move together; a planet with its moon orbits the sun. 
+*  Contrast this case with the other option: If you don't create an extra pivot node and transform a Geometry, then every transformation is done relative to the Geometry's origin (typically the center). +*Examples:* If you rotate each cube directly (using `red.rotate(0.1f , 0.2f , 0.3f);` and `blue.rotate(0.5f , 0.0f , 0.25f);`), then each cube is rotated individually around its center. This is similar to a planet rotating around its own center.
 
 
 == How do I Populate the Scenegraph?
@@ -308,7 +293,6 @@ a| Everything you initialize and attach to the `rootNode` in the `simpleInitApp(
 == How do I Transform Spatials?
 
 There are three types of 3D transformation: Translation, Scaling, and Rotation.
-
 [cols="4", options="header"]
 |===
 
@@ -317,15 +301,13 @@ a| X-axis
 a| Y-axis 
 a| Z-axis 
 
-a| Specify the new location in three dimensions: How far away is it from the origin going right-up-forward? +
-To move a Spatial _to_ specific coordinates, such as (0,40.2f,-2), use: 
+a| Specify the new location in three dimensions: How far away is it from the origin going right-up-forward? +To move a Spatial _to_ specific coordinates, such as (0,40.2f,-2), use: 
 [source,java]
 ----
 thing.setLocalTranslation( new Vector3f( 0.0f, 40.2f, -2.0f ) );
 ----
 
  To move a Spatial _by_ a certain amount, e.g. higher up (y=40.2f) and further back (z=-2.0f): 
-
 
 [source,java]
 ----
@@ -345,10 +327,7 @@ a| X-axis
 a| Y-axis 
 a| Z-axis 
 
-a|Specify the scaling factor in each dimension: length, height, width. +
-A value between 0.0f and 1.0f shrinks the Spatial; bigger than 1.0f stretches it; 1.0f keeps it the same. +
-Using the same value for each dimension scales proportionally, different values stretch it. +
-To scale a Spatial 10 times longer, one tenth the height, and keep the same width: 
+a|Specify the scaling factor in each dimension: length, height, width. +A value between 0.0f and 1.0f shrinks the Spatial; bigger than 1.0f stretches it; 1.0f keeps it the same. +Using the same value for each dimension scales proportionally, different values stretch it. +To scale a Spatial 10 times longer, one tenth the height, and keep the same width: 
 [source,java]
 ----
 thing.scale( 10.0f, 0.1f, 1.0f );
@@ -367,15 +346,13 @@ a| X-axis
 a| Y-axis 
 a| Z-axis 
 
-a|3-D rotation is a bit tricky (<<jme3/rotate#,learn details here>>). In short: You can rotate around three axes: Pitch, yaw, and roll. You can specify angles in degrees by multiplying the degrees value with `FastMath.DEG_TO_RAD`. +
-To roll an object 180° around the z axis: 
+a|3-D rotation is a bit tricky (<<jme3/rotate#,learn details here>>). In short: You can rotate around three axes: Pitch, yaw, and roll. You can specify angles in degrees by multiplying the degrees value with `FastMath.DEG_TO_RAD`. +To roll an object 180° around the z axis: 
 [source,java]
 ----
 thing.rotate( 0f , 0f , 180*FastMath.DEG_TO_RAD );
 ----
 
  Tip: If your game idea calls for a serious amount of rotations, it is worth looking into <<jme3/quaternion#,quaternion>>s, a data structure that can combine and store rotations efficiently. 
-
 
 [source,java]
 ----
@@ -393,7 +370,6 @@ a|roll = cocking your head
 == How do I Troubleshoot Spatials?
 
 If you get unexpected results, check whether you made the following common mistakes:
-
 [cols="2", options="header"]
 |===
 
@@ -401,17 +377,10 @@ a| Problem?
 a| Solution! 
 
 a| A created Geometry does not appear in the scene. 
-a| Have you attached it to (a node that is attached to) the rootNode? +
-Does it have a Material? +
-What is its translation (position)? Is it behind the camera or covered up by another Geometry? +
-Is it to tiny or too gigantic to see? +
-Is it too far from the camera? (Try link:http://jmonkeyengine.org/javadoc/com/jme3/renderer/Camera.html#setFrustumFar%28float%29[cam.setFrustumFar](111111f); to see further) 
+a| Have you attached it to (a node that is attached to) the rootNode? +Does it have a Material? +What is its translation (position)? Is it behind the camera or covered up by another Geometry? +Is it to tiny or too gigantic to see? +Is it too far from the camera? (Try link:http://jmonkeyengine.org/javadoc/com/jme3/renderer/Camera.html#setFrustumFar%28float%29[cam.setFrustumFar](111111f); to see further) 
 
 a| A Spatial rotates in unexpected ways. 
-a| Did you use radian values, and not degrees? (If you used degrees, multiply them with FastMath.DEG_TO_RAD to convert them to radians)  +
-Did you create the Spatial at the origin (Vector.ZERO) before moving it? +
-Did you rotate around the intended pivot node or around something else? +
-Did you rotate around the right axis? 
+a| Did you use radian values, and not degrees? (If you used degrees, multiply them with FastMath.DEG_TO_RAD to convert them to radians)  +Did you create the Spatial at the origin (Vector.ZERO) before moving it? +Did you rotate around the intended pivot node or around something else? +Did you rotate around the right axis? 
 
 a| A Geometry has an unexpected Color or Material. 
 <a| Did you reuse a Material from another Geometry and have inadvertently changed its properties? (If so, consider cloning it: mat2 = mat.clone(); )  
@@ -423,13 +392,10 @@ a| A Geometry has an unexpected Color or Material.
 
 Many Spatials represent game characters or other entities that the player can interact with. The above code that rotates the two boxes around a common center (pivot) could be used for a spacecraft docked to a orbiting space station, for example.
 
-
 Depending on your game, game entities do not only change their position, rotation, or scale (the transformations that you just learned about). Game entities also have custom properties, such as health, inventory carried, equipment worn for a character, or hull strength and fuel left for a spacecraft. In Java, you represent entity data as class variables, e.g. floats, Strings, or Arrays. 
-
 
 You can add custom data directly to any Node or Geometry. *You do not need to extend the Node class to include variables*!
 For example, to add a custom id number to a node, you would use:
-
 
 [source,java]
 ----
@@ -437,7 +403,6 @@ pivot.setUserData( "pivot id", 42 );
 ----
 
 To read this Node's id number elsewhere, you would use:
-
 
 [source,java]
 ----
@@ -447,11 +412,8 @@ int id = pivot.getUserData( "pivot id" );
 By using different Strings keys (here the key is `pivot id`), you can get and set several values for whatever data the Spatial needs to carry. When you start writing your game, you might add a fuel value to a car node, speed value to an airplane node, or number of gold coins to a player node, and much more. 
 
 
-
 == Conclusion
 
 You have learned that your 3D scene is a scene graph made up of Spatials: Visible Geometries and invisible Nodes. You can transform Spatials, or attach them to nodes and transform the nodes. You know the easiest way how to add custom entity properties (such as player health or vehicle speed) to Spatials.
 
-
 Since standard shapes like spheres and boxes get old fast, continue with the next chapter where you learn to <<jme3/beginner/hello_asset#,load assets such as 3-D models>>.
-

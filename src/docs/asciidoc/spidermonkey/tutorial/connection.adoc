@@ -14,15 +14,12 @@ This article covers a deprecated +++<abbr title="Application Programming Interfa
 ====
 
 
-
 This very first tutorial is going to teach you how to open a server and a client, and connect them to eachother. I'll also discuss how connection registration works. Since this is a very simple process in SpiderMonkey, this tutorial will be quite short.
 
 
-
-=== Simple connections
+== Simple connections
 
 Creating a server is as simple as doing this:
-
 
 [source,java]
 ----
@@ -34,7 +31,6 @@ myServer.start();
 
 This initializes and starts a server on TCP port 4040 and UDP port 5050. Now it's time to connect a client:
 
-
 [source,java]
 ----
 
@@ -44,7 +40,6 @@ client.start();
 ----
 
 This initializes and starts a client, and it will immediately connect to localhost, TCP port 4040, and UDP port 5050. In the log, you'll get to see this:
-
 
 [source]
 ----
@@ -69,11 +64,9 @@ INFO: [Client#1][TCP] Connection succeeded.
 As you can see, this is a combined log of the client and server. Even though it looks like only a connection has been made, the Client registration has already happened at this point as well. Client registration is necessary so you can call TCP and UDP methods on only one Client instance on the server. You don't have to worry about client registration, since SpiderMonkey does this automatically on connection.
 
 
-
-=== Connector filters
+== Connector filters
 
 You can also filter connections (or connectors as I call them) in SpiderMonkey. You can do this by implementing the ConnectorFilter interface:
-
 
 [source,java]
 ----
@@ -90,11 +83,9 @@ public class MyConnectorFilter implements ConnectorFilter {
 Return null for no filtering, or a String with the reason if you want to filter this person.
 
 
-
-=== Discover hosts
+== Discover hosts
 
 SpiderMonkey Clients are also able to discover hosts running in the +++<abbr title="Local Area Network">LAN</abbr>+++. This is also a very simple process, and can be done as follows:
-
 
 [source,java]
 ----
@@ -105,7 +96,6 @@ List<InetAddress> foundHosts = client.discoverHosts(5050, 5000);
 ----
 
 This starts the host discovery on port 5050, and listens for servers for 5 seconds. Typically, servers respond pretty fast so a few seconds should be enough. To do something with these hosts it's as simple as doing:
-
 
 [source,java]
 ----
@@ -119,6 +109,4 @@ client.start();
 
 Do note that this would connect to every host found, so this does not work properly, but the idea is that you can configure it the way you want it. Don't forget to start() the client.
 
-
 This concludes the first tutorial. In the next tutorial, it's time to send and listen for messages!
-

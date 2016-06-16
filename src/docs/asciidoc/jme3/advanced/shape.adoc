@@ -11,7 +11,6 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 The simplest type of Meshes are the built-in JME Shapes. You can create Shapes without using the AssetManager.
 
 
-
 == 3D shapes
 
 
@@ -20,7 +19,6 @@ image::http://www.jmonkeyengine.com/jme/wiki-data/userref/sphere.png[sphere.png,
 image::http://www.jmonkeyengine.com/jme/wiki-data/userref/cylinder.png[cylinder.png,with="108",height="80",align="right"]
 
 image::http://www.jmonkeyengine.com/jme/wiki-data/userref/box.png[box.png,with="108",height="80",align="right"]
-
 
 
 *  com.jme3.scene.shape.Box – A cube or cuboid. Single-sided Quad faces (outside only). 
@@ -35,7 +33,6 @@ image::http://www.jmonkeyengine.com/jme/wiki-data/userref/pyramid.png[pyramid.pn
 image::http://www.jmonkeyengine.com/jme/wiki-data/userref/cone.png[cone.png,with="108",height="80",align="right"]
 
 image::http://www.jmonkeyengine.com/jme/wiki-data/userref/dome.png[dome.png,with="108",height="80",align="right"]
-
 
 
 *  com.jme3.scene.shape.Dome – A semi-sphere, e.g. SkyDome.
@@ -61,10 +58,9 @@ image::http://i204.photobucket.com/albums/bb19/mike_ch_1/torus.png[Torus,with="1
 *  com.jme3.scene.shape.Curve – A curved 1D spline. Compare with shape.Surface.
 
 
-==== com.jme3.math versus com.jme3.shape?
+=== com.jme3.math versus com.jme3.shape?
 
 Do not mix up these visible com.jme3.shapes with similarly named classes from the com.jme3.math package. Choose the right package when letting your IDE fill in the import statements!
-
 
 *  com.jme3.math.Line – is invisible, has a direction, goes through a point, infinite length.
 *  com.jme3.math.Ray – is invisible, has a direction and start point, but no end.
@@ -74,14 +70,12 @@ Do not mix up these visible com.jme3.shapes with similarly named classes from th
 These maths objects are invisible and are used for collision testing (ray casting) or to describe motion paths. They cannot be wrapped into a Geometry.
 
 
-
 == Usage
 
 
-==== Basic Usage
+=== Basic Usage
 
 To add a shape to the scene:
-
 
 .  Create the base mesh shape.
 .  Wrap the mesh into a Geometry.
@@ -96,11 +90,9 @@ Create one static shape as mesh and use it in several geometries, or clone() the
 
 
 
-
-==== Complex Shapes
+=== Complex Shapes
 
 You can compose more complex custom Geometries out of simple Shapes. Think of the buildings in games like Angry Birds, or the building blocks in Second Life (“prims) and in Tetris (“Tetrominos).
-
 
 .  Create a Node. By default it is located at the origin (0/0/0) – leave the Node there for now.
 .  Create your shapes and wrap each into a Geometry, as just described.
@@ -111,11 +103,9 @@ You can compose more complex custom Geometries out of simple Shapes. Think of th
 The order is important: First arrange around origin, then transform. Otherwise, transformations are applied around the wrong center (pivot). Of course, you can attach your constellation to other pivot Nodes to create even more complex shapes (a chair, a furnished room, a house, a city, …), but again, arrange them around the origin first before you transform them. Obviously, such composed Geometries are simpler than hand-sculpted meshes from a mesh editor.
 
 
-
 == Code Examples
 
 Create the Mesh shape:
-
 
 [source,java]
 ----
@@ -154,7 +144,6 @@ PQTorus mesh = new PQTorus(3,8, 2f, 1f, 32, 32); // Flower torus
 
 Use one of the above examples together with the following geometry in a scene:
 
-
 [source,java]
 ----
 
@@ -171,4 +160,3 @@ rootNode.attachChild(geom);                    // attach geometry to a node
 == See also
 
 * <<jme3/intermediate/optimization#,Optimization>> – The GeometryBatchFactory class combines several of your shapes with the same texture into one mesh with one texture.
-

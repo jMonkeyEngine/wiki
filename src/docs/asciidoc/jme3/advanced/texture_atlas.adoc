@@ -9,13 +9,10 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 The `jme3tools.optimize.TextureAtlas` allows combining multiple textures into one texture atlas.  Loading one geometry with one material is much more efficient than handling several geometries and materials. Optimally, you already export your textures as texture atlas from e.g. Blender.
 
-
 `jme3tools.optimize.GeometryBatchFactory`, in contrast, only works if the geometries have only one material with textures.
 
-
 .  Create a TextureAtlas. 
-.  Add textures to texture atlas, each texture goes onto one map (e.g. `DiffuseMap`). +
-The image data is stored in a byte array for each named texture map. 
+.  Add textures to texture atlas, each texture goes onto one map (e.g. `DiffuseMap`). +The image data is stored in a byte array for each named texture map. 
 .  Later, you retrieve each map by name as a Texture, and use it in materials.
 
 
@@ -78,13 +75,10 @@ a|Get the transformed texture coordinate for a given input location.
 
 The helper methods that work with Geometry objects automatically consider the `DiffuseMap` (for Lighting.j3md-based Materials) or ColorMap (for Unshaded.j3md-based Materials) the *master map*, and additionally treat the `NormalMap` and `SpecularMap` as secondary maps, if they exist in the Geometry.
 
-
-*  The first map name that you supply becomes the *master map*. The master map defines locations on the atlas. Typically, you name the master map `DiffuseMap` (for Lighting.j3md) or `ColorMap` (for Unshaded.j3md). +
-In general, if you want to use the texture with a certain shader, you should supply the map names that are specified in this shader's .j3md for clarity.
+*  The first map name that you supply becomes the *master map*. The master map defines locations on the atlas. Typically, you name the master map `DiffuseMap` (for Lighting.j3md) or `ColorMap` (for Unshaded.j3md). +In general, if you want to use the texture with a certain shader, you should supply the map names that are specified in this shader's .j3md for clarity.
 *  Secondary textures (other map names, for example `SpecularMap` and `NormalMap` for Lighting.j3md) have to reference a existing texture on the master map, so the Atlas knows where to position the added texture on the secondary map. This is necessary because the maps share texture coordinates and thus need to be placed at the same location on both maps. If you do not share texture coordinates in your maps, use separate TextureAtlas classes.
 
 You reference textures by their *asset key name*, this is what their “id is. For each texture, the atlas stores its location. A texture with an existing key name is never added more than once to the atlas. You can access the information for each texture or geometry texture via helper methods.
-
 
 *  Textures are not scaled automatically, and your atlas needs to be created large enough to hold all textures. All methods that allow adding textures return false if the texture could not be added due to the atlas being full. 
 *  Secondary textures (normal maps, specular maps etc.) have to be the same size as the main (e.g. DiffuseMap) texture.
@@ -98,11 +92,9 @@ Note that models that use texture coordinates outside the 0-1 range (that is, th
 
 
 
-
 == Usage examples: Combine Geometries
 
 Use `makeAtlasBatch` to turn several geometries that are loaded from a j3o file into one geometry:
-
 
 [source,java]
 ----
@@ -116,7 +108,6 @@ Use `makeAtlasBatch` to turn several geometries that are loaded from a j3o file 
 ----
 
 Create a texture atlas and change the texture coordinates of one geometry:
-
 
 [source,java]
 ----

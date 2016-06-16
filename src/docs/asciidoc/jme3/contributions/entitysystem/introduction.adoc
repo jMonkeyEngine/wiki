@@ -17,7 +17,6 @@ decide in which direction the game will develop)
 (Maybe you already compared alpha screenshots of a game with the final result)
 
 
-
 image::http://media.moddb.com/images/articles/1/116/115301/auto/shjWa.png[shjWa.png,with="",height="",align="center"]
 
 In this example we suddenly want a new unit, an armored robot.
@@ -25,12 +24,10 @@ This is not possible with our structure and therefore we would need to rewrite t
 At this point, the idea for an Entity System starts.
 
 
-
-= Entity System
+== Entity System
 
 There are various concepts for Entity Systems and they all have some differences.
 In this article we concentrate on the way the jMonkey Entity System works.
-
 
 
 === Entity
@@ -39,13 +36,11 @@ An Entity is simply an unique Id.
 Every Unit, Item, Bullet, etc. in your game will be represented by one of these entity Ids.
 
 
-
 === Component
 
 A Component is a class which only contains data.
 This means it has a constructor and *only* getter methods.
 Examples for Components can be:
-
 
 *  PositionComponent
 *  MovementComponent
@@ -59,15 +54,12 @@ Components are added to the Entities.
 ====
 
 
-
 As you can see Entities are flexibly made up of different Components.
 You need your Armored Robot? No Problem, you only need to combine the right components.
 Besides, you are able to remove/change/add components during the game which is a huge benefit of Entity Systems.
 
 
-
 image::http://media.moddb.com/images/articles/1/116/115301/auto/0WoEb.png[0WoEb.png,with="",height="",align="center"]
-
 
 
 
@@ -77,31 +69,25 @@ Simply put, any classes other than the components and the entities can be consid
 You need to pay attention when you read about other Entity Systems
 because they can have different ideas of what a system is.
 
-
 In the systems, you can request all Entities which have special components.
 For example you can say that you want all entities who have a position and a movement component,
 and then calculate the new position for these Entities by overwriting the old position component with a new one.
 
-
 This leads automatically to many classes that only perform a single task, like the movement.
 As a result the project becomes clear and in case of bugs, you directly know which class is responsible for these components.
 
-
 For a more detailed and technical view, have a look at the <<jme3/contributions/entitysystem/advanced#,Entity System Advanced>> article
-
 
 
 === Pros and Cons
 
 Pro:
 
-
 *  good overview
 *  flexibility
 *  modularity
 
 Con:
-
 
 *  performance
 *  unfamiliar
@@ -113,9 +99,7 @@ This point is not so significant anymore because computers are becoming faster a
 A more critical point is that, until now, only a few projects have employed entity systems. One example of a project which uses a similar Entity System is the adventure Mythruna.
 link:http://mythruna.com/[http://mythruna.com/]
 
-
 Some say that it is not guaranteed that the Entity System will always work in practice.  This may be true depending on the projects structure.  Therefore project structure and layout is an important consideration when using an entity system.
-
 
 
 === Difficulty
@@ -123,7 +107,6 @@ Some say that it is not guaranteed that the Entity System will always work in pr
 It can be hard to adapt to the style of Entity System Programming if you are used to OOP.
 Therefore you need to pay attention that you in no way mix both styles together.
 Like other software architectures, you lose all benefits if you are not consistent.
-
 
 
 === Should I use an Entity System?

@@ -11,14 +11,11 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 Bloom is a popular shader effect in 3D games industry. It usually consist in displaying a glowing halo around light sources or bright areas of a scene.
 In practice, the bright areas are extracted from the rendered scene, blurred and finally added up to the render.
 
-
 Those images gives an idea of what bloom does. The left image has no bloom effect, the right image does. +
-
 image:jme3/advanced/nobloomsky.png[No bloom,with="",height=""]image:jme3/advanced/blomsky.png[Bloom,with="",height=""]
 
 
-
-= Bloom Usage
+== Bloom Usage
 
 .  Create a FilterPostProcessor
 .  Create a BloomFilter
@@ -36,7 +33,6 @@ image:jme3/advanced/nobloomsky.png[No bloom,with="",height=""]image:jme3/advance
 ----
 
 Here are the parameters that you can tweak :
-
 [cols="4", options="header"]
 |===
 
@@ -70,27 +66,21 @@ a| the resulting bloom value is multiplied by this intensity
 You'll probably need to adjust those parameters depending on your scene.
 
 
-
-= Bloom with a glow map
+== Bloom with a glow map
 
 Sometimes, you want to have more control over what glows and does not glow. 
 The bloom filter supports a glow map or a glow color.
 
 
-
-===== Creating a glow-map
+=== Creating a glow-map
 
 Let's take the hover tank example bundled with JME3 test data.+
-
 Here you can see the diffuse map of the tank, and the associated glow map that only contains the parts of the texture that will glow and their glowing color: +
-
 image:jme3/advanced/tank_diffuse_ss.png[Tank diffuse map,with="",height=""]
 image:jme3/advanced/tank_glow_map_ss.png[Tank glow map,with="",height=""]
 
-
 Glow maps work with Lighting.j3md, Particles.j3md and SolidColor.j3md material definitions.
 The tank material looks like this : 
-
 
 [source]
 ----
@@ -114,8 +104,7 @@ Material My Material : Common/MatDefs/Light/Lighting.j3md {
 The glow map is defined here : *GlowMap : Models/HoverTank/tank_glow_map_highres.png*
 
 
-
-===== Usage
+=== Usage
 
 .  Create a FilterPostProcessor
 .  Create a BloomFilter with the GlowMode.Objects parameter
@@ -133,19 +122,16 @@ The glow map is defined here : *GlowMap : Models/HoverTank/tank_glow_map_highres
 ----
 
 Here is the result : +
-
 image:jme3/advanced/tanlglow1.png[Glowing hover tank,with="",height=""]
 
 
-
-= Bloom with a glow color
+== Bloom with a glow color
 
 Sometimes you need an entire object to glow, not just parts of it.
 In this case you'll need to use the glow color parameter.
 
 
-
-===== Usage
+=== Usage
 
 .  Create a material for your object and set the GlowColor parameter
 .  Create a FilterPostProcessor
@@ -168,7 +154,6 @@ In this case you'll need to use the glow color parameter.
 
 Here is the result on Oto's plasma ball (before and after) : +
 
-
 image::jme3/advanced/otonobloom.png[Oto's plasma ball is just a big pea,with="400",height="",align="left"]
 
 
@@ -176,16 +161,13 @@ image::jme3/advanced/otoglow.png[Oto's plasma ball radiates incredible power!!!,
 
 
 
+== Hints and tricks
 
-= Hints and tricks
 
-
-===== Increasing the blur range and reducing fps cost
+=== Increasing the blur range and reducing fps cost
 
 The glow render is sampled on a texture that has the same dimensions as the viewport.
 You can reduce the size of the bloom sampling just by using the setDownSamplingFactor method like this : +
-
-
 
 [source,java]
 ----
@@ -199,12 +181,10 @@ In this example the sampling size is divided by 4 (width/2,height/2), resulting 
 The resulting texture is then up sampled to the screen size using hardware bilinear filtering. this results in a wider blur range.
 
 
-
-===== Using classic bloom combined with a glow map
+=== Using classic bloom combined with a glow map
 
 let's say you want a global bloom on your scene, but you have also a glowing object on it.
 You can use only one bloom filter for both effects like that
-
 
 [source,java]
 ----
@@ -216,12 +196,10 @@ BloomFilter bloom=new BloomFilter(BloomFilter.GlowMode.SceneAndObjects);
 However, note that both effects will share the same values of attribute, and sometimes, it won't be what you need.
 
 
-
-===== Making your home brewed material definition support Glow
+=== Making your home brewed material definition support Glow
 
 Let's say you have made a custom material on your own, and that you want it to support glow maps and glow color.
 In your material definition you need to add those lines in the MaterialParameters section :
-
 
 [source]
 ----
@@ -239,7 +217,6 @@ In your material definition you need to add those lines in the MaterialParameter
 ----
 
 Then add the following technique : 
-
 
 [source]
 ----
@@ -266,11 +243,9 @@ Then add the following technique :
 Then you can use this material with the BloomFilter
 
 
-
-===== Make a glowing object stop to glow
+=== Make a glowing object stop to glow
 
 If you are using a glow map, remove the texture from the material.
-
 
 [source]
 ----
@@ -280,7 +255,6 @@ material.clearTextureParam("GlowMap");
 ----
 
 If you are using a glow color, set it to black
-
 
 [source]
 ----

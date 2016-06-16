@@ -11,13 +11,10 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 Previous: <<jme3/beginner/hello_node#,Hello Node>>,
 Next: <<jme3/beginner/hello_main_event_loop#,Hello Update Loop>>
 
-
 In this tutorial we will learn to load 3D models and text into the scene graph, using the jME <<jme3/advanced/asset_manager#,Asset Manager>>. You will also learn how to determine the correct paths, and which file formats to use.
 
 
-
 image::jme3/beginner/beginner-assets-models.png[beginner-assets-models.png,with="320",height="250",align="center"]
-
 
 
 
@@ -25,7 +22,6 @@ image::jme3/beginner/beginner-assets-models.png[beginner-assets-models.png,with=
 ====
 <<sdk/sample_code#,Trouble finding the files to run this sample?>> To get the assets (3D models) used in this example, add the included `jME3-testdata.jar` to your classpath. In project created with the jMonkeyEngine SDK (recommended), simply right-click your project, choose “Properties, go to “Libraries, press “Add Library and add the preconfigured “jme3-test-data library. 
 ====
-
 
 
 
@@ -101,19 +97,16 @@ public class HelloAssets extends SimpleApplication {
 Build and run the code sample. You should see a green Ninja with a colorful teapot standing behind a wall. The text on the screen should say “Hello World.
 
 
-
 == The Asset Manager
 
 *By game assets we mean all multi-media files, such as models, materials, textures, whole scenes, custom shaders, music and sound files, and custom fonts.* JME3 comes with a handy AssetManager object that helps you access your assets. 
 The AssetManager can load files from:
-
 
 *  the current classpath (the top level of your project directory), 
 *  the `assets` directory of your project, and
 *  optionally, custom paths that you register.
 
 The following is the recommended directory structure for storing assets in your project directoy: 
-
 
 [source]
 ----
@@ -136,11 +129,9 @@ MyGame/...
 This is just a suggested best practice, and it's what you get by default when creating a new Java project in the jMokeyEngine <<sdk#,SDK>>. You can create an `assets` directory and technically name the subdirectories whatever you like.
 
 
-
 === Loading Textures
 
 Place your textures in a subdirectory of `assets/Textures/`. Load the texture into the material before you set the Material. The following code sample is from the `simpleInitApp()` method and loads a simple wall model:
-
 
 [source,java]
 ----
@@ -161,12 +152,10 @@ rootNode.attachChild(wall);
 In this case, you <<jme3/beginner/hello_material#,create your own Material>> and apply it to a Geometry. You base Materials on default material descriptions (such as “Unshaded.j3md), as shown in this example. 
 
 
-
 === Loading Text and Fonts
 
 This example displays the text “Hello World in the default font at the bottom edge of the window. You attach text to the `guiNode` – this is a special node for flat (orthogonal) display elements. You display text to show the game score, player health, etc.
 The following code sample goes into the `simpleInitApp()` method.
-
 
 [source,java]
 ----
@@ -184,11 +173,9 @@ guiNode.attachChild(helloText);
 *Tip:* Clear existing text in the guiNode by detaching all its children.
 
 
-
 === Loading a Model
 
 Export your 3D model in OgreXML format (.mesh.xml, .scene, .material, .skeleton.xml) and place it in a subdirectory of `assets/Models/`. The following code sample goes into the `simpleInitApp()` method.
-
 
 [source,java]
 ----
@@ -209,14 +196,11 @@ rootNode.addLight(sun);
 Note that you do not need to create a Material if you exported the model with a material. Remember to add a light source, as shown, otherwise the material (and the whole model) is not visible!
 
 
-
 === Loading Assets From Custom Paths
 
 What if your game relies on user supplied model files, that are not included in the distribution? If a file is not located in the default location (e.g. assets directory), you can register a custom Locator and load it from any path. 
 
-
 Here is a usage example of a ZipLocator that is registered to a file `town.zip` in the top level of your project directory:
-
 
 [source,java]
 ----
@@ -228,7 +212,6 @@ Here is a usage example of a ZipLocator that is registered to a file `town.zip` 
 ----
 
 Here is a HttpZipLocator that can download zipped models and load them:
-
 
 [source,java]
 ----
@@ -244,16 +227,13 @@ Here is a HttpZipLocator that can download zipped models and load them:
 JME3 offers ClasspathLocator, ZipLocator, FileLocator, HttpZipLocator, and UrlLocator (see `com.jme3.asset.plugins`). 
 
 
-
 == Creating Models and Scenes
 
 To create 3D models and scenes, you need a 3D Mesh Editor. If you don't have any tools, install Blender and the OgreXML Exporter plugin. 
 Then you link:http://en.wikibooks.org/wiki/Blender_3D:_Noob_to_Pro/UV_Map_Basics[create fully textured models (e.g. with Blender)] and export them to your project.
 Then you use the <<sdk#,SDK>> to <<sdk/model_loader_and_viewer#,load models>>, <<sdk/blender#,convert models>>, and <<sdk/scene_composer#,create 3D scenes>> from them. 
 
-
 *Example:* From Blender, you export your models as Ogre XML meshes with materials as follows:
-
 
 .  Open the menu File &gt; Export &gt; OgreXML Exporter to open the exporter dialog.
 .  In the Export Materials field: Give the material the same name as the model. For example, the model `something.mesh.xml` goes with `something.material`, plus (optionally) `something.skeleton.xml` and some JPG texture files.
@@ -272,14 +252,12 @@ Then you use the <<sdk#,SDK>> to <<sdk/model_loader_and_viewer#,load models>>, <
 
 JME3 can convert and load
 
-
 *  Ogre XML models + materials, 
 *  Ogre DotScenes, 
 *  Wavefront OBJ + MTL models, 
 *  .Blend files.
 
 The `loadModel()` method loads these original file formats when you run your code directly from the SDK. If you however build the executables using the default build script, then the original model files (XML, OBJ, etc) _are not included_. This means, when you run the executable outside the SDK, and load any original models directly, you get the following error message: 
-
 
 [source]
 ----
@@ -293,12 +271,9 @@ java.lang.NullPointerException
 
 You see that loading the *XML/OBJ/Blend files* directly is only acceptable during the development phase in the SDK. For example, every time your graphic designer pushes updated files to the asset directory, you can quickly review the latest version in your development environment.
 
-
 But for QA test builds and for the final release build, you use *.j3o files* exclusively. J3o is an optimized binary format for jME3 applications. When you do QA test builds, or are ready to release, use the <<sdk#,SDK>> to <<sdk/model_loader_and_viewer#,convert>> all .obj/.scene/.xml/.blend files to .j3o files, and update all code to load the .j3o files. The default build script automatically packages .j3o files in the executables.
 
-
 Open your JME3 Project in the jMonkeyEngine SDK.
-
 
 .  Right-click a .Blend, .OBJ, or .mesh.xml file in the Projects window, and choose “convert to JME3 binary. 
 .  The .j3o file appears next to the .mesh.xml file and has the same name. 
@@ -314,7 +289,6 @@ Spatial ninja = assetManager.loadModel("Models/Ninja/Ninja.j3o");
 ====
 If your executable throws a “Cannot locate resource runtime exception, check all load paths and make sure you have converted all models to .j3o files!
 ====
-
 
 
 
@@ -373,7 +347,6 @@ rootNode.attachChild(scene);
 
 As an exercise, let's try different ways of loading a scene. You will learn how to load the scene directly, or from a zip file.
 
-
 .  link:http://jmonkeyengine.googlecode.com/svn/trunk/engine/town.zip[Download the town.zip] sample scene. 
 .  (Optional:) Unzip the town.zip to see the structure of the contained Ogre dotScene: You'll get a directory named `town`. It contains XML and texture files, and file called main.scene. (This is just for your information, you do not need to do anything with it.)
 .  Place the town.zip file in the top level directory of your JME3 project, like so: 
@@ -390,7 +363,6 @@ jMonkeyProjects/MyGameProject/town.zip
 
 Use the following method to load models from a zip file:
 
-
 .  Verify `town.zip` is in the project directory.
 .  Register a zip file locator to the project directory: Add the following code under `simpleInitApp() {`
 [source,java]
@@ -402,18 +374,13 @@ Use the following method to load models from a zip file:
     rootNode.attachChild(gameLevel);
 ----
 
-The loadModel() method now searches this zip directly for the files to load. +
-(This means, do not write `loadModel(town.zip/main.scene)` or similar!)
+The loadModel() method now searches this zip directly for the files to load. +(This means, do not write `loadModel(town.zip/main.scene)` or similar!)
 
-
-.  Clean, build and run the project. +
-You should now see the Ninja+wall+teapot standing in a town. 
+.  Clean, build and run the project. +You should now see the Ninja+wall+teapot standing in a town. 
 
 *Tip:* If you register new locators, make sure you do not get any file name conflicts: Don't name all scenes `main.scene` but give each scene a unique name.
 
-
 Earlier in this tutorial, you loaded scenes and models from the asset directory. This is the most common way you will be loading scenes and models. Here is the typical procedure:
-
 
 .  Remove the code that you added for the previous exercise.
 .  Move the unzipped `town/` directory into the `assets/Scenes/` directory of your project.
@@ -428,11 +395,9 @@ Earlier in this tutorial, you loaded scenes and models from the asset directory.
 
  Note that the path is relative to the `assets/…` directory.
 
-
 .  Clean, build and run the project. Again, you should see the Ninja+wall+teapot standing in a town. 
 
 Here is a third method you must know, loading a scene/model from a .j3o file:
-
 
 .  Remove the code from the previous exercise.
 .  If you haven't already, open the <<sdk#,SDK>> and open the project that contains the HelloAsset class.
@@ -449,22 +414,17 @@ Here is a third method you must know, loading a scene/model from a .j3o file:
 
  Again, note that the path is relative to the `assets/…` directory.
 
-
-.  Clean, Build and run the project. +
-Again, you should see the Ninja+wall+teapot standing in a town. 
+.  Clean, Build and run the project. +Again, you should see the Ninja+wall+teapot standing in a town. 
 
 
 == Conclusion
 
 Now you know how to populate the scenegraph with static shapes and models, and how to build scenes. You have learned how to load assets using the `assetManager` and you have seen that the paths start relative to your project directory. Another important thing you have learned is to convert models to .j3o format for the executable JARs etc.
 
-
 Let's add some action to the scene and continue with the <<jme3/beginner/hello_main_event_loop#,Update Loop>>!
-
 '''
 
 *See also:*
-
 
 *  <<jme3/external/blender#,The definitive Blender import tutorial>>
 *  <<jme3/intermediate/multi-media_asset_pipeline#,Asset pipeline introduction>>
