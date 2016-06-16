@@ -48,7 +48,7 @@ class helper_plugin_asciidoc extends DokuWiki_Plugin {
                 }
                 return true;
             case 'iframe':
-                $str = 'iframe:'.$data['url'].'[width="'. $data['width'].'", height="'. $data['height'].'", alt="'. $data['alt'].'", scroll="'. var_export($data['scroll'], true).'",border="'. var_export($data['border'], true).'",align="'. var_export($data['align'], true).'"]'.DOKU_LF;
+                $str = 'iframe::'.$data['url'].'[width="'. $data['width'].'", height="'. $data['height'].'", alt="'. $data['alt'].'", scroll="'. var_export($data['scroll'], true).'",border="'. var_export($data['border'], true).'",align="'. var_export($data['align'], true).'"]'.DOKU_LF;
                 $renderer->doc .= $str;
                 return true;
             case 'note':
