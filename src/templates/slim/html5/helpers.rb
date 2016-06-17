@@ -529,4 +529,22 @@ module Slim::Helpers
       (%(fa-flip-#{attr :flip}) if attr? :flip)
     ].compact
   end
+
+  # wiki_links
+
+  def source_relative_path(file)
+    file[document.attr('sourcedir', '').length..-1]
+    #file - document.attr('sourcedir', '')
+  end
+
+  def wiki_link_edit()
+    document.attr('wiki_link_edit_prefix', 'wikiedit') + source_relative_path(document.attr('docfile', ''))
+  end
+
+  def wiki_link_create()
+    path =source_relative_path(document.attr('docfile', ''))
+    path = path[0..path.rindex('/')] # parent directory
+    document.attr('wiki_link_create_prefix', 'wikicreate')  + path
+  end
+
 end

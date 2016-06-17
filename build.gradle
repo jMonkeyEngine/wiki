@@ -19,7 +19,7 @@ asciidoctor {
 		from('src/docs/resources')
 	}
 	attributes 'build-gradle': file('build.gradle'),
-		'sourcedir': project.sourceSets.main.java.srcDirs[0],
+		'sourcedir': project.asciidoctor.sourceDir,
 		'endpoint-url': 'https://jmonkeyengine.github.io/wiki',
 		'source-highlighter' : 'coderay',
 		'linkcss': 'true',
@@ -30,6 +30,8 @@ asciidoctor {
 		'idprefix':'',
 		'idseparator':'-',
 		'docinfo1':'true',
+		'wiki_link_edit_prefix': 'https://github.com/jMonkeyEngine/wiki/edit/master/src/docs/asciidoc',
+		'wiki_link_create_prefix': 'https://github.com/jMonkeyEngine/wiki/new/master/src/docs/asciidoc',
 		'orgname':'jMonkeyEngine'
 	options header_footer: true,
 		template_dirs: [file('src/templates/slim').absolutePath]
