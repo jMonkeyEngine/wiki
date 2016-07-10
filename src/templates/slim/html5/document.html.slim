@@ -13,6 +13,7 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
     = html_meta_if 'keywords', (attr :keywords)
     title=((doctitle sanitize: true) || (attr 'untitled-label'))
     = styles_and_scripts
+    link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css"
     - unless (docinfo_content = docinfo).empty?
       =docinfo_content
   body(
@@ -26,3 +27,11 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
       include _footnotes.html
     - unless nofooter
       include _footer.html
+    script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"
+    javascript:
+      docsearch({
+        apiKey: 'a736b6d93de805e26ec2f49b55013fbd',
+        indexName: 'jmonkeyengine',
+        inputSelector: '#doc-search',
+        debug: false // Set debug to true if you want to inspect the dropdown
+      });
