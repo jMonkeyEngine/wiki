@@ -1,4 +1,4 @@
-= Maven
+= Maven Artifacts
 :author: 
 :revnumber: 
 :revdate: 2016/03/17 20:48
@@ -12,9 +12,13 @@ You can use jME3 with maven compatible build systems.
 
 == jME3.1
 
-Artifacts for jME3.1 releases are available in link:https://jcenter.bintray.com/org/jmonkeyengine/[JCenter], as well as the link:http://updates.jmonkeyengine.org/maven/[jME3 repository] like before.
+Artifacts for jME3.1 releases are available in repositories :
+
+* link:https://jcenter.bintray.com/org/jmonkeyengine/[JCenter]
+* link:https://bintray.com/jmonkeyengine/org.jmonkeyengine[Bintray repo: org.jmonkeyengine] every artifacts of the group org.jmonkeyengine (same as jcenter + few artifacts not eligible for jcenter), click on the `SET ME UP` button to view instruction for Gradle, Maven,...
+
 The group id for all jME3 libraries is `org.jmonkeyengine`.
-The following artifacts are currently available (version 3.1.0-alpha2):
+The following artifacts are currently available (version `3.1.0-beta1`):
 
 *  jme3-core - Core libraries needed for all jME3 projects
 *  jme3-effects - Effects libraries for water and other post filters
@@ -48,13 +52,33 @@ For a basic android application to work you need to import at least
 *  jme3-android
 *  jme3-android-native
 
+=== Gradle
+
+[source]
+----
+repositories {
+    jcenter()
+    //maven { url "http://dl.bintray.com/jmonkeyengine/org.jmonkeyengine" }
+}
+
+def jme3 = [v:'3.1.0-beta1', g:'org.jmonkeyengine']
+dependencies {
+	compile "${jme3.g}:jme3-core:${jme3.v}"
+	runtime "${jme3.g}:jme3-desktop:${jme3.v}"
+	runtime "${jme3.g}:jme3-lwjgl:${jme3.v}"
+}
+----
+
+
 
 == jME3.0
 
-You can use jME3 with maven compatible build systems, the official maven repository for jME3 is at
-link:http://updates.jmonkeyengine.org/maven/[http://updates.jmonkeyengine.org/maven/]
+You can use jME3 with maven compatible build systems, the official maven repository for jME3:
 
-The group id for all jME3 libraries is com.jme3, the following artifacts are currently available (version 3.0.10):
+* link:https://bintray.com/jmonkeyengine/com.jme3[Bintray repo: com.jme3] (click on the `SET ME UP` button to view instruction for Gradle, Maven,...)
+
+
+The group id for all jME3 libraries is `com.jme3`, the following artifacts are currently available (version `3.0.10`):
 
 *  jme3-core - Core libraries needed for all jME3 projects
 *  jme3-effects - Effects libraries for water and other post filters
@@ -85,62 +109,21 @@ For a basic android application to work you need to import at least
 *  jme3-android
 
 
-== Gradle
+=== Gradle
 
 If you happen to be using Gradle, you'll first need to add the repository, perhaps so it looks like this:
 
 [source]
 ----
-
 repositories {
-    mavenCentral()
-    maven {
-        url 'http://updates.jmonkeyengine.org/maven'
-    }
+    jcenter()
+    maven { url "http://dl.bintray.com/jmonkeyengine/com.jme3" }
 }
 
-----
-
-Next you'll need to add dependencies on all the JARs – here's what it looks like for all desktop-related JARs, selecting the latest patch version:
-
-[source]
-----
-
+def jme3 = [v:'3.0.10', g:'com.jme3']
 dependencies {
-    compile 'com.jme3:jme3-core:3.0.+'
-    compile 'com.jme3:jme3-effects:3.0.+'
-    compile 'com.jme3:jme3-networking:3.0.+'
-    compile 'com.jme3:jme3-plugins:3.0.+'
-    compile 'com.jme3:jme3-jogg:3.0.+'
-    compile 'com.jme3:jme3-terrain:3.0.+'
-    compile 'com.jme3:jme3-blender:3.0.+'
-    compile 'com.jme3:jme3-jbullet:3.0.+'
-    compile 'com.jme3:jme3-niftygui:3.0.+'
-    compile 'com.jme3:jme3-desktop:3.0.+'
-    compile 'com.jme3:jme3-lwjgl:3.0.+'
+	compile "${jme3.g}:jme3-core:${jme3.v}"
+	runtime "${jme3.g}:jme3-desktop:${jme3.v}"
+	runtime "${jme3.g}:jme3-lwjgl:${jme3.v}"
 }
-
-----
-
-If you'd rather factor out the “3.0 bit, you can also do this:
-
-[source]
-----
-
-def jmonkeyengine_version = '3.0'
-
-dependencies {
-    compile "com.jme3:jme3-core:$jmonkeyengine_version.+"
-    compile "com.jme3:jme3-effects:$jmonkeyengine_version.+"
-    compile "com.jme3:jme3-networking:$jmonkeyengine_version.+"
-    compile "com.jme3:jme3-plugins:$jmonkeyengine_version.+"
-    compile "com.jme3:jme3-jogg:$jmonkeyengine_version.+"
-    compile "com.jme3:jme3-terrain:$jmonkeyengine_version.+"
-    compile "com.jme3:jme3-blender:$jmonkeyengine_version.+"
-    compile "com.jme3:jme3-jbullet:$jmonkeyengine_version.+"
-    compile "com.jme3:jme3-niftygui:$jmonkeyengine_version.+"
-    compile "com.jme3:jme3-desktop:$jmonkeyengine_version.+"
-    compile "com.jme3:jme3-lwjgl:$jmonkeyengine_version.+"
-}
-
 ----
