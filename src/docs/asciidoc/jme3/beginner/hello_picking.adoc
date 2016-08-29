@@ -331,11 +331,11 @@ The above example assumes that the player is aiming crosshairs (attached to the 
 ----
 ...
 CollisionResults results = new CollisionResults();
-Vector2f click2d = inputManager.getCursorPosition();
+Vector2f click2d = inputManager.getCursorPosition().clone();
 Vector3f click3d = cam.getWorldCoordinates(
-    new Vector2f(click2d.x, click2d.y), 0f).clone();
+    click2d, 0f).clone();
 Vector3f dir = cam.getWorldCoordinates(
-    new Vector2f(click2d.x, click2d.y), 1f).subtractLocal(click3d).normalizeLocal();
+    click2d, 1f).subtractLocal(click3d).normalizeLocal();
 Ray ray = new Ray(click3d, dir);
 shootables.collideWith(ray, results);
 ...
