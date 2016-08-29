@@ -233,11 +233,11 @@ Next: <a href="../../jme3/beginner/hello_collision.html">Hello Collision</a></p>
 <div class="olist arabic"><ol class="arabic"><li><p>Reset result list.</p></li><li><p>Get 2D click coordinates.</p></li><li><p>Convert 2D screen coordinates to their 3D equivalent.</p></li><li><p>Aim the ray from the clicked 3D location forwards into the scene.</p></li><li><p>Collect intersections between ray and all nodes into a results list.</p></li></ol></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">...
 CollisionResults results = <span class="keyword">new</span> CollisionResults();
-Vector2f click2d = inputManager.getCursorPosition();
+Vector2f click2d = inputManager.getCursorPosition().clone();
 Vector3f click3d = cam.getWorldCoordinates(
-    <span class="keyword">new</span> Vector2f(click2d.x, click2d.y), <span class="float">0f</span>).clone();
+    click2d, <span class="float">0f</span>).clone();
 Vector3f dir = cam.getWorldCoordinates(
-    <span class="keyword">new</span> Vector2f(click2d.x, click2d.y), <span class="float">1f</span>).subtractLocal(click3d).normalizeLocal();
+    click2d, <span class="float">1f</span>).subtractLocal(click3d).normalizeLocal();
 Ray ray = <span class="keyword">new</span> Ray(click3d, dir);
 shootables.collideWith(ray, results);
 ...</code></pre></div></div>
@@ -259,7 +259,7 @@ Modify the code sample to solve these exercises:</p></div>
 <div class="paragraph"><p>Now, wouldn&#8217;t it be nice if those targets and the floor were solid objects and you could walk around between them? Let&#8217;s continue to learn about <a href="../../jme3/beginner/hello_collision.html">Collision Detection</a>.
 '''</p></div>
 <div class="paragraph"><p>See also:</p></div>
-<div class="ulist"><ul><li><p><a href="../../jme3/beginner/hello_input_system.html">Hello Input</a></p></li><li><p><a href="../../jme3/advanced/mouse_picking.html">Mouse Picking</a></p></li><li><p><a href="../../jme3/advanced/collision_and_intersection.html">Collision and Intersection</a></p></li></ul></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2016-08-24 07:10:47 UTC</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
+<div class="ulist"><ul><li><p><a href="../../jme3/beginner/hello_input_system.html">Hello Input</a></p></li><li><p><a href="../../jme3/advanced/mouse_picking.html">Mouse Picking</a></p></li><li><p><a href="../../jme3/advanced/collision_and_intersection.html">Collision and Intersection</a></p></li></ul></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2016-08-29 15:36:15 UTC</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
   apiKey: 'a736b6d93de805e26ec2f49b55013fbd',
   indexName: 'jmonkeyengine',
   inputSelector: '#doc-search',
