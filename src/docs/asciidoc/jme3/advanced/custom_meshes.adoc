@@ -1,15 +1,11 @@
 = Custom Mesh Shapes
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :keywords: spatial, node, mesh, geometry, scenegraph
 :relfileprefix: ../../
 :imagesdir: ../..
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-
-
-
-image::http://wiki.jmonkeyengine.org/lib/exe/fetch.php/jme3:advanced:custom_mesh.png[custom_mesh.png,with="150",height="150",align="left"]
 
 Use the Mesh class to create custom shapes that go beyond Quad, Box, Cylinder, and Sphere, even procedural shapes are possible. Thank you to KayTrance for providing the sample code!
 
@@ -22,16 +18,16 @@ Use the Mesh class to create custom shapes that go beyond Quad, Box, Cylinder, a
 
 Polygon <<jme3/advanced/mesh#,mesh>>es are made up of triangles. The corners of the triangles are called vertices. When ever you create any new shape, you break it down into triangles.
 
-*Example:* Let's look at a cube. A cube is made up of 6 rectangles. Each rectangle can be broken down into two triangles. This means you need 12 triangles to describe a cube mesh. Therefor you must provide the coordinates of the triangles' 8 corners (called vertices). 
+*Example:* Let's look at a cube. A cube is made up of 6 rectangles. Each rectangle can be broken down into two triangles. This means you need 12 triangles to describe a cube mesh. Therefor you must provide the coordinates of the triangles' 8 corners (called vertices).
 
-The important thing is that you have to specify the vertices of each triangle in the right order: Each triangle separately, counter-clockwise. 
+The important thing is that you have to specify the vertices of each triangle in the right order: Each triangle separately, counter-clockwise.
 
 Sounds harder than it is – let's create a simple custom mesh, a quad.
 
 
 == Creating a Quad Mesh
 
-In this tutorial we want to create a 3x3 Quad. The quad has four vertices, and is made up of two triangles. In our example, we decide that the bottom left corner is at 0/0/0 and the top right is at 3/3/0. 
+In this tutorial we want to create a 3x3 Quad. The quad has four vertices, and is made up of two triangles. In our example, we decide that the bottom left corner is at 0/0/0 and the top right is at 3/3/0.
 
 [source]
 ----
@@ -93,9 +89,9 @@ This syntax means, when you apply a texture to this mesh, the texture will fill 
 
 === Connecting the Dots
 
-Next we turn these unrelated coordinates into *triangles*: We define the order in which each triangle is constructed. Think of these indexes as coming in groups of three. Each group of indexes describes one triangle. If the corners are identical, you can (and should!) reuse an index for several triangles. 
+Next we turn these unrelated coordinates into *triangles*: We define the order in which each triangle is constructed. Think of these indexes as coming in groups of three. Each group of indexes describes one triangle. If the corners are identical, you can (and should!) reuse an index for several triangles.
 
-Remember that you must specify the vertices counter-clockwise. 
+Remember that you must specify the vertices counter-clockwise.
 
 [source,java]
 ----
@@ -120,7 +116,7 @@ This syntax means:
 
 ----
 
-If the shape is more complex, it has more triangles, and therefor also more vertices/indices. Just continue expanding the list by adding groups of three indices for each triangle. (For example a three-triangle “house shape has 5 vertices/indices and you'd specify three groups: `int [] indexes = { 2,0,1, 1,3,2, 2,3,4 };`.) 
+If the shape is more complex, it has more triangles, and therefor also more vertices/indices. Just continue expanding the list by adding groups of three indices for each triangle. (For example a three-triangle “house shape has 5 vertices/indices and you'd specify three groups: `int [] indexes = { 2,0,1, 1,3,2, 2,3,4 };`.)
 
 
 [TIP]
@@ -164,7 +160,7 @@ We create a `com.jme3.scene.Geometry` and `com.jme3.material.Material`from our `
 ----
 
 Geometry geo = new Geometry("OurMesh", mesh); // using our custom mesh object
-Material mat = new Material(assetManager, 
+Material mat = new Material(assetManager,
     "Common/MatDefs/Misc/Unshaded.j3md");
 mat.setColor("Color", ColorRGBA.Blue);
 geo.setMaterial(mat);
@@ -185,7 +181,7 @@ We created a quad Mesh it can be replace by a Quad such as :
 
 Quad quad = new Quad(1,1); // replace the definition of Vertex and Textures Coordinates plus indexes
 Geometry geo = new Geometry("OurQuad", quad); // using Quad object
-Material mat = new Material(assetManager, 
+Material mat = new Material(assetManager,
     "Common/MatDefs/Misc/Unshaded.j3md");
 mat.setColor("Color", ColorRGBA.Blue);
 geo.setMaterial(mat);
@@ -209,7 +205,7 @@ quad.scaleTextureCoordinates(new Vector2f(width , height));
 If you are modifying a mesh dynamically in a way which changes the model's bounds, you need to update it:
 
 .  Call `updateBound()` on the mesh object, or
-.  Call `updateModelBound()` on the Geometry object containing the mesh - which in turns calls `updateBound()` on the mesh. 
+.  Call `updateModelBound()` on the Geometry object containing the mesh - which in turns calls `updateBound()` on the mesh.
 
 The updateModelBound() method warns you about not usually needing to use it, but that can be ignored in this special case.
 
@@ -235,7 +231,7 @@ matVC.setBoolean("VertexColor", true);
 You create a float array color buffer:
 
 *  Assign 4 color values, RGBA, to each vertex.
-**  To loop over the 4 color values, use a color index 
+**  To loop over the 4 color values, use a color index
 [source,java]
 ----
 int colorIndex = 0;
@@ -243,14 +239,14 @@ int colorIndex = 0;
 
 
 *  The color buffer contains four color values for each vertex.
-**  The Quad in this example has 4 vertices. 
+**  The Quad in this example has 4 vertices.
 [source,java]
 ----
 float[] colorArray = new float[4*4];
 
 ----
 
-**  Tip: If your mesh has a different number of vertices, you would write: 
+**  Tip: If your mesh has a different number of vertices, you would write:
 [source,java]
 ----
 float[] colorArray = new float[yourVertexCount * 4]
@@ -301,14 +297,14 @@ mesh.setBuffer(Type.Normal, 3, BufferUtils.createFloatBuffer(normals));
 
 ----
 
-You need to specify as many normals as the polygon has vertices. For a flat quad, the four normals point in the same direction. In this case, the direction is the Z unit vector (0,0,1), this means our quad is facing the camera. 
+You need to specify as many normals as the polygon has vertices. For a flat quad, the four normals point in the same direction. In this case, the direction is the Z unit vector (0,0,1), this means our quad is facing the camera.
 
 If the mesh is more complex or rounded, calculate cross products of neighbouring vertices to identify normal vectors!
 
 
 === Example: Point Mode
 
-Additionally to coloring the faces as just described, you can hide the faces and show only the vertices as colored corner points. 
+Additionally to coloring the faces as just described, you can hide the faces and show only the vertices as colored corner points.
 
 [source,java]
 ----
@@ -336,13 +332,13 @@ This means for you that, by default, your custom mesh is invisible when seen fro
 
 In case however that your usecase requires the backfaces be visible, you have two options:
 
-*  If you have a very simple scene, you can simply deactivate backface culling for this one mesh's material. 
+*  If you have a very simple scene, you can simply deactivate backface culling for this one mesh's material.
 [source]
 ----
 mat.getAdditionalRenderState().setFaceCullMode(FaceCullMode.Off);
 ----
 
-*  Another solution for truly double-sided meshes is to specify each triangle twice, the second time with the opposite order of vertices. The second (reversed) triangle is a second frontface that covers up the culled backface. 
+*  Another solution for truly double-sided meshes is to specify each triangle twice, the second time with the opposite order of vertices. The second (reversed) triangle is a second frontface that covers up the culled backface.
 [source]
 ----
 int[] indexes = { 2,0,1, 1,3,2, 2,3,1, 1,0,2 };
@@ -350,7 +346,7 @@ int[] indexes = { 2,0,1, 1,3,2, 2,3,1, 1,0,2 };
 
 '''
 
-See also: 
+See also:
 
 *  <<jme3/advanced/spatial#,Spatial>> – contains more info about how to debug custom meshes (that do not render as expected) by changing the default culling behaviour.
 *  <<jme3/advanced/mesh#,Mesh>> – more details about advanced Mesh properties
