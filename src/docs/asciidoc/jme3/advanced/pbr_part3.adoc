@@ -62,6 +62,7 @@ In this picture the orange area represent the light rays coming from the cube ma
 As you can image that’s not practical for a real time rendering pipeline. Even with a 128×128 env map that’s around 50k texture fetches per pixel.
 
 Fortunately, We can use something called an *Irradiance map*. An irradiance map is basically the afford mentioned computation…except that it’s precomputed and baked into a texture. In practice here is what it looks like.
+
 image::jme3/advanced/irradianceMap.png[irradianceMap.png,with="320",height="250",align="center"]
 On the left the original cube map, on the right, the pre computed irradiance map.
 
@@ -89,6 +90,7 @@ Here is the diffuse effect of indirect lighting using an irradiance cube map
 Indirect diffuse is cool, but we want “shiny”!! Shiny implies specular lighting.
 
 It’s important to understand what we want as a specular reflection. We want it to be very neat when the roughness is low and very blurry when it’s high.
+
 image::jme3/advanced/Roughness.png[Roughness.png,with="320",height="250",align="center"]
 As roughness increase the reflection gets more blurry.
 
@@ -120,6 +122,7 @@ image::jme3/advanced/prefilteredEnvMapSampling.png[prefilteredEnvMapSampling.png
 This is an approximation again, and it has a cost in quality, but we’re all for approximation as long as it’s perform faster while still looking good, right?
 
 Here is what the result looks like
+
 image::jme3/advanced/PrefilteredEnvMap.png[PrefilteredEnvMap.png,with="320",height="250",align="center"]
 The prefiltered environment map, with the different mip levels. notice how the blur increases through them.
 
@@ -138,6 +141,7 @@ The outputs are a *scale*, and a *bias*, also varying from 0 to 1.
 So basically we can bake all combinations into a 2D map. roughness and N.L will be the texture coordinate. the red channel of the map will be the scale, and the green channel will be the bias. (the blue channel is not used)
 
 Here is what it looks like :
+
 image::jme3/advanced/integrateBrdf.png[integrateBrdf.png,with="320",height="250",align="center"]
 
 The nice part is that this map is constant for white light. It does not depends on the environment. So you can bake it once and for all then use it as an asset in your shaders.
