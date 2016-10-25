@@ -515,47 +515,42 @@ All physical objects…
 *  can respond to collisions dynamically, or statically, or kinematically.
 [cols="4", options="header"]
 |===
+|Property |Static |Kinematic |Dynamic 
 
-a| Property 
-a| Static 
-a| Kinematic 
-a| Dynamic 
-
-a| Examples
+a|Examples
 a|Immobile obstacles: Floors, walls, buildings, …
-a|Remote-controlled solid objects: Airships, meteorites, elevators, doors; networked or remote-controlled NPCs; invisible “airhooks for hinges and joints.
+a|Remote-controlled solid objects: Airships, meteorites, elevators, doors networked or remote-controlled NPCs invisible “airhooks for hinges and joints.
 a|Interactive objects: Rolling balls, movable crates, falling pillars, zero-g space ship…
 
-a| Does it have a mass?
+a|Does it have a mass?
 a|no, 0.0f
 a|yesfootnote:[Inertia is calculated for kinematic objects, and you need mass to do that.], &gt;0.0f 
 a|yes, &gt;0.0f
 
-a| How does it move?
+a|How does it move?
 a|never
-a|setLocalTranslation();
-a|setLinearVelocity(); applyForce(); +setWalkDirection(); for CharacterControl
+a|setLocalTranslation()
+a|setLinearVelocity(); applyForce(); +setWalkDirection() for CharacterControl
 
-a| How to place in scene?
-a|setPhysicsLocation(); +setPhysicsRotation()
-a|setLocalTranslation(); +setLocalRotation();
-a|setPhysicsLocation(); + setPhysicsRotation()
+a|How to place in scene?
+a|setPhysicsLocation() +setPhysicsRotation()
+a|setLocalTranslation() +setLocalRotation()
+a|setPhysicsLocation() +setPhysicsRotation()
 
-a| Can it move and push others?
+a|Can it move and push others?
 a|no
 a|yes
 a|yes
 
-a| Is is affected by forces? +(Falls when it mid-air? Can be pushed by others?)
+a|Is is affected by forces? +(Falls when it mid-air? Can be pushed by others?)
 a|no
 a|no
 a|yes
 
-a| How to activate this behaviour? 
-a|setMass(0f); +setKinematic(false); 
-a|setMass(1f); +setKinematic(true);
-a|setMass(1f); +setKinematic(false);
-
+a|How to activate this behaviour? 
+a|setMass(0f) +setKinematic(false) 
+a|setMass(1f) +setKinematic(true)
+a|setMass(1f) +setKinematic(false)
 |===
 
 
