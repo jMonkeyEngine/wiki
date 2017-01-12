@@ -29,7 +29,7 @@ viewPort.setBackgroundColor(ColorRGBA.Blue);
 
 === Can I customize the SimpleApplication class?
 
-Yes! Actually, you MUST customize it! For your own games, you always create a custom base class that extends link:http://code.google.com/p/jmonkeyengine/source/browse/trunk/engine/src/core/com/jme3/app/SimpleApplication.java[com.jme3.app.SimpleApplication] class. From now on it's no longer a “simple application – it's now your game. Configure your <<jme3/intermediate/appsettings#,application settings>>, implement methods, and customize away!
+Yes! Actually, you MUST customize it! For your own games, you always create a custom base class that extends link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/java/com/jme3/app/SimpleApplication.java[com.jme3.app.SimpleApplication] class. From now on it's no longer a “simple application – it's now your game. Configure your <<jme3/intermediate/appsettings#,application settings>>, implement methods, and customize away!
 
 *Learn more:* <<jme3/intermediate/simpleapplication#,SimpleApplication>>, <<jme3/intermediate/appsettings#,AppSettings>>.
 
@@ -76,8 +76,15 @@ Make sure to only load() models converted to .j3o binary format, not the origina
 
 === What is java.lang.LinkageError: Version mismatch?
 
-This rare exception shows a message similar to the following: `Exception in thread “LWJGL Renderer Thread java.lang.LinkageError: Version mismatch: jar version is (number), native library version is (another number)`. jME3 needs native libraries (.dll, .jnilib, lib*.so files) to run LWJGL and jBullet. The correct versions of these libraries are included when you install the SDK or download the binaries. However there are circumstances where jME3 cannot determine which copy of the native library it should use: +
-If you install another application that needs a different version of a native library, and this app globally installs its version over jME3's; or if an old copy of a native library is in your project directory, your home directory, or Java library path, or in the classpath; or if you permanently linked an old copy in your IDE's settings; then Java assumes you prefer these native libraries over the bundled ones, and your jME3 application ends up running with the wrong version. +
+This rare exception shows a message similar to the following: `Exception in thread “LWJGL Renderer Thread java.lang.LinkageError: Version mismatch: jar version is (number), native library version is (another number)`. jME3 needs native libraries (.dll, .jnilib, lib*.so files) to run LWJGL and jBullet. The correct versions of these libraries are included when you install the SDK or download the binaries. However there are circumstances where jME3 cannot determine which copy of the native library it should use: 
+
+.Possible Causes
+* If you install another application that needs a different version of a native library, and this app globally installs its version over jME3's. 
+* If an old copy of a native library is in your project directory, your home directory, or Java library path, or in the classpath. 
+* If you permanently linked an old copy in your IDE's settings. 
+
+Java then assumes you prefer these native libraries over the bundled ones, and your jME3 application ends up running with the wrong version. 
+
 To fix this, search for .dll (Windows), .jnilib (Mac), and .so (Linux) files for jBullet and LWJGL on your harddrive and in your path and IDE settings, and verify they don't interfere. (If you have other jME  versions installed and linked somehow, the outdated natives may also be in a lwjgl.jar or jbullet.jar file!) 
 
 
@@ -111,7 +118,7 @@ First check whether the file path of the asset is correct. By default it is rela
 Spatial ninja = assetManager.loadModel("Models/Ninja/Ninja.j3o");
 ----
 
-If you are not using the default `assets` directory, verify that you have registered a locator to the AssetManager. link:http://jmonkeyengine.org/javadoc/com/jme3/asset/plugins/package-summary.html[Different Locator types] are available.
+If you are not using the default `assets` directory, verify that you have registered a locator to the AssetManager. link:http://javadoc.jmonkeyengine.org/com/jme3/asset/plugins/package-summary.html[Different Locator types] are available.
 
 [source,java]
 ----
@@ -149,7 +156,7 @@ Spatial ninja = assetManager.loadModel("Models/Ninja/Ninja.j3o");
 ----
 
 *Learn more:* <<jme3/beginner/hello_asset#,Hello Asset>>, <<jme3/advanced/asset_manager#,Asset Manager>>, link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/java/com/jme3/asset/AssetManager.java[com.jme3.assets.AssetManager], link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/java/com/jme3/scene/Geometry.java[com.jme3.scene.Geometry], <<sdk/model_loader_and_viewer#,jMonkeyEngine SDK j3o converter>>, +
-*Code sample:* link:http://code.google.com/p/jmonkeyengine/source/browse/trunk/engine/src/test/jme3test/model/TestOgreLoading.java[TestOgreLoading.java], link:http://code.google.com/p/jmonkeyengine/source/browse/trunk/engine/src/test/jme3test/export/TestOgreConvert.java[TestOgreConvert.java].
+*Code sample:* link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/model/TestOgreLoading.java[TestOgreLoading.java], link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/export/TestOgreConvert.java[TestOgreConvert.java].
 
 
 === How do initialize the scene?
@@ -248,7 +255,7 @@ Use the AssetManager to load Materials, and change material settings.
 
 Create Textures as image files. Use the AssetManager to load a Material and use texture mapping for improved looks.
 
-*Learn more:* <<jme3/beginner/hello_material#,Hello Material>>, <<jme3/intermediate/how_to_use_materials#,How To Use Materials>>, <<jme3/advanced/materials_overview#,Materials Overview>>, <<jme3/advanced/asset_manager#,Asset Manager>>, link:http://code.google.com/p/jmonkeyengine/source/browse/trunk/engine/src/core/com/jme3/asset/AssetManager.java[com.jme3.assets.AssetManager], link:http://wiki.blender.org/index.php/Doc:Manual/Textures/Maps/Bump_and_Normal_Maps[Blender: Creating Bump Maps and Normal Maps] +
+*Learn more:* <<jme3/beginner/hello_material#,Hello Material>>, <<jme3/intermediate/how_to_use_materials#,How To Use Materials>>, <<jme3/advanced/materials_overview#,Materials Overview>>, <<jme3/advanced/asset_manager#,Asset Manager>>, link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/java/com/jme3/asset/AssetManager.java[com.jme3.assets.AssetManager], link:http://wiki.blender.org/index.php/Doc:Manual/Textures/Maps/Bump_and_Normal_Maps[Blender: Creating Bump Maps and Normal Maps] +
 *Code sample:* link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/material/TestSimpleBumps.java[TestSimpleBumps.java]
 
 
@@ -336,7 +343,7 @@ flyCam.setEnabled(true);
 ----
 
 *Learn more:* <<jme3/beginner/hello_collision#,Hello Collision>>. +
-*Code sample:*  link:http://code.google.com/p/jmonkeyengine/source/browse/trunk/engine/src/core/com/jme3/input/FlyByCam.java[com.jme3.input.FlyByCamera] 
+*Code sample:*  link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/java/com/jme3/input/FlyByCamera.java[com.jme3.input.FlyByCamera] 
 
 You can also create a third-person chase cam. 
 
@@ -346,8 +353,8 @@ flyCam.setEnabled(false);
 chaseCam = new ChaseCamera(cam, spatial, inputManager);
 ----
 
-*Learn more:* link:http://code.google.com/p/jmonkeyengine/source/browse/trunk/engine/src/core/com/jme3/input/ChaseCamera.java[com.jme3.input.ChaseCamera] +
-*Code sample:* link:http://code.google.com/p/jmonkeyengine/source/browse/trunk/engine/src/test/jme3test/input/TestChaseCamera.java[jme3test/input/TestChaseCamera.java]. 
+*Learn more:* link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/java/com/jme3/input/ChaseCamera.java[com.jme3.input.ChaseCamera] +
+*Code sample:* link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/input/TestChaseCamera.java[jme3test/input/TestChaseCamera.java]. 
 
 
 
@@ -380,7 +387,7 @@ Use com.jme3.input.KeyInput and a Input Listener.
 
 Players typically click the mouse to pick up objects, to open doors, to shoot a weapon, etc. Use an Input Listener to respond to mouse clicks, then cast a ray from the player; if it intersects with the bounding volume of a spatial, this is the selected target. The links below contain code samples for both “fixed crosshair picking and “free mouse pointer picking.
 
-*Learn more:* <<jme3/beginner/hello_picking#,Hello Picking>>, <<jme3/advanced/mouse_picking#,Mouse Picking>>, <<jme3/advanced/collision_and_intersection#,Collision and Intersection>>, <<jme3/advanced/input_handling#,Input Handling>>, com.jme3.bounding., com.jme3.math.Ray, com.jme3.collision.CollisionResults. +
+*Learn more:* <<jme3/beginner/hello_picking#,Hello Picking>>, <<jme3/advanced/mouse_picking#,Mouse Picking>>, <<jme3/advanced/collision_and_intersection#,Collision and Intersection>>, <<jme3/advanced/input_handling#,Input Handling>>, link:https://github.com/jMonkeyEngine/jmonkeyengine/tree/master/jme3-core/src/main/java/com/jme3/bounding[com.jme3.bounding.], link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/java/com/jme3/math/Ray.java[com.jme3.math.Ray.java], link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/java/com/jme3/math/Ray.java[com.jme3.collision.CollisionResults.java]. +
 *Code sample:* link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/bounding/TestRayCollision.java[TestRayCollision.java]
 
 
@@ -388,7 +395,7 @@ Players typically click the mouse to pick up objects, to open doors, to shoot a 
 
 Create an animated OgreMesh model with bones in a 3-D mesh editor (e.g. Blender).
 
-*Learn more:* com.jme3.animation., <<jme3/beginner/hello_animation#,Hello Animation>>, <<jme3/advanced/animation#,Animation>>, link:http://wiki.blender.org/index.php/Doc:Tutorials/Animation/BSoD/Character_Animation[Blender animation tutorial] +
+*Learn more:* link:https://github.com/jMonkeyEngine/jmonkeyengine/tree/master/jme3-core/src/main/java/com/jme3/animation[com.jme3.animation.], <<jme3/beginner/hello_animation#,Hello Animation>>, <<jme3/advanced/animation#,Animation>>, link:http://wiki.blender.org/index.php/Doc:Tutorials/Animation/BSoD/Character_Animation[Blender animation tutorial] +
 *Code sample:*  link:https://github.com/jMonkeyEngine/jmonkeyengine/tree/master/jme3-examples/src/main/java/jme3test/model/anim[animation]
 
 
@@ -396,14 +403,14 @@ Create an animated OgreMesh model with bones in a 3-D mesh editor (e.g. Blender)
 
 Use collision detection. The most common solution is to use jme's physics integration, jBullet.
 
-*Learn more:* <<jme3/beginner/hello_collision#,Hello Collision>>, <<jme3/advanced/physics#,Physics>>, com.jme3.bullet., CapsuleCollisionShape versus CompoundCollisionShape, CharacterControl versus RigidBodyControl.
+*Learn more:* <<jme3/beginner/hello_collision#,Hello Collision>>, <<jme3/advanced/physics#,Physics>>, link:https://github.com/jMonkeyEngine/jmonkeyengine/tree/master/jme3-bullet/src/common/java/com/jme3/bullet[com.jme3.bullet.], CapsuleCollisionShape versus CompoundCollisionShape, CharacterControl versus RigidBodyControl.
 
 
 === How do I make balls/wheels/etc bounce and roll?
 
 Add physics controls to Spatials and give them spherical or cylindrical bounding volumes.
 
-*Learn more:* <<jme3/beginner/hello_physics#,Hello Physics>>, <<jme3/advanced/physics#,Physics>>, com.jme3.bounding., com.jme3.bullet.collisions, com.jme3.bullet.controls.RigidBodyControl. +
+*Learn more:* <<jme3/beginner/hello_physics#,Hello Physics>>, <<jme3/advanced/physics#,Physics>>, link:https://github.com/jMonkeyEngine/jmonkeyengine/tree/master/jme3-core/src/main/java/com/jme3/bounding[com.jme3.bounding.], link:https://github.com/jMonkeyEngine/jmonkeyengine/tree/master/jme3-bullet/src/main/java/com/jme3/bullet/collision[com.jme3.bullet.collisions], link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-bullet/src/common/java/com/jme3/bullet/control/RigidBodyControl.java[com.jme3.bullet.control.RigidBodyControl.java] +
 *Code sample:* link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/bullet/TestSimplePhysics.java[TestSimplePhysics.java], link:https://github.com/jMonkeyEngine/jmonkeyengine/tree/master/jme3-examples/src/main/java/jme3test/bullet[more physics samples]
 
 
@@ -429,7 +436,7 @@ You can use jBullet's CharacterControl that locks a physical object upright, so 
 
 Use a VehicleControl that supports suspension behavior.
 
-*Learn more:* <<jme3/advanced/vehicles#,Vehicles>>, com.jme3.bullet., VehicleControl +
+*Learn more:* <<jme3/advanced/vehicles#,Vehicles>>, link:https://github.com/jMonkeyEngine/jmonkeyengine/tree/master/jme3-bullet/src/common/java/com/jme3/bullet[com.jme3.bullet.], VehicleControl +
 Code samples: link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/bullet/TestFancyCar.java[TestFancyCar.java], (Press HUJK keys to steer, spacebar to jump.)
 
 
@@ -437,7 +444,7 @@ Code samples: link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jm
 
 Use a PhysicsControl's hinges and joints.
 
-*Learn more:* <<jme3/advanced/hinges_and_joints#,Hinges and Joints>>, com.jme3.bullet.joints.PhysicsHingeJoint,
+*Learn more:* <<jme3/advanced/hinges_and_joints#,Hinges and Joints>>, [com.jme3.bullet.joints.],
 link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/bullet/TestPhysicsHingeJoint.java[TestPhysicsHingeJoint.java] (Press HK keys to turn, spacebar to swing.)
 
 
@@ -466,7 +473,7 @@ setDisplayStatView(false); // to hide the statistics
 
 Attach text and pictures to the orthogonal `guiNode` to create a heads-up display (link:http://en.wikipedia.org/wiki/HUD_%28video_gaming%29[HUD]).
 
-*Learn more:* <<jme3/advanced/hud#,HUD>>, com.jme3.font., com.jme3.ui.Picture, guiNode.attachChild() +
+*Learn more:* <<jme3/advanced/hud#,HUD>>, link:https://github.com/jMonkeyEngine/jmonkeyengine/tree/master/jme3-core/src/main/java/com/jme3/font[com.jme3.font.], link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/java/com/jme3/ui/Picture.java[com.jme3.ui.Picture.java], guiNode.attachChild() +
 *Code sample:* link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/gui/TestOrtho.java[TestOrtho.java], 
 link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/gui/TestBitmapFont.java[TestBitmapFont.java] 
 
@@ -524,7 +531,7 @@ Use AudioRenderer, Listener, and AudioNode from com.jme3.audio..
 
 For swarm like effects you use particle emitters.
 
-*Learn more:* <<jme3/beginner/hello_effects#,Hello Effects>>, <<jme3/advanced/particle_emitters#,Particle Emitters>>, <<jme3/advanced/bloom_and_glow#,Bloom and Glow>>, <<jme3/advanced/effects_overview#,Effects Overview>>, com.jme3.effect.EmitterSphereShape, com.jme3.effect.ParticleEmitter +
+*Learn more:* <<jme3/beginner/hello_effects#,Hello Effects>>, <<jme3/advanced/particle_emitters#,Particle Emitters>>, <<jme3/advanced/bloom_and_glow#,Bloom and Glow>>, <<jme3/advanced/effects_overview#,Effects Overview>>, link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/java/com/jme3/effect/shapes/EmitterSphereShape.java[com.jme3.effect.EmitterSphereShape.java], link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/java/com/jme3/effect/ParticleEmitter.java[com.jme3.effect.ParticleEmitter.java] +
 *Code sample:* link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/effect/TestExplosionEffect.java[TestExplosionEffect.java], 
 link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/effect/TestMovingParticle.java[TestMovingParticle.java],
 link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/effect/TestSoftParticles.java[TestSoftParticle.java]
@@ -542,7 +549,7 @@ Use a special post-processor renderer from com.jme3.water..
 
 Use special post-processor renderers from com.jme3.post..
 
-*Learn more:* <<jme3/advanced/effects_overview#,effects_overview>>
+*Learn more:* <<jme3/advanced/effects_overview#,Effects Overview>>
 
 
 === How do I generate a terrain?
@@ -590,7 +597,7 @@ In your game, add
 settings.setRenderer(AppSettings.LWJGL_OPENGL1)
 ----
 
- to the <<jme3/intermediate/appsettings#,AppSettings>> (see details there). +
+to the <<jme3/intermediate/appsettings#,AppSettings>> (see details there). +
 For the jMonkeyEngine SDK itself, choose Options &gt; OpenGL, and check OpenGL1.
 
 
