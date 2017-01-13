@@ -86,7 +86,8 @@ What we call “color is merely part of an object's light reflection. The onlook
 *  Degree of shininess of a surface (1-128).
 *  Shiny objects have small, clearly outlined specular highlights. (E.g. glass, water, silver)
 *  Normal objects have wide, blurry specular highlights. (E.g. metal, plastic, stone, polished materials)
-*  Uneven objects are not shiny and have no specular highlights. (E.g. cloth, paper, wood, snow) +Set the Specular color to ColorRGBA.Black to switch off shininess.
+*  Uneven objects are not shiny and have no specular highlights. (E.g. cloth, paper, wood, snow) +
+Set the Specular color to ColorRGBA.Black to switch off shininess.
 
 
 ==== Specular Color
@@ -97,7 +98,7 @@ What we call “color is merely part of an object's light reflection. The onlook
 *  Non-shiny objects have a black specular color.
 
 
-image::http://wiki.jmonkeyengine.org/lib/exe/fetch.php/jme3:tanlglow2.png[tanlglow2.png,with="400",height="234",align="center"]
+image::jme3/tanlglow2.png[tanlglow2.png,with="400",height="234",align="center"]
 
 
 
@@ -121,7 +122,7 @@ Got no textures? link:http://opengameart.org[Download free textures from opengam
 ==== Color Map / Diffuse Map
 
 
-image::http://jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Models/HoverTank/tank_diffuse.jpg[tank_diffuse.jpg,with="128",height="128",align="right"]
+image::jme3/advanced/tank_diffuse_ss.png[tank_diffuse.jpg,with="128",height="128",align="right"]
 
 
 *  A plain image file or a procedural texture that describes an object's visible surface.
@@ -138,7 +139,7 @@ Bump maps are used to describe detailed shapes that would be too hard or simply 
 *  You use Height Maps to model large terrains with valleys and mountains.
 
 
-image::http://jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Textures/Terrain/splat/mountains512.png[mountains512.png,with="128",height="128",align="right"]
+image::jme3/beginner/mountains512.png[mountains512.png,with="128",height="128",align="right"]
 
 
 
@@ -220,7 +221,7 @@ A procedural texture is generated from repeating one small image, plus some pseu
 image::http://jmonkeyengine.org/wp-content/uploads/2010/10/neotexture-2.jpg[neotexture-2.jpg,with="380",height="189",align="center"]
 
 
-See also: link:http://www.blender.org/education-help/tutorials/materials/[Creating Materials in Blender], link:http://en.wikibooks.org/wiki/Blender_3D:_Noob_to_Pro/Every_Material_Known_to_Man[Blender: Every Material Known to Man]
+See also: link:http://gryllus.net/Blender/Lessons/Lesson05.html[Creating Materials in Blender], link:http://en.wikibooks.org/wiki/Blender_3D:_Noob_to_Pro/Every_Material_Known_to_Man[Blender: Every Material Known to Man]
 
 
 == Animation
@@ -289,9 +290,12 @@ Non-player (computer-controlled) characters (NPCs) are only fun in a game if the
 
 The domain of artificial intelligence deals, among other things, with:
 
-*  *Knowledge* – Knowledge is _the data_ to which the AI agent has access, and on which the AI bases its decisions. Realistic agents only “know what they “see and hear. This implies that information can be hidden from the AI to keep the game fair. You can have an all-knowing AI, or you can let only some AI agents share information, or you let only AI agents who are close know the current state. +Example: After the player trips the wire, only a few AI guards with two-way radios start moving towards the player's position, while many other guards don't suspect anything yet.
-*  *Goal Planning* – Planning is about how an AI agent _takes action_. Each agent has the priority to achieve a specific goal, to reach a future state. When programming, you split the agent's goal into several subgoals. The agent consults its knowledge about the current state, chooses from available tactics and strategies, and prioritizes them. The agent repeatedly tests whether the current state is closer to its goal. If unsuccessful, the agent must discard the current tactics/strategy and try another one. +Example: An agent searches the best path to reach the player base in a changing environment, avoiding traps. An agent chases the player with the goal of eliminating him. An agent hides from the player with the goal of murdering a VIP. 
-*  *Problem Solving* – Problem solving is about how the agent _reacts to interruptions_, obstacles that stand between it and its goal. The agent uses a given set of facts and rules to deduct what state it is in – triggered by perceptions similar to pain, agony, boredom, or being trapped. In each state, only a specific subset of reactions makes sense. The actual reaction also depends on the agent's, goal since the agent's reaction must not block its own goal! +Examples: If player approaches, does the agent attack or conceal himself or raise alarm? While agent is idle, does he lay traps or heal self or recharge magic runes? If danger to own life, does the agent try to escape or kamikaze?
+*  *Knowledge* – Knowledge is _the data_ to which the AI agent has access, and on which the AI bases its decisions. Realistic agents only “know what they “see and hear. This implies that information can be hidden from the AI to keep the game fair. You can have an all-knowing AI, or you can let only some AI agents share information, or you let only AI agents who are close know the current state. + 
+Example: After the player trips the wire, only a few AI guards with two-way radios start moving towards the player's position, while many other guards don't suspect anything yet.
+*  *Goal Planning* – Planning is about how an AI agent _takes action_. Each agent has the priority to achieve a specific goal, to reach a future state. When programming, you split the agent's goal into several subgoals. The agent consults its knowledge about the current state, chooses from available tactics and strategies, and prioritizes them. The agent repeatedly tests whether the current state is closer to its goal. If unsuccessful, the agent must discard the current tactics/strategy and try another one. +
+Example: An agent searches the best path to reach the player base in a changing environment, avoiding traps. An agent chases the player with the goal of eliminating him. An agent hides from the player with the goal of murdering a VIP. 
+*  *Problem Solving* – Problem solving is about how the agent _reacts to interruptions_, obstacles that stand between it and its goal. The agent uses a given set of facts and rules to deduct what state it is in – triggered by perceptions similar to pain, agony, boredom, or being trapped. In each state, only a specific subset of reactions makes sense. The actual reaction also depends on the agent's, goal since the agent's reaction must not block its own goal! +
+Examples: If player approaches, does the agent attack or conceal himself or raise alarm? While agent is idle, does he lay traps or heal self or recharge magic runes? If danger to own life, does the agent try to escape or kamikaze?
 
 More advanced AIs can also learn, for example using neural networks.
 
@@ -302,7 +306,7 @@ There are lots of resources explaining interesting AI algorithms:
 *  link:http://hem.fyristorg.com/dawnbringer/z-path.html[&quot;Z-Path&quot; algorithm] (backwards pathfinding)
 *  link:http://web.media.mit.edu/~jorkin/goap.html[GOAP -- Goal-Oriented Action Planning]
 *  link:http://neuroph.sourceforge.net/[Neuroph -- Java Neural Networks]
-*  …
+
 
 
 == Math
@@ -385,7 +389,7 @@ Examples: Falling and rotating bricks in 3D Tetris.
 
 ==== Slerp
 
-Slerp is how we pronounce spherical linear interpolation when we are in a hurry. A slerp is an interpolated transformation that is used as a simple “animation in 3D engines. You define a start and end state, and the slerp interpolates a constant-speed transition from one state to the other. You can play the motion, pause it at various percentages (values between 0.0 and 1.0), and play it backwards and forwards. link:http://jmonkeyengine.org/javadoc/com/jme3/math/Quaternion.html#slerp(com.jme3.math.Quaternion,%20com.jme3.math.Quaternion,%20float)[JavaDoc: slerp()]
+Slerp is how we pronounce spherical linear interpolation when we are in a hurry. A slerp is an interpolated transformation that is used as a simple “animation in 3D engines. You define a start and end state, and the slerp interpolates a constant-speed transition from one state to the other. You can play the motion, pause it at various percentages (values between 0.0 and 1.0), and play it backwards and forwards. link:http://javadoc.jmonkeyengine.org/com/jme3/math/Quaternion.html#slerp-com.jme3.math.Quaternion-com.jme3.math.Quaternion-float-[JavaDoc: slerp()]
 
 Example: A burning meteorite Geometry slerps from “position p1, rotation r1, scale s1 in the sky down to “p2, r2, s2 into a crater.
 
