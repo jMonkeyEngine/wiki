@@ -156,7 +156,8 @@ For a partially translucent/transparent texture, you need:
 
 *  A Texture with alpha channel
 *  A Texture with blend mode of `BlendMode.Alpha`
-*  A Geometry in the `Bucket.Transparent` render bucket.  +This bucket ensures that the transparent object is drawn on top of objects behind it, and they show up correctly under the transparent parts. 
+*  A Geometry in the `Bucket.Transparent` render bucket.  +
+This bucket ensures that the transparent object is drawn on top of objects behind it, and they show up correctly under the transparent parts. 
 
 [source,java]
 ----
@@ -296,12 +297,17 @@ a| Usage
 <a| Parameters  
 
 a| `Common/MatDefs/Misc/Unshaded.j3md` 
-a| Colored: Use with mat.setColor() and ColorRGBA. +Textured: Use with mat.setTexture() and Texture. 
-a| Color : Color +ColorMap : Texture2D 
+a| Colored: Use with mat.setColor() and ColorRGBA. +
+Textured: Use with mat.setTexture() and Texture. 
+a| Color : Color +
+ColorMap : Texture2D 
 
 <a| `Common/MatDefs/Light/Lighting.j3md`      
-a| Use with shiny Textures, Bump- and NormalMaps textures. +Requires a light source. 
-a| Ambient, Diffuse, Specular : Color +DiffuseMap, NormalMap, SpecularMap : Texture2D +Shininess : Float 
+a| Use with shiny Textures, Bump- and NormalMaps textures. +
+Requires a light source. 
+a| Ambient, Diffuse, Specular : Color +
+DiffuseMap, NormalMap, SpecularMap : Texture2D +
+Shininess : Float 
 
 |===
 
@@ -380,6 +386,7 @@ You have learned how to create a Material, specify its properties, and use it on
 You have also learned that a material can be stored in a .j3m file. The file references a built-in MaterialDefinition and specifies values for properties of that MaterialDefinition. You know to save your custom .j3m files in your project's `assets/Materials/` directory.
 
 Now that you know how to load models and how to assign good-looking materials to them, let's have a look at how to animate models in the next chapter, <<jme3/beginner/hello_animation#,Hello Animation>>.
+
 '''
 
 See also
