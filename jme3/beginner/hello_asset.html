@@ -151,7 +151,7 @@ java.lang.NullPointerException</code></pre></div></div>
 <div class="olist arabic"><ol class="arabic"><li><p>Right-click a .Blend, .OBJ, or .mesh.xml file in the Projects window, and choose “convert to JME3 binary.</p></li><li><p>The .j3o file appears next to the .mesh.xml file and has the same name.</p></li><li><p>Update all your <code>loadModel()</code> lines accordingly. For example:</p></li></ol></div>
 <div class="listingblock"><div class="content"><pre>Spatial ninja = assetManager.loadModel("Models/Ninja/Ninja.j3o");</pre></div></div>
 <div class="admonitionblock tip"><table><tr><td class="icon"><i class="fa icon-tip" title="Tip"></i></td><td class="content"><div class="paragraph"><p>If your executable throws a “Cannot locate resource runtime exception, check all load paths and make sure you have converted all models to .j3o files!</p></div></td></tr></table></div></div>
-<div class="sect2"><h3 id="loading-models-and-scenes">Loading Models and Scenes</h3><table class="tableblock frame-all grid-all spread"><colgroup><col style="width: 50%;"><col style="width: 50%;"></colgroup><thead><tr><th class="tableblock halign-left valign-top">Task?</th><th class="tableblock halign-left valign-top">Solution!</th></tr></thead><tbody><tr><td class="tableblock halign-left valign-top"><div><div class="paragraph"><p>Load a model with materials</p></div></div></td><td class="tableblock halign-left valign-top"><div><div class="paragraph"><p>Use the asset manager&#8217;s <code>loadModel()</code> method and attach the Spatial to the rootNode.</p></div>
+<div class="sect2"><h3 id="loading-models-and-scenes">Loading Models and Scenes</h3><table class="tableblock frame-all grid-all spread"><colgroup><col style="width: 30%;"><col style="width: 70%;"></colgroup><thead><tr><th class="tableblock halign-left valign-top">Task?</th><th class="tableblock halign-left valign-top">Solution!</th></tr></thead><tbody><tr><td class="tableblock halign-left valign-top"><div><div class="paragraph"><p>Load a model with materials</p></div></div></td><td class="tableblock halign-left valign-top"><div><div class="paragraph"><p>Use the asset manager&#8217;s <code>loadModel()</code> method and attach the Spatial to the rootNode.</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">Spatial elephant = assetManager.loadModel(<span class="string"><span class="delimiter">&quot;</span><span class="content">Models/Elephant/Elephant.mesh.xml</span><span class="delimiter">&quot;</span></span>);
 rootNode.attachChild(elephant);</code></pre></div></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">Spatial elephant = assetManager.loadModel(<span class="string"><span class="delimiter">&quot;</span><span class="content">Models/Elephant/Elephant.j3o</span><span class="delimiter">&quot;</span></span>);
@@ -178,8 +178,10 @@ jMonkeyProjects/MyGameProject/town.zip
     gameLevel.setLocalTranslation(0, -5.2f, 0);
     gameLevel.setLocalScale(2);
     rootNode.attachChild(gameLevel);</pre></div></div>
-<div class="paragraph"><p>The loadModel() method now searches this zip directly for the files to load. +(This means, do not write <code>loadModel(town.zip/main.scene)</code> or similar!)</p></div>
-<div class="olist arabic"><ol class="arabic"><li><p>Clean, build and run the project. +You should now see the Ninja+wall+teapot standing in a town.</p></li></ol></div>
+<div class="paragraph"><p>The loadModel() method now searches this zip directly for the files to load.<br>
+(This means, do not write <code>loadModel(town.zip/main.scene)</code> or similar!)</p></div>
+<div class="olist arabic"><ol class="arabic"><li><p>Clean, build and run the project.<br>
+You should now see the Ninja+wall+teapot standing in a town.</p></li></ol></div>
 <div class="paragraph"><p><strong>Tip:</strong> If you register new locators, make sure you do not get any file name conflicts: Don&#8217;t name all scenes <code>main.scene</code> but give each scene a unique name.</p></div>
 <div class="paragraph"><p>Earlier in this tutorial, you loaded scenes and models from the asset directory. This is the most common way you will be loading scenes and models. Here is the typical procedure:</p></div>
 <div class="olist arabic"><ol class="arabic"><li><p>Remove the code that you added for the previous exercise.</p></li><li><p>Move the unzipped <code>town/</code> directory into the <code>assets/Scenes/</code> directory of your project.</p></li><li><p>Add the following code under <code>simpleInitApp() {</code></p></li></ol></div>
@@ -188,7 +190,8 @@ jMonkeyProjects/MyGameProject/town.zip
     gameLevel.setLocalScale(2);
     rootNode.attachChild(gameLevel);</pre></div></div>
 <div class="literalblock"><div class="content"><pre>Note that the path is relative to the `assets/…` directory.</pre></div></div>
-<div class="olist arabic"><ol class="arabic"><li><p>Clean, build and run the project. Again, you should see the Ninja+wall+teapot standing in a town.</p></li></ol></div>
+<div class="olist arabic"><ol class="arabic"><li><p>Clean, build and run the project.<br>
+Again, you should see the Ninja+wall+teapot standing in a town.</p></li></ol></div>
 <div class="paragraph"><p>Here is a third method you must know, loading a scene/model from a .j3o file:</p></div>
 <div class="olist arabic"><ol class="arabic"><li><p>Remove the code from the previous exercise.</p></li><li><p>If you haven&#8217;t already, open the <a href="../../sdk.html">SDK</a> and open the project that contains the HelloAsset class.</p></li><li><p>In the projects window, browse to the <code>assets/Scenes/town</code> directory.</p></li><li><p>Right-click the <code>main.scene</code> and convert the scene to binary: The jMonkeyPlatform generates a main.j3o file.</p></li><li><p>Add the following code under <code>simpleInitApp() {</code></p></li></ol></div>
 <div class="listingblock"><div class="content"><pre>    Spatial gameLevel = assetManager.loadModel("Scenes/town/main.j3o");
@@ -196,12 +199,13 @@ jMonkeyProjects/MyGameProject/town.zip
     gameLevel.setLocalScale(2);
     rootNode.attachChild(gameLevel);</pre></div></div>
 <div class="literalblock"><div class="content"><pre>Again, note that the path is relative to the `assets/…` directory.</pre></div></div>
-<div class="olist arabic"><ol class="arabic"><li><p>Clean, Build and run the project. +Again, you should see the Ninja+wall+teapot standing in a town.</p></li></ol></div></div></div>
+<div class="olist arabic"><ol class="arabic"><li><p>Clean, Build and run the project.<br>
+Again, you should see the Ninja+wall+teapot standing in a town.</p></li></ol></div></div></div>
 <div class="sect1"><h2 id="conclusion">Conclusion</h2><div class="sectionbody"><div class="paragraph"><p>Now you know how to populate the scenegraph with static shapes and models, and how to build scenes. You have learned how to load assets using the <code>assetManager</code> and you have seen that the paths start relative to your project directory. Another important thing you have learned is to convert models to .j3o format for the executable JARs etc.</p></div>
-<div class="paragraph"><p>Let&#8217;s add some action to the scene and continue with the <a href="../../jme3/beginner/hello_main_event_loop.html">Update Loop</a>!
-'''</p></div>
+<div class="paragraph"><p>Let&#8217;s add some action to the scene and continue with the <a href="../../jme3/beginner/hello_main_event_loop.html">Update Loop</a>!</p></div>
+<hr>
 <div class="paragraph"><p><strong>See also:</strong></p></div>
-<div class="ulist"><ul><li><p><a href="../../jme3/external/blender.html">The definitive Blender import tutorial</a></p></li><li><p><a href="../../jme3/intermediate/multi-media_asset_pipeline.html">Asset pipeline introduction</a></p></li><li><p>If you want to learn how to load sounds, see <a href="../../jme3/beginner/hello_audio.html">Hello Audio</a></p></li><li><p>If you want to learn more about loading textures and materials, see <a href="../../jme3/beginner/hello_material.html">Hello Material</a></p></li></ul></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2017-01-13 22:17:29 UTC</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
+<div class="ulist"><ul><li><p><a href="../../jme3/external/blender.html">The definitive Blender import tutorial</a></p></li><li><p><a href="../../jme3/intermediate/multi-media_asset_pipeline.html">Asset pipeline introduction</a></p></li><li><p>If you want to learn how to load sounds, see <a href="../../jme3/beginner/hello_audio.html">Hello Audio</a></p></li><li><p>If you want to learn more about loading textures and materials, see <a href="../../jme3/beginner/hello_material.html">Hello Material</a></p></li></ul></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2017-01-13 22:25:36 UTC</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
   apiKey: 'a736b6d93de805e26ec2f49b55013fbd',
   indexName: 'jmonkeyengine',
   inputSelector: '#doc-search',
