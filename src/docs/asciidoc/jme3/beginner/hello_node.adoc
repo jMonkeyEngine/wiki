@@ -219,8 +219,10 @@ If you run the app with only the code up to here, you see two cubes: A red cube 
 
 You can transform (e.g. rotate) Geometries around their own center, or around a user defined center point. A user defined center point for one or more Geometries is called a pivot.
 
-*  In this example, you have grouped two Geometries by attaching them to one pivot Node. You use the pivot Node as a handle to rotate the two Geometries together around one common center. Rotating the pivot Node rotates all attached Geometries, in one step. The pivot node is the center of the rotation. Before attaching the other Geometries, make certain that the pivot node is at (0,0,0). Transforming a parent Node to transform all attached child Spatials is a common task. You will use this method a lot in your games when you move Spatials around. +*Examples:* A vehicle and its driver move together; a planet with its moon orbits the sun. 
-*  Contrast this case with the other option: If you don't create an extra pivot node and transform a Geometry, then every transformation is done relative to the Geometry's origin (typically the center). +*Examples:* If you rotate each cube directly (using `red.rotate(0.1f , 0.2f , 0.3f);` and `blue.rotate(0.5f , 0.0f , 0.25f);`), then each cube is rotated individually around its center. This is similar to a planet rotating around its own center.
+*  In this example, you have grouped two Geometries by attaching them to one pivot Node. You use the pivot Node as a handle to rotate the two Geometries together around one common center. Rotating the pivot Node rotates all attached Geometries, in one step. The pivot node is the center of the rotation. Before attaching the other Geometries, make certain that the pivot node is at (0,0,0). Transforming a parent Node to transform all attached child Spatials is a common task. You will use this method a lot in your games when you move Spatials around. +
+*Examples:* A vehicle and its driver move together; a planet with its moon orbits the sun. 
+*  Contrast this case with the other option: If you don't create an extra pivot node and transform a Geometry, then every transformation is done relative to the Geometry's origin (typically the center). +
+*Examples:* If you rotate each cube directly (using `red.rotate(0.1f , 0.2f , 0.3f);` and `blue.rotate(0.5f , 0.0f , 0.25f);`), then each cube is rotated individually around its center. This is similar to a planet rotating around its own center.
 
 
 == How do I Populate the Scenegraph?
@@ -290,7 +292,7 @@ a| Everything you initialize and attach to the `rootNode` in the `simpleInitApp(
 == How do I Transform Spatials?
 
 There are three types of 3D transformation: Translation, Scaling, and Rotation.
-[cols="4", options="header"]
+[cols="55,15,15,15", options="header"]
 |===
 
 a| Translation moves Spatials 
@@ -298,7 +300,8 @@ a| X-axis
 a| Y-axis 
 a| Z-axis 
 
-a| Specify the new location in three dimensions: How far away is it from the origin going right-up-forward? +To move a Spatial _to_ specific coordinates, such as (0,40.2f,-2), use: 
+a| Specify the new location in three dimensions: How far away is it from the origin going right-up-forward? +
+To move a Spatial _to_ specific coordinates, such as (0,40.2f,-2), use: 
 [source,java]
 ----
 thing.setLocalTranslation( new Vector3f( 0.0f, 40.2f, -2.0f ) );
@@ -316,7 +319,7 @@ a|+up -down
 a|+forward -backward
 
 |===
-[cols="4", options="header"]
+[cols="55,15,15,15", options="header"]
 |===
 
 a| Scaling resizes Spatials 
@@ -324,7 +327,10 @@ a| X-axis
 a| Y-axis 
 a| Z-axis 
 
-a|Specify the scaling factor in each dimension: length, height, width. +A value between 0.0f and 1.0f shrinks the Spatial; bigger than 1.0f stretches it; 1.0f keeps it the same. +Using the same value for each dimension scales proportionally, different values stretch it. +To scale a Spatial 10 times longer, one tenth the height, and keep the same width: 
+a|Specify the scaling factor in each dimension: length, height, width. +
+A value between 0.0f and 1.0f shrinks the Spatial; bigger than 1.0f stretches it; 1.0f keeps it the same. +
+Using the same value for each dimension scales proportionally, different values stretch it. +
+To scale a Spatial 10 times longer, one tenth the height, and keep the same width: 
 [source,java]
 ----
 thing.scale( 10.0f, 0.1f, 1.0f );
@@ -343,7 +349,8 @@ a| X-axis
 a| Y-axis 
 a| Z-axis 
 
-a|3-D rotation is a bit tricky (<<jme3/rotate#,learn details here>>). In short: You can rotate around three axes: Pitch, yaw, and roll. You can specify angles in degrees by multiplying the degrees value with `FastMath.DEG_TO_RAD`. +To roll an object 180° around the z axis: 
+a|3-D rotation is a bit tricky (<<jme3/rotate#,learn details here>>). In short: You can rotate around three axes: Pitch, yaw, and roll. You can specify angles in degrees by multiplying the degrees value with `FastMath.DEG_TO_RAD`. +
+To roll an object 180° around the z axis: 
 [source,java]
 ----
 thing.rotate( 0f , 0f , 180*FastMath.DEG_TO_RAD );
@@ -367,17 +374,25 @@ a|roll = cocking your head
 == How do I Troubleshoot Spatials?
 
 If you get unexpected results, check whether you made the following common mistakes:
-[cols="2", options="header"]
+[cols="40,60", options="header"]
 |===
 
 a| Problem? 
 a| Solution! 
 
 a| A created Geometry does not appear in the scene. 
-a| Have you attached it to (a node that is attached to) the rootNode? +Does it have a Material? +What is its translation (position)? Is it behind the camera or covered up by another Geometry? +Is it too tiny or too gigantic to see? +Is it too far from the camera? (Try link:http://javadoc.jmonkeyengine.org/com/jme3/renderer/Camera.html#setFrustumFar(float)[cam.setFrustumFar](111111f); to see further) 
+a| Have you attached it to (a node that is attached to) the rootNode? +
+Does it have a Material? +
+What is its translation (position)? +
+Is it behind the camera or covered up by another Geometry? +
+Is it too tiny or too gigantic to see? +
+Is it too far from the camera? (Try link:http://javadoc.jmonkeyengine.org/com/jme3/renderer/Camera.html#setFrustumFar(float)[cam.setFrustumFar](111111f); to see further) 
 
 a| A Spatial rotates in unexpected ways. 
-a| Did you use radian values, and not degrees? (If you used degrees, multiply them with FastMath.DEG_TO_RAD to convert them to radians)  +Did you create the Spatial at the origin (Vector.ZERO) before moving it? +Did you rotate around the intended pivot node or around something else? +Did you rotate around the right axis? 
+a| Did you use radian values, and not degrees? (If you used degrees, multiply them with FastMath.DEG_TO_RAD to convert them to radians)  +
+Did you create the Spatial at the origin (Vector.ZERO) before moving it? +
+Did you rotate around the intended pivot node or around something else? +
+Did you rotate around the right axis? 
 
 a| A Geometry has an unexpected Color or Material. 
 <a| Did you reuse a Material from another Geometry and have inadvertently changed its properties? (If so, consider cloning it: mat2 = mat.clone(); )  
