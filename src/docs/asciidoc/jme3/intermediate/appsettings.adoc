@@ -56,7 +56,7 @@ public void toggleToFullscreen() {
 
 
 == Properties
-[cols="3", options="header"]
+[cols="30,55,15", options="header"]
 |===
 
 a|Settings Property (Video)
@@ -99,7 +99,8 @@ a|setVSync(true) +
 setFrequency(60)
 a|Set vertical syncing to true to time the frame buffer to coincide with the refresh frequency of the screen. VSync prevents ugly page tearing artefacts, but is a bit slower; recommened for release build. +
 Set VSync to false to deactivate vertical syncing (faster, but possible page tearing artifacts); can remain deactivated during development or for slower PCs.
-a|false +60 fps
+a|false +
+60 fps
 
 a|setStencilBits(8)
 a|Set the number of stencil bits. +
@@ -112,7 +113,7 @@ The number of depth bits specifies the precision of the depth buffer. To increas
 a|24
 
 |===
-[cols="3", options="header"]
+[cols="30,55,15", options="header"]
 |===
 
 a|Settings Property (Input)
@@ -136,7 +137,7 @@ a|Flips the X or Y (or both) axes for the emulated mouse. Set the first paramete
 a|false,false
 
 |===
-[cols="3", options="header"]
+[cols="30,55,15", options="header"]
 |===
 
 a|Settings Property (Audio)
@@ -152,38 +153,38 @@ a|Enable 3D stereo. This feature requires hardware support from the GPU driver. 
 a|false
 
 |===
-[cols="3", options="header"]
+[cols="30,55,15", options="header"]
 |===
 
 a|Settings Property (Branding)
 a|Description
 a|Default
 
-a|setTitle(“My Game)
+a|setTitle("My Game")
 a|This string will be visible in the titlebar, unless the window is fullscreen.
-a|“jMonkey Engine 3.0
+a|"jMonkey Engine 3.0"
 
 a|setIcons(new BufferedImage[]{ +
-ImageIO.read(new File(“)), …});
+ImageIO.read(new File(" ")), …});
 a|This specifies the little application icon in the titlebar of the application (unused in MacOS?). You should specify the icon in various sizes (256,128,32,16) to look good on various operating systems. Note: This is not the application icon on the desktop.
 a|null
 
-a|setSettingsDialogImage(“Interface/mysplashscreen.png)
+a|setSettingsDialogImage("Interface/mysplashscreen.png")
 a|A custom splashscreen image in the `assets/Interface` directory which is displayed when the settings dialog is shown.
-a|“/com/jme3/app/Monkey.png
+a|"/com/jme3/app/Monkey.png"
 
 |===
 
 
 [TIP]
 ====
-You can use `app.setShowSettings(true);` and `setSettingsDialogImage(“Interface/mysplashscreen.png)` to present the user with jme3's default display settings dialog when starting the game. Use `app.setShowSettings(false);` to hide the default settings screen. Set this boolean before calling `app.start()` on the SimpleApplication.
+You can use `app.setShowSettings(true);` and `setSettingsDialogImage("Interface/mysplashscreen.png")` to present the user with jme3's default display settings dialog when starting the game. Use `app.setShowSettings(false);` to hide the default settings screen. Set this boolean before calling `app.start()` on the SimpleApplication.
 ====
 
 
 
 == Toggling and Activating Settings
-[cols="2", options="header"]
+[cols="25,75", options="header"]
 |===
 
 a|SimpleApplication method
@@ -208,8 +209,8 @@ a|Restart()ing a running game restarts the game context and applies the updated 
 
 An AppSettings object also supports the following methods to save your settings under a unique key (in this example “com.foo.MyCoolGame3):
 
-*  Use `settings.save(“com.foo.MyCoolGame3)` to save your settings via standard java.io serialization.
-*  Use `settings.load(“com.foo.MyCoolGame3)` to load your settings.
+*  Use `settings.save("com.foo.MyCoolGame3")` to save your settings via standard java.io serialization.
+*  Use `settings.load("com.foo.MyCoolGame3")` to load your settings.
 *  Use `settings2.copyFrom(settings)` to copy a settings object.
 
 Usage: 
@@ -226,6 +227,7 @@ Provide the unique name of your jME3 application as the String argument. For exa
 
 *  On Windows, the preferences are saved under the following registry key: +
 `HKEY_CURRENT_USER\Software\JavaSoft\Prefs\com\foo\MyCoolGame3`
-*  On Linux, the preferences are saved in an XML file under: +`$HOME/.java/.userPrefs/com/foo/MyCoolGame3`
+*  On Linux, the preferences are saved in an XML file under: +
+`$HOME/.java/.userPrefs/com/foo/MyCoolGame3`
 *  On Mac +++<abbr title="Operating System">OS</abbr>+++ X, the preferences are saved as XML file under: +
 `$HOME/Library/Preferences/com.foo.MyCoolGame3.plist`
