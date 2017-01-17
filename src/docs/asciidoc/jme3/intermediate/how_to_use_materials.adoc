@@ -86,7 +86,7 @@ To give an unshaded material a color:
 ----
 mat.setColor("Color", ColorRGBA.Blue); // with Unshaded.j3md
 ----
-+
+
 
 To give an Phong-illuminated material a color:
 
@@ -113,14 +113,16 @@ To give an unshaded material a texture:
 
 *  Specify at least a ColorMap: 
 [source,java]
++
 ----
 mat.setTexture("ColorMap", assetManager.loadTexture("Textures/monkey.png")); // with Unshaded.j3md
 ----
-
++
 
 To give a Phong-illuminated material a texture:
 
 *  Specify at least the DiffuseMap texture: 
++
 [source,java]
 ----
 mat.setTexture("DiffuseMap", assetManager.loadTexture("Textures/wood_diffuse.png")); // with Lighting.j3md
@@ -208,6 +210,7 @@ mat.setTexture("SpecularMap", assetManager.loadTexture("Textures/metal_spec.png"
 To deactivate shininess
 
 *  Set the `Specular` color to `ColorRGBA.Black`. Do not just set `Shininess` to 0.
++
 [source,java]
 ----
 mat.setColor("Specular",ColorRGBA.Black);
@@ -249,6 +252,7 @@ mat.setTexture("GlowMap", assetManager.loadTexture("Textures/alien_glow.png"));
 To deactivate glow:
 
 *  Set the `Glow` color to `ColorRGBA.Black`.
++
 [source,java]
 ----
 mat.setColor("GlowColor", ColorRGBA.Black);
@@ -270,18 +274,21 @@ To make a Geometry transparent or translucent:
 
 .  Specify which areas you want to be transparent or translucent by specifying the alpha channel:
 **  (For colored Materials) In any RGBA color, the first three are Red-Green-Blue, and the last float is the Alpha channel. For example, to replace ColorRGBA.Red with a translucent red: 
++
 [source,java]
 ----
 mat.setColor("Color", new ColorRGBA(1,0,0,0.5f));
 ----
 
 **  (For textured Materials) Supply an AlphaMap that outlines which areas are transparent. 
++
 [source,java]
 ----
 mat.setTexture("AlphaMap", assetManager.loadTexture("Textures/window_alpha.png"));
 ----
 
 **  (For textured Materials) If the DiffuseMap has an alpha channel, use: 
++
 [source,java]
 ----
 mat.setBoolean("UseAlpha",true);
@@ -289,20 +296,22 @@ mat.setBoolean("UseAlpha",true);
 
 
 .  Specify BlendMode Alpha for the Material. 
++
 [source,java]
 ----
 mat.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
 ----
 
 .  Put the Geometry (not the Material!) in the appropriate render queue bucket. +
-Objects in the translucent bucket (e.g. particles) are not affected by SceneProcessors (e.g. shadows). Objects in the transparent bucket (e.g. foliage) are affected by SceneProcessors (e.g. shadows).
-**
+**  Objects in the translucent bucket (e.g. particles) are not affected by SceneProcessors (e.g. shadows).  
++
 [source,java]
 ----
 geo.setQueueBucket(Bucket.Translucent); 
 ----
 
-**
+**  Objects in the transparent bucket (e.g. foliage) are affected by SceneProcessors (e.g. shadows).
++
 [source,java]
 ----
 geo.setQueueBucket(Bucket.Transparent); 
