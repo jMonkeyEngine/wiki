@@ -94,7 +94,7 @@ For example, you disable your IdleBehaviourControl when you enable your Defensiv
 Implement this method to be able to <a href="../../jme3/advanced/save_and_load.html">save() and load()</a> Spatials carrying this Control.<br>
 The AssetManager also uses this method if the same spatial is loaded twice. You can specify which fields you want your object to reuse (e.g. collisionshapes) in this case.</p></li><li><p><code>setEnabled(boolean)</code>: Toggles a boolean that enables or disables the Control. Goes with accessor <code>isEnabled();</code>. You test for it in the <code>update(float tpf)</code> loop before you execute anything.</p></li><li><p>There are also some internal methods that you do not call from user code: <code>setSpatial(Spatial s)</code>, <code>update(float tpf);</code>, <code>render(RenderManager rm, ViewPort vp)</code>.</p></li></ul></div>
 <div class="paragraph"><p>Usage example:</p></div>
-<div class="olist arabic"><ol class="arabic"><li><p>Create a custom control interface</p><div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">MyControlInterface</span> <span class="directive">extends</span> <span class="predefined-type">Control</span> {
+<div class="olist arabic"><ol class="arabic"><li><p>Create a custom control interface.</p><div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">MyControlInterface</span> <span class="directive">extends</span> <span class="predefined-type">Control</span> {
     <span class="directive">public</span> <span class="type">void</span> setSomething(<span class="type">int</span> x); <span class="comment">// optionally, add custom methods</span>
 }</code></pre></div></div></li><li><p>Create custom Controls implementing your Control interface.</p><div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">MyControl</span> <span class="directive">extends</span> MyCustomClass <span class="directive">implements</span> MyControlInterface {
 
@@ -162,8 +162,8 @@ The AssetManager also uses this method if the same spatial is loaded twice. You 
         <span class="comment">// read custom variables ....</span>
     }
 }</code></pre></div></div></li></ol></div></div></div>
-<div class="sect1"><h2 id="best-practices">Best Practices</h2><div class="sectionbody"><div class="admonitionblock tip"><table><tr><td class="icon"><i class="fa icon-tip" title="Tip"></i></td><td class="content"><div class="paragraph"><p>Use the getControl() accessor to get Control objects from Spatials. No need to pass around lots of object references.
-Here an example from the <a href="http://code.google.com/p/monkeyzone/">MonkeyZone</a> code:</p></div></td></tr></table></div>
+<div class="sect1"><h2 id="best-practices">Best Practices</h2><div class="sectionbody"><div class="paragraph"><p>Use the getControl() accessor to get Control objects from Spatials. No need to pass around lots of object references.
+Here an example from the <a href="http://code.google.com/p/monkeyzone/">MonkeyZone</a> code:</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">CharacterAnimControl</span> <span class="directive">implements</span> <span class="predefined-type">Control</span> {
   ...
   public <span class="type">void</span> setSpatial(Spatial spatial) {
@@ -173,7 +173,7 @@ Here an example from the <a href="http://code.google.com/p/monkeyzone/">MonkeyZo
     ...
   }
 }</code></pre></div></div>
-<div class="admonitionblock tip"><table><tr><td class="icon"><i class="fa icon-tip" title="Tip"></i></td><td class="content"><div class="paragraph"><p>You can create custom Control interfaces so a set of different Controls provide the same methods and can be accessed with the interface class type.</p></div></td></tr></table></div>
+<div class="paragraph"><p>You can create custom Control interfaces so a set of different Controls provide the same methods and can be accessed with the interface class type.</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">ManualControl</span> <span class="directive">extends</span> <span class="predefined-type">Control</span> {
     <span class="directive">public</span> <span class="type">void</span> steerX(<span class="type">float</span> value);
     <span class="directive">public</span> <span class="type">void</span> steerY(<span class="type">float</span> value);
@@ -184,16 +184,16 @@ Here an example from the <a href="http://code.google.com/p/monkeyzone/">MonkeyZo
 }</code></pre></div></div>
 <div class="paragraph"><p>Then you create custom sub-Controls and implement the methods accordingly to the context:</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">ManualVehicleControl</span>   <span class="directive">extends</span> ManualControl {...}</code></pre></div></div>
-<div class="literalblock"><div class="content"><pre>and</pre></div></div>
+<div class="paragraph"><p>and</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">ManualCharacterControl</span> <span class="directive">extends</span> ManualControl {...}</code></pre></div></div>
 <div class="paragraph"><p>Then add the appropriate controls to spatials:</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">characterSpatial.addControl(<span class="keyword">new</span> ManualCharacterControl());
 ...
 vehicleSpatial.addControl(<span class="keyword">new</span> ManualVehicleControl());
 ...</code></pre></div></div>
-<div class="admonitionblock tip"><table><tr><td class="icon"><i class="fa icon-tip" title="Tip"></i></td><td class="content"><div class="paragraph"><p>Use the getControl() method on a Spatial to get a specific Control object, and activate its behaviour!</p></div></td></tr></table></div>
+<div class="admonitionblock tip"><table><tr><td class="icon"><i class="fa icon-tip" title="Tip"></i></td><td class="content"><div class="paragraph"><p>Use the getControl() method on a Spatial to get a specific Control object, and activate its behaviour!</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">ManualControl c = mySpatial.getControl(ManualControl.class);
-c.steerX(steerX);</code></pre></div></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2017-01-18 23:08:29 UTC</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
+c.steerX(steerX);</code></pre></div></div></td></tr></table></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2017-01-18 23:25:00 UTC</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
   apiKey: 'a736b6d93de805e26ec2f49b55013fbd',
   indexName: 'jmonkeyengine',
   inputSelector: '#doc-search',
