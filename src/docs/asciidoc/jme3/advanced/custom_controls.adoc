@@ -181,7 +181,7 @@ The AssetManager also uses this method if the same spatial is loaded twice. You 
 
 Usage example:
 
-. Create a custom control interface
+. Create a custom control interface.
 +
 [source,java]
 ----
@@ -265,11 +265,8 @@ public class MyControl extends MyCustomClass implements MyControlInterface {
 
 == Best Practices
 
-[TIP]
-====
 Use the getControl() accessor to get Control objects from Spatials. No need to pass around lots of object references.
 Here an example from the link:http://code.google.com/p/monkeyzone/[MonkeyZone] code:
-====
 
 [source,java]
 ----
@@ -285,10 +282,7 @@ public class CharacterAnimControl implements Control {
 }
 ----
 
-[TIP]
-====
 You can create custom Control interfaces so a set of different Controls provide the same methods and can be accessed with the interface class type.
-====
 
 [source,java]
 ----
@@ -309,7 +303,7 @@ Then you create custom sub-Controls and implement the methods accordingly to the
 public class ManualVehicleControl   extends ManualControl {...}
 ----
 
- and
+and
 
 [source,java]
 ----
@@ -330,10 +324,10 @@ vehicleSpatial.addControl(new ManualVehicleControl());
 [TIP]
 ====
 Use the getControl() method on a Spatial to get a specific Control object, and activate its behaviour!
-====
 
 [source,java]
 ----
 ManualControl c = mySpatial.getControl(ManualControl.class);
 c.steerX(steerX);
 ----
+====
