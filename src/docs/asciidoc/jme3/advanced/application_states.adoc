@@ -38,9 +38,11 @@ You can! This is what AppStates are there for. An AppState class is subset of (o
 
 Each AppState lets you define what happens to it in the following situations:
 
-*  *The AppState is initialized:* You load and initialize game data, InputHandlers, AppStates and Controls and attach nodes. +The AppState executes its own simpleInitApp() method when it is attached, so to speak.
+*  *The AppState is initialized:* You load and initialize game data, InputHandlers, AppStates and Controls and attach nodes. +
+The AppState executes its own simpleInitApp() method when it is attached, so to speak.
 *  *The AppState has been enabled (unpaused):* This toggles a boolean isEnabled() to true. Here you attach nodes and listeners that should become active while it's running. 
-*  *While the AppState is running/paused:* You can poll isEnabled() to define paused and unpaused game behaviour in the update() loop. In update(), you poll and modify the game state, modify the scene graph, and trigger events. Test if `!isEnabled()`, and write code that skips the running sections of this AppState's `update()` loop. +Each AppState has its own update loop, which hooks into the main simpleUpdate() loop (callback). 
+*  *While the AppState is running/paused:* You can poll isEnabled() to define paused and unpaused game behaviour in the update() loop. In update(), you poll and modify the game state, modify the scene graph, and trigger events. Test if `!isEnabled()`, and write code that skips the running sections of this AppState's `update()` loop. +
+Each AppState has its own update loop, which hooks into the main simpleUpdate() loop (callback). 
 *  *The AppState has been disabled (paused):* This toggles a boolean isEnabled() to false. Here you switch all objects to their specific “paused behaviour. 
 *  *The AppState is cleaned up:* Here you decide what happens when the AppState is detached. Save this AppState's game state, unregister Controls and InputHandlers, detach related AppStates, detach nodes from the rootNode, etc.
 
@@ -81,7 +83,7 @@ JME3 comes with a BulletAppState that implements Physical behaviour (using the j
 == AppState
 
 The AppState interface lets you initialize sets of objects, and hook a set of continuously executing code into the main loop.
-[cols="2", options="header"]
+[cols="25,75", options="header"]
 |===
 
 a|AppState Method
@@ -105,13 +107,15 @@ a|Here you implement the behaviour that you want to hook into the simpleUpdate()
 a|isInitialized()
 a|Your implementations of this interface should return the correct respective boolean value. (See AbstractAppState)
 
-a|setEnabled(true) +setEnabled(false)
+a|setEnabled(true) +
+setEnabled(false)
 a|Temporarily enables or disables an AppState. (See AbstractAppState) 
 
 a|isEnabled()
 a|Test whether AppState is enabled or disabled. Your implementation should consider the boolean. (See AbstractAppState)
 
-a|stateAttached(asm) +stateDetached(asm)
+a|stateAttached(asm) +
+stateDetached(asm)
 a|The AppState knows when it is attached to, or detached from, the AppStateManager, and triggers these two methods. Don't modify the scene graph from here! (Typically not used.) 
 
 a|render(RenderManager rm)
