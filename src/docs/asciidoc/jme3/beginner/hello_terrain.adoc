@@ -14,10 +14,10 @@ Next: <<jme3/beginner/hello_audio#,Hello Audio>>
 One way to create a 3D landscape is to sculpt a huge terrain model. This gives you a lot of artistic freedom – but rendering such a huge model can be quite slow. This tutorial explains how to create fast-rendering terrains from heightmaps, and how to use texture splatting to make the terrain look good.
 
 
-image::jme3/beginner/beginner-terrain.png[beginner-terrain.png,with="360",height="291",align="center"]
+image::jme3/beginner/beginner-terrain.png[beginner-terrain.png,360,291,align="center"]
 
 
-Note: If you get an error when trying to create your ImageBasedHeightMap object, you may need to update the SDK, click on “Help / “Check for updates
+NOTE: If you get an error when trying to create your ImageBasedHeightMap object, you may need to update the SDK, click on “Help / “Check for updates
 
 
 [TIP]
@@ -132,7 +132,7 @@ Heightmaps are an efficient way of representing the shape of a hilly landscape. 
 
 In Java, a heightmap is a float array containing height values between 0f and 255f. Here is a very simple example of a terrain generated from a heightmap with 5x5=25 height values.
 
-image:jme2/terrain-from-float-array.png[terrain-from-float-array.png,with="",height=""]
+image:jme2/terrain-from-float-array.png[terrain-from-float-array.png,width="",height=""]
 
 Important things to note:
 
@@ -147,7 +147,7 @@ When looking at Java data types to hold an array of floats between 0 and 255, th
 
 Look at the next screenshot: In the top left you see a 128x128 grayscale image (heightmap) that was used as a base to generate the depicted terrain. To make the hilly shape better visible, the mountain tops are colored white, valleys brown, and the areas inbetween green:
 
-image:jme2/terrain-from-heightmap.png[terrain-from-heightmap.png,with="",height=""]}
+image:jme2/terrain-from-heightmap.png[terrain-from-heightmap.png,width="",height=""]}
 
 In a real game, you will want to use more complex and smoother terrains than the simple heightmaps shown here. Heightmaps typically have square sizes of 512x512 or 1024x1024, and contain hundred thousands to 1 million height values. No matter which size, the concept is the same as described here.
 
@@ -155,7 +155,7 @@ In a real game, you will want to use more complex and smoother terrains than the
 === Looking at the Heightmap Code
 
 
-image::jme3/beginner/mountains512.png[mountains512.png,with="128",height="128",align="right"]
+image::jme3/beginner/mountains512.png[mountains512.png,128,128,align="right"]
 
 
 The first step of terrain creation is the heightmap. You can create one yourself in any standard graphic application. Make sure it has the following properties:
@@ -207,12 +207,12 @@ Splat textures are based on the `Terrain.j3md` material defintion. If you open t
 Before you can start painting, you have to make a few decisions:
 
 .  Choose three textures. For example grass.jpg, dirt.jpg, and road.jpg. 
-
-image::jme3/beginner/road.jpg[road.jpg,with="64",height="64",align="right"]
-  
-image::jme3/beginner/dirt.jpg[dirt.jpg,with="64",height="64",align="right"]
- 
-image::jme3/beginner/grass.jpg[grass.jpg,with="64",height="64",align="right"]
++
+image::jme3/beginner/road.jpg[road.jpg,64,64,align="right"]
++
+image::jme3/beginner/dirt.jpg[dirt.jpg,64,64,align="right"]
++
+image::jme3/beginner/grass.jpg[grass.jpg,64,64,align="right"]
 
 .  You “paint three texture layers by using three colors: Red, blue and, green. You arbitrarily decide that…
 ..  Red   is grass – red   is layer `Tex1`, so put the grass texture into Tex1.
@@ -231,7 +231,7 @@ Now you start painting the texture:
 
 .  The end result should look similar to this:
 
-image:jme3/beginner/mountains512.png[mountains512.png,with="64",height="64"] ⇒ image:jme3/beginner/alphamap.png[alphamap.png,with="64",height="64"]
+image:jme3/beginner/mountains512.png[mountains512.png,64,64] ⇒ image:jme3/beginner/alphamap.png[alphamap.png,64,64]
 
 
 === Looking at the Texturing Code
@@ -322,12 +322,14 @@ terrain = new TerrainQuad(
 You have created the terrain object.
 
 .  Remember to apply the created material: 
++
 [source,java]
 ----
 terrain.setMaterial(mat_terrain);
 ----
 
 .  Remember to attach the terrain to the rootNode.
++
 [source,java]
 ----
 rootNode.attachChild(terrain);
@@ -336,7 +338,10 @@ rootNode.attachChild(terrain);
 
 .  If needed, scale and translate the terrain object, just like any other Spatial.
 
-*Tip:* Terrain.j3md is an unshaded material definition, so you do not need a light source. You can also use TerrainLighting.j3md plus a light, if you want a shaded terrain.
+[TIP]
+====
+Terrain.j3md is an unshaded material definition, so you do not need a light source. You can also use TerrainLighting.j3md plus a light, if you want a shaded terrain.
+====
 
 
 == What is LOD (Level of Detail)?
@@ -389,6 +394,7 @@ The following three lines generate the heightmap object based on your user-defin
 Instead, you can also let JME3 generate a random landscape for you:
 
 .  What result do you get when you replace the above three heightmap lines by the following lines and run the sample?
++
 [source,java]
 ----
 
