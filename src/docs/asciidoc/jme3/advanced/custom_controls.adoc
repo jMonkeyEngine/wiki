@@ -15,7 +15,8 @@ To control global game behaviour see <<jme3/advanced/application_states#,Applica
 
 To control the behaviour of spatials:
 
-.  Create one control for each _type of behavior_. When you add several controls to one spatial, they will be executed in the order they were added. +For example, one NPC can be controlled by a PhysicsControl instance and an AIControl instance.
+.  Create one control for each _type of behavior_. When you add several controls to one spatial, they will be executed in the order they were added. +
+For example, one NPC can be controlled by a PhysicsControl instance and an AIControl instance.
 .  Define the custom control and implement its behaviour in the Control's update method:
 **  You can pass arguments into your custom control.
 **  In the control class, the object `spatial` gives you access to the spatial and subspatials that the control is attached to.
@@ -80,7 +81,8 @@ The AbstractControl can be found under `com.jme3.scene.control.AbstractControl`.
 *  You have access to a boolean `isEnabled()`.
 *  You have access to the Spatial object `spatial`. 
 *  You override the `controlUpdate()` method to implement the Spatial's behaviour. 
-*  You have access to a `setEnabled(boolean)` method. This activates or deactivates this Control's behaviour in this spatial temporarily. While the AbstractControl is toggled to be disabled, the `controlUpdate()` loop is no longer executed. +For example, you disable your IdleBehaviourControl when you enable your DefensiveBehaviourControl in a spatial.
+*  You have access to a `setEnabled(boolean)` method. This activates or deactivates this Control's behaviour in this spatial temporarily. While the AbstractControl is toggled to be disabled, the `controlUpdate()` loop is no longer executed. +
+For example, you disable your IdleBehaviourControl when you enable your DefensiveBehaviourControl in a spatial.
 
 Usage: Your custom subclass implements the three methods `controlUpdate()`, `controlRender()`, `setSpatial()`, and `cloneForSpatial()` as shown here:
 
@@ -171,13 +173,16 @@ In the less common case that you want to create a Control that also extends anot
 
 The Control interface can be found under `com.jme3.scene.control.Control`. It has the following method signatures:
 
-*  `cloneForSpatial(Spatial)`: Clones the Control and attaches it to a clone of the given Spatial. +Implement this method to be able to <<jme3/advanced/save_and_load#,save() and load()>> Spatials carrying this Control. +The AssetManager also uses this method if the same spatial is loaded twice. You can specify which fields you want your object to reuse (e.g. collisionshapes) in this case. 
+*  `cloneForSpatial(Spatial)`: Clones the Control and attaches it to a clone of the given Spatial. +
+Implement this method to be able to <<jme3/advanced/save_and_load#,save() and load()>> Spatials carrying this Control. +
+The AssetManager also uses this method if the same spatial is loaded twice. You can specify which fields you want your object to reuse (e.g. collisionshapes) in this case. 
 *  `setEnabled(boolean)`: Toggles a boolean that enables or disables the Control. Goes with accessor `isEnabled();`. You test for it in the `update(float tpf)` loop before you execute anything.
 *  There are also some internal methods that you do not call from user code: `setSpatial(Spatial s)`, `update(float tpf);`, `render(RenderManager rm, ViewPort vp)`.
 
 Usage example:
-1. Create a custom control interface
 
+. Create a custom control interface
++
 [source,java]
 ----
 public interface MyControlInterface extends Control {
@@ -185,8 +190,8 @@ public interface MyControlInterface extends Control {
 }
 ----
 
-2. Create custom Controls implementing your Control interface.
-
+. Create custom Controls implementing your Control interface.
++
 [source,java]
 ----
 public class MyControl extends MyCustomClass implements MyControlInterface {
@@ -260,8 +265,11 @@ public class MyControl extends MyCustomClass implements MyControlInterface {
 
 == Best Practices
 
-*Tip:* Use the getControl() accessor to get Control objects from Spatials. No need to pass around lots of object references.
+[TIP]
+====
+Use the getControl() accessor to get Control objects from Spatials. No need to pass around lots of object references.
 Here an example from the link:http://code.google.com/p/monkeyzone/[MonkeyZone] code:
+====
 
 [source,java]
 ----
@@ -277,7 +285,10 @@ public class CharacterAnimControl implements Control {
 }
 ----
 
-*Tip:* You can create custom Control interfaces so a set of different Controls provide the same methods and can be accessed with the interface class type.
+[TIP]
+====
+You can create custom Control interfaces so a set of different Controls provide the same methods and can be accessed with the interface class type.
+====
 
 [source,java]
 ----
@@ -316,7 +327,10 @@ vehicleSpatial.addControl(new ManualVehicleControl());
 ...
 ----
 
-*Tip:* Use the getControl() method on a Spatial to get a specific Control object, and activate its behaviour!
+[TIP]
+====
+Use the getControl() method on a Spatial to get a specific Control object, and activate its behaviour!
+====
 
 [source,java]
 ----
