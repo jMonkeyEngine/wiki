@@ -29,7 +29,8 @@ To let you see the main update loop in context, understand that the SimpleApplic
 
 ..  Repeat loop.
 
-*  *Quit* – If user requests `exit()`, execute `cleanup()` and `destroy()`. +The jME window closes and the loop ends.
+*  *Quit* – If user requests `exit()`, execute `cleanup()` and `destroy()`. +
+The jME window closes and the loop ends.
 
 
 == Usage
@@ -38,5 +39,7 @@ In a trivial <<jme3/intermediate/simpleapplication#,SimpleApplication>> (such as
 
 It's a best practice to modularize your game mechanics and spread out initialization and update loop code over several Java objects:
 
-*  Move modular code blocks from the `simpleInitApp()` method into <<jme3/advanced/application_states#,AppStates>>. Attach AppStates to initialize custom subsets of “one dungeon, and detach it when the player exits this “dungeon. +Examples: Weather/sky audio and visuals, physics collision shapes, sub-rootnodes of individual dungeons including dungeon NPCs, etc.
-*  Move modular code blocks from the `simpleUpdate()` method into the update loops of <<jme3/advanced/custom_controls#,Custom Controls>> to control individual entity behavior (NPCs), and into the update method of <<jme3/advanced/application_states#,AppStates>> to control world events. +Examples: Weather behaviour, light behaviour, physics behaviour, individual NPC behaviour, trap behaviour, etc.
+*  Move modular code blocks from the `simpleInitApp()` method into <<jme3/advanced/application_states#,AppStates>>. Attach AppStates to initialize custom subsets of “one dungeon, and detach it when the player exits this “dungeon. +
+Examples: Weather/sky audio and visuals, physics collision shapes, sub-rootnodes of individual dungeons including dungeon NPCs, etc.
+*  Move modular code blocks from the `simpleUpdate()` method into the update loops of <<jme3/advanced/custom_controls#,Custom Controls>> to control individual entity behavior (NPCs), and into the update method of <<jme3/advanced/application_states#,AppStates>> to control world events. +
+Examples: Weather behaviour, light behaviour, physics behaviour, individual NPC behaviour, trap behaviour, etc.
