@@ -13,7 +13,7 @@ Next: <<jme3/beginner/hello_animation#,Hello Animation>>
 
 The term Material includes everything that influences what the surface of a 3D model looks like: The color, texture, shininess, and opacity/transparency. Plain coloring is covered in <<jme3/beginner/hello_node#,Hello Node>>. Loading models that come with materials is covered in <<jme3/beginner/hello_asset#,Hello Asset>>. In this tutorial you learn to create and use custom JME3 Material Definitions.
 
-image::jme3/beginner/beginner-materials.png[beginner-materials.png,with="320",height="240",align="center"]
+image::jme3/beginner/beginner-materials.png[beginner-materials.png,320,240,align="center"]
 
 
 
@@ -188,7 +188,13 @@ What you did for the transparent texture is the same as before, with only one ad
 .  Load the texture `cube2Tex` into the `ColorMap` layer of the material `cube2Mat`.
 .  Apply the material to the cube, and attach the cube to the rootnode.
 
-*Tip:* Learn more about creating PNG images with an alpha layer in the help system of your graphic editor.
+
+
+[TIP]
+====
+Learn more about creating PNG images with an alpha layer in the help system of your graphic editor.
+====
+
 
 
 == Shininess and Bumpiness
@@ -200,6 +206,7 @@ In a lit material, the standard texture layer is refered to as _DiffuseMap_, any
 Let's have a look at the part of the code example where you create the shiny bumpy rock.
 
 .  Create a Geometry from a Sphere shape. Note that this shape is a normal smooth sphere mesh. 
++
 [source,java]
 ----
 
@@ -208,6 +215,7 @@ Let's have a look at the part of the code example where you create the shiny bum
 ----
 
 ..  (Only for Spheres) Change the sphere's TextureMode to make the square texture project better onto the sphere.
++
 [source,java]
 ----
 
@@ -215,6 +223,7 @@ Let's have a look at the part of the code example where you create the shiny bum
 ----
 
 ..  You must generate TangentBinormals for the mesh so you can use the NormalMap layer of the texture.
++
 [source,java]
 ----
 
@@ -223,6 +232,7 @@ Let's have a look at the part of the code example where you create the shiny bum
 
 
 .  Create a material based on the `Lighting.j3md` default material.
++
 [source,java]
 ----
 
@@ -230,10 +240,10 @@ Let's have a look at the part of the code example where you create the shiny bum
         "Common/MatDefs/Light/Lighting.j3md");
 ----
 
-..  Set a standard rocky texture in the `DiffuseMap` layer. +
-
-image::https://github.com/jMonkeyEngine/jmonkeyengine/raw/445f7ed010199d30c484fe75bacef4b87f2eb38e/jme3-testdata/src/main/resources/Textures/Terrain/Pond/Pond.jpg[Pond.jpg,with="64",height="64",align="right"]
-
+..  Set a standard rocky texture in the `DiffuseMap` layer. 
++
+image::https://github.com/jMonkeyEngine/jmonkeyengine/raw/445f7ed010199d30c484fe75bacef4b87f2eb38e/jme3-testdata/src/main/resources/Textures/Terrain/Pond/Pond.jpg[Pond.jpg,64,64,align="right"]
++
 [source,java]
 ----
 
@@ -243,9 +253,9 @@ image::https://github.com/jMonkeyEngine/jmonkeyengine/raw/445f7ed010199d30c484fe
 ----
 
 ..  Set the `NormalMap` layer that contains the bumpiness. The NormalMap was generated for this particular DiffuseMap with a special tool (e.g. Blender). 
-
-image::https://github.com/jMonkeyEngine/jmonkeyengine/raw/445f7ed010199d30c484fe75bacef4b87f2eb38e/jme3-testdata/src/main/resources/Textures/Terrain/Pond/Pond_normal.png[Pond_normal.png,with="64",height="64",align="right"]
- 
++
+image::https://github.com/jMonkeyEngine/jmonkeyengine/raw/445f7ed010199d30c484fe75bacef4b87f2eb38e/jme3-testdata/src/main/resources/Textures/Terrain/Pond/Pond_normal.png[Pond_normal.png,64,64,align="right"] 
++
 [source,java]
 ----
 
@@ -254,6 +264,7 @@ image::https://github.com/jMonkeyEngine/jmonkeyengine/raw/445f7ed010199d30c484fe
 ----
 
 ..  Set the Material's Shininess to a value between 1 and 128. For a rock, a low fuzzy shininess is appropriate. Use material colors to define the shiny Specular color. 
++
 [source,java]
 ----
 
@@ -265,6 +276,7 @@ image::https://github.com/jMonkeyEngine/jmonkeyengine/raw/445f7ed010199d30c484fe
 
 
 .  Assign your newly created material to the Geometry.
++
 [source,java]
 ----
 
@@ -272,6 +284,7 @@ image::https://github.com/jMonkeyEngine/jmonkeyengine/raw/445f7ed010199d30c484fe
 ----
 
 .  Let's move and rotate the geometry a bit to position it better. 
++
 [source,java]
 ----
 
@@ -283,7 +296,13 @@ image::https://github.com/jMonkeyEngine/jmonkeyengine/raw/445f7ed010199d30c484fe
 
 Remember that any Lighting.j3md-based material requires a light source, as shown in the full code sample above.
 
-*Tip:* To deactivate Shininess, do not set `Shininess` to 0, but instead set the `Specular` color to `ColorRGBA.Black`.
+
+
+[TIP]
+====
+To deactivate Shininess, do not set `Shininess` to 0, but instead set the `Specular` color to `ColorRGBA.Black`.
+====
+
 
 
 == Default Material Definitions
@@ -331,6 +350,7 @@ If you want to use one custom material for several models, you can store it in a
 You create a j3m file as follows:
 
 .  Create a plain text file `assets/Materials/MyCustomMaterial.j3m` in your project directory, with the following content:
++
 [source]
 ----
 Material My shiny custom material : Common/MatDefs/Light/Lighting.j3md {
@@ -352,6 +372,7 @@ Material My shiny custom material : Common/MatDefs/Light/Lighting.j3md {
 
 .  In the code sample, comment out the eight lines that have `sphereMat` in them.
 .  Below this line, add the following line: 
++
 [source,java]
 ----
 sphereGeo.setMaterial((Material) assetManager.loadMaterial( 
