@@ -56,7 +56,8 @@ a|Sets whether the motion along this path should be closed (true) or open-ended 
 a|path.addWayPoint(vector)
 a|Adds individual waypoints to this path. The order is relevant.
 
-a|path.removeWayPoint(vector) +removeWayPoint(index)
+a|path.removeWayPoint(vector) +
+removeWayPoint(index)
 a|Removes a way point from this path. You can specify the point that you want to remove as vector or as integer index.
 
 a|path.setCurveTension(0.83f)
@@ -76,14 +77,14 @@ a|Hides the line that visualizes the path. Use this for the release build.
 
 == MotionPathListener
 
-You can hook interactions into a playing MotionPath. Register a MotionPathListener to the MotionPath to track whether way points have been reached, and then trigger a custom action. The onWayPointReach() method of the interface gives you access to the MotionTrack object `control`, and an integer value representing the current wayPointIndex.
+You can hook interactions into a playing MotionPath. Register a MotionPathListener to the MotionPath to track whether way points have been reached, and then trigger a custom action. The onWayPointReach() method of the interface gives you access to the MotionEvent object `control`, and an integer value representing the current wayPointIndex.
 
 In this example, you just print the status at every way point. In a game you could trigger actions here: Transformations, animations, sounds, game actions (attack, open door, etc).
 
 [source,java]
 ----
 path.addListener( new MotionPathListener() {
-  public void onWayPointReach(MotionTrack control, int wayPointIndex) {
+  public void onWayPointReach(MotionEvent control, int wayPointIndex) {
     if (path.getNbWayPoints() == wayPointIndex + 1) {
       println(control.getSpatial().getName() + " has finished moving. ");
     } else {
