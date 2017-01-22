@@ -83,16 +83,20 @@ a| Usage
 a| A solid skyblue, or use with a custom SkyDome texture. +
 See also: <<jme3/advanced/sky#,Sky>> 
 a| setTexture(“TextureCubeMap, assetManager.loadTexture(“)); +
-setBoolean(“SphereMap,true); +setVector3(“NormalScale, new Vector3f(0,0,0)); 
+setBoolean(“SphereMap,true); +
+setVector3(“NormalScale, new Vector3f(0,0,0)); 
 
 a| Common/MatDefs/Terrain/Terrain.j3md 
 a| Splat textures for e.g. terrains. +
 See also: <<jme3/beginner/hello_terrain#,Hello Terrain>> 
-a| setTexture(“Tex1, assetManager.loadTexture(“)); (red) +
+a| setTexture(“Tex1, assetManager.loadTexture(“)); +
+(red) +
 setFloat(“Tex1Scale,1f); +
-setTexture(“Tex2, assetManager.loadTexture(“)); (green) +
+setTexture(“Tex2, assetManager.loadTexture(“)); +
+(green) +
 setFloat(“Tex2Scale,1f); +
-setTexture(“Tex3, assetManager.loadTexture(“)); (blue) +
+setTexture(“Tex3, assetManager.loadTexture(“)); +
+(blue) +
 setFloat(“Tex3Scale,1f); +
 setTexture(“Alpha, assetManager.loadTexture(“)); 
 
@@ -165,7 +169,8 @@ setTexture(“ParallaxMap, assetManager.loadTexture(“)); +
 setTexture(“AlphaMap, assetManager.loadTexture(“)); +
 setFloat(“AlphaDiscardThreshold,1f); +
 setTexture(“ColorRamp, assetManager.loadTexture(“)); +
-*Glow* +setTexture(“GlowMap, assetManager.loadTexture(“)); +
+*Glow* +
+setTexture(“GlowMap, assetManager.loadTexture(“)); +
 setColor(“GlowColor, ColorRGBA.White); +
 *Performance and quality* +
 setBoolean(“VertexLighting,true); +
@@ -313,15 +318,12 @@ If the DiffuseMap has an alpha channel, use:
 mat.setBoolean("UseAlpha",true);
 ----
 
-Later, put the Geometry (not the Material!) in the appropriate render queue
-
-*  
+Later, put the Geometry (not the Material!) in the appropriate render queue.
 [source,java]
 ----
 geo.setQueueBucket(Bucket.Translucent);
 ----
-
-*  
+or
 [source,java]
 ----
 geo.setQueueBucket(Bucket.Transparent);
