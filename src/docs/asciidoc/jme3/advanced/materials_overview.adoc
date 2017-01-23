@@ -285,46 +285,57 @@ a|Material Option
 a|Description
 a|Example
 
-a|getAdditionalRenderState().setBlendMode(BlendMode.Off);
+a|getAdditionalRenderState(). +
+setBlendMode(BlendMode.Off);
 a|This is the default, no transparency.
 a|Use for all opaque objects like walls, floors, people…
 
-a|getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
+a|getAdditionalRenderState() +
+.setBlendMode(BlendMode.Alpha);
 a|Interpolates the background pixel with the current pixel by using the current pixel's alpha.
 a|Use this for normal every-day translucency: Frosted window panes, ice, glass, alpha-blended vegetation textures… 
 
-a|getAdditionalRenderState().setDepthWrite(false);
+a|getAdditionalRenderState() +
+.setDepthWrite(false);
 a|Disables writing of the pixel's depth value to the depth buffer.
 a|Use this on Materials if you have several transparent/translucent objects obscuring one another, but you want to see through both.
 
-a|getAdditionalRenderState().setAlphaFallOff(0.5f); +
-getAdditionalRenderState().setAlphaTest(true)
+a|getAdditionalRenderState() +
+.setAlphaFallOff(0.5f); +
+getAdditionalRenderState() +
+.setAlphaTest(true)
 a|Enables Alpha Testing with a “AlphaDiscardThreshold in the AlphaMap.
 a|Activate Alpha Testing for (partially) *transparent* objects such as foliage, hair, etc. +
 Deactivate Alpha Testing for gradually *translucent* objects, such as colored glass, smoked glass, ghosts.
 
-a|getAdditionalRenderState().setBlendMode(BlendMode.Additive);
+a|getAdditionalRenderState() +
+.setBlendMode(BlendMode.Additive);
 a|Additive alpha blending adds colors in a commutative way, i.e. the result does not depend on the order of transparent layers, since it adds the scene's background pixel color to the current pixel color. This is useful if you have lots of transparent textures overlapping and don't care about the order. +
 *Note:* Viewed in front of a white background, Additive textures become fully transparent! 
 a| This is the default for Particle.j3md-based textures that have a black color background. 
 
-a|getAdditionalRenderState().setBlendMode(BlendMode.AlphaAdditive);
+a|getAdditionalRenderState() +
+.setBlendMode(BlendMode.AlphaAdditive);
 a|Same as “Additive, except first it multiplies the current pixel color by the pixel alpha.
 a|This can be used for particle effects that have alpha as background. 
 
-a|getAdditionalRenderState().setBlendMode(BlendMode.Color);
+a|getAdditionalRenderState() +
+.setBlendMode(BlendMode.Color);
 a|Blends by color.
 a|Generally useless.
 
-a|getAdditionalRenderState().setBlendMode(BlendMode.Modulate);
+a|getAdditionalRenderState() +
+.setBlendMode(BlendMode.Modulate);
 a|Multiplies the background pixel by the current pixel.
 a|?
 
-a|getAdditionalRenderState().setBlendMode(BlendMode.ModulateX2);
+a|getAdditionalRenderState() +
+.setBlendMode(BlendMode.ModulateX2);
 a|Same as “Modulate, except the result is doubled.
 a|?
 
-a|getAdditionalRenderState().setBlendMode(BlendMode.PremultAlpha);
+a|getAdditionalRenderState() +
+.setBlendMode(BlendMode.PremultAlpha);
 a|Pre-multiplied alpha blending. E.g. if the color of the object has already been multiplied by its alpha, this is used instead of “Alpha blend mode.
 a|For use with Premult Alpha textures.
 
@@ -358,19 +369,23 @@ a|Material Option
 a|Usage
 a|Example
 
-a|getAdditionalRenderState().setFaceCullMode(FaceCullMode.Back); 
+a|getAdditionalRenderState() +
+.setFaceCullMode(FaceCullMode.Back); 
 a|Activates back-face culling. Mesh faces that are facing away from the camera are not rendered, which saves time. *Backface culling is activated by default as a major optimization.* 
 a|The invisible backsides and insides of models are not calculated. 
 
-a|getAdditionalRenderState().setFaceCullMode(FaceCullMode.Off); 
+a|getAdditionalRenderState() +
+.setFaceCullMode(FaceCullMode.Off); 
 a|No meshes are culled. Both mesh faces are rendered, even if they face away from the camera. Slow.
 a|Sometimes used to debug custom meshes if you messed up some of the polygon sides, or for special shadow effects.
 
-a|getAdditionalRenderState().setFaceCullMode(FaceCullMode.Front); 
+a|getAdditionalRenderState() +
+.setFaceCullMode(FaceCullMode.Front); 
 a|Activates front-face culling. Mesh faces facing the camera are not rendered.
 a|No example – Typically not used because you wouldn't see anything meaningful.
 
-a|getAdditionalRenderState().setFaceCullMode(FaceCullMode.FrontAndBack)
+a|getAdditionalRenderState() +
+.setFaceCullMode(FaceCullMode.FrontAndBack)
 a|Culls both backfaces and frontfaces.
 a|Use this as an efficient way to make an object temporarily invisible, while keeping all its other in-game properties (such as node attachment, collision shapes, interactions, etc) active.
 
@@ -381,15 +396,22 @@ a|Use this as an efficient way to make an object temporarily invisible, while ke
 .Miscellaneous
 |===
 
-a|getAdditionalRenderState().setColorWrite(false);
+a|Material Option
+a|Useage
+a|Example
+
+a|getAdditionalRenderState() +
+.setColorWrite(false);
 a|Disable writing the color of pixels.
 a|Use this together with setDepthWrite(true) to write pixels only to the depth buffer, for example. 
 
-a|getAdditionalRenderState().setPointSprite(true);
+a|getAdditionalRenderState() +
+.setPointSprite(true);
 a|Enables point-sprite mode, e.g. meshes with “Mode.Points will be rendered as textured sprites. Note that gl_PointCoord must be set in the shader.
 a|Point sprites are used internally for hardware accelerated particle effects.
 
-a|getAdditionalRenderState().setPolyOffset();
+a|getAdditionalRenderState() +
+.setPolyOffset();
 a|Enable polygon offset.
 a|Use this when you have meshes that have triangles really close to each over (e.g. link:http://en.wikipedia.org/wiki/Coplanarity[Coplanar]), it will shift the depth values to prevent link:http://en.wikipedia.org/wiki/Z-fighting[Z-fighting].
 
