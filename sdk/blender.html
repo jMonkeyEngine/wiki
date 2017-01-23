@@ -12,8 +12,7 @@ By default a BlenderModelLoader is registered with your assetManager to load ble
 <div class="sect1"><h2 id="planned-features">Planned features.</h2><div class="sectionbody"><div class="olist arabic"><ol class="arabic"><li><p>Full support for scale and offset in texture input mapping.</p></li><li><p>Full support for bone and object constraints.</p></li><li><p>More modifiers loaded.</p></li><li><p>Loading texts.</p></li><li><p>Loading meta objects (if jme will support it ;) ).</p></li></ol></div></div></div>
 <div class="sect1"><h2 id="known-bugs-problems">Known bugs/problems.</h2><div class="sectionbody"><div class="olist arabic"><ol class="arabic"><li><p>RGB10 and RGB9E5 texture types are not supported in texture merging operations (which means that you can use this as a single texture on the model, but you should not combine it with other images or generated textures).</p></li><li><p>If an armature is attached to a mesh that has more than one material the vertices of the mesh might be strongly displaced. Hope to fix that soon.</p></li></ol></div></div></div>
 <div class="sect1"><h2 id="using-blenderloader-instead-of-blendermodelloader">Using BlenderLoader instead of BlenderModelLoader</h2><div class="sectionbody"><div class="paragraph"><p>You have two loaders available.</p></div>
-<div class="ulist"><ul><li><p>BlenderLoader that loads the whole scene. It returns an instance of  LoadingResults that contains all the data loaded from the scene.</p></li></ul></div>
-<div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">LoadingResults</span> <span class="directive">extends</span> Spatial {
+<div class="ulist"><ul><li><p>BlenderLoader that loads the whole scene. It returns an instance of LoadingResults that contains all the data loaded from the scene.</p><div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">LoadingResults</span> <span class="directive">extends</span> Spatial {
         <span class="comment">/** Bitwise mask of features that are to be loaded. */</span>
         <span class="directive">private</span> <span class="directive">final</span> <span class="type">int</span> featuresToLoad;
         <span class="comment">/** The scenes from the file. */</span>
@@ -31,13 +30,12 @@ By default a BlenderModelLoader is registered with your assetManager to load ble
         <span class="comment">/** All lights from the file. */</span>
         <span class="directive">private</span> <span class="predefined-type">List</span>&lt;Light&gt; lights;
         <span class="comment">/** Access Methods goes here. */</span>
-}</code></pre></div></div>
-<div class="ulist"><ul><li><p>BlenderModelLoader loads only the model node and should be used if you have a single model in a file.</p></li></ul></div>
+}</code></pre></div></div></li><li><p>BlenderModelLoader loads only the model node and should be used if you have a single model in a file.</p></li></ul></div>
 <div class="paragraph"><p>To register the model do the following:</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">assetManager.registerLoader(BlenderLoader.class, <span class="string"><span class="delimiter">&quot;</span><span class="content">blend</span><span class="delimiter">&quot;</span></span>);</code></pre></div></div>
 <div class="paragraph"><p>or</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">assetManager.registerLoader(BlenderModelLoader.class, <span class="string"><span class="delimiter">&quot;</span><span class="content">blend</span><span class="delimiter">&quot;</span></span>);</code></pre></div></div>
-<div class="ulist"><ul><li><p>The last thing to do is to create a proper key.</p></li></ul></div>
+<div class="paragraph"><p>The last thing to do is to create a proper key.</p></div>
 <div class="paragraph"><p>You can use com.jme3.asset.BlenderKey for that.
 The simplest use is to create the key with the asset&#8217;s name.
 It has many differens settings descibing the blender file more precisely, but all of them have default values so you do not need to worry about it at the beggining.
@@ -64,7 +62,7 @@ Marcin Roguski (Kaelthas)</p></div>
 This text might be edited in a meantime if I forgot about something ;)
 '''</p></div>
 <div class="paragraph"><p>See also:</p></div>
-<div class="ulist"><ul><li><p><a href="../sdk/3ds_to_blender_to_jmp.html">3DS to Blender to j3o</a></p></li></ul></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2017-01-23 01:43:52 UTC</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
+<div class="ulist"><ul><li><p><a href="../sdk/3ds_to_blender_to_jmp.html">3DS to Blender to j3o</a></p></li></ul></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2017-01-23 02:05:59 UTC</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
   apiKey: 'a736b6d93de805e26ec2f49b55013fbd',
   indexName: 'jmonkeyengine',
   inputSelector: '#doc-search',
