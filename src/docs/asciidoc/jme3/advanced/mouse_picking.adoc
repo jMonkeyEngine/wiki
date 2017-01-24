@@ -1,6 +1,6 @@
 = Mouse Picking
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :keywords: documentation, node, ray, click, collision, keyinput, input
 :relfileprefix: ../../
@@ -10,18 +10,18 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 Mouse picking means that the user clicks an object in the scene to select it, or to interact with it otherwise. Games use picking to implement aiming and shooting, casting spells, picking up objects, selecting targets, dragging and moving objects, etc. Mouse picking can be done using fixed crosshairs, or using the mouse pointer.
 
-image:jme3/advanced/mouse-picking.png[mouse-picking.png,with="",height=""]
+image:jme3/advanced/mouse-picking.png[mouse-picking.png,width="",height=""]
 
 See <<jme3/advanced/input_handling#,Input Handling>> for details on how to define the necessary input triggers, input mappings, and input listeners.
 
 
 == Pick a Target Using Fixed Crosshairs
 
-The following `pick target` input mapping implements an action that determines what a user clicked. It assumes that the mouse pointer is invisible and there are crosshairs painted in the center of the screen. It assumes that the user aims the crosshairs at an object in the scene and clicks. You use Ray Casting to identify the geometry that was picked by the user. Use this method together with a first-person flyCam. 
+The following `pick target` input mapping implements an action that determines what a user clicked. It assumes that the mouse pointer is invisible and there are crosshairs painted in the center of the screen. It assumes that the user aims the crosshairs at an object in the scene and clicks. You use Ray Casting to identify the geometry that was picked by the user. Use this method together with a first-person flyCam.
 
 .  Activate the first-person camera: `flyCam.setEnabled(true);`
 .  Keep mouse pointer invisible using `inputManager.setCursorVisible(false)`.
-.  Map the `pick target` action to a MouseButtonTrigger. 
+.  Map the `pick target` action to a MouseButtonTrigger.
 .  Implement the action in the Listener.
 
 The following example rotates Spatials named “Red Box or “Blue Box when they are clicked. Modify this code to do whatever your game needs to do with the identified target (shoot it, take it, move it, etc).
@@ -66,13 +66,13 @@ The following example rotates Spatials named “Red Box or “Blue Box when they
 
 == Pick a Target Using the Mouse Pointer
 
-The following `pick target` input mapping implements an action that determines what a user clicked. It assumes that the mouse pointer is visible, and the user aims the cursor at an object in the scene. You use ray casting to determine the geometry that was picked by the user. 
+The following `pick target` input mapping implements an action that determines what a user clicked. It assumes that the mouse pointer is visible, and the user aims the cursor at an object in the scene. You use ray casting to determine the geometry that was picked by the user.
 
 *Note:* Picking with a visible mouse pointer implies that your application can no longer use the default flyCam where the MouseAxisTrigger rotates the camera. You have to deactivate the flyCam mappings and provide custom mappings. Either different inputs rotate the camera, or the camera is fixed.
 
-.  Map the `pick target` action to a MouseButtonTrigger. 
+.  Map the `pick target` action to a MouseButtonTrigger.
 .  Make the mouse pointer visible using `inputManager.setCursorVisible(true)`.
-.  Remap the inputs for camera rotation, or deactivate camera rotation. 
+.  Remap the inputs for camera rotation, or deactivate camera rotation.
 .  Implement the action in the Listener.
 
 The following example rotates Spatials named “Red Box or “Blue Box when they are clicked. Modify this code to do whatever your game needs to do with the identified target (shoot it, take it, move it, etc).

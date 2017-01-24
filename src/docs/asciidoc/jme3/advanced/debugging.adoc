@@ -1,6 +1,6 @@
 = Debugging
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :relfileprefix: ../../
 :imagesdir: ../..
@@ -9,14 +9,14 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 When you deal with complex game engine features like animations or physics it is handy to get feedback from the engine how it interpreted the current state. Is the physical object's collision shape really where you think it is? Is the skeleton of the animated character moving like you think it should? This document shows you how to activate visual debug aides.
 
-What if you just want to quickly write code that loads models and brings them in their start position? You may not want to hunt for a sample model, convert it, add lights, and load materials. Instead you use “hasslefree simple shapes, and a “hasslefree unshaded material or wireframe: No model, no light source, no materials are needed to see them in your test scene. 
+What if you just want to quickly write code that loads models and brings them in their start position? You may not want to hunt for a sample model, convert it, add lights, and load materials. Instead you use “hasslefree simple shapes, and a “hasslefree unshaded material or wireframe: No model, no light source, no materials are needed to see them in your test scene.
 
 If you ever have problems with objects appearing in the wrong spot, with the wrong scale, or wrong orientation, simply attach debug shapes to your scene to have a point of reference in 3D space – just like a giant ruler. If your code positions the debug shapes correctly, but models remain invisible when you apply the same code to them, you know that the problem must be either the model (where is its origin coordinate?), or the light (too dark? too bright? missing?), or the model's material (missing?) – and not the positioning code.
 
-Here are some different debug shapes: 
+Here are some different debug shapes:
 
 
-image::jme3/advanced/debug-shapes.png[debug-shapes.png,with="600",height="220",align="center"]
+image::jme3/advanced/debug-shapes.png[debug-shapes.png,width="600",height="220",align="center"]
 
 
 
@@ -25,7 +25,7 @@ image::jme3/advanced/debug-shapes.png[debug-shapes.png,with="600",height="220",a
 
 === Coordinate Axes
 
-The coordinate axes (com.jme3.scene.debug.Arrow) help you see the cardinal directions (X,Y,Z) from their center point. Scale the arrows to use them as a “ruler for a certain length. 
+The coordinate axes (com.jme3.scene.debug.Arrow) help you see the cardinal directions (X,Y,Z) from their center point. Scale the arrows to use them as a “ruler for a certain length.
 
 [source,java]
 ----
@@ -141,7 +141,7 @@ Making the skeleton visible inside animated models can be handy for debugging an
 [source,java]
 ----
 
-     SkeletonDebugger skeletonDebug = 
+     SkeletonDebugger skeletonDebug =
          new SkeletonDebugger("skeleton", control.getSkeleton());
      Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
      mat.setColor("Color", ColorRGBA.Green);
@@ -157,14 +157,14 @@ We assume that you have loaded a model with a material `mat`.
 
 Then you can add a switch to toggle the model's wireframe on and off, like this:
 
-.  Create a key input trigger that switches between the two materials: E.g. we toggle when the T key is pressed: 
+.  Create a key input trigger that switches between the two materials: E.g. we toggle when the T key is pressed:
 [source,java]
 ----
     inputManager.addMapping("toggle wireframe", new KeyTrigger(KeyInput.KEY_T));
     inputManager.addListener(actionListener, "toggle wireframe");
 ----
 
-.  Now add the toggle action to the action listener 
+.  Now add the toggle action to the action listener
 [source,java]
 ----
 
@@ -174,20 +174,20 @@ Then you can add a switch to toggle the model's wireframe on and off, like this:
       // toggle wireframe
       if (name.equals("toggle wireframe") && !pressed) {
         wireframe = !wireframe; // toggle boolean
-        mat.getAdditionalRenderState().setWireframe(wireframe); 
+        mat.getAdditionalRenderState().setWireframe(wireframe);
       }
       // else ... other input tests.
     }
   };
 ----
 
-.  Alternatively you could traverse over the whole scene and toggle for all Geometry objects in there if you don't want to create a new SceneProcessor 
+.  Alternatively you could traverse over the whole scene and toggle for all Geometry objects in there if you don't want to create a new SceneProcessor
 [source,java]
 ----
 
   private ActionListener actionListener = new ActionListener() {
-    boolean wireframe = false; 
-    
+    boolean wireframe = false;
+
     @Override
     public void onAction(String name, boolean pressed, float tpf) {
       // toggle wireframe
@@ -198,7 +198,7 @@ Then you can add a switch to toggle the model's wireframe on and off, like this:
             if (spatial instanceof Geometry)
               ((Geometry)spatial).getMaterial().getAdditionalRenderState().setWireframe(wireframe);
           }
-        }); 
+        });
       }
       // else ... other input tests.
     }
@@ -215,8 +215,8 @@ To display the wireframe of the entire scene instead on one material at a time, 
 
 [source,java]
 ----
-public class WireProcessor implements SceneProcessor {    
-    
+public class WireProcessor implements SceneProcessor {
+
     RenderManager renderManager;
     Material wireMaterial;
 
@@ -225,7 +225,7 @@ public class WireProcessor implements SceneProcessor {
         wireMaterial.setColor("Color", ColorRGBA.Blue);
         wireMaterial.getAdditionalRenderState().setWireframe(true);
     }
-    
+
     public void initialize(RenderManager rm, ViewPort vp) {
         renderManager = rm;
     }
@@ -238,7 +238,7 @@ public class WireProcessor implements SceneProcessor {
         return renderManager != null;
     }
 
-    public void preFrame(float tpf) {        
+    public void preFrame(float tpf) {
     }
 
     public void postQueue(RenderQueue rq) {
@@ -252,7 +252,7 @@ public class WireProcessor implements SceneProcessor {
     public void cleanup() {
         renderManager.setForcedMaterial(null);
     }
-    
+
 }
 ----
 

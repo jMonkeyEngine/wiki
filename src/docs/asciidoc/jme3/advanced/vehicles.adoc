@@ -1,6 +1,6 @@
 = Controlling a Physical Vehicle
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :keywords: documentation, physics, vehicle, collision
 :relfileprefix: ../../
@@ -8,14 +8,14 @@
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
-For physical vehicles, jME's uses the jBullet ray-cast vehicle. In this vehicle implementation, the physical chassis 'floats' along on four non-physical vertical rays. 
+For physical vehicles, jME's uses the jBullet ray-cast vehicle. In this vehicle implementation, the physical chassis 'floats' along on four non-physical vertical rays.
 
 Internally, each wheel casts a ray down, and using the ray's intersection point, jBullet calculates the suspension length, and the suspension force. The suspension force is applied to the chassis, keeping it from hitting the ground. The friction force is calculated for each wheel where the ray intersects with the ground. Friction is applied as a sideways and forwards force. footnote:[ link:https://docs.google.com/Doc?docid=0AXVUZ5xw6XpKZGNuZG56a3FfMzU0Z2NyZnF4Zmo&hl=en[https://docs.google.com/Doc?docid=0AXVUZ5xw6XpKZGNuZG56a3FfMzU0Z2NyZnF4Zmo&amp;hl=en] ]
 
 This article shows how you use this vehicle implementation in a jME3 application.
 
 
-image::jme3/advanced/physics-vehicle.png[physics-vehicle.png,with="",height="",align="center"]
+image::jme3/advanced/physics-vehicle.png[physics-vehicle.png,width="",height="",align="center"]
 
 
 
@@ -31,7 +31,7 @@ Full code samples are here:
 
 The goal is to create a physical vehicle with wheels that can be steered and that interacts (collides with) with the floor and obstacles.
 
-.  Create a SimpleApplication with a <<jme3/advanced/physics#,BulletAppState>> 
+.  Create a SimpleApplication with a <<jme3/advanced/physics#,BulletAppState>>
 **  This gives us a PhysicsSpace for PhysicsNodes
 
 .  Create a VehicleControl + CompoundCollisionShape for the physical vehicle behaviour
@@ -56,7 +56,7 @@ The goal is to create a physical vehicle with wheels that can be steered and tha
 
 The vehicle that we create here in the link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/bullet/TestPhysicsCar.java[TestPhysicsCar.java] example is just a “box on wheels, a basic vehicle shape that you can replace with a fancy car model, as demonstrated in link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/bullet/TestFancyCar.java[TestFancyCar.java].
 
-Every physical object must have a collision shape, that we prepare first. For the vehicle, we choose a compound collision shape that is made up of a box-shaped body of the right size for the vehicle. We will add the wheels later. 
+Every physical object must have a collision shape, that we prepare first. For the vehicle, we choose a compound collision shape that is made up of a box-shaped body of the right size for the vehicle. We will add the wheels later.
 
 [source,java]
 ----
@@ -66,14 +66,14 @@ BoxCollisionShape box = new BoxCollisionShape(new Vector3f(1.2f, 0.5f, 2.4f));
 
 ----
 
-*Best Practice:* We attach the BoxCollisionShape (the vehicle body) to the CompoundCollisionShape at a Vector of (0,1,0): This shifts the effective center of mass of the BoxCollisionShape downwards to 0,-1,0 and makes a moving vehicle more stable! 
+*Best Practice:* We attach the BoxCollisionShape (the vehicle body) to the CompoundCollisionShape at a Vector of (0,1,0): This shifts the effective center of mass of the BoxCollisionShape downwards to 0,-1,0 and makes a moving vehicle more stable!
 
 [source,java]
 ----
 compoundShape.addChildShape(box, new Vector3f(0, 1, 0));
 ----
 
-Any kind of geometry can make up the visible part of the vehicle, here we use a wireframe box. We create a node that we use to group the geometry. 
+Any kind of geometry can make up the visible part of the vehicle, here we use a wireframe box. We create a node that we use to group the geometry.
 
 [source,java]
 ----
@@ -114,7 +114,7 @@ We now have a node `vehicleNode` with a visible “car geometry, which acts like
 
 == Adding the Wheels
 
-We create four wheel Geometries and add them to the vehicle. Our wheel geometries are simple, non-physical discs (flat Cylinders), they are just visual decorations. Note that the physical wheel behaviour (the com.jme3.bullet.objects.VehicleWheel objects) is created internally by the `vehicle.addWheel()` method. 
+We create four wheel Geometries and add them to the vehicle. Our wheel geometries are simple, non-physical discs (flat Cylinders), they are just visual decorations. Note that the physical wheel behaviour (the com.jme3.bullet.objects.VehicleWheel objects) is created internally by the `vehicle.addWheel()` method.
 
 The `addWheel()` method sets following properties:
 
@@ -209,7 +209,7 @@ Not shown here is that we also created a Material `mat`.
 
 Not shown here is the standard way how we map the input keys to actions (see full code sample). Also refer to <<jme3/advanced/input_handling#,Input Handling>>).
 
-In the ActionListener, we implement the actions that control the vehicle's direction and speed. For the four directions (accelerate=up, brake=down, left, right), we specify how we want the vehicle to move. 
+In the ActionListener, we implement the actions that control the vehicle's direction and speed. For the four directions (accelerate=up, brake=down, left, right), we specify how we want the vehicle to move.
 
 *  The braking action is pretty straightforward: +`vehicle.brake(brakeForce)`
 *  For left and right turns, we add a constant to `steeringValue` when the key is pressed, and subtract it when the key is released. +`vehicle.steer(steeringValue);`

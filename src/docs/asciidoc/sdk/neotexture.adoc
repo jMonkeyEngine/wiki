@@ -1,6 +1,6 @@
 = jMonkeyEngine SDK: Procedural Textures with NeoTexture
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :keywords: documentation, sdk, tool, texture, material
 :relfileprefix: ../
@@ -8,15 +8,15 @@
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
-The NeoTextureEditor allows creating tiled textures procedurally using a simple node interface for generating images, blending them, creating normal maps and much more. You can directly load the .tgr files as a material or export the generated images as .png files and use them in a jMonkeyEngine-based game. 
+The NeoTextureEditor allows creating tiled textures procedurally using a simple node interface for generating images, blending them, creating normal maps and much more. You can directly load the .tgr files as a material or export the generated images as .png files and use them in a jMonkeyEngine-based game.
 
-Textures usually make up most of the size of a game distribution. This is why NeoTexture is not only an editor, but also a library that generates textures from .tgr files. Use the library to load .tgr files directly in jME3 as a material, without having to export the textures before. This means high-quality textures for your models, but just tiny description files in your distribution. 
+Textures usually make up most of the size of a game distribution. This is why NeoTexture is not only an editor, but also a library that generates textures from .tgr files. Use the library to load .tgr files directly in jME3 as a material, without having to export the textures before. This means high-quality textures for your models, but just tiny description files in your distribution.
 
 
 == Creating and Editing a NeoTexture file
 
 
-image::wp-uploads/2010/10/neotexture-300x189.jpg[neotexture-300x189.jpg,with="",height="",align="right"]
+image::wp-uploads/2010/10/neotexture-300x189.jpg[neotexture-300x189.jpg,width="",height="",align="right"]
 
 
 .  Right-click the `assets/Textures` directory and choose New… &gt; Other.
@@ -26,7 +26,7 @@ image::wp-uploads/2010/10/neotexture-300x189.jpg[neotexture-300x189.jpg,with="",
 
 Edit the .tgr file and create your procedural texture: (link:http://neotextureedit.sourceforge.net/[Learn more about creating Procedural Textures here])
 
-.  Drag any pattern from the left bar to the editor area. 
+.  Drag any pattern from the left bar to the editor area.
 .  Right-click the editor area and paste a NormalMap filter node.
 .  Connect the green output mark of the pattern with the red input mark of the filter. +This generates a Normal Map that can be used as bump map.
 
@@ -44,7 +44,7 @@ To use NeoTexture tgr files directly in your application, you have to add the Ne
 == Loading tgr files as material
 
 
-image::wp-uploads/2010/10/neotexture-2-300x149.jpg[neotexture-2-300x149.jpg,with="",height="",align="right"]
+image::wp-uploads/2010/10/neotexture-2-300x149.jpg[neotexture-2-300x149.jpg,width="",height="",align="right"]
 
 
 We want to use the procedural texture as a material based on `Lighting.j3md` (the default). We know that Lighting.j3md supports DiffuseMap, NormalMap, SpecularMap, and ParallaxMap.
@@ -60,7 +60,7 @@ We want to use the procedural texture as a material based on `Lighting.j3md` (th
 Let's assign the newly created texture to a mesh to see what it looks like.
 
 .  Open your Main.java file.
-.  Choose Window→Palette to open the Palette. You will find two NeoTexture code snippets, one for adding the NeoTexture loader to the assetManager, and one for loading a NeoTexture material. 
+.  Choose Window→Palette to open the Palette. You will find two NeoTexture code snippets, one for adding the NeoTexture loader to the assetManager, and one for loading a NeoTexture material.
 .  Drag&amp;Drop one of each into the simpleInitApp() method of your application.
 .  Adjust the .tgr file path names to match the file that we just created: “Materials/neoMaterial.tgr.
 
@@ -71,7 +71,7 @@ Clean, build and run. You’re ready to load your procedural material!
 
 assetManager.registerLoader(com.jme3.material.plugins.NeoTextureMaterialLoader.class,"tgr");
 NeoTextureMaterialKey key = new NeoTextureMaterialKey("Materials/neoMaterial.tgr");
- 
+
 Material mat = assetManager.loadAsset(key);
 mat.setFloat("Shininess",12); /* Lighting.j3md has non-map parameters too that we can set. */
 thing.setMaterial(mat);

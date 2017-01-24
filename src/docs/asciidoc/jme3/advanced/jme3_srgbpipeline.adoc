@@ -1,6 +1,6 @@
 = Gamma Correction or sRGB pipline
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :relfileprefix: ../../
 :imagesdir: ../..
@@ -33,7 +33,7 @@ This only apply to textures that will render colors on screen (basically diffuse
 
 this is the kind of difference you can have :+
 left is non corrected output, right is gamma corrected output.+
-image:http://i.imgur.com/uNL7vw8.png[uNL7vw8.png,with="",height=""]
+image:http://i.imgur.com/uNL7vw8.png[uNL7vw8.png,width="",height=""]
 +
 
 
@@ -57,7 +57,7 @@ Note that Gamma Correction is only available on desktop with LWJGL or JOGL rende
 ==== Turning Gamma Correction on/off
 
 You can turn Gamma Correction on and off using the AppSettings. There is a method setGammaCorrection(boolean) that changes the setting.
-use this in the main() method of your application : 
+use this in the main() method of your application :
 
 [source,java]
 ----
@@ -69,7 +69,7 @@ app.setSettings(settings);
 ----
 
 This setting is also exposed in the Settings dialog displayed when you launch a jME application.+
-image:http://i.imgur.com/Lya1ldH.png[Lya1ldH.png,with="400",height=""]
+image:http://i.imgur.com/Lya1ldH.png[Lya1ldH.png,width="400",height=""]
 
 
 [IMPORTANT]
@@ -82,7 +82,7 @@ This is a short hand to enable both linearization of input textures and Gamma co
 
 ===== Enabling output Gamma Correction
 
-You can enable or disable the Gamma correction of the rendered output by using 
+You can enable or disable the Gamma correction of the rendered output by using
 
 [source,java]
 ----
@@ -121,16 +121,16 @@ As with output gamma correction this will not give exact result, but the error i
 Not all image format have their sRGB equivalent, and only 8bit formats.
 Here is an exhaustive list of the supported format and there equivalent :
 
-*  RGB8 : GL_SRGB8           
+*  RGB8 : GL_SRGB8
 *  RGBA8 : GL_SRGB8_ALPHA8
-*  BGR8 : GL_SRGB8  
+*  BGR8 : GL_SRGB8
 *  ABGR8 : GL_SRGB8_ALPHA8
 *  Luminance8 : GL_SLUMINANCE8
 *  Luminance8Alpha8 : GL_SLUMINANCE8_ALPHA8
 *  DXT1 : GL_COMPRESSED_SRGB_S3TC_DXT1
 *  DXT1A : GL_COMPRESSED_SRGB_ALPHA_S3TC_DXT1
 *  DXT3 : GL_COMPRESSED_SRGB_ALPHA_S3TC_DXT3
-*  DXT5 : GL_COMPRESSED_SRGB_ALPHA_S3TC_DXT5  
+*  DXT5 : GL_COMPRESSED_SRGB_ALPHA_S3TC_DXT5
 
 
 [IMPORTANT]
@@ -146,7 +146,7 @@ Conventionally only the rgb channels are gamma corrected, as the alpha channel d
 [IMPORTANT]
 ====
 Only loaded images will be marked as in sRGB color space, when using assetManager.loadTexture or loadAsset.+
-The color space of an image created by code will have to be specified in the constructor or will be assumed as Linear if not specified. 
+The color space of an image created by code will have to be specified in the constructor or will be assumed as Linear if not specified.
 ====
 
 
@@ -167,7 +167,7 @@ For example here is how the NormalMap parameter is declared in the lighting mate
 
 ----
 
-When a texture is assigned to this material param by using material.setTexture(“NormalMap, myNormalTexture), the color space of this texture's image will be forced to linear. 
+When a texture is assigned to this material param by using material.setTexture(“NormalMap, myNormalTexture), the color space of this texture's image will be forced to linear.
 So if you make your own material and want to use Gamma Correction, make sure you properly mark your textures as in the proper color space.
 
 This can sound complicated, but you just have to answer this question :  Does my image represent color data? if the answer is no, then you have to set the -Linear flag.

@@ -1,6 +1,6 @@
 = JME3 and Shaders
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :relfileprefix: ../../
 :imagesdir: ../..
@@ -23,7 +23,7 @@ There are multiple frequently used languages that you may encounter to code shad
 To keep it Simple: The Vertex shader is executed once for each vertex in the view, then the Fragment shader (also called the Pixel shader) is executed once for each pixel on the screen.+
 The main purpose of the Vertex shader is to compute the screen coordinate of a vertex (where this vertex will be displayed on screen) while the main purpose of the Fragment shader is to compute the color of a pixel.+
 This is a very simplified graphic to describe the call stack: +
-image:jme3/advanced/jme3andshaders.png[jme3andshaders.png,with="",height=""]+
+image:jme3/advanced/jme3andshaders.png[jme3andshaders.png,width="",height=""]+
 The main program sends mesh data to the vertex shader (vertex position in object space, normals, tangents, etc..). The vertex shader computes the screen position of the vertex and sends it to the Fragment shader. The fragment shader computes the color, and the result is displayed on screen or in a texture.
 +
 
@@ -43,7 +43,7 @@ There is a large panel of variable types to be used, for more information about 
 === Spaces and Matrices
 
 To understand the coming example you must know about the different spaces in 3D computer graphics, and the matrices used to translate coordinate from one space to another.+
-image:jme3/advanced/jme3andshaders-1.png[jme3andshaders-1.png,with="",height=""]+
+image:jme3/advanced/jme3andshaders-1.png[jme3andshaders-1.png,width="",height=""]+
 The engine passes the object space coordinates to the vertex shader. We need to compute its position in projection space. To do that we transform the object space position by the WorldViewProjectionMatrix which is a combination of the World, View, Projection matrices (who would have guessed?).+
 +
 
@@ -143,7 +143,7 @@ The complete list of global uniforms that can be used in JME3 can be found link:
 JME3 uses some global uniforms for lighting :
 
 *  g_LightDirection (vec4) : the direction of the light
-**  use for SpotLight : x,y,z contain the world direction vector of the light, the w component contains the spotlight angle cosine 
+**  use for SpotLight : x,y,z contain the world direction vector of the light, the w component contains the spotlight angle cosine
 
 *  g_LightColor (vec4) : the color of the light
 *  g_LightPosition : the position of the light
@@ -197,7 +197,7 @@ For integer and floating point parameters, the define will contain the value tha
 For all other types of parameters, the value 1 is defined.+
 If no value is set for that parameter, the define is not declared in the shader.+
 
-Those material parameters will be sent from the engine to the shader as follows, 
+Those material parameters will be sent from the engine to the shader as follows,
 there are setXXXX methods for any type of uniform you want to pass.+
 
 [source,java]
@@ -242,7 +242,7 @@ We need to pass 2 new parameters to the Lighting.j3md definition, MaterialParame
 // Keying Map
 Texture2D KeyMap
 
-// Key Color 
+// Key Color
 Color KeyColor
 
 ----
@@ -319,28 +319,28 @@ GLSL 1.0 to 1.2 comes with built in attributes and uniforms (ie, gl_Vertex, gl_M
 a|GLSL 1.2 attributes
 a|JME3 equivalent
 
-<a|gl_Vertex	
+<a|gl_Vertex
 a|inPosition
 
-<a|gl_Normal	
+<a|gl_Normal
 a|inNormal
 
-<a|gl_Color	
+<a|gl_Color
 a|inColor
 
-<a|gl_MultiTexCoord0	
+<a|gl_MultiTexCoord0
 a|inTexCoord
 
-<a|gl_ModelViewMatrix	
+<a|gl_ModelViewMatrix
 a|g_WorldViewMatrix
 
-<a|gl_ProjectionMatrix	
+<a|gl_ProjectionMatrix
 a|g_ProjectionMatrix
 
-<a|gl_ModelViewProjectionMatrix	
+<a|gl_ModelViewProjectionMatrix
 a|g_WorldViewProjectionMatrix
 
-<a|gl_NormalMatrix	
+<a|gl_NormalMatrix
 a|g_NormalMatrix
 
 |===

@@ -1,13 +1,13 @@
 = 3D Game Development Terminology
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :relfileprefix: ../
 :imagesdir: ..
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
-Before you start, make certain you are familiar with the following concepts and terminology. 
+Before you start, make certain you are familiar with the following concepts and terminology.
 
 
 == 3D Graphics and Audio
@@ -49,7 +49,7 @@ You create 3D meshes in tools called mesh editors, e.g in Blender. The jMonkeyEn
 
 == Materials: Color, Lighting/Shading
 
-What we call “color is merely part of an object's light reflection. The onlooker's brain uses shading and reflecting properties to infer an object's shape and material. Factors like these make all the difference between chalk vs milk, skin vs paper, water vs plastic, etc! 
+What we call “color is merely part of an object's light reflection. The onlooker's brain uses shading and reflecting properties to infer an object's shape and material. Factors like these make all the difference between chalk vs milk, skin vs paper, water vs plastic, etc!
 
 
 === Color
@@ -128,7 +128,7 @@ image::https://raw.githubusercontent.com/jMonkeyEngine/jmonkeyengine/master/jme3
 
 *  A plain image file or a procedural texture that describes an object's visible surface.
 *  The image can have alpha channels for transparency.
-*  *A Color Map is the minimum texture.* You can map more textures as optional improvements. 
+*  *A Color Map is the minimum texture.* You can map more textures as optional improvements.
 *  Color Maps are unshaded. The same is called Diffuse Map in a Phong-illuminated material, because this texture defines the basic colors of light that are _diffused_ by this object.
 
 
@@ -136,7 +136,7 @@ image::https://raw.githubusercontent.com/jMonkeyEngine/jmonkeyengine/master/jme3
 
 Bump maps are used to describe detailed shapes that would be too hard or simply too inefficient to sculpt in a mesh editor. There are two types:
 
-*  You use Normal Maps to model tiny details such as cracks in walls, rust, skin texture, or a canvas weave ( (link:http://en.wikipedia.org/wiki/Bump_mapping[More on BumpMaps]). 
+*  You use Normal Maps to model tiny details such as cracks in walls, rust, skin texture, or a canvas weave ( (link:http://en.wikipedia.org/wiki/Bump_mapping[More on BumpMaps]).
 *  You use Height Maps to model large terrains with valleys and mountains.
 
 [.right]
@@ -180,7 +180,7 @@ image::https://raw.githubusercontent.com/jMonkeyEngine/jmonkeyengine/master/jme3
 
 Tiles are a very simple, commonly used type of texture. When texturing a wide area (e.g. walls, floors), you don't create one huge texture – instead you tile a small texture repeatedly to fill the area.
 
-A seamless texture is an image file that has been designed or modified so that it can be used as tiles: The right edge matches the left edge, and the top edge matches the bottom edge. The onlooker cannot easily tell where one starts and the next one ends, thus creating an illusion of a huge texture. The downside is that the tiling becomes painfully obvious when the area is viewed from a distance. Also you cannot use it on more complex models such as characters. 
+A seamless texture is an image file that has been designed or modified so that it can be used as tiles: The right edge matches the left edge, and the top edge matches the bottom edge. The onlooker cannot easily tell where one starts and the next one ends, thus creating an illusion of a huge texture. The downside is that the tiling becomes painfully obvious when the area is viewed from a distance. Also you cannot use it on more complex models such as characters.
 
 See also this tutorial on link:http://www.photoshoptextures.com/texture-tutorials/seamless-textures.htm[How to make seamless textures in Photoshop].
 
@@ -199,12 +199,12 @@ Getting the seams and mappings right is crucial: You must use a graphic tool lik
 === Environment Mapping
 
 
-image::http://jmonkeyengine.org/wp-content/uploads/2010/10/glass-teapot1.png[glass-teapot1.png,with="160",height="90",align="right"]
+image::http://jmonkeyengine.org/wp-content/uploads/2010/10/glass-teapot1.png[glass-teapot1.png,width="160",height="90",align="right"]
 
 
-Environment Mapping or Reflection Mapping is used to create the impression of reflections and refractions in real time. It's faster (but less accurate) than the raytracing methods used in offline rendering applications. 
+Environment Mapping or Reflection Mapping is used to create the impression of reflections and refractions in real time. It's faster (but less accurate) than the raytracing methods used in offline rendering applications.
 
-You create a Cube Map to represent your environment; Sphere Maps are also possible, but often look distorted. Basically you give the environment map a set of images showing a “360° view of the background scene – very similar to a skybox. The renderer maps the environment on the texture of the reflective surface, which results in an acceptable “glass/mirror/water effect. Just like a skybox, the reflection map is static, so dynamic things (such as the player walking) are not part of the reflection. (!) 
+You create a Cube Map to represent your environment; Sphere Maps are also possible, but often look distorted. Basically you give the environment map a set of images showing a “360° view of the background scene – very similar to a skybox. The renderer maps the environment on the texture of the reflective surface, which results in an acceptable “glass/mirror/water effect. Just like a skybox, the reflection map is static, so dynamic things (such as the player walking) are not part of the reflection. (!)
 
 See also: <<jme3/advanced/water#,Water>>.
 
@@ -219,7 +219,7 @@ MIP Map means that you provide one texture in two or three resolutions in one fi
 A procedural texture is generated from repeating one small image, plus some pseudo-random, gradient variations (called Perlin noise). Procedural textures look more natural than static rectangular textures, and they look less distorted on spheres. On big meshes, their repetitiveness is much less noticable than with tiled seamless textures. Procedural textures are ideal for irregular large-area textures like grass, soil, rock, rust, and walls. Use the <<sdk/neotexture#,jMonkeyEngine SDK NeoTexture plugin>> to create them.
 
 
-image::http://jmonkeyengine.org/wp-content/uploads/2010/10/neotexture-2.jpg[neotexture-2.jpg,with="380",height="189",align="center"]
+image::http://jmonkeyengine.org/wp-content/uploads/2010/10/neotexture-2.jpg[neotexture-2.jpg,width="380",height="189",align="center"]
 
 
 See also: link:http://gryllus.net/Blender/Lessons/Lesson05.html[Creating Materials in Blender], link:http://en.wikibooks.org/wiki/Blender_3D:_Noob_to_Pro/Every_Material_Known_to_Man[Blender: Every Material Known to Man]
@@ -235,7 +235,7 @@ Unless you animate a 3D cartoon, realism of animated characters is generally a p
 === Rigging and Skinning
 
 
-image::http://pub.admc.com/misc/jme/blenderjmetut/blenderswordsman.png[blenderswordsman.png,with="195",height="151",align="right"]
+image::http://pub.admc.com/misc/jme/blenderjmetut/blenderswordsman.png[blenderswordsman.png,width="195",height="151",align="right"]
 
 
 An animated character has an armature: An internal skeleton (Bones) and an external surface (Skin). The Skin is the visible outside of the character and it includes clothing. The Bones are not visible and are used to interpolate (calculate) the morphing steps of the skin.
@@ -266,7 +266,7 @@ E.g. when the thigh bone moves, the leg is fully affected, the hips joints less 
 ====
 What is the difference between animation (rigging, skinning, keyframes) and transformation (rotation, scaling, moving, “slerp)?
 
-*  Transformation is simpler than animation. Sometimes, transforming a geometry already makes it look like it is animated: For example, a spinning windmill, a pulsating alien ball of energy, moving rods of a machine. Transformations can be easily done with JME3 methods. 
+*  Transformation is simpler than animation. Sometimes, transforming a geometry already makes it look like it is animated: For example, a spinning windmill, a pulsating alien ball of energy, moving rods of a machine. Transformations can be easily done with JME3 methods.
 *  Animations however are more complex and are encoded in a special format (keyframes). They distort the skin of the mesh, and complex series of motions be “recorded (in external tools) and played (in JME3).
 
 
@@ -293,10 +293,10 @@ Non-player (computer-controlled) characters (NPCs) are only fun in a game if the
 
 The domain of artificial intelligence deals, among other things, with:
 
-*  *Knowledge* – Knowledge is _the data_ to which the AI agent has access, and on which the AI bases its decisions. Realistic agents only “know what they “see and hear. This implies that information can be hidden from the AI to keep the game fair. You can have an all-knowing AI, or you can let only some AI agents share information, or you let only AI agents who are close know the current state. + 
+*  *Knowledge* – Knowledge is _the data_ to which the AI agent has access, and on which the AI bases its decisions. Realistic agents only “know what they “see and hear. This implies that information can be hidden from the AI to keep the game fair. You can have an all-knowing AI, or you can let only some AI agents share information, or you let only AI agents who are close know the current state. +
 Example: After the player trips the wire, only a few AI guards with two-way radios start moving towards the player's position, while many other guards don't suspect anything yet.
 *  *Goal Planning* – Planning is about how an AI agent _takes action_. Each agent has the priority to achieve a specific goal, to reach a future state. When programming, you split the agent's goal into several subgoals. The agent consults its knowledge about the current state, chooses from available tactics and strategies, and prioritizes them. The agent repeatedly tests whether the current state is closer to its goal. If unsuccessful, the agent must discard the current tactics/strategy and try another one. +
-Example: An agent searches the best path to reach the player base in a changing environment, avoiding traps. An agent chases the player with the goal of eliminating him. An agent hides from the player with the goal of murdering a VIP. 
+Example: An agent searches the best path to reach the player base in a changing environment, avoiding traps. An agent chases the player with the goal of eliminating him. An agent hides from the player with the goal of murdering a VIP.
 *  *Problem Solving* – Problem solving is about how the agent _reacts to interruptions_, obstacles that stand between it and its goal. The agent uses a given set of facts and rules to deduct what state it is in – triggered by perceptions similar to pain, agony, boredom, or being trapped. In each state, only a specific subset of reactions makes sense. The actual reaction also depends on the agent's, goal since the agent's reaction must not block its own goal! +
 Examples: If player approaches, does the agent attack or conceal himself or raise alarm? While agent is idle, does he lay traps or heal self or recharge magic runes? If danger to own life, does the agent try to escape or kamikaze?
 
@@ -336,7 +336,7 @@ The origin is the central point in the 3D world, where the three axes meet. It's
 
 A vector has a length and a direction, like an arrow in 3D space. A vector starts at a coordinate (x1,y1,z1) or at the origin, and ends at the target coordinate (x2,y2,z2). Backwards directions are expressed with negative values.
 
-*Example:* 
+*Example:*
 
 [source,java]
 ----
@@ -362,7 +362,7 @@ Negate the components of the vector to turn its direction, e.g. negating right (
 A _normalized vector_ is a custom _unit vector_. A normalized vector is not the same as a _(surface) normal vector_.
 When you normalize a vector, it still has the same direction, but you lose the information where the vector originally pointed.
 
-*Example:* You normalize vectors before calculating angles. 
+*Example:* You normalize vectors before calculating angles.
 
 
 ==== Surface Normal Vectors
@@ -370,7 +370,7 @@ When you normalize a vector, it still has the same direction, but you lose the i
 [.right]
 image::jme3/300px-surface_normal.png[300px-surface_normal.png,width="",height=""]
 
-A surface normal is a vector that is perpendicular (orthogonal) to a plane. 
+A surface normal is a vector that is perpendicular (orthogonal) to a plane.
 You calculate the Surface Normal by calculating the cross product.
 
 
@@ -385,7 +385,7 @@ In 3D space, speaking of an orthogonal only makes sense with respect to a plane.
 
 ==== Transformation
 
-Transformation means rotating (turning), scaling (resizing), or translating (moving) objects in 3D scenes. 3D engines offer simple methods so you can write code that transforms nodes. 
+Transformation means rotating (turning), scaling (resizing), or translating (moving) objects in 3D scenes. 3D engines offer simple methods so you can write code that transforms nodes.
 
 Examples: Falling and rotating bricks in 3D Tetris.
 

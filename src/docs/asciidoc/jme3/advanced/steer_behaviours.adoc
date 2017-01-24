@@ -1,6 +1,6 @@
 = Steer Behaviors
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :relfileprefix: ../../
 :imagesdir: ../..
@@ -11,7 +11,7 @@ Steer behaviors allows you to control the locomotion of “characters”, this c
 +
 +
 *Steer behaviors in action:*
-image:jme3/advanced/youtube_yyztntsgv00[youtube_yyztntsgv00,with="",height=""]
+image:jme3/advanced/youtube_yyztntsgv00[youtube_yyztntsgv00,width="",height=""]
 +
 Be sure that you have checked the demos: They can be downloaded here: link:http://localhost/jmeSteerTesting/downloads.php[jmesteer.bdevel.org]
 
@@ -40,7 +40,7 @@ Finally, do not forget to import the `com.jme3.ai.agents.behaviors.npc.steering`
 *  Alignment
 *  Obstacle Avoidance
 *  Unaligned obstacle avoidance
-*  Hide 
+*  Hide
 *  Slow
 *  Queuing
 *  Containment
@@ -58,25 +58,25 @@ All the behaviours extend from the `AbstractSteeringBehavior` class.
 
 == Adding a steer behavior
 
-Create instances from the steer behavior classes, They are located in the `com.jme3.ai.agents.behaviors.npc.steering` package. 
+Create instances from the steer behavior classes, They are located in the `com.jme3.ai.agents.behaviors.npc.steering` package.
 
-If we want to add more than one steer behavior, we need to create a container: 
+If we want to add more than one steer behavior, we need to create a container:
 [WARNING]
 ====
-If you add more than one steer behavior to a `SimpleMainBehavior` it will cause problems in the rotation of the agents. 
+If you add more than one steer behavior to a `SimpleMainBehavior` it will cause problems in the rotation of the agents.
 ====
 
 [cols="2", options="header"]
 |===
 
-a| Container 
-a| Purpose 
+a| Container
+a| Purpose
 
-a| CompoundSteeringBehavior 
-a| Contains and merges several `AbstractSteeringBehavior` instances 
+a| CompoundSteeringBehavior
+a| Contains and merges several `AbstractSteeringBehavior` instances
 
-a| BalancedCompoundSteeringBehavior 
-<a| Each force generated inside this container is reduced in relation with a proportion factor: “Partial Force / “Total container force  
+a| BalancedCompoundSteeringBehavior
+<a| Each force generated inside this container is reduced in relation with a proportion factor: “Partial Force / “Total container force
 
 |===
 
@@ -130,7 +130,7 @@ To assign priority layers add behaviors with the following function:
 
 [TIP]
 ====
-To optimize the process speed add the behaviors with the lowest priority first. 
+To optimize the process speed add the behaviors with the lowest priority first.
 ====
 
 
@@ -153,7 +153,7 @@ Example:
 ----
 
     Plane horizontalPlane = new Plane(new Vector3f(0,1,0), 0);
-    
+
     steerBehavior1.setupStrengthControl(0.5f); //Force reduced a 50%
     steerBehavior2.setupStrengthControl(horizontalPlane); //Force contained in the XZ plane
     steerContainer.setupStrengthControl(horizontalPlane, 2f); //Contained in the XZ plane and increased a 100%
@@ -173,9 +173,9 @@ The responsible for the agent's acceleration is the vector returned in the `calc
     @Override
     protected Vector3f calculateRawSteering() {
         Vector3f steerForce = Vector3f.ZERO;
-        
+
         //calculations
-        
+
         return steerForce;
     }
 
@@ -218,11 +218,11 @@ Example:
 ----
 
     public class CustomSteeringExceptions extends SteeringExceptions  {
-    
+
         public static class CustomRuntimeException extends SteeringBehaviorException {
             public CustomRuntimeException(String msg) { super(msg); }
         }
-    
+
         // ... other exceptions ...
     }
 
