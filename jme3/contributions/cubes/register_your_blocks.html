@@ -5,12 +5,12 @@
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">BlockManager.register(myBlockObject);</code></pre></div></div>
 <div class="admonitionblock tip"><table><tr><td class="icon"><i class="fa icon-tip" title="Tip"></i></td><td class="content"><div class="paragraph"><p>Using own blocks <em>should</em> work at the moment, if you encounter problems you can test your code using the default blocks (e.g. <strong>CubesTestAssets.BLOCK_GRASS</strong>).</p></div>
 <div class="paragraph"><p>You can register them by calling <code>CubesTestAssets.registerBlocks();</code>.</p></div></td></tr></table></div></div></div>
-<div class="sect1"><h2 id="single-texture-block">Single Texture Block</h2><div class="sectionbody"><div style="text-align: right;" class="imageblock"><div class="content"><img src="http://destroflyer.mania-community.de/other/imagehost/cubes/block_stone.png" alt="block_stone.png" height=""></div></div>
+<div class="sect1"><h2 id="single-texture-block">Single Texture Block</h2><div class="sectionbody"><div style="text-align: right;" class="imageblock"><div class="content"><img src="http://destroflyer.mania-community.de/other/imagehost/cubes/block_stone.png" alt="block_stone.png" width="150" height=""></div></div>
 <div class="paragraph"><p>Let&#8217;s say, you want to add a simple block, which uses the same texture on every face. The framework recognizes, when only one texture is specified and therefore uses this for each face:</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="comment">//The stone texture is in the 10th column and 1st row in the texture atlas</span>
 Block blockStone = <span class="keyword">new</span> Block(<span class="keyword">new</span> BlockSkin(<span class="keyword">new</span> BlockSkin_TextureLocation(<span class="integer">9</span>, <span class="integer">0</span>), <span class="predefined-constant">false</span>));
 BlockManager.register(blockStone);</code></pre></div></div></div></div>
-<div class="sect1"><h2 id="face-dependant-textures-block">Face-Dependant Textures Block</h2><div class="sectionbody"><div style="text-align: right;" class="imageblock"><div class="content"><img src="http://destroflyer.mania-community.de/other/imagehost/cubes/block_wood.png" alt="block_wood.png" height=""></div></div>
+<div class="sect1"><h2 id="face-dependant-textures-block">Face-Dependant Textures Block</h2><div class="sectionbody"><div style="text-align: right;" class="imageblock"><div class="content"><img src="http://destroflyer.mania-community.de/other/imagehost/cubes/block_wood.png" alt="block_wood.png" width="150" height=""></div></div>
 <div class="paragraph"><p>Now it&#8217;s time to get prettier blocks - The wood block as known in Minecraft has two textures: Top/Bottom (cross-section) and Left/Right/Front/Back (bark). A simple way to set the texture for each face is to just give 6 textures to the skin (in the right order :P):</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">Block blockWood = <span class="keyword">new</span> Block(<span class="keyword">new</span> BlockSkin<span class="type">[]</span>{
     <span class="keyword">new</span> BlockSkin(<span class="keyword">new</span> BlockSkin_TextureLocation(<span class="integer">4</span>, <span class="integer">0</span>), <span class="predefined-constant">false</span>),
@@ -22,7 +22,7 @@ BlockManager.register(blockStone);</code></pre></div></div></div></div>
 });
 BlockManager.register(blockWood);</code></pre></div></div></div></div>
 <div class="sect1"><h2 id="dynamic-textures-block">Dynamic Textures Block</h2><div class="sectionbody"><div class="paragraph"><p>Last but not least: What if a block wants to change its texture according to its environment?</p></div>
-<div style="text-align: right;" class="imageblock"><div class="content"><img src="http://destroflyer.mania-community.de/other/imagehost/cubes/block_grass.png" alt="block_grass.png" height=""></div></div>
+<div style="text-align: right;" class="imageblock"><div class="content"><img src="http://destroflyer.mania-community.de/other/imagehost/cubes/block_grass.png" alt="block_grass.png" width="150" height=""></div></div>
 <div class="paragraph"><p>A nice example would be a grass block - If it&#8217;s on the surface, it contains a nice grass texture at the top face and a little earth-grass-transition at the sides. Otherwise, all 6 sides should display an earth texture.
 Special behaviours like this can be achieved by overwriting the <strong>getSkinIndex</strong> method:</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">Block blockGrass = <span class="keyword">new</span> Block(<span class="keyword">new</span> BlockSkin<span class="type">[]</span>{
@@ -50,7 +50,7 @@ Special behaviours like this can be achieved by overwriting the <strong>getSkinI
         <span class="keyword">return</span> <span class="integer">2</span>;
     }
 };
-BlockManager.register(blockGrass);</code></pre></div></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2017-01-24 19:02:48 UTC</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
+BlockManager.register(blockGrass);</code></pre></div></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2017-01-24 19:32:04 UTC</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
   apiKey: 'a736b6d93de805e26ec2f49b55013fbd',
   indexName: 'jmonkeyengine',
   inputSelector: '#doc-search',

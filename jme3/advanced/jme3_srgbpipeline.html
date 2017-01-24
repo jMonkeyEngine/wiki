@@ -20,7 +20,7 @@ To avoid this we need to apply some gamma correction to the colors : (pow(color,
 This only apply to textures that will render colors on screen (basically diffuse map, specular, light maps). Normal maps, height maps don’t need the correction.</p></div>
 <div class="paragraph"><p>this is the kind of difference you can have :+
 left is non corrected output, right is gamma corrected output.+
-<span class="image"><img src="http://i.imgur.com/uNL7vw8.png" alt="uNL7vw8.png" height=""></span></p></div>
+<span class="image"><img src="http://i.imgur.com/uNL7vw8.png" alt="uNL7vw8.png" width="" height=""></span></p></div>
 <div class="paragraph"><p>+</p></div>
 <div class="sect2"><h3 id="implementation">Implementation</h3><div class="ulist"><ul><li><p>To handle proper gamma corrected ouput colors, Opengl expose an ARB extension that allows you to output a color in linear space and have the GPU automatically correct it : <a href="https://www.opengl.org/registry/specs/ARB/framebuffer_sRGB.txt">https://www.opengl.org/registry/specs/ARB/framebuffer_sRGB.txt</a></p></li><li><p>To handle the input, instead of classic RGBA8 image format, one can use SRGB8_ALPHA8_EXT which is basically RGBA in sRGB. Using this you specify the GPU that the texture is in sRGB space and when fetching  a color from it, the GPU will linearize the color value for you (for free). There are sRGB equivalent to all 8 bits formats (even compressed format like DXT).+</p></li><li><p>But all textures don&#8217;t need this. For example, normal maps, height maps colors are most probably generated and not hand picked by an artist looking through a monitor. The implementation needs to account for it and expose a way to exclude some textures from the sRGB pipeline.</p></li></ul></div>
 <div class="paragraph"><p>Gamma Correction in jME 3.0 is based on those three statements.</p></div>
@@ -31,7 +31,7 @@ use this in the main() method of your application :</p></div>
 settings.setGammaCorrection(<span class="predefined-constant">true</span>);
 app.setSettings(settings);</code></pre></div></div>
 <div class="paragraph"><p>This setting is also exposed in the Settings dialog displayed when you launch a jME application.+
-<span class="image"><img src="http://i.imgur.com/Lya1ldH.png" alt="Lya1ldH.png" height=""></span></p></div>
+<span class="image"><img src="http://i.imgur.com/Lya1ldH.png" alt="Lya1ldH.png" width="400" height=""></span></p></div>
 <div class="admonitionblock important"><table><tr><td class="icon"><i class="fa icon-important" title="Important"></i></td><td class="content"><div class="paragraph"><p>This is a short hand to enable both linearization of input textures and Gamma correction of the rendered output on screen.* But both can be enabled separately*.</p></div></td></tr></table></div>
 <div class="sect4"><h5 id="enabling-output-gamma-correction">Enabling output Gamma Correction</h5><div class="paragraph"><p>You can enable or disable the Gamma correction of the rendered output by using</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">renderer.setMainFrameBufferSrgb(<span class="type">boolean</span> srgb)</code></pre></div></div>
@@ -76,7 +76,7 @@ You can see in some games some Gamma calibration screens, that are here to help 
 <div class="sect2"><h3 id="should-you-use-this">Should you use this?</h3><div class="paragraph"><p>Yes. Mostly because it&#8217;s the only way to have proper lighting.
 If you&#8217;re starting a new project it&#8217;s a no brainer…use it, period. And don&#8217;t allow the player to turn it off.</p></div>
 <div class="paragraph"><p>Now if you already spent time to adjust lighting in your scenes, without gamma correction, turning it on will make everything too bright, and you&#8217;ll have to adjust all your lighting and colors again.
-That&#8217;s why we kept a way to turn it off, for backward compatibility.</p></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2017-01-24 19:02:48 UTC</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
+That&#8217;s why we kept a way to turn it off, for backward compatibility.</p></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2017-01-24 19:32:04 UTC</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
   apiKey: 'a736b6d93de805e26ec2f49b55013fbd',
   indexName: 'jmonkeyengine',
   inputSelector: '#doc-search',

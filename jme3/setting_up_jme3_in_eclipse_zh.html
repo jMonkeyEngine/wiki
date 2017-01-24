@@ -4,24 +4,24 @@
 <div class="paragraph"><p>或者，你可以使用你喜好的IDE：本教程将介绍如何下载并安装最新版的jMonkeyEngine 3，并与Eclipse IDE集成。jMonkeyEngine 3与<a href="../jme3/setting_up_netbeans_and_jme3.html">NetBeans IDE</a>同样可以集成。</p></div></div></div>
 <div class="sect1"><h2 id="下载jme3">下载jME3</h2><div class="sectionbody"><div class="paragraph"><p>下载最新的jMonkeyEngine3稳定版JAR包。</p></div>
 <div class="olist arabic"><ol class="arabic"><li><p>从 <a href="http://updates.jmonkeyengine.org/stable/3.0/engine">http://updates.jmonkeyengine.org/stable/3.0/engine</a> 下载最新的压缩包(不出意外应该是jME3_2014-06-12.zip)。</p></li><li><p>将其解压到你的工作目录($HOME)下，保存到`jME3_2014-xx-xx`文件夹中，你将会看到下列文件及文件夹：</p><div class="ulist"><ul><li><p><code>lib/</code> – 编译好的jMonkeyEngine运行库。(重要！不要移动这个文件夹！)</p></li><li><p><code>opt/</code> – 可选运行库，包含android、ios、jogl、gluegen、OpenAL、bullet等JAR包和DLL文件，用户自选使用。(可选)</p></li><li><p><code>javadoc/</code> – jME3 API文档。(可选)</p></li><li><p><code>source/</code> – jME3源代码。(可选)</p></li><li><p><code>TestChooser.exe</code> – 运行这个程序，可以预览大量的DEMO。(可选)</p></li></ul></div></li></ol></div>
-<div style="text-align: center;" class="imageblock"><div class="content"><img src="../jme3/1_jme3_2014_06_12_zip.png" alt="1_jme3_2014_06_12_zip.png" height=""></div></div></div></div>
+<div style="text-align: center;" class="imageblock"><div class="content"><img src="../jme3/1_jme3_2014_06_12_zip.png" alt="1_jme3_2014_06_12_zip.png" width="800" height=""></div></div></div></div>
 <div class="sect1"><h2 id="新建游戏项目">新建游戏项目</h2><div class="sectionbody"><div class="ulist"><ul><li><p>在Eclipse的菜单中，选择 File &gt; New &gt; Java Project</p></li><li><p>项目名：HelloJME3</p></li><li><p>点击Finish</p></li></ul></div>
-<div style="text-align: center;" class="imageblock"><div class="content"><img src="../jme3/2_create_hellojme3_project.png" alt="2_create_hellojme3_project.png" height=""></div></div>
+<div style="text-align: center;" class="imageblock"><div class="content"><img src="../jme3/2_create_hellojme3_project.png" alt="2_create_hellojme3_project.png" width="800" height=""></div></div>
 <div class="paragraph"><p>项目创建完毕，即可在Package视图中看到这个项目。</p></div></div></div>
 <div class="sect1"><h2 id="添加jme3依赖">添加jME3依赖</h2><div class="sectionbody"><div class="paragraph"><p>你的项目依赖于jMonkeyEngine库文件，需要知道JME3的JAR包都在什么位置。</p></div>
 <div class="ulist"><ul><li><p>右键单击项目名，在弹出菜单中选择`Build Path &gt; Configure Build Path..`</p></li></ul></div>
-<div style="text-align: center;" class="imageblock"><div class="content"><img src="../jme3/3_configure_build_path.png" alt="3_configure_build_path.png" height=""></div></div>
+<div style="text-align: center;" class="imageblock"><div class="content"><img src="../jme3/3_configure_build_path.png" alt="3_configure_build_path.png" width="643" height=""></div></div>
 <div class="ulist"><ul><li><p>打开项目配置窗口后，选择`Java Build Path &gt; Libraries &gt; Add External JARs..`</p></li></ul></div>
-<div style="text-align: center;" class="imageblock"><div class="content"><img src="../jme3/4_add_external_jars.png" alt="4_add_external_jars.png" height=""></div></div>
+<div style="text-align: center;" class="imageblock"><div class="content"><img src="../jme3/4_add_external_jars.png" alt="4_add_external_jars.png" width="751" height=""></div></div>
 <div class="ulist"><ul><li><p>在“JAR selection对话框中，打开`$HOME/jME3_2012-xx-xx`文件夹</p></li><li><p>选中`lib`文件夹中所有的JAR文件，然后点击“Open</p></li></ul></div>
-<div style="text-align: center;" class="imageblock"><div class="content"><img src="../jme3/5_jar_selection.png" alt="5_jar_selection.png" height=""></div></div>
+<div style="text-align: center;" class="imageblock"><div class="content"><img src="../jme3/5_jar_selection.png" alt="5_jar_selection.png" width="563" height=""></div></div>
 <div class="paragraph"><p>现在所有必要的JAR包都已经添加到了项目的classpath，并显示在在Referenced Libraries中。至于每个JAR文件的详细介绍，请查阅<a href="../jme3/jme3_source_structure.html#structure_of_jmonkeyengine3_jars">jME3 JAR文件说明</a>。</p></div></div></div>
 <div class="sect1"><h2 id="添加资源">添加资源</h2><div class="sectionbody"><div class="paragraph"><p>在classpath中创建一个assets文件夹，确保jME3的资源管理器可以正确访问项目资源。</p></div>
 <div class="olist arabic"><ol class="arabic"><li><p>打开项目配置(Project Properties)窗口</p></li><li><p>选择Java Build Path</p></li><li><p>在Source标签页下点击“Add folder</p></li><li><p>添加Assets文件夹</p></li></ol></div>
-<div style="text-align: center;" class="imageblock"><div class="content"><img src="../jme3/6_new_source_folder.png" alt="6_new_source_folder.png" height=""></div></div></div></div>
+<div style="text-align: center;" class="imageblock"><div class="content"><img src="../jme3/6_new_source_folder.png" alt="6_new_source_folder.png" width="525" height=""></div></div></div></div>
 <div class="sect1"><h2 id="编写一个简单的应用程序">编写一个简单的应用程序</h2><div class="sectionbody"><div class="olist arabic"><ol class="arabic"><li><p>在项目中新建一个package，例如“hello</p></li><li><p>在hello包中新建一个类，命名为“MyGame，继承于`com.jme3.app.SimpleApplication`</p></li></ol></div>
-<div style="text-align: center;" class="imageblock"><div class="content"><img src="../jme3/7_create_mygame.png" alt="7_create_mygame.png" height=""></div></div>
-<div class="paragraph"><p>然后你可以接着开发<a href="../jme3/beginner/hello_simpleapplication_zh.html">你的第一个jme3应用程序</a>了！</p></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2017-01-24 19:02:48 UTC</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
+<div style="text-align: center;" class="imageblock"><div class="content"><img src="../jme3/7_create_mygame.png" alt="7_create_mygame.png" width="556" height=""></div></div>
+<div class="paragraph"><p>然后你可以接着开发<a href="../jme3/beginner/hello_simpleapplication_zh.html">你的第一个jme3应用程序</a>了！</p></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2017-01-24 19:32:04 UTC</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
   apiKey: 'a736b6d93de805e26ec2f49b55013fbd',
   indexName: 'jmonkeyengine',
   inputSelector: '#doc-search',
