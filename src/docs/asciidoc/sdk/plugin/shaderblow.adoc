@@ -69,17 +69,13 @@ Add a link:https://github.com/jMonkeyEngine-Contributions/shaderblowlib/blob/mas
 
 [source,java]
 ----
-
-		this.fpp = new FilterPostProcessor(this.assetManager);
-		this.fpp.setNumSamples(4);
-		this.colorScale = new ColorScaleFilter();
-		this.fpp.addFilter(this.colorScale);
-
-		// colorScale.setFilterColor(ColorRGBA.Red.clone()); // Set Filter color
-		// colorScale.setColorDensity(0.5f); // Set Color intensity (between 0 and 1);
-
-		this.viewPort.addProcessor(this.fpp);
-
+this.fpp = new FilterPostProcessor(this.assetManager);
+this.fpp.setNumSamples(4);
+this.colorScale = new ColorScaleFilter();
+this.fpp.addFilter(this.colorScale); 
+// colorScale.setFilterColor(ColorRGBA.Red.clone()); // Set Filter color
+// colorScale.setColorDensity(0.5f); // Set Color intensity (between 0 and 1);
+this.viewPort.addProcessor(this.fpp);
 ----
 
 link:https://github.com/jMonkeyEngine-Contributions/shaderblowlib/blob/master/ShaderBlow/test-src/com/shaderblow/test/filter/color/TestColorScale.java[TestCase]
@@ -92,6 +88,7 @@ link:https://hub.jmonkeyengine.org/t/colorscale-filter-added-to-shaderblow/23995
 == GrayScale Filter
 
 The GrayScale filter converts the render image to grayscale.
+
 [cols="2", options="header"]
 |===
 
@@ -110,12 +107,10 @@ Add a link:https://github.com/jMonkeyEngine-Contributions/shaderblowlib/blob/mas
 
 [source,java]
 ----
-
-        this.fpp = new FilterPostProcessor(this.assetManager); // Create FilterPostProcessor instance
-        this.grayScale = new GrayScaleFilter();  // Create GrayScaleFilter instance
-        this.fpp.addFilter(this.grayScale);  // Add GrayScaleFilter instance to FilterPostProcessor instance
-        this.viewPort.addProcessor(this.fpp);  // Add FilterPostProcessor instance to ViewPort
-
+this.fpp = new FilterPostProcessor(this.assetManager); // Create FilterPostProcessor instance
+this.grayScale = new GrayScaleFilter();  // Create GrayScaleFilter instance
+this.fpp.addFilter(this.grayScale);  // Add GrayScaleFilter instance to FilterPostProcessor instance
+this.viewPort.addProcessor(this.fpp);  // Add FilterPostProcessor instance to ViewPort
 ----
 
 link:https://github.com/jMonkeyEngine-Contributions/shaderblowlib/blob/master/ShaderBlow/test-src/com/shaderblow/test/filter/grayscale/TestGrayScale.java[TestCase]
@@ -159,12 +154,10 @@ Add a link:https://github.com/jMonkeyEngine-Contributions/shaderblowlib/blob/mas
 
 [source,java]
 ----
-
-        this.fpp = new FilterPostProcessor(this.assetManager); // Create FilterPostProcessor instance
-        this.oldFilmFilter= new OldFilmFilter();  // Create OldFilmFilter instance
-        this.fpp.addFilter(this.oldFilmFilter);  // Add OldFilmFilter instance to FilterPostProcessor instance
-        this.viewPort.addProcessor(this.fpp);  // Add FilterPostProcessor instance to ViewPort
-
+this.fpp = new FilterPostProcessor(this.assetManager); // Create FilterPostProcessor instance
+this.oldFilmFilter= new OldFilmFilter();  // Create OldFilmFilter instance
+this.fpp.addFilter(this.oldFilmFilter);  // Add OldFilmFilter instance to FilterPostProcessor instance
+this.viewPort.addProcessor(this.fpp);  // Add FilterPostProcessor instance to ViewPort
 ----
 
 link:https://github.com/jMonkeyEngine-Contributions/shaderblowlib/blob/master/ShaderBlow/test-src/com/shaderblow/test/filter/oldfilm/TestOldFilm.java[TestCase]
@@ -278,25 +271,22 @@ Dissolver is based on Common/MatDefs/Lighting.j3md. So, all Common/MatDefs/Light
 
 [source,java]
 ----
+// Create a material instance using ShaderBlow's Lighting.j3md
+final Material mat = new Material(this.assetManager, "ShaderBlow/MatDefs/Dissolve/Lighting.j3md");
+mat.setColor("Ambient", ColorRGBA.Blue);
+mat.setColor("Diffuse", ColorRGBA.White);
+mat.setColor("Specular", ColorRGBA.Black);
+mat.setBoolean("UseMaterialColors", true);
 
-        // Create a material instance using ShaderBlow's Lighting.j3md
-        final Material mat = new Material(this.assetManager, "ShaderBlow/MatDefs/Dissolve/Lighting.j3md");
-        mat.setColor("Ambient", ColorRGBA.Blue);
-        mat.setColor("Diffuse", ColorRGBA.White);
-        mat.setColor("Specular", ColorRGBA.Black);
-        mat.setBoolean("UseMaterialColors", true);
+this.assetManager.loadTexture("TestTextures/Dissolve/burnMap.png", mat.setTexture("DissolveMap", map); // Set mask texture map
 
-        this.assetManager.loadTexture("TestTextures/Dissolve/burnMap.png"
-        mat.setTexture("DissolveMap", map); // Set mask texture map
-        
-        this.DSParams = new Vector2f(0, 0); // standard dissolver
-        //this.DSParamsInv = new Vector2f(0, 1); // inverted dissolver
-        mat.setVector2("DissolveParams", this.DSParams); // Set params
+this.DSParams = new Vector2f(0, 0); // standard dissolver
+//this.DSParamsInv = new Vector2f(0, 1); // inverted dissolver
+mat.setVector2("DissolveParams", this.DSParams); // Set params
 
-        final Box b = new Box(Vector3f.ZERO, 1, 1, 1);
-        final Geometry geom = new Geometry("Box", b);
-        geom.setMaterial(mat);
-
+final Box b = new Box(Vector3f.ZERO, 1, 1, 1);
+final Geometry geom = new Geometry("Box", b);
+geom.setMaterial(mat);
 ----
 
 link:https://github.com/jMonkeyEngine-Contributions/shaderblowlib/blob/master/ShaderBlow/test-src/com/shaderblow/test/dissolve/TestDissolve.java[TestCase]
@@ -357,51 +347,46 @@ Remenber to set the queue bucket to transparent for the spatial.
 
 [source,java]
 ----
+// Create the material
+final Material mat = new Material(this.assetManager, "ShaderBlow/MatDefs/FakeParticleBlow/FakeParticleBlow.j3md");
 
-        // Create the material
-        final Material mat = new Material(this.assetManager,
-                "ShaderBlow/MatDefs/FakeParticleBlow/FakeParticleBlow.j3md");
+// Create the mask texture to use
+final Texture maskTex = this.assetManager.loadTexture("TestTextures/FakeParticleBlow/mask.png");
+mat.setTexture("MaskMap", maskTex);
 
-        // Create the mask texture to use
-        final Texture maskTex = this.assetManager.loadTexture("TestTextures/FakeParticleBlow/mask.png");
-        mat.setTexture("MaskMap", maskTex);
+// Create the texture to use for the spatial.
+final Texture aniTex = this.assetManager.loadTexture("TestTextures/FakeParticleBlow/particles.png");
+aniTex.setWrap(WrapMode.MirroredRepeat); // NOTE: Set WrapMode = MirroredRepeat in order to animate the texture
+mat.setTexture("AniTexMap", aniTex); // Set texture
 
-        // Create the texture to use for the spatial.
-        final Texture aniTex = this.assetManager.loadTexture("TestTextures/FakeParticleBlow/particles.png");
-        aniTex.setWrap(WrapMode.MirroredRepeat); // NOTE: Set WrapMode = MirroredRepeat in order to animate the texture
-        mat.setTexture("AniTexMap", aniTex); // Set texture
+mat.setFloat("TimeSpeed", 2); // Set animation speed
 
-        mat.setFloat("TimeSpeed", 2); // Set animation speed
+mat.setColor("BaseColor", ColorRGBA.Green.clone()); // Set base color to apply to the texture
 
-        mat.setColor("BaseColor", ColorRGBA.Green.clone()); // Set base color to apply to the texture
+// mat.setBoolean("Animation_X", true); // Enable X axis animation
+mat.setBoolean("Animation_Y", true); // Enable Y axis animation
+mat.setBoolean("Change_Direction", true); // Change direction of the texture animation
 
-        // mat.setBoolean("Animation_X", true); // Enable X axis animation
-        mat.setBoolean("Animation_Y", true); // Enable Y axis animation
-        mat.setBoolean("Change_Direction", true); // Change direction of the texture animation
+mat.getAdditionalRenderState().setFaceCullMode(FaceCullMode.Off); // Allow to see both sides of a face
+mat.getAdditionalRenderState().setBlendMode(BlendMode.Additive);
 
-        mat.getAdditionalRenderState().setFaceCullMode(FaceCullMode.Off); // Allow to see both sides of a face
-        mat.getAdditionalRenderState().setBlendMode(BlendMode.Additive);
+final ColorRGBA fogColor = ColorRGBA.Black.clone();
+fogColor.a = 10; // fogColor's alpha value is used to calculate the intensity of the fog (distance to apply fog)
+mat.setColor("FogColor", fogColor); // Set fog color to apply to the spatial.
 
-        final ColorRGBA fogColor = ColorRGBA.Black.clone();
-        fogColor.a = 10; // fogColor's alpha value is used to calculate the intensity of the fog (distance to apply fog)
-        mat.setColor("FogColor", fogColor); // Set fog color to apply to the spatial.
-
-        final Quad quad = new Quad(3, 3); // Create an spatial. A plane in this case
-        final Geometry geom = new Geometry("Particle", quad);
-        geom.setMaterial(mat); // Assign the material to the spatial
-        TangentBinormalGenerator.generate(geom);
-        geom.setQueueBucket(Bucket.Transparent); // Remenber to set the queue bucket to transparent for the spatial
-
+final Quad quad = new Quad(3, 3); // Create an spatial. A plane in this case
+final Geometry geom = new Geometry("Particle", quad);
+geom.setMaterial(mat); // Assign the material to the spatial
+TangentBinormalGenerator.generate(geom);
+geom.setQueueBucket(Bucket.Transparent); // Remenber to set the queue bucket to transparent for the spatial
 ----
 
 To get green/yellow/blue fog (not transparency):
 
 [source,java]
 ----
-
-        mat.getAdditionalRenderState().setBlendMode(BlendMode.AlphaAdditive);
-        final ColorRGBA fogColor = ColorRGBA.Blue.clone();
-
+mat.getAdditionalRenderState().setBlendMode(BlendMode.AlphaAdditive);
+final ColorRGBA fogColor = ColorRGBA.Blue.clone();
 ----
 
 Several planes geometries will be required as there will be AlphaAdditive material.
@@ -455,40 +440,34 @@ If you experience problems, try higher polygon object.
 
 [source,java]
 ----
+// Create spatial to be the shield
+final Sphere sphere = new Sphere(30, 30, 1.2f);
+final Geometry shield = new Geometry("forceshield", sphere);
+shield.setQueueBucket(Bucket.Transparent); // Remenber to set the queue bucket to transparent for the spatial
 
-        // Create spatial to be the shield
-        final Sphere sphere = new Sphere(30, 30, 1.2f);
-        final Geometry shield = new Geometry("forceshield", sphere);
-        shield.setQueueBucket(Bucket.Transparent); // Remenber to set the queue bucket to transparent for the spatial
+// Create ForceShieldControl
+this.forceShieldControl = new ForceShieldControl(this.assetManager, 0.5f);
+shield.addControl(this.forceShieldControl); // Add the control to the spatial
+this.forceShieldControl.setEffectSize(2f); // Set the effect size
+this.forceShieldControl.setColor(new ColorRGBA(1, 0, 0, 3)); // Set effect color
+this.forceShieldControl.setVisibility(0.1f); // Set shield visibility.
 
-        // Create ForceShieldControl
-        this.forceShieldControl = new ForceShieldControl(this.assetManager, 0.5f);
-        shield.addControl(this.forceShieldControl); // Add the control to the spatial
-        this.forceShieldControl.setEffectSize(2f); // Set the effect size
-        this.forceShieldControl.setColor(new ColorRGBA(1, 0, 0, 3)); // Set effect color
-        this.forceShieldControl.setVisibility(0.1f); // Set shield visibility.
+// Set a texture to the shield
+this.forceShieldControl.setTexture(this.assetManager.loadTexture("TestTextures/ForceShield/fs_texture.png"));
 
-        // Set a texture to the shield
-        this.forceShieldControl.setTexture(this.assetManager.loadTexture("TestTextures/ForceShield/fs_texture.png"));
-
-        // this.forceShieldControl.setEnabled(false); // Enable, disable animation.
-
+// this.forceShieldControl.setEnabled(false); // Enable, disable animation.
 ----
 
 Use _forceShieldControl.registerHit(final Vector3f position)_ method to register a hit.
 
 [source,java]
 ----
+final CollisionResults crs = new CollisionResults();
+this.rootNode.collideWith(new Ray(this.cam.getLocation(), this.cam.getDirection()), crs);
+if (crs.getClosestCollision() != null) {
 
-            final CollisionResults crs = new CollisionResults();
-            this.rootNode.collideWith(new Ray(this.cam.getLocation(), this.cam.getDirection()), crs);
-            if (crs.getClosestCollision() != null) {
-
-                // Register a hit
-                this.forceShieldControl.registerHit(crs.getClosestCollision().getContactPoint());
-
-            }
-
+// Register a hit
+this.forceShieldControl.registerHit(crs.getClosestCollision().getContactPoint());
 ----
 
 link:https://github.com/jMonkeyEngine-Contributions/shaderblowlib/blob/master/ShaderBlow/test-src/com/shaderblow/test/forceshield/TestShield.java[TestCase]
