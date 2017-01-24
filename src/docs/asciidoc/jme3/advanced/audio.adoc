@@ -14,7 +14,8 @@ Place audio files in the `assets/Sound/` directory of your project. jME3 support
 == Audio Terminology
 
 *  *Streaming:* There are two ways to load audio data: Short audio files are to be stored entirely in memory (prebuffered), while long audio files, such as music, are streamed from the hard drive as it is played.
-*  *Looping:* You can play a sound either once and then stop, or repeatedly (continuously) in a loop. +You cannot loop streamed sounds.
+*  *Looping:* You can play a sound either once and then stop, or repeatedly (continuously) in a loop. +
+You cannot loop streamed sounds.
 *  *Instance:* If you play the same audio twice, the playing is queued up and jME plays one after the other. If you play instances of sounds, several instances of the same sound can play at the same time.
 
 
@@ -38,6 +39,7 @@ AudioNode music = new AudioNode(assetManager, "Sound/music.wav", DataType.Stream
 
 
 == Getting AudioNode Properties
+
 [cols="2", options="header"]
 |===
 
@@ -55,10 +57,14 @@ a|Returns the pitch.
 
 |===
 
-Note: There are other obvious getters to poll the status of all corresponding setters listed here.
+[NOTE]
+====
+There are other obvious getters to poll the status of all corresponding setters listed here.
+====
 
 
 == Setting AudioNode Properties
+
 [cols="2", options="header"]
 |===
 
@@ -87,29 +93,34 @@ a|Configures the sound so that, if it is played, it plays once and stops. No loo
 
 
 === Looping & Ambient Sounds
+
 [cols="2", options="header"]
 |===
 
 a|AudioNode Method
 a|Usage
 
-a|setPositional(false) +setDirectional(false)
+a|setPositional(false) +
+setDirectional(false)
 a|All 3D effects switched off. This sound is global and plays in headspace (it appears to come from everywhere). Good for environmental ambient sounds and background music.
 
 a|setLooping(true)
-a|Configures the sound to be a loop: After the sound plays, it repeats from the beginning, until you call stop() or pause(). Good for music and ambient background noises. +*Before 3.1-alpha2, Looping does not work on streamed sounds.* 
+a|Configures the sound to be a loop: After the sound plays, it repeats from the beginning, until you call stop() or pause(). Good for music and ambient background noises. +
+*Before 3.1-alpha2, Looping does not work on streamed sounds.* 
 
 |===
 
 
 === Positional 3D Sounds
+
 [cols="2", options="header"]
 |===
 
 a|AudioNode Method
 a|Usage
 
-a|setPositional(true) +setLocalTranslation(…)
+a|setPositional(true) +
+setLocalTranslation(…)
 a|Activates 3D audio: The sound appears to come from a certain position, where it is loudest. Position the AudioNode in the 3D scene, or move it with mobile players or NPCs.
 
 a|setReverbEnabled(true)
@@ -126,16 +137,19 @@ Positional 3D sounds require an `AudioListener` object in the scene (representin
 
 
 === Directional 3D Sounds
+
 [cols="2", options="header"]
 |===
 
 a|AudioNode Method
 a|Usage
 
-a|setDirectional(true) +setDirection(…) 
+a|setDirectional(true) +
+setDirection(…) 
 a|Activates 3D audio: This sound can only be heard from a certain direction. Specify the direction and angle in the 3D scene if you have setDirectional() true. Use this to restrict noises that should not be heard, for example, through a wall.
 
-a|setInnerAngle() +setOuterAngle()
+a|setInnerAngle() +
+setOuterAngle()
 a|Set the angle in degrees for the directional audio. The angle is relative to the direction. Note: By default, both angles are 360° and the sound can be heard from all directions!
 
 |===
@@ -167,7 +181,10 @@ myAudioNode.pause();
 myAudioNode.stop();
 ----
 
-*Note:* Whether an Audio Node plays continuously or only once, depends on the Loop properties you have set above!
+[NOTE]
+====
+Whether an Audio Node plays continuously or only once, depends on the Loop properties you have set above!
+====
 
 You can also start playing instances of an AudioNode. Use the `playInstance()` method if you need to play the same AudioNode multiple times, possibly simulatenously. Note that changes to the parameters of the original AudioNode do not affect the instances that are already playing!
 
@@ -197,6 +214,7 @@ The default AudioListener object `listener` in `SimpleApplication` is the user's
 == Setting Audio Environment Properties
 
 Optionally, You can choose from the following environmental presets from `com.jme3.audio.Environment`. This presets influence subtle echo effects (reverb) that evoke associations of different environments in your users. That is, it makes you scene sound “indoors or “outdoors etc. You use Audio Environments together with `setReverbEnabled(true)` on positional AudioNodes (see above).
+
 [cols="11", options="header"]
 |===
 
@@ -276,12 +294,14 @@ a|0.0006f
 
 .  Activate a Environment preset
 **  Either use a default, e.g. make you scene sounds like a dungeon environment: 
++
 [source,java]
 ----
 audioRenderer.setEnvironment(new Environment(Environment.Dungeon));
 ----
 
 **  Or activate <<jme3/advanced/audio_environment_presets#,custom environment settings>> in the Environment constructor:
++
 [source,java]
 ----
 audioRenderer.setEnvironment(
@@ -291,6 +311,7 @@ audioRenderer.setEnvironment(
 
 
 .  Activate 3D audio for certain sounds: 
++
 [source,java]
 ----
 footstepsAudio.setPositional(true);
