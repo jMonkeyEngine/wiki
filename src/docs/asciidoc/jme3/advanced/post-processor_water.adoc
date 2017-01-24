@@ -9,9 +9,8 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 The awesome SeaMonkey WaterFilter is highly configurable. It can render any type of water and also simulates the underwater part of the effect, including light effects called caustics. The effect is based on link:http://www.gamedev.net/page/reference/index.html/_//feature/fprogramming/rendering-water-as-a-post-process-effect-r2642[Wojciech Toman’s Rendering Water as a Post-process Effect] published on gamedev.net. Here's a video:
 
-link:http://www.youtube.com/watch?v=AWlUzgRN3Pc[
-image::jme3/advanced/water-post.png[water-post.png,width="",height="",align="center"]
-]
+
+image::jme3/advanced/water-post.png[water-post.png,width="",height="",align="center",link:http://www.youtube.com/watch?v=AWlUzgRN3Pc]
 
 
 [NOTE]
@@ -43,11 +42,11 @@ Now we have the rendered scene in a texture, and we can reconstruct the position
 
 == Sample Code
 
-There are two test cases in the jME3 repository:
+These are test cases in the jME3 repository:
 
-*  link:http://code.google.com/p/jmonkeyengine/source/browse/trunk/engine/src/test/jme3test/water/TestPostWater.java[jme3/src/test/jme3test/water/TestPostWater.java] (ocean island)
-*  link:http://code.google.com/p/jmonkeyengine/source/browse/trunk/engine/src/test/jme3test/water/TestPostWaterLake.java[jme3/src/test/jme3test/water/TestPostWaterLake.java] (calm and muddy water pond)
-*  link:http://code.google.com/p/jmonkeyengine/source/browse/trunk/engine/src/test/jme3test/water/TestMultiPostWater.java[jme3/src/test/jme3test/water/TestMultiPostWater.java] (several ponds of different sizes at different heights etc)
+*  link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/water/TestPostWater.java[jme3/src/test/jme3test/water/TestPostWater.java] (ocean island)
+*  link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/water/TestPostWaterLake.java[jme3/src/test/jme3test/water/TestPostWaterLake.java] (calm and muddy water pond)
+*  link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/water/TestMultiPostWater.java[jme3/src/test/jme3test/water/TestMultiPostWater.java] (several ponds of different sizes at different heights etc)
 
 
 === Using the Water Filter
@@ -108,6 +107,7 @@ image::jme3/advanced/water-post-muddy.png[water-post-muddy.png,width="220",heigh
 
 
 All these effects are optional. Every setter also has a getter.
+
 [cols="3", options="header"]
 |===
 
@@ -135,11 +135,13 @@ a|water.setSpeed(0.7f);
 a|How fast the waves move. Set it to 0.0f for still water.
 a|1.0f
 
-a|water.setHeightTexture( (Texture2D) +manager.loadTexture(“Textures/waveheight.png) )
+a|water.setHeightTexture( (Texture2D) +
+manager.loadTexture(“Textures/waveheight.png) )
 a|This height map describes the shape of the waves
 a|“Common/MatDefs/Water/Textures/heightmap.jpg
 
-a|water.setNormalTexture( (Texture2D) +manager.loadTexture(“Textures/wavenormals.png) )
+a|water.setNormalTexture( (Texture2D) +
+manager.loadTexture(“Textures/wavenormals.png) )
 a|This normal map describes the shape of the waves
 a|“Common/MatDefs/Water/Textures/gradient_map.jpg
 
@@ -152,6 +154,7 @@ a|Sets the normal scaling factors to apply to the normal map. The higher the val
 a|1.0f
 
 |===
+
 [cols="3", options="header"]
 |===
 
@@ -169,11 +172,13 @@ a|RGBA.White
 
 a|water.setWaterColor(ColorRGBA.Brown.mult(2.0f));
 a|Sets the main water color.
-a|greenish blue +ColorRGBA(0.0f,0.5f,0.5f,1.0f)
+a|greenish blue +
+ColorRGBA(0.0f,0.5f,0.5f,1.0f)
 
 a|water.setDeepWaterColor(ColorRGBA.Brown);
 a|Sets the deep water color.
-a|dark blue +ColorRGBA(0.0f, 0.0f,0.2f,1.0f)
+a|dark blue +
+ColorRGBA(0.0f, 0.0f,0.2f,1.0f)
 
 a|water.setWaterTransparency(0.2f);
 a|Sets how fast colors fade out. use this to control how clear (e.g. 0.05f) or muddy (0.2f) water is.
@@ -184,6 +189,7 @@ a|Sets At what depth the refraction color extincts. The three values are RGB (re
 a|Vector3f(5f,20f,30f)
 
 |===
+
 [cols="3", options="header"]
 |===
 
@@ -191,7 +197,8 @@ a| Water method example
 a| Effects: Shore
 a|Default
 
-a|water.setCenter(Vector3f.ZERO); +water.setRadius(260);
+a|water.setCenter(Vector3f.ZERO); +
+water.setRadius(260);
 a|Limit the water filter to a semisphere with the given center and radius. Use this for lakes and smaller bodies of water. Skip this for oceans.
 a|unused
 
@@ -204,6 +211,7 @@ a|Renders shoreline with better quality ?
 a|true
 
 |===
+
 [cols="3", options="header"]
 |===
 
@@ -223,11 +231,13 @@ a|water.setFoamExistence(new Vector3f(0.5f,5f,1.0f))
 a|The three values describe what depth foam starts to fade out, at what depth it is completely invisible, at what height foam for waves appears (+ waterHeight).
 a|Vector3f(0.45f,4.35f,1.0f)
 
-a|water.setFoamTexture( (Texture2D) +manager.loadTexture(“Textures/foam.png) )
+a|water.setFoamTexture( (Texture2D) +
+manager.loadTexture(“Textures/foam.png) )
 a|This foam texture will be used with WrapMode.Repeat
 a|“Common/MatDefs/Water/Textures/foam.jpg
 
 |===
+
 [cols="3", options="header"]
 |===
 
@@ -280,9 +290,10 @@ audioRenderer.playSource(waves);
 ----
 
 See also: <<jme3/advanced/audio#,audio>>.
+
 '''
 
 See also:
 
-*  link:http://jmonkeyengine.org/2011/01/15/new-advanced-water-effect-for-jmonkeyengine-3/#comment-609[JME3's Water Post-Process Effect] by Nehon
+*  link:https://hub.jmonkeyengine.org/t/monkeys-at-the-beach/15000[JME3's Water Post-Process Effect] by Nehon
 *  <<jme3/advanced/water#,Simple water>>
