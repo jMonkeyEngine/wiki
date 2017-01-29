@@ -1,4 +1,4 @@
-= jMonkeyEngine 3 第二颗 (2) - Hello Node
+= jMonkeyEngine 3 第二课 (2) - Hello Node
 :author: 
 :revnumber: 
 :revdate: 2016/03/17 20:48
@@ -9,22 +9,23 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
 先看: <<jme3/the_scene_graph#,Hello SimpleApplication>>,
-在看: <<jme3/beginner/hello_asset#,Hello Assets>>. 
+再看: <<jme3/beginner/hello_asset#,Hello Assets>>. 
 
-我的中文不是呢么好，请你们帮我咻咻他。谢谢。
+我的中文不是那么好，请你们帮我修改，谢谢！（原句：我的中文不是呢么好，请你们帮我咻咻他。谢谢。）
+PS：我的英语不怎么地，我把编者未翻译的部分翻译过来会带上英文原文，希望有所贡献。
 
 在这一课，你会学怎么去盖一个3D场景。
 
-*  学这一棵前，你先好知道什么是<<jme3/setting_up_jme3_in_eclipse#,Scene Graph>>，
+*  学这一课前，你需要知道什么是<<jme3/setting_up_jme3_in_eclipse#,Scene Graph>>，
 *  如果你不知道他是什么，就看<<jme3/scenegraph_for_dummies#,Scene Graph for Dummies>>.
 
-盖3D游戏时：
+创建3D游戏时：
 
 .  你要雕塑3D人，房子，ect。
-.  你要方静你的模型在游戏场景里
-.  你要动，便形，转，图上颜色，和动画他们。
+.  你要放置模型到游戏场景里。
+.  你要移动，变形，旋转模型，对模型上色，并让模型进行动画。
 
-你会学怎么用 Scene Graph 做什么，学为什么 RootNode 呢么重要，学怎么放变量比如活力或钱经一个 Node，学怎么动，转或变你的模型的形状，和你会学 Node 和 Geometry 有什么分别。
+你会学用 Scene Graph 表现3D世界，认识到 RootNode 的重要性。学习创建一个简单的对象，并存储用户数据变量（比如活力值）。你将学会移动，变形以及旋转模型。你会明白Node 和 Geometry 有什么分别。
 
 
 == 例子
@@ -54,7 +55,7 @@ public class HelloNode extends SimpleApplication {
     @Override
     public void simpleInitApp() {
 
-        /** 改一个新蓝色的立方体在（1,1,1）*/
+        /** 创建一个新的蓝色立方体在（1,1,1）*/
         Box box1 = new Box( Vector3f.ZERO, 1,1,1);
         Geometry blue = new Geometry("Box", box1);
         Material mat1 = new Material(assetManager, 
@@ -63,7 +64,7 @@ public class HelloNode extends SimpleApplication {
         blue.setMaterial(mat1);
         blue.move(1,-1,1);
 
-        /**盖一个新红色的立方体在（1,3,1）*/
+        /**创建一个新的红色立方体在（1,3,1）*/
         Box box2 = new Box( Vector3f.ZERO, 1,1,1);
         Geometry red = new Geometry("Box", box2);
         Material mat2 = new Material(assetManager, 
@@ -72,53 +73,53 @@ public class HelloNode extends SimpleApplication {
         red.setMaterial(mat2);
         red.move(1,3,1);
         
-        /** 改一个新 Node 叫 ”pivot“ 在 （0,0,0），放他在 Root Node 上*/
+        /** 创建一个新 Node 叫 “pivot” 在 （0,0,0），放置在 Root Node 上*/
         Node pivot = new Node("pivot");
         rootNode.attachChild(pivot); // 放 pivot 在 Root Node 上。
 
-        /** 放那两个立方体在在 pivot 上 */
+        /** 放那两个立方体在 pivot 上 */
         pivot.attachChild(blue);
         pivot.attachChild(red);
-        /** 转 pivot：那两个立方体会跟他转*/
+        /** 旋转 pivot：那两个立方体会随 node旋转*/
         pivot.rotate(.4f,.4f,0f);
     }
 }
 ----
 
-开始 Hello Node 后，你会看到两个一样斜的立方体。
+运行 Hello Node 后，你会看到两个倾斜同样角度的立方体。
 
 
 == 口语到 JME 语
 
-在这一个，你学到了几个东西:
+在这一课，你学到了几个东西:
 [cols="2", options="header"]
 |===
 
 a|你要做什么
-a|怎么说在JME语言
+a|在JME语言里怎么说
 
 a|Lay out the 3D scene
 a|Populate the scene graph
 
-a|Create scene objects
+a|创建模型
 a|Create Spatials (e.g. create Geometries)
 
-a|Make an object appear in the scene
+a|放置模型到场景中
 a|Attach a Spatial to the rootNode
 
-a|Make an object disappear from the scene
+a|从场景中将模型移除
 a|Detach the Spatial from the rootNode
 
-a|Position/move, turn, or resize an object
+a|定位，移动，旋转或者变形模型
 a|Translate, or rotate, or scale an object = transform an object.
 
 |===
 
-Every JME3 application has a rootNode: Your game automatically inherits the `rootNode` object from SimpleApplication. Everything attached to the rootNode is part of the scene graph. The elements of the scene graph are Spatials.
+每一个 JME3 应用都有一个rootNode: 你的游戏会自动从 SimpleApplication 继承 ‘rootNode’。任何添加（attach）在 rootNode 的事物都是场景中的一部分。场景中的元素叫做 Spatial 。（Every JME3 application has a rootNode: Your game automatically inherits the `rootNode` object from SimpleApplication. Everything attached to the rootNode is part of the scene graph. The elements of the scene graph are Spatials.）
 
-*  A Spatial contains the location, rotation, and scale of an object.
-*  A Spatial can be loaded, transformed, and saved.
-*  There are two types of Spatials: Nodes and Geometries.
+*  Spatial 包含一个对象的位置，角度和尺寸。（A Spatial contains the location, rotation, and scale of an object.）
+*  Spatial 可以被加载，变形和保存。（A Spatial can be loaded, transformed, and saved.）
+* 有 Node 和 Geometry 两种 Spatial。（There are two types of Spatials: Nodes and Geometries.）
 [cols="3", options="header"]
 |===
 
@@ -126,13 +127,13 @@ Every JME3 application has a rootNode: Your game automatically inherits the `roo
 a| Geometry 
 a| Node 
 
-a| Visibility: 
-a| A Geometry is a visible scene object. 
-a| A Node is an invisible “handle for scene objects. 
+a| 可见性： 
+a| Geometry 在场景中可见。 
+a| Node 是抽象场景模型集合，不可见。（A Node is an invisible “handle for scene objects.） 
 
-a| Purpose: 
-a| A Geometry stores an object's looks. 
-a| A Node groups Geometries and other Nodes together. 
+a| 作用：
+a| Geometry 表示一个物体的外形。 
+a| Node 将 Geometry 和其他 Node 组合起来。 
 
 a| Examples: 
 a| A box, a sphere, a player, a building, a piece of terrain, a vehicle, missiles, NPCs, etc… 
@@ -141,16 +142,16 @@ a| The `rootNode`, a floor node grouping several terrains, a custom vehicle-with
 |===
 
 
-== Understanding the Code
+== 代码解释
 
-What happens in the code snippet? You use the `simpleInitApp()` method that was introduced in the first tutorial to initialize the scene.
+上边的例子中使用了第一课中介绍的 simpleInitApp() 方法。
 
-.  You create the first box Geometry.
-**  Create a Box shape with a radius of (1,1,1), that makes the box 2x2x2 world units big.
-**  Position the box at (1,-1,1) using the move() method. (Don't change the Vector3f.ZERO unless you want to change the center of rotation)
-**  Wrap the Box shape into a Geometry.
-**  Create a blue material. 
-**  Apply the blue material to the Box Geometry. 
+.  创建第一个 box Geometry.
+**  创建一个半径 (1,1,1) 的立方体，这个方块的尺寸是 2x2x2。（Create a Box shape with a radius of (1,1,1), that makes the box 2x2x2 world units big.）
+**  通过move() 方法将方块定位在(1,1,1)， （不要改变 Vector3f.ZERO 除非你想要改变旋转中心）。（Position the box at (1,-1,1) using the move() method. (Don’t change the Vector3f.ZERO unless you want to change the center of rotation)）
+**  将方块放进 Geometry。（Wrap the Box shape into a Geometry.）
+**  创建蓝色材质。（Create a blue material. ）
+**  应用蓝色材质到方块Geometry。（Apply the blue material to the Box Geometry.） 
 [source,java]
 ----
 
@@ -164,12 +165,12 @@ What happens in the code snippet? You use the `simpleInitApp()` method that was 
 ----
 
 
-.  You create a second box Geometry.
-**  Create a second Box shape with the same size.
-**  Position the second box at (1,3,1). This is straight above the first box, with a gap of 2 world units inbetween.
-**  Wrap the Box shape into a Geometry.
-**  Create a red material. 
-**  Apply the red material to the Box Geometry. 
+.  创建第二个 Box Geometry.
+**  以同样的尺寸创建方块立方体。
+**  将方块放置在(1,3,1)，在第一个方块正上方2个单元格（Position the second box at (1,3,1). This is straight above the first box, with a gap of 2 world units inbetween.）
+**  将方块放进 Geometry。（Wrap the Box shape into a Geometry.）
+**  创建红色材质。（Create a red material. ）
+**  应用红色材质到方块。（Apply the red material to the Box Geometry.） 
 [source,java]
 ----
 
@@ -183,11 +184,11 @@ What happens in the code snippet? You use the `simpleInitApp()` method that was 
 ----
 
 
-.  You create a pivot Node. 
-**  Name the Node “pivot.
-**  By default the Node is positioned at (0,0,0). 
-**  Attach the Node to the rootNode.
-**  The Node has no visible appearance in the scene. 
+.  创建Pivot Node。（You create a pivot Node. ）
+**  命名 Node 为 pivot。（Name the Node “pivot.）
+**  Node 默认坐标是(0,0,0)。（By default the Node is positioned at (0,0,0).）
+**  添加 Node 到 rootNode。（Attach the Node to the rootNode.）
+**  目前 Node 不可见，不包含可见元素。（The Node has no visible appearance in the scene. ）
 [source,java]
 ----
 
@@ -195,10 +196,10 @@ What happens in the code snippet? You use the `simpleInitApp()` method that was 
     rootNode.attachChild(pivot);
 ----
 
-If you run the application with only the code up to here, the scene appears empty. This is because a Node is invisible, and you have not yet attached any visible Geometries to the rootNode. 
+如果你写到这里就运行代码，场景会显现为空，因为 Node 是不可见的，而且没有任何可见的 Geometry 添加到 rootNode。（If you run the application with only the code up to here, the scene appears empty. This is because a Node is invisible, and you have not yet attached any visible Geometries to the rootNode.）
 
 
-.  Attach the two boxes to the pivot node. 
+.  添加两个方块 Geometry 到 pivot Node。（Attach the two boxes to the pivot node.）
 [source,java]
 ----
 
@@ -206,24 +207,24 @@ If you run the application with only the code up to here, the scene appears empt
         pivot.attachChild(red);
 ----
 
-If you run the app with only the code up to here, you see two cubes: A red cube straight above a blue cube.
+如果运行代码，你会看到两个方块：一个红色方块在蓝色方块正上方。（If you run the app with only the code up to here, you see two cubes: A red cube straight above a blue cube.）
 
-.  Rotate the pivot node.
+.  旋转 pivot node。（Rotate the pivot node.）
 [source,java]
 ----
         pivot.rotate( 0.4f , 0.4f , 0.0f );
 ----
 
- If you run the app now, you see two boxes on top of each other – both tilted at the same angle.
+运行代码，你会看到两个方块以相同的角度倾斜。（ If you run the app now, you see two boxes on top of each other – both tilted at the same angle.）
 
 
 
-=== What is a Pivot Node?
+=== 什么是Pivot Node？
 
-You can transform (e.g. rotate) Geometries around their own center, or around a user defined center point. A user defined center point for one or more Geometries is called pivot.
+你可以围绕Geometry自身的中心变形，比如旋转。或者围绕你定义的中心点旋转变形。用户为Geometry定义的中心点叫做Pivot。（You can transform (e.g. rotate) Geometries around their own center, or around a user defined center point. A user defined center point for one or more Geometries is called pivot.）
 
-*  In this example, you have grouped two Geometries by attaching them to one pivot Node. You use the pivot Node as a handle to rotate the two Geometries together around one common center. Rotating the pivot Node rotates all attached Geometries, in one step. The pivot node is the center of the rotation. Before attaching the other Geometries, make certain that the pivot node is at (0,0,0). Transforming a parent Node to transform all attached child Spatials is a common task. You will use this method a lot in your games when you move Spatials around. +*Examples:* A vehicle and its driver move together; a planet with its moon orbits the sun. 
-*  Contrast this case with the other option: If you don't create an extra pivot node and transform a Geometry, then every transformation is done relative to the Geometry's origin (typically the center). +*Examples:* If you rotate each cube directly (using `red.rotate(0.1f , 0.2f , 0.3f);` and `blue.rotate(0.5f , 0.0f , 0.25f);`), then each cube is rotated individually around its center. This is similar to a planet rotating around its own center.
+*  在本例中，将两个Geometry添加到同一个Pivot Node组合在一起，可以通过旋转Pivot Node来一同旋转两个Geometry，并围绕一个共同点，也就是Pivot Node为旋转中心（而不是各自中心）。在添加另一个Geometry前，请确保Pivot Node坐标为(0,0,0)。通过变形父节点（parent Node）来对节点上添加的Node或Geometry进行变形是一种常用方法，在游戏中会经常用到。（In this example, you have grouped two Geometries by attaching them to one pivot Node. You use the pivot Node as a handle to rotate the two Geometries together around one common center. Rotating the pivot Node rotates all attached Geometries, in one step. The pivot node is the center of the rotation. Before attaching the other Geometries, make certain that the pivot node is at (0,0,0). Transforming a parent Node to transform all attached child Spatials is a common task. You will use this method a lot in your games when you move Spatials around. ）+*例子:* 交通工具和驾驶者一同移动；地球和月球一同围绕太阳公转。（A vehicle and its driver move together; a planet with its moon orbits the sun.）
+*  与此相对照：如果不额外创建Pivot Node，而是对Geometry变形，每一个变形操作都会围绕Geometry的原点（通常为中心）。（Contrast this case with the other option: If you don't create an extra pivot node and transform a Geometry, then every transformation is done relative to the Geometry's origin (typically the center).） +*例子:* 如果直接旋转案例代码中的两个方块（red.rotate(0.1f, 0.2f, 0.3f); blue.rotate(0.5f, 0.0f, 0.25f);），会使方块直接围绕各自中心旋转，好比地球公转变成了自转。（If you rotate each cube directly (using `red.rotate(0.1f , 0.2f , 0.3f);` and `blue.rotate(0.5f , 0.0f , 0.25f);`), then each cube is rotated individually around its center. This is similar to a planet rotating around its own center.）
 
 
 == How do I Populate the Scenegraph?
@@ -233,8 +234,8 @@ You can transform (e.g. rotate) Geometries around their own center, or around a 
 a| Task…? 
 a| Solution! 
 
-a| Create a Spatial 
-a| Create a Mesh shape, wrap it into a Geometry, and give it a Material. For example: 
+a| 创建一个空间体（Create a Spatial） 
+a| 创建Mesh Shape，放进Geometry，然后添加材质，例如：（Create a Mesh shape, wrap it into a Geometry, and give it a Material. For example:）
 [source,java]
 ----
 Box mesh = new Box(Vector3f.ZERO, 1, 1, 1); // a cuboid default mesh
@@ -245,16 +246,16 @@ thing.setMaterial(mat);
 ----
 
 
-a| Make an object appear in the scene 
-a| Attach the Spatial to the `rootNode`, or to any node that is attached to the rootNode. 
+a| 使物体在场景中可见。（Make an object appear in the scene）
+a| 添加物体到rootNode或其他添加到rootNode上的Node。（Attach the Spatial to the `rootNode`, or to any node that is attached to the rootNode.）
 [source,java]
 ----
 rootNode.attachChild(thing);
 ----
 
 
-a| Remove objects from the scene 
-a| Detach the Spatial from the `rootNode`, and from any node that is attached to the rootNode. 
+a| 从场景中移除物体（Remove objects from the scene） 
+a| 从rootNode中或Node中移除物体。（Detach the Spatial from the `rootNode`, and from any node that is attached to the rootNode.）
 [source,java]
 ----
 rootNode.detachChild(thing);
@@ -266,7 +267,7 @@ rootNode.detachAllChildren();
 ----
 
 
-a| Find a Spatial in the scene by the object's name, or ID, or by its position in the parent-child hierarchy. 
+a| 通过名字或ID或是父节点中的索引顺序寻找物体。（Find a Spatial in the scene by the object's name, or ID, or by its position in the parent-child hierarchy.） 
 a| Look at the node's children or parent: 
 [source,java]
 ----
@@ -284,15 +285,15 @@ Spatial parent = myNode.getParent();
 ----
 
 
-a| Specify what should be loaded at the start 
-a| Everything you initialize and attach to the `rootNode` in the `simpleInitApp()` method is part of the scene at the start of the game. 
+a| 指定游戏开始时加载的内容。（Specify what should be loaded at the start） 
+a| 在simpleInitApp()中实现。（Everything you initialize and attach to the `rootNode` in the `simpleInitApp()` method is part of the scene at the start of the game.）
 
 |===
 
 
-== How do I Transform Spatials?
+== 如何对物体进行变形操作？（How do I Transform Spatials?）
 
-There are three types of 3D transformation: Translation, Scaling, and Rotation.
+有3种三维变形操作：移动，缩放，旋转。（There are three types of 3D transformation: Translation, Scaling, and Rotation.）
 [cols="4", options="header"]
 |===
 
@@ -301,13 +302,17 @@ a| X-axis
 a| Y-axis 
 a| Z-axis 
 
-a| Specify the new location in three dimensions: How far away is it from the origin going right-up-forward? +To move a Spatial _to_ specific coordinates, such as (0,40.2f,-2), use: 
+a| 指定新的位置：距离场景原点的距离是多少？（Specify the new location in three dimensions: How far away is it from the origin going right-up-forward?）
+
+1.移动物体到指定坐标位置，如(0, 40.2, -2)：（To move a Spatial _to_ specific coordinates, such as (0,40.2f,-2), use:） 
+
+2.对物体坐标增减，如上升40.2单位，后移2单位：（To move a Spatial _by_ a certain amount, e.g. higher up (y=40.2f) and further back (z=-2.0f):） 
+
+
 [source,java]
 ----
 thing.setLocalTranslation( new Vector3f( 0.0f, 40.2f, -2.0f ) );
 ----
-
- To move a Spatial _by_ a certain amount, e.g. higher up (y=40.2f) and further back (z=-2.0f): 
 
 [source,java]
 ----
@@ -322,12 +327,15 @@ a|+forward -backward
 [cols="4", options="header"]
 |===
 
-a| Scaling resizes Spatials 
+a| 缩放变形空间体
 a| X-axis 
 a| Y-axis 
 a| Z-axis 
 
-a|Specify the scaling factor in each dimension: length, height, width. +A value between 0.0f and 1.0f shrinks the Spatial; bigger than 1.0f stretches it; 1.0f keeps it the same. +Using the same value for each dimension scales proportionally, different values stretch it. +To scale a Spatial 10 times longer, one tenth the height, and keep the same width: 
+a|指定各个维度的缩放比例：0.0f - 1.0f的值缩小物体，>1.0f的值扩展物体，=1.0f的值为保持原来尺寸。+设置相同值可以实现等比例缩放。（Specify the scaling factor in each dimension: length, height, width. +A value between 0.0f and 1.0f shrinks the Spatial; bigger than 1.0f stretches it; 1.0f keeps it the same. +Using the same value for each dimension scales proportionally, different values stretch it.） 
+
+使物体长度为原来的10倍，高度为1/10，宽度保持不变：（+To scale a Spatial 10 times longer, one tenth the height, and keep the same width:）
+
 [source,java]
 ----
 thing.scale( 10.0f, 0.1f, 1.0f );
@@ -341,18 +349,20 @@ a|width
 [cols="4", options="header"]
 |===
 
-a| Rotation turns Spatials 
+a| 旋转物体（Rotation turns Spatials）
 a| X-axis 
 a| Y-axis 
 a| Z-axis 
 
-a|3-D rotation is a bit tricky (<<jme3/rotate#,learn details here>>). In short: You can rotate around three axes: Pitch, yaw, and roll. You can specify angles in degrees by multiplying the degrees value with `FastMath.DEG_TO_RAD`. +To roll an object 180° around the z axis: 
+a|3维旋转较为复杂，简单来说就是围绕x,y,z三个轴旋转。FastMath.DEG_TO_RAD可以帮助你将角度转化为弧度（参数以弧度为单位）。（3-D rotation is a bit tricky (<<jme3/rotate#,learn details here>>). In short: You can rotate around three axes: Pitch, yaw, and roll. You can specify angles in degrees by multiplying the degrees value with `FastMath.DEG_TO_RAD`. +To roll an object 180° around the z axis:）
+
+Tip: 如果游戏中需要一系列旋转操作，你可以参考<<jme3/quaternion#,quaternion>>，一个有效地组合存储旋转操作的数据结构。（If your game idea calls for a serious amount of rotations, it is worth looking into <<jme3/quaternion#,quaternion>>s, a data structure that can combine and store rotations efficiently.） 
+
 [source,java]
 ----
+/**物体绕z轴旋转180度**/
 thing.rotate( 0f , 0f , 180*FastMath.DEG_TO_RAD );
 ----
-
- Tip: If your game idea calls for a serious amount of rotations, it is worth looking into <<jme3/quaternion#,quaternion>>s, a data structure that can combine and store rotations efficiently. 
 
 [source,java]
 ----
@@ -367,35 +377,49 @@ a|roll = cocking your head
 |===
 
 
-== How do I Troubleshoot Spatials?
+== 常见错误（How do I Troubleshoot Spatials?）
 
-If you get unexpected results, check whether you made the following common mistakes:
+如果遇到意外结果，检查是否犯了以下错误。（If you get unexpected results, check whether you made the following common mistakes:）
 [cols="2", options="header"]
 |===
 
 a| Problem? 
 a| Solution! 
 
-a| A created Geometry does not appear in the scene. 
-a| Have you attached it to (a node that is attached to) the rootNode? +Does it have a Material? +What is its translation (position)? Is it behind the camera or covered up by another Geometry? +Is it to tiny or too gigantic to see? +Is it too far from the camera? (Try link:http://jmonkeyengine.org/javadoc/com/jme3/renderer/Camera.html#setFrustumFar%28float%29[cam.setFrustumFar](111111f); to see further) 
+a| 创建好的Geometry不能显示在场景中。（A created Geometry does not appear in the scene.） 
+a| 1.是否添加到rootNode或父节点是否添加到rootNode？（Have you attached it to (a node that is attached to) the rootNode?）
 
-a| A Spatial rotates in unexpected ways. 
-a| Did you use radian values, and not degrees? (If you used degrees, multiply them with FastMath.DEG_TO_RAD to convert them to radians)  +Did you create the Spatial at the origin (Vector.ZERO) before moving it? +Did you rotate around the intended pivot node or around something else? +Did you rotate around the right axis? 
+2.是否添加了材质？（Does it have a Material?）
 
-a| A Geometry has an unexpected Color or Material. 
-<a| Did you reuse a Material from another Geometry and have inadvertently changed its properties? (If so, consider cloning it: mat2 = mat.clone(); )  
+3.他的坐标是否在摄像头后边或者被其他物体挡到？（+What is its translation (position)? Is it behind the camera or covered up by another Geometry?）
+
+4.是否太小或者太大导致看不到？（ +Is it to tiny or too gigantic to see?）
+
+5.是否距离摄像头太远？（+Is it too far from the camera?）(Try link:http://jmonkeyengine.org/javadoc/com/jme3/renderer/Camera.html#setFrustumFar%28float%29[cam.setFrustumFar](111111f); to see further) 
+
+a| 物体错误的方式旋转（A Spatial rotates in unexpected ways.）
+a| 1.方法参数为弧度，不是角度值。FastMath.DEG_TO_RAD可以转换角度值为弧度值。（Did you use radian values, and not degrees? (If you used degrees, multiply them with FastMath.DEG_TO_RAD to convert them to radians)）
+
+2.PS:这个不会翻，应该是想让检查中心点吧。（+Did you create the Spatial at the origin (Vector.ZERO) before moving it?）
+
+3.检查是否是围绕父节点旋转或者其他物体。（+Did you rotate around the intended pivot node or around something else?）
+
+4.是否围绕正确的轴旋转，参数顺序是否正确？（+Did you rotate around the right axis?） 
+
+a| Geometry颜色或者材质错误（A Geometry has an unexpected Color or Material.） 
+<a|是否与其他Geometry共同使用了一个材质并在另一个Geometry中做了更改。可以通过克隆材质：mat2 = mat.clone();（Did you reuse a Material from another Geometry and have inadvertently changed its properties? (If so, consider cloning it: mat2 = mat.clone(); )）  
 
 |===
 
 
-== How do I Add Custom Data to Spatials?
+==如何绑定用户数据？（ How do I Add Custom Data to Spatials?）
 
-Many Spatials represent game characters or other entities that the player can interact with. The above code that rotates the two boxes around a common center (pivot) could be used for a spacecraft docked to a orbiting space station, for example.
+许多空间体表示游戏角色或其他用户可以交互的实体，比如以上Pivot Node部分代码可以实现停靠在太空站的飞船与太空站共同移动。（Many Spatials represent game characters or other entities that the player can interact with. The above code that rotates the two boxes around a common center (pivot) could be used for a spacecraft docked to a orbiting space station, for example.）
 
-Depending on your game, game entities do not only change their position, rotation, or scale (the transformations that you just learned about). Game entities also have custom properties, such as health, inventory carried, equipment worn for a character, or hull strength and fuel left for a spacecraft. In Java, you represent entity data as class variables, e.g. floats, Strings, or Arrays. 
+根据你的游戏，游戏实体不仅仅在视觉上改变他们的形状或位置，也包含了用户属性，比如角色的血量，背包，装备，或者是飞船油量等。Java中，可以通过float, String, Array等变量表示实体数据。（Depending on your game, game entities do not only change their position, rotation, or scale (the transformations that you just learned about). Game entities also have custom properties, such as health, inventory carried, equipment worn for a character, or hull strength and fuel left for a spacecraft. In Java, you represent entity data as class variables, e.g. floats, Strings, or Arrays. ）
 
-You can add custom data directly to any Node or Geometry. *You do not need to extend the Node class to include variables*!
-For example, to add a custom id number to a node, you would use:
+你可以直接添加数据到任何Node或者Geometry而不需要拓展类。比如：（You can add custom data directly to any Node or Geometry. *You do not need to extend the Node class to include variables*!
+For example, to add a custom id number to a node, you would use:）
 
 [source,java]
 ----
@@ -409,11 +433,11 @@ To read this Node's id number elsewhere, you would use:
 int id = pivot.getUserData( "pivot id" ); 
 ----
 
-By using different Strings keys (here the key is `pivot id`), you can get and set several values for whatever data the Spatial needs to carry. When you start writing your game, you might add a fuel value to a car node, speed value to an airplane node, or number of gold coins to a player node, and much more. 
+通过不同的键，你可以绑定和获取任何数据变量。当你开始写游戏时，也许要添加一个油量到汽车Node中等。（By using different Strings keys (here the key is `pivot id`), you can get and set several values for whatever data the Spatial needs to carry. When you start writing your game, you might add a fuel value to a car node, speed value to an airplane node, or number of gold coins to a player node, and much more.）
 
 
-== Conclusion
+==结论
 
-You have learned that your 3D scene is a scene graph made up of Spatials: Visible Geometries and invisible Nodes. You can transform Spatials, or attach them to nodes and transform the nodes. You know the easiest way how to add custom entity properties (such as player health or vehicle speed) to Spatials.
+在本节课，学习了Geometry和Node，对空间体进行变形操作，并且学习了如何简单地绑定数据到空间体中。（You have learned that your 3D scene is a scene graph made up of Spatials: Visible Geometries and invisible Nodes. You can transform Spatials, or attach them to nodes and transform the nodes. You know the easiest way how to add custom entity properties (such as player health or vehicle speed) to Spatials.）
 
-Since standard shapes like spheres and boxes get old fast, continue with the next chapter where you learn to <<jme3/beginner/hello_asset#,load assets such as 3-D models>>.
+因为球体，立方体等标准形状不能满足开发需要，下章节将学习<<jme3/beginner/hello_asset#,load assets such as 3-D models>>（Since standard shapes like spheres and boxes get old fast, continue with the next chapter where you learn to <<jme3/beginner/hello_asset#,load assets such as 3-D models>>.）
