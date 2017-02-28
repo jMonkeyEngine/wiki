@@ -8,8 +8,8 @@
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
-3D games are typically played full-screen, or in a window that takes over the mouse and all inputs. However it is also possible to embed a jME 3 canvas in a standard Swing application. ++
-This can be useful when you create some sort of interactive 3D viewer with a user interface that is more complex than just a HUD: For instance an interactive scientific demo, a level editor, or a game character designer. ++
+3D games are typically played full-screen, or in a window that takes over the mouse and all inputs. However it is also possible to embed a jME 3 canvas in a standard Swing application. +
+This can be useful when you create some sort of interactive 3D viewer with a user interface that is more complex than just a HUD: For instance an interactive scientific demo, a level editor, or a game character designer.
 
 *  Advantages:
 **  You can use Swing components (frame, panels, menus, controls) next to your jME3 game.
@@ -24,7 +24,7 @@ Here is the full link:http://code.google.com/p/jmonkeyengine/source/browse/trunk
 
 == Extending SimpleApplication
 
-You start out just the same as for any jME3 game: The base application, here SwingCanvasTest, extends `com.jme3.app.SimpleApplication`. As usual, you use `simpleInitApp()` to initialize the scene, and `simpleUpdate()` as event loop. ++
+You start out just the same as for any jME3 game: The base application, here SwingCanvasTest, extends `com.jme3.app.SimpleApplication`. As usual, you use `simpleInitApp()` to initialize the scene, and `simpleUpdate()` as event loop. +
 The camera's default behaviour in SimpleApplication is to capture the mouse, which doesn't make sense in a Swing window. You have to deactivate and replace this behaviour by `flyCam.setDragToRotate(true);` when you initialize the application:
 
 [source,java]
@@ -43,7 +43,7 @@ In short: The first thing that is different is the `main()` method. We don't cal
 
 == Main() and Runnable()
 
-The Swing isn't thread-safe and doesn't allow us to keep the jME3 canvas up-to-date. This is why we create a runnable for the jME canvas and queue it in the AWT event thread, so it can be invoked “later in the loop, when Swing is ready with updating its own stuff. ++
+The Swing isn't thread-safe and doesn't allow us to keep the jME3 canvas up-to-date. This is why we create a runnable for the jME canvas and queue it in the AWT event thread, so it can be invoked “later in the loop, when Swing is ready with updating its own stuff. +
 In the SwingCanvasTest's main() method, create a queued runnable(). It will contain the jME canvas and the Swing frame.
 
 [source,java]
@@ -69,7 +69,7 @@ Note that you have to use app.enqueue() when modifying objects in the scene from
 
 === Creating the Canvas
 
-Here in the `run()` method, we start the jME application, create its canvas, create a Swing frame, and add everything together. ++
+Here in the `run()` method, we start the jME application, create its canvas, create a Swing frame, and add everything together. +
 Specify the com.jme3.system.AppSettings so jME knows the size of the Swing panel that we put it into. The application will not ask the user for display settings, you have to specify them in advance.
 
 [source,java]
@@ -106,7 +106,7 @@ JFrame window = new JFrame("Swing Application");
 window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 ----
 
-We create a standard JPanel inside the JFrame. Give it any Layout you wish – here we use a simple Flow Layout. Where the code sample says “Some Swing Component, this is where you add your buttons and controls. ++
+We create a standard JPanel inside the JFrame. Give it any Layout you wish – here we use a simple Flow Layout. Where the code sample says “Some Swing Component, this is where you add your buttons and controls. +
 The important step is to add() the canvas component into the panel, like all the other Swing components.
 
 [source,java]
