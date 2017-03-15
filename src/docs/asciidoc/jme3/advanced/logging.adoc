@@ -27,15 +27,18 @@ Instead of `println()`, use the standard Java logger from `java.util.logging`. I
 To print comments like a pro, you use the following logger syntax.
 
 .  Declare the logger object once per file. In the following code, replace `HelloWorld` by the name of the class where you are using this line.
++
 [source,java]
 ----
 private static final Logger logger = Logger.getLogger(HelloWorld.class.getName());
 ----
 
-.  Declare the info that you want to include in the message. The variables (here `a, b, c`) can be any printable Java object. +Example: `Vector3f a = cam.getLocation();` 
+.  Declare the info that you want to include in the message. The variables (here `a, b, c`) can be any printable Java object. +
+Example: `Vector3f a = cam.getLocation();` 
 .  Put the variables in a new `Object` array. Refer to the variables as `{0},{1},{2}` etc in the message string. Variables are numbered in the order you put them into the `Object` array. 
 .  Add the logger line and specify the log level:
 **  Usecase 1: During debugging, a developer uses a warning to remind himself of a bug:
++
 [source,java]
 ----
 logger.log(Level.WARNING, "why is {0} set to {1} again?!", 
@@ -43,6 +46,7 @@ logger.log(Level.WARNING, "why is {0} set to {1} again?!",
 ----
 
 **  Usecase 2: For the release, you inform the customer of a problem and how to solve it. 
++
 [source,java]
 ----
 logger.log(Level.SEVERE, "MyGame error: {0} must not be {1} after {2}! Adjust flux generator settings.", 
