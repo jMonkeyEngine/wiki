@@ -7,7 +7,7 @@
 :experimental: 
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
-There are a plethora of ways to create skymaps with varying levels of difficulty and expense. The link:http://planetside.co.uk/[Terragen] program has been mentioned as one way to do so but it is now limited in its use and for commercial purposes is not free. Another program, link:https://www.daz3d.com/bryce-7-pro[Bryce], is also not free and seems to of stalled in developement based off there only being a 32bit version available. Maybe they are doing things behind the scenes but its still not a free program. This articles intent is to give the JME3 user other options for the creation of skymaps using the free programs Blender and Gimp. It is not the be all, end all of skymap creation. If you know of better methods or tools please feel free to share your wisdom on the link:https://hub.jmonkeyengine.org/[forums].
+There are a plethora of ways to create skymaps with varying levels of difficulty and expense. The link:http://planetside.co.uk/[Terragen] program has been mentioned as one way to do so but it is now limited in its use and for commercial purposes is not free. Another program, link:https://www.daz3d.com/bryce-7-pro[Bryce], is also not free and seems to of stalled in development based off there only being a 32bit version available. Maybe they are doing things behind the scenes but its still not a free program. This articles intent is to give the JME3 user other options for the creation of skymaps using the free programs Blender and Gimp. It is not the be all, end all of skymap creation. If you know of better methods or tools please feel free to share your wisdom on the link:https://hub.jmonkeyengine.org/[forums].
 
 
 == Blender
@@ -30,9 +30,11 @@ This tutorial is an adaptation of contributor glaucomardanos production, not an 
 - [ ] Rename the Camera to Camera-north.
 - [ ] Change your 3d view to top-ortho by pressing kbd:[NumPad 7] followed by kbd:[NumPad 5].
 - [ ] With the camera still selected, press kbd:[R] immediately followed by kbd:[X] immediately followed by 90 immediately followed by kbd:[Enter] to rotate the camera 90 degrees around the X axis.
-- [ ] With the camera still selected, press kbd:[Shift]+kbd:[D]. This will duplicate the camera. Next press kbd:[Enter] to set the selection.   
+- [ ] With the camera still selected, press kbd:[Shift]+kbd:[D]. This will duplicate the camera. Next press kbd:[Enter] to set the selection.
++
 *  Press kbd:[R] immediately followed by 180 immediately followed by kbd:[Enter]. This will rotate the camera 180 degrees around the Z axis. Rename this camera to Camera-south.
-- [ ] With the camera still selected, press kbd:[Shift]+kbd:[D]. This will duplicate the camera. Next press kbd:[Enter] to set the selection.   
+- [ ] With the camera still selected, press kbd:[Shift]+kbd:[D]. This will duplicate the camera. Next press kbd:[Enter] to set the selection.
++
 *  With the camera still selected, press kbd:[R] immediately followed by 90 immediately followed by kbd:[Enter]. This will rotate the camera another 90 degrees around the Z axis. Rename this camera to Camera-west.
 - [ ] With the camera still selected, press kbd:[Shift]+kbd:[D]. This will duplicate the camera. Next press kbd:[Enter] to set the selection.   
 *  With the camera still selected, press kbd:[R] immediately followed by -180 immediately followed by kbd:[Enter]. This will rotate the camera -180 degrees around the Z axis. Rename this camera to Camera-east.
@@ -47,18 +49,18 @@ This tutorial is an adaptation of contributor glaucomardanos production, not an 
 - [ ] From the properties panel (bottom-right panel) select the Textures tab (red-white checkerboard) then press the new button to create a new texture. Rename this texture to AngMap.
 *  Under the Image panel select open and navigate to the file you saved earlier.
 *  In the Mapping panel select AngMap from the drop down box.
-*  In the Influence panel de-select blend (ble) and select horrizon (hor).
+*  In the Influence panel de-select blend (ble) and select horizon (hor).
 - [ ] From the properties panel select the Data tab (reel to reel camera).
 *  In the lens panel change the Focal Lens value from 35 to 16. Do this for every camera.
 - [ ] From the properties panel select the Render tab (normal looking camera).
-*  In the Dimensions panel set the resoloution to any number that is a power of 2. For this example 1024 x 1024. 
-**  Slide the resoloution scale to 100%.
-*  In the Output panel change the image type to JPEG. I have found out by trial and error that using a JPEG file has the same image quality as a PNG or DDS file but with a huge difference in image size. A single PNG image will clock in at over 8mb to the JPEG size of 325kb. Even converting to a DDS file comes in at over 3mb for comparrison (using RGB888 as is recommended by Momoko_Fan/Core Developer in this link:https://hub.jmonkeyengine.org/t/best-dds-format-for-skyfactory/17668/2[forum post]) with no gain in image quality that I could see. Your welcome to experiment on your own if you wish.
+*  In the Dimensions panel set the resolution to any number that is a power of 2. For this example 1024 x 1024. 
+**  Slide the resolution scale to 100%.
+*  In the Output panel change the image type to JPEG. I have found out by trial and error that using a JPEG file has the same image quality as a PNG or DDS file but with a huge difference in image size. A single PNG image will clock in at over 8mb to the JPEG size of 325kb. Even converting to a DDS file comes in at over 3mb for comparison (using RGB888 as is recommended by Momoko_Fan/Core Developer in this link:https://hub.jmonkeyengine.org/t/best-dds-format-for-skyfactory/17668/2[forum post]) with no gain in image quality that I could see. Your welcome to experiment on your own if you wish.
 *  Set the image format to RGB.
 *  Setting the quality slider to 0 has the effect of reducing the image size. In this example it reduced the image sizes to less than 125kb, once again with no discernable image degradation that I could see.
 - [ ] In the properties panel select the World tab.
 *  Check the Real Sky toggle.
-- [ ] Next we will setup the 3d view for your Angualr map generation. 
+- [ ] Next we will setup the 3d view for your Angular map generation. 
 *  From the header at the top of the 3d view click the "Choose Screen Layout" drop down list next to the word "Default" and select "Split Verticle F/R". 
 *  Click the "+" sign to create a new layout. 
 *  Rename this new layout Angular Map Generator or a name of your choosing.
@@ -70,7 +72,7 @@ This tutorial is an adaptation of contributor glaucomardanos production, not an 
 - [ ] With your mouse inside the left side UV/Image Editor you can scroll in or out to center the view.
 *  With your mouse inside the left side UV/Image Editor press kbd:[F3] to save your image. Rename the image (down.jpg in this case). 
 
-Follow this same procedure for the remaning cameras. Rendering, renaming and saving each. After you have rendered all your images you can copy and paste them into your asset folder for JME3. Usually under the Texture directory. To use them in your code, in simpleInitApp(), load the Textures and use the SkyFactory to create your sky.
+Follow this same procedure for the remaining cameras. Rendering, renaming and saving each. After you have rendered all your images you can copy and paste them into your asset folder for JME3. Usually under the Texture directory. To use them in your code, in simpleInitApp(), load the Textures and use the SkyFactory to create your sky.
 
 [source,java]
 ----
