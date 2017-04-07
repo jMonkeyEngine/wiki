@@ -18,18 +18,14 @@ Adding a sky is extremely easy using the `com.jme3.util.SkyFactory`.
 
 [source,java]
 ----
-
-rootNode.attachChild(SkyFactory.createSky(
-            assetManager, "Textures/Sky/Bright/BrightSky.dds", false));
-
+getRootNode().attachChild(SkyFactory.createSky(getAssetManager(), "Textures/Sky/Bright/BrightSky.dds", SkyFactory.EnvMapType.CubeMap));
 ----
 
 To add a sky you need to supply:
 
 .  The assetManager object to use
 .  A cube or sphere map texture of the sky
-.  Set the boolean to true if you are using a sphere map texture. For a cube map, use false. +
-Tip: Cube map is the default. You would know if you had created a sphere map.
+.  Set the map type: link:http://javadoc.jmonkeyengine.org/com/jme3/util/SkyFactory.EnvMapType.html[SkyFactory.EnvMapType]. In this instance, CubeMap. 
 
 Internally, the SkyFactory calls the following methods:
 
@@ -59,4 +55,4 @@ Box or Sphere?
 *  If you have access to sphere map textures – specially projected sky images that fit inside a sphere – then you use a SkySphere or SkyDome. 
 **  link:http://wiki.delphigl.com/index.php/Datei:Skysphere.jpg[SkySphere example]
 
-See <<jme3/advanced/free_skymaps#,How to create free skymaps>> for more information on Skymap creation. 
+For more information on Skymap creation see <<jme3/advanced/free_skymaps#,How to create free skymaps>>. 
