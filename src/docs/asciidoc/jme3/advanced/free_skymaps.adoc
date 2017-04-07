@@ -91,7 +91,9 @@ This is in checklist format so you can mark items as you go to keep your place.
 - [ ] With your mouse inside the left side UV/Image Editor you can scroll in or out to center the view.
 - [ ] With your mouse inside the left side UV/Image Editor press kbd:[F3] to save your image. Rename the image (down.jpg in this case). 
 
-Follow this same procedure for the remaining cameras. Rendering, renaming and saving each. After you have rendered all your images you can copy and paste them into your asset folder for JME3. Usually under the Texture directory. To use them in your code, in simpleInitApp(), load the Textures and use the SkyFactory to create your sky.
+Follow this same procedure for the remaining cameras. Rendering, renaming and saving each. After you have rendered all your images you can copy and paste them into your asset folder for JME3. Usually under the `Assets/Texture` directory. 
+
+To use your images in your code, in simpleInitApp(), load the Textures and use the SkyFactory to create your sky.
 
 [source,java]
 ----
@@ -104,12 +106,12 @@ Texture down = getAssetManager().loadTexture("Textures/Sky/down.jpg");
 getRootNode().attachChild(SkyFactory.createSky(getAssetManager(), west, east, north, south, up, down));
 ----
 
+Many thanks go out to contributor glaucomardano for his video. He has excellent taste in music.
+
 Listed below are other Blender tutorials JME3 users may find valuable. 
 
 *  link:https://www.katsbits.com/tutorials/blender/cycles-skybox.php[Render a Skybox using Cycles]
 *  link:https://www.katsbits.com/tutorials/blender/render-skybox.php[Render a Skybox Environment Map]
-
-Many thanks go out to contributor glaucomardano for his video. He has excellent taste in music.
 
 
 == Gimp
@@ -128,12 +130,13 @@ After installing the scripts you open a image in gimp. This script works by slic
 **  Cubemap layout: `Cross Horizontal`
 **  2 to the power of: `10` (for 1024 sized Layers) 
 .  Press btn:[OK] to slice up the image.
-.  Select `menu:File[Export As]` and change the `Name` and `File Type` to `.dds` and choose your save location to export into.
+.  Select `menu:File[Export As]` and change the `Name` and `File Type` to `.dds`. Choose your save location, typically `Assets/Textures`.
 .  Press btn:[Export].
+. A DDS panel will open. Apply the following settings:
 * Compression: `None`
 * Format: `RGB8`
 * Save: `As cube map`
 * MipMaps: `No mipmaps`
 . Press btn:[OK] to export.
 
-You add it to your scene as is explained in the <<jme3/advanced/sky#,How to add a Sky to your Scene>> tutorial.
+You attach the exported image to your scene as is explained in the <<jme3/advanced/sky#,How to add a Sky to your Scene>> tutorial.
