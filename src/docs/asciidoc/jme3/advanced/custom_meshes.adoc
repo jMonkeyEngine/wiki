@@ -13,7 +13,10 @@ image::jme3/advanced/custom_mesh.png[custom_mesh.png,width="150",height="150",al
 
 Use the Mesh class to create custom shapes that go beyond Quad, Box, Cylinder, and Sphere, even procedural shapes are possible. Thank you to KayTrance for providing the sample code!
 
-*Note:* In this tutorial, we (re)create a very simple rectangular mesh (a quad), and we have a look at different ways of coloring it. Coding a custom quad may not be very useful because it's exactly the same as the built-in `com.jme3.scene.shape.Quad`. We chose a simple quad to teach you how to build any shape out of triangles, without the distractions of more complex shapes.
+[NOTE]
+====
+In this tutorial, we (re)create a very simple rectangular mesh (a quad), and we have a look at different ways of coloring it. Coding a custom quad may not be very useful because it's exactly the same as the built-in `com.jme3.scene.shape.Quad`. We chose a simple quad to teach you how to build any shape out of triangles, without the distractions of more complex shapes.
+====
 
 *  Full code sample: link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/model/shape/TestCustomMesh.java[TestCustomMesh.java]
 
@@ -54,7 +57,10 @@ The base class for creating meshes is `com.jme3.scene.Mesh`.
 Mesh mesh = new Mesh();
 ----
 
-Tip: If you create your own Mesh-based class (`public class MyMesh extends Mesh {  }`), replace the variable `mesh` by `this` in the following examples.
+[TIP]
+====
+If you create your own Mesh-based class (`public class MyMesh extends Mesh {  }`), replace the variable `mesh` by `this` in the following examples.
+====
 
 
 === Vertex Coordinates
@@ -158,7 +164,7 @@ Our Mesh is ready! Now we want to see it.
 
 == Using the Mesh in a Scene
 
-We create a `com.jme3.scene.Geometry` and `com.jme3.material.Material`from our `mesh`, apply a simple color material to it, and attach it to the rootNode to make it appear in the scene.
+We create a `com.jme3.scene.Geometry` and `com.jme3.material.Material` from our `mesh`, apply a simple color material to it, and attach it to the rootNode to make it appear in the scene.
 
 [source,java]
 ----
@@ -213,7 +219,7 @@ If you are modifying a mesh dynamically in a way which changes the model's bound
 
 The updateModelBound() method warns you about not usually needing to use it, but that can be ignored in this special case.
 
-_N.B.: This does not work on TerrainQuad.  Please use the TerrainQuad.adjustHeight() function to edit the TerrainQuad mesh instead.  Additionally, if you want to use collisions on them afterwards, you need to call TerrainPatch.getMesh().createCollisionData(); to update the collision data, else it will collide with what seems to be the old mesh. _
+__N.B.: This does not work on TerrainQuad.  Please use the TerrainQuad.adjustHeight() function to edit the TerrainQuad mesh instead.  Additionally, if you want to use collisions on them afterwards, you need to call TerrainPatch.getMesh().createCollisionData(); to update the collision data, else it will collide with what seems to be the old mesh.__
 
 
 == Optional Mesh Features
