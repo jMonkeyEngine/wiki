@@ -47,7 +47,11 @@ camNode.lookAt(target.getLocalTranslation(), Vector3f.UNIT_Y);
 
 ----
 
-*Important:* Where the example says `camNode.setLocalTranslation(new Vector3f(0, 5, -5));`, you have to supply your own start position for the camera. This depends on the size of your target (the player character) and its position in your particular scene. Optimally, you set this to a spot a bit behind and above the target.
+[IMPORTANT]
+====
+Where the example says `camNode.setLocalTranslation(new Vector3f(0, 5, -5));`, you have to supply your own start position for the camera. This depends on the size of your target (the player character) and its position in your particular scene. Optimally, you set this to a spot a bit behind and above the target.
+====
+
 [cols="2", options="header"]
 |===
 
@@ -55,10 +59,13 @@ a|Methods
 a|Description
 
 a|setControlDir(ControlDirection.SpatialToCamera)
-a|User input steers the target spatial, and the camera follows the spatial.+The spatial's transformation is copied over the camera's transformation. +Example: Use with <<jme3/advanced/physics#,CharacterControl>>led spatial.
+a|User input steers the target spatial, and the camera follows the spatial. +
+The spatial's transformation is copied over the camera's transformation. +
+Example: Use with <<jme3/advanced/physics#,CharacterControl>>led spatial.
 
 a|setControlDir(ControlDirection.CameraToSpatial)
-a|User input steers the camera, and the target spatial follows the camera. +The camera's transformation is copied over the spatial's transformation. Use with first-person flyCam.
+a|User input steers the camera, and the target spatial follows the camera. +
+The camera's transformation is copied over the spatial's transformation. Use with first-person flyCam.
 
 |===
 
@@ -111,7 +118,9 @@ a|Camera looks at a point 3 world units above the target.
 a|setToggleRotationTrigger(new MouseButtonTrigger(MouseInput.BUTTON_MIDDLE))
 a|Enable rotation by keeping the middle mouse button pressed (like in Blender). This disables the rotation on right and left mouse button click.
 
-a|setToggleRotationTrigger(new MouseButtonTrigger(+MouseInput.BUTTON_MIDDLE),+new KeyTrigger(KeyInput.KEY_SPACE))
+a|setToggleRotationTrigger(new MouseButtonTrigger( +
+MouseInput.BUTTON_MIDDLE), +
+new KeyTrigger(KeyInput.KEY_SPACE))
 a|Activate mutiple triggers for the rotation of the camera, e.g. spacebar and middle mouse button, etc.
 
 a|setRotationSensitivity(5f)
