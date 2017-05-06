@@ -26,7 +26,10 @@ public void rotateGeometry(final Geometry geo, final Quaternion rot) {
 
 ----
 
-Note that this example does not fetch the returned value by calling `get()` on the Future object returned from `enqueue()`. This means that the example method `rotateGeometry()` will return immediately and will not wait for the rotation to be processed before continuing.
+[NOTE]
+====
+This example does not fetch the returned value by calling `get()` on the Future object returned from `enqueue()`. This means that the example method `rotateGeometry()` will return immediately and will not wait for the rotation to be processed before continuing.
+====
 
 If the processing thread needs to wait or needs the return value then `get()` or the other methods in the returned Future object such as `isDone()` can be used.
 
@@ -71,8 +74,11 @@ ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(4);
 
 Pool size means the executor will keep four threads alive at any time. Having more threads in the pool means that more tasks can run concurrently. But a bigger pool only results in a speed gain if the PC can handle it! Allocating a pool  that is uselessly large just wastes memory, so you need to find a good compromise: About the same to double the size of the number of cores in the computer makes sense. 
 
-!!! Executor needs to be shut down when the application ends, in order to make the process die properly
+[WARNING]
+====
+Executor needs to be shut down when the application ends, in order to make the process die properly
 In your simple application you can override the destroy method and shutdown the executor: 
+====
 
 [source,java]
 ----
@@ -194,7 +200,10 @@ private Callable<MyWayList> findWay = new Callable<MyWayList>(){
 
 === Useful Links
 
-High level description which describes how to manage the game state and the rendering in different threads: link:http://altdevblog.com/2011/07/03/threading-and-your-game-loop/[link]. A C++ example can be found at link:http://gamasutra.com/blogs/AndreaMagnorsky/20130527/193087/Multithreading_rendering_in_a_game_engine_with_CDouble_buffer_implementation.php[link]
+High level description which describes how to manage the game state and the rendering in different threads: +
+link:http://jahej.com/alt/2011_07_03_threading-and-your-game-loop.html[Threading and your game loop]. + 
+A C++ example can be found at: +
+link:http://gamasutra.com/blogs/AndreaMagnorsky/20130527/193087/Multithreading_rendering_in_a_game_engine_with_CDouble_buffer_implementation.php[Multithreading-rendering in_a game engine with CDouble buffer implementation].
 
 
 === Conclusion
