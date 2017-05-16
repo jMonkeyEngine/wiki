@@ -4,6 +4,7 @@
 :revdate: 2016/03/17 20:48
 :relfileprefix: ../../
 :imagesdir: ../..
+:experimental:
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
@@ -29,7 +30,7 @@ Spatial model = assetManager.loadModel(
 
 == Creating Models and Scenes
 
-To create 3D models and scenes, you need a 3D Mesh Editor such as link:http://www.blender.org/[Blender], with an OgreXML Exporter plugin. 
+To create 3D models and scenes, you need a 3D Mesh Editor such as link:http://www.blender.org/[Blender], with an <<jme3/advanced/ogrecompatibility#,OgreXML Exporter>> plugin. 
 
 [TIP]
 ====
@@ -42,16 +43,19 @@ Learn how to create link:http://en.wikibooks.org/wiki/Blender_3D:_Noob_to_Pro/UV
 
 To export your models as Ogre XML meshes with materials:
 
-.  Open the menu File &gt; Export &gt; OgreXML Exporter to open the exporter dialog.
-.  In the Export Materials field: Give the material the same name as the model. For example, the model `something.mesh.xml` goes with `something.material`, plus (optionally) `something.skeleton.xml`, and some JPG files.
-.  In the Export Meshes field: Select a target subdirectory of your `assets/Models/` directory. E.g. `assets/Models/something/`.
-.  Activate the following exporter settings: 
-**  Copy Textures: YES
-**  Rendering Materials: YES
-**  Flip Axis: YES
-**  Require Materials: YES
-**  Skeleton name follows mesh: YES
-
+. jMonkeyEngine requires a matrial file to be named the same name as the model so prior to export you must name the material the same name as the model. The model will export files named `ModelName.mesh.xml` with a `ModelName.material`, plus (optionally) `ModelName.skeleton.xml`, and some JPG files.
+.  Open the menu menu:File[Export > Ogre3D] to open the exporter dialog.
+.  In the `File Path` field: Select a target subdirectory of your `Project Assets/Textures/` directory. E.g. `Project Assets/Textures/ModelName/`. See <<jme3/intermediate/best_practices#multi-media-asset-pipeline#,Best Practices>>.
+.  In the panel at the bottom left of the export window toggle the following export settings: 
+**  Swap Axis: xz-y
+- [*] Separate materials
+- [ ] Only Deformable Bones footnote:[Optional: If selected and you have an Armature with the model only deform bones are exported.]
+- [ ] Export Selected Only footnote:[Optional: If selected you manually choose each object you want exported prior to export.]
+- [*] Export Meshes
+- [ ] Export Meshes Overwrite footnote:[Optional: If selected it will overwrite the exising files in the selected directory] 
+- [ ] Armature Animation footnote:[Optional: Only used if the model contains an armature.]
+**  Trim Weights footnote:[Occasionally when exporting you may get a warning complaining about vertices weighted to to many bones. You are then asked to try increasing the trim weights option. Slightly increase this spinner and try exporting again. Repeat the process untill the warning goes away.]
+- [*] Export Materials
 .  Click export.
 
 You can now use the <<sdk#,jMonkeyEngine SDK>> to <<sdk/model_loader_and_viewer#,load and view models>>. You can <<sdk/scene_composer#,create scenes>> from them and write code that loads them into your application. 
