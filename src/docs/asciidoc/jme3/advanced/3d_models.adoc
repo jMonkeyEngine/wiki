@@ -16,7 +16,7 @@ Like <<jme3/advanced/shape#,Shape>>s, 3D models are also made up of <<jme3/advan
 To use 3D models in a jME3 application:
 
 .  Export the 3D model in Ogre XML or Wavefront OBJ format. Export Scenes as Ogre DotScene format.
-.  Save the files into a sub-directory of your jME3 project's `assets` directory.
+.  Save the files into a sub-directory of your jME3 `Project Assets` directory.
 .  In your code, you use the <<jme3/advanced/asset_manager#,Asset Manager>> to load models as <<jme3/advanced/spatial#,Spatial>>s into a jME application.
 +
 [source,java]
@@ -25,7 +25,10 @@ Spatial model = assetManager.loadModel(
     "Models/MonkeyHead/MonkeyHead.mesh.xml" );
 ----
 
-.  (For the release build:) Use the jMonkeyEngine SDK to convert models to .j3o format. You don't need this step as long you still develop and test the application within the jMonkeyEngine SDK.
+[NOTE]
+====
+(For the release build:) Use the jMonkeyEngine SDK to convert models to .j3o format. You don't need this step as long you still develop and test the application within the jMonkeyEngine SDK.
+====
 
 
 == Creating Models and Scenes
@@ -44,12 +47,13 @@ Learn how to create link:http://en.wikibooks.org/wiki/Blender_3D:_Noob_to_Pro/UV
 To export your models as Ogre XML meshes with materials:
 
 . jMonkeyEngine requires a material file to be named the same name as the model so prior to opening the export dialog make it so. The model will export files named `ModelName.mesh.xml` with a `ModelName.material`, plus (optionally) `ModelName.skeleton.xml`, and some JPG files.
-.  Open the menu menu:File[Export > Ogre3D] to open the exporter dialog.
+.  Open the menu `menu:File[Export > Ogre3D]` to open the exporter dialog.
 .  In the `File Path` field: Select a target sub-directory of your `Project Assets/Textures/` directory. E.g. `Project Assets/Textures/ModelName/`. See <<jme3/intermediate/best_practices#multi-media-asset-pipeline#,Best Practices>>.
 .  In the panel at the bottom left of the export window toggle the following export settings: 
 -  Swap Axis: xz-y
 - [*] Separate materials
 - [ ] Only Deformable Bones footnote:[Optional: If selected, and you have an Armature with the model, only the deform bones are exported.]
+- [ ] Export Scene footnote:[Toggle this to export your model in DotScene format]
 - [ ] Export Selected Only footnote:[Optional: If selected, you manually choose each object you want exported prior to opening the export dialog.]
 - [*] Export Meshes
 - [ ] Export Meshes Overwrite footnote:[Optional: If selected, it will overwrite the existing files in the target directory] 
