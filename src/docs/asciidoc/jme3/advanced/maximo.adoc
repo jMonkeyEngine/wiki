@@ -1,0 +1,78 @@
+= Mixamo Animation
+:author: 
+:revnumber: 
+:revdate: 2017/05/25 13:04
+:relfileprefix: ../../
+:imagesdir: ../..
+:experimental:
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
+
+[NOTE]
+====
+In the near future the Mixamo website will be undergoing some changes that will have some level of effect upon how you animate your character. The only real difference that Adobe says will happen, with respect to auto-rigging your characters, is you no longer can store the assets on the Mixamo website. See this link:http://blogs.adobe.com/adobecare/2017/05/23/download-assets-from-mixamo/[notice] for more info.
+====
+
+== Using Mixamo For Model Animation
+
+With very little effort, you can use Adobes Mixamo to fully animate your Blender models. Once you understand the process that is. This guide uses link:https://www.blender.org/download/[Blender version 2.78c] with its default settings along with the Ogre exporter 0.6.0 found <<jme3/advanced/ogrecompatibility.html,here>>. You will need to have FBX file Importing and Exporting initialized in Blender. This can be found under `menu:File[User Preferences > Add-ons]` in the Info header at the top of the program. Be sure to toggle btn:[Auto Run Python Scripts] in the `menu:User Preferences[File]` tab.
+
+== Prepare to Export
+
+To properly animate your models there are a few rules you must follow.
+
+*  Read the link:https://community.mixamo.com/hc/en-us/articles/210310918-Auto-Rigger-Troubleshooting[Auto-Rig Error Troubleshooting] guide before you do anything else.
+
+*  Clean up your Blender file before exporting. This means you have a game ready model that will become the base for all your animations. The following checklist is provided for your convienence.
+[% interactive]
+- [ ] You have no Animations.
+- [ ] You have no Actions stored in the Dope Sheet Action Editor btn:[Browse Action to be linked] buffer.
+- [ ] You have UV Mapped your model.
+- [ ] You have one Material named the same as your mesh.
+- [ ] You have baked and packed your Texture (ie, your using a texture atlas).
+- [ ] You have cleared the UV, Material and Texture buffers of unused images, materials and textures.
+- [ ] You have applied the Location, Rotation, and Scale to your model.
+- [ ] *MOST IMPORTANT OF ALL*, in the `menu:Properties Panel[Scene Tab > Unit Panel]` set the btn:[Unit of Measure] to Meters and the Length to Metric. Adobe uses centimeters for the FBX exporter and if this is not set the models scale will be unusual to say the least. Besides that, JME3 uses 1 WU = 1 Meter so this will keep things consistant. If you are doing this now, you may have to rescale your model before proceding.
+
+
+== Export
+
+
+.Blender
+.  In the 3d viewport select your model, it will be high-lighted in orange.
+.  In the `Info` header at the top of the program select `menu:File[Export > FBX]`.
+
+.FBX Exporter
+.  Enter a file path to export to, usually the same directory as your `.blend` file for simplicity.
+.  Enter a file name.
+.  In the `Export FBX` panel, located in the bottom left of th
+
+
+. If the model is facing you click btn:[Next].
+. In this panel you will rig your model. Place the markers as shown in the image. 
++
+[NOTE]
+====
+Remember that the model is facing you so its right is on your left.
+====
+
+.  Select the LOD you are after. This is based off how many bones you want the hand of the model to have. Feel free to cycle through the options to see what each one does.
+.  When you are through click the btn:[Next] button to rig your model.
++
+[NOTE]
+====
+This may take some time and if the model does not appear within 2 minutes something has went wrong and you will have to restart the upload process over. This is a trail blazing  process so keep that in mind. e open window, under the `Main` tab, toggle on the checkbox `Selected Objects`.
+.  Leave the `Scale` at 1 but click the button next to it to turn off btn:[Scale all data]. Failure to do so will destroy the scale of your model. If the button is selected, it will be dark in color.
+.  Leave the `Forward` and `Up` axis at the default of `-Z Forward` and `Y Up`.
+.  Under `Which kind of object to export` deselect everything but `Mesh`. 
+.  Under the `Geometries` tab, select `Apply Modifiers`.
+.  When you are done, click the btn:[Export FBX] button to export the file.
+
+
+==  Import
+====
+
+When the model appears, click through to the end of the process.
+
+
+== Download
