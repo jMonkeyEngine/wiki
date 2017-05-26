@@ -103,10 +103,10 @@ After the file is ready, it will be in your `Downloads` directory on Mixamo.
 .  Click the btn:[Queue Download] button under `Status`, rename the file to TPose and save the it to your computer.  Preferably in the same directory as your blender file.
 
 
-== Preparing Blender for Animations
+== Creating Blender Animations
 
 
-Before you can import any animations from Mixamo, you should have a file that is separate from the model file you exported earlier. Although its not required, it's best to do so. Things can go wrong and you dont want to destroy your model file by accident so it's always best to keep things separate. Our plan of attack is we will create a `.blend` file for every animation and then use this seperate file to combine them into one.
+We now have a animation file to work with. To keep things organized we will create a `.blend` file for every animation and later use a separate `.blend` file to combine all animations into one jME3 compatible animation. The following steps apply to any animation you want to add in the future.
 
 .  In the `Info` header at the top of the program, select `menu:File[New > Reload Startup]`.
 .  Select the default cube and delete it.
@@ -118,28 +118,29 @@ You should create and save a default startup file in Blender. `menu:File[Save St
 ====
 
 .  In the `Info` header select `menu:File[Import > FBX]`.
-.  Select the file TPose.fbx file you downloaded earlier.
-.  In the `Import Fbx` file located at the bottom left of the import dialog, leave all settings at their defaults.
+.  Select the FBX file you downloaded earlier.
+.  In the `Import Fbx` panel located at the bottom left of the import dialog, leave all settings at their defaults.
 +
 .FBX Importer
 Main::
 -  Scale = 1
 - [x] Import Normals
 - [x] Import Animations
--  Armature offset = 1
+- Armature offset = 1
 - [x] Image Search
--  Deacal offset = 0
-- [x] Use pre/post rotation 
-
+- Deacal offset = 0
+- [x] Use pre/post rotation
 Armatures::
 -  Nothing checked
 .  When ready click btn:[Import FBX].
 .  After Blender imports the file, select the Armature then `menu:Object[Apply > Scale]`, repeat the process for the model.
-.  In the `Info` header change the `Default` screen layout to `Animation`.
+.  Select the Armature. 
 .  In the `Time Line` determine the Length of the animation by btn:[R Mse Btn] selecting the last keyframe in the timeline. +
-Set `End:` to this value.
+ Set `End:` to this value.
 .  Click the btn:[|<<] button to reset timeline back to the first frame.  
-.  In the 3d viewport, select the Armature then `menu:Object[Animation > Bake Action]`.
+.  In the `Info` header change the `Default` screen layout to `Animation`.
+.  In the `Dope Sheet` editor, change the `Dope Sheet` mode/context to `Action Editor`. The `Linked Action` will now show the action name of the Mixamo animation you imported. 
+.  In the 3d viewport, with the Armature still selected, select `menu:Object[Animation > Bake Action]`.
 .  In the `Bake Action` dialog, deselect and set the settings as follows:
 +
 - [ ] Selected Only
@@ -149,6 +150,67 @@ Set `End:` to this value.
 - [ ] Overwrite Current
 -  Bake Data = Pose
 .  When ready click btn:[OK].
+.  The `Linked Action` will change to the newly baked action named `Action`. Rename this to the name of the imported animation name. In this instance it was TPose.
+. Click the btn:[F] button to save the action.
+.  Save your file with the same name as the animation.
+
+
+== Clearing The Linked Action Buffer
+
+
+Remember, our goal is to have a single `.blend` file that represents a single animation. After baking we have the old action and the new baked action. You now have to clear the `Linked Action` buffer. Due to some quirks in Blender currently you must do so from the NLA editor.
+
+.  Click the `Action to be linked` button and select the original action you imported from Mixamo.
+. Deselect the btn:[F] button to prevent it from saving.
+.  Change the editor type from `Dope Sheet` to `NLA Editor`. You will see the Mixamo animation listed.
+.  Click the double down arrow button next to the action to push it into the stack.
+.  Click the `Star` next to the NLA Track name then Press kbd:[X] to delete the track.
+.  Save your file.
+.  From the `Info` header select `menu:File[Open Recent > Your Saved File]`.
+.  Save your file again.
+.  From the `Info` header select `menu:File[Open Recent > Your Saved File]` again.
+.  Change back to the `Dope Sheet` editor.
+.  Click the btn:[Browse Action to be linked] button and you will see only the baked action remains and the buffer is now clear of unwanted actions. Select your action.
+.  Save your file one last time.
+
+
+== Combining Animations Into A JME3 Compatible Format
+
+
+It's good practice to have a separate file for combining animations. Things can go wrong, animations may change, and you dont want to destroy your original model file by accident so it's always best to keep things separate. Our plan of attack is we create a .blend file for every animation and then use this separate file to combine them into one. To keep it simple we will use a copy of the first animation we downloaded.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
