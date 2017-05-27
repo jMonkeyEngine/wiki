@@ -64,12 +64,12 @@ You can save these FBX export settings by clicking the btn:[+] button next to bt
 .  Navigate to your `My Assets` directory.
 .  Select `Upload`.
 .  Navigate to the file to be uploaded or drag and drop it onto the file uploader.
+　
+
+== Mixamo Auto-Rigger
 
 
-== Auto-Rigger
-
-
-If everything went well the `Auto-Rigger` will open and your model will be facing you.  If not, fix your model in Blender before proceeding. 
+If everything went well the `Auto-Rigger` will open and your model will be facing you.  If not, fix your model in Blender before proceeding.
 
 .  If the model is facing you click btn:[Next].
 .  In this panel you will rig your model. Place the markers as shown in the Auto-Rigger dialog image. 
@@ -84,29 +84,55 @@ Remember that the model is facing you so its right is on your left.
 +
 [NOTE]
 ====
-This may take some time and if the model does not appear within 2 minutes something has went wrong and you will have to restart the upload process over. This is trail blazing  so keep that in mind. 
+This may take some time and if the model does not appear within 2 minutes something has went wrong and you will have to restart the upload process over. This is trail blazing so keep that in mind. 
 ====
 
 .  When the model appears, click through to the end.
 
 
-== Download
+== Mixamo Animations
 
 
-Navigate to `My Assets`. You should now see your model in a TPose position. This will be your base model for all Mixamo animations. We will also use it as our newly rigged model for Blender.
-
-.  Select the TPose model and then click the btn:[Queue Download] button.
-.  In the `Download Settings` dialog the `Format` is FBX and `Pose` is TPose.
-.  Click the btn:[Queue Download] button.
+.  Navigate to your `My Assets`  folder. 
+.  Select the model to be rigged.
+.  In the far right panel select btn:[Find Animations].
+.  After deciding on an animation, click the animation to have it applied to your model.
+.  After the animation is applied to your model toggle the btn:[In Place] checkbox.
 +
-After the file is ready, it will be in your `Downloads` directory on Mixamo.
-.  Click the btn:[Queue Download] button under `Status`, rename the file to TPose and save the it to your computer.  Preferably in the same directory as your blender file.
+[TIP]
+====
+You can make small adjustments to the animation by using the sliders. The most common adjustment you will make is the  `Character Arm-Space`. If you find the models hands are clipping through the model then use this slider to remedy the situation.
+====
+
+.  Click the btn:[Add To My Assets] button when finished to add the animation to your 'My Animations` folder.
+
+
+== Mixamo Download
+
+
+When downloading `*Animations*` from Mixamo:
+
+.  If the `Animation` is not already in your `Downloads` folder navigate to your `My Animations` folder and select the animation to be downloaded.
+.  Make sure the btn:[In Place] checkbox is selected.
+.  Click the btn:[Queue Download] button.
+.  In the `Download Settings` dialog use the default settings.
+**  Format = FBX
+**  Skin = With Skin
+** Frames per second = 30
+**  Keyframe Reduction = none
+.  Click btn:[Queue Download] to add the animation to your `Downloads` folder.
+
+When downloading `*Characters*` from Mixamo:
+
+.  Select the model and then click the btn:[Queue Download] button.
+.  In the `Download Settings` dialog the `Format` is FBX and `Pose` is TPose.
+.  Click the btn:[Queue Download] button. After the file is ready, it will be in your `Downloads` folder on Mixamo.
+.  In the `Downloads` folder, click the btn:[Queue Download] button under `Status`, rename the file and save it to your computer.  Preferably in the same directory as your blender file.
 
 
 == Creating Blender Animations
 
-
-We now have a animation file to work with. To keep things organized we will create a `.blend` file for every animation and later use a separate `.blend` file to combine all animations into one jME3 compatible animation. The following steps apply to any animation you want to add in the future.
+Download your TPose model using the instructions for downloading `*Characters*` given above. We will use it as our newly rigged model for Blender. To keep things organized we will create a `.blend` file for every animation and later use a separate `.blend` file to combine all animations into one jME3 compatible animation. The following steps apply to any animation you want to add in the future.
 
 .  In the `Info` header at the top of the program, select `menu:File[New > Reload Startup]`.
 .  Select the default cube and delete it.
@@ -174,7 +200,7 @@ Remember, our goal is to have a single `.blend` file that represents a single an
 .  Save your file one last time.
 
 
-== Combining Animations Into A JME3 Compatible Format
+== Creating The Rigged Animation File
 
 
 It's good practice to have a separate file for combining animations. Things can go wrong, animations may change, and you dont want to destroy your original model file by accident so it's always best to keep things separate. Our plan of attack is we create a .blend file for every animation and then use this separate file to combine them into one. To keep it simple we will use a copy of the first animation we downloaded.
