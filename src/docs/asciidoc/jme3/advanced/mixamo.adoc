@@ -15,7 +15,16 @@ In the near future the Mixamo website will be undergoing some changes that will 
 
 == Using Mixamo For Model Animation
 
-With very little effort, you can use Adobes Mixamo to fully animate your Blender models. Once you understand the process that is. This guide uses link:https://www.blender.org/download/[Blender version 2.78c] with its default settings along with the Ogre exporter 0.6.0 found <<jme3/advanced/ogrecompatibility#,here>>. You are expected to have at minimum a modest amount of Blender knowledge. You will need to have FBX file Importing and Exporting initialized in Blender. 
+With very little effort, you can use Adobes Mixamo to fully animate your Blender models. Once you understand the process that is. 
+
+This guide requires:
+
+*  link:https://www.blender.org/download/[Blender version 2.78c] with its default settings.
+*  The Blender Ogre exporter 0.6.0, found <<jme3/advanced/ogrecompatibility#,here>>, enabled. 
+*  Blender FBX file Importing and Exporting enabled.
+*  A Modest amount of Blender knowledge.
+*  A link:https://www.mixamo.com/[Mixamo]  account.
+
 
 == Prepare to Export
 
@@ -32,8 +41,12 @@ To properly animate your models there are a few rules you must follow.
 - [ ] You have baked and packed your Texture (ie, your using a texture atlas).
 - [ ] You have cleared the UV, Material and Texture buffers of unused images, materials and textures.
 - [ ] You have applied the Location, Rotation, and Scale to your model.
-- [ ] *MOST IMPORTANT OF ALL*, in the `menu:Properties Panel[Scene Tab > Unit Panel]` set the btn:[Unit of Measure] to Meters and the Length to Metric. Adobe uses centimeters for the FBX exporter and if this is not set the models scale will be unusual to say the least. Besides that, JME3 uses 1 WU = 1 Meter so this will keep things consistant. If you are doing this now, you may have to rescale your model before proceding.
+- [ ] *MOST IMPORTANT OF ALL*, in the `menu:Properties Panel[Scene Tab > Units Panel]` set the btn:[Unit of Measure] to Meters and the Length to Metric. Adobe uses centimeters for the FBX exporter and if this is not set the models scale will be unusual to say the least. Besides that, JME3 uses 1 WU = 1 Meter so this will keep things consistant. If you are doing this now, you may have to rescale your model before proceding.
 
+[TIP]
+====
+You can clear the Blender buffers by using the `Browse` button located next to the material, texture or UV Image to load the item to be cleared, then while holding the kbd:[Shift] button down, click the btn:[X] button located next to the loaded item. The exception to this rule is the `Linked Action` buffer for animations. To clear this buffer see <<jme3/advanced/mixamo#clearing-the-linked-action-buffer#,Clearing The Linked Action Buffer>> in this tutorial.
+====
 
 == Blender Export
 
@@ -104,7 +117,7 @@ This may take some time and if the model does not appear within 2 minutes someth
 You can make small adjustments to the animation by using the sliders. The most common adjustment you will make is the  `Character Arm-Space`. If you find the models hands are clipping through the model then use this slider to remedy the situation.
 ====
 
-.  Click the btn:[Add To My Assets] button when finished to add the animation to your 'My Animations` folder.
+.  Click the btn:[Add To My Assets] button when finished to add the animation to your `My Animations` folder.
 
 
 == Mixamo Download
@@ -116,10 +129,10 @@ When downloading `*Animations*` from Mixamo:
 .  Make sure the btn:[In Place] checkbox is selected.
 .  Click the btn:[Queue Download] button.
 .  In the `Download Settings` dialog use the default settings.
-**  Format = FBX
-**  Skin = With Skin
-** Frames per second = 30
-**  Keyframe Reduction = none
+*  Format = FBX
+*  Skin = With Skin
+* Frames per second = 30
+*  Keyframe Reduction = none
 .  Click btn:[Queue Download] to add the animation to your `Downloads` folder.
 
 When downloading `*Characters*` from Mixamo:
