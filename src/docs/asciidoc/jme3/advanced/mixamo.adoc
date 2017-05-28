@@ -38,7 +38,7 @@ To properly animate your models there are a few rules you must follow.
 - [ ] You have no Actions stored in the Dope Sheet Action Editor btn:[Browse Action to be linked] buffer.
 - [ ] You have UV Mapped your model.
 - [ ] You have one Material named the same as your mesh.
-- [ ] You have baked and packed your Texture (ie, your using a texture atlas).
+- [ ] You have baked and packed your Texture. For this tutorial we use a diffuse texture (ie, your using a texture atlas), no normal or specular maps.
 - [ ] You have cleared the UV, Material and Texture buffers of unused images, materials and textures.
 - [ ] You have applied the Location, Rotation, and Scale to your model.
 - [ ] *MOST IMPORTANT OF ALL*, in the `menu:Properties Panel[Scene Tab > Units Panel]` set the btn:[Unit of Measure] to Meters and the Length to Metric. Adobe uses centimeters for the FBX exporter and if this is not set the models scale will be unusual to say the least. Besides that, JME3 uses 1 WU = 1 Meter so this will keep things consistant. If you are doing this now, you may have to rescale your model before proceding.
@@ -223,7 +223,17 @@ Remember, our goal is to have a single `.blend` file that represents a single an
 It's good practice to have a separate file for combining animations. Things can go wrong, animations may change, and you dont want to destroy your original model file by accident so it's always best to keep things separate. Our plan of attack is we create a .blend file for every animation and then use this separate file to combine them into one. To keep it simple we will use a copy of the first animation we downloaded.
 
 .  If you have closed the TPose.blend file open it. In the `Info` header select `menu:File[Save As]` and save the file using the models name with the word `Rigged` added. This will be the only file we add animations to, for this model, from now on. It has our default TPose action which will allow us to start our animation track for `Ogre` animation exporting.
-.  With the Armature selected, in the `Properties` panel navigate to the `Object` tab. In the `Display` panel toggle `X-Ray` on.
+.  Select your `Armature`.
+Object Tab::
+*  In the `Properties` panel navigate to the `Object` tab. In the `Display` panel toggle `X-Ray` on.
+.  With your mouse inside the `3d Viewport`, press kbd:[Num Pad 1] followed by kbd:[Numpad 5].
+.  Select `menu:Object[Snap > Cursor to Center]`.
+.  Select `menu:Add[Armature > Single Bone]`.
+.  Rename the bone to `Root`.
+. With the bone still selected, select `menu:Object[Apply > Scale]`.
+.  Select your `Armature` followed the `Root` bone, in that order.
+.  Press kbd:[Ctrl] + kbd:[P].
+. In the `Set Parent To` dialog choose `Object`.
 . Select your model.
 Data Tab::
 *  In the `Properties` panel, navigate to the `Data` tab and make sure the name is the same as you models name.
@@ -231,11 +241,12 @@ Material Tab::
 *  In the `Properties` panel, navigate to the `Material` tab and verify there is one material and it's named the same as your model.
 *  Deselect `Transparency`.
 Texture Tab::
-*  In the `Properties` panel, navigate to the `Texture` tab, you will note that your texture has duplicate names. The bottom texture is actually a transparent texture and appears to be a bug. You cannot import duplicate named textures into JME3. Select the second texture and press the btn:[X] button to delete it.
+*  In the `Properties` panel, navigate to the `Texture` tab, you will note that your texture has duplicate names. The bottom texture is actually a transparent texture and appears to be a bug. You cannot use a model with duplicate named textures in JME3. Select the *second* texture in the `Textures Window` to highlight it. 
+*  Press the btn:[X] button next to the textures `*ID Name*` to delete it.
 *  Select your remaining texture.
 *  In the `Image` panel, click the btn:[Small Box] button located next to your textures path to pack the image file.
 .  In the `Info` header change the layout from `Animation` to `UV Editing`.
-.  With the model still selected, tab into edit mode. If your model is not completely orange press kbd:[A] untill all vertice are selected. You will see your UV Mapped mesh appear in the UV Image editor window.
+.  With the model still selected, tab into edit mode. If your model is not completely orange press kbd:[A] untill all vertice are selected. You will see your UV Mapped mesh appear in the `UV Image Editor` window.
 .  In the `UV Image Editor`, click the btn:[Browse Image to be linked] button and select your UV image.
 .  kbd:[Tab] out of `Edit Mode`.
 .  In the `Info` header change the layout from `UV Editing` to `Default` and then click the btn:[+] button to create a new layout.
@@ -250,10 +261,16 @@ Your rigged file is now `Ogre` export ready. Before we go any further we will te
 .  In the `Info` header change the layout from `NLA Editing` to `Default`.
 .  kbd:[Shift] + btn:[L Mse Btn] select your armature. Your model and armature should now be highlighted, if not, make it so.
 .  From the `Info` header select `menu:File[Export > Ogre3d]`. 
-. Selectect a destination directory in your games `Assetts` folder, usually the `Textures` folder, and when your happy with your export settings click btn:[Export Ogre]. More on the `Ogre` settings can be found in <<jme3/advanced/3d_models#creating-models-and-scenes#,creating models and scenes>>.
+. Select a destination directory in your games `Assets` folder, usually the `Textures` folder. 
+.  Make sure `Selected Only` is checked.
+.   When your happy with your export settings click btn:[Export Ogre]. 
 
 If your file exports clean, proceede with the next steps. If not, fix any errors before continuing.
 
+[TIP]
+====
+More on the `Ogre` settings can be found in <<jme3/advanced/3d_models#creating-models-and-scenes#,creating models and scenes>>.
+====
 
 
 
