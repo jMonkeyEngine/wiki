@@ -19,9 +19,9 @@ With very little effort, you can use Adobes Mixamo to fully animate your Blender
 
 This guide requires:
 
-*  link:https://www.blender.org/download/[Blender version 2.78c] with its default settings.
+*  link:https://www.blender.org/download/[Blender version 2.78c] with its default settings. The exception being `Select With:`, under `menu:File[User Preferences >  Input]` is set to `Left Click`.
 *  Blender Ogre exporter 0.6.0, found <<jme3/advanced/ogrecompatibility#,here>>, enabled. 
-*  Blender FBX file Importing and Exporting enabled.
+*  Blender FBX file Importing and Exporting, enabled.
 *  A Modest amount of Blender knowledge.
 *  A link:https://www.mixamo.com/[Mixamo]  account.
 
@@ -48,7 +48,7 @@ To properly animate your models there are a few rules you must follow.
 You clear Blender buffers as follows: 
 
 .  Select the btn:[Browse] button located next to the material, texture or UV Image name to load the item to be cleared.
-.  While holding the kbd:[Shift] button down, click the btn:[X] button, also known as the btn:[Unlink datablock] button, located next to the loaded item. A item that is unlinked will show a `0` before it when viewed by selecting the btn:[Browse] button and will not be saved if you exit Blender.
+.  While holding kbd:[Shift] down, click the btn:[X] button, also known as the btn:[Unlink datablock] button, located next to the loaded item. A item that is unlinked will show a `0` before it when viewed by selecting the btn:[Browse] button and will not be saved if you exit Blender.
 .  Save your file and then from the `Info` header select `menu:File[Open Recent > Saved File]`.
 
 The exception to this rule is the `Linked Action` buffer for animations. To clear this buffer see <<jme3/advanced/mixamo#clearing-the-linked-action-buffer#,Clearing The Linked Action Buffer>> in this tutorial.
@@ -59,15 +59,16 @@ The exception to this rule is the `Linked Action` buffer for animations. To clea
 
 .  In the 3d viewport select your model, it will be high-lighted in orange.
 .  In the `Info` header select `menu:File[Export > FBX]`.
-
-.FBX Exporter
 .  Enter a file path to export to, usually the same directory as your `.blend` file for simplicity.
 .  Enter a file name.
-.  In the `Export FBX` panel, located in the bottom left of the export dialog, under the `Main` tab, toggle on the checkbox `Selected Objects`.
-.  Leave the `Scale` at 1 but click the button next to it to deselect btn:[Scale all data]. Failure to do so will destroy the scale of your model. If the button is selected, it will be dark in color.
-.  Leave the `Forward` and `Up` axis at the default of `-Z Forward` and `Y Up`.
-.  Under `Which kind of object to export` deselect everything but `Mesh`. 
-.  Under the `Geometries` tab, select `Apply Modifiers`.
+.  In the `Export FBX` panel, located in the bottom left of the export dialog: 
+Main Tab:: 
+*  Toggle on the checkbox `Selected Objects`.
+*  Leave the `Scale` at 1 but click the button next to it to deselect btn:[Scale all data]. Failure to do so will destroy the scale of your model. If the button is selected, it will be dark in color.
+*  Leave the `Forward` and `Up` axis at the default of `-Z Forward` and `Y Up`.
+*  Under `Which kind of object to export` deselect everything but `Mesh`. 
+Geometries Tab::
+*  Select `Apply Modifiers`.
 .  When you are done, click the btn:[Export FBX] button to export the file.
 
 [TIP]
@@ -137,13 +138,13 @@ When downloading `*Animations*` from Mixamo:
 *  Skin = With Skin
 * Frames per second = 30
 *  Keyframe Reduction = none
-.  Click btn:[Queue Download] to add the animation to your `Downloads` folder.
+.  Click btn:[Queue Download] to add the animation to your `Downloads` folder on Mixamo.
 
 When downloading `*Characters*` from Mixamo:
 
 .  Select the model and then click the btn:[Queue Download] button.
 .  In the `Download Settings` dialog the `Format` is FBX and `Pose` is TPose.
-.  Click the btn:[Queue Download] button. After the file is ready, it will be in your `Downloads` folder on Mixamo.
+.  Click the btn:[Queue Download] to add the character to your `Downloads` folder on Mixamo.
 .  In the `Downloads` folder, click the btn:[Queue Download] button under `Status`, rename the file and save it to your computer.  Preferably in the same directory as your blender file.
 
 
@@ -163,8 +164,6 @@ You should create and save a default startup file in Blender. `menu:File[Save St
 .  In the `Info` header select `menu:File[Import > FBX]`.
 .  Select the FBX file you downloaded earlier.
 .  In the `Import Fbx` panel located at the bottom left of the import dialog, leave all settings at their defaults.
-+
-.FBX Importer
 Main::
 -  Scale = 1
 - [x] Import Normals
@@ -182,7 +181,7 @@ Armatures::
  Set `End:` to this value.
 .  Click the btn:[|<<] button to reset timeline back to the first frame.  
 .  In the `Info` header change the `Default` screen layout to `Animation`.
-.  In the `Dope Sheet` editor, change the `Dope Sheet` mode/context to `Action Editor`. The `Linked Action` will now show the action name of the Mixamo animation you imported. 
+.  In the `Dope Sheet` editor, change the `Dope Sheet` mode/context to `Action Editor`. The `Linked Action` will now show the action name of the animation you imported. 
 .  In the 3d viewport, with the Armature still selected, select `menu:Object[Animation > Bake Action]`.
 .  In the `Bake Action` dialog, deselect and set the settings as follows:
 +
@@ -193,7 +192,7 @@ Armatures::
 - [ ] Overwrite Current
 -  Bake Data = Pose
 .  When ready click btn:[OK].
-.  The `Linked Action` in the `Dope Sheet` editor will change to the newly baked action named `Action`. Rename this to the name of the imported animation. In this instance it was TPose.
+.  The `Linked Action` in the `Dope Sheet` editor will change to the newly baked action and is named `Action`. Rename this to the name of the imported animation. In this instance it was TPose.
 . Click the btn:[F] button to save the action.
 .  Save your file with the same name as the action.
 
@@ -203,7 +202,7 @@ Armatures::
 
 Remember, our goal is to have a single `.blend` file that represents a single animation. After baking we have the old action and the new baked action. You now want to clear the old action from the `Linked Action` buffer. Due to some quirks in Blender currently you must do so from the NLA editor.
 
-.  Click the `Action to be linked` button and select the action you want cleared.
+.  In the `Dope Sheet Editor`, click the `Action to be linked` button and select the action you want cleared.
 .  Deselect the btn:[F] button to prevent it from saving.
 .  Change the editor type from `Dope Sheet` to `NLA Editor`. You will see the action listed.
 .  Click the double down arrow button next to the action to push it into the stack.
@@ -220,20 +219,25 @@ Remember, our goal is to have a single `.blend` file that represents a single an
 == Creating The Rigged Animation File
 
 
-It's good practice to have a separate file for combining animations. Things can go wrong, animations may change, and you dont want to destroy your original model file by accident so it's always best to keep things separate. Our plan of attack is we create a .blend file for every animation and then use this separate file to combine them into one. To keep it simple we will use a copy of the first animation we downloaded.
+It's good practice to have a separate file for combining animations. Things can go wrong, animations may change, and you dont want to destroy your original model file by accident so it's always best to keep things separate. Our plan of attack is we create a .blend file for every animation and then use this separate rigged file to combine them into one. To keep it simple we will use a copy of the first animation we downloaded.
 
 .  If you have closed the TPose.blend file open it. In the `Info` header select `menu:File[Save As]` and save the file using the models name with the word `Rigged` added. This will be the only file we add animations to, for this model, from now on. It has our default TPose action which will allow us to start our animation track for `Ogre` animation exporting.
 .  Select your `Armature`.
 Object Tab::
 *  In the `Properties` panel navigate to the `Object` tab. In the `Display` panel toggle `X-Ray` on.
 .  With your mouse inside the `3d Viewport`, press kbd:[Num Pad 1] followed by kbd:[Numpad 5].
+.  Tab into `Edit Mode`.
 .  Select `menu:Object[Snap > Cursor to Center]`.
-.  Select `menu:Add[Armature > Single Bone]`.
+.  Select `menu:Add[Single Bone]`.
 .  Rename the bone to `Root`.
-. With the bone still selected, select `menu:Object[Apply > Scale]`.
-.  Select your `Armature` followed the `Root` bone, in that order.
+. Scale the `Root` bone down or up as needed by selecting the `Tip` (ball at the narrowest part of the bone) and draging the `Z` arrow (blue arrow) of the manipulator up or down untill you are satisfied with its scale. *DO NOT CHANGE THE ANGLE OR MOVE THE BASE OF THE BONE FROM CENTER*.
+Bone Tab::
+*  In the `Properties` panel, navigate to the `Bone` tab. Deselect the `Deform` panel checkbox. 
+.  In the `3d Viewport`, select the armatures `Hip` bone, the lowest bone in the center of the armature.
+.  While holding kbd:[Shift] down, btn:[L Mse Btn] select the `Root` bone.
 .  Press kbd:[Ctrl] + kbd:[P].
-. In the `Set Parent To` dialog choose `Object`.
+. In the `Make Parent` dialog choose `Keep Offset`.
+.  Tab out of `Edit Mode`.
 . Select your model.
 Data Tab::
 *  In the `Properties` panel, navigate to the `Data` tab and make sure the name is the same as you models name.
@@ -261,9 +265,9 @@ Your rigged file is now `Ogre` export ready. Before we go any further we will te
 .  In the `Info` header change the layout from `NLA Editing` to `Default`.
 .  kbd:[Shift] + btn:[L Mse Btn] select your armature. Your model and armature should now be highlighted, if not, make it so.
 .  From the `Info` header select `menu:File[Export > Ogre3d]`. 
-. Select a destination directory in your games `Assets` folder, usually the `Textures` folder. 
-.  Make sure `Selected Only` is checked.
-.   When your happy with your export settings click btn:[Export Ogre]. 
+.  Select a destination path in your games `Assets` folder, usually the `Textures` folder. 
+.  Make sure `Selected Only` is checked and `Only Deformable Bones` is unchecked.
+.  When you're happy with your export settings click btn:[Export Ogre]. 
 
 If your file exports clean, proceede with the next steps. If not, fix any errors before continuing.
 
