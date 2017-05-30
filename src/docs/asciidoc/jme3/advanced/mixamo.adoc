@@ -34,23 +34,17 @@ To properly animate your models there are a few rules you must follow.
 *  Clean up your Blender file prior to exporting. This means you have a game ready model that will become the base for all your animations. The following checklist is provided for your convenience.
 [%interactive]
 - [ ] You have no Animations.
-- [ ] There are no Actions stored in the `Dope Sheet Editor`.  Under the `Action Editor` context, select the btn:[Browse Action to be linked] button to check.
 - [ ] You have UV Mapped your model.
 - [ ] You have one Material named the same as your mesh.
 - [ ] You have baked and packed your Texture. For this tutorial we use a diffuse texture (i.e. your using a texture atlas), no normal or specular maps.
 - [ ] You have cleared the UV, Material and Texture buffers of unused images, materials and textures.
+- [ ] There are no `Actions` stored in the `Dope Sheet Editor` buffer.  Open the `Action Editor` context, select the btn:[Browse Action to be linked] button to check there are no stored actions.
 - [ ] You have applied the Location, Rotation, and Scale to your model.
 - [ ] *MOST IMPORTANT OF ALL*, in the `menu:Properties Panel[Scene Tab > Units Panel]` set the btn:[Unit of Measure] to Meters and the Length to Metric. Adobe uses centimeters for the FBX exporter and if this is not set the models scale will be unusual to say the least. Besides that, JME3 uses 1 WU = 1 Meter so this will keep things consistent. If you are doing this now, you may have to re-scale your model before proceeding.
 
 [TIP]
 ====
-You clear Blender buffers as follows: 
-
-.  Select the btn:[Browse] button located next to the material, texture or UV Image name to load the item to be cleared.
-.  While holding kbd:[Shift] down, click the btn:[X] button, also known as the btn:[Unlink datablock] button, located next to the loaded item. A item that is unlinked will show a `0` before it when viewed by selecting the btn:[Browse] button and will not be saved if you exit Blender.
-.  Save your file and then from the `Info` header select `menu:File[Open Recent > Your Saved File]`.
-
-The exception to this rule is the `Linked Action` buffer for animations. To clear this buffer see <<jme3/advanced/mixamo#clearing-the-linked-action-buffer#,Clearing The Linked Action Buffer>> in this tutorial.
+See <<jme3/advanced/3d_models#blender-buffer-clearing#,Blender Buffer Clearing>> if you don't already know how to clear your buffers.
 ====
 
 == Blender FBX Export
@@ -209,21 +203,7 @@ Armatures::
 
 == Clearing The Linked Action Buffer
 
-
-Remember, our goal is to have a single `.blend` file that represents a single animation. After baking, we have the old action and the new baked action. You now want to clear the old action from the `Linked Action` buffer. Due to some quirks in Blender currently you must do so from the NLA editor.
-
-.  In the `Dope Sheet Editor`, click the `Action to be linked` button and select the action you want cleared.
-.  Deselect the btn:[F] button to prevent it from saving.
-.  Change the editor type from `Dope Sheet` to `NLA Editor`. You will see the action listed.
-.  Click the btn:[Double Down Arrow] button next to the action to push it into the stack.
-.  With the mouse inside the `NLA Track List`,  press kbd:[X] to delete both the track and strip.
-.  Save your file.
-.  From the `Info` header, select `menu:File[Open Recent > Your Saved File]`.
-.  Save your file again.
-.  From the `Info` header, select `menu:File[Open Recent > Your Saved File]` again.
-.  Change back to the `Dope Sheet Editor`.
-.  Click the btn:[Browse Action to be linked] button and you will see only the baked action remains and the buffer is now clear of unwanted actions. Select your action.
-.  Save your file.
+Remember, our goal is to have a single `.blend` file that represents a single animation. After baking, we have the old action and the new baked action. You now want to clear the old action from the `Linked Action` buffer. Due to some quirks in Blender currently you must do so from the NLA editor. See <<jme3/advanced/3d_models#blender-buffer-clearing#,Blender Buffer Clearing>> for more information.
 
 
 == Creating The Rigged Animation File
@@ -343,4 +323,4 @@ Your file is now ready to <<jme3/advanced/mixamo#ogre-export#,export>>.
 
 == Notes
 
-You can see a similar video demonstration of the process in the wiki <<jme3#animations-and-scenes#,Animations And Scenes>> under the CadNav → Mixamo → JME Workflow heading.
+You can see a similar video demonstration of the process in <<jme3#animations-and-scenes#,Animations And Scenes>> under the CadNav → Mixamo → JME Workflow heading.
