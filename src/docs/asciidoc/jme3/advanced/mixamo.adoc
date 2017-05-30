@@ -211,6 +211,8 @@ Remember, our goal is to have a single `.blend` file that represents a single an
 
 It's good practice to have a separate file for combining animations. Things can go wrong, animations may change, and you don't want to destroy your original model file by accident so it's always best to keep things separate. Our plan of attack is we create a .blend file for every animation and then use this separate rigged file to combine them into one. To keep it simple we will use a copy of the first animation we downloaded.
 
+You create a rigged animation file only one time per model.
+
 .  If you have closed the TPose.blend file, open it. In the `Info` header select `menu:File[Save As]` and save the file using the models name with the word `Rigged` added. This will be the only file we add animations to, for this model, from now on. It has our default TPose action which will allow us to start our animation track for `Ogre` animation exporting.
 .  Select your `Armature`.
 Object Tab::
@@ -243,7 +245,7 @@ There appears to be a bug where the FBX importer adds an `Alpha` map texture to 
 
 *  Deselect `Transparency`.
 Texture Tab::
-*  In the `Properties` panel, navigate to the `Texture` tab, you will note that your texture has duplicate names in the `Texture List`. The bottom texture is actually a transparent texture and appears to be a bug. You cannot use a model with duplicate named textures in JME3. Select the *second* texture in the `*Texture List*` to highlight it. 
+*  In the `Properties` panel, navigate to the `Texture` tab, you will note that your texture has duplicate names in the `Texture List`. The bottom texture is actually a transparent `Alpha` texture and appears to be a bug. Select the *second* texture in the `*Texture List*` to highlight it. 
 *  While holding down the kbd:[Shift] key, press the btn:[X] button next to the `*Texture Data Block*` to delete it.
 *  Select your remaining texture in the `Texture List` to highlight it. You will note the `Texture Data Block` is now red due to no texture being assigned.
 *  Click on the btn:[Browse Texture to be linked] button next to the `Texture Data Block` and select your texture.
@@ -292,19 +294,19 @@ Follow the directions for <<jme3/advanced/mixamo#mixamo-animations#,Mixamo Anima
 .  When ready, select the btn:[Append From Library] button to finalize your selection.
 .  From the `Info` header, change your layout to `Animation`.
 .  In the `Dope Sheet Editor`, change the context to `Action Editor` if not already selected. 
-.  Click the btn:[Action to be linked] button and select your appended action from the list.
+.  Click the btn:[Action to be linked] button and select your append action from the list.
 .  From the `Info` header, change the layout from `Animation` to the `NLA Editing` layout we created in the <<jme3/advanced/mixamo#creating-the-rigged-animation-file#,Creating The Rigged Animation File>> section of this tutorial. You will see your append `Action` at the top of the list.
 .  From the `NLA Editor` header, select `menu:Add[Add Tracks]`. A new track has now been added to the top of the list.
 .  Click the btn:[Double Down Arrow] button next to the `Action` to push it down into the stack.
 .  btn:[LMB] select the strip to make it the only strip selected.
-.  btn:[LMB] drag the selected strip to the right until there is at least a 4 keyframe gap between the furthest strip to the right in the list and the appended strip you are dragging. 
+.  btn:[LMB] drag the selected strip to the right until there is at least a 4 keyframe gap between the furthest strip to the right in the list and the append strip you are dragging. 
 +
 [TIP]
 ====
 When the strip is in drag mode it will be purple. While in drag mode you do not need to keep the btn:[LMB] pressed.
 ====
 
-.  When you are satisfied with the position, btn:[LMB] click the strip to finalize your selection. Your appended strip should now be the furthest strip to the right in the list.
+.  When you are satisfied with the position, btn:[LMB] click the strip to finalize your selection. Your append strip should now be the furthest strip to the right in the list.
 +
 [TIP]
 ====
