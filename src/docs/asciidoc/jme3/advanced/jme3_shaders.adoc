@@ -11,15 +11,19 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 == Shaders Basics
 
-Shaders are sets of instructions that are executed on the GPU. They are used to take advantage of hardware acceleration available on the GPU for rendering purposes. +
-This paper only covers Vertex and Fragment shaders because they are the only ones supported by JME3 for the moment. Be aware that there are some other types of shaders (geometry, tessellation,…). + 
+Shaders are sets of instructions that are executed on the GPU. They are used to take advantage of hardware acceleration available on the GPU for rendering purposes. 
+
+This paper only covers Vertex and Fragment shaders because they are the only ones supported by JME3 for the moment. Be aware that there are some other types of shaders (geometry, tessellation,…). 
+
 There are multiple frequently used languages that you may encounter to code shaders but as JME3 is based on OpenGL, shaders in JME use GLSL and any example in this paper will be written in GLSL.
 
 
 === How Does it work?
 
-To keep it Simple: The Vertex shader is executed once for each vertex in the view, then the Fragment shader (also called the Pixel shader) is executed once for each pixel on the screen. +
-The main purpose of the Vertex shader is to compute the screen coordinate of a vertex (where this vertex will be displayed on screen) while the main purpose of the Fragment shader is to compute the color of a pixel. +
+To keep it Simple: The Vertex shader is executed once for each vertex in the view, then the Fragment shader (also called the Pixel shader) is executed once for each pixel on the screen. 
+
+The main purpose of the Vertex shader is to compute the screen coordinate of a vertex (where this vertex will be displayed on screen) while the main purpose of the Fragment shader is to compute the color of a pixel. 
+
 This is a very simplified graphic to describe the call stack: 
 
 image:jme3/advanced/jme3andshaders.png[jme3andshaders.png,width="",height="", align="left] 
@@ -29,11 +33,11 @@ The main program sends mesh data to the vertex shader (vertex position in object
 
 === Variables scope
 
-There are different types of scope for variables in a shader :
+There are different types of scope for variables in a shader:
 
-*  uniform : User defined variables that are passed by the main program to the vertex and fragment shader, these variables are global for a given execution of a shader.
-*  attribute : Per-vertex variables passed by the engine to the shader, like position, normal, etc (Mesh data in the graphic)
-*  varying : Variables passed from the vertex shader to the fragment shader.
+*  uniform: User defined variables that are passed by the main program to the vertex and fragment shader, these variables are global for a given execution of a shader.
+*  attribute: Per-vertex variables passed by the engine to the shader, like position, normal, etc (Mesh data in the graphic)
+*  varying: Variables passed from the vertex shader to the fragment shader.
 
 There is a large panel of variable types to be used, for more information about it I recommend reading the GLSL specification link:http://www.opengl.org/registry/doc/GLSLangSpec.Full.1.20.8.pdf[here]. 
 
@@ -47,10 +51,11 @@ image:jme3/advanced/jme3andshaders-1.png[jme3andshaders-1.png,width="",height=""
 The engine passes the object space coordinates to the vertex shader. We need to compute its position in projection space. To do that we transform the object space position by the WorldViewProjectionMatrix, which is a combination of the World, View, Projection matrices (who would have guessed?).
 
 
-=== Simple example : rendering a solid color on an object
+=== Simple example: rendering a solid color on an object
 
-Here is the simplest application to shaders, rendering a solid color. +
-Vertex Shader : 
+Here is the simplest application to shaders, rendering a solid color. 
+
+Vertex Shader: 
 
 [source,java]
 ----
@@ -147,7 +152,6 @@ JME3 uses some global uniforms for lighting:
 
 *  g_LightDirection (vec4): the direction of the light
 **  use for SpotLight: x,y,z contain the world direction vector of the light, the w component contains the spotlight angle cosine
-
 *  g_LightColor (vec4): the color of the light
 *  g_LightPosition: the position of the light
 **  use for SpotLight: x,y,z contain the world position of the light, the w component contains 1/lightRange
@@ -219,8 +223,7 @@ there are setXXXX methods for any type of uniform you want to pass.
 ----
 
 To use this uniform in the shader, you need to declare it in the .frag or .vert files (depending on where you need it).
-You can make use of the defines here and later in the code:
-*Note that the “m_ prefix specifies that the uniform is a material parameter.*
+You can make use of the defines here and later in the code: *Note that the “m_ prefix specifies that the uniform is a material parameter.*
 
 [source,java]
 ----
@@ -288,8 +291,7 @@ if we need to blend it:
 
 ----
 
-This way, a transparent pixel in the KeyMap texture doesn't modify the color. +
-A black pixel replaces it for the m_KeyColor and values in between are blended. 
+This way, a transparent pixel in the KeyMap texture doesn't modify the color. A black pixel replaces it for the m_KeyColor and values in between are blended. 
 
 A result preview can be seen here: link:http://wstaw.org/m/2011/10/24/plasma-desktopuV2787.jpg[http://wstaw.org/m/2011/10/24/plasma-desktopuV2787.jpg]
 
@@ -318,8 +320,9 @@ A result preview can be seen here: link:http://wstaw.org/m/2011/10/24/plasma-des
 
 === JME3 and OpenGL 3 & 4 compatibility
 
-GLSL 1.0 to 1.2 comes with built in attributes and uniforms (ie, gl_Vertex, gl_ModelViewMatrix, etc…). +
-Those attributes are deprecated since GLSL 1.3 (opengl 3), hence JME3 global uniforms and attributes. Here is a list of deprecated attributes and their equivalent in JME3.
+GLSL 1.0 to 1.2 comes with built in attributes and uniforms (ie, gl_Vertex, gl_ModelViewMatrix, etc…). Those attributes are deprecated since GLSL 1.3 (opengl 3), hence JME3 global uniforms and attributes. 
+
+Here is a list of deprecated attributes and their equivalent in JME3.
 
 [cols="2", options="header"]
 |===
