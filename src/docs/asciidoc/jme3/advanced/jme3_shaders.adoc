@@ -92,10 +92,10 @@ For example applying this shader to a sphere would render a solid blue sphere on
 
 == How to use shaders in JME3
 
-You probably heard that JME3 is “shader oriented”, but what does that mean? +
-Usually to use shaders you must create what is called a program. This program specify the vertex shader and the fragment shader to use. 
 
-JME3 encloses this in the material system. Every material in JME3 uses shaders. +
+You probably heard that JME3 is "`shader oriented`", but what does that mean? + 
+Usually, to use shaders you must create a program. This program specifies the vertex shader and the fragment shader to use. JME3 encloses this in the material system. Every material in JME3 uses shaders. 
+
 For example let’s have a look at the SolidColor.j3md file : 
 
 [source,java]
@@ -129,33 +129,39 @@ For more information on JME3 material system, I suggest you read link:https://hu
 
 === JME3 Global uniforms
 
-JME3 can expose pre-computed global uniforms to your shaders. You must specify the one that are required for your shader in the WorldParameters section of the material definition file (.j3md). +
-Note that in the shader the uniform names will be prefixed by a “g_”. +
-In the example above, WorldViewProjectionMatrix is declared as uniform mat4 g_WorldViewProjectionMatrix in the shader. +
+JME3 can expose pre-computed global uniforms to your shaders. You must specify the ones that are required for your shader in the WorldParameter's section of the material definition file (.j3md).
+
+[NOTE]
+====
+In the shader, the uniform names will be prefixed by a “g_”.
+====
+
+In the example above, WorldViewProjectionMatrix is declared as uniform mat4 g_WorldViewProjectionMatrix in the shader.
+
 The complete list of global uniforms that can be used in JME3 can be found in link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/java/com/jme3/shader/UniformBinding.java[UniformBinding.java].
 
 
 === JME3 Lighting Global uniforms
 
-JME3 uses some global uniforms for lighting :
+JME3 uses some global uniforms for lighting:
 
-*  g_LightDirection (vec4) : the direction of the light
-**  use for SpotLight : x,y,z contain the world direction vector of the light, the w component contains the spotlight angle cosine
+*  g_LightDirection (vec4): the direction of the light
+**  use for SpotLight: x,y,z contain the world direction vector of the light, the w component contains the spotlight angle cosine
 
-*  g_LightColor (vec4) : the color of the light
-*  g_LightPosition : the position of the light
-**  use for SpotLight : x,y,z contain the world position of the light, the w component contains 1/lightRange
-**  use for PointLight : x,y,z contain the world position of the light, the w component contains 1/lightRadius
-**  use for DirectionalLight : strangely enough it's used for the direction of the light…this might change though. The fourth component contains -1 and it's used in the lighting shader to know if it's a directionalLight or not.
-
-*  g_AmbientLightColor the color of the ambient light.
+*  g_LightColor (vec4): the color of the light
+*  g_LightPosition: the position of the light
+**  use for SpotLight: x,y,z contain the world position of the light, the w component contains 1/lightRange
+**  use for PointLight: x,y,z contain the world position of the light, the w component contains 1/lightRadius
+**  use for DirectionalLight: strangely enough it's used for the direction of the light…this might change though. The fourth component contains -1 and it's used in the lighting shader to know if it's a directionalLight or not.
+*  g_AmbientLightColor: the color of the ambient light.
 
 These uniforms are passed to the shader without having to declare them in the j3md file, but you have to specify in the technique definition “ LightMode MultiPass see lighting.j3md for more information.
 
 
 === JME3 attributes
 
-Those are different attributes that are always passed to your shader. +
+Those are different attributes that are always passed to your shader. 
+
 You can find a complete list of those attribute in the Type enum of the VertexBuffer in link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/java/com/jme3/scene/VertexBuffer.java[VertexBuffer.java]. 
 
 [NOTE] 
@@ -168,7 +174,8 @@ When the enumeration lists some usual types for each attribute (for example texC
 
 === User's uniforms
 
-At some point when making your own shader you'll need to pass your own uniforms +
+At some point when making your own shader you'll need to pass your own uniforms.
+
 Any uniform has to be declared in the material definition file (.j3md) in the “MaterialParameters section.
 
 [source,java]
@@ -181,7 +188,8 @@ Any uniform has to be declared in the material definition file (.j3md) in the �
 
 ----
 
-You can also pass some define to your vertex/fragment programs to know if an uniform as been declared. +
+You can also pass some define to your vertex/fragment programs to know if an uniform as been declared. 
+
 You simply add it in the Defines section of your Technique in the definition file.
 
 [source,java]
@@ -193,8 +201,10 @@ You simply add it in the Defines section of your Technique in the definition fil
 
 ----
 
-For integer and floating point parameters, the define will contain the value that was set. +
-For all other types of parameters, the value 1 is defined. +
+For integer and floating point parameters, the define will contain the value that was set. 
+
+For all other types of parameters, the value 1 is defined. 
+
 If no value is set for that parameter, the define is not declared in the shader.
 
 Those material parameters will be sent from the engine to the shader as follows,
@@ -227,14 +237,11 @@ The uniforms will be populated at runtime with the value you sent.
 
 === Example: Adding Color Keying to the Lighting.j3md Material Definition
 
-Color Keying is useful in games involving many players. It consists of adding some +
-player-specific color on models textures. +
-The easiest way of doing this is to use a keyMap which will contain the amount of +
-color to add in its alpha channel. +
-Here I will use this color map: link:http://wstaw.org/m/2011/10/24/plasma-desktopxB2787.jpg[http://wstaw.org/m/2011/10/24/plasma-desktopxB2787.jpg] +
-to blend color on this texture: link:http://wstaw.org/m/2011/10/24/plasma-desktopbq2787.jpg[http://wstaw.org/m/2011/10/24/plasma-desktopbq2787.jpg] 
+Color Keying is useful in games involving many players. It consists of adding some player-specific color on models textures. The easiest way of doing this is to use a keyMap which will contain the amount of color to add in its alpha channel. 
 
-We need to pass 2 new parameters to the Lighting.j3md definition, MaterialParameters section :
+Here I will use this color map: link:http://wstaw.org/m/2011/10/24/plasma-desktopxB2787.jpg[http://wstaw.org/m/2011/10/24/plasma-desktopxB2787.jpg] to blend color on this texture: link:http://wstaw.org/m/2011/10/24/plasma-desktopbq2787.jpg[http://wstaw.org/m/2011/10/24/plasma-desktopbq2787.jpg] 
+
+We need to pass 2 new parameters to the Lighting.j3md definition, MaterialParameters section:
 
 [source,java]
 ----
@@ -312,7 +319,7 @@ A result preview can be seen here: link:http://wstaw.org/m/2011/10/24/plasma-des
 === JME3 and OpenGL 3 & 4 compatibility
 
 GLSL 1.0 to 1.2 comes with built in attributes and uniforms (ie, gl_Vertex, gl_ModelViewMatrix, etc…). +
-Those attributes are deprecated since GLSL 1.3 (opengl 3), hence JME3 global uniforms and attributes. Here is a list of deprecated attributes and their equivalent in JME3
+Those attributes are deprecated since GLSL 1.3 (opengl 3), hence JME3 global uniforms and attributes. Here is a list of deprecated attributes and their equivalent in JME3.
 
 [cols="2", options="header"]
 |===
