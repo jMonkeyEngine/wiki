@@ -37,7 +37,7 @@ Animations for jME3 have to be bone animations, simple object movement is suppor
 
 To create an animation from scratch do the following:
 
-*  Create the model
+*  Create the model.
 **  Make sure your models location, rotation and scale is applied and zero / one (see “Model Checklist below).
 **  (Did you know? You can make any model from a box by only using extrusion, this creates very clean meshes.)
 
@@ -47,7 +47,7 @@ To create an animation from scratch do the following:
 ***  image:jme3/external/blender-add-bone.png[blender-add-bone.png,width="",height=""]
 
 **  Select the bone and go to edit mode (press kbd:[Tab]).
-**  Select the root bone end and press "`E`" to extrude the bone, then start rigging your model this way.
+**  Select the root bone end and press kbd:[E] to extrude the bone, then start rigging your model this way.
 **  *Make sure your armatures location, rotation and scale is applied (see “Model Checklist below) before continuing*.
 
 *  Make the armature the parent of the model.
@@ -70,7 +70,7 @@ image:jme3/external/blender-make-armature.png[blender-make-armature.png,width=""
 *  Add an action by pressing the btn:[+] button.
 *  Set the rotationmode of the bone to Quaternion or switch later from your rotationmode to Quaternion and make a keyframe.
 **  image:jme3/external/blender-switch-rotationmode.png[blender-switch-rotationmode.png,width="",height=""]
-*  Create the keyframes (select the model armature and press I) along the timeline.
+*  Create the keyframes (select the model armature and press kbd:[I]) along the timeline.
 **  image:jme3/external/blender-add-keyframes.png[blender-add-keyframes.png,width="",height=""]
 
 *  Each action will be an animation available via the animation control in jME after the import.
@@ -85,22 +85,23 @@ Sometimes you do not create the model yourself and often times models from the w
 
 To export an animated model in Blender make sure the following conditions are met:
 
-*  The animation has to be a *bone animation*
-*  Apply Location, Rotation and Scale to the mesh on Blender: On 3D View editor on Blender, select the mesh in Object Mode and go to the 3D View Editor’s header → Object Menu → Apply → Location / Rotation / Scale.
+*  The animation has to be a *bone animation*.
+*  Apply Location, Rotation and Scale to the mesh in Blender: In the `3D View Editor` in Blender, select the mesh in `Object Mode` and go to the `3D View Editor` header, click `menu:Object[Apply > Location / Rotation / Scale]`.
 **  image:jme3/external/blender_apply_mesh.png[blender_apply_mesh.png,width="300",height=""]
 
-*  Apply Location, Rotation and Scale to the armature on Blender: On 3D View editor on Blender, select the armature in Object Mode and go to the 3D View Editor’s header → Object Menu → Apply → Location / Rotation / Scale.
+*  Apply Location, Rotation and Scale to the armature in Blender: In the `3D View Editor` in Blender, select the armature in `Object Mode` and go to the `3D View Editor` header, click `menu:Object[Apply > Location / Rotation / Scale]`.
 **  image:jme3/external/blender_apply_bones.png[blender_apply_bones.png,width="300",height=""]
 
 *  Set the mesh’s origin point in the bottom of the mesh (see the image below).
 *  Set the armature’s origin point in the bottom of the armature (see the image below).
 *  Armature’s origin point and mesh’s origin point must be in the same location(see the image below).
 *  Use a root bone located in the armature’s origin. This root bone must be in vertical position (see the image below) and it is the root bone of the armature. If you rotate the root bone, the the entire armature might be rotate when you import the model into jMonkey (I’m just mentioning the result, I don’t know where is the problem (jMonkey importer or blender’s ogre exporter plugin)).
-*  Uncheck “Bone Envelopes” checkbox on the Armature modifier for the mesh (see the image below).
+*  Uncheck "`Bone Envelopes`" checkbox on the Armature modifier for the mesh (see the image below).
 **  image:jme3/external/blender_envelopes.png[blender_envelopes.png,width="300",height=""]
 
-*  Uncheck “Envelopes” checkbox on the armature (see the image below).
-**  image:jme3/external/blender_rootbone.png[blender_rootbone.png,width="500",height=""]
+*  Under the armature data tab, make sure the bone type is `Octahedral` (see image below).
+//*  Uncheck "`Envelopes`" checkbox on the armature (see the image below).
+**  image:jme3/external/blender_rootbone2.png[blender_rootbone2.png,width="",height=""]
 
 
 You can use SkeletonDebugger to show the skeleton on your game in order to check if the mesh and the skeleton are loaded correctly:
@@ -117,12 +118,13 @@ You can use SkeletonDebugger to show the skeleton on your game in order to check
  
     soldier2Node.attachChild(soldier2);
     rootNode.attachChild(soldier2Node);
- 
-    final AnimControl control = soldier2.getControl(AnimControl.class);
-    control.addListener(this);
-    final AnimChanel channel = control.createChannel();
- 
-    final SkeletonDebugger skeletonDebug = new SkeletonDebugger("skeleton", control.getSkeleton());
+    
+    final AnimControl animControl = soldier2.getControl(AnimControl.class);
+    animControl.addListener(this);
+    final AnimChannel animChannel = animControl.createChannel();
+
+    final SkeletonDebugger skeletonDebug = 
+                    new SkeletonDebugger("skeleton", animControl.getSkeleton());
     final Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
     mat.setColor("Color", ColorRGBA.Green);
     mat.getAdditionalRenderState().setDepthTest(false);
@@ -130,6 +132,27 @@ You can use SkeletonDebugger to show the skeleton on your game in order to check
     soldier2Node.attachChild(skeletonDebug);
 
 ----
+
+[TIP]
+====
+For more complex models where the `AnimControl` is not a child of the root node, use a SceneGraphVisitor to locate the control. You can implement the AnimEventListener by using an anonymous inner class, or as in this example, an inner class that implements the AnimEventListener. 
+
+[source,java]
+----
+
+soldier2.depthFirstTraversal(new SceneGraphVisitor() {                
+    @Override
+    public void visit(Spatial spatial) {
+        if (spatial instanceof Node && spatial.getControl(AnimControl.class) != null) {
+            final AnimControl animControl = spatial.getControl(AnimControl.class);
+            animControl.addListener(new AnimationEventListener());
+            final AnimChannel animChannel = animControl.createChannel();            
+        }
+    }
+});
+
+----
+====
 
 *  image:jme3/external/blender_finished.png[blender_finished.png,width="500",height=""]
 
