@@ -283,7 +283,7 @@ Texture Tab::
 
 Your rigged file is now `Ogre` export ready. Before we go any further, we will test our export to verify it's error free.
 
-.  In the `Info` header, change the layout from `NLA Editing` to `Default`.
+.  In the `Info` header, change the layout to `Default`.
 .  kbd:[Shift] + btn:[LMB] select your armature and your model.  
 .  From the `Info` header, select `menu:File[Export > Ogre3d]`. 
 .  Select a destination path in your games `Assets` folder, usually the `Textures` folder. 
@@ -303,15 +303,16 @@ More on the `Ogre` settings can be found in <<jme3/advanced/3d_models#creating-m
 Follow the directions for <<jme3/advanced/mixamo#mixamo-animations#,Mixamo Animations>>, <<jme3/advanced/mixamo#mixamo-download#,Mixamo Download>>, <<jme3/advanced/mixamo#creating-blender-animations#,Creating Blender Animations>> and <<jme3/advanced/mixamo#clearing-the-linked-action-buffer#,Clearing The Linked Action Buffer>> for all animations you wish to append to your *rigged* animation file.
 
 .  If your `Rigged` file is closed, open it. 
+.  From the `Info` header, change the Layout to `Default`. 
+.  In the `3d Viewport`, select the armature of the model.
 .  From the `Info` header, select `menu:File[Append]`.
-.  Navigate to, and select the animation file you want to append.
-.  From the folders list select `Action`.
-.  Select your action.
+.  Navigate to, and select the `.blend` animation file you want to append.
+.  From the folders list select the `Action` folder, followed by your action.
 .  When ready, select the btn:[Append From Library] button to finalize your selection.
 .  From the `Info` header, change your layout to `Animation`.
 .  In the `Dope Sheet Editor`, change the context to `Action Editor` if not already selected. 
 .  Click the btn:[Action to be linked] button and select your append action from the list.
-.  Select the btn:[F] button to save the action.
+.  Select the F button to save the action.
 .  From the `Info` header, change the layout from `Animation` to the `NLA Editing` layout we created in the <<jme3/advanced/mixamo#creating-the-rigged-animation-file#,Creating The Rigged Animation File>> section of this tutorial. You will see your append `Action` at the top of the list.
 .  From the `NLA Editor` header, select `menu:Add[Add Tracks]`. A new track has now been added to the top of the list.
 .  Click the btn:[Double Down Arrow] button next to the `Action` to push it down into the stack.
@@ -337,6 +338,17 @@ You can drag the slider, at the bottom of the strip window, to the right or left
 .  Save your file.
 
 Your file is now ready to <<jme3/advanced/mixamo#ogre-export#,export>>. 
+
+[IMPORTANT]
+====
+Prior to export: 
+
+In the `NLA Editor` make sure no `Actions` are waiting to be pushed down into the stack. If there are, it must be removed or made into a strip prior to export.
+
+In the `Dope Sheet Editor` make sure no `Actions` are selected in the `Action Editor` context. If one is selected, it will be sitting at the top of the `NLA Editor` stack.
+
+An `Action` that has not been pushed down into the `NLA Stack` will block your `NLA Strip` from playing.
+====
 
 Your NLA strip should look something like this:
 
