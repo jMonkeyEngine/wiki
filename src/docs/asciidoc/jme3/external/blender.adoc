@@ -64,7 +64,7 @@ image:jme3/external/blender-make-armature.png[blender-make-armature.png,width=""
 
 *  Voila, your model should move when you move the bones in pose mode.
 *  From the `Info` header, press the btn:[Choose Screen Layout] button and select the `Animation` layout.
-*  In the `Dope Sheet Editor` window, press the btn:[Context] button select `Action Editor`.
+*  In the `Dope Sheet Editor` window, press the btn:[Context] button and select `Action Editor`.
 **  image:jme3/external/blender-action-editor.png[blender-action-editor.png,width="",height=""]
 
 *  Add an action by pressing the btn:[+] button.
@@ -86,10 +86,10 @@ Sometimes you do not create the model yourself and often times models from the w
 To export an animated model in Blender make sure the following conditions are met:
 
 *  The animation has to be a *bone animation*.
-*  Apply Location, Rotation and Scale to the mesh in Blender: In the `3D View Editor` in Blender, select the mesh in `Object Mode` and go to the `3D View Editor` header, click `menu:Object[Apply > Location / Rotation / Scale]`.
+*  Apply Location, Rotation and Scale to the mesh in Blender: In the `3D Viewport` in Blender, select the mesh in `Object Mode`, from the `3D View Editor` header, click `menu:Object[Apply > Location / Rotation / Scale]`.
 **  image:jme3/external/blender_apply_mesh.png[blender_apply_mesh.png,width="300",height=""]
 
-*  Apply Location, Rotation and Scale to the armature in Blender: In the `3D View Editor` in Blender, select the armature in `Object Mode` and go to the `3D View Editor` header, click `menu:Object[Apply > Location / Rotation / Scale]`.
+*  Apply Location, Rotation and Scale to the armature in Blender: In the `3D Viewport` in Blender, select the armature in `Object Mode`, from the `3D View Editor` header, click `menu:Object[Apply > Location / Rotation / Scale]`.
 **  image:jme3/external/blender_apply_bones.png[blender_apply_bones.png,width="300",height=""]
 
 *  Set the mesh’s origin point in the bottom of the mesh (see the image below).
@@ -133,28 +133,24 @@ You can use SkeletonDebugger to show the skeleton on your game in order to check
 
 ----
 
-[TIP]
-====
-For more complex models where the `AnimControl` is not a child of the root node, use a SceneGraphVisitor to locate the control. You can implement the AnimEventListener by using an anonymous inner class, or as in this example, an inner class that implements the AnimEventListener. 
+*  image:jme3/external/blender_finished.png[blender_finished.png,width="500",height=""]
 
+For more complex models where the `AnimControl` is not a child of the root node, use a SceneGraphVisitor to locate the control. You can implement the AnimEventListener by using an anonymous inner class, or as in this example, an inner class that implements the AnimEventListener. 
 [source,java]
 ----
 
-soldier2.depthFirstTraversal(new SceneGraphVisitor() {                
-    @Override
-    public void visit(Spatial spatial) {
-        if (spatial instanceof Node && spatial.getControl(AnimControl.class) != null) {
-            final AnimControl animControl = spatial.getControl(AnimControl.class);
-            animControl.addListener(new AnimationEventListener());
-            final AnimChannel animChannel = animControl.createChannel();            
-        }
+soldier2.depthFirstTraversal(new SceneGraphVisitor() {                    
+    @Override    
+    public void visit(Spatial spatial) {        
+        if (spatial instanceof Node && spatial.getControl(AnimControl.class) != null) {            
+            final AnimControl animControl = spatial.getControl(AnimControl.class);            
+            animControl.addListener(new AnimationEventListener());            
+            final AnimChannel animChannel = animControl.createChannel();                    
+        }    
     }
 });
 
 ----
-====
-
-*  image:jme3/external/blender_finished.png[blender_finished.png,width="500",height=""]
 
 Also check out these videos and resources:
 
