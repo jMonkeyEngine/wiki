@@ -135,23 +135,6 @@ You can use SkeletonDebugger to show the skeleton on your game in order to check
 
 *  image:jme3/external/blender_finished.png[blender_finished.png,width="500",height=""]
 
-For more complex models where the `AnimControl` is not a child of the root node, use a SceneGraphVisitor to locate the control. You can implement the AnimEventListener by using an anonymous inner class, or as in this example, an inner class that implements the AnimEventListener. 
-[source,java]
-----
-
-soldier2.depthFirstTraversal(new SceneGraphVisitor() {                    
-    @Override    
-    public void visit(Spatial spatial) {        
-        if (spatial instanceof Node && spatial.getControl(AnimControl.class) != null) {            
-            final AnimControl animControl = spatial.getControl(AnimControl.class);            
-            animControl.addListener(new AnimationEventListener());            
-            final AnimChannel animChannel = animControl.createChannel();                    
-        }    
-    }
-});
-
-----
-
 Also check out these videos and resources:
 
 *  link:https://hub.jmonkeyengine.org/t/importing-animations-from-blender-2-62-using-ogre-xml-things-to-check-if-you-are-getting-problems/22234[Forum: How to import animated models from Blender 2.6 correctly] (link:https://www.youtube.com/watch?v=QiLCs4AKh28[Video])
