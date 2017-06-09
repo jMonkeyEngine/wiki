@@ -191,9 +191,30 @@ Armatures::
 .  Click the btn:[|<<] button to reset timeline back to the first frame.  
 .  In the `Info` header, change the `Default` screen layout to `Animation`.
 .  In the `Dope Sheet Editor`, change the `Dope Sheet` mode/context to `Action Editor`. The `Linked Action` will now show the action name of the animation you imported.
+.  Rename this to the name of the imported animation. In this instance it was TPose.
+.  Select the btn:[F] button to save the action. 
+.  Save your file with the same name as the action.
+
+[NOTE]
+====
+Mixamo sets the rotation mode of bones to `Quaternion` as is appropriate for preventing link:https://en.wikipedia.org/wiki/Gimbal_lock[`Gimbal Lock`]. Keep this in mind if you decide to modify your animation. Blender defaults to `XYZ Euler` so you will need to change this setting prior to inserting new keyframes.
+====
+
+
+== Action Baking
+
+
+There are many ways to export or import files for jMonkeyEngine. If you plan to use a method other than `Ogre Exporter`, you may need to bake your actions. Baking is a destructive process so it is recommended that *after* completion of <<jme3/advanced/mixamo#creating-blender-animations#, Creating Blender Animations>>, test the animation in-game.
+
+If you find yourself in need of baking, the process is as follows.
+
+.  Using the animation file you created in the previous section, from the `Info` header, select `menu:File[Save Copy]`.
+.  Save the file somewhere other than the current folder. This will save you the effort of re-creating the animation file if you need it at some other time.
+.  In the `Info` header, change the `Default` screen layout to `Animation`.
+.  In the `Dope Sheet Editor`, change the `Dope Sheet` mode/context to `Action Editor`. 
+.  Click the btn:[Action to be linked] button and select your action.
 .  In the `3d Viewport` header, with the armature selected, select `menu:Object[Animation > Bake Action]`.
 .  In the `Bake Action` dialog, deselect and set the settings as follows:
-+
 Bake Action::
 - [ ] Selected Only
 - [x] Visual Keying
@@ -202,21 +223,16 @@ Bake Action::
 - [ ] Overwrite Current
 -  Bake Data = Pose
 .  When ready click btn:[OK].
-.  The `Linked Action` in the `Dope Sheet Editor` will change to the newly baked action and is named `Action`. Rename this to the name of the imported animation. In this instance it was TPose.
-.  Select the btn:[F] button to save the action. 
-.  Save your file with the same name as the action.
+.  The `Linked Action` in the `Dope Sheet Editor` will change to the newly baked action and is named `Action`. Rename this to the name of the imported animation.
+.  Select the btn:[F] button to save the action. 
+.  Save your file.
 .  Clear the old action from the `Linked Action` buffer. See <<jme3/advanced/3d_models#blender-buffer-clearing#,Blender Buffer Clearing>> for more information.
-
-[NOTE]
-====
-Mixamo sets the rotation mode of bones to `Quaternion` as is appropriate for preventing link:https://en.wikipedia.org/wiki/Gimbal_lock[`Gimbal Lock`]. Keep this in mind if you decide to modify your animation. Blender defaults to `XYZ Euler` so you will need to change this setting prior to inserting new keyframes.
-====
 
 
 == Creating The Rigged Animation File
 
 
-It's good practice to have a separate file for combining animations. Things can go wrong, animations may change, and you don't want to destroy your original model file by accident so it's always best to keep things separate. Our plan of attack is we create a .blend file for every animation and then use this separate rigged file to combine them into one. To keep it simple we will use a copy of the first animation we downloaded.
+It's good practice to have a separate file for combining animations. Things can go wrong, animations may change, and you don't want to destroy your original model file by accident. Our plan of attack has been we create a .blend file for every animation and then use this separate rigged file to combine them into one. To keep it simple we will use a copy of the first animation we downloaded and created a `.blend` file for.
 
 You create a rigged animation file only one time per model.
 
