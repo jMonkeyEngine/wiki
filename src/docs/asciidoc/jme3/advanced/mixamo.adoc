@@ -195,6 +195,13 @@ Armatures::
 *  If the btn:[F] button is not selected, i.e. dark, select it to save the action. 
 .  Save your file with the same name as the action.
 
+[IMPORTANT]
+====
+If you decide to use the Blender importer of the SDK or convert a `.blend` file you will have to bake your `Action` to the armature.
+
+See <<jme3/advanced/mixamo.html#notes, Notes>> for details.
+====
+
 [NOTE]
 ====
 Mixamo sets the rotation mode of bones to `Quaternion` as is appropriate for preventing link:https://en.wikipedia.org/wiki/Gimbal_lock[`Gimbal Lock`]. Keep this in mind if you decide to modify your animation. Blender defaults to `XYZ Euler` so you will need to change this setting prior to inserting new keyframes.
@@ -345,20 +352,13 @@ image::jme3/advanced/MixamoNLA.png[MixamoNLA.png,width="",height=""]
 == Notes
 
 
-*  Eventually, you may need to edit or bake the actions of your animation file. This work should be done in a copy of the animation `.blend` file you created in <<jme3/advanced/mixamo.html#creating-blender-animations,Creating Blender Animations>>, then appending that file to your `Rigged` file, or working directly with the actions in the `Rigged` file. This way you won't have to go through the process of creating the blender animation file again if you FUBAR something.
+*  If you use the Blender importer of the SDK or convert a `.blend` file to `.j3o` you will have to bake your actions to the `Armature`. The `Ogre Exporter` is unaffected by this requirement.
 
-*  In some situations, it's best to bake an action to the armature. Here are a couple of quotes on the subject.
-
-
-"You bake simulations such as fluid, smoke, cloth, particles and rigid bodies. These take a long time to calculate and if you don't bake them running your animation will be very slow in 3d view every time."
---  Relja Trajković, Answer to: Why do I have to "bake" animations I have made in Blender? Isn't setting keyframes good enough?
-
-"Baking can also mean precalculating physics simulations such as Cloth or Rigid Body. For this Blender saves them to a file, which then loads when rendering or playing back the animation so that the physics don't have to be recalculated every time."
---  Hugo Sales, Answer to: What does "Baking" mean?
+//-
 
 How to bake actions::
+.  From the `Info` header, change the layout to `Animation`.
 .  In the `Dope Sheet Editor`, change the `Dope Sheet` mode/context to `Action Editor`.
-**  Note that one or more strips can be baked into an `Action` from the `NLA Editor`.
 .  Navigate to the `Action` you wish to bake by clicking on the btn:[Browse Action to be linked] button.
 .  In the `3d Viewport`, with the armature selected, select `menu:Object[Animation > Bake Action]`.
 .  In the `Bake Action` dialog, deselect and set the settings as follows:
