@@ -24,9 +24,9 @@ Thanks to Gábor (@anthyon) and Brent (@sploreg) for this contribution!
 
 The classes with source code can be found in the org.jme3.terrain.geomipmapping and org.jme3.terrain.heightmap packages. Also there are 3 tests prepared in the jme3test.terrain package:
 
-*  link:http://code.google.com/p/jmonkeyengine/source/browse/trunk/engine/src/test/jme3test/terrain/TerrainGridTest.java[TerrainGridTest.java]: uses an ImageBasedHeightMapGrid instance to load the tiles
-*  link:http://code.google.com/p/jmonkeyengine/source/browse/trunk/engine/src/test/jme3test/terrain/TerrainFractalGridTest.java[TerrainFractalGridTest.java]: makes use of the FractalHeightMapGrid class, and generates a terrain from noise
-*  link:http://code.google.com/p/jmonkeyengine/source/browse/trunk/engine/src/test/jme3test/terrain/TerrainGridAlphaMapTest.java[TerrainGridAlphaMapTest.java]: shows how to use TerrainGridListener to change the material of the tiles
+*  link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/terrain/TerrainGridTest.java[TerrainGridTest.java]: uses an ImageBasedHeightMapGrid instance to load the tiles
+*  link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/terrain/TerrainFractalGridTest.java[TerrainFractalGridTest.java]: makes use of the FractalHeightMapGrid class, and generates a terrain from noise
+*  link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/terrain/TerrainGridAlphaMapTest.java[TerrainGridAlphaMapTest.java]: shows how to use TerrainGridListener to change the material of the tiles
 
 
 == Specification
@@ -38,17 +38,15 @@ TerrainGrid is made up of the TerrainGrid class, and the HeightMapGrid and Terra
 **  gridMoved(Vector3f):  gets the new center as parameter after terrain update, so any objects can be added or removed as needed.
 **  Material tileLoaded(Material material, Vector3f cell): notifies the system about a tile being loaded. Parameters are a cloned value of the material added to the TerrainGrid, and the cell of the new tile. The system can change the material according to this information (eg. load required alphamaps, etc).
 
-
-+
 Multiple listeners can be added to the TerrainGrid, they will be called in the order of addition, so it’s possible to have multiple changes to the material before completing the load of the tile.
-+
+
 HeightMapGrid adds the possibility of loading terrain tiles on demand instead of having a simple height array. There’s no predefined way of how to store these tiles, it only takes care of loading one HeightMap object at given location at a time.
 
 
 == Motivation
 
 
-image::wp-uploads/2011/06/grid-tiles.jpg[grid-tiles.jpg,width="130",height="130",align="right"]
+//image::wp-uploads/2011/06/grid-tiles.jpg[grid-tiles.jpg,width="130",height="130",align="right"]
 
 After playing around with the terrain in jME3, soon comes the requirement of having larger explorable lands. Increasing the size of one TerrainQuad leads to more memory usage, while it will still be easy to reach the worlds boundaries. That’s why TerrainGrid was designed. It extends the TerraindQuad class and uses 4 HeightMaps (dark blue) as the four sub-quad. This means that a terrain of size 513 will use tiles of 257. Also an LRUCache is built into the terrain package, so surrounding tiles (green) can be pre-cached on a different thread, lowering the loading time. The quads are updated as the camera approaches the boundary of the light blue section.
 
@@ -72,5 +70,5 @@ There exist also two basic HeightMapGrid implementations:
 
 Further information about terrain and TerrainQuad can be found in the wiki at:
 
-*  <<jme3/beginner/hello_terrain#,jme3:beginner:hello_terrain>> and
+*  <<jme3/beginner/hello_terrain#,jme3:beginner:hello_terrain>>
 *  <<jme3/advanced/terrain#,jme3:advanced:terrain>>
