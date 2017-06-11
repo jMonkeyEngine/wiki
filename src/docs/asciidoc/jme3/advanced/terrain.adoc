@@ -29,7 +29,7 @@ TerraMonkey is a GeoMipMapping quad tree of terrain tiles that supports real tim
 *  GeoMipMapping: LodControl optimizes the level of detail
 *  Terrain can be randomized or generated from a heightmap
 *  jMonkeyEngine SDK terrain editor
-*  Streaming <<jme3/advanced/endless_terraingrid#,terrain grid>> (ie. “infinite terrain)
+*  Streaming <<jme3/advanced/endless_terraingrid#,terrain grid>> (i.e. infinite terrain)
 
 
 === Planned Features:
@@ -50,7 +50,7 @@ TerraMonkey is a GeoMipMapping quad tree of terrain tiles that supports real tim
 == Geo Mip Mapping
 
 
-image::jme3/advanced/terrain-lod-high-medium-low.png[The wiremesh of a terrain with visible differences in levels of detail (LOD),width="",height="",align="right"]
+image::jme3/advanced/terrain-lod-high-medium-low.png[The wiremesh of a terrain with visible differences in levels of detail (LOD),width="",height="",align="left"]
 
 
 You have seen GeoMipMapping implemented in games before. This is where the farther away terrain has fewer polygons, and as you move closer, more polygons fill in. The whole terrain is divided into a grid of patches, and each one has its own level of detail (LOD). The GeoMipMapping algorithm looks at each patch, and its neighbours, to determine how to render the geometry. It will seam the edges between two patches with different LOD.
@@ -68,7 +68,7 @@ TerraMonkey is a quad tree. Each node is a TerrainQuad, and each leaf is a Terra
 
 == Texture Splatting
 
-When you “slap a texture on a mesh, the whole mesh looks the same. For big meshes (such as terrains) that is undesirable because it looks very boring (your whole landscape would be all rock, or all grass, or all sand). Texture Splatting is a technique that lets you “paint several textures into one combined texure. Each of the splat textures has an opacity value so you can define where it is visible in the final overall texture.
+When you '`slap`' a texture on a mesh, the whole mesh looks the same. For big meshes (such as terrains) that is undesirable because it looks very boring (your whole landscape would be all rock, or all grass, or all sand). Texture Splatting is a technique that lets you “paint several textures into one combined texure. Each of the splat textures has an opacity value so you can define where it is visible in the final overall texture.
 
 The default material for TerraMonkey is TerrainLighting.j3md. This material combines several texture maps to produce the final custom texture. Remember, Diffuse Maps are the main textures that define the look; optionally, each Diffuse Map can be enhanced with a Normal Map; Alpha Maps describe the opacity of each Diffuse Map used (one color –red, green, blue, or alpha– stands for one Diffuse Map's opacity); Glow and Specular Maps define optional effects.
 
@@ -81,8 +81,8 @@ We recommend to <<sdk/terrain_editor#,create and edit Splat Textures for terrain
 
 Here are the names of TerrainLighting.j3md's material properties:
 
-
-image::/jme3/beginner/mountains512.png[A heightmap encodes the topological highs and lows of the terrain,width="128",height="128",align="right"]
+[.right.text-left]
+image::jme3/beginner/mountains512.png[A heightmap encodes the topological highs and lows of the terrain,width="128",height="128"]
 
 
 *  1-3 Alpha Maps
@@ -95,7 +95,7 @@ image::/jme3/beginner/mountains512.png[A heightmap encodes the topological highs
 ***  `DiffuseMap_1`, `DiffuseMap_1_scale`, `NormalMap_1`
 ***  `DiffuseMap_2`, `DiffuseMap_2_scale`, `NormalMap_2`
 ***  `DiffuseMap_3`, `DiffuseMap_3_scale`, `NormalMap_3` 
-image:/jme3/beginner/alphamap.png[An alpha map can describe where 4 textures are painted onto the terrain.,width="128",height="128",align="right"]
+image:jme3/beginner/alphamap.png[An alpha map can describe where 4 textures are painted onto the terrain.,width="128",height="128",align="right"]
 
 ***  `DiffuseMap_4`, `DiffuseMap_4_scale`, `NormalMap_4`
 ***  …
@@ -115,7 +115,8 @@ OpenGL supports a maximum of 16 _samplers_ in any given shader. This means you c
 
 Adhere to the following constraints:
 
-image::/jme3/beginner/road.jpg[The Diffuse Map of one of the terrain textures depicts the colors of a paved surface,width="",height="",align="right"]
+[.right.text-left]
+image::jme3/beginner/road.jpg[The Diffuse Map of one of the terrain textures depicts the colors of a paved surface,width="",height=""]
 
 
 *  1-12 Diffuse Maps. One Diffuse Map is the minimum!
@@ -127,7 +128,8 @@ image::/jme3/beginner/road.jpg[The Diffuse Map of one of the terrain textures de
 
 Here are some common examples what this means:
 
-image::/jme3/beginner/road_normal.png[The Normal Map of one of the terrain textures depicts the bumpiness of a paved surface,width="",height="",align="right"]
+[.right.text-left]
+image::jme3/beginner/road_normal.png[The Normal Map of one of the terrain textures depicts the bumpiness of a paved surface,width="",height=""]
 
 
 *  3 Alpha + 11 Diffuse + 1 Normal.
@@ -198,7 +200,7 @@ Next we create the actual terrain.
 terrain = new TerrainQuad("terrain", 65, 513, heightmap.getHeightMap());
 terrain.setMaterial(matRock);
 terrain.setLocalScale(2f, 1f, 2f); // scale to make it less steep
-List<Camera> cameras = new ArrayList<Camera>();
+List<Camera> cameras = new ArrayList<>();
 cameras.add(getCamera());
 TerrainLodControl control = new TerrainLodControl(terrain, cameras);
 terrain.addControl(control);
