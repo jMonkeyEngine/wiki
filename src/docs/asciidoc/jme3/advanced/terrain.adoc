@@ -11,12 +11,13 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 == Overview
 
 
-image::http://jmonkeyengine.org/wp-content/uploads/2011/07/terrain-blogpost-july.png[terrain-blogpost-july.png,width="400",height="300",align="right"]
+//image::http://jmonkeyengine.org/wp-content/uploads/2011/07/terrain-blogpost-july.png[terrain-blogpost-july.png,width="400",height="300",align="right"]
 
 
 TerraMonkey is a GeoMipMapping quad tree of terrain tiles that supports real time editing and texture splatting. That's a mouth full! Lets look at each part:
 
-*  *GeoMipMapping:* a method of changing the level of detail (LOD) of geometry tiles based on how far away they are from the camera. Between the edges of two tiles, it will seam those edges together so you don't get gaps or holes. For an in-depth read on how it works, here is a pdf link:http://www.flipcode.com/archives/article_geomipmaps.pdf[http://www.flipcode.com/archives/article_geomipmaps.pdf].
+*  *GeoMipMapping:* a method of changing the level of detail (LOD) of geometry tiles based on how far away they are from the camera. Between the edges of two tiles, it will seam those edges together so you don't get gaps or holes. For an in-depth read on how it works, read link:http://www.flipcode.com/archives/article_geomipmaps.pdf[Fast Terrain Rendering Using Geometrical MipMapping
+].
 *  *Quad Tree:* The entire terrain structure is made up of TerrainPatches (these hold the actual meshes) as leaves in a quad tree (TerrainQuad). TerrainQuads are subdivided by 4 until they reach minimum size, then a TerrainPatch is created, and that is where the actual geometry mesh lives. This allows for fast culling of the terrain that you can't see.
 *  *Splatting:* The ability to paint multiple textures onto your terrain. What differs here from JME2 is that this is all done in a shader, no more render passes. So it performs much faster.
 *  *Real-time editing:* <<sdk/terrain_editor#,TerraMonkey terrains are editable in jMonkeyEngine SDK>>, and you are able to modify them in real time, for example by raising and lowering the terrain.
@@ -56,7 +57,8 @@ You have seen GeoMipMapping implemented in games before. This is where the farth
 
 GeoMipMapping often leads to “popping where you see the terrain switch from one LOD to another. TerraMonkey has been designed so you can swap out different LOD calculation algorithms based on what will look best for your game. You can do this with the LodCalculator interface.
 
-GeoMipMapping in TerraMonkey has been split into several parts: the terrain quad tree, and the LODGeomap. The geomap deals with the actual LOD and seaming algorithm. So if you want a different data structure for your terrain system, you can re-use this piece of code. The quad tree (TerrainQuad and TerrainPatch) provide a means to organize the LODGeomaps, notify them of their neighbour's LOD change, and to update the geometry when the LOD does change. To change the LOD it does this by changing the index buffer of the triangle strip, so the whole geometry doesn't have to be re-loaded onto the video card. If you are eager, you can read up more detail how GeoMipMapping works here: link:http://www.flipcode.com/archives/article_geomipmaps.pdf[www.flipcode.com/archives/article_geomipmaps.pdf]
+GeoMipMapping in TerraMonkey has been split into several parts: the terrain quad tree, and the LODGeomap. The geomap deals with the actual LOD and seaming algorithm. So if you want a different data structure for your terrain system, you can re-use this piece of code. The quad tree (TerrainQuad and TerrainPatch) provide a means to organize the LODGeomaps, notify them of their neighbour's LOD change, and to update the geometry when the LOD does change. To change the LOD it does this by changing the index buffer of the triangle strip, so the whole geometry doesn't have to be re-loaded onto the video card. If you are eager for more detail on how GeoMipMapping works read: link:http://www.flipcode.com/archives/article_geomipmaps.pdf[Fast Terrain Rendering Using Geometrical MipMapping
+].
 
 
 == Terrain Quad Tree
@@ -80,7 +82,7 @@ We recommend to <<sdk/terrain_editor#,create and edit Splat Textures for terrain
 Here are the names of TerrainLighting.j3md's material properties:
 
 
-image::http://jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Textures/Terrain/splat/mountains512.png[A heightmap encodes the topological highs and lows of the terrain,width="128",height="128",align="right"]
+image::/jme3/beginner/mountains512.png[A heightmap encodes the topological highs and lows of the terrain,width="128",height="128",align="right"]
 
 
 *  1-3 Alpha Maps
@@ -92,25 +94,28 @@ image::http://jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Textures/T
 ***  `DiffuseMap`, `DiffuseMap_0_scale`, `NormalMap`
 ***  `DiffuseMap_1`, `DiffuseMap_1_scale`, `NormalMap_1`
 ***  `DiffuseMap_2`, `DiffuseMap_2_scale`, `NormalMap_2`
-***  `DiffuseMap_3`, `DiffuseMap_3_scale`, `NormalMap_3`
-image::http://jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Textures/Terrain/splat/alphamap.png[An alpha map can describe where 4 textures are painted onto the terrain.,width="128",height="128",align="right"]
+***  `DiffuseMap_3`, `DiffuseMap_3_scale`, `NormalMap_3` 
+image:/jme3/beginner/alphamap.png[An alpha map can describe where 4 textures are painted onto the terrain.,width="128",height="128",align="right"]
 
 ***  `DiffuseMap_4`, `DiffuseMap_4_scale`, `NormalMap_4`
 ***  …
 ***  `DiffuseMap_11`, `DiffuseMap_11_scale`, `NormalMap_11`
 
-*  “Light maps
+*  Light maps
 ***  `GlowMap`
 ***  `SpecularMap`
 
 
-*Note:* `DiffuseMap_0_scale` is a float value (e.g. 1.0f); you must specify one scale per Diffuse Map.
+[NOTE]
+====
+`DiffuseMap_0_scale` is a float value (e.g. 1.0f); you must specify one scale per Diffuse Map.
+====
 
 OpenGL supports a maximum of 16 _samplers_ in any given shader. This means you can only use a subset of material properties at the same time if you use the terrain's default lighting shader (TerrainLighting.j3md)!
 
 Adhere to the following constraints:
 
-image::http://jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Textures/Terrain/splat/road.jpg[The Diffuse Map of one of the terrain textures depicts the colors of a paved surface,width="",height="",align="right"]
+image::/jme3/beginner/road.jpg[The Diffuse Map of one of the terrain textures depicts the colors of a paved surface,width="",height="",align="right"]
 
 
 *  1-12 Diffuse Maps. One Diffuse Map is the minimum!
@@ -122,7 +127,7 @@ image::http://jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Textures/T
 
 Here are some common examples what this means:
 
-image::http://jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Textures/Terrain/splat/road_normal.png[The Normal Map of one of the terrain textures depicts the bumpiness of a paved surface,width="",height="",align="right"]
+image::/jme3/beginner/road_normal.png[The Normal Map of one of the terrain textures depicts the bumpiness of a paved surface,width="",height="",align="right"]
 
 
 *  3 Alpha + 11 Diffuse + 1 Normal.
@@ -201,7 +206,9 @@ rootNode.attachChild(terrain);
 
 ----
 
-PS: As an alternative to an image-based height map, you can also generate a Hill hightmap:
+[TIP]
+====
+As an alternative to an image-based height map, you can also generate a Hill hightmap:
 
 [source,java]
 ----
@@ -209,3 +216,4 @@ PS: As an alternative to an image-based height map, you can also generate a Hill
 heightmap = new HillHeightMap(1025, 1000, 50, 100, (byte) 3);
 
 ----
+====
