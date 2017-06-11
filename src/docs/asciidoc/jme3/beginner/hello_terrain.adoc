@@ -5,6 +5,7 @@
 :keywords: beginner, heightmap, documentation, terrain, texture
 :relfileprefix: ../../
 :imagesdir: ../..
+:experimental:
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
@@ -17,12 +18,14 @@ One way to create a 3D landscape is to sculpt a huge terrain model. This gives y
 image::jme3/beginner/beginner-terrain.png[beginner-terrain.png,360,291,align="center"]
 
 
-NOTE: If you get an error when trying to create your ImageBasedHeightMap object, you may need to update the SDK, click on “Help / “Check for updates
-
+[NOTE]
+====
+If you get an error when trying to create your `ImageBasedHeightMap` object, you may need to update the SDK, click on `menu:Help[Check for Updates]`.
+====
 
 [TIP]
 ====
-To use the example assets in a new jMonkeyEngine SDK project, right-click your project, select “Properties, go to “Libraries, press “Add Library and add the “jme3-test-data library.
+To use the example assets in a new jMonkeyEngine SDK project, btn:[RMB] select your project, select `menu:Propertie[Libraries]` and in  the '`Compile'` tab press '`Add Library`' and add the '`jme3-test-data`' library.
 ====
 
 
@@ -147,7 +150,7 @@ When looking at Java data types to hold an array of floats between 0 and 255, th
 
 Look at the next screenshot: In the top left you see a 128x128 grayscale image (heightmap) that was used as a base to generate the depicted terrain. To make the hilly shape better visible, the mountain tops are colored white, valleys brown, and the areas inbetween green:
 
-image:jme2/terrain-from-heightmap.png[terrain-from-heightmap.png,width="",height=""]}
+image:jme2/terrain-from-heightmap.png[terrain-from-heightmap.png,width="",height=""]
 
 In a real game, you will want to use more complex and smoother terrains than the simple heightmaps shown here. Heightmaps typically have square sizes of 512x512 or 1024x1024, and contain hundred thousands to 1 million height values. No matter which size, the concept is the same as described here.
 
@@ -194,7 +197,7 @@ It requires an image from a JME Texture.
 
 Previously you learned how to create a material for a simple shape such as a cube. All sides of the cube have the same color. You can apply the same material to a terrain, but then you have one big meadow, one big rock desert, etc. This is not always what you want.
 
-Texture splatting allows you create a custom material, and “paint textures on it like with a “paint brush. This is very useful for terrains: As you see in the example here, you can paint a grass texture into the valleys, a dirt texture onto the mountains, and free-form roads inbetween.
+Texture splatting allows you create a custom material, and '`paint textures`' on it like with a '`paint brush`'. This is very useful for terrains: As you see in the example here, you can paint a grass texture into the valleys, a dirt texture onto the mountains, and free-form roads inbetween.
 
 
 [TIP]
@@ -207,15 +210,13 @@ Splat textures are based on the `Terrain.j3md` material defintion. If you open t
 
 Before you can start painting, you have to make a few decisions:
 
-.  Choose three textures. For example grass.jpg, dirt.jpg, and road.jpg.
-+
+.  Choose three textures. For example grass.jpg, dirt.jpg, and road.jpg. + 
 image:jme3/beginner/grass.jpg[grass.jpg,64,64] image:jme3/beginner/dirt.jpg[dirt.jpg,64,64] image:jme3/beginner/road.jpg[road.jpg,64,64]
 
-.  You “paint three texture layers by using three colors: Red, blue and, green. You arbitrarily decide that…
+.  You '`paint`' three texture layers by using three colors: Red, blue and, green. You arbitrarily decide that…
 ..  Red   is grass – red   is layer `Tex1`, so put the grass texture into Tex1.
 ..  Green is dirt  – green is layer `Tex2`, so put the dirt  texture into Tex2.
 ..  Blue  is roads – blue  is layer `Tex3`, so put the roads texture into Tex3.
-
 
 Now you start painting the texture:
 
@@ -225,10 +226,9 @@ Now you start painting the texture:
 ..  Paint the black valleys red – this will be the grass.
 ..  Paint the white hills green – this will be the dirt of the mountains.
 ..  Paint blue lines where you want roads to criss-cross the landscape.
-
-.  The end result should look similar to this:
-+
-image:jme3/beginner/mountains512.png[mountains512.png,64,64] ⇒ image:jme3/beginner/alphamap.png[alphamap.png,64,64]
+.  The end result should look similar to this: +
+image:jme3/beginner/mountains512.png[mountains512.png,64,64] &#8658;
+ image:jme3/beginner/alphamap.png[alphamap.png,64,64]
 
 
 === Looking at the Texturing Code
@@ -275,7 +275,7 @@ The three other textures are the layers that you have previously decided to pain
 
 ----
 
-The individual texture scales (e.g. `mat_terrain.setFloat(“Tex3Scale, 128f);`) depend on the size of the textures you use.
+The individual texture scales (e.g. `mat_terrain.setFloat("Tex3Scale", 128f);`) depend on the size of the textures you use.
 
 *  You can tell you picked too small a scale if, for example, your road tiles appear like tiny grains of sand. 
 *  You can tell you picked too big a scale if, for example, the blades of grass look like twigs.
@@ -294,11 +294,9 @@ Create a TerrainQuad with the following arguments:
 .  Specify a name: E.g. `my terrain`.
 .  Specify tile size: You want to terrain tiles of size 64x64, so you supply 64+1 = 65.
 **  In general, 64 is a good starting value for terrain tiles.
-
 .  Specify block size: Since you prepared a heightmap of size 512x512, you supply 512+1 = 513.
 **  If you supply a block size of 2x the heightmap size (1024+1=1025), you get a stretched out, wider, flatter terrain.
 **  If you supply a block size 1/2 the heightmap size (256+1=257), you get a smaller, more detailed terrain.
-
 .  Supply the 512x512 heightmap object that you created.
 
 
@@ -407,15 +405,12 @@ try {
 .  Change one parameter at a time, and the run the sample again. Note the differences. Can you find out which of the values has which effect on the generated terrain (look at the javadoc also)?
 **  Which value controls the size?
 ***  What happens if the size is not a square number +1 ?
-
 **  Which value controls the number of hills generated?
 **  Which values control the size and steepness of the hills?
 ***  What happens if the min is bigger than or equal to max? 
 ***  What happens if both min and max are small values (e.g. 10/20)?
 ***  What happens if both min and max are large values (e.g. 1000/1500)?
 ***  What happens if min and max are very close(e.g. 1000/1001, 20/21)? Very far apart (e.g. 10/1000)?
-
-
 
 You see the variety of hilly landscapes that can be generated using this method.
 
@@ -436,7 +431,7 @@ Can you combine what you learned here and in <<jme3/beginner/hello_collision#,He
 
 You have learned how to create terrains that are more efficient than loading one giant model. You know how to generate random or create handmade heightmaps. You can add a LOD control to render large terrains faster. You are aware that you can combine what you learned about collision detection to make the terrain solid to a physical player. You are also able to texture a terrain “like a boss using layered Materials and texture splatting. You are aware that the jMonkeyEngine SDK provides a TerrainEditor that helps with most of these manual tasks.
 
-Do you want to hear your players say “ouch! when they bump into a wall or fall off a hill? Continue with learning <<jme3/beginner/hello_audio#,how to add sound>> to your game.
+Do you want to hear your players say '`ouch!`' when they bump into a wall or fall off a hill? Continue with learning <<jme3/beginner/hello_audio#,how to add sound>> to your game.
 
 '''
 
