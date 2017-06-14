@@ -10,13 +10,9 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 == How to control any scene node source code
 
+.RotatingControl.java
 [source,java]
 ----
-/* 
-* To change this license header, choose License Headers in Project Properties. 
-* To change this template file, choose Tools | Templates 
-* and open the template in the editor. 
-*/
 
 package mygame;
 import com.jme3.renderer.RenderManager;
@@ -65,9 +61,246 @@ public class RotatingControl extends AbstractControl {       
     public void setSpeed(float speed) {        
       this.speed = speed;    
     }
-
 }
 ----
 
 
 == How to control a character in a scene source code
+
+You can read about this code on the jMonkeyEngine forum thread, link:https://hub.jmonkeyengine.org/t/new-sdk-video-tutorial-latest-vol2/25185[New Sdk Video Tutorial (Latest:Vol2)].
+
+.ConfigAppState.java
+
+[source,java]
+----
+ 
+package mygame;
+
+import com.jme3.app.Application;
+import com.jme3.app.SimpleApplication;
+import com.jme3.app.state.BaseAppState;
+import com.jme3.scene.Node;
+import com.jme3.scene.SceneGraphVisitor;
+import com.jme3.scene.Spatial;
+import controls.QuixoteControl;
+
+/** 
+ * 
+ * @author normenhansen 
+ */
+public class ConfigAppState extends BaseAppState {
+
+    private SimpleApplication app;    
+    private QuixoteState state = QuixoteState.RELAXED;    
+    private Spatial quixote;    
+    private boolean quixoteRunning = false;
+    
+    public enum QuixoteState {        
+        AGITATED, RELAXED, SLEEPING    
+    }
+    
+    @Override    
+    protected void initialize(Application app) {        
+        this.app = (SimpleApplication) app;        
+        setQuixoteRunning(true);    
+    }
+    
+    @Override    
+    protected void cleanup(Application app) {        
+        //TODO: clean up what you initialized in the initialize method,        
+        //e.g. remove all spatials from rootNode    
+    }
+    
+    //onEnable()/onDisable() can be used for managing things that should     
+    //only exist while the state is enabled. Prime examples would be scene     
+    //graph attachment or input listener attachment.    
+    @Override    
+    protected void onEnable() {        
+        //Called when the state is fully enabled, ie: is attached and         
+        //isEnabled() is true or when the setEnabled() status changes after the         
+        //state is attached.    
+    }
+    
+    @Override    
+    protected void onDisable() {        
+        //Called when the state was previously enabled but is now disabled         
+        //either because setEnabled(false) was called or the state is being         
+        //cleaned up.    
+    }
+    
+    @Override    
+    public void update(float tpf) {        
+        //TODO: implement behavior during runtime    
+    }
+    
+    /**     
+     * @return the quixoteRunning     
+     */    
+    public boolean isQuixoteRunning() {        
+        return quixoteRunning;    
+    }
+    
+    /**     
+     * @param quixoteRunning the quixoteRunning to set     
+     */    
+    public void setQuixoteRunning(boolean quixoteRunning) {        
+        this.quixoteRunning = quixoteRunning;        
+        if (quixoteRunning) {            
+            quixote = getApplication().getAssetManager().loadModel("Models/Quixote.j3o");            
+            applyQuixoteState(quixote, state);            
+            Node scene = (Node) app.getRootNode().getChild("Scene");            
+            if (scene != null) {                
+                scene.attachChild(quixote);            
+            }        
+        } else {            
+            if (quixote != null) {                
+                quixote.removeFromParent();            
+            }        
+        }    
+    }
+    
+    /**     
+     * @return the state     
+     */    
+    public QuixoteState getState() {        
+        return state;    
+    }
+
+    /**     
+     * @param state the state to set     
+     */    
+    public void setState(QuixoteState state) {        
+        this.state = state;        
+        QuixoteState quxState = state;        
+        app.getRootNode().depthFirstTraversal(new SceneGraphVisitor() {            
+            @Override            
+            public void visit(Spatial spatial) {                
+                applyQuixoteState(spatial, quxState);            
+            }                   
+        });    
+    }        
+
+    private void applyQuixoteState(Spatial spatial, QuixoteState state) {        
+        QuixoteControl control = spatial.getControl(QuixoteControl.class);        
+            if (control != null) {            
+            switch (state) {                
+                case AGITATED:                     
+                    control.setSpeed(5.0f);                    
+                    break;                
+                case RELAXED:                    
+                    control.setSpeed(1.0f);                    
+                    break;                
+                case SLEEPING:                    
+                    control.setSpeed(0.0f);                    
+                    break;            
+            }        
+        }    
+    }
+}
+
+----
+
+.QuixoteControl.java
+
+[source,java]
+----
+
+package mygame;
+
+import com.jme3.math.Quaternion;
+import com.jme3.math.Vector3f;
+import com.jme3.renderer.RenderManager;
+import com.jme3.renderer.ViewPort;
+import com.jme3.scene.Node;
+import com.jme3.scene.SceneGraphVisitor;
+import com.jme3.scene.Spatial;
+import com.jme3.scene.control.AbstractControl;
+import com.jme3.scene.control.Control;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
+
+/** 
+ * 
+ * @author normenhansen 
+ */
+public class QuixoteControl extends AbstractControl {        
+    
+    private Spatial myMill;    
+    private float speed = 1.0f;    
+    private static Random rnd = new Random(System.currentTimeMillis());    
+    private final Quaternion lookRotation = new Quaternion();
+    
+    @Override    
+    protected void controlUpdate(float tpf) {        
+        if (myMill == null) {            
+            millers();        
+        }        
+        runToTheMills(tpf);    
+    }
+    
+    @Override    
+    protected void controlRender(RenderManager rm, ViewPort vp) {        
+        //Only needed for rendering-related operations,        
+        //not called when spatial is culled.    
+    }
+    
+    @Override    
+    public Control cloneForSpatial(Spatial spatial) {        
+        QuixoteControl control = new QuixoteControl();        
+        control.setSpeed(speed);        
+        control.setSpatial(spatial);        
+        return control;    
+    }
+            
+    public void millers() {        
+        Node node = spatial.getParent();        
+        if (node != null) {            
+            final List<Spatial> mills = new LinkedList<>();            
+            node.depthFirstTraversal(new SceneGraphVisitor() {                 
+                @Override                
+                public void visit(Spatial spatial) {                    
+                    if (spatial.getName().equals("Models/RotatingMill.j3o")) {                        
+                        mills.add(spatial);                    
+                    }                
+                }                        
+            });            
+            if (mills.isEmpty()) {                
+                return;            
+            }            
+            int no = (int) ((mills.size() - 1) * rnd.nextFloat());            
+            myMill = mills.get(no);        
+        }    
+    }
+    
+    public void runToTheMills(float tpf) {        
+        if (myMill != null) {            
+            Vector3f aim = myMill.getWorldTranslation();            
+            Vector3f dist = aim.subtract(spatial.getWorldTranslation());            
+            if (dist.length() < 1) {                
+                myMill = null;            
+            } else {                
+                dist.normalizeLocal();                
+                lookRotation.lookAt(dist, Vector3f.UNIT_Y);                
+                spatial.setLocalRotation(lookRotation);                
+                spatial.move(dist.multLocal(speed * tpf));            
+            }        
+        }    
+    }
+    
+    /**     
+     * @return the speed     
+     */    
+    public float getSpeed() {        
+        return speed;    
+    }
+    
+    /**     
+     * @param speed the speed to set     
+     */    
+     public void setSpeed(float speed) {        
+        this.speed = speed;    
+    }
+}
+
+----
