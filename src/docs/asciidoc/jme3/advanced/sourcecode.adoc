@@ -1,0 +1,73 @@
+= Rotating Control
+:author: 
+:revnumber: 
+:revdate: 2016/03/17 20:48
+:relfileprefix: ../../
+:imagesdir: ../..
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
+
+
+== How to control any scene node source code
+
+[source,java]
+----
+/* 
+* To change this license header, choose License Headers in Project Properties. 
+* To change this template file, choose Tools | Templates 
+* and open the template in the editor. 
+*/
+
+package mygame;
+import com.jme3.renderer.RenderManager;
+import com.jme3.renderer.ViewPort;
+import com.jme3.scene.Spatial;
+import com.jme3.scene.control.AbstractControl;
+import com.jme3.scene.control.Control;
+
+/** 
+ * 
+ * @author normenhansen 
+ */
+public class RotatingControl extends AbstractControl {        
+
+    private float speed = 1;
+    
+    @Override    
+    protected void controlUpdate(float tpf) {        
+      spatial.rotate(0, 0, tpf * speed);    
+    }
+
+    @Override    
+    protected void controlRender(RenderManager rm, ViewPort vp) {        
+      //Only needed for rendering-related operations,        
+      //not called when spatial is culled.    
+    }
+    
+    @Override    
+    public Control cloneForSpatial(Spatial spatial) {       
+      RotatingControl control = new RotatingControl();        
+      control.setSpeed(speed);        
+      control.setSpatial(spatial);        
+      return control;    
+    }
+    
+    /**     
+     * @return the speed     
+     */    
+    public float getSpeed() {        
+      return speed;    
+    }
+    
+    /**     
+     * @param speed the speed to set     
+     */    
+    public void setSpeed(float speed) {        
+      this.speed = speed;    
+    }
+
+}
+----
+
+
+== How to control a character in a scene source code
