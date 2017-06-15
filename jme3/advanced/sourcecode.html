@@ -273,6 +273,103 @@
         <span class="local-variable">this</span>.speed = speed;<span class="error"> </span><span class="error"> </span><span class="error"> </span>
     }
 }</code></pre></div></div>
+<div class="listingblock"><div class="title">TerrainTrackControl.java</div>
+<div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">mygame</span>;
+
+<span class="keyword">import</span> <span class="include">com.jme3.collision.CollisionResult</span>;
+<span class="keyword">import</span> <span class="include">com.jme3.collision.CollisionResults</span>;
+<span class="keyword">import</span> <span class="include">com.jme3.export.InputCapsule</span>;
+<span class="keyword">import</span> <span class="include">com.jme3.export.JmeExporter</span>;
+<span class="keyword">import</span> <span class="include">com.jme3.export.JmeImporter</span>;
+<span class="keyword">import</span> <span class="include">com.jme3.export.OutputCapsule</span>;
+<span class="keyword">import</span> <span class="include">com.jme3.math.Ray</span>;
+<span class="keyword">import</span> <span class="include">com.jme3.math.Vector3f</span>;
+<span class="keyword">import</span> <span class="include">com.jme3.renderer.RenderManager</span>;
+<span class="keyword">import</span> <span class="include">com.jme3.renderer.ViewPort</span>;
+<span class="keyword">import</span> <span class="include">com.jme3.scene.Spatial</span>;
+<span class="keyword">import</span> <span class="include">com.jme3.scene.control.AbstractControl</span>;
+<span class="keyword">import</span> <span class="include">com.jme3.scene.control.Control</span>;
+<span class="keyword">import</span> <span class="include">java.io.IOException</span>;
+<span class="keyword">import</span> <span class="include">java.util.Iterator</span>;
+
+<span class="comment">/** 
+ * 
+ * @author normenhansen 
+ */</span>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">TerrainTrackControl</span> <span class="directive">extends</span> AbstractControl {<span class="error"> </span><span class="error"> </span><span class="error"> </span>
+    <span class="comment">//Any local variables should be encapsulated by getters/setters so they   </span>
+    <span class="comment">//appear in the SDK properties window and can be edited.   </span>
+    <span class="comment">//Right-click a local variable to encapsulate it with getters and setters.   </span>
+    <span class="directive">private</span> <span class="directive">final</span> Ray ray = <span class="keyword">new</span> Ray(Vector3f.ZERO.clone(), <span class="keyword">new</span> Vector3f(<span class="integer">0</span>, -<span class="integer">1</span>, <span class="integer">0</span>));<span class="error"> </span><span class="error"> </span><span class="error"> </span>
+    <span class="directive">private</span> <span class="directive">final</span> Vector3f up = <span class="keyword">new</span> Vector3f(<span class="integer">0</span>, <span class="integer">50</span>, <span class="integer">0</span>);<span class="error"> </span><span class="error"> </span><span class="error"> </span>
+    <span class="directive">private</span> <span class="directive">final</span> CollisionResults results = <span class="keyword">new</span> CollisionResults();<span class="error"> </span><span class="error"> </span><span class="error"> </span>
+    <span class="directive">private</span> <span class="directive">final</span> <span class="type">float</span> offset = <span class="float">0.5f</span>;<span class="error"> </span><span class="error"> </span><span class="error"> </span>
+    <span class="directive">private</span> Spatial terrain;<span class="error"> </span><span class="error"> </span><span class="error"> </span> <span class="error"> </span><span class="error"> </span><span class="error"> </span>
+
+    <span class="directive">public</span> TerrainTrackControl() {<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span> <span class="error"> </span><span class="error"> </span><span class="error"> </span>
+
+    }<span class="error"> </span><span class="error"> </span><span class="error"> </span> <span class="error"> </span><span class="error"> </span><span class="error"> </span>
+
+    <span class="annotation">@Override</span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+    <span class="directive">protected</span> <span class="type">void</span> controlUpdate(<span class="type">float</span> tpf) {<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+        terrain = spatial.getParent();<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+        <span class="keyword">if</span> (terrain != <span class="predefined-constant">null</span>) {<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+            ray.setOrigin(spatial.getWorldTranslation().add(up));<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+            ray.setLimit(<span class="integer">100</span>);<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+            results.clear();<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+            terrain.collideWith(ray, results);<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+            <span class="keyword">for</span> (<span class="predefined-type">Iterator</span>&lt;CollisionResult&gt; it = results.iterator(); it.hasNext(); ) {<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+                CollisionResult collisionResult = it.next();<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+                <span class="keyword">if</span> (isTerrain(collisionResult.getGeometry()) ) {<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+                    Vector3f loc = collisionResult.getContactPoint();<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+                    spatial.setLocalTranslation(spatial.getLocalTranslation().setY(loc.getY() * offset));
+                    <span class="keyword">return</span>;<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+                }<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+            }<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+        }<span class="error"> </span><span class="error"> </span><span class="error"> </span>
+    }<span class="error"> </span><span class="error"> </span><span class="error"> </span> <span class="error"> </span><span class="error"> </span><span class="error"> </span>
+
+    <span class="directive">private</span> <span class="type">boolean</span> isTerrain(Spatial spat) {<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+        <span class="keyword">while</span> (<span class="predefined-constant">true</span>) {<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+            <span class="keyword">if</span> (spat == <span class="predefined-constant">null</span>) {<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+                <span class="keyword">return</span> <span class="predefined-constant">false</span>;<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+            } <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string"><span class="delimiter">&quot;</span><span class="content">terrain</span><span class="delimiter">&quot;</span></span>.equals(spat.getName())) {<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+                <span class="keyword">return</span> <span class="predefined-constant">true</span>;<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+            }<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+            spat = spat.getParent();<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+        }<span class="error"> </span><span class="error"> </span><span class="error"> </span>
+    }
+<span class="error"> </span><span class="error"> </span><span class="error"> </span>
+    <span class="annotation">@Override</span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+    <span class="directive">protected</span> <span class="type">void</span> controlRender(RenderManager rm, ViewPort vp) {<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+        <span class="comment">//Only needed for rendering-related operations,       </span>
+        <span class="comment">//not called when spatial is culled.   </span>
+    }
+<span class="error"> </span><span class="error"> </span><span class="error"> </span>
+    <span class="annotation">@Override</span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+    <span class="directive">public</span> <span class="predefined-type">Control</span> cloneForSpatial(Spatial spatial) {<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+        TerrainTrackControl control = <span class="keyword">new</span> TerrainTrackControl();<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+        <span class="comment">//TODO: copy parameters to new Control       </span>
+        control.setSpatial(spatial);<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+        <span class="keyword">return</span> control;<span class="error"> </span><span class="error"> </span><span class="error"> </span>
+    }
+<span class="error"> </span><span class="error"> </span><span class="error"> </span>
+    <span class="annotation">@Override</span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+    <span class="directive">public</span> <span class="type">void</span> read(JmeImporter im) <span class="directive">throws</span> <span class="exception">IOException</span> {<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+        <span class="local-variable">super</span>.read(im);<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+        InputCapsule in = im.getCapsule(<span class="local-variable">this</span>);<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+        <span class="comment">//TODO: load properties of this Control, e.g.       </span>
+        <span class="comment">//this.value = in.readFloat(&quot;name&quot;, defaultValue);   </span>
+    }
+<span class="error"> </span><span class="error"> </span><span class="error"> </span>
+    <span class="annotation">@Override</span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+    <span class="directive">public</span> <span class="type">void</span> write(JmeExporter ex) <span class="directive">throws</span> <span class="exception">IOException</span> {<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+        <span class="local-variable">super</span>.write(ex);<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+        OutputCapsule out = ex.getCapsule(<span class="local-variable">this</span>);<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+        <span class="comment">//TODO: save properties of this Control, e.g.       </span>
+        <span class="comment">//out.write(this.value, &quot;name&quot;, defaultValue);   </span>
+    }
+}</code></pre></div></div>
 <div class="listingblock"><div class="title">AnimUpdateControl.java</div>
 <div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">mygame</span>;
 
@@ -371,7 +468,7 @@
         <span class="comment">//TODO: save properties of this Control, e.g.       </span>
         <span class="comment">//out.write(this.value, &quot;name&quot;, defaultValue);   </span>
     }
-}</code></pre></div></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2017-06-15 19:20:46 UTC</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
+}</code></pre></div></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2017-06-15 21:35:32 UTC</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
   apiKey: 'a736b6d93de805e26ec2f49b55013fbd',
   indexName: 'jmonkeyengine',
   inputSelector: '#doc-search',
