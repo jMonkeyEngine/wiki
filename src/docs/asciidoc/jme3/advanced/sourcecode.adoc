@@ -355,11 +355,12 @@ public class TerrainTrackControl extends AbstractControl {   
             ray.setLimit(100);            
             results.clear();            
             terrain.collideWith(ray, results);            
-            for (Iterator<CollisionResult> it = results.iterator(); it.hasNext(); ) {                
+            for (Iterator<CollisionResult> it = results.iterator(); it.hasNext(); ) {
                 CollisionResult collisionResult = it.next();                
                 if (isTerrain(collisionResult.getGeometry()) ) {                    
                     Vector3f loc = collisionResult.getContactPoint();                    
-                    spatial.setLocalTranslation(spatial.getLocalTranslation().setY(loc.getY() * offset));
+                    spatial.setLocalTranslation(
+                        spatial.getLocalTranslation().setY(loc.getY() * offset));
                     return;                
                 }            
             }        
@@ -409,6 +410,7 @@ public class TerrainTrackControl extends AbstractControl {   
 }
 
 ----
+
 .AnimUpdateControl.java
 
 [source,java]
