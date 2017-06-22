@@ -186,3 +186,75 @@ public interface MyControlInterface extends Control {   
     public void setSomething(int x); // optionally, add custom methods
 }
 ----
+
+. Create custom Controls implementing your Control interface.
++
+[source,java]
+----
+public class MyControl extends MyCustomClass implements MyControlInterface {
+    protected Spatial spatial;
+    
+    protected boolean enabled = true;
+    
+    public MyControl() { } // empty serialization constructor
+    
+    public MyControl(int x) { // custom constructor        
+        super(x);    
+    }
+    
+    @Override    
+    public void update(float tpf) {        
+        if (enabled && spatial != null) {            
+            // Write custom code to control the spatial here!        
+        }    
+    }        
+    
+    @Override    
+    public void render(RenderManager rm, ViewPort vp) {        
+        // optional for advanced users, e.g. to display a debug shape    
+    }        
+    
+    @Override    
+    public Control cloneForSpatial(Spatial spatial) {        
+        MyControl control = new MyControl();        
+        // set custom properties        
+        control.setSpatial(spatial);        
+        control.setEnabled(isEnabled());         
+        // set some more properties here...        
+        return control;    
+    }        
+    
+    @Override    
+    public void setEnabled(boolean enabled) {        
+        this.enabled = enabled;    
+    }        
+    
+    @Override    
+    public boolean isEnabled() {        
+        return enabled;    
+    }        
+    
+    @Override    
+    public void setSomething(int z) {        
+        // You can add custom methods ...    
+    }        
+    
+    @Override    
+    public void write(JmeExporter ex) throws IOException {        
+        super.write(ex);        
+        OutputCapsule oc = ex.getCapsule(this);        
+        oc.write(enabled, "enabled", true);        
+        oc.write(spatial, "spatial", null);        
+        // write custom variables ....    
+    }    
+    
+    @Override    
+    public void read(JmeImporter im) throws IOException {        
+        super.read(im);        
+        InputCapsule ic = im.getCapsule(this);        
+        enabled = ic.readBoolean("enabled", true);        
+        spatial = (Spatial) ic.readSavable("spatial", null);        
+        // read custom variables ....    
+    }
+}
+----
