@@ -5,3 +5,19 @@
 :relfileprefix: ../../:
 imagesdir: ../..
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
+
+A `com.jme3.scene.control.Control` is a customizable jME3 interface that allows you to cleanly steer the behaviour of game entities (Spatials), such as artificially intelligent behaviour in NPCs, traps, automatic alarms and doors, animals and pets, self-steering vehicles or platforms – anything that moves and interacts. Several instances of custom Controls together implement the behaviours of a type of Spatial. 
+
+To control global game behaviour see <<jme3/advanced/application_states#,Application States>> – you often use AppStates and Control together.
+
+*  link:http://www.youtube.com/watch?v=MNDiZ9YHIpM[Quick video introduction to Custom Controls]
+
+To control the behaviour of spatials:
+
+.  Create one control for each _type of behavior_. When you add several controls to one spatial, they will be executed in the order they were added. +
+For example, one NPC can be controlled by a PhysicsControl instance and an AIControl instance.
+.  Define the custom control and implement its behaviour in the Control's update method:
+**  You can pass arguments into your custom control.
+**  In the control class, the object `spatial` gives you access to the spatial and subspatials that the control is attached to.
+**  Here you modify the `spatial`'s transformation (move, scale, rotate), play animations, check its environement, define how it acts and reacts. 
