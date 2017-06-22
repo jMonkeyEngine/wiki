@@ -65,3 +65,90 @@ Existing examples in the code base include:
 *  link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/java/com/jme3/scene/control/CameraControl.java[CameraControl.java] allows you to sync the camera position with the position of a given spatial.
 *  link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/java/com/jme3/scene/control/BillboardControl.java[BillboardControl.java] displays a flat picture orthogonally, e.g. a speech bubble or informational dialog.
 *  link:https://github.com/jMonkeyEngine/jmonkeyengine/tree/master/jme3-bullet/src/common/java/com/jme3/bullet/control[PhysicsControl] subclasses (such as CharacterControl, RigidBodyControl, VehicleControl) allow you to add physical properties to any spatial. PhysicsControls tie into capabilities provided by the BulletAppState.
+
+
+== AbstractControl Class
+
+
+[TIP]
+====
+The most common way to create a Control is to create a class that extends AbstractControl.
+====
+
+
+The AbstractControl can be found under `com.jme3.scene.control.AbstractControl`. This is a default abstract class that implements the Control interface.
+
+*  You have access to a boolean `isEnabled()`.
+*  You have access to the Spatial object `spatial`. 
+*  You override the `controlUpdate()` method to implement the Spatial's behaviour. 
+*  You have access to a `setEnabled(boolean)` method. This activates or deactivates this Control's behaviour in this spatial temporarily. While the AbstractControl is toggled to be disabled, the `controlUpdate()` loop is no longer executed. +
+For example, you disable your IdleBehaviourControl when you enable your DefensiveBehaviourControl in a spatial.
+
+Usage: Your custom subclass implements the three methods `controlUpdate()`, `controlRender()`, `setSpatial()`, and `cloneForSpatial()` as shown here:
+
+[source,java]
+----
+public class MyControl extends AbstractControl implements Savable, Cloneable {  
+    private int index; // can have custom fields -- example     
+    
+    public MyControl(){} // empty serialization constructor    
+    
+    /** Optional custom constructor with arguments that can init custom fields.    
+      * Note: you cannot modify the spatial here yet! */  
+    public MyControl(int i){     
+        // index=i; // example   
+    }     
+    
+    /** This method is called when the control is added to the spatial,    
+      * and when the control is removed from the spatial (setting a null value).    
+      * It can be used for both initialization and cleanup. */      
+    @Override  
+    public void setSpatial(Spatial spatial) {    
+        super.setSpatial(spatial);    
+        /* Example:    
+        if (spatial != null){        
+            // initialize    
+        }else{        
+            // cleanup    
+        }    
+        */  
+    }
+    
+    /** Implement your spatial's behaviour here.    
+      * From here you can modify the scene graph and the spatial    
+      * (transform them, get and set userdata, etc).    
+      * This loop controls the spatial while the Control is enabled. */  
+    @Override  
+    protected void controlUpdate(float tpf){    
+        if(spatial != null) {      
+            // spatial.rotate(tpf,tpf,tpf); // example behaviour    
+        }  
+    }    
+    
+    @Override  
+    public Control cloneForSpatial(Spatial spatial){    
+        final MyControl control = new MyControl();    
+        /* Optional: use setters to copy userdata into the cloned control */    
+        // control.setIndex(i); // example    
+        control.setSpatial(spatial);    
+        return control;  
+    }    
+    
+    @Override  
+    protected void controlRender(RenderManager rm, ViewPort vp){     
+        /* Optional: rendering manipulation (for advanced users) */  
+    }    
+    
+    @Override  
+    public void read(JmeImporter im) throws IOException {      
+        super.read(im);      
+        // im.getCapsule(this).read(...);  
+    }    
+    
+    @Override  
+    public void write(JmeExporter ex) throws IOException {      
+        super.write(ex);      
+        // ex.getCapsule(this).write(...);  
+    }  
+}
+----
