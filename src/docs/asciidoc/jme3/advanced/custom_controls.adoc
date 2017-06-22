@@ -258,3 +258,72 @@ public class MyControl extends MyCustomClass implements MyControlInterface {
     }
 }
 ----
+
+
+== Best Practices
+
+
+Use the getControl() accessor to get Control objects from Spatials. No need to pass around lots of object references.Here an example from the link:http://code.google.com/p/monkeyzone/[MonkeyZone] code:
+
+[source,java]
+----
+public class CharacterAnimControl implements Control {  
+    ...  
+    public void setSpatial(Spatial spatial) {    
+        ...    
+        animControl      = spatial.getControl(AnimControl.class);    
+        characterControl = spatial.getControl(CharacterControl.class);    
+        ...  
+    }
+}
+----
+
+You can create custom Control interfaces so a set of different Controls provide the same methods and can be accessed with the interface class type.
+
+[source,java]
+----
+public interface ManualControl extends Control {    
+    public void steerX(float value);    
+    public void steerY(float value);    
+    public void moveX(float value);    
+    public void moveY(float value);    
+    public void moveZ(float value);   
+    ...
+}
+----
+
+Then you create custom sub-Controls and implement the methods accordingly to the context:
+
+[source,java]
+----
+public class ManualVehicleControl   extends ManualControl {...}
+----
+
+and
+
+[source,java]
+----
+public class ManualCharacterControl extends ManualControl {...}
+----
+
+Then add the appropriate controls to spatials:
+
+[source,java]
+----
+
+characterSpatial.addControl(new ManualCharacterControl());
+...
+vehicleSpatial.addControl(new ManualVehicleControl());
+...
+----
+
+[TIP]
+====
+Use the getControl() method on a Spatial to get a specific Control object, and activate its behaviour!
+
+[source,java]
+----
+ManualControl c = mySpatial.getControl(ManualControl.class);
+c.steerX(steerX);
+----
+====
