@@ -94,7 +94,72 @@ The AssetManager also uses this method if the same spatial is loaded twice. You 
 <div class="paragraph"><p>Usage example:</p></div>
 <div class="olist arabic"><ol class="arabic"><li><p>Create a custom control interface.</p><div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">MyControlInterface</span> <span class="directive">extends</span> <span class="predefined-type">Control</span> {<span class="error"> </span><span class="error"> </span><span class="error"> </span>
     <span class="directive">public</span> <span class="type">void</span> setSomething(<span class="type">int</span> x); <span class="comment">// optionally, add custom methods</span>
-}</code></pre></div></div></li></ol></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2017-06-22 22:25:50 UTC</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
+}</code></pre></div></div></li><li><p>Create custom Controls implementing your Control interface.</p><div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">MyControl</span> <span class="directive">extends</span> MyCustomClass <span class="directive">implements</span> MyControlInterface {
+<span class="error"> </span><span class="error"> </span><span class="error"> </span> <span class="directive">protected</span> Spatial spatial;
+
+<span class="error"> </span><span class="error"> </span><span class="error"> </span> <span class="directive">protected</span> <span class="type">boolean</span> enabled = <span class="predefined-constant">true</span>;
+
+<span class="error"> </span><span class="error"> </span><span class="error"> </span> <span class="directive">public</span> MyControl() { } <span class="comment">// empty serialization constructor</span>
+<span class="error"> </span><span class="error"> </span><span class="error"> </span>
+    <span class="directive">public</span> MyControl(<span class="type">int</span> x) { <span class="comment">// custom constructor       </span>
+        <span class="local-variable">super</span>(x);<span class="error"> </span><span class="error"> </span><span class="error"> </span>
+    }
+
+<span class="error"> </span><span class="error"> </span><span class="error"> </span> <span class="annotation">@Override</span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+    <span class="directive">public</span> <span class="type">void</span> update(<span class="type">float</span> tpf) {<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+        <span class="keyword">if</span> (enabled &amp;&amp; spatial != <span class="predefined-constant">null</span>) {<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+            <span class="comment">// Write custom code to control the spatial here!       </span>
+        }<span class="error"> </span><span class="error"> </span><span class="error"> </span>
+    }<span class="error"> </span><span class="error"> </span><span class="error"> </span> <span class="error"> </span><span class="error"> </span><span class="error"> </span>
+
+    <span class="annotation">@Override</span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+    <span class="directive">public</span> <span class="type">void</span> render(RenderManager rm, ViewPort vp) {<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+        <span class="comment">// optional for advanced users, e.g. to display a debug shape   </span>
+    }<span class="error"> </span><span class="error"> </span><span class="error"> </span> <span class="error"> </span><span class="error"> </span><span class="error"> </span>
+
+    <span class="annotation">@Override</span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+    <span class="directive">public</span> <span class="predefined-type">Control</span> cloneForSpatial(Spatial spatial) {<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+        MyControl control = <span class="keyword">new</span> MyControl();<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+        <span class="comment">// set custom properties       </span>
+        control.setSpatial(spatial);<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+        control.setEnabled(isEnabled()); <span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+        <span class="comment">// set some more properties here...       </span>
+        <span class="keyword">return</span> control;<span class="error"> </span><span class="error"> </span><span class="error"> </span>
+    }<span class="error"> </span><span class="error"> </span><span class="error"> </span> <span class="error"> </span><span class="error"> </span><span class="error"> </span>
+
+    <span class="annotation">@Override</span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+    <span class="directive">public</span> <span class="type">void</span> setEnabled(<span class="type">boolean</span> enabled) {<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+        <span class="local-variable">this</span>.enabled = enabled;<span class="error"> </span><span class="error"> </span><span class="error"> </span>
+    }<span class="error"> </span><span class="error"> </span><span class="error"> </span> <span class="error"> </span><span class="error"> </span><span class="error"> </span>
+
+    <span class="annotation">@Override</span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+    <span class="directive">public</span> <span class="type">boolean</span> isEnabled() {<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+        <span class="keyword">return</span> enabled;<span class="error"> </span><span class="error"> </span><span class="error"> </span>
+    }<span class="error"> </span><span class="error"> </span><span class="error"> </span> <span class="error"> </span><span class="error"> </span><span class="error"> </span>
+
+    <span class="annotation">@Override</span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+    <span class="directive">public</span> <span class="type">void</span> setSomething(<span class="type">int</span> z) {<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+        <span class="comment">// You can add custom methods ...   </span>
+    }<span class="error"> </span><span class="error"> </span><span class="error"> </span> <span class="error"> </span><span class="error"> </span><span class="error"> </span>
+
+    <span class="annotation">@Override</span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+    <span class="directive">public</span> <span class="type">void</span> write(JmeExporter ex) <span class="directive">throws</span> <span class="exception">IOException</span> {<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+        <span class="local-variable">super</span>.write(ex);<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+        OutputCapsule oc = ex.getCapsule(<span class="local-variable">this</span>);<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+        oc.write(enabled, <span class="string"><span class="delimiter">&quot;</span><span class="content">enabled</span><span class="delimiter">&quot;</span></span>, <span class="predefined-constant">true</span>);<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+        oc.write(spatial, <span class="string"><span class="delimiter">&quot;</span><span class="content">spatial</span><span class="delimiter">&quot;</span></span>, <span class="predefined-constant">null</span>);<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+        <span class="comment">// write custom variables ....   </span>
+    }<span class="error"> </span><span class="error"> </span><span class="error"> </span>
+
+    <span class="annotation">@Override</span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+    <span class="directive">public</span> <span class="type">void</span> read(JmeImporter im) <span class="directive">throws</span> <span class="exception">IOException</span> {<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+        <span class="local-variable">super</span>.read(im);<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+        InputCapsule ic = im.getCapsule(<span class="local-variable">this</span>);<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+        enabled = ic.readBoolean(<span class="string"><span class="delimiter">&quot;</span><span class="content">enabled</span><span class="delimiter">&quot;</span></span>, <span class="predefined-constant">true</span>);<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+        spatial = (Spatial) ic.readSavable(<span class="string"><span class="delimiter">&quot;</span><span class="content">spatial</span><span class="delimiter">&quot;</span></span>, <span class="predefined-constant">null</span>);<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+        <span class="comment">// read custom variables ....   </span>
+    }
+}</code></pre></div></div></li></ol></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2017-06-22 22:35:32 UTC</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
   apiKey: 'a736b6d93de805e26ec2f49b55013fbd',
   indexName: 'jmonkeyengine',
   inputSelector: '#doc-search',
