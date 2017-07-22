@@ -5,6 +5,7 @@
 :keywords: beginner, intro, animation, documentation, keyinput, input, node, model
 :relfileprefix: ../../
 :imagesdir: ../..
+:experimental:
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
@@ -20,7 +21,7 @@ image::jme3/beginner/beginner-animation.png[beginner-animation.png,width="",heig
 
 [TIP]
 ====
-To use the example assets in a new jMonkeyEngine SDK project, right-click your project, select “Properties, go to “Libraries, press “Add Library and add the “jme3-test-data library.
+To use the example assets in a new jMonkeyEngine SDK project, btn:[RMB] select your project, select menu:Properties[Libraries] and in the `Compile` tab press `Add Library` and add the `jme3-test-data` library.
 ====
 
 
@@ -157,6 +158,19 @@ After you load the animated model, you register it to the Animation Controller.
 
 ----
 
+This line of code will return NULL if the AnimeControl is not in the main node of your model.
+
+[source,java]
+----
+control = player.getControl(AnimControl.class);
+----
+
+To check this, btn:[RMB] select your model and click `"Edit in SceneComposer"` if the models file extension ends in .j3o, or `"View"` if not. You can then see the tree for the model so you can locate the node the control resides in. You can then access the subnode with the following code.
+
+[source,java]
+----
+player.getChild("Subnode").getControl(AnimControl.class);
+----
 
 [NOTE]
 ====
@@ -171,32 +185,6 @@ Usually multiple channels are used to animate different part of the body. For ex
 In your case, where you want animations to chain for the whole skeleton, you just have to use one channel.
 
 ====
-
-
-
-[NOTE]
-====
-
-
-[source]
-----
-
-control = player.getControl(AnimControl.class);
-
-----
-
-This line of code will return NULL if the AnimeControl is not in the main node of your model. To check this, right click your model and click “Edit in SceneComposer You can then see the tree for the model. You can then move everything to the main node. You can also access a subnode with the following code.
-
-[source]
-----
-
-player.getChild("Subnode").getControl(AnimControl.class);
-
-----
-
-
-====
-
 
 
 == Responding to Animation Events
