@@ -1,37 +1,34 @@
 = Simple Water
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :relfileprefix: ../../
 :imagesdir: ../..
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
-jMonkeyEngine offers a SimpleWaterProcessor that turns any quad (flat rectangle) into a reflective water surface with waves. You can use this quad for simple limited water surfaces such as water troughs, shallow fountains, puddles, shallow water in channels. The SimpleWaterProcessor has less performance impact on your game than the full featured <<jme3/advanced/post-processor_water#,SeaMonkey WaterFilter>>; the main difference is that the SimpleWaterProcessor does not include under-water effects. 
+jMonkeyEngine offers a SimpleWaterProcessor that turns any quad (flat rectangle) into a reflective water surface with waves. You can use this quad for simple limited water surfaces such as water troughs, shallow fountains, puddles, shallow water in channels. The SimpleWaterProcessor has less performance impact on your game than the full featured <<jme3/advanced/post-processor_water#,SeaMonkey WaterFilter>>; the main difference is that the SimpleWaterProcessor does not include under-water effects.
 
 Here is some background info for JME3's basic water implementation:
 
-*  link:http://www.jmonkeyengine.com/forum/index.php?topic=14740.0[http://www.jmonkeyengine.com/forum/index.php?topic=14740.0]
+// *  link:http://www.jmonkeyengine.com/forum/index.php?topic=14740.0[http://www.jmonkeyengine.com/forum/index.php?topic=14740.0]
 *  link:http://www.bonzaisoftware.com/water_tut.html[http://www.bonzaisoftware.com/water_tut.html]
-*  link:http://www.gametutorials.com/Articles/RealisticWater.pdf[http://www.gametutorials.com/Articles/RealisticWater.pdf]
-
-
-image::http://www.jmonkeyengine.com/wp-content/uploads/2010/10/simplewaterdemo.jpg[simplewaterdemo.jpg,with="277",height="180",align="center"]
-
+// *  link:http://www.gametutorials.com/Articles/RealisticWater.pdf[http://www.gametutorials.com/Articles/RealisticWater.pdf]
+// image::http://www.jmonkeyengine.com/wp-content/uploads/2010/10/simplewaterdemo.jpg[simplewaterdemo.jpg,width="277",height="180",align="center"]
 
 
 == SimpleWaterProcessor
 
 A JME3 scene with water can use a `com.jme3.water.SimpleWaterProcessor` (which implements the SceneProcessor interface).
 
-To achieve a water effect, JME3 uses shaders and a special material, `Common/MatDefs/Water/SimpleWater.j3md`. The water surface is a quad, and we use normal map and dU/dV map texturing to simulate the waves. 
+To achieve a water effect, JME3 uses shaders and a special material, `Common/MatDefs/Water/SimpleWater.j3md`. The water surface is a quad, and we use normal map and dU/dV map texturing to simulate the waves.
 
 .  Every frame, we render to three texture maps:
 **  For the water surface (reflection), we take a snapshot of the environment, flip it upside down, and clip it to the visible water surface. Note that we do not actually use a “water texture color map: The “texture of the water is solely a distorted reflection.
 **  For the “wavy distortion (refraction), we use the derivative of a normal map, a dU/dV map.
 **  For the fogginess of water (depth) we use a depth map from the terrains z-buffer.
 
-.  In the shaders, we add all of the texture maps together. 
+.  In the shaders, we add all of the texture maps together.
 **  For the “bumpy displacement of the waves, we use a normal map and a du/dv map that are shifted against each other over time to create the wave effect.
 **  For the light reflection vectors on the water surface, we use the Fresnel formula, together with normal vectors.
 **  We add specular lighting.
@@ -41,8 +38,8 @@ To achieve a water effect, JME3 uses shaders and a special material, `Common/Mat
 
 == Usage
 
-
-image::jme3/advanced/simplewater.png[simplewater.png,with="384",height="288",align="right"]
+[.right.text-left]
+image::jme3/advanced/simplewater.png[simplewater.png,width="384",height="288",align="right"]
 
 
 .  Create a `mainScene` Node
@@ -73,7 +70,7 @@ image::jme3/advanced/simplewater.png[simplewater.png,with="384",height="288",ali
 
 == Sample Code
 
-The sample code can be found in `jme3/src/jme3test/water/TestSimpleWater.java` and `jme3/src/jme3test/water/TestSceneWater.java`.
+The sample code can be found in `link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/445f7ed010199d30c484fe75bacef4b87f2eb38e/jme3-examples/src/main/java/jme3test/water/TestSimpleWater.java[TestSimpleWater.java]` and `link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/445f7ed010199d30c484fe75bacef4b87f2eb38e/jme3-examples/src/main/java/jme3test/water/TestSceneWater.java[TestSceneWater.java]`.
 
 Here is the most important part of the code:
 
@@ -118,7 +115,7 @@ You can lower the render size to gain higher performance:
 waterProcessor.setRenderSize(128,128);
 ----
 
-The deeper the water, the more transparent. (?) 
+The deeper the water, the more transparent. (?)
 
 [source,java]
 ----

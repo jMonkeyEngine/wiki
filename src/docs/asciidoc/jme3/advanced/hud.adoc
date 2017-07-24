@@ -1,6 +1,6 @@
 = Head-Up Display (HUD)
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :keywords: gui, display, documentation, hud
 :relfileprefix: ../../
@@ -8,9 +8,9 @@
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
-
-image::http://www.jmonkeyengine.com/wp-content/uploads/2010/10/grapplinghook.jpg[grapplinghook.jpg,with="256",height="192",align="right"]
-
+////
+image::http://www.jmonkeyengine.com/wp-content/uploads/2010/10/grapplinghook.jpg[grapplinghook.jpg,width="256",height="192",align="right"]
+////
 
 A HUD (Head-Up Display) is part of a game's visual user interface. It's an overlay that displays additional information as (typically) 2-dimensional text or icons on the screen, on top of the 3D scene. Not all games have, or need a HUD. To avoid breaking the immersion and cluttering the screen, only use a HUD if it is the only way to convey certain information.
 
@@ -31,14 +31,18 @@ a|Cons
 
 a|Attach elements to default guiNode:
 a|Easy to learn. jMonkeyEngine built-in +++<abbr title="Application Programming Interface">API</abbr>+++ for attaching plain images and bitmap text.
-a|Only basic features. +You will have to write custom controls / buttons / effects if you need them.
+a|Only basic features. +
+You will have to write custom controls / buttons / effects if you need them.
 
 a|Use advanced <<jme3/advanced/nifty_gui#,Nifty GUI>> integration:
-a|Full-featured interactive user interface. +Includes buttons, effects, controls. +Supports XML and Java layouts.
+a|Full-featured interactive user interface. +
+Includes buttons, effects, controls. +Supports XML and Java layouts.
 a|Steeper learning curve.
 
 a|Use user contributed +++<abbr title="Graphical User Interface">GUI</abbr>+++ libraries such as <<jme3/contributions/tonegodgui#,tonegodgui>> or link:http://hub.jmonkeyengine.org/t/lemur-api-documentation/27209[Lemur]:
-a|Both have many features that would be difficult to do with Nifty +Includes buttons, effects, controls. +New features are still being released 
+a|Both have many features that would be difficult to do with Nifty +
+Includes buttons, effects, controls. +
+New features are still being released
 a|Are not necessarily guaranteed future updates, not as well documented
 
 |===
@@ -48,20 +52,20 @@ Using the +++<abbr title="Graphical User Interface">GUI</abbr>+++ Node is the de
 
 == Simple HUD: GUI Node
 
-You already know the `rootNode` that holds the 3-dimensional scene graph. jME3 also offers a 2-dimension (orthogonal) node, the `guiNode`. 
+You already know the `rootNode` that holds the 3-dimensional scene graph. jME3 also offers a 2-dimension (orthogonal) node, the `guiNode`.
 
 This is how you use the guiNode for HUDs:
 
 *  Create a +++<abbr title="Graphical User Interface">GUI</abbr>+++ element: a BitmapText or Picture object.
-*  Attach the element to the guiNode. 
-*  Place the element in the orthogonal render queue using `setQueueBucket(Bucket.Gui)`. 
+*  Attach the element to the guiNode.
+*  Place the element in the orthogonal render queue using `setQueueBucket(Bucket.Gui)`.
 
 The BitmapTexts and Pictures appear as 2 dimensional element on the screen.
 
 
 [TIP]
 ====
-By default, the guiNode has some scene graph statistics attached. To clear the guiNode before you attach your own +++<abbr title="Graphical User Interface">GUI</abbr>+++ elements, use the following methods: 
+By default, the guiNode has some scene graph statistics attached. To clear the guiNode before you attach your own +++<abbr title="Graphical User Interface">GUI</abbr>+++ elements, use the following methods:
 
 [source,java]
 ----
@@ -93,12 +97,12 @@ When you set the last boolean in setImage() to true, the alpha channel of your i
 
 === Displaying Text in the HUD
 
-You use `com.jme3.font.BitmapText` to display text on the screen. 
+You use `com.jme3.font.BitmapText` to display text on the screen.
 
 [source,java]
 ----
 
-BitmapText hudText = new BitmapText(guiFont, false);          
+BitmapText hudText = new BitmapText(guiFont, false);
 hudText.setSize(guiFont.getCharSet().getRenderedSize());      // font size
 hudText.setColor(ColorRGBA.Blue);                             // font color
 hudText.setText("You can write any string here");             // the text
@@ -125,7 +129,7 @@ hudText = new BitmapText(myFont, false);
 
 === Displaying Geometries in the HUD
 
-It is technically possible to attach Quads and 3D Geometries to the HUD. They show up as flat, static +++<abbr title="Graphical User Interface">GUI</abbr>+++ elements. The size unit for the guiNode is pixels, not world units. If you attach a Geometry that uses a lit Material, you must add a light to the guiNode. 
+It is technically possible to attach Quads and 3D Geometries to the HUD. They show up as flat, static +++<abbr title="Graphical User Interface">GUI</abbr>+++ elements. The size unit for the guiNode is pixels, not world units. If you attach a Geometry that uses a lit Material, you must add a light to the guiNode.
 
 
 [IMPORTANT]
@@ -155,11 +159,11 @@ public void simpleUpdate(float tpf) {
 
 The recommended approach to create HUDs is using <<jme3/advanced/nifty_gui#,Nifty GUI>>.
 
-.  Lay out the +++<abbr title="Graphical User Interface">GUI</abbr>+++ in one or several Nifty XML or Java files. 
+.  Lay out the +++<abbr title="Graphical User Interface">GUI</abbr>+++ in one or several Nifty XML or Java files.
 .  Write the controller classes in Java.
 .  Load the XML file with the controller object in your game's simpleInit() method.
 
-The advantage of Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++ is that it is well integrated into jME and the jMonkeyEngine SDK, and that it offers all the features that you expect from a professional modern user interface. 
+The advantage of Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++ is that it is well integrated into jME and the jMonkeyEngine SDK, and that it offers all the features that you expect from a professional modern user interface.
 
 For HUDs, you basically follow the same instructions as for creating a normal <<jme3/advanced/nifty_gui#,Nifty GUI>>, you just don't pause the game while the HUD is up.
 

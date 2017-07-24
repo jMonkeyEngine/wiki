@@ -10,8 +10,8 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 == Creating Custom Controls
 
-In this section, I'm going to walk you through creating a custom control and hopefully pass along a few tip and help standardize how controls are built.  This way (if you feel so inclined) you can share your controls with other and all will know exactly how to use your control.+
-+
+In this section, I'm going to walk you through creating a custom control and hopefully pass along a few tip and help standardize how controls are built.  This way (if you feel so inclined) you can share your controls with other and all will know exactly how to use your control.
+
 
 
 === A Reusable Contextual Menu
@@ -46,8 +46,7 @@ public abstract class ContextualMenu extends Menu {
             screen.getStyle("Menu").getString("defaultImg"),
             isScrollable
         );
-    }
-	
+    }	
     public ContextualMenu(Screen screen, String UID, Vector2f position, Vector2f dimensions, 
             Vector4f resizeBorders, String defaultImg, boolean isScrollable) {
         // Call the super class to construct our basic menu
@@ -56,6 +55,7 @@ public abstract class ContextualMenu extends Menu {
 }
 
 ----
+
 
 
 ==== STEP 2: Adding a public method for building standard options
@@ -83,6 +83,7 @@ public void resetMenuOptions() {
 ----
 
 
+
 === Adding Our New Control to the Screen
 
 [source,java]
@@ -103,13 +104,14 @@ screen.add(rcMenu);
 ----
 
 
+
 === Extending the Window Class to Utilize Our Control
+
 
 
 ==== STEP 1: Extend the window class and add a few methods
 
-We need to entend the window class in order to add right-click event handling and handle the setOption() method call from our ContextualMenu class.+
-+
+We need to entend the window class in order to add right-click event handling and handle the setOption() method call from our ContextualMenu class.
 
 [source,java]
 ----

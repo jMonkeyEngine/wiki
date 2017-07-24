@@ -632,14 +632,14 @@ class renderer_plugin_asciidoc extends Doku_Renderer {
             $url = $src;
         }
 
-        //$out = 'image:' . $url. '['. $name . ',with="'. $width .'",height="'. $height . '",align="' . $align . '", link="'. $linking .'"]';
+        //$out = 'image:' . $url. '['. $name . ',width="'. $width .'",height="'. $height . '",align="' . $align . '", link="'. $linking .'"]';
         if (stripos($url, '.mp4') !== false || stripos($url, '.webm') !== false || stripos($url, '.ogv') !== false) {
           $out = DOKU_LF.'video::' . $url . '[]'.DOKU_LF;
         } else {
           if (empty($align)) {
-            $out = 'image:' . $url. '['. $name . ',with="'. $width .'",height="'. $height . '"]';
+            $out = 'image:' . $url. '['. $name . ',width="'. $width .'",height="'. $height . '"]';
           } else {
-            $out = DOKU_LF.'image::' . $url. '['. $name . ',with="'. $width .'",height="'. $height . '",align="' . $align .'"]'.DOKU_LF;
+            $out = DOKU_LF.'image::' . $url. '['. $name . ',width="'. $width .'",height="'. $height . '",align="' . $align .'"]'.DOKU_LF;
           }
         }
         //$out .= '<media type="'.$type.'" link="'.$this->_xmlEntities($link).'"'.($src).' align="'.$align.'" width="'.$width.'" height="'.$height.'" cache="'.$cache.'" linking="'.$linking.'">';

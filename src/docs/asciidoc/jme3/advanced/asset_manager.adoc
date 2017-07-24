@@ -12,7 +12,8 @@ By assets we mean multi-media files, such as 3D models, materials, textures, sce
 Advantages of the AssetManager:
 
 *  The paths stay the same, no matter whether the game runs on Windows, Mac, Linux, etc!
-*  The AssetManager automatically caches and optimizes the handling of OpenGL objects. +For example, the same textures are not uploaded to the graphics card multiple times when multiple models use them.
+*  The AssetManager automatically caches and optimizes the handling of OpenGL objects. +
+For example, the same textures are not uploaded to the graphics card multiple times when multiple models use them.
 *  The <<sdk/default_build_script#,default build script>> automatically bundles the contents of the `assets` directory into the executable. 
 
 Advanced users can write a custom build and packaging script, and can register custom paths to the AssetManager, but this is up to you then. 
@@ -99,7 +100,8 @@ You can rename/delete/add (sub)directories inside the `assets` directory in any 
 
 [IMPORTANT]
 ====
-Store textures in `assets/Textures/` before you work with them in a mesh editor! Export and save 3D model files (.mesh.xml+.material, .mtl+.obj, .blend) into the `assets/Textures/` (!) before you convert the model to binary format (.j3o)! This ensures that texture paths correctly point to the `assets/Textures` directory. +After the conversion, you move the .j3o file into the `assets/Models/` or `assets/Scenes/` directories. This way, you can reuse textures, your binaries consistently link the correct textures, and the `assets/Models` and `assets/Scenes` directories don't become cluttered.
+Store textures in `assets/Textures/` before you work with them in a mesh editor! Export and save 3D model files (.mesh.xml+.material, .mtl+.obj, .blend) into the `assets/Textures/` (!) before you convert the model to binary format (.j3o)! This ensures that texture paths correctly point to the `assets/Textures` directory. +
+After the conversion, you move the .j3o file into the `assets/Models/` or `assets/Scenes/` directories. This way, you can reuse textures, your binaries consistently link the correct textures, and the `assets/Models` and `assets/Scenes` directories don't become cluttered.
 ====
 
 
@@ -160,8 +162,9 @@ Alternatively to ZipLocator, there is also a HttpZipLocator that can stream mode
 [source,java]
 ----
 
-assetManager.registerLocator("http://jmonkeyengine.googlecode.com/files/wildhouse.zip", 
-                             HttpZipLocator.class);
+assetManager.registerLocator("https://storage.googleapis.com/"
+    + "google-code-archive-downloads/v2/code.google.com/"
+    + "jmonkeyengine/wildhouse.zip", HttpZipLocator.class);
 Spatial scene = assetManager.loadModel("main.scene");
 rootNode.attachChild(scene);
 
@@ -178,7 +181,7 @@ The custom build script does not automatically include all ZIP files in the exec
 
 
 === Common AssetManager Tasks
-[cols="2", options="header"]
+[cols="15,85", options="header"]
 |===
 
 a| Task? 
@@ -275,11 +278,13 @@ I use another IDE than jMonkeyEngine SDK for coding (Eclipse, IntelliJ, text edi
 You can code in any IDE, but you must create a so-called codeless project in the jMonkeyEngine SDK to maintain assets. *A code-less jMonkeyEngine project does not meddle with your sources or custom build scripts.* You merely use it to convert models to .j3o binaries. 
 
 .  Create your (Eclipse or whatever) project as you like.
-.  Create a directory in your project folder and name it, for example, `assets`. +Store your assets there as described above.
+.  Create a directory in your project folder and name it, for example, `assets`. +
+Store your assets there as described above.
 .  Download and install the jMonkeyEngine SDK.
 .  In the SDK, go to File → Import Projects → External Project Assets.
 .  Select your (Eclipse or whatever) project and your assets folder in the Import Wizard.
-.  You can now open this (Eclipse or whatever) project in the jMonkeyEngine SDK. +Convert assets as described above.
+.  You can now open this (Eclipse or whatever) project in the jMonkeyEngine SDK. +
+Convert assets as described above.
 
 
 [IMPORTANT]

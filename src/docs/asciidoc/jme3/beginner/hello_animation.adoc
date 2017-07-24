@@ -1,10 +1,11 @@
 = jMonkeyEngine 3 Tutorial (7) - Hello Animation
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :keywords: beginner, intro, animation, documentation, keyinput, input, node, model
 :relfileprefix: ../../
 :imagesdir: ../..
+:experimental:
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
@@ -14,13 +15,13 @@ Next: <<jme3/beginner/hello_picking#,Hello Picking>>
 This tutorial shows how to add an animation controller and channels, and how to respond to user input by triggering an animation in a loaded model.
 
 
-image::jme3/beginner/beginner-animation.png[beginner-animation.png,with="",height="",align="center"]
+image::jme3/beginner/beginner-animation.png[beginner-animation.png,width="",height="",align="center"]
 
 
 
 [TIP]
 ====
-To use the example assets in a new jMonkeyEngine SDK project, right-click your project, select “Properties, go to “Libraries, press “Add Library and add the “jme3-test-data library.
+To use the example assets in a new jMonkeyEngine SDK project, btn:[RMB] select your project, select menu:Properties[Libraries] and in the `Compile` tab press `Add Library` and add the `jme3-test-data` library.
 ====
 
 
@@ -56,7 +57,7 @@ public class HelloAnimation extends SimpleApplication
     HelloAnimation app = new HelloAnimation();
     app.start();
   }
-  
+
   @Override
   public void simpleInitApp() {
     viewPort.setBackgroundColor(ColorRGBA.LightGray);
@@ -72,7 +73,7 @@ public class HelloAnimation extends SimpleApplication
     channel = control.createChannel();
     channel.setAnim("stand");
   }
-  
+
   public void onAnimCycleDone(AnimControl control, AnimChannel channel, String animName) {
     if (animName.equals("Walk")) {
       channel.setAnim("stand", 0.50f);
@@ -80,11 +81,11 @@ public class HelloAnimation extends SimpleApplication
       channel.setSpeed(1f);
     }
   }
-  
+
   public void onAnimChange(AnimControl control, AnimChannel channel, String animName) {
     // unused
   }
-  
+
   /** Custom Keybinding: Map named actions to inputs. */
   private void initKeys() {
     inputManager.addMapping("Walk", new KeyTrigger(KeyInput.KEY_SPACE));
@@ -107,7 +108,7 @@ public class HelloAnimation extends SimpleApplication
 
 == Creating and Loading Animated Models
 
-You create animated models with a tool such as Blender. Take some time and learn how to create your own models in these link:http://www.blender.org/education-help/tutorials/animation/[Blender Animation Tutorials]. For now, download and use a free model, such as the one included here as an example (link:http://jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Models/Oto/[Oto Golem], and link:http://jmonkeyengine.googlecode.com/svn/trunk/engine/test-data/Models/Ninja/[Ninja]).
+You create animated models with a tool such as Blender. Take some time and learn how to create your own models in these link:http://www.blender.org/education-help/tutorials/animation/[Blender Animation Tutorials]. For now, download and use a free model, such as the one included here as an example (link:https://github.com/jMonkeyEngine/jmonkeyengine/tree/master/jme3-testdata/src/main/resources/Models/Oto/[Oto Golem], and link:https://github.com/jMonkeyEngine/jmonkeyengine/tree/master/jme3-testdata/src/main/resources/Models/Ninja/[Ninja]).
 
 Loading an animated model is pretty straight-forward, just as you have learned in the previous chapters. Animated Ogre models come as a set of files: The model is in `Oto.mesh.xml`, and the animation details are in `Oto.skeleton.xml`, plus the usual files for materials and textures. Check that all files of the model are together in the same `Model` subdirectory.
 
@@ -149,7 +150,7 @@ After you load the animated model, you register it to the Animation Controller.
     ...
     /* Load the animation controls, listen to animation events,
      * create an animation channel, and bring the model in its default position.  */
-    control = player.getControl(AnimControl.class); 
+    control = player.getControl(AnimControl.class);
     control.addListener(this);
     channel = control.createChannel();
     channel.setAnim("stand");
@@ -157,6 +158,19 @@ After you load the animated model, you register it to the Animation Controller.
 
 ----
 
+This line of code will return NULL if the AnimeControl is not in the main node of your model.
+
+[source,java]
+----
+control = player.getControl(AnimControl.class);
+----
+
+To check this, btn:[RMB] select your model and click "`Edit in SceneComposer`" if the models file extension is .j3o, or "`View`" if not. You can then see the tree for the model so you can locate the node the control resides in. You can access the subnode with the following code.
+
+[source,java]
+----
+player.getChild("Subnode").getControl(AnimControl.class);
+----
 
 [NOTE]
 ====
@@ -173,32 +187,6 @@ In your case, where you want animations to chain for the whole skeleton, you jus
 ====
 
 
-
-[NOTE]
-====
-
-
-[source]
-----
-
-control = player.getControl(AnimControl.class);
-
-----
-
-This line of code will return NULL if the AnimeControl is not in the main node of your model. To check this, right click your model and click “Edit in SceneComposer You can then see the tree for the model. You can then move everything to the main node. You can also access a subnode with the following code.
-
-[source]
-----
-
-player.getChild("Subnode").getControl(AnimControl.class);
-
-----
-
-
-====
-
-
-
 == Responding to Animation Events
 
 Add `implements AnimEventListener` to the class declaration. This interface gives you access to events that notify you when a sequence is done, or when you change from one sequence to another, so you can respond to it. In this example, you reset the character to a standing position after a `Walk` cycle is done.
@@ -209,8 +197,8 @@ Add `implements AnimEventListener` to the class declaration. This interface give
 public class HelloAnimation extends SimpleApplication
                          implements AnimEventListener {
   ...
-  
-  public void onAnimCycleDone(AnimControl control, 
+
+  public void onAnimCycleDone(AnimControl control,
                               AnimChannel channel, String animName) {
     if (animName.equals("Walk")) {
       channel.setAnim("stand", 0.50f);
@@ -278,13 +266,19 @@ To use the input controller, you need to implement the actionListener by testing
 
 Make a mouse click trigger another animation sequence!
 
-.  Create a second channel in the controller
-..  Create a new key trigger mapping and action (see: <<jme3/beginner/hello_input_system#,Hello Input>>)
-..  Tip: Do you want to find out what animation sequences are available in the model? Use: 
+.  Create a second channel in the controller.
+.  Create a new key trigger mapping and action. (see: <<jme3/beginner/hello_input_system#,Hello Input>>)
+
+[TIP]
+====
+Do you want to find out what animation sequences are available in the model? Use:
 [source,java]
 ----
-for (String anim : control.getAnimationNames()) { System.out.println(anim); }
+for (String anim : control.getAnimationNames()) {
+    System.out.println(anim);
+}
 ----
+====
 
 
 
@@ -314,7 +308,7 @@ Add the following code snippet to `simpleInitApp()` to make the bones (that you 
 [source,java]
 ----
 
-     SkeletonDebugger skeletonDebug = 
+     SkeletonDebugger skeletonDebug =
          new SkeletonDebugger("skeleton", control.getSkeleton());
      Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
      mat.setColor("Color", ColorRGBA.Green);
@@ -332,6 +326,7 @@ Can you identify individual bones in the skeleton?
 Now you can load animated models, identify stored animations, and trigger animations by using onAnimCycleDone() and onAnimChange(). You also learned that you can play several animations simultaneously, by starting each in a channel of its own. This could be useful if you ever want to animate the lower and upper part of the characters body independently, for example the legs run, while the arms use a weapon.
 
 Now that your character can walk, wouldn't it be cool if it could also pick up things, or aim a weapon at things, or open doors? Time to reveal the secrets of <<jme3/beginner/hello_picking#,mouse picking>>!
+
 '''
 
 See also: link:https://docs.google.com/leaf?id=0B9hhZie2D-fEYmRkMTYwN2YtMzQ0My00NTM4LThhOTYtZTk1MTRlYTNjYTc3&hl=en[Creating Animated OgreXML Models in Blender]

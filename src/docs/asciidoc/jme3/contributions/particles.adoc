@@ -1,6 +1,6 @@
 = Next Generation Particle Emitters
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :relfileprefix: ../../
 :imagesdir: ../..
@@ -28,29 +28,29 @@ An easy way to see what you need is to create a new ParticleController and then 
 [cols="2", options="header"]
 |===
 
-a| name 
-a| The name to use for the geometry in the scene graph 
+a| name
+a| The name to use for the geometry in the scene graph
 
-a| mesh 
-a| The mesh to use (Usually either PointMesh or QuadMesh) 
+a| mesh
+a| The mesh to use (Usually either PointMesh or QuadMesh)
 
-a| maxParticles 
-a| The maximum number of particles to allow active at any one time 
+a| maxParticles
+a| The maximum number of particles to allow active at any one time
 
-a| lifeMin 
-a| The minimum amount of time (in seconds) for which each particle lives 
+a| lifeMin
+a| The minimum amount of time (in seconds) for which each particle lives
 
-a| lifeMax 
-a| The maximum amount of time (in seconds) for which each particle lives 
+a| lifeMax
+a| The maximum amount of time (in seconds) for which each particle lives
 
-a| source 
-a| The source from which the particles are spawned 
+a| source
+a| The source from which the particles are spawned
 
-a| emissionController 
-a| The frequency and timing with which particles are spawned. If null then no particles are automatically spawned and they must be triggered manually using emitNextParticle() or emitAllParticles() 
+a| emissionController
+a| The frequency and timing with which particles are spawned. If null then no particles are automatically spawned and they must be triggered manually using emitNextParticle() or emitAllParticles()
 
-a| influencers 
-a| Zero or more ParticleInfluencers, each of which changes the behaviour of the particles. 
+a| influencers
+a| Zero or more ParticleInfluencers, each of which changes the behaviour of the particles.
 
 |===
 
@@ -77,17 +77,17 @@ public class HelloParticles1_SimpleFire extends SimpleApplication {
     @Override
     public void simpleInitApp() {
 
-// Construct a new ParticleController       
+// Construct a new ParticleController
         ParticleController pCtrl = new ParticleController(
 // The name of the emitter
-                "SimpleFire", 
+                "SimpleFire",
 // Use a simple point mesh (the fastest but most limitted mesh type) with the specified
 // image (from jME3-testdata). The image actually contains a 2x2 grid of sprites.
                 new PointMesh(assetManager, "Effects/Explosion/flame.png", 2, 2),
-// Allow at most 32 particles at any time                
-                32, 
-// Particles last for at least 2 seconds                
-                2, 
+// Allow at most 32 particles at any time
+                32,
+// Particles last for at least 2 seconds
+                2,
 // And at most 3 seconds
                 3,
 // Point sources always generate particles at the location of the source, the particles
@@ -95,14 +95,14 @@ public class HelloParticles1_SimpleFire extends SimpleApplication {
                 new PointSource(new Vector3f(-3, 0, -3), new Vector3f(3, 0, 3)),
 // Emit particles at regular intervals, 10 particles every second
                 new RegularEmission(10),
-// ** Influencers start here                
-// Select a random sprite from the 4 available for each particle                
+// ** Influencers start here
+// Select a random sprite from the 4 available for each particle
                 new RandomSpriteInfluencer(),
-// Particles start off with a size of 0.5 units, end with a radius of 0.1                
+// Particles start off with a size of 0.5 units, end with a radius of 0.1
                 new SizeInfluencer(0.5f, 0.1f),
 // Particles start yellow full opacity and fade towards red with very low opacity
                 new ColorInfluencer(new ColorRGBA(1,1,0.2f,1), new ColorRGBA(1,0,0,0.1f)),
-// No matter what velocity particles started with they will start moving upwards.               
+// No matter what velocity particles started with they will start moving upwards.
                 new PreferredDirectionInfluencer(new Vector3f(0, 1, 0), 0.25f));
 
 // Finally attach the geometry to the rootNode in order to start the particles running
@@ -114,7 +114,7 @@ public class HelloParticles1_SimpleFire extends SimpleApplication {
 
 Run that and the result should look something like:
 
-image:jme3/particles1.jpg[particles1.jpg,with="",height=""]
+image:jme3/particles1.jpg[particles1.jpg,width="",height=""]
 
 
 == Simple Fire and Smoke
@@ -125,18 +125,18 @@ image:jme3/particles1.jpg[particles1.jpg,with="",height=""]
     @Override
     public void simpleInitApp() {
 
-// Construct a new ParticleController       
+// Construct a new ParticleController
         ParticleController pCtrl = new ParticleController(
 // The name of the emitter
-                "SimpleFire", 
+                "SimpleFire",
 // Use a simple point mesh (the fastest but most limitted mesh type) with the specified
 // image (from jME3-testdata). The image actually contains a 2x2 grid of sprites.
                 new PointMesh(assetManager, "Effects/Explosion/flame.png", 2, 2),
 // Allow at most 50 particles at any time, the particles are lasting longer this time
-// so we need to allow more on screen at once                
-                50, 
-// Particles last for at least 4 seconds                
-                4, 
+// so we need to allow more on screen at once
+                50,
+// Particles last for at least 4 seconds
+                4,
 // And at most 5 seconds
                 5,
 // Point sources always generate particles at the location of the source, the particles
@@ -144,10 +144,10 @@ image:jme3/particles1.jpg[particles1.jpg,with="",height=""]
                 new PointSource(new Vector3f(-3, 0, -3), new Vector3f(3, 0, 3)),
 // Emit particles at regular intervals, 10 particles every second
                 new RegularEmission(10),
-// ** Influencers start here                
-// Select a random sprite from the 4 available for each particle                
+// ** Influencers start here
+// Select a random sprite from the 4 available for each particle
                 new RandomSpriteInfluencer(),
-// Particles start off with a size of 0.5 units, end with a radius of 0.1                
+// Particles start off with a size of 0.5 units, end with a radius of 0.1
                 new SizeInfluencer(0.5f, 0.25f),
 // Particles start yellow full opacity and fade towards red with very low opacity
                 new MultiColorInfluencer(
@@ -156,7 +156,7 @@ image:jme3/particles1.jpg[particles1.jpg,with="",height=""]
                     new MultiColorInfluencer.Stage(0.3f, new ColorRGBA(1f, 1f, 1f, 0.5f)),
                     new MultiColorInfluencer.Stage(1, new ColorRGBA(1f,1f,1f,0f))
                 ),
-// No matter what velocity particles started with they will start moving upwards.               
+// No matter what velocity particles started with they will start moving upwards.
                 new PreferredDirectionInfluencer(new Vector3f(0, 1, 0), 0.25f));
 
 // Finally attach the geometry to the rootNode in order to start the particles running
@@ -167,7 +167,7 @@ image:jme3/particles1.jpg[particles1.jpg,with="",height=""]
 
 You can see that the only change is to make the particles last a little longer and to change the ColorInfluencer for a MultiColorInfluencer, and yet the results look quite different:
 
-image:jme3/particles2.jpg[particles2.jpg,with="",height=""]
+image:jme3/particles2.jpg[particles2.jpg,width="",height=""]
 
 This isn't a very convincing fire yet, but it is very simple to get up and running. One problem with this approach is that particles are done using an alpha-additive material, they can only make things brighter but never darker. That is not ideal for smoke which should be able to make them darker too. We will look at this again later but for now we will move on to some different mesh types.
 
@@ -184,7 +184,7 @@ While PointMesh is recommended for basic particles for more advanced options the
 
 The flame image from before is used for the second emitter, the first emitter uses this image which you can download and use:
 
-image:jme3/runecircle.png[runecircle.png,with="256",height=""]
+image:jme3/runecircle.png[runecircle.png,width="256",height=""]
 
 ====
 
@@ -195,48 +195,48 @@ image:jme3/runecircle.png[runecircle.png,with="256",height=""]
     @Override
     public void simpleInitApp() {
 
-// Construct a new ParticleController to provide the actual spell runes effect     
+// Construct a new ParticleController to provide the actual spell runes effect
         ParticleController pCtrl = new ParticleController(
 // The name of the emitter
-                "SpellRunes", 
+                "SpellRunes",
 // Use a Quad Mesh, this image is available for download on this page. The texture file contains
 // a single image so there are no sprite columns and rows to set up. The BillboardStrategy is how
 // the particles should be oriented, in this case it uses the particle rotation.
                 new QuadMesh(QuadMeshBillboardStrategy.USE_PARTICLE_ROTATION, assetManager, "Textures/runeCircle.png"),
 // Allow at most 9 particles at any time
-                9, 
-// Particles always last for 4 seconds                
-                4, 
+                9,
+// Particles always last for 4 seconds
+                4,
                 4,
 // We want to generate all particles from the same location with the same velocity.
                 new PointSource(new Vector3f(0, 1f, 0), new Vector3f(0, 1f, 0)),
 // Emit particles at regular intervals, 4 particles every second
                 new RegularEmission(2),
-// ** Influencers start here                
+// ** Influencers start here
 // These particles should be size 3 and stay the same size
                 new SizeInfluencer(3, 3),
-// Start the particles at full opacity blue and then fade them out to 0 opacity cyan.                
+// Start the particles at full opacity blue and then fade them out to 0 opacity cyan.
                 new ColorInfluencer(ColorRGBA.Blue, new ColorRGBA(0, 1, 1, 0)),
-// Rotate all particles by the same amount. The units are radians-per-second              
+// Rotate all particles by the same amount. The units are radians-per-second
                 new RotationInfluencer(
                     new Vector3f(0, FastMath.QUARTER_PI, 0),
                     new Vector3f(0, FastMath.QUARTER_PI, 0), false));
 
 // Finally attach the geometry to the rootNode in order to start the particles running
         rootNode.attachChild(pCtrl.getGeometry());
-        
+
 
 // Construct a new ParticleController to provide the central glow effect
         pCtrl = new ParticleController(
 // The name of the emitter
-                "SpellBase", 
+                "SpellBase",
 // Use a simple point mesh (the fastest but most limitted mesh type) with the specified
 // image (from jME3-testdata). The image actually contains a 2x2 grid of sprites.
                 new PointMesh(assetManager, "Textures/flame.png", 2, 2),
-// Allow at most 76 particles at any time                
-                76, 
-// Particles last for at least 5 seconds                
-                5, 
+// Allow at most 76 particles at any time
+                76,
+// Particles last for at least 5 seconds
+                5,
 // And at most 5 seconds
                 5,
 // Point sources always generate particles at the location of the source, the particles
@@ -244,8 +244,8 @@ image:jme3/runecircle.png[runecircle.png,with="256",height=""]
                 new PointSource(new Vector3f(-1f, 0, -1f), new Vector3f(1f, 0.5f, 1f)),
 // Emit particles at regular intervals, 15 particles every second
                 new RegularEmission(15),
-// ** Influencers start here                
-// Select a random sprite from the 4 available for each particle                
+// ** Influencers start here
+// Select a random sprite from the 4 available for each particle
                 new RandomSpriteInfluencer(),
 // Particles start red with some blue and green and fade towards blue zero opacity
 // Because particles are rendered using an additive blend then any area where a lot
@@ -254,8 +254,8 @@ image:jme3/runecircle.png[runecircle.png,with="256",height=""]
 
 // Finally attach the geometry to the rootNode in order to start the particles running
         rootNode.attachChild(pCtrl.getGeometry());
-        
-        
+
+
         cam.setLocation(new Vector3f(0, 10, -10));
         cam.lookAt(Vector3f.ZERO, Vector3f.UNIT_Y);
     }
@@ -264,7 +264,7 @@ image:jme3/runecircle.png[runecircle.png,with="256",height=""]
 ----
 
 The result should look something like:
-image:jme3/contributions/youtube_spjqag99hy[youtube_spjqag99hy,with="",height=""]
+image:jme3/contributions/youtube_spjqag99hy[youtube_spjqag99hy,width="",height=""]
 
 
 == Using a mesh as the particle source
@@ -293,26 +293,26 @@ There is a model of a monkeys head in the test data that is used in this example
 
 The result should look something like:
 
-image:jme3/particles3.jpg[particles3.jpg,with="",height=""]
+image:jme3/particles3.jpg[particles3.jpg,width="",height=""]
 
 Now lets set fire to the monkey! (No monkeys were harmed during the making of this particle system!).
 
 [source,java]
 ----
 
-   
-// Construct a new ParticleController       
+
+// Construct a new ParticleController
         ParticleController pCtrl = new ParticleController(
 // The name of the emitter
-                "SimpleFire", 
+                "SimpleFire",
 // Use a simple point mesh (the fastest but most limitted mesh type) with the specified
 // image (from jME3-testdata). The image actually contains a 2x2 grid of sprites.
                 new PointMesh(assetManager, "Textures/flame.png", 2, 2),
 // Allow at most 1200 particles at any time, the particles are lasting longer this time
-// so we need to allow more on screen at once                
-                1200, 
-// Particles last for at least 4 seconds                
-                4, 
+// so we need to allow more on screen at once
+                1200,
+// Particles last for at least 4 seconds
+                4,
 // And at most 5 seconds
                 5,
 // A MeshSource scans a geometry and picks a random point on the surface of that
@@ -321,10 +321,10 @@ Now lets set fire to the monkey! (No monkeys were harmed during the making of th
                 new MeshSource(g),
 // Emit particles at regular intervals, 10 particles every second
                 new RegularEmission(240),
-// ** Influencers start here                
-// Select a random sprite from the 4 available for each particle                
+// ** Influencers start here
+// Select a random sprite from the 4 available for each particle
                 new RandomSpriteInfluencer(),
-// Particles start off with a size of 0.1 units, end with a size of 0.15                
+// Particles start off with a size of 0.1 units, end with a size of 0.15
                 new SizeInfluencer(0.1f, 0.15f),
 // Particles have a constant speed of 0.25f, this will modify the original speed
 // from the emitter and then allow the GravityInfluencer to change the direction
@@ -337,7 +337,7 @@ Now lets set fire to the monkey! (No monkeys were harmed during the making of th
                     new MultiColorInfluencer.Stage(0.5f, new ColorRGBA(1f, 1f, 1f, 0.25f)),
                     new MultiColorInfluencer.Stage(1, new ColorRGBA(1f,1f,1f,0f))
                 ),
-// No matter what velocity particles started with they will start moving upwards.               
+// No matter what velocity particles started with they will start moving upwards.
                 new GravityInfluencer(new Vector3f(0, 0.5f, 0)));
 
 // Finally attach the geometry to the rootNode in order to start the particles running
@@ -347,7 +347,7 @@ Now lets set fire to the monkey! (No monkeys were harmed during the making of th
 
 Again this is just a very simple example, much more sophisticated fire effects are possible with the use of the right textures and mixture of emitters and influencers. The result though should look something like this:
 
-image:jme3/contributions/youtube_w_zgjhz2au[youtube_w_zgjhz2au,with="",height=""]
+image:jme3/contributions/youtube_w_zgjhz2au[youtube_w_zgjhz2au,width="",height=""]
 
 
 == Meshes and Weighted Meshes
@@ -415,37 +415,37 @@ There is a rock texture available in the jME3 test data, or you can substitute a
 
 // Construct the new particle controller
         ParticleController rockCtrl = new ParticleController(
-                "TemplateMesh", 
+                "TemplateMesh",
 // The TemplateMesh uses the rock material we created previously, the two boolean
 // flags say that we are not interested in vertex colours but we do want the vertex
 // normals. The array of meshes extracted from the model is then passed in to use
 // as models for each particle.
-                new TemplateMesh(rock, false, true, templates), 
-// A maximum of 64 particles at once, each lasting for 5 to 5.5 seconds.                
-                64, 
-                5, 
+                new TemplateMesh(rock, false, true, templates),
+// A maximum of 64 particles at once, each lasting for 5 to 5.5 seconds.
+                64,
+                5,
                 5.5f,
-// Particles are emitted from the source that we created and positioned earlier                
-                source, 
-// Emit 8 particles per second                
+// Particles are emitted from the source that we created and positioned earlier
+                source,
+// Emit 8 particles per second
                 new RegularEmission(8),
 // The "sprites" in this case are the available templates. The TemplateMesh has
 // one spriteColumn for each template it has been provided, so the standard
 // RandomSpriteInfluencer just causes one to be picked at random each time a
 // particle is emitted.
                 new RandomSpriteInfluencer(),
-// Rocks fall.                
+// Rocks fall.
                 new GravityInfluencer(new Vector3f(0, -4, 0)),
 // Rocks spin.
                 new RotationInfluencer(new Vector3f(-2, -2, -2), new Vector3f(2, 2, 2), false));
-        
-        rootNode.attachChild(rockCtrl.getGeometry());        
-    }        
+
+        rootNode.attachChild(rockCtrl.getGeometry());
+    }
 
 ----
 
 The result should look like:
-image:jme3/contributions/youtube_a7y53uf8giw[youtube_a7y53uf8giw,with="",height=""]
+image:jme3/contributions/youtube_a7y53uf8giw[youtube_a7y53uf8giw,width="",height=""]
 
 Any number and mixture of models can be used, although as it is all a single mesh the same material must be used for all of them. It is recommended to keep a similar number of vertices for each of the models but that is not a strict requirement.
 
@@ -463,29 +463,29 @@ Adding the following code:
 
 
         ParticleController pCtrl = new ParticleController(
-                "TemplateFlames", 
+                "TemplateFlames",
                 new PointMesh(assetManager, "Textures/flame.png", 2, 2),
-                1300, 
-                3, 
-                4, 
+                1300,
+                3,
+                4,
                 new MeshSource(rockCtrl.getGeometry()),
-                new RegularEmission(320), 
+                new RegularEmission(320),
                 new SizeInfluencer(0.5f, 2),
                 new ColorInfluencer(new ColorRGBA(1,1,0.1f, 1f), new ColorRGBA(1,0,0,0.05f)),
                 new GravityInfluencer(new Vector3f(0, 0.3f, 0)),
                 new RandomImpulseInfluencer(
-                    RandomImpulseInfluencer.ImpulseApplicationTime.INITIALIZE, 
-                    new Vector3f(-0.5f, -0.5f, -0.5f), 
+                    RandomImpulseInfluencer.ImpulseApplicationTime.INITIALIZE,
+                    new Vector3f(-0.5f, -0.5f, -0.5f),
                     new Vector3f(0.5f, 0.5f, 0.5f)));
-        
+
         rootNode.attachChild(pCtrl.getGeometry());
-        
+
 
 ----
 
 Results in something that looks like this:
 
-image:jme3/contributions/youtube_wgr5rzf9apg[youtube_wgr5rzf9apg,with="",height=""]
+image:jme3/contributions/youtube_wgr5rzf9apg[youtube_wgr5rzf9apg,width="",height=""]
 
 You can see that while dramatic the fire is left behind each particle, this is because although it is emitted from the face of the particle at its current position it has no knowledge of how that particle is moving.
 
@@ -501,7 +501,7 @@ Leave everything else the same but change the MeshSource into
 ----
 
 You can see that this gives much better results:
-image:jme3/contributions/youtube_2blbzvm0ezq[youtube_2blbzvm0ezq,with="",height=""]
+image:jme3/contributions/youtube_2blbzvm0ezq[youtube_2blbzvm0ezq,width="",height=""]
 
 There is a lot of falling rocks and fire here, but not much in the way of smoke. That could be added using a multi-colour emitter as previously, but the standard particle material is additive. That means it can only make colours brighter, never darker. For smoke it should be able to darken as well as lighten.
 
@@ -525,15 +525,15 @@ To add smoke we can add a third emitter after the other two:
 
 // Construct the new particle controller
         pCtrl = new ParticleController(
-                "TemplateSmoke", 
+                "TemplateSmoke",
 // The Smoke.png texture contains 15 sprites, if you use a different texture adjust
 // these parameters accordingly.
                 new PointMesh(smokeMat, 15, 1),
-                800, 
-                4, 
-                5, 
-                new ParticleParticleSource(rockCtrl), 
-                new RegularEmission(180), 
+                800,
+                4,
+                5,
+                new ParticleParticleSource(rockCtrl),
+                new RegularEmission(180),
                 new SizeInfluencer(1f, 2.5f),
                 new MultiColorInfluencer(
                     new MultiColorInfluencer.Stage(0, new ColorRGBA(1, 1, 1, 0)),
@@ -541,16 +541,16 @@ To add smoke we can add a third emitter after the other two:
                     new MultiColorInfluencer.Stage(1, new ColorRGBA(1, 1, 1, 0))),
                 new GravityInfluencer(new Vector3f(0, 0.75f, 0)),
                 new RandomImpulseInfluencer(
-                    RandomImpulseInfluencer.ImpulseApplicationTime.INITIALIZE, 
-                    new Vector3f(-0.5f, -0.5f, -0.5f), 
+                    RandomImpulseInfluencer.ImpulseApplicationTime.INITIALIZE,
+                    new Vector3f(-0.5f, -0.5f, -0.5f),
                     new Vector3f(0.5f, 0.5f, 0.5f)));
-        
-        rootNode.attachChild(pCtrl.getGeometry());      
+
+        rootNode.attachChild(pCtrl.getGeometry());
 
 ----
 
 The results look something like:
-image:jme3/contributions/youtube_01qcbgbvf-c[youtube_01qcbgbvf-c,with="",height=""]
+image:jme3/contributions/youtube_01qcbgbvf-c[youtube_01qcbgbvf-c,width="",height=""]
 
 To complete the effect one final line of code adds a skybox (using another texture that can be find in the test data):
 
@@ -563,4 +563,4 @@ To complete the effect one final line of code adds a skybox (using another textu
 
 Now we have the final effect which looks like:
 
-image:jme3/contributions/youtube_udewajw4lxu[youtube_udewajw4lxu,with="",height=""]
+image:jme3/contributions/youtube_udewajw4lxu[youtube_udewajw4lxu,width="",height=""]

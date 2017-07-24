@@ -86,8 +86,10 @@ Here you see why we save user data inside spatials – so it can be saved and lo
 
 JME's BinaryExporter can write standard Java objects (String, ArrayList, buffers, etc), JME objects (Savables, such as Material), and primitive data types (int, float, etc). If you are using any custom class together with a Spatial, then the custom class must implement the `com.jme3.export.Savable` interface. There are two common cases where this is relevant:
 
-*  The Spatial is carrying any <<jme3/advanced/custom_controls#,Custom Controls>>. +Example: You used something like `mySpatial.addControl(myControl);`
-*  The Spatial's user data can contain a custom Java object. +Example: You used something like `mySpatial.setUserData(“inventory, myInventory);`
+*  The Spatial is carrying any <<jme3/advanced/custom_controls#,Custom Controls>>. +
+Example: You used something like `mySpatial.addControl(myControl);`
+*  The Spatial's user data can contain a custom Java object. +
+Example: You used something like `mySpatial.setUserData("inventory", myInventory);`
 
 If your custom classes (the user data or the Controls) do not implement Savable, then the BinaryImporter/BinaryExporter cannot save the Spatial!
 
@@ -134,12 +136,12 @@ To make a custom class savable:
 
 .  Implement `Savable` and add the `write()` and `read()` methods as shown in the example above.
 .  Do the following for each non-temporary class field: 
-**  Add one line that `write()`s the data to the JmeExport output capsule. 
+**  Add one line that ``write()``s the data to the JmeExport output capsule. 
 ***  Specify the variable to save, give it a String name (can be the same as the variable name), and specify a default value.
 
-**  Add one line that `read…()`s the data to the JmeImport input capsule. 
+**  Add one line that ``read…()``s the data to the JmeImport input capsule. 
 ***  On the left side of the assignment, specify the class field that you are restoring
-***  On the right side, use the appropriate `capsule.read…()` method for the data type. Specify the String name of the variable (must be the same as you used in the `write() method`), and again specify a default value.
+***  On the right side, use the appropriate `capsule.read…()` method for the data type. Specify the String name of the variable (must be the same as you used in the `write()` method), and again specify a default value.
 
 
 

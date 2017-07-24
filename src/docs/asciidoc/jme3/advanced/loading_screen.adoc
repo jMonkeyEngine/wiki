@@ -1,6 +1,6 @@
 = loading_screen
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :relfileprefix: ../../
 :imagesdir: ../..
@@ -16,12 +16,12 @@ link:http://sourceforge.net/apps/mediawiki/nifty-gui/index.php?title=Create_your
 This example will use the existing hello terrain as an example.
 It will require these 2 images inside Assets/Interface/ (save them as border.png and inner.png respectively)
 
-image:jme3/advanced/inner1.png[inner1.png,with="",height=""]
-image:jme3/advanced/border1.png[border1.png,with="",height=""]
+image:jme3/advanced/inner1.png[inner1.png,width="",height=""]
+image:jme3/advanced/border1.png[border1.png,width="",height=""]
 
 This is the progress bar at 90%:
 
-image:jme3/advanced/loadingscreen.png[loadingscreen.png,with="",height=""]
+image:jme3/advanced/loadingscreen.png[loadingscreen.png,width="",height=""]
 
 nifty_loading.xml
 
@@ -32,15 +32,15 @@ nifty_loading.xml
 <nifty>
     <useStyles filename="nifty-default-styles.xml" />
     <useControls filename="nifty-default-controls.xml" />
-  
+
     <controlDefinition name = "loadingbar" controller = "jme3test.TestLoadingScreen">
-        <image filename="Interface/border.png" childLayout="absolute" 
+        <image filename="Interface/border.png" childLayout="absolute"
                imageMode="resize:15,2,15,15,15,2,15,2,15,2,15,15">
             <image id="progressbar" x="0" y="0" filename="Interface/inner.png" width="32px" height="100%"
                    imageMode="resize:15,2,15,15,15,2,15,2,15,2,15,15" />
         </image>
     </controlDefinition>
-    
+
     <screen id="start" controller = "jme3test.TestLoadingScreen">
         <layer id="layer" childLayout="center">
             <panel id = "panel2" height="30%" width="50%" align="center" valign="center" childLayout="vertical"
@@ -51,20 +51,20 @@ nifty_loading.xml
             </panel>
         </layer>
     </screen>
-    
+
     <screen id="loadlevel" controller = "jme3test.TestLoadingScreen">
         <layer id="loadinglayer" childLayout="center" backgroundColor="#000000">
             <panel id = "loadingpanel" childLayout="vertical" align="center" valign="center" height="32px" width="70%">
                 <control name="loadingbar" align="center" valign="center" width="100%" height="100%" />
-                <control id="loadingtext" name="label" align="center" 
+                <control id="loadingtext" name="label" align="center"
                          text="                                                  "/>
             </panel>
         </layer>
     </screen>
-    
+
     <screen id="end" controller = "jme3test.TestLoadingScreen">
     </screen>
-    
+
 </nifty>
 
 ----
@@ -79,7 +79,7 @@ A custom control is created, which represents the progress bar.
 ----
 
     <controlDefinition name = "loadingbar" controller = "jme3test.TestLoadingScreen">
-        <image filename="Interface/border.png" childLayout="absolute" 
+        <image filename="Interface/border.png" childLayout="absolute"
                imageMode="resize:15,2,15,15,15,2,15,2,15,2,15,15">
             <image id="progressbar" x="0" y="0" filename="Interface/inner.png" width="32px" height="100%"
                    imageMode="resize:15,2,15,15,15,2,15,2,15,2,15,15"/>
@@ -126,7 +126,7 @@ This screen displays our custom progress bar control with a text control
 
 == Creating the bindings to use the Nifty XML
 
-There are 3 main ways to update a progress bar. To understand why these methods are necessary, an understanding of the graphics pipeline is needed. 
+There are 3 main ways to update a progress bar. To understand why these methods are necessary, an understanding of the graphics pipeline is needed.
 
 Something like this in a single thread will not work:
 
@@ -220,7 +220,7 @@ public class TestLoadingScreen extends SimpleApplication implements ScreenContro
             if (frameCount == 1) {
                 Element element = nifty.getScreen("loadlevel").findElementByName("loadingtext");
                 textRenderer = element.getRenderer(TextRenderer.class);
-                
+
                 mat_terrain = new Material(assetManager, "Common/MatDefs/Terrain/Terrain.j3md");
                 mat_terrain.setTexture("Alpha", assetManager.loadTexture("Textures/Terrain/splat/alphamap.png"));
                 setProgress(0.2f, "Loading grass");
@@ -290,7 +290,7 @@ public class TestLoadingScreen extends SimpleApplication implements ScreenContro
         int pixelWidth = (int) (MIN_WIDTH + (progressBarElement.getParent().getWidth() - MIN_WIDTH) * progress);
         progressBarElement.setConstraintWidth(new SizeValue(pixelWidth + "px"));
         progressBarElement.getParent().layoutElements();
-        
+
         textRenderer.setText(loadingText);
     }
 
@@ -416,9 +416,9 @@ public class TestLoadingScreen1 extends SimpleApplication implements ScreenContr
             }
             //check if the execution on the other thread is done
             if (loadFuture.isDone()) {
-                //these calls have to be done on the update loop thread, 
+                //these calls have to be done on the update loop thread,
                 //especially attaching the terrain to the rootNode
-                //after it is attached, it's managed by the update loop thread 
+                //after it is attached, it's managed by the update loop thread
                 // and may not be modified from any other thread anymore!
                 nifty.gotoScreen("end");
                 nifty.exit();
@@ -485,7 +485,7 @@ public class TestLoadingScreen1 extends SimpleApplication implements ScreenContr
             TerrainLodControl control = new TerrainLodControl(terrain, cameras);
             terrain.addControl(control);
             setProgress(1f, "Loading complete");
-            
+
             return null;
         }
     };
@@ -542,8 +542,8 @@ public class TestLoadingScreen1 extends SimpleApplication implements ScreenContr
 
     public void onFocus(boolean getFocus) {
     }
-    
-    
+
+
     @Override
     public void stop() {
         super.stop();

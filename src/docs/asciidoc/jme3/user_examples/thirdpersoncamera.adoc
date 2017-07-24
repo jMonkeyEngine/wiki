@@ -1,13 +1,13 @@
 = User Example: Third Person Camera
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :relfileprefix: ../../
 :imagesdir: ../..
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
-image:jme3/user_examples/thirdpersoncamera/3p.png[3p.png,with="",height=""]
+image:jme3/user_examples/thirdpersoncamera/3p.png[3p.png,width="",height=""]
 
 (by Berzee) (see a video demonstration here: link:https://www.youtube.com/watch?v=phu52hmIoYU[https://www.youtube.com/watch?v=phu52hmIoYU])
 
@@ -39,7 +39,7 @@ Most of the code in the example files should be relatively self-explanatory, but
 
 But what if we want to be able to move the camera angle up or down, while the Player stays firmly upright? We can accomplish this with minimal Horrible Maths by adding an invisible “pivot node to the Player, and instructing the camera to follow that “pivot instead. Then we can independently rotate the *pivot* instead of the Player, and do things like this:
 
-image:jme3/user_examples/thirdpersoncamera/pivot2.png[pivot2.png,with="",height=""]
+image:jme3/user_examples/thirdpersoncamera/pivot2.png[pivot2.png,width="",height=""]
 
 Now you know the mystical secrets, and are ready to see the code itself.
 
@@ -87,21 +87,21 @@ public class ThirdPersonPlayerNode extends Node implements ActionListener, Analo
     //object. Check the "onAnalog" function here to see how we do mouselook.
     private ThirdPersonCamera camera;
     private Camera cam;
-    
+
     private Spatial model;
     private CharacterControl characterControl;
     private AnimChannel animChannel;
     private AnimControl animControl;
     private InputManager inputManager;
     private Vector3f walkDirection = new Vector3f();
-    
+
     private boolean left = false;
     private boolean right = false;
     private boolean up = false;
     private boolean down = false;
     private boolean attack;
     private boolean attacking;
-    
+
     //These can all be changed according to your whims.
     private float walkSpeed = .15f;
     private float mouselookSpeed = FastMath.PI;
@@ -109,7 +109,7 @@ public class ThirdPersonPlayerNode extends Node implements ActionListener, Analo
     private float fallSpeed = 20;
     private float gravity = 25;
     private float stepSize = .05f;
-    
+
     //Animation names. These are currently set up for the Ninja.mesh.xml from
     //jme3-test-data.jar (to add that jar to your project, right-click on
     //Libraries in the SDK project explorer, click "Add Library" and choose
@@ -121,34 +121,34 @@ public class ThirdPersonPlayerNode extends Node implements ActionListener, Analo
     private String walkAnim = "Walk";
     private String attackAnim = "Attack3";
     private String jumpAnim = "Climb"; //hilarious
-    
+
     public ThirdPersonPlayerNode(Spatial model, InputManager inputManager, Camera cam)
     {
 	super();
 	this.cam = cam;
 	camera = new ThirdPersonCamera("CamNode", cam, this);
-	
+
         this.model = model;
 	this.model.scale(.01f); //Ninja.mesh.xml-specific scale stuff
 	this.model.setLocalTranslation(0f, -1f, 0f); //Ninja-specific
 	this.attachChild(this.model);
-	
+
 	CapsuleCollisionShape playerShape = new CapsuleCollisionShape(.5f,1f); //Ninja-specific
 	characterControl = new CharacterControl(playerShape, stepSize);
 	characterControl.setJumpSpeed(jumpSpeed);
 	characterControl.setFallSpeed(fallSpeed);
 	characterControl.setGravity(gravity);
 	this.addControl(characterControl);
-	
+
 	animControl = model.getControl(AnimControl.class);
 	animControl.addListener(this);
 	animChannel = animControl.createChannel();
 	animChannel.setAnim(idleAnim);
-	
+
 	this.inputManager = inputManager;
 	setUpKeys();
     }
-    
+
     //Make sure to call this from the main simpleUpdate() loop
     public void update()
     {
@@ -157,17 +157,17 @@ public class ThirdPersonPlayerNode extends Node implements ActionListener, Analo
 	Vector3f camLeft = cam.getLeft().clone();
 	camLeft.y = 0;
 	walkDirection.set(0, 0, 0);
-	
+
 	if (left)  { walkDirection.addLocal(camLeft); }
 	if (right) { walkDirection.addLocal(camLeft.negate()); }
 	if (up)    { walkDirection.addLocal(camDir); }
 	if (down)  { walkDirection.addLocal(camDir.negate()); }
-	
+
 	characterControl.setWalkDirection(walkDirection.normalize().multLocal(walkSpeed));
-	
+
 	handleAnimations();
     }
-    
+
     private void handleAnimations()
     {
 	if(attacking)
@@ -176,7 +176,7 @@ public class ThirdPersonPlayerNode extends Node implements ActionListener, Analo
 	}
 	else if(attack)
 	{
-	    
+
 	    animChannel.setAnim(attackAnim,.3f);
 	    animChannel.setLoopMode(LoopMode.DontLoop);
 	    attack = false;
@@ -202,7 +202,7 @@ public class ThirdPersonPlayerNode extends Node implements ActionListener, Analo
 	    }
 	}
     }
-    
+
     private void setUpKeys()
     {
 	inputManager.addMapping("Left", new KeyTrigger(KeyInput.KEY_A));
@@ -261,7 +261,7 @@ public class ThirdPersonPlayerNode extends Node implements ActionListener, Analo
 	    attack = value;
 	}
     }
-    
+
     //Analog handler for mouse movement events.
     //It is assumed that we want horizontal movements to turn the character,
     //while vertical movements only make the camera rotate up or down.
@@ -300,12 +300,12 @@ public class ThirdPersonPlayerNode extends Node implements ActionListener, Analo
     public void onAnimChange(AnimControl control, AnimChannel channel, String animName)
     {
     }
-    
+
     public CharacterControl getCharacterControl()
     {
 	return characterControl;
     }
-    
+
     public ThirdPersonCamera getCameraNode()
     {
 	return camera;
@@ -350,36 +350,36 @@ public class ThirdPersonCamera
     //for how they should actually behave (min and max angles, et cetera).
     private Node pivot;
     private CameraNode cameraNode;
-    
+
     //Change these as you desire. Lower verticalAngle values will put the camera
     //closer to the ground.
     public float followDistance = 7;
     public float verticalAngle = 30 * FastMath.DEG_TO_RAD;
-    
+
     //These bounds keep the camera from spinning too far and clipping through
     //the floor or turning upside-down. You can change them as needed but it is
     //recommended to keep the values in the (-90,90) range.
     public float maxVerticalAngle = 85 * FastMath.DEG_TO_RAD;
     public float minVerticalAngle = 5 * FastMath.DEG_TO_RAD;
-    
+
     public ThirdPersonCamera(String name, Camera cam, Node player)
     {
-	pivot = new Node("CamTrack");	
+	pivot = new Node("CamTrack");
 	player.attachChild(pivot);
-	
+
 	cameraNode = new CameraNode(name, cam);
         cameraNode.setControlDir(CameraControl.ControlDirection.SpatialToCamera);
 	pivot.attachChild(cameraNode);
 	cameraNode.setLocalTranslation(new Vector3f(0, 0, followDistance));
 	cameraNode.lookAt(pivot.getLocalTranslation(), Vector3f.UNIT_Y);
-	
+
 	pivot.getLocalRotation().fromAngleAxis(-verticalAngle, Vector3f.UNIT_X);
     }
-    
+
     public void verticalRotate(float angle)
     {
 	verticalAngle += angle;
-	
+
 	if(verticalAngle > maxVerticalAngle)
 	{
 	    verticalAngle = maxVerticalAngle;
@@ -388,15 +388,15 @@ public class ThirdPersonCamera
 	{
 	    verticalAngle = minVerticalAngle;
 	}
-	
+
 	pivot.getLocalRotation().fromAngleAxis(-verticalAngle, Vector3f.UNIT_X);
     }
-    
+
     public CameraNode getCameraNode()
     {
 	return cameraNode;
     }
-    
+
     public Node getCameraTrack()
     {
 	return pivot;
@@ -430,26 +430,26 @@ import com.jme3.scene.Node;
  * @author Berzee
  */
 public class Main extends SimpleApplication
-{    
+{
     private Spatial sceneModel;
     private RigidBodyControl scene;
     private BulletAppState bulletAppState;
     private ThirdPersonPlayerNode player;
-    
+
     public static void main(String[] args) {
         Main app = new Main();
         app.start();
     }
 
     @Override
-    public void simpleInitApp() {        
+    public void simpleInitApp() {
         mouseInput.setCursorVisible(false);
 	flyCam.setEnabled(false);
-	
+
 	bulletAppState = new BulletAppState();
 	stateManager.attach(bulletAppState);
 	//bulletAppState.getPhysicsSpace().enableDebug(assetManager);
-	
+
         sceneModel = assetManager.loadModel("Scenes/ManyLights/Main.scene");
 	sceneModel.scale(1f,.5f,1f); //Make scenery short enough to jump on. =P
 	CollisionShape sceneShape = CollisionShapeFactory.createMeshShape((Node) sceneModel);
@@ -457,13 +457,13 @@ public class Main extends SimpleApplication
 	sceneModel.addControl(scene);
         rootNode.attachChild(sceneModel);
 	bulletAppState.getPhysicsSpace().add(scene);
-        
+
 	Spatial playerModel = assetManager.loadModel("Models/Ninja/Ninja.mesh.xml");
 	player = new ThirdPersonPlayerNode(playerModel, inputManager, cam);
 	player.getCharacterControl().setPhysicsLocation(new Vector3f(-5f,2f,5f));
 	rootNode.attachChild(player);
 	bulletAppState.getPhysicsSpace().add(player);
-        
+
         // You must add a light to make the model visible
         DirectionalLight sun = new DirectionalLight();
         sun.setDirection(new Vector3f(-.1f, -.7f, -1f));

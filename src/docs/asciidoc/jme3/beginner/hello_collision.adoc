@@ -16,13 +16,13 @@ You use a `RigidBodyControl` for the static collidable scene, and a `CharacterCo
 You can use the solution shown here for first-person shooters, mazes, and similar games.
 
 
-image::jme3/beginner/beginner-scene.png[beginner-scene.png,with="360",height="281",align="center"]
+image::jme3/beginner/beginner-scene.png[beginner-scene.png,360,281,align="center"]
 
 
 
 == Sample Code
 
-If you don't have it yet, link:http://jmonkeyengine.googlecode.com/svn/trunk/engine/town.zip[download the town.zip] sample scene.
+If you don't have it yet, link:https://github.com/jMonkeyEngine/wiki/raw/master/src/docs/resources/Scenes/Town/town.zip[download the town.zip] sample scene.
 
 [source]
 ----
@@ -87,7 +87,7 @@ public class HelloCollision extends SimpleApplication
     /** Set up Physics */
     bulletAppState = new BulletAppState();
     stateManager.attach(bulletAppState);
-    //bulletAppState.getPhysicsSpace().enableDebug(assetManager);
+    //bulletAppState.setDebugEnabled(true);
 
     // We re-use the flyby camera for rotation, while positioning is handled by physics
     viewPort.setBackgroundColor(new ColorRGBA(0.7f, 0.8f, 1f, 1f));
@@ -287,7 +287,7 @@ For the scene, you load the `sceneModel` from a zip file, and adjust the size.
 
 ----
 
-The file `town.zip` is included as a sample model in the JME3 sources – you can link:http://jmonkeyengine.googlecode.com/svn/trunk/engine/town.zip[download it here]. (Optionally, use any OgreXML scene of your own.) For this sample, place the zip file in the application's top level directory (that is, next to src/, assets/, build.xml).
+The file `town.zip` is included as a sample model in the JME3 sources – you can link:https://github.com/jMonkeyEngine/wiki/raw/master/src/docs/resources/Scenes/Town/town.zip[download it here]. (Optionally, use any OgreXML scene of your own.) For this sample, place the zip file in the application's top level directory (that is, next to src/, assets/, build.xml).
 
 [source,java]
 ----
@@ -307,7 +307,10 @@ To use collision detection, you add a RigidBodyControl to the `sceneModel` Spati
 *  Add the control to the Spatial to give it physical properties. 
 *  As always, attach the sceneModel to the rootNode to make it visible.
 
-*Tip:* Remember to add a light source so you can see the scene.
+[TIP]
+====
+Remember to add a light source so you can see the scene.
+====
 
 
 === The Physics-Controlled Player
@@ -342,7 +345,7 @@ Again, you create a CollisionShape: This time you choose a CapsuleCollisionShape
 
 [source,java]
 ----
-bulletAppState.getPhysicsSpace().enableDebug(assetManager);
+bulletAppState.setDebugEnabled(true);
 ----
 
 
@@ -482,21 +485,26 @@ This is how the walking is triggered:
 .  Initialize the vector `walkDirection` to zero. This is where you want to store the calculated walk direction.
 ..  Add to `walkDirection` the recent motion vectors that you polled from the camera. This way it is posible for a character to move forward and to the left simultaneously, for example! 
 ..  This one last line does the “walking magic: 
++
 [source,java]
 ----
 player.setWalkDirection(walkDirection);
 ----
-
- Always use `setWalkDirection()` to make a physics-controlled object move continuously, and the physics engine handles collision detection for you.
++
+Always use `setWalkDirection()` to make a physics-controlled object move continuously, and the physics engine handles collision detection for you.
 
 ..  Make the first-person camera object follow along with the physics-controlled player:
++
 [source,java]
 ----
 cam.setLocation(player.getPhysicsLocation());
 ----
 
 
-*Important:* Again, do not use `setLocalTranslation()` to walk the player around. You will get it stuck by overlapping with another physical object. You can put the player in a start position with `setPhysicalLocation()` if you make sure to place it a bit above the floor and away from obstacles.
+[IMPORTANT]
+====
+Again, do not use `setLocalTranslation()` to walk the player around. You will get it stuck by overlapping with another physical object. You can put the player in a start position with `setPhysicalLocation()` if you make sure to place it a bit above the floor and away from obstacles.
+====
 
 
 == Conclusion
@@ -505,6 +513,7 @@ You have learned how to load a “solid physical scene model and walk around in 
 You learned to speed up the physics calculations by using the CollisionShapeFactory to create efficient CollisionShapes for complex Geometries. You know how to add PhysicsControls to your collidable geometries and you register them to the PhysicsSpace. You also learned to use `player.setWalkDirection(walkDirection)` to move collision-aware characters around, and not `setLocalTranslation()`.
 
 Terrains are another type of scene in which you will want to walk around. Let's proceed with learning <<jme3/beginner/hello_terrain#,how to generate terrains>> now. 
+
 '''
 
 Related info:

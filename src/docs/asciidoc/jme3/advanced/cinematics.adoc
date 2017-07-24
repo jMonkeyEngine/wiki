@@ -13,8 +13,10 @@ Internally, Cinematics are implemented as <<jme3/advanced/application_states#,Ap
 
 Short overview of the cinematic process:
 
-.  Plan the script of your movie. +Write down a timeline (e.g. on paper) of which character should be at which spot at which time.
-.  Attach the scene objects that you want to remote-control to one Node. +This Node can be the rootNode, or a Node that is attached to the rootNode. 
+.  Plan the script of your movie. +
+Write down a timeline (e.g. on paper) of which character should be at which spot at which time.
+.  Attach the scene objects that you want to remote-control to one Node. +
+This Node can be the rootNode, or a Node that is attached to the rootNode. 
 .  Create a Cinematic object for this movie scene. The Cinematic will contain and manage the movie script.
 .  For each line in your script (for each keyframe in your timeline), add a CinematicEvent to the Cinematic. 
 
@@ -50,6 +52,7 @@ stateManager.attach(cinematic);
 
 .  Attach the Cinematic to the SimpleApplication's stateManager. 
 .  Play, stop and pause the Cinematic from your code.
+
 [cols="2", options="header"]
 |===
 
@@ -73,7 +76,7 @@ a|Pauses the cinematic.
 Just like a movie script consists of lines with instructions to the actors, each Cinematic consists of a series of events.
 
 Here is the list of available CinematicEvents that you use as events. Each track remote-controls scene objects in a different way:
-[cols="2", options="header"]
+[cols="20,80", options="header"]
 |===
 
 a|Events(CinematicEvents)
@@ -112,10 +115,11 @@ Details of the constructor:
 
 To create a MotionEvent, do the following:
 
-.  <<jme3/advanced/motiontrack#,Create a MotionEvent>>
+.  Create a MotinPath.
 .  Create a MotionEvent based on the MotionPath.
 .  Configure your MotionEvent (see below).
 .  Add the MotionEvent to a Cinematic.
+
 [cols="2", options="header"]
 |===
 
@@ -148,7 +152,10 @@ a|Sets the rotation. Use together with `MotionEvent.Direction.Rotation` or `Moti
 
 |===
 
-*Tip:* Most likely you remote-control more than one object in your scene. Give the events and paths useful names such as `dragonEvent`, `dragonPath`, `heroEvent`, `heroPath`, etc.
+[TIP]
+====
+Most likely you remote-control more than one object in your scene. Give the events and paths useful names such as `dragonEvent`, `dragonPath`, `heroEvent`, `heroPath`, etc.
+====
 
 
 === SoundEvent

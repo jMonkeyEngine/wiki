@@ -1,6 +1,6 @@
 = hellochasecam
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :relfileprefix: ../../
 :imagesdir: ../..
@@ -9,7 +9,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 link:http://www.youtube.com/watch?v=dXGfecvI1Sk[Youtube video]
 
-image:jme3/beginner/chasecamera.png[chasecamera.png,with="",height=""]
+image:jme3/beginner/chasecamera.png[chasecamera.png,width="",height=""]
 
 *  link:https://code.google.com/p/jmonkeyengine/source/browse/#svn%2Ftrunk%2Fengine%2Ftest-data%2FModels%2FNinja[Ninja Mesh]
 *  link:http://jmonkeyengine.googlecode.com/svn/trunk/engine/town.zip[Town Scene]
@@ -98,7 +98,7 @@ public abstract class AbstractSpatialBodyContext extends AbstractAppState
     public AbstractSpatialBodyContext()
     {
     }
-    
+
 }
 
 ----
@@ -139,14 +139,14 @@ public class ApplicationContext extends AbstractAppState
     private final SceneBodyManager sceneBodyManager;
 
 /**
-    
+
     @param stateManager
     @param am
     @param settings
     @param inputManager
     @param rootNode
     @param cam
-    @param flyByCam 
+    @param flyByCam
     */
     public ApplicationContext(AppStateManager stateManager, AssetManager am, AppSettings settings, InputManager inputManager, Node rootNode, Camera cam, FlyByCamera flyByCam)
     {
@@ -213,10 +213,10 @@ public class AvatarAnimationEventListener extends AbstractAppState implements An
     private final AvatarAnimationHelper animHelper;
     private final PhysicsCharacter physicBody;
 /**
-    
+
     @param pial
     @param pc
-    @param avatarMesh 
+    @param avatarMesh
     */
     public AvatarAnimationEventListener(PlayerInputActionListener pial, PhysicsCharacter pc, Spatial avatarMesh)
     {
@@ -297,9 +297,9 @@ public class AvatarAnimationHelper
     private final AnimChannel animChannel;
     private final PhysicsCharacter physicBody;
 /**
-    
+
     @param pc
-    @param ac 
+    @param ac
     */
     public AvatarAnimationHelper(PhysicsCharacter pc, AnimChannel ac)
     {
@@ -432,10 +432,10 @@ public class AvatarBodyManager extends AbstractPhysicBodyContext
     private final PlayerInputActionListener playerInputListener;
 
 /**
-    
+
     @param am
     @param rootNode
-    @param cc 
+    @param cc
     */
     public AvatarBodyManager(AssetManager am, Node rootNode, CameraContext cc)
     {
@@ -463,7 +463,7 @@ public class AvatarBodyManager extends AbstractPhysicBodyContext
     {
         //TODO: initialize your AppState, e.g. attach spatials to rootNode
         //this is called on the OpenGL thread after the AppState has been attached
-        
+
         stateManager.attach(this.asbc);
         stateManager.attach(this.apbc);
         stateManager.attach(this.playerInputListener);
@@ -520,10 +520,10 @@ public class AvatarBodyMoveControl extends AbstractControl
     private final PhysicsCharacter physicBody;
     private final PlayerInputActionListener pial;
 /**
-    
+
     @param pial
     @param physicBody
-    @param cam 
+    @param cam
     */
     public AvatarBodyMoveControl(PlayerInputActionListener pial, PhysicsCharacter physicBody, Camera cam)
     {
@@ -532,7 +532,7 @@ public class AvatarBodyMoveControl extends AbstractControl
         this.cam = cam;
     }
     private final Vector3f walkDirection = new Vector3f();
-    
+
     @Override
     protected void controlUpdate(float tpf)
     {
@@ -546,7 +546,7 @@ public class AvatarBodyMoveControl extends AbstractControl
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    
+
         /**
 
      @param camDir
@@ -650,7 +650,7 @@ public class AvatarPhysicBodyContext extends AbstractPhysicBodyContext
 
     private final PhysicsCharacter physicBody;
 
-    
+
     public AvatarPhysicBodyContext()
     {
 
@@ -721,7 +721,7 @@ import com.jme3.scene.Spatial;
  */
 public class AvatarSpatialBodyContext extends AbstractSpatialBodyContext
 {
-   
+
     //
     private final Node rootNode;
     //
@@ -729,10 +729,10 @@ public class AvatarSpatialBodyContext extends AbstractSpatialBodyContext
     private final Spatial avatarMesh;
     private final Vector3f correction;
 /**
-    
+
     @param am
-    @param rootNode 
-    */    
+    @param rootNode
+    */
     public AvatarSpatialBodyContext(AssetManager am, Node rootNode)
     {
         this.rootNode = rootNode;
@@ -744,12 +744,12 @@ public class AvatarSpatialBodyContext extends AbstractSpatialBodyContext
                 AvatarConstants.COLLISION_SHAPE_CENTERAL_POINT - AvatarConstants.COLLISION_SHAPE_RADIUS,
                 0);
     }
-    
+
     @Override
     public void initialize(AppStateManager stateManager, Application app)
     {
-        
-        
+
+
         this.avatarMesh.setLocalScale(new Vector3f(0.05f, 0.05f, 0.05f));//Trouble with scales?
         this.avatarMesh.setLocalTranslation(this.correction);
         this.avatar.attachChild(this.avatarMesh);
@@ -809,7 +809,7 @@ public class CameraContext extends AbstractAppState
      public class Camera
      extends java.lang.Object
      implements Savable, java.lang.Cloneable
-    
+
      Width and height are set to the current Application's settings.getWidth() and settings.getHeight() values.
      Frustum Perspective:
      Frame of view angle of 45Â° along the Y axis
@@ -825,21 +825,21 @@ public class CameraContext extends AbstractAppState
      public class ChaseCamera
      extends java.lang.Object
      implements ActionListener, AnalogListener, Control
-         
+
      A camera that follows a spatial and can turn around it by dragging the mouse
-     Constructs the chase camera, and registers inputs if you use this 
-     constructor you have to attach the cam later to a spatial doing 
+     Constructs the chase camera, and registers inputs if you use this
+     constructor you have to attach the cam later to a spatial doing
      spatial.addControl(chaseCamera);
      */
     private final ChaseCamera chaseCam;
     private final FlyByCamera flyByCam;
 
 /**
-    
+
     @param settings
     @param inputManager
     @param cam
-    @param flyByCam 
+    @param flyByCam
     */
     public CameraContext(AppSettings settings, InputManager inputManager, Camera cam, FlyByCamera flyByCam)
     {
@@ -920,9 +920,9 @@ public class PlayerInputActionListener extends AbstractAppState implements Actio
     private boolean jump = false;
     private final AvatarAnimationEventListener aael;
 /**
-    
+
     @param pc
-    @param avatar 
+    @param avatar
     */
     public PlayerInputActionListener(PhysicsCharacter pc, Spatial avatar)
     {
@@ -958,19 +958,19 @@ public class PlayerInputActionListener extends AbstractAppState implements Actio
 
         if (binding.equals("LEFTWARD"))
         {
-            
+
             this.leftward = this.aael.getAnimHelper().leftward(keyPressed);
-            
+
         } else if (binding.equals("RIGHTWARD"))
         {
-            
+
             this.rightward = this.aael.getAnimHelper().rightward(keyPressed);
-        
+
         } else if (binding.equals("FORWARD"))
         {
-            
+
             this.forward = this.aael.getAnimHelper().forward(keyPressed);
-        
+
         } else if (binding.equals("BACKWARD"))
         {
 
@@ -980,7 +980,7 @@ public class PlayerInputActionListener extends AbstractAppState implements Actio
         {
 
             this.jump = this.aael.getAnimHelper().jump(keyPressed);
-            
+
         }
     }
 
@@ -1052,10 +1052,10 @@ public class SceneBodyManager extends AbstractPhysicBodyContext
     private final SceneSpatialBodyContext ssbc;
 
 /**
-    
+
     @param stateManager
     @param am
-    @param rootNode 
+    @param rootNode
     */
     public SceneBodyManager(AppStateManager stateManager, AssetManager am, Node rootNode)
     {
@@ -1104,13 +1104,13 @@ public class ScenePhysicBodyContext extends AbstractPhysicBodyContext
     private final Node scene;
 
 /**
-    
-    @param scene 
+
+    @param scene
     */
     public ScenePhysicBodyContext(Node scene)
     {
         this.scene = scene;
-        this.rigidBodyControl = new RigidBodyControl(.0f);       
+        this.rigidBodyControl = new RigidBodyControl(.0f);
     }
 
 
@@ -1159,9 +1159,9 @@ public class SceneSpatialBodyContext extends AbstractSpatialBodyContext
     private AmbientLight ambient;
     private DirectionalLight sun;
 /**
-    
+
     @param am
-    @param rootNode 
+    @param rootNode
     */
     public SceneSpatialBodyContext(AssetManager am, Node rootNode)
     {

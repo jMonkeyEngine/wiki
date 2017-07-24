@@ -1,6 +1,6 @@
 = Introduction to Marine Navigation
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :relfileprefix: ../../
 :imagesdir: ../..
@@ -33,7 +33,7 @@ The difference of latitude between two places is the angular length of arc of an
 
 Similarly, the difference of longitude between two places is the shorter arc of the parallel or the smaller angle at the pole between the meridians of the two places. If both places are on the same side (i.e east or west) of Greenwich, then difference of longitude is the numerical difference of the longitudes of the two places; otherwise the difference of longitude is their numerical sum (unless of course this exceeds 180◦. In that case it is 360◦ minus the sum).
 
-image:jme3/tools/globe_lat_long.png[Figure 1: Illustrated latitude (φ) and longitude (λ). Photo courtesy of Wikimedia Inc.,with="",height=""]
+image:jme3/tools/globe_lat_long.png[Figure 1: Illustrated latitude (φ) and longitude (λ). Photo courtesy of Wikimedia Inc.,width="",height=""]
 
 *Meridional Parts*
 As described by Bowditch, Meridional parts are ”units of latitude that have been adjusted to compensate for the distortion that results from projecting a three-dimensional globe onto a two-dimensional Mercator chart”.
@@ -67,8 +67,8 @@ The number of pixels or world units per minute serves as a baseline for all coor
 Unlike commonly assumed, this method is not derived from the inverse Guder- mannian function. Accepting a set of latitude/longitude coordinates encapsulated in a Position object as a parameter, the method returns the equivalent pixel (x, y) encapsulated as a Point object. This conversion can be summarized as follows[2]:
 
 .  Ordered List Item Get the distance between the given position’s longitude coordinate and the chart’s longitude centre.
-.  Convert the obtained distance into pixels by dividing it with the number of pixels that are contained within one minute. Refer to it as distanceInPixels. 
-.  Calculate the x-coordinate by subtracting or adding it to the canvas’ x-centre coordinate (the canvas’ x-centre coordinate being the canvas width di- vided by two) depending on the location of the position itself and the chart’s centre: That is, if the chart is centred west of the prime meridian and if the position to be converted is west of the centre, then the resulting x-coordinate is the difference between the x-centre and the distanceInPixels obtained in step 2 above. If however the centre is West and the position is east of the centre, then the resulting x-coordinate equates to the sum of the x-centre and its dis- tanceInPixels. The opposite is true for an easterly centre and a position west of this centre or an easterly centre and a position east of this centre. 
+.  Convert the obtained distance into pixels by dividing it with the number of pixels that are contained within one minute. Refer to it as distanceInPixels.
+.  Calculate the x-coordinate by subtracting or adding it to the canvas’ x-centre coordinate (the canvas’ x-centre coordinate being the canvas width di- vided by two) depending on the location of the position itself and the chart’s centre: That is, if the chart is centred west of the prime meridian and if the position to be converted is west of the centre, then the resulting x-coordinate is the difference between the x-centre and the distanceInPixels obtained in step 2 above. If however the centre is West and the position is east of the centre, then the resulting x-coordinate equates to the sum of the x-centre and its dis- tanceInPixels. The opposite is true for an easterly centre and a position west of this centre or an easterly centre and a position east of this centre.
 .  Ordered List Item For the y-coordinate, the difference in meridional parts between the chart’s latitude centre and the position’s latitude serves as a baseline. Con- vert the difference to pixels by dividing it by the number of pixels contained
 
 within one minute. Refer to it as dmp1.
@@ -92,12 +92,12 @@ To convert world units into latitude/longitude coordinates, use the map model’
 
 [source,java]
 ----
-try { 
-     int worldWidth = 800; MapModel3D m = new MapModel3D(worldWidth); 
-     Position pos = m.toPosition(new Vector3f(10, 10, 10)); 
+try {
+     int worldWidth = 800; MapModel3D m = new MapModel3D(worldWidth);
+     Position pos = m.toPosition(new Vector3f(10, 10, 10));
      System.out.println("Latitude: " + pos.getLatitude() + " Longitude: " + pos.getLongitude());
-} catch (InvalidPositionException e) { 
-     e.printStackTrace(); 
+} catch (InvalidPositionException e) {
+     e.printStackTrace();
 }
 ----
 
@@ -106,13 +106,13 @@ Navigational calculations are performed inside the `NavCalculator` class.
 *Mercator Sailing*
 Mercator sailing is defined as ’the process of solving problems involving course, distance, difference of latitude and difference of longitude, by considering them in relation to a Mercator chart’[1]. Essentially, this refers to the plotting of a rhumb line2 on a Mercator chart whereby the rhumb line will appear as a straight line. That is, given a constant bearing β north of the rhumb line, longitude λ0 where the line passes the equator, λ1 being any longitude point of the rhumb line, and φ being any latitude point on the rhumb line then its Mercator projection can be derived as:
 
-*  x = λ1 
-*  y = m(λ1 − λ0) 
+*  x = λ1
+*  y = m(λ1 − λ0)
 
 where slope m is cot(β), then λ and φ can be expressed as
 
-*  x = λ1 
-*  y = tanh−1(sin(φ) φ = sin−1(tanh(m(λ1 − λ0))) 
+*  x = λ1
+*  y = tanh−1(sin(φ) φ = sin−1(tanh(m(λ1 − λ0)))
 
 That is, tan(course) = (differenceinlongitude)/(differenceinmeridionalparts)
 and distance = (differenceinlatitude/cos(course)) where the difference in meridional parts is defined in terms of a Clarke Spheroid.
@@ -121,19 +121,19 @@ This is implemented as follows where `RLSailing` and `Position` are wrapper clas
 
 [source,java]
 ----
-public RLSailing mercatorSailing(Position p1, Position p2) { 
+public RLSailing mercatorSailing(Position p1, Position p2) {
      double dLat = computeDLat(p1.getLatitude(), p2.getLatitude());
-     if (dLat == 0) { 
+     if (dLat == 0) {
           RLSailing rl = planeSailing(p1, p2); return rl;
      }
-     double dLong = computeDLong(p1.getLongitude(), p2.getLongitude()); 
+     double dLong = computeDLong(p1.getLongitude(), p2.getLongitude());
      double dmp = (float) computeDMPClarkeSpheroid(p1.getLatitude(), p2.getLatitude());
-     trueCourse = (float) Math.toDegrees(Math.atan(dLong / dmp)); 
-     double degCrs = convertCourse((float) trueCourse, p1, p2); 
-     distance = (float) Math.abs(dLat / Math.cos(Math.toRadians(trueCourse))); 
-     
+     trueCourse = (float) Math.toDegrees(Math.atan(dLong / dmp));
+     double degCrs = convertCourse((float) trueCourse, p1, p2);
+     distance = (float) Math.abs(dLat / Math.cos(Math.toRadians(trueCourse)));
+
      RLSailing rl = new RLSailing(degCrs, (float) distance);
-     trueCourse = rl.getCourse(); 
+     trueCourse = rl.getCourse();
      return rl;
 }
 ----
@@ -151,14 +151,14 @@ Where m1 and m2 refer to the meridional parts of the offset and destination poin
 
 [source,java]
 ----
-public static double computeDMPClarkeSpheroid(double lat1, double lat2) { 
+public static double computeDMPClarkeSpheroid(double lat1, double lat2) {
      double absLat1 = Math.abs(lat1); double absLat2 = Math.abs(lat2);
      double m1 = (7915.704468 * (Math.log(Math.tan(Math.toRadians(45 + (absLat1 / 2)))) / Math.log(10)) - 23.268932 * Math.sin(Math.toRadians(absLat1)) - 0.052500 * Math.pow(Math.sin(Math.toRadians(absLat1)), 3) - 0.000213 * Math.pow(Math.sin(Math.toRadians(absLat1)), 5));
 double m2 = (7915.704468 * (Math.log(Math.tan(Math.toRadians(45 + (absLat2 / 2)))) / Math.log(10))
 - 23.268932 * Math.sin(Math.toRadians(absLat2)) - 0.052500 * Math.pow(Math.sin(Math.toRadians(absLat2)), 3) - 0.000213 * Math.pow(Math.sin(Math.toRadians(absLat2)), 5));
-     if ((lat1 <= 0 && lat2 <= 0) || (lat1 > 0 && lat2 > 0)) { 
+     if ((lat1 <= 0 && lat2 <= 0) || (lat1 > 0 && lat2 > 0)) {
           return Math.abs(m1 - m2);
-     } else { 
+     } else {
           return m1 + m2;
      }
 }
@@ -189,8 +189,8 @@ Which can be determined as follows:
 
 [source,java]
 ----
-try { 
-     double bearing = NavCalculator.computeBearing(new Position(-53.6, 8.1), new Position(-53, 8. 
+try {
+     double bearing = NavCalculator.computeBearing(new Position(-53.6, 8.1), new Position(-53, 8.
   } catch (InvalidPositionException e) {
      e.printStackTrace();
   }

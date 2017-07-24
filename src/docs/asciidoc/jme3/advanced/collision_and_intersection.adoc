@@ -1,6 +1,6 @@
 = Collision and Intersection
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :relfileprefix: ../../
 :imagesdir: ../..
@@ -9,7 +9,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 The term collision can be used to refer to <<jme3/advanced/physics_listeners#,physical interactions>> (where <<jme3/advanced/physics#,physical objects>> collide, push and bump off one another), and also to non-physical _intersections_ in 3D space. This article is about the non-physical (mathematical) collisions.
 
-Non-physical collision detection is interesting because it uses less computing resources than physical collision detection. The non-physical calculations are faster because they do not have any side effects such as pushing other objects or bumping off of them. Tasks such as <<jme3/advanced/mouse_picking#,mouse picking>> are easily implemented using mathematical techniques such as ray casting and intersections.  Experienced developers optimize their games by finding ways to simulate certain (otherwise expensive physical) interactions in a non-physical way. 
+Non-physical collision detection is interesting because it uses less computing resources than physical collision detection. The non-physical calculations are faster because they do not have any side effects such as pushing other objects or bumping off of them. Tasks such as <<jme3/advanced/mouse_picking#,mouse picking>> are easily implemented using mathematical techniques such as ray casting and intersections.  Experienced developers optimize their games by finding ways to simulate certain (otherwise expensive physical) interactions in a non-physical way.
 
 *Example:* One example for an optimization is a physical vehicle's wheels. You could make the wheels fully physical disks, and have jME calculate every tiny force – sounds very accurate? It's total overkill and too slow for a racing game. A more performant solution is to cast four invisible rays down from the vehicle and calculate the intersections with the floor. These non-physical wheels require (in the simplest case) only four calculations per tick to achieve an effect that players can hardly distinguish from the real thing.
 
@@ -19,23 +19,25 @@ Non-physical collision detection is interesting because it uses less computing r
 The interface com.jme3.collision.Collidable declares one method that returns how many collisions were found between two Collidables: `collideWith(Collidable other, CollisionResults results)`.
 
 *  A `com.jme3.collision.CollisionResults` object is an ArrayList of comparable `com.jme3.collision.CollisionResult` objects.
-*  You can iterate over the CollisionResults to identify the other parties involved in the collision. +Note that jME counts _all_ collisions, this means a ray intersecting a box will be counted as two hits, one on the front where the ray enters, and one on the back where the ray exits.
+*  You can iterate over the CollisionResults to identify the other parties involved in the collision. +
+Note that jME counts _all_ collisions, this means a ray intersecting a box will be counted as two hits, one on the front where the ray enters, and one on the back where the ray exits.
+
 [cols="2", options="header"]
 |===
 
 a|CollisionResults Method
 a|Usage
 
-<a|size()                
+<a|size()
 a|Returns the number of CollisionResult objects.
 
-a|getClosestCollision() 
+a|getClosestCollision()
 a|Returns the CollisionResult with the lowest distance.
 
 a|getFarthestCollision()
 a|Returns the CollisionResult with the farthest distance.
 
-<a|getCollision(i)       
+<a|getCollision(i)
 a|Returns the CollisionResult at index i.
 
 |===
@@ -80,7 +82,7 @@ The following code snippet can be triggered by listeners (e.g. after an input ac
   // Calculate detection results
   CollisionResults results = new CollisionResults();
   a.collideWith(b, results);
-  System.out.println("Number of Collisions between" + 
+  System.out.println("Number of Collisions between" +
       a.getName()+ " and " + b.getName() + ": " + results.size());
   // Use the results
   if (results.size() > 0) {
@@ -125,15 +127,15 @@ Knowing the distance of the collisions is useful for example when you intersect 
 
 == Bounding Volumes
 
-A `com.jme3.bounding.BoundingVolume` is an interface for dealing with containment of a collection of points. All BoundingVolumes are `Collidable` and are used as optimization to calculate non-physical collisions more quickly: It's always faster to calculate an intersection between simple shapes like spheres and boxes than between complex shapes like models. 
+A `com.jme3.bounding.BoundingVolume` is an interface for dealing with containment of a collection of points. All BoundingVolumes are `Collidable` and are used as optimization to calculate non-physical collisions more quickly: It's always faster to calculate an intersection between simple shapes like spheres and boxes than between complex shapes like models.
 
-jME3 computes bounding volumes for all objects. These bounding volumes are later used for frustum culling, which is making sure only objects visible on-screen are actually sent for rendering. 
+jME3 computes bounding volumes for all objects. These bounding volumes are later used for frustum culling, which is making sure only objects visible on-screen are actually sent for rendering.
 
 All fast-paced action and shooter games use BoundingVolumes as an optimization. Wrap all complex models into simpler shapes – in the end, you get equally useful collision detection results, but faster. link:http://en.wikipedia.org/wiki/Bounding_volume[More about bounding volumes...]
 
 Supported types:
 
-image::http://www.jmonkeyengine.com/jme/wiki-data/userref/capsule.png[Capsule,with="150",height="110",align="right"]
+// image::http://www.jmonkeyengine.com/jme/wiki-data/userref/capsule.png[Capsule,width="150",height="110",align="right"]
 
 
 *  Type.AABB = Axis-aligned bounding box, that means it doesn't rotate, which makes it less precise. A `com.jme3.bounding.BoundingBox` is an axis-aligned cuboid used as a container for a group of vertices of a piece of geometry. A BoundingBox has a center and extents from that center along the x, y and z axis. This is the default bounding volume, since it is fairly fast to generate and gives better accuracy than the bounding sphere.
@@ -162,7 +164,7 @@ mesh.updateBound();
 
 == Mesh and Scene Graph Collision
 
-One of the supported `Collidable`s are meshes and scene graph objects. To execute a collision detection query against a scene graph, use `Spatial.collideWith()`. This will traverse the scene graph and return any mesh collisions that were detected. Note that the first collision against a particular scene graph may take a long time, this is because a special data structure called link:http://en.wikipedia.org/wiki/Bounding_interval_hierarchy[|Bounding Interval Hierarchy (BIH)] needs to be generated for the meshes. At a later point, the mesh could change and the BIH tree would become out of date, in that case, call link:http://jmonkeyengine.org/javadoc/com/jme3/scene/Mesh.html#createCollisionData()[Mesh.createCollisionData()] on the changed mesh to update the BIH tree.
+One of the supported `Collidable`s are meshes and scene graph objects. To execute a collision detection query against a scene graph, use `Spatial.collideWith()`. This will traverse the scene graph and return any mesh collisions that were detected. Note that the first collision against a particular scene graph may take a long time, this is because a special data structure called link:http://en.wikipedia.org/wiki/Bounding_interval_hierarchy[|Bounding Interval Hierarchy (BIH)] needs to be generated for the meshes. At a later point, the mesh could change and the BIH tree would become out of date, in that case, call link:http://javadoc.jmonkeyengine.org/com/jme3/scene/Mesh.html#createCollisionData--[Mesh.createCollisionData()] on the changed mesh to update the BIH tree.
 
 
 == Intersection
@@ -182,6 +184,7 @@ These simple but powerful ray-surface intersection tests are called Ray Casting.
 
 
 Learn the details of how to implement <<jme3/advanced/mouse_picking#,Mouse Picking>> here.
+
 '''
 
 TODO:

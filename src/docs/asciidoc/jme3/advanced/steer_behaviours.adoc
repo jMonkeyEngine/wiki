@@ -1,6 +1,6 @@
 = Steer Behaviors
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :relfileprefix: ../../
 :imagesdir: ../..
@@ -8,17 +8,24 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
 Steer behaviors allows you to control the locomotion of “characters”, this can reduce drastically the time needed to develop a game since for almost every game we need to set how these “characters” will be moving around the scene.
-+
-+
-*Steer behaviors in action:*
-image:jme3/advanced/youtube_yyztntsgv00[youtube_yyztntsgv00,with="",height=""]
-+
-Be sure that you have checked the demos: They can be downloaded here: link:http://localhost/jmeSteerTesting/downloads.php[jmesteer.bdevel.org]
+
+[cols="2",caption=]
+.YouTube
+|===
+
+a|.Steer behaviors in action
+image:jme3/advanced/hqdefault.jpg[youtu.be/yyzTntsGV00,width="",height="",link=https://youtu.be/yyzTntsGV00]
+a|
+
+|===
+ 
+
+Be sure that you have checked the demos: They can be downloaded here: link:http://jmesteer.bdevel.org[jmesteer.bdevel.org]
 
 
 == First steps
 
-The steer behaviors AI is integrated with MonkeyBrains so before start coding be sure that you have checked the link:http://hub.jmonkeyengine.org/wiki/doku.php/jme3:advanced:monkey_brains[monkey brains documentation]
+The steer behaviors AI is integrated with MonkeyBrains so before start coding be sure that you have checked the <<jme3/advanced/monkey_brains#,monkey brains documentation>>.
 
 Be sure to create a reference to MonkeyBrains from your project.
 
@@ -40,7 +47,7 @@ Finally, do not forget to import the `com.jme3.ai.agents.behaviors.npc.steering`
 *  Alignment
 *  Obstacle Avoidance
 *  Unaligned obstacle avoidance
-*  Hide 
+*  Hide
 *  Slow
 *  Queuing
 *  Containment
@@ -58,25 +65,25 @@ All the behaviours extend from the `AbstractSteeringBehavior` class.
 
 == Adding a steer behavior
 
-Create instances from the steer behavior classes, They are located in the `com.jme3.ai.agents.behaviors.npc.steering` package. 
+Create instances from the steer behavior classes, They are located in the `com.jme3.ai.agents.behaviors.npc.steering` package.
 
-If we want to add more than one steer behavior, we need to create a container: 
+If we want to add more than one steer behavior, we need to create a container:
 [WARNING]
 ====
-If you add more than one steer behavior to a `SimpleMainBehavior` it will cause problems in the rotation of the agents. 
+If you add more than one steer behavior to a `SimpleMainBehavior` it will cause problems in the rotation of the agents.
 ====
 
 [cols="2", options="header"]
 |===
 
-a| Container 
-a| Purpose 
+a| Container
+a| Purpose
 
-a| CompoundSteeringBehavior 
-a| Contains and merges several `AbstractSteeringBehavior` instances 
+a| CompoundSteeringBehavior
+a| Contains and merges several `AbstractSteeringBehavior` instances
 
-a| BalancedCompoundSteeringBehavior 
-<a| Each force generated inside this container is reduced in relation with a proportion factor: “Partial Force / “Total container force  
+a| BalancedCompoundSteeringBehavior
+<a| Each force generated inside this container is reduced in relation with a proportion factor: “Partial Force / “Total container force
 
 |===
 
@@ -130,7 +137,7 @@ To assign priority layers add behaviors with the following function:
 
 [TIP]
 ====
-To optimize the process speed add the behaviors with the lowest priority first. 
+To optimize the process speed add the behaviors with the lowest priority first.
 ====
 
 
@@ -153,7 +160,7 @@ Example:
 ----
 
     Plane horizontalPlane = new Plane(new Vector3f(0,1,0), 0);
-    
+
     steerBehavior1.setupStrengthControl(0.5f); //Force reduced a 50%
     steerBehavior2.setupStrengthControl(horizontalPlane); //Force contained in the XZ plane
     steerContainer.setupStrengthControl(horizontalPlane, 2f); //Contained in the XZ plane and increased a 100%
@@ -173,9 +180,9 @@ The responsible for the agent's acceleration is the vector returned in the `calc
     @Override
     protected Vector3f calculateRawSteering() {
         Vector3f steerForce = Vector3f.ZERO;
-        
+
         //calculations
-        
+
         return steerForce;
     }
 
@@ -218,11 +225,11 @@ Example:
 ----
 
     public class CustomSteeringExceptions extends SteeringExceptions  {
-    
+
         public static class CustomRuntimeException extends SteeringBehaviorException {
             public CustomRuntimeException(String msg) { super(msg); }
         }
-    
+
         // ... other exceptions ...
     }
 

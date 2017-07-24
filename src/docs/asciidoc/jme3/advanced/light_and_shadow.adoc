@@ -7,7 +7,7 @@
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
-image:jme3/advanced/shading-ani.gif[Examples of shading and lighting.,with="",height=""]
+image:jme3/advanced/shading-ani.gif[Examples of shading and lighting.,width="",height=""]
 
 Light and Shadow are two separate things in 3D engines, although we percieve them together in real life:
 
@@ -25,7 +25,7 @@ A light source with a direction or location is required for all Geometries with 
 == Light Sources and Colors
 
 
-image::jme3/advanced/light-sources.png[A lit scene with multiple light sources,with="300",height="200",align="right"]
+image::jme3/advanced/light-sources.png[A lit scene with multiple light sources,width="300",height="200",align="right"]
 
 
 You can add several types of light sources to a scene using `rootNode.addLight(mylight)`. 
@@ -47,7 +47,7 @@ You can get a list of all lights added to a Spatial by calling `getWorldLightLis
 === PointLight
 
 
-image::jme3/advanced/elephant-pointlights.png[An elephant model illuminated by pointlights,with="300",height="205",align="right"]
+image::jme3/advanced/elephant-pointlights.png[An elephant model illuminated by pointlights,width="300",height="205",align="right"]
 
 
 A PointLight has a location and shines from there in all directions as far as its radius reaches. The light intensity decreases with increased distance from the light source. A PointLight can be used to cast shadows along with a PointLightShadowRenderer (see the Casting Shadows section)
@@ -67,7 +67,7 @@ rootNode.addLight(lamp_light);
 === DirectionalLight
 
 
-image::jme3/advanced/house-directionallight.png[A house model illuminated with a sun-like directional light,with="300",height="210",align="right"]
+image::jme3/advanced/house-directionallight.png[A house model illuminated with a sun-like directional light,width="300",height="210",align="right"]
 
 
 A DirectionalLight has no position, only a direction. It sends out parallel beams of light and is considered “infinitely far away. You typically have one directional light per scene. A DirectionalLight can be used together with shadows. 
@@ -86,7 +86,7 @@ rootNode.addLight(sun);
 === SpotLight
 
 
-image::jme3/advanced/spotlight.png[Spotlight,with="",height="",align="right"]
+image::jme3/advanced/spotlight.png[Spotlight,width="",height="",align="right"]
 
 
 A SpotLight sends out a distinct beam or cone of light. A SpotLight has a direction, a position, distance (range) and two angles. The inner angle is the central maximum of the light cone, the outer angle the edge of the light cone. Everything outside the light cone's angles is not affected by the light.
@@ -124,7 +124,8 @@ rootNode.addLight(al);
 
 [TIP]
 ====
-You can increase the brightness of a light source gradually by multiplying the light color to values greater than 1.0f. +Example: `mylight.setColor(ColorRGBA.White.mult(1.3f));`
+You can increase the brightness of a light source gradually by multiplying the light color to values greater than 1.0f. +
+Example: `mylight.setColor(ColorRGBA.White.mult(1.3f));`
 ====
 
 
@@ -150,7 +151,7 @@ Obviously, this does not apply to AmbientLights, which have no position.
 
 Full code sample
 
-*  link:http://code.google.com/p/jmonkeyengine/source/browse/trunk/engine/src/test/jme3test/light/TestShadow.java[TestShadow.java]
+*  link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/light/TestShadow.java[TestShadow.java]
 
 
 == Casting Shadows
@@ -159,6 +160,7 @@ For each type of non-ambient light source, JME3 implements two ways to simulate 
 
 *  a shadow renderer (which you apply to a viewport) and
 *  a shadow filter (which you can add to a viewport's filter post-processor).
+
 [cols="3", options="header"]
 |===
 
@@ -204,7 +206,7 @@ Both shadow renderers and shadow filters use shadow modes to determine which obj
 
 Here's a sample application which demonstrates both DirectionalLightShadowRenderer and DirectionalLightShadowFilter:
 
-*  link:http://code.google.com/p/jmonkeyengine/source/browse/trunk/engine/src/test/jme3test/light/TestDirectionalLightShadow.java[TestDirectionalLightShadow.java]
+*  link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/light/TestDirectionalLightShadow.java[TestDirectionalLightShadow.java]
 
 Here is the key code fragment:
 
@@ -247,10 +249,10 @@ Properties you can set:
 
 Full sample code
 
-*  link:http://code.google.com/p/jmonkeyengine/source/browse/trunk/engine/src/test/jme3test/light/TestPssmShadow.java[TestPssmShadow.java]
+*  link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/light/TestPssmShadow.java[TestPssmShadow.java]
 
 
-image::jme3/advanced/shadow.png[A lit scene with PSSM drop shadows,with="300",height="200",align="right"]
+image::jme3/advanced/shadow.png[A lit scene with PSSM drop shadows,width="300",height="200",align="right"]
 
 
 [source,java]
@@ -270,9 +272,9 @@ public void simpleInitApp() {
 
 Full sample code
 
-*  link:http://code.google.com/p/jmonkeyengine/source/browse/trunk/engine/src/test/jme3test/post/TestSSAO.java[jme3/src/test/jme3test/post/TestSSAO.java] – Screen-Space Ambient Occlusion shadows
-*  link:http://code.google.com/p/jmonkeyengine/source/browse/trunk/engine/src/test/jme3test/post/TestTransparentSSAO.java[jme3/src/test/jme3test/post/TestTransparentSSAO.java] – Screen-Space Ambient Occlusion shadows plus transparancy
-*  link:http://hub.jmonkeyengine.org/2010/08/screen-space-ambient-occlusion-for-jmonkeyengine-3-0/[Screen Space Ambient Occlusion for jMonkeyEngine (article)]
+*  link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/post/TestSSAO.java[TestSSAO.java] – Screen-Space Ambient Occlusion shadows
+*  link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/post/TestTransparentSSAO.java[TestTransparentSSAO.java] – Screen-Space Ambient Occlusion shadows plus transparancy
+*  link:https://hub.jmonkeyengine.org/t/ssao-for-monkeys/13369[Screen Space Ambient Occlusion for jMonkeyEngine (article)]
 
 Ambient Occlusion refers to the shadows which nearby objects cast on each other under an ambient lighting. Screen Space Ambient Occlusion (SSAO) approximates how light radiates in real life.
 
@@ -288,4 +290,4 @@ viewPort.addProcessor(fpp);
 
 ----
 
-image:jme3/advanced/shading-textured-ani.gif[Shading with and without Ambient Occlusion,with="",height=""]
+image:jme3/advanced/shading-textured-ani.gif[Shading with and without Ambient Occlusion,width="",height=""]

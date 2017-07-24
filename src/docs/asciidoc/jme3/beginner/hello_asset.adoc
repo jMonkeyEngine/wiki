@@ -14,7 +14,7 @@ Next: <<jme3/beginner/hello_main_event_loop#,Hello Update Loop>>
 In this tutorial we will learn to load 3D models and text into the scene graph, using the jME <<jme3/advanced/asset_manager#,Asset Manager>>. You will also learn how to determine the correct paths, and which file formats to use.
 
 
-image::jme3/beginner/beginner-assets-models.png[beginner-assets-models.png,with="320",height="250",align="center"]
+image::jme3/beginner/beginner-assets-models.png[beginner-assets-models.png,320,250,align="center"]
 
 
 
@@ -170,7 +170,10 @@ guiNode.attachChild(helloText);
 
 ----
 
-*Tip:* Clear existing text in the guiNode by detaching all its children.
+[TIP]
+====
+Clear existing text in the guiNode by detaching all its children.
+====
 
 
 === Loading a Model
@@ -216,9 +219,9 @@ Here is a HttpZipLocator that can download zipped models and load them:
 [source,java]
 ----
 
-    assetManager.registerLocator(
-      "http://jmonkeyengine.googlecode.com/files/wildhouse.zip", 
-      HttpZipLocator.class);
+    assetManager.registerLocator("https://storage.googleapis.com/"
+            + "google-code-archive-downloads/v2/code.google.com/" 
+            + "jmonkeyengine/wildhouse.zip", HttpZipLocator.class);
     Spatial scene = assetManager.loadModel("main.scene");
     rootNode.attachChild(scene);
 
@@ -278,6 +281,7 @@ Open your JME3 Project in the jMonkeyEngine SDK.
 .  Right-click a .Blend, .OBJ, or .mesh.xml file in the Projects window, and choose “convert to JME3 binary. 
 .  The .j3o file appears next to the .mesh.xml file and has the same name. 
 .  Update all your `loadModel()` lines accordingly. For example: 
++
 [source,java]
 ----
 Spatial ninja = assetManager.loadModel("Models/Ninja/Ninja.j3o");
@@ -293,7 +297,7 @@ If your executable throws a “Cannot locate resource runtime exception, check a
 
 
 === Loading Models and Scenes
-[cols="2", options="header"]
+[cols="30,70", options="header"]
 |===
 
 a| Task? 
@@ -347,9 +351,10 @@ rootNode.attachChild(scene);
 
 As an exercise, let's try different ways of loading a scene. You will learn how to load the scene directly, or from a zip file.
 
-.  link:http://jmonkeyengine.googlecode.com/files/town.zip[Download the town.zip] sample scene. 
+.  link:https://github.com/jMonkeyEngine/wiki/raw/master/src/docs/resources/Scenes/Town/town.zip[Download the town.zip] sample scene. 
 .  (Optional:) Unzip the town.zip to see the structure of the contained Ogre dotScene: You'll get a directory named `town`. It contains XML and texture files, and file called main.scene. (This is just for your information, you do not need to do anything with it.)
 .  Place the town.zip file in the top level directory of your JME3 project, like so: 
++
 [source]
 ----
 jMonkeyProjects/MyGameProject/assets/
@@ -359,12 +364,13 @@ jMonkeyProjects/MyGameProject/town.zip
 ...
 
 ----
-
++
 
 Use the following method to load models from a zip file:
 
 .  Verify `town.zip` is in the project directory.
 .  Register a zip file locator to the project directory: Add the following code under `simpleInitApp() {`
++
 [source,java]
 ----
     assetManager.registerLocator("town.zip", ZipLocator.class);
@@ -373,18 +379,24 @@ Use the following method to load models from a zip file:
     gameLevel.setLocalScale(2);
     rootNode.attachChild(gameLevel);
 ----
++
+The loadModel() method now searches this zip directly for the files to load. +
+(This means, do not write `loadModel(town.zip/main.scene)` or similar!)
 
-The loadModel() method now searches this zip directly for the files to load. +(This means, do not write `loadModel(town.zip/main.scene)` or similar!)
+.  Clean, build and run the project. +
+You should now see the Ninja+wall+teapot standing in a town. 
 
-.  Clean, build and run the project. +You should now see the Ninja+wall+teapot standing in a town. 
-
-*Tip:* If you register new locators, make sure you do not get any file name conflicts: Don't name all scenes `main.scene` but give each scene a unique name.
+[TIP]
+====
+If you register new locators, make sure you do not get any file name conflicts: Don't name all scenes `main.scene` but give each scene a unique name.
+====
 
 Earlier in this tutorial, you loaded scenes and models from the asset directory. This is the most common way you will be loading scenes and models. Here is the typical procedure:
 
 .  Remove the code that you added for the previous exercise.
 .  Move the unzipped `town/` directory into the `assets/Scenes/` directory of your project.
 .  Add the following code under `simpleInitApp() {` 
++
 [source,java]
 ----
     Spatial gameLevel = assetManager.loadModel("Scenes/town/main.scene");
@@ -392,10 +404,11 @@ Earlier in this tutorial, you loaded scenes and models from the asset directory.
     gameLevel.setLocalScale(2);
     rootNode.attachChild(gameLevel);
 ----
++
+Note that the path is relative to the `assets/…` directory.
 
- Note that the path is relative to the `assets/…` directory.
-
-.  Clean, build and run the project. Again, you should see the Ninja+wall+teapot standing in a town. 
+.  Clean, build and run the project. +
+Again, you should see the Ninja+wall+teapot standing in a town. 
 
 Here is a third method you must know, loading a scene/model from a .j3o file:
 
@@ -404,6 +417,7 @@ Here is a third method you must know, loading a scene/model from a .j3o file:
 .  In the projects window, browse to the `assets/Scenes/town` directory. 
 .  Right-click the `main.scene` and convert the scene to binary: The jMonkeyPlatform generates a main.j3o file.
 .  Add the following code under `simpleInitApp() {`
++
 [source,java]
 ----
     Spatial gameLevel = assetManager.loadModel("Scenes/town/main.j3o");
@@ -411,10 +425,11 @@ Here is a third method you must know, loading a scene/model from a .j3o file:
     gameLevel.setLocalScale(2);
     rootNode.attachChild(gameLevel);
 ----
++
+Again, note that the path is relative to the `assets/…` directory.
 
- Again, note that the path is relative to the `assets/…` directory.
-
-.  Clean, Build and run the project. +Again, you should see the Ninja+wall+teapot standing in a town. 
+.  Clean, Build and run the project. +
+Again, you should see the Ninja+wall+teapot standing in a town. 
 
 
 == Conclusion
@@ -422,6 +437,7 @@ Here is a third method you must know, loading a scene/model from a .j3o file:
 Now you know how to populate the scenegraph with static shapes and models, and how to build scenes. You have learned how to load assets using the `assetManager` and you have seen that the paths start relative to your project directory. Another important thing you have learned is to convert models to .j3o format for the executable JARs etc.
 
 Let's add some action to the scene and continue with the <<jme3/beginner/hello_main_event_loop#,Update Loop>>!
+
 '''
 
 *See also:*

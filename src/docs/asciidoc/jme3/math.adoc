@@ -1,13 +1,13 @@
 = Introduction to Mathematical Functionality
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :relfileprefix: ../
 :imagesdir: ..
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
-It's a fact of life, math is hard. Unfortunately, 3D graphics require a fair bit of knowledge about the subject. Fortunately, jME is able to hide the majority of the details away from the user. Vectors are the fundamental type in the 3D environment, and it is used extensively. Matrices are also a basic necessity of 3D for representing linear systems. <<jme3/quaternion#,Quaternion>>s are perhaps the most powerful and complicated of the basic types and are used for rotation in jME. 
+It's a fact of life, math is hard. Unfortunately, 3D graphics require a fair bit of knowledge about the subject. Fortunately, jME is able to hide the majority of the details away from the user. Vectors are the fundamental type in the 3D environment, and it is used extensively. Matrices are also a basic necessity of 3D for representing linear systems. <<jme3/quaternion#,Quaternions>> are perhaps the most powerful and complicated of the basic types and are used for rotation in jME.
 
 I'll discuss how these are used in the system for the core functionality. Including Transforming, Visibility Determination, Collision Detection, and the Coordinate System. Note, that these are low level details. Further chapters will discuss how to use these various systems from a high level perspective.
 
@@ -26,7 +26,7 @@ jME uses a Right-Handed coordinate system (as OpenGL does).
 The definition of a coordinate system is defined in jME by the properties sent to Camera. There are no error checks to insure that: 1) the coordinate system is right-handed and 2) The axes are mutually perpendicular. Therefore, if the user sets the axes incorrectly, they are going to experience very odd rendering artifacts (random culling, etc).
 
 
-image::jme3/intermediate/coordinate-system.png[coordinate-system.png,with="235",height="210",align="center"]
+image::jme3/intermediate/coordinate-system.png[coordinate-system.png,width="235",height="210",align="center"]
 
 
 
@@ -91,15 +91,14 @@ ColorRGBA will also handle interpolation between two colors. Given a second colo
 
 == Matrix
 
-See link:http://www.jmonkeyengine.com/doc/com/jme/math/Matrix3f.html[Matrix3f Javadoc]+
-and link:http://www.jmonkeyengine.com/doc/com/jme/math/Matrix4f.html[Matrix4f Javadoc]
+See link:http://javadoc.jmonkeyengine.org/com/jme3/math/Matrix3f.html[Matrix3f Javadoc] and link:http://javadoc.jmonkeyengine.org/com/jme3/math/Matrix4f.html[Matrix4f Javadoc]
 
 
 === Definition
 
-A Matrix is typically used as a _linear transformation_ to map vectors to vectors. That is: Y = MX where X is a Vector and M is a Matrix applying any or all transformations (scale, <<jme3/rotate#,rotate>>, translate). 
+A Matrix is typically used as a _linear transformation_ to map vectors to vectors. That is: Y = MX where X is a Vector and M is a Matrix applying any or all transformations (scale, <<jme3/rotate#,rotate>>, translate).
 
-There are a few special matrices: 
+There are a few special matrices:
 
 _zero matrix_ is the Matrix with all zero entries.
 [cols="3", options="header"]
@@ -137,7 +136,7 @@ a|1
 
 |===
 
-A Matrix is _invertible_ if there is a matrix _M^-1^_ where _MM^-1^ = M^-1^M = I_. 
+A Matrix is _invertible_ if there is a matrix _M^-1^_ where _MM^-1^ = M^-1^M = I_.
 
 The _transpose_ of a matrix _M = [m~ij~]_ is _M^T^ = [m~ji~]_. This causes the rows of _M_ to become the columns of _M^T^_.
 [cols="7", options="header"]
@@ -146,7 +145,7 @@ The _transpose_ of a matrix _M = [m~ij~]_ is _M^T^ = [m~ji~]_. This causes the r
 a|1
 a|1
 a|1
-<a|    
+<a|
 a|1
 a|2
 a|3
@@ -154,7 +153,7 @@ a|3
 a|2
 a|2
 a|2
-a| ⇒ 
+a| ⇒
 a|1
 a|2
 a|3
@@ -162,7 +161,7 @@ a|3
 a|3
 a|3
 a|3
-<a|    
+<a|
 a|1
 a|2
 a|3
@@ -187,7 +186,7 @@ a|X
 
 |===
 
-Where X, A, B, and C equal numbers 
+Where X, A, B, and C equal numbers
 
 jME includes two types of Matrix classes: Matrix3f and Matrix4f. Matrix3f is a 3x3 matrix and is the most commonly used (able to handle scaling and rotating), while Matrix4f is a 4x4 matrix that can also handle translation.
 
@@ -242,15 +241,14 @@ where M is the 3x3 matrix (containing any rotation/scale information), T is the 
 
 === jME Class
 
-Both Matrix3f and Matrix4f store their values as floats and are publicly available as (m00, m01, m02, …, mNN) where N is either 2 or 3. 
+Both Matrix3f and Matrix4f store their values as floats and are publicly available as (m00, m01, m02, …, mNN) where N is either 2 or 3.
 
-Most methods are straight forward, and I will leave documentation to the Javadoc. 
+Most methods are straight forward, and I will leave documentation to the Javadoc.
 
 
 == Vector
 
-See link:http://www.jmonkeyengine.com/doc/com/jme/math/Vector3f.html[Vector3f Javadoc]+
-and link:http://www.jmonkeyengine.com/doc/com/jme/math/Vector2f.html[Vector2f Javadoc]
+See link:http://javadoc.jmonkeyengine.org/com/jme3/math/Vector3f.html[Vector3f Javadoc] and link:http://javadoc.jmonkeyengine.org/com/jme3/math/Vector2f.html[Vector2f Javadoc]
 
 
 === Definition
@@ -267,7 +265,7 @@ We have two Vectors (2f and 3f) meaning we have tuples of 2 float values or 3 fl
 
 ===== Multiplication by Scalar
 
-A Vector can be multiplied by a scalar value to produce a second Vector with the same proportions as the first. a*V* = *V*a = &lt;aV~1~, aV~2~,…,aV~n~&gt;
+A Vector can be multiplied by a scalar value to produce a second Vector with the same proportions as the first. a**V** = **V**a = &lt;aV~1~, aV~2~,…,aV~n~&gt;
 
 
 ===== Addition and Subtraction
@@ -288,7 +286,7 @@ A Vector can be _normalized_ or made _unit length_ by multiplying the Vector by 
 
 ===== Dot Products
 
-The dot product of two vectors is defined as: 
+The dot product of two vectors is defined as:
 *P* dot *Q* = P~x~Q~x~ + P~y~Q~y~ + P~z~Q~z~
 
 Using the dot product allows us to determine how closely two Vectors are pointing to the same point. If the dot product is negative they are facing in relatively opposite directions, while postive tells us they are pointing in the relative same direction.
@@ -310,12 +308,12 @@ Vector3f and Vector2f store their values (x, y, z) and (x, y) respectively as fl
 
 == Quaternion
 
-See link:http://www.jmonkeyengine.com/doc/com/jme/math/Quaternion.html[Quaternion Javadoc]
+See link:http://javadoc.jmonkeyengine.org/com/jme3/math/Quaternion.html[Quaternion Javadoc]
 
 
 === Definition
 
-Quaternions define a subset of a hypercomplex number system. Quaternions are defined by (i^2^ = j^2^ = k^2^ = ijk = -1). jME makes use of Quaternions because they allow for compact representations of rotations, or correspondingly, orientations, in 3D space. With only four float values, we can represent an object's orientation, where a rotation matrix would require nine. They also require fewer arithmetic operations for concatenation. 
+Quaternions define a subset of a hypercomplex number system. Quaternions are defined by (i^2^ = j^2^ = k^2^ = ijk = -1). jME makes use of Quaternions because they allow for compact representations of rotations, or correspondingly, orientations, in 3D space. With only four float values, we can represent an object's orientation, where a rotation matrix would require nine. They also require fewer arithmetic operations for concatenation.
 
 Additional benefits of the Quaternion is reducing the chance of link:http://en.wikipedia.org/wiki/Gimbal_lock[Gimbal Lock] and allowing for easily interpolation between two rotations (spherical linear interpolation or slerp).
 
@@ -356,7 +354,7 @@ You might wish to represent your rotations as Angle Axis pairs. That is, you def
 ----
 
 //rotate about the Y-Axis by approximately 1 pi
-Vector3f axis = Vector3f.UNIT_Y; 
+Vector3f axis = Vector3f.UNIT_Y;
 // UNIT_Y equals (0,1,0) and does not require to create a new object
 float angle = 3.14f;
 s.getLocalRotation().fromAngleAxis(angle, axis);
@@ -481,12 +479,12 @@ Along with the base Math classes, jME provides a number of Math classes to make 
 
 == Fast Math
 
-See link:http://www.jmonkeyengine.com/doc/com/jme/math/FastMath.html[FastMath Javadoc]
+See link:http://javadoc.jmonkeyengine.org/com/jme3/math/FastMath.html[FastMath Javadoc]
 
 
 === Definition
 
-FastMath provides a number of convience methods, and where possible faster versions (although this can be at the sake of accuracy). 
+FastMath provides a number of convience methods, and where possible faster versions (although this can be at the sake of accuracy).
 
 
 === Usage
@@ -498,29 +496,29 @@ There are five major categories of functions that FastMath provides.
 
 ===== Trig Functions
 
-* cos and acos - provide link:http://en.wikipedia.org/wiki/cosine[cosine] and link:http://en.wikipedia.org/wiki/arc cosine[arc cosine] values (make use of the look-up table if `USE_FAST_TRIG` is true)
-* sin and asin - provide link:http://en.wikipedia.org/wiki/sine[sine] and link:http://en.wikipedia.org/wiki/arc sine[arc sine] values (make use of the look-up table if `USE_FAST_TRIG` is true)
-* tan and atan - provide link:http://en.wikipedia.org/wiki/tangent[tangent] and link:http://en.wikipedia.org/wiki/arc tangent[arc tangent] values
+* cos and acos - provide link:http://en.wikipedia.org/wiki/cosine[cosine] and link:https://en.wikipedia.org/wiki/Inverse_trigonometric_functions[arc cosine] values (make use of the look-up table if `USE_FAST_TRIG` is true)
+* sin and asin - provide link:http://en.wikipedia.org/wiki/sine[sine] and link:https://en.wikipedia.org/wiki/Inverse_trigonometric_functions[arc sine] values (make use of the look-up table if `USE_FAST_TRIG` is true)
+* tan and atan - provide link:http://en.wikipedia.org/wiki/tangent[tangent] and link:https://en.wikipedia.org/wiki/Inverse_trigonometric_functions[arc tangent] values
 
 
 ===== Numerical Methods
 
 * ceil - provides the ceiling (smallest value that is greater than or equal to a given value and an integer)of a value.
 * floor - provides the floor (largest value that is less than or equal to a given value and an integer) of a value.
-* exp - provides the link:http://en.wikipedia.org/wiki/euler number[euler number] (e) raised to the provided value.
+* exp - provides the link:http://en.wikipedia.org/wiki/Euler_number[euler number] (e) raised to the provided value.
 * sqr - provides the square of a value (i.e. value * value).
 * pow - provides the first given number raised to the second.
 * isPowerOfTwo - provides a boolean if a value is a power of two or not (e.g. 32, 64, 4).
-* abs - provides the link:http://en.wikipedia.org/wiki/absolute value[absolute value] of a given number.
-* sign - provides the sign of a value (1 if positive, -1 if negative, 0 if 0). 
-* log - provides the link:http://en.wikipedia.org/wiki/natural logarithm[natural logarithm] of a value.
-* sqrt - provides the link:http://en.wikipedia.org/wiki/square root[square root] of a value.
-* invSqrt - provides the inverse link:http://en.wikipedia.org/wiki/square root[square root] of a value (1 / sqrt(value).
+* abs - provides the link:http://en.wikipedia.org/wiki/Absolute_value[absolute value] of a given number.
+* sign - provides the sign of a value (1 if positive, -1 if negative, 0 if 0).
+* log - provides the link:http://en.wikipedia.org/wiki/Natural_logarithm[natural logarithm] of a value.
+* sqrt - provides the link:http://en.wikipedia.org/wiki/Square_root[square root] of a value.
+* invSqrt - provides the inverse link:http://en.wikipedia.org/wiki/Square_root[square root] of a value (1 / sqrt(value).
 
 
 ===== Linear Algebra
 
-* LERP - calculate the link:http://en.wikipedia.org/wiki/Linear interpolation[linear interpolation] of two points given a time between 0 and 1.
+* LERP - calculate the link:http://en.wikipedia.org/wiki/Linear_interpolation[linear interpolation] of two points given a time between 0 and 1.
 * determinant - calculates the link:http://en.wikipedia.org/wiki/determinant[determinant] of a 4x4 matrix.
 
 
@@ -528,8 +526,8 @@ There are five major categories of functions that FastMath provides.
 
 * counterClockwise - given three points (defining a triangle), the winding is determined. 1 if counter-clockwise, -1 if clockwise and 0 if the points define a line.
 * pointInsideTriangle - calculates if a point is inside a triangle.
-* sphericalToCartesian - converts a point from link:http://en.wikipedia.org/wiki/spherical coordinates[spherical coordinates] to link:http://en.wikipedia.org/wiki/cartesian coordinates[cartesian coordinates].
-* cartesianToSpherical - converts a point from link:http://en.wikipedia.org/wiki/cartesian coordinates[cartesian coordinates] to link:http://en.wikipedia.org/wiki/spherical coordinates[spherical coordinates].
+* sphericalToCartesian - converts a point from link:https://en.wikipedia.org/wiki/Spherical_coordinate_system[spherical coordinates] to link:https://en.wikipedia.org/wiki/Cartesian[cartesian coordinates].
+* cartesianToSpherical - converts a point from link:https://en.wikipedia.org/wiki/Cartesian[cartesian coordinates] to link:https://en.wikipedia.org/wiki/Spherical_coordinate_system[spherical coordinates].
 
 
 ===== Misc.
@@ -539,7 +537,7 @@ There are five major categories of functions that FastMath provides.
 
 == Line
 
-See link:http://www.jmonkeyengine.com/doc/com/jme/math/Line.html[Line Javadoc]
+See link:http://javadoc.jmonkeyengine.org/com/jme3/math/Line.html[Line Javadoc]
 
 
 === Definition
@@ -567,20 +565,20 @@ Vector3f randomPoint = l.random();
 
 == Plane
 
-See link:http://www.jmonkeyengine.com/doc/com/jme/math/Plane.html[Plane Javadoc]
+See link:http://javadoc.jmonkeyengine.org/com/jme3/math/Plane.html[Plane Javadoc]
 
 
 === Definition
 
 A plane is defined by the equation *N* . (*X* - *X~0~*) = 0 where *N* = (a, b, c) and passes through the point *X~0~* = (x~0~, y~0~, z~0~). *X* defines another point on this plane (x, y, z).
 
-*N* . (*X* - *X~0~*) = 0 can be described as (*N* . *X*) + (*N* . -*X~0~*) = 0 
+*N* . (*X* - *X~0~*) = 0 can be described as (*N* . *X*) + (*N* . -*X~0~*) = 0
 
-or 
+or
 
 (ax + by + cz) + (-ax~0~-by~0~-cz~0~) = 0
 
-where (-ax~0~-by~0~-cz~0~) = d 
+where (-ax~0~-by~0~-cz~0~) = d
 
 Where d is the negative value of a point in the plane times the unit vector describing the orientation of the plane.
 
@@ -591,7 +589,7 @@ This gives us the general equation: (ax + by + cz + d = 0)
 
 jME defines the Plane as ax + by + cz = -d. Therefore, during creation of the plane, the normal of the plane (a,b,c) and the constant d is supplied.
 
-The most common usage of Plane is <<jme3/introduction_to_the_camera#,Camera>> frustum planes. Therefore, the primary purpose of Plane is to determine if a point is on the positive side, negative side, or intersecting a plane.
+The most common usage of Plane is <<jme3/advanced/camera#,Camera>> frustum planes. Therefore, the primary purpose of Plane is to determine if a point is on the positive side, negative side, or intersecting a plane.
 
 Plane defines the constants:
 
@@ -640,7 +638,7 @@ import com.jme.math.*;
 public class TestPlanes
 {
   public static final Logger logger = Logger.getLogger(LevelGraphBuilder.class.getName());
-  
+
   public static void main(String[] args) throws Exception
   {
     //***Outline.
@@ -650,13 +648,13 @@ public class TestPlanes
     //be perpendicular to the x axis (it's facing). It's "centre" (if
     //such a thing exists in an infinite plane) will be positioned 1
     //unit along the positive x axis.
-    
+
     //***Step 1.
     //The vector that represents the normal to the plane, in 3D space.
     //Imagine a vector coming out of the origin in this direction.
     //There is no displacement yet (see Step 2, below).
     Vector3f normal = new Vector3f(5f,0,0);
-    
+
     //***Step 2.
     //This is our displacement vector. The plane remains facing in the
     //direction we've specified using the normal above, but now we are
@@ -666,24 +664,24 @@ public class TestPlanes
     Vector3f displacement = Vector3f.UNIT_X;
     //or
     //Vector3f displacement = new Vector3f(1f, 0, 0);
-    
+
     //***Step 3.
     //Here we generate the constant needed to define any plane. This
     //is semi-arcane, don't let it worry you. All you need to
     //do is use this same formula every time.
     float constant = displacement.dot(normal);
-    
+
     //***Step 4.
     //Finally, construct the plane using the data you have assembled.
     Plane plane = new Plane(normal, constant);
-        
+
     //***Some tests.
     logger.info("Plane info: "+plane.toString()); //trace our plane's information
-    
+
     Vector3f p1  = new Vector3f(1.1f,0,0); //beyond the plane (further from origin than plane)
     Vector3f p2  = new Vector3f(0.9f,0,0); //before the plane (closer to origin than plane)
     Vector3f p3  = new Vector3f(1f,0,0); //on the plane
-    
+
     logger.info("p1 position relative to plane is "+plane.whichSide(p1)); //outputs NEGATIVE
     logger.info("p2 position relative to plane is "+plane.whichSide(p2)); //outputs POSITIVE
     logger.info("p3 position relative to plane is "+plane.whichSide(p3)); //outputs NONE
@@ -695,14 +693,14 @@ public class TestPlanes
 
 == Ray
 
-See link:http://www.jmonkeyengine.com/doc/com/jme/math/Ray.html[Ray Javadoc]
+See link:http://javadoc.jmonkeyengine.org/com/jme3/math/Ray.html[Ray Javadoc]
 
 
 === Definition
 
-Ray defines a line that starts at a point *A* and continues in a direction through *B* into infinity. 
+Ray defines a line that starts at a point *A* and continues in a direction through *B* into infinity.
 
-This Ray is used extensively in jME for <<jme3/picking#,Picking>>. A Ray is cast from a point in screen space into the scene. Intersections are found and returned. To create a ray supply the object with two points, where the first point is the origin.
+This Ray is used extensively in jME for <<jme3/beginner/hello_picking#,Picking>>. A Ray is cast from a point in screen space into the scene. Intersections are found and returned. To create a ray supply the object with two points, where the first point is the origin.
 
 
 === Example 1 - Create a Ray That Represents Where the Camera is Looking
@@ -717,7 +715,7 @@ Ray ray = new Ray(cam.getLocation(), cam.getDirection());
 
 == Rectangle
 
-See link:http://www.jmonkeyengine.com/doc/com/jme/math/Rectangle.html[Rectangle Javadoc]
+See link:http://javadoc.jmonkeyengine.org/com/jme3/math/Rectangle.html[Rectangle Javadoc]
 
 
 === Definition
@@ -727,7 +725,7 @@ Rectangle defines a finite plane within three dimensional space that is specifie
 
 === jME Usage
 
-Rectangle is a straight forward data class that simply maintains values that defines a Rectangle in 3D space. One interesting use is the `random` method that will create a random point on the Rectangle. The <<jme3/particle_system#,Particle System>> makes use of this to define an area that generates <<jme3/particles#,Particles>>.
+Rectangle is a straight forward data class that simply maintains values that defines a Rectangle in 3D space. One interesting use is the `random` method that will create a random point on the Rectangle. The <<jme3/advanced/effects_overview#,Particle System>> makes use of this to define an area that generates <<jme3/advanced/particle_emitters#,Particles>>.
 
 
 === Example 1 : Define a Rectangle and Get a Point From It
@@ -746,7 +744,7 @@ Vector3f point = r.random();
 
 == Triangle
 
-See link:http://www.jmonkeyengine.com/doc/com/jme/math/Triangle.html[Triangle Javadoc]
+See link:http://javadoc.jmonkeyengine.org/com/jme3/math/Triangle.html[Triangle Javadoc]
 
 
 === Definition
@@ -756,7 +754,7 @@ A triangle is a 3-sided polygon. Every triangle has three sides and three angles
 
 === Usage
 
-jME's Triangle class is a simple data class. It contains three <<jme3/vector#,Vector3f>> objects that represent the three points of the triangle. These can be retrieved via the `get` method. The `get` method, obtains the point based on the index provided. Similarly, the values can be set via the `set` method.
+jME's Triangle class is a simple data class. It contains three <<jme3/terminology.html#vectors#,Vector3f>> objects that represent the three points of the triangle. These can be retrieved via the `get` method. The `get` method, obtains the point based on the index provided. Similarly, the values can be set via the `set` method.
 
 
 === Example 1 - Creating a Triangle
@@ -800,5 +798,5 @@ geo.center().move(pos);
 
 === See Also
 
-*  <<jme3/rotate#,Rotate>> 
+*  <<jme3/rotate#,Rotate>>
 *  <<jme3/quaternion#,Quaternion>>

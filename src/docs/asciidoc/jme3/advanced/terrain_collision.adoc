@@ -5,6 +5,7 @@
 :keywords: terrain, collision
 :relfileprefix: ../../
 :imagesdir: ../..
+:experimental:
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
@@ -70,7 +71,8 @@ public class HelloTerrainCollision extends SimpleApplication
     /** Set up Physics */
     bulletAppState = new BulletAppState();
     stateManager.attach(bulletAppState);
-    //bulletAppState.getPhysicsSpace().enableDebug(assetManager);
+    //Uncomment for debugging. 
+    //bulletAppState.setDebugEnabled(true);
     
     flyCam.setMoveSpeed(100);
     setUpKeys();
@@ -209,7 +211,7 @@ public class HelloTerrainCollision extends SimpleApplication
 }
 ----
 
-To try this code, create a New Project → JME3 → BasicGame using the default settings. Paste the sample code over the pregenerated Main.java class. Chnage the package to “mygame if necessary. Open the Project Properties, Libraries, and add the `jme3-test-data` library to make certain you have all the files. 
+To try this code, create a `menu:New Project[JME3 > BasicGame]` using the default settings. Paste the sample code over the pregenerated Main.java class. Change the package to '`mygame`' if necessary. Open the `menu:File[Project Properties > Libraries]` and add the `jme3-test-data` library to make certain you have all the files. 
 
 Compile and run the code. You should see a terrain. You can use the WASD keys and the mouse to run up and down the hills.
 
@@ -234,6 +236,7 @@ Read <<jme3/beginner/hello_collision#,Hello Collision>> for details of the follo
 .  The `ActionListener` (`onAction()`) lets you reconfigure the input handling for the first-person player, so it takes collision detection into account.
 .  The custom `setUpKeys()` method loads your reconfigured input handlers. They now don't just walk blindly, but calculate the `walkDirection` vector that we need for collision detection.
 .  `simpleUpdate()` uses the `walkDirection` vector and makes the character walk, while taking obstacles and solid walls/floor into account. 
+
 [source,java]
 ----
 player.setWalkDirection(walkDirection);
@@ -273,6 +276,7 @@ You attach the `terrain` and the first-person `player` to the rootNode, and to t
 You see that you can combine snippets of sample code (such as HelloTerrain and HelloCollision), and create a new application from it that combines two features into soemthing new.
 
 You should spawn high up in the area and fall down to the map, giving you a few seconds to survey the area.  Then walk around and see how you like the lay of the land.
+
 '''
 
 See also:

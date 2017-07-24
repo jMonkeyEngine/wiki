@@ -113,16 +113,21 @@ Build and run the example.
 
 First you register each mapping name with its trigger(s). Remember the following:
 
-*  An input trigger can be a key press or mouse action. +For example a mouse movement, a mouse click, or pressing the letter “P.
-*  The mapping name is a string that you can choose. +The name should describe the action (e.g. “Rotate), and not the trigger. Because the trigger can change.
-*  One named mapping can have several triggers. +For example, the “Rotate action can be triggered by a click and by pressing the spacebar.
+*  An input trigger can be a key press or mouse action. +
+For example a mouse movement, a mouse click, or pressing the letter “P.
+*  The mapping name is a string that you can choose. +
+The name should describe the action (e.g. “Rotate), and not the trigger. Because the trigger can change.
+*  One named mapping can have several triggers. +
+For example, the “Rotate action can be triggered by a click and by pressing the spacebar.
 
 Have a look at the code:
 
-.  You register the mapping named “Rotate to the Spacebar key trigger. +`new KeyTrigger(KeyInput.KEY_SPACE)`). 
-.  In the same line, you also register “Rotate to an alternative mouse click trigger. +`new MouseButtonTrigger(MouseInput.BUTTON_LEFT)`
+.  You register the mapping named “Rotate to the Spacebar key trigger. +
+`new KeyTrigger(KeyInput.KEY_SPACE)`). 
+.  In the same line, you also register “Rotate to an alternative mouse click trigger. +
+`new MouseButtonTrigger(MouseInput.BUTTON_LEFT)`
 .  You map the `Pause`, `Left`, `Right` mappings to the P, J, K keys, respectively. 
-
++
 [source,java]
 ----
 
@@ -139,7 +144,7 @@ Now you need to register your trigger mappings.
 
 .  You register the pause action to the ActionListener, because it is an “on/off action.
 .  You register the movement actions to the AnalogListener, because they are gradual actions.
-
++
 [source,java]
 ----
 
@@ -260,7 +265,9 @@ Mappings registered to the *ActionListener* are digital either-or actions – �
 
 *  Example: Pause button, shooting, selecting, jumping, one-time click interactions.
 
-*Tip:* It's very common that you want an action to be only triggered once, in the moment when the key is _released_. For instance when opening a door, flipping a boolean state, or picking up an item. To achieve that, you use an `ActionListener` and test for `… &amp;&amp; !keyPressed`. For an example, look at the Pause button code:
+[TIP]
+====
+It's very common that you want an action to be only triggered once, in the moment when the key is _released_. For instance when opening a door, flipping a boolean state, or picking up an item. To achieve that, you use an `ActionListener` and test for `… &amp;&amp; !keyPressed`. For an example, look at the Pause button code:
 
 [source,java]
 ----
@@ -268,6 +275,7 @@ Mappings registered to the *ActionListener* are digital either-or actions – �
         isRunning = !isRunning;
       }
 ----
+====
 
 
 == Table of Triggers
@@ -292,24 +300,30 @@ a| KeyTrigger(KeyInput.KEY_X)
 a| KeyTrigger(KeyInput.KEY_SPACE) 
 
 a| Keyboard: Return, Enter 
-<a| KeyTrigger(KeyInput.KEY_RETURN), KeyTrigger(KeyInput.KEY_NUMPADENTER)  
+<a| KeyTrigger(KeyInput.KEY_RETURN), +
+KeyTrigger(KeyInput.KEY_NUMPADENTER)  
 
 a| Keyboard: Escape 
 a| KeyTrigger(KeyInput.KEY_ESCAPE) 
 
 a| Keyboard: Arrows 
-a| KeyTrigger(KeyInput.KEY_UP), KeyTrigger(KeyInput.KEY_DOWN) +KeyTrigger(KeyInput.KEY_LEFT), KeyTrigger(KeyInput.KEY_RIGHT) 
+a| KeyTrigger(KeyInput.KEY_UP), +
+KeyTrigger(KeyInput.KEY_DOWN) +
+KeyTrigger(KeyInput.KEY_LEFT), +
+KeyTrigger(KeyInput.KEY_RIGHT) 
 
 |===
 
-*Tip:* If you don't recall an input constant during development, you benefit from an IDE's code completion functionality: Place the caret after e.g. `KeyInput.|` and trigger code completion to select possible input identifiers.
-
+[TIP]
+====
+If you don't recall an input constant during development, you benefit from an IDE's code completion functionality: Place the caret after e.g. `KeyInput.|` and trigger code completion to select possible input identifiers.
+====
 
 == Exercises
 
 .  Add mappings for moving the player (box) up and down with the H and L keys!
 .  Switch off the flyCam and override the WASD keys.
-**  Tip: Use <<jme3/faq#how_do_i_switch_between_third-person_and_first-person_view,flyCam.setEnabled(false);>> 
+**  Tip: Use <<jme3/faq#how-do-i-switch-between-third-person-and-first-person-view,flyCam.setEnabled(false);>> 
 
 .  Modify the mappings so that you can also trigger the up an down motion with the mouse scroll wheel!
 **  Tip: Use `new MouseAxisTrigger(MouseInput.AXIS_WHEEL, true)`
@@ -327,7 +341,7 @@ inputManager.addMapping("Pause",  new KeyTrigger(usersPauseKey));
 
 [IMPORTANT]
 ====
-Link to user-proposed solutions: link:http://jmonkeyengine.org/wiki/doku.php/jm3:solutions[http://jmonkeyengine.org/wiki/doku.php/jm3:solutions]
+Link to user-proposed solutions: <<jm3/solutions#,Some proposed solutions>> +
 +++<u>Be sure to try to solve them for yourself first!</u>+++
 ====
 
@@ -335,6 +349,6 @@ Link to user-proposed solutions: link:http://jmonkeyengine.org/wiki/doku.php/jm3
 
 == Conclusion
 
-You are now able to add custom interactions to your game: You know that you first have to define the key mappings, and then the actions for each mapping. You have learned to respond to mouse events and to the keyboard. You understand the difference between “analog (gradually repeated) and “digital (on/off) inputs.
+You are now able to add custom interactions to your game: You know that you first have to define the key mappings, and then the actions for each mapping. You have learned to respond to mouse events and to the keyboard. You understand the difference between &#8220;analog (gradually repeated) and &#8220;digital (on/off) inputs.
 
 Now you can already write a little interactive game! But wouldn't it be cooler if these old boxes were a bit more fancy? Let's continue with learning about <<jme3/beginner/hello_material#,materials>>.

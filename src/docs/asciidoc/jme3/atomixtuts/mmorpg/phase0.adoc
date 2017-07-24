@@ -1,6 +1,6 @@
 = phase0
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :relfileprefix: ../../../
 :imagesdir: ../../..
@@ -10,19 +10,19 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 == Phase 0
 
-*Start:* July 1st - August 1st 
+*Start:* July 1st - August 1st
 *Tasks:*
 
 .  Search for free and open assets
-.  Setup MORPG engine Arriane 
+.  Setup MORPG engine Arriane
 ..  Port from 2D to 3D
 
-.  Try and review. 
+.  Try and review.
 
 *Features:*
 *Bugs:*
 
-Google code Issues tracker: 
+Google code Issues tracker:
 
 
 == Detail
@@ -31,9 +31,9 @@ Google code Issues tracker:
 === Arianne
 
 
-image::http://stendhalgame.org/wiki/images/3/34/Stendhal_0_65_fuzzy.png[Stendhal_0_65_fuzzy.png,with="",height="",align="center"]
+image::http://stendhalgame.org/wiki/images/3/34/Stendhal_0_65_fuzzy.png[Stendhal_0_65_fuzzy.png,width="",height="",align="center"]
 
-Another framework which is much small scale than Three rings is Arianne. 
+Another framework which is much small scale than Three rings is Arianne.
 link:http://sourceforge.net/projects/arianne/[http://sourceforge.net/projects/arianne/]
 
 In the phase Zero, I decided to use Arianne instead of Three rings. Why?
@@ -48,7 +48,7 @@ Because it's Open source, simple, have enough features, easy to deploy, test, an
 
 ==== Features
 
-*  
+*
 *      Stendhal - MORPG featuring hundreds of NPCs and quests
 *      Stendhal - Huge and beautiful world to explore
 *      Stendhal - Statistics website and Hall of Fame
@@ -94,7 +94,7 @@ The main entities you should know about are:
 *  RPClass
 *  IRPZone interface
 *  IRPRuleProcessor interface
-*  RPWorld 
+*  RPWorld
 
 
 ==== Role Playing Design
@@ -120,7 +120,7 @@ To achieve this we use several classes:
 
 *RPWorld* is the class that you need to extend inorder to implement the onInit and onFinish methods which personalize what happens when you initialise the server and what happens when you close the server.
 
-*IRPZone* is an interface that you could implement if you wanted to achive the highest personalization possible of the engine, however, I would use MarauroaRPZone instead as that uses our great *Delta2* feature. 
+*IRPZone* is an interface that you could implement if you wanted to achive the highest personalization possible of the engine, however, I would use MarauroaRPZone instead as that uses our great *Delta2* feature.
 
 
 ==== Actions
@@ -144,7 +144,7 @@ There are two types of perception:
 
 ....
   Sync perceptions: these are used to synchronize clients with the server world representation. This is the only valid way of knowing world's status.
-  Delta perception: this is used to send only the changes to the world since the last perception. 
+  Delta perception: this is used to send only the changes to the world since the last perception.
 ....
 
 Our actual Perception system is called Delta2. It is heavily attached to the Marauroa core, so I recommend you to use it :)
@@ -197,7 +197,7 @@ The delta2 algorithm is based on four containers:
 *      List of added objects
 *      List of modified added attributes of objects
 *      List of modified deleted attributes of objects
-*      List of deleted objects 
+*      List of deleted objects
 
 
 === Plan
@@ -207,7 +207,7 @@ My initial plan for the phase Zero is to create a port to 3d version of the exis
 
 ==== Assets
 
-In the first attempt, 3d enviroment and models will use open art website such as: 
+In the first attempt, 3d enviroment and models will use open art website such as:
 Blendswap link:http://blendswap.com[http://blendswap.com]
 OpengameArt link:http://opengameart.com[http://opengameart.com]
 
@@ -221,18 +221,18 @@ The reusable:
 *      Network: Good for small scale game
 *      DB: MySQL or integrated H2
 *      Almost gameplay: Enities definition, Quest, Scripting
-*      They also have a complete website for the game with tutorials, wiki 
+*      They also have a complete website for the game with tutorials, wiki
 
 The different between a 2d and 3d, Arianne an jME3 engine:
 
-*  
+*
 *      Replace the Arianne game loop with jME3 states and update loop.
 *      Delete the Render task of the game view JPanel
 *      Terrain : I have my own tiled Terrain implement in jME3 for almost top-down game.
 *      Characters: Use 3D Models of Open Art resource
 *      +++<abbr title="Graphical User Interface">GUI</abbr>+++ : Use pure swing gui (port to Nifty later)
 *      2d to 3d Gameplay: Map entities, trigger
-*      2d to 3d Picking : I use a simple translation 
+*      2d to 3d Picking : I use a simple translation
 
 
 == Concepts

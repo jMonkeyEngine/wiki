@@ -29,8 +29,13 @@ This is how you add interaction to your game:
 
 Choose one or several key/mouse events for the interaction. We use `KeyTrigger`, `MouseAxisTrigger`, `MouseButtonTrigger`, `JoyAxisTrigger` and `JoyButtonTrigger` constants from the `com.jme3.input.controls` package. 
 
-*Note:* The MouseAxis and JoyAxis triggers go along the X axis (right/left) or Y axis (up/down). These Triggers come with extra booleans for the negative half of the axis (left, down). Remember to write code that listens to the negative (true) and positive (false) axis!
+[NOTE]
+====
+The MouseAxis and JoyAxis triggers go along the X axis (right/left) or Y axis (up/down). These Triggers come with extra booleans for the negative half of the axis (left, down). Remember to write code that listens to the negative (true) and positive (false) axis!
+====
+
 [cols="2", options="header"]
+
 |===
 
 a| Trigger 
@@ -76,28 +81,35 @@ a| Keyboard: Spacebar
 a| KeyTrigger(KeyInput.KEY_SPACE) 
 
 a| Keyboard: Shift 
-a| KeyTrigger(KeyInput.KEY_RSHIFT), +KeyTrigger(KeyInput.KEY_LSHIFT) 
+a| KeyTrigger(KeyInput.KEY_RSHIFT), +
+KeyTrigger(KeyInput.KEY_LSHIFT) 
 
 a| Keyboard: F1, F2, … 
 a| KeyTrigger(KeyInput.KEY_F1) … 
 
 a| Keyboard: Return, Enter 
-<a| KeyTrigger(KeyInput.KEY_RETURN), +KeyTrigger(KeyInput.KEY_NUMPADENTER)  
+<a| KeyTrigger(KeyInput.KEY_RETURN), +
+KeyTrigger(KeyInput.KEY_NUMPADENTER)  
 
 a| Keyboard: PageUp, PageDown 
-a| KeyTrigger(KeyInput.KEY_PGUP), +KeyTrigger(KeyInput.KEY_PGDN) 
+a| KeyTrigger(KeyInput.KEY_PGUP), +
+KeyTrigger(KeyInput.KEY_PGDN) 
 
 a| Keyboard: Delete, Backspace 
-a| KeyTrigger(KeyInput.KEY_BACK), +KeyTrigger(KeyInput.KEY_DELETE) 
+a| KeyTrigger(KeyInput.KEY_BACK), +
+KeyTrigger(KeyInput.KEY_DELETE) 
 
 a| Keyboard: Escape 
 a| KeyTrigger(KeyInput.KEY_ESCAPE) 
 
 a| Keyboard: Arrows 
-a| KeyTrigger(KeyInput.KEY_DOWN), +KeyTrigger(KeyInput.KEY_UP) +KeyTrigger(KeyInput.KEY_LEFT), KeyTrigger(KeyInput.KEY_RIGHT) 
+a| KeyTrigger(KeyInput.KEY_DOWN), +
+KeyTrigger(KeyInput.KEY_UP) +
+KeyTrigger(KeyInput.KEY_LEFT), KeyTrigger(KeyInput.KEY_RIGHT) 
 
 a| Joystick Button: 
-a| JoyButtonTrigger(0, JoyInput.AXIS_POV_X), +JoyButtonTrigger(0, JoyInput.AXIS_POV_Y) ? 
+a| JoyButtonTrigger(0, JoyInput.AXIS_POV_X), +
+JoyButtonTrigger(0, JoyInput.AXIS_POV_Y) ? 
 
 a| Joystick Movement: Right 
 a| JoyAxisTrigger(0, JoyInput.AXIS_POV_X, true) 
@@ -181,7 +193,10 @@ inputManager.addMapping("Right", new KeyTrigger(KeyInput.KEY_D),
 
 The jME3 input manager supports two types of event listeners for inputs: AnalogListener and ActionListener. You can use one or both listeners in the same application. Add one or both of the following code snippets to your main SimpleApplication-based class to activate the listeners.
 
-*Note:* The two input listeners do not know, and do not care, which actual key was pressed. They only know which _named input mapping_ was triggered. 
+[NOTE]
+====
+The two input listeners do not know, and do not care, which actual key was pressed. They only know which _named input mapping_ was triggered. 
+====
 
 
 === ActionListener
@@ -195,8 +210,6 @@ The jME3 input manager supports two types of event listeners for inputs: AnalogL
 **  The mapping name of the triggered action.
 **  A boolean whether the trigger is still pressed or has just been released.
 **  A float of the current time-per-frame as timing factor
-
-*  
 
 [source,java]
 ----
