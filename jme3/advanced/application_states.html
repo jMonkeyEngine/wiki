@@ -105,8 +105,59 @@ stateDetached(asm)</p></div></div></td><td class="tableblock halign-left valign-
 <div class="paragraph"><p>Notable BaseAppState changes are as follows:</p></div>
 <div class="ulist"><ul><li><p>You no longer need to call super.initialize(stateManager, app) because it is now called by BaseAppState upon initialization for you.</p></li><li><p>You no longer have to cast SimpleApplication to have access to AssetManager, AppStateManager, and you can even get a State directly. The getters getApplication(), getAssetManager(), getState(type) and thier methods are available to you immediately. However, you still have to cast SimpleApplication to get rootNode.</p></li><li><p>You no longer call super during cleanup, its done for you now.</p></li><li><p>It is now safe to do all initialization and cleanup in the onEnable()/onDisable() methods. Choosing to use initialize() and cleanup() for this is a matter of performance specifics for the implementor.</p></li><li><p>Cleanup and setEnabled now have logging built in.</p></li></ul></div>
 <div class="paragraph"><p>You use BaseAppState no differently than AbstractAppState, other than mentioned above, and which one you use is entirely up to you. However, BaseAppState makes your life easier and is the recommended one to use now.</p></div>
-<div class="paragraph"><p>If you use netbeans or the jme SDK you can add the following template to your IDE.</p></div>
-<div class="paragraph"><p>See link:http://javadoc.jmonkeyengine.org/com/jme3/app/state/BaseAppState.htmlBaseAppState for more information.</p></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2017-08-13 19:29:06 UTC</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
+<div class="paragraph"><p>If you use the jme SDK you can add the following template to make adding BaseAppState to your project easier.</p></div>
+<div class="ulist"><ul><li><p>From the SDK select <span class="menuseq"><span class="menu">Tools</span>&#160;&#9656; <span class="submenu">Templates</span>&#160;&#9656; <span class="submenu">JME Classes</span>&#160;&#9656; <span class="menuitem">New AppState</span></span>.</p></li><li><p>Click the <b class="button">Duplicate</b> button.</p></li><li><p>Rename this newly created copy to &#8220;New BaseAppState&#8221;.</p></li><li><p>Select <b class="button">Open In Editor</b>.</p></li><li><p>Select all text in the open file and delete it.</p></li><li><p>Copy and paste the code below into the file.</p></li></ul></div>
+<div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">&lt;<span class="error">#</span>assign licenseFirst = <span class="string"><span class="delimiter">&quot;</span><span class="content">/*</span><span class="delimiter">&quot;</span></span>&gt;
+&lt;<span class="error">#</span>assign licensePrefix = <span class="string"><span class="delimiter">&quot;</span><span class="content"> * </span><span class="delimiter">&quot;</span></span>&gt;
+&lt;<span class="error">#</span>assign licenseLast = <span class="string"><span class="delimiter">&quot;</span><span class="content"> */</span><span class="delimiter">&quot;</span></span>&gt;
+&lt;<span class="error">#</span>include <span class="string"><span class="delimiter">&quot;</span><span class="content">../Licenses/license-${project.license}.txt</span><span class="delimiter">&quot;</span></span>&gt;
+
+&lt;<span class="error">#</span><span class="keyword">if</span> <span class="keyword">package</span>?? &amp;&amp; <span class="namespace">package</span> != <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>&gt;<span class="namespace">package</span> <span class="error">$</span>{<span class="namespace">package</span>};
+&lt;/<span class="error">#</span><span class="keyword">if</span>&gt;<span class="keyword">import</span> <span class="include">com.jme3.app.Application</span>;<span class="keyword">import</span> <span class="include">com.jme3.app.state.BaseAppState</span>;
+
+<span class="comment">/** 
+ * 
+ * @author ${user} 
+ */</span>
+<span class="directive">public</span> <span class="type">class</span> <span class="error">$</span>{name} <span class="directive">extends</span> BaseAppState {<span class="error"> </span><span class="error"> </span><span class="error"> </span> <span class="error"> </span><span class="error"> </span><span class="error"> </span>
+
+    <span class="annotation">@Override</span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+    <span class="directive">protected</span> <span class="type">void</span> initialize(Application app) {<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+        <span class="comment">//It is technically safe to do all initialization and cleanup in the        </span>
+        <span class="comment">//onEnable()/onDisable() methods. Choosing to use initialize() and        </span>
+        <span class="comment">//cleanup() for this is a matter of performance specifics for the        </span>
+        <span class="comment">//implementor.       </span>
+        <span class="comment">//TODO: initialize your AppState, e.g. attach spatials to rootNode   </span>
+    }
+<span class="error"> </span><span class="error"> </span><span class="error"> </span>
+    <span class="annotation">@Override</span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+    <span class="directive">protected</span> <span class="type">void</span> cleanup(Application app) {<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+        <span class="comment">//TODO: clean up what you initialized in the initialize method,       </span>
+        <span class="comment">//e.g. remove all spatials from rootNode   </span>
+    }
+<span class="error"> </span><span class="error"> </span><span class="error"> </span>
+    <span class="comment">//onEnable()/onDisable() can be used for managing things that should    </span>
+    <span class="comment">//only exist while the state is enabled. Prime examples would be scene    </span>
+    <span class="comment">//graph attachment or input listener attachment.   </span>
+    <span class="annotation">@Override</span><span class="error"> </span><span class="error"> </span><span class="error"> </span> <span class="directive">protected</span> <span class="type">void</span> onEnable() {<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+        <span class="comment">//Called when the state is fully enabled, ie: is attached and        </span>
+        <span class="comment">//isEnabled() is true or when the setEnabled() status changes after the        </span>
+        <span class="comment">//state is attached.   </span>
+    }
+<span class="error"> </span><span class="error"> </span><span class="error"> </span>
+    <span class="annotation">@Override</span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+    <span class="directive">protected</span> <span class="type">void</span> onDisable() {<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+        <span class="comment">//Called when the state was previously enabled but is now disabled        </span>
+        <span class="comment">//either because setEnabled(false) was called or the state is being        </span>
+        <span class="comment">//cleaned up.   </span>
+    }<span class="error"> </span><span class="error"> </span><span class="error"> </span> <span class="error"> </span><span class="error"> </span><span class="error"> </span>
+
+    <span class="annotation">@Override</span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+    <span class="directive">public</span> <span class="type">void</span> update(<span class="type">float</span> tpf) {<span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span><span class="error"> </span>
+        <span class="comment">//TODO: implement behavior during runtime   </span>
+    }<span class="error"> </span><span class="error"> </span><span class="error"> </span>
+}</code></pre></div></div>
+<div class="paragraph"><p>See link:http://javadoc.jmonkeyengine.org/com/jme3/app/state/BaseAppState.htmlBaseAppState for more information.</p></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2017-08-13 19:56:24 UTC</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
   apiKey: 'a736b6d93de805e26ec2f49b55013fbd',
   indexName: 'jmonkeyengine',
   inputSelector: '#doc-search',
