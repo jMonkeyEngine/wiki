@@ -221,6 +221,53 @@ A typical JME3 game has the following initialization process:
 
 
 
+=== The Future of SimpleApplication
+
+
+There are plans to change the SimpleApplication in the future. Sometime back it was decided that we should really refactor the Application class. SimpleApplication especially is a mess of 'magic' protected fields that on the one hand makes it really easy to slam some simple one-class application together, but on the other hand does new users no favors because they have no idea where 'cam' and 'assetManager' come from. Unfortunately, lots of code refers to Application and it's tough to change... especially the app states.
+
+So, we hatched a plan to convert the Application class to an interface. This would give us some freedom to iterate on a new set of application base classes. You can read about the changes link:https://hub.jmonkeyengine.org/t/jmonkeyengine-3-1-alpha-4-released/35478[here]. As said before we are envisioning a better design, that is not enforced today, but that is already usable. 
+
+If you look at SimpleApplication default constructor you will understand how it works.
+
+[source,java]
+----
+public SimpleApplication() {    
+    this(new StatsAppState(), new FlyCamAppState(), new AudioListenerState(), new DebugKeysAppState());}
+----
+
+Basically the application is injected upon construction with the default AppStates. Lets look at the second constructor.
+
+[source,java]
+----
+public SimpleApplication( AppState... initialStates ) {    
+    super(initialStates);
+}
+----
+
+It allows you to specify what AppState you want for your application. So SimpleApplication is handy for test projects (I very often use it as is) but I recommend for a full blown game to use it like this:
+
+[source,java]
+----
+public class MyGame extends SimpleApplication {
+    
+    public MyGame(){
+         super(new MyCustomSate(), new AnotherState(), ....);
+    }
+
+    public static void main(String[] args) {
+        MyGame app = new MyGame();
+        app.start();
+    }
+
+}
+----
+
+Then have all logic implemented in <<jme3/advanced/application_states#,AppStates>> and your SimpleApplication will never change much, except when you want to add a bootstrap AppState (or maybe you can have an AppState that manages AppStates...), SimpleApplication is just the list of states you are using.
+
+In future version, all the code in SimpleApplication will be refactored in AppStates (InputHandlingSate, RenderAppState, whatever) and you will decide what you want to use. But for legacy sake we kept the code as is for now.
+
+
 == Conclusion
 
 You have learned that a SimpleApplication is a good starting point because it provides you with:
@@ -245,4 +292,5 @@ See also:
 
 *  <<documentation#,Install the jMonkeyEngine>>
 *  <<jme3/simpleapplication_from_the_commandline#,SimpleApplication From the Commandline>>
-*  <<sdk/project_creation#,Create a JME3 project>>.
+*  <<sdk/project_creation#,Create a JME3 project>>
+*  <<jme3/advanced/application_states#,AppStates>>
