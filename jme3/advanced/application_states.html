@@ -102,10 +102,30 @@ stateDetached(asm)</p></div></div></td><td class="tableblock halign-left valign-
   }
 }</code></pre></div></div></div>
 <div class="sect2"><h3 id="the-future-of-appstate">The Future of AppState</h3><div class="paragraph"><p>There are plans to change the SimpleApplication in the future. Sometime back it was decided that we should really refactor the Application class. SimpleApplication especially is a mess of 'magic' protected fields that on the one hand makes it really easy to slam some simple one-class application together, but on the other hand does new users no favors because they have no idea where 'cam' and 'assetManager' come from. Unfortunately, lots of code refers to Application and it&#8217;s tough to change&#8230;&#8203; especially the app states.</p></div>
-<div class="paragraph"><p>So, we hatched a plan to convert the Application class to an interface. This would give us some freedom to iterate on a new set of application base classes. You can read about the changes <a href="https://hub.jmonkeyengine.org/t/jmonkeyengine-3-1-alpha-4-released/35478">here</a>. As said before we are envisioning a better design, that is not enforced today, but that is already usable. If you look at SimpleApplication default constructor you will understand how it works.</p></div>
+<div class="paragraph"><p>So, we hatched a plan to convert the Application class to an interface. This would give us some freedom to iterate on a new set of application base classes. You can read about the changes <a href="https://hub.jmonkeyengine.org/t/jmonkeyengine-3-1-alpha-4-released/35478">here</a>. As said before we are envisioning a better design, that is not enforced today, but that is already usable.</p></div>
+<div class="paragraph"><p>If you look at SimpleApplication default constructor you will understand how it works.</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> SimpleApplication() {
     <span class="local-variable">this</span>(<span class="keyword">new</span> StatsAppState(), <span class="keyword">new</span> FlyCamAppState(), <span class="keyword">new</span> AudioListenerState(), <span class="keyword">new</span> DebugKeysAppState());
-}</code></pre></div></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2017-08-13 17:41:59 UTC</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
+}</code></pre></div></div>
+<div class="paragraph"><p>Basically the application is injected upon construction with the default AppStates. Lets look at the second constructor.</p></div>
+<div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> SimpleApplication( AppState... initialStates ) {
+    <span class="local-variable">super</span>(initialStates);
+}</code></pre></div></div>
+<div class="paragraph"><p>It allows you to specify what AppState you want for your application. So SimpleApplication is handy for test projects (I very often use it as is) but I recommend for a full blown game to use it like this:</p></div>
+<div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">MyGame</span> <span class="directive">extends</span> SimpleApplication {
+
+    <span class="directive">public</span> MyGame(){
+         <span class="local-variable">super</span>(<span class="keyword">new</span> MyCustomSate(), <span class="keyword">new</span> AnotherState(), ....);
+    }
+
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> main(<span class="predefined-type">String</span><span class="type">[]</span> args) {
+        MyGame app = <span class="keyword">new</span> MyGame();
+        app.start();
+    }
+
+}</code></pre></div></div>
+<div class="paragraph"><p>Then have all logic implemented in AppStates and your SimpleApplication will never change much, except when you want to add a bootstrap AppState (or maybe you can have an AppState that manages AppStates&#8230;&#8203;), SimpleApplication is just the list of states you are using.</p></div>
+<div class="paragraph"><p>In future version, all the code in SimpleApplication will be refactored in AppStates (InputHandlingSate, RenderAppState, whatever) and you will decide what you want to use. But for legacy sake we kept the code as is for now.</p></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2017-08-13 17:52:28 UTC</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
   apiKey: 'a736b6d93de805e26ec2f49b55013fbd',
   indexName: 'jmonkeyengine',
   inputSelector: '#doc-search',
