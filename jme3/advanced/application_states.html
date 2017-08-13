@@ -113,7 +113,8 @@ stateDetached(asm)</p></div></div></td><td class="tableblock halign-left valign-
 }</code></pre></div></div>
 <div class="paragraph"><p>Notable BaseAppState changes are as follows:</p></div>
 <div class="ulist"><ul><li><p>You no longer need to call super.initialize(stateManager, app) because it is now called by BaseAppState upon initialization for you.</p></li><li><p>You no longer have to cast SimpleApplication to have access to AssetManager, AppStateManager, and you can even get a State directly. The getters getApplication(), getAssetManager(), getState(type) and their methods are available to you immediately. However, you still have to cast SimpleApplication to get rootNode.</p></li><li><p>You no longer call super during cleanup, its done for you now.</p></li><li><p>It is now safe to do all initialization and cleanup in the onEnable()/onDisable() methods. Choosing to use initialize() and cleanup() for this is a matter of performance specifics for the implementor.</p></li><li><p>Cleanup and setEnabled now have logging built in.</p></li></ul></div>
-<div class="paragraph"><p>You use BaseAppState as you would AbstractAppState, other than mentioned above, and which one you use is entirely up to you. However, BaseAppState makes your life easier and is the recommended one to use now.</p></div></div></div>
+<div class="paragraph"><p>You use BaseAppState as you would AbstractAppState, other than mentioned above, and which one you use is entirely up to you. However, BaseAppState makes your life easier and is the recommended one to use now.</p></div>
+<div class="paragraph"><p>See <a href="http://javadoc.jmonkeyengine.org/com/jme3/app/state/BaseAppState.html">BaseAppState</a> for more information.</p></div></div></div>
 <div class="sect1"><h2 id="pausing-and-unpausing">Pausing and Unpausing</h2><div class="sectionbody"><div class="paragraph"><p>You define what an AppState does when Paused or Unpaused, in the <code>setEnabled()</code> and <code>update()</code> methods. Call <code>myState.setEnabled(false)</code> on all states that you want to pause. Call <code>myState.setEnabled(true)</code> on all states that you want to unpause.</p></div></div></div>
 <div class="sect1"><h2 id="appstatemanager">AppStateManager</h2><div class="sectionbody"><div class="paragraph"><p>The com.jme3.app.state.AppStateManager holds the list of AppStates for an application. AppStateManager ensures that active AppStates can modify the scene graph, and that the update() loops of active AppStates is executed. There is one AppStateManager per application. You typically attach several AppStates to one AppStateManager, but the same state can only be attached once.</p></div>
 <table class="tableblock frame-all grid-all spread"><colgroup><col style="width: 50%;"><col style="width: 50%;"></colgroup><thead><tr><th class="tableblock halign-left valign-top">AppStateManager Method</th><th class="tableblock halign-left valign-top">Usage</th></tr></thead><tbody><tr><td class="tableblock halign-left valign-top"><div><div class="paragraph"><p>hasState(myState)</p></div></div></td><td class="tableblock halign-left valign-top"><div><div class="paragraph"><p>Is AppState object 'myState' attached?</p></div></div></td></tr><tr><td class="tableblock halign-left valign-top"><div><div class="paragraph"><p>getState(MyAppState.class)</p></div></div></td><td class="tableblock halign-left valign-top"><div><div class="paragraph"><p>Returns the first attached state that is an instance of a subclass of <code>MyAppState.class</code>.</p></div></div></td></tr></tbody></table>
@@ -143,65 +144,7 @@ stateDetached(asm)</p></div></div></td><td class="tableblock halign-left valign-
     <span class="local-variable">this</span>.viewPort     = <span class="local-variable">this</span>.app.getViewPort();
     <span class="local-variable">this</span>.physics      = <span class="local-variable">this</span>.stateManager.getState(BulletAppState.class);
   }
-}</code></pre></div></div>
-<div class="paragraph"><p>If you use the jme SDK you can add the following template to make adding BaseAppState to your project easier.</p></div>
-<div class="ulist"><ul><li><p>From the SDK select <span class="menuseq"><span class="menu">Tools</span>&#160;&#9656; <span class="submenu">Templates</span>&#160;&#9656; <span class="submenu">JME Classes</span>&#160;&#9656; <span class="menuitem">New AppState</span></span>.</p></li><li><p>Click the <b class="button">Duplicate</b> button.</p></li><li><p>Rename this newly created copy to &#8220;New BaseAppState&#8221;.</p></li><li><p>Select <b class="button">Open in Editor</b>.</p></li><li><p>Select all text in the open file and delete it.</p></li><li><p>Copy and paste the code below into the file and save when finished.</p></li></ul></div>
-<div class="listingblock"><div class="content"><pre>&lt;#assign licenseFirst = "/*"&gt;
-&lt;#assign licensePrefix = " * "&gt;
-&lt;#assign licenseLast = " */"&gt;
-&lt;#include "../Licenses/license-${project.license}.txt"&gt;
-
-&lt;#if package?? &amp;&amp; package != ""&gt;
-package ${package};
-
-&lt;/#if&gt;
-import com.jme3.app.Application;
-import com.jme3.app.state.BaseAppState;
-
-/** 
- * 
- * @author ${user} 
- */
-public class ${name} extends BaseAppState {       
-
-    @Override   
-    protected void initialize(Application app) {       
-        //It is technically safe to do all initialization and cleanup in the        
-        //onEnable()/onDisable() methods. Choosing to use initialize() and        
-        //cleanup() for this is a matter of performance specifics for the        
-        //implementor.       
-        //TODO: initialize your AppState, e.g. attach spatials to rootNode   
-    }
-   
-    @Override   
-    protected void cleanup(Application app) {       
-        //TODO: clean up what you initialized in the initialize method,       
-        //e.g. remove all spatials from rootNode   
-    }
-   
-    //onEnable()/onDisable() can be used for managing things that should    
-    //only exist while the state is enabled. Prime examples would be scene    
-    //graph attachment or input listener attachment.   
-    @Override   
-    protected void onEnable() {       
-        //Called when the state is fully enabled, ie: is attached and        
-        //isEnabled() is true or when the setEnabled() status changes after the        
-        //state is attached.   
-    }
-   
-    @Override   
-    protected void onDisable() {       
-        //Called when the state was previously enabled but is now disabled        
-        //either because setEnabled(false) was called or the state is being        
-        //cleaned up.   
-    }       
-
-    @Override   
-    public void update(float tpf) {       
-        //TODO: implement behavior during runtime   
-    }   
-}</pre></div></div>
-<div class="paragraph"><p>See <a href="http://javadoc.jmonkeyengine.org/com/jme3/app/state/BaseAppState.html">BaseAppState</a> for more information.</p></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2017-08-13 21:05:16 UTC</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
+}</code></pre></div></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2017-08-13 21:10:56 UTC</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
   apiKey: 'a736b6d93de805e26ec2f49b55013fbd',
   indexName: 'jmonkeyengine',
   inputSelector: '#doc-search',
