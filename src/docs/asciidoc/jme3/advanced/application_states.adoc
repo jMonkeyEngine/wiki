@@ -238,18 +238,16 @@ public class MyBaseAppState extends BaseAppState {       
 
 Notable BaseAppState changes are as follows:
 
+
 *  You no longer need to call super.initialize(stateManager, app) because it is now called by BaseAppState upon initialization for you.
 *  You no longer have to cast SimpleApplication to have access to AssetManager, AppStateManager, and you can even get a State directly. The getters getApplication(), getAssetManager(), getState(type) and their methods are available to you immediately. However, you still have to cast SimpleApplication to get rootNode.
 *  You no longer call super during cleanup, its done for you now.
-*  It is now safe to do all initialization and cleanup in the onEnable()/onDisable() methods. Choosing to use initialize() and cleanup() for this is a matter of performance specifics for the implementor.
-
-
+*  It is now safe to do all initialization and cleanup in the onEnable()/onDisable() methods. Choosing to use initialize() and cleanup() for this is a matter of performance specifics for the implementor. 
 *  Cleanup and setEnabled now have logging built in.
-
 
 You use BaseAppState as you would AbstractAppState, other than mentioned above, and which one you use is entirely up to you. However, BaseAppState makes your life easier and is the recommended one to use now.
 
-
+See link:http://javadoc.jmonkeyengine.org/com/jme3/app/state/BaseAppState.html[BaseAppState] for more information.
 
 == Pausing and Unpausing
 
@@ -328,71 +326,3 @@ public class MyAppState extends AbstractAppState {
 
 ----
 
-If you use the jme SDK you can add the following template to make adding BaseAppState to your project easier. 
-
-*  From the SDK select menu:Tools[Templates>JME Classes>New AppState].
-*  Click the btn:[Duplicate] button.
-*  Rename this newly created copy to "`New BaseAppState`".
-*  Select btn:[Open in Editor].
-*  Select all text in the open file and delete it.
-*  Copy and paste the code below into the file and save when finished.
-
-----
-<#assign licenseFirst = "/*">
-<#assign licensePrefix = " * ">
-<#assign licenseLast = " */">
-<#include "../Licenses/license-${project.license}.txt">
-
-<#if package?? && package != "">
-package ${package};
-
-</#if>
-import com.jme3.app.Application;
-import com.jme3.app.state.BaseAppState;
-
-/** 
- * 
- * @author ${user} 
- */
-public class ${name} extends BaseAppState {        
-    
-    @Override    
-    protected void initialize(Application app) {        
-        //It is technically safe to do all initialization and cleanup in the         
-        //onEnable()/onDisable() methods. Choosing to use initialize() and         
-        //cleanup() for this is a matter of performance specifics for the         
-        //implementor.        
-        //TODO: initialize your AppState, e.g. attach spatials to rootNode    
-    }
-    
-    @Override    
-    protected void cleanup(Application app) {        
-        //TODO: clean up what you initialized in the initialize method,        
-        //e.g. remove all spatials from rootNode    
-    }
-    
-    //onEnable()/onDisable() can be used for managing things that should     
-    //only exist while the state is enabled. Prime examples would be scene     
-    //graph attachment or input listener attachment.    
-    @Override    
-    protected void onEnable() {        
-        //Called when the state is fully enabled, ie: is attached and         
-        //isEnabled() is true or when the setEnabled() status changes after the         
-        //state is attached.    
-    }
-    
-    @Override    
-    protected void onDisable() {        
-        //Called when the state was previously enabled but is now disabled         
-        //either because setEnabled(false) was called or the state is being         
-        //cleaned up.    
-    }        
-    
-    @Override    
-    public void update(float tpf) {        
-        //TODO: implement behavior during runtime    
-    }    
-}
-----
-
-See link:http://javadoc.jmonkeyengine.org/com/jme3/app/state/BaseAppState.html[BaseAppState] for more information.
