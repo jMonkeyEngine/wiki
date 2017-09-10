@@ -1,0 +1,326 @@
+= jMonkeyEngine 3 教學(12) - 哈囉 特效(Effects)
+:author: 
+:rev數字: 
+:revdate: 2016/03/17 20:48
+:keywords: 初學者,說明文件,入門,簡單應用程式,透明度,特效
+:relfileprefix: ../../
+:imagesdir: ../..
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
+
+Previous: <<jme3/beginner/hello_audio#,Hello Audio>>,
+Next: <<jme3/beginner/hello_physics#,Hello Physics>>
+
+[.right]
+image::jme3/beginner/beginner-effect-fire.png[beginner-effect-fire.png,150,165]
+
+
+當你在遊戲中看到以下的東西,那很有可能是使用粒子系統
+
+*  火,火焰,火星;
+*  雨,雪,瀑布,葉子;
+*  爆炸,碎片,衝擊波;
+*  塵雲,霧,雲,煙;
+*  蟲,蟲群,流星雨;
+*  魔咒.
+
+這些場景元素不能使用於表層. 由於非常簡單的理由:
+
+*  爆炸與塵雲的差別在於粒子特效的速度. 
+*  火焰與瀑布的差別在於粒子特效的方向以及顏色 
+
+粒子特效可以是動畫(e.g. 火星, 水滴) 或是靜態 (草, 頭髮). 無粒子特效，包含 開花/長大, 以及移動濾鏡/殘影. 在這個教學理你可以學到如何製作動畫粒子 (com.jme3.effect). 
+
+
+[TIP]
+====
+To use the example assets in a new jMonkeyEngine SDK project, right-click your project, select “Properties, go to “Libraries, press “Add Library and add the “jme3-test-data library.
+====
+
+
+
+== 範例程式
+
+[source,java]
+----
+package jme3test.helloworld;
+
+import com.jme3.app.SimpleApplication;
+import com.jme3.effect.ParticleEmitter;
+import com.jme3.effect.ParticleMesh;
+import com.jme3.material.Material;
+import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector3f;
+
+/** Sample 11 - how to create fire, water, and explosion effects. */
+public class HelloEffects extends SimpleApplication {
+
+  public static void main(String[] args) {
+    HelloEffects app = new HelloEffects();
+    app.start();
+  }
+
+  @Override
+  public void simpleInitApp() {
+
+    ParticleEmitter fire = 
+            new ParticleEmitter("Emitter", ParticleMesh.Type.Triangle, 30);
+    Material mat_red = new Material(assetManager, 
+            "Common/MatDefs/Misc/Particle.j3md");
+    mat_red.setTexture("Texture", assetManager.loadTexture(
+            "Effects/Explosion/flame.png"));
+    fire.setMaterial(mat_red);
+    fire.setImagesX(2); 
+    fire.setImagesY(2); // 2x2 texture animation
+    fire.setEndColor(  new ColorRGBA(1f, 0f, 0f, 1f));   // red
+    fire.setStartColor(new ColorRGBA(1f, 1f, 0f, 0.5f)); // yellow
+    fire.getParticleInfluencer().setInitialVelocity(new Vector3f(0, 2, 0));
+    fire.setStartSize(1.5f);
+    fire.setEndSize(0.1f);
+    fire.setGravity(0, 0, 0);
+    fire.setLowLife(1f);
+    fire.setHighLife(3f);
+    fire.getParticleInfluencer().setVelocityVariation(0.3f);
+    rootNode.attachChild(fire);
+
+    ParticleEmitter debris = 
+            new ParticleEmitter("Debris", ParticleMesh.Type.Triangle, 10);
+    Material debris_mat = new Material(assetManager, 
+            "Common/MatDefs/Misc/Particle.j3md");
+    debris_mat.setTexture("Texture", assetManager.loadTexture(
+            "Effects/Explosion/Debris.png"));
+    debris.setMaterial(debris_mat);
+    debris.setImagesX(3); 
+    debris.setImagesY(3); // 3x3 texture animation
+    debris.setRotateSpeed(4);
+    debris.setSelectRandomImage(true);
+    debris.getParticleInfluencer().setInitialVelocity(new Vector3f(0, 4, 0));
+    debris.setStartColor(ColorRGBA.White);
+    debris.setGravity(0, 6, 0);
+    debris.getParticleInfluencer().setVelocityVariation(.60f);
+    rootNode.attachChild(debris);
+    debris.emitAllParticles();
+  }
+}
+----
+
+You should see an explosion that sends debris flying, and a fire.
+link:https://github.com/jMonkeyEngine/jmonkeyengine/tree/master/jme3-examples/src/main/java/jme3test/effect[More example code is here.]
+
+
+=== 材質動畫以及變化
+
+[.right]
+image::jme3/beginner/Debris.png[Debris.png,96,96]
+
+
+Start by choosing a material texture for your effect. If you provide the emitter with a set of textures (see image), it can use them either for variation (random order), or as animation steps (fixed order). 
+
+Setting emitter textures works just as you have already learned in previous chapters. This time you base the material on the `Particle.j3md` material definition. Let's have a closer look at the material for the Debris effect. 
+
+[source,java]
+----
+
+    ParticleEmitter debris = 
+            new ParticleEmitter("Debris", ParticleMesh.Type.Triangle, 10);
+    Material debris_mat = new Material(assetManager, 
+            "Common/MatDefs/Misc/Particle.j3md");
+    debris_mat.setTexture("Texture", assetManager.loadTexture(
+            "Effects/Explosion/Debris.png"));
+    debris.setMaterial(debris_mat);
+    debris.setImagesX(3); 
+    debris.setImagesY(3); // 3x3 texture animation
+    debris.setSelectRandomImage(true);
+        ...
+
+----
+
+.  創造一個新材料並且載入材質
+.  Tell the Emitter into how many animation steps (x*y) the texture is divided. +
+The debris texture has 3x3 frames.
+.  Optionally, tell the Emitter whether the animation steps are to be at random, or in order. +
+For the debris, the frames play at random.
+
+As you see in the debris example, texture animations improve effects because each “flame or “piece of debris now looks different. Also think of electric or magic effects, where you can create very interesting animations by using an ordered morphing series of lightning bolts; or flying leaves or snow flakes, for instance.
+
+The fire material is created the same way, just using “Effects/Explosion/flame.png texture, which has with 2x2 ordered animation steps.
+
+
+=== 預設粒子
+
+The following particle textures included in `test-data.jar`. You can copy and use them in your own effects.
+[cols="3", options="header"]
+|===
+
+<a| 材質路徑                     
+a| 尺寸 
+a| 預覽 
+
+<a| Effects/Explosion/Debris.png     
+<a| 3*3  
+a| image:jme3/beginner/Debris.png[Debris.png,32,32] 
+
+<a| Effects/Explosion/flame.png      
+<a| 2*2  
+a| image:jme3/beginner/flame.png[flame.png,32,32] 
+
+<a| Effects/Explosion/shockwave.png  
+<a| 1*1  
+a| image:jme3/beginner/shockwave.png[shockwave.png,32,32] 
+
+a| Effects/Explosion/smoketrail.png 
+<a| 1*3  
+a| image:jme3/beginner/smoketrail.png[smoketrail.png,32,32] 
+
+<a| Effects/Smoke/Smoke.png          
+a| 1*15 
+a| image:jme3/beginner/Smoke.png[Smoke.png,96,32] 
+
+|===
+
+Copy them into your `assets/Effects` directory to use them.
+
+
+== 創造自訂材質
+
+For your game, you will likely create custom particle textures. Look at the fire example again.
+
+[source,java]
+----
+
+    ParticleEmitter fire = 
+            new ParticleEmitter("Emitter", ParticleMesh.Type.Triangle, 30);
+    Material mat_red = new Material(assetManager, 
+            "Common/MatDefs/Misc/Particle.j3md");
+    mat_red.setTexture("Texture", assetManager.loadTexture(
+            "Effects/Explosion/flame.png"));
+    fire.setMaterial(mat_red);
+    fire.setImagesX(2); 
+    fire.setImagesY(2); // 2x2 texture animation
+    fire.setEndColor(  new ColorRGBA(1f, 0f, 0f, 1f));   // red
+    fire.setStartColor(new ColorRGBA(1f, 1f, 0f, 0.5f)); // yellow
+    
+----
+
+[.right]
+image::jme3/beginner/flame.png[flame.png,96,96]
+
+
+比較材質與特效結果.
+
+*  圖片裡的黑色部位變成透明. 
+*  White/灰 parts of the image are translucent and get 顏色ized.
+*  You set the color using `setStartColor()` and `setEndColor()`. +
+For fire, is's a gradient from yellow to red. 
+*  在預設裡動畫是依序以及循環的播放.
+
+Create a grayscale texture in a graphic editor, and save it to your `assets/Effects` directory. If you split up one image file into x*y animation steps, make sure each square is of equal 大小–just as you see in the examples here. 
+
+
+=== 發射器參數
+
+A particle system is always centered around an emitter. 
+
+Use the `setShape()` method to change the EmitterShape:
+
+*  EmitterPointShape(Vector3f.ZERO) –  粒子發射器在一個點(預設)
+*  EmitterSphereShape(Vector3f.ZERO,2f) – 粒子發射器在一個球體大小的空間
+*  EmitterBoxShape(new Vector3f(-1f,-1f,-1f),new Vector3f(1f,1f,1f)) – 粒子發射器在一個箱子大小的空間
+
+範例: 
+
+[source,java]
+----
+emitter.setShape(new EmitterPointShape(Vector3f.ZERO));
+----
+
+You create different effects by changing the emitter parameters: 
+[cols="10,50,15,25", options="header"]
+|===
+
+<a| 變數           
+a| 方法 
+a| 預設 
+a| 描述 
+
+<a| number              
+a| `setNumParticles()` 
+a| N/A 
+a| The maximum number of particles visible at the same time. Value is specified by user in constructor. This influences the density and length of the “trail. 
+
+<a| 速度            
+<a| `getParticleInfluencer().setInitialVelocity()`  
+a| Vector3f.ZERO 
+a| 指定一個多快粒子移動以及在哪個方向開始的向量 
+
+<a| 方向           
+a| `getParticleInfluencer().setVelocityVariation()` +
+`setFacingVelocity()` +
+`setRandomAngle()` +
+`setFaceNormal()` +
+`setRotateSpeed()` 
+a| 0.2f +
+false +
+false +
+Vector3f.NAN +
+0.0f 
+a| Optional accessors that control in which direction particles face while flying. 
+
+<a| 期限            
+a| `setLowLife()` +
+`setHighLife()` 
+<a| 3f +
+7f  
+a| 最小以及最大粒子淡出周期 
+
+<a| 釋放率       
+a| `setParticlesPerSec()` 
+a| 20 
+a| 每秒發射多少個粒子. 
+
+<a| color               
+a| `setStartColor()` +
+`setEndColor()` 
+a| gray 
+a| Set to the same colors, or to two different colors for a gradient effect. 
+
+<a| size                
+a| `setStartSize()` +
+`setEndSize()` 
+a| 0.2f +
+2f 
+a| Set to two different values for shrink/grow effect, or to same size for constant effect. 
+
+<a| 地心引力             
+a| `setGravity()` 
+a| 0,1,0 
+a| Whether particles fall down (positive) or fly up (negative). Set to 0f for a zero-g effect where particles keep flying. 
+
+|===
+
+You can find details about <<jme3/advanced/particle_emitters#configure_parameters,effect parameters>> here.
+Add and modify one parameter at a time, and try different values until you get the effect you want. 
+
+
+[TIP]
+====
+Use the SceneComposer in the jMonkeyEngine SDK to create effects more easily. Create an empty scene and add an emitter object to it. Change the emitter properties and watch the outcome live. You can save created effects as .j3o file and load them like scenes or models.
+====
+
+
+
+== 練習
+
+Can you “invert the fire effect into a small waterfall? Here some tips:
+
+*  改變紅色與黃色到青色與藍色
+*  用一個負數反轉速度向量(方向)
+*  交換開始與結束大小
+*  將他設定成 0,1,0 以啟動地心引力
+
+
+== 結論
+
+你已經學了許多不同特效可以用一個一般發射器物件改變參數以及材質來創造 
+
+Now you move on to another exciting chapter – the simulation of <<jme3/beginner/hello_physics#,physical objects>>. Let's shoot some cannon balls at a brick wall!

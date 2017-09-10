@@ -1,0 +1,61 @@
+= 如何增加天空到你的場景
+:author: 
+:revnumber: 
+:revdate: 2016/03/17 20:48
+:relfileprefix: ../../
+:imagesdir: ../..
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
+
+
+這是一個範例告訴你如何增加一個靜態地平線(一個背景景觀以及天空)到場景.
+有一個可以辨別的地平線與適當的景觀(或是太空,或是海洋,或是隨便) 在背景會讓場景顯得比單一色調背景更真實
+
+
+== 增加天空
+
+Adding a sky is extremely easy using the `com.jme3.util.SkyFactory`.
+
+[source,java]
+----
+getRootNode().attachChild(SkyFactory.createSky(getAssetManager(), "Textures/Sky/Bright/BrightSky.dds", SkyFactory.EnvMapType.CubeMap));
+----
+
+增加一個天空你需要供應:
+
+.   assetManager要使用的物件
+.  一個cube 或是 sphere map 天空材質
+.  Set the map type: link:http://javadoc.jmonkeyengine.org/com/jme3/util/SkyFactory.EnvMapType.html[SkyFactory.EnvMapType]. In this instance, CubeMap. 
+
+內部的, SkyFactory會呼叫以下的方法:
+
+.  `sky.setQueueBucket(Bucket.Sky);` makes certain the sky is rendered in the right order, behind everything else.
+.  `sky.setCullHint(Spatial.CullHint.Never);` makes certain that the sky is never culled.
+.  The SkyFactory uses the internal jME3 material definition `Sky.j3md`. This Material definition works with sphere and cube maps. 
+
+
+== 創建材質
+
+As the sky texture we use the sample BrightSky.dds file from jme3test-test-data. 
+
+How to create a sky textures?
+
+*  There are many tools out there that generate cube and sphere maps. +
+Examples for landscape texture generators are Terragen or Bryce.
+*  The actual texture size does not matter, as long as you add the Sky Geometry to the Sky bucket: Everything in the sky bucket will always be infinitely far away behind everything else, and never intersect with your scene. +
+Of course the higher the resolution, the better it will look. On the other hand, if the graphic is too big, it will slow the game down. 
+*  A box or sphere map is the simplest solution. But you can use any Node as sky, even complex sets of geometries and quads with animated clouds, blinking stars, city skylines, etc.
+*  JME3支援cube maps 在 PNG, JPG, 或是(壓縮) DDS 格式.
+
+Box or Sphere?
+
+*  If you have access to cube map textures, then use a SkyBox
+**  link:http://1.bp.blogspot.com/_uVsWqMqIGQU/SN0IZEE117I/AAAAAAAAAPs/4lfHx1Erdqg/s1600/skybox[SkyBox 範例]
+
+*  If you have access to sphere map textures – specially projected sky images that fit inside a sphere – then you use a SkySphere or SkyDome. 
+**  link:http://wiki.delphigl.com/index.php/Datei:Skysphere.jpg[SkySphere example]
+
+For more information on Skymap creation see: 
+
+*  <<jme3/advanced/free_skymaps#,如何創造免費skymaps>>
+*  <<jme3/external/blender.html#skybox-baking#,SkyBox baking>>

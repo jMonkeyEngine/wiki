@@ -1,0 +1,262 @@
+= jMonkeyEngine 3 -- Source Structure
+:author: 
+:revnumber: 
+:revdate: 2016/03/17 20:48
+:relfileprefix: ../
+:imagesdir: ..
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
+
+An overview of the source structure of the JME3 project. In order to support both Desktop and Android Java platforms, it was necessary to split the source code into several parts. This wiki page describes the packages and their purpose. Status: Up-to-date for JME3 beta.
+
+
+== Structure of src directory
+
+You can build jME using the included build.xml script: `ant clean; ant jar; ant run`
+When building the sources in a project created with another IDE,  include every folder under `src` in the project as its own separate source root.
+
+
+=== Core
+[cols="2", options="header"]
+|===
+
+<a| Source Package    
+<a| Description     
+
+<a| src/core         
+a| The main package. Must always be included, as all other packages depend on it. 
+
+a| src/core-effects 
+a| Core effects like Water, PSSM etc. 
+
+<a| src/core-data    
+a| Basic material definitions, shaders and fonts that are needed by most jME3 applications. 
+
+a| src/core-plugins 
+a| Important asset plugins, such as .j3o model loader, .obj loader, font loader, basic image loaders. 
+
+<a| src/desktop      
+<a| Must be included if deploying on desktop, applet or web start. +++<strike>Android</strike>+++  
+
+<a| src/android      
+a| Must be included if deploying on the Android platform. +++<strike>Desktop</strike>+++ 
+
+<a| src/lwjgl        
+a| LWJGL OpenGL display implementation. +++<strike>Android</strike>+++ 
+
+|===
+
+
+=== Physics
+[cols="2", options="header"]
+|===
+
+a| Source Package 
+a| Description 
+
+<a| src/jbullet       
+a| Game Physics Engine, based on the jBullet framework. +++<strike>Bullet</strike>+++
+
+<a| src/bullet        
+a| Game Physics Engine, based on the native Bullet framework. +++<strike>jBullet</strike>+++
+
+a| src/bullet-common 
+a| Classes common between native and java Bullet implementations.
+
+a| src/bullet-native 
+a| Native Bullet implementation pass:[C++] classes. +++<strike>jBullet</strike>+++
+
+|===
+
+[NOTE]
+====
+Only one of the physics libraries can be used at a time as they replace each other.
+====
+
+
+=== Plugins and Extra packages
+[cols="2", options="header"]
+|===
+
+a| Source Package 
+a| Description 
+
+<a| src/ogre       
+a| Ogre3D model and scene loader. Supports skeletal and vertex animation, scene loading, and materials. 
+
+<a| src/xml        
+<a| Provides an XML im/exporter.  
+
+<a| src/jogg       
+<a| OGG/Vorbis loader to play .ogg sound files.   
+
+<a| src/niftygui   
+a| Support for custom Graphical User Interfaces. 
+
+<a| src/blender    
+a| Blender model importer 
+
+a| src/networking 
+a| SpiderMonkey networking package 
+
+<a| src/terrain    
+a| Terrain generation tools
+
+|===
+
+
+=== Tests, Games and Tools
+[cols="2", options="header"]
+|===
+
+a| Source Package 
+a| Description 
+
+<a| src/test      
+a| Small sample Applications that demo individual jME3 features. ←- jme3_test-data.jar 
+
+a| src/test-data 
+a| Data assets (jme3_test-data.jar) required by jme3_test samples. 
+
+<a| src/tools     
+a| Tools and programs that help you use jme3. 
+
+|===
+
+
+== Structure of lib directory
+
+JME3 depends on the following JARs and native libraries in the `lib` directory. The JAR libraries must be on the classpath. 
+
+
+[NOTE]
+====
+The jME3-*natives*.jar bundles contain the native libraries, those are necessary `.dll`, `.jnilib`, `lib**.so**` files. You do not need to manually include native libraries on the java.library.path! jME3 handles the extraction of natives automatically via the JAR bundles.
+====
+
+
+*  lib/android:
+**  android.jar
+
+*  lib/bullet:
+**  android, jME3-bullet-natives-android.jar, jME3-bullet-natives.jar, jarcontent (natives)
+
+*  lib/jbullet:
+**  asm-all.jar, jbullet.jar, stack-alloc.jar, vecmath.jar
+
+*  lib/jogg:
+**  j-ogg-oggd.jar, j-ogg-vorbisd.jar
+
+*  lib/lwjgl:
+**  jME3-lwjgl-natives.jar, jinput.jar, lwjgl.jar
+
+*  lib/niftygui:
+**  nifty.jar, nifty-javadoc.jar, xmlpull-xpp3.jar, eventbus.jar
+**  nifty-default-controls-javadoc.jar, nifty-default-controls.jar, 
+**  nifty-examples.jar, nifty-examples-javadoc.jar, nifty-style-black.jar
+
+
+
+== Structure of jMonkeyEngine3 JARs
+
+After the build is complete (in the `dist` directory), you see that the jMonkeyEngine library is split up over several JAR files. This allows for better separation of the parts for different operating systems, projects etc. 
+[cols="3", options="header"]
+|===
+
+a| JAR file 
+a| Purpose 
+a| External Dependence 
+
+a| dist/lib/jME3-core.jar 
+a| Platform-independent core libraries (math, animation, scenegraph, Wavefront OBJ model support, etc) 
+a| None 
+
+a| dist/lib/jME3-effects.jar 
+a| Core jME3 effects (Water, SSAO etc) 
+a| None 
+
+a| dist/lib/jME3-desktop.jar 
+a| Desktop PC only jME3 libraries 
+a| None 
+
+a| dist/lib/jME3-plugins.jar 
+a| Basic import plugins (OgreXML models and j3o XML) 
+a| None 
+
+a| dist/lib/jME3-blender.jar 
+a| Blender model import plugin (Desktop only) 
+a| None 
+
+a| dist/lib/jME3-networking.jar 
+a| “Spidermonkey networking library 
+a| None 
+
+a| dist/lib/jME3-jogg.jar 
+a| J-OGG audio plugin 
+a| j-ogg-vorbisd.jar, j-ogg-oggd.jar 
+
+a| dist/lib/jME3-terrain.jar 
+a| Terrain system 
+a| None 
+
+a| dist/lib/jME3-jbullet.jar 
+a| jBullet physics 
+a| jbullet.jar, vecmath.jar, stack-alloc.jar, asm-all-3.1.jar 
+
+a| dist/lib/jME3-bullet.jar 
+a| Bullet physics (only jBullet *or* Bullet can be used)
+a| jME3-bullet-natives.jar 
+
+a| dist/lib/jME3-niftygui.jar 
+a| NiftyGUI support 
+a| nifty.jar, nifty-default-controls.jar, eventbus.jar, xmlpull-xpp3.jar 
+
+a| dist/lib/jME3-lwjgl.jar 
+a| LWJGL Desktop Renderer 
+a| lwjgl.jar, jME3-lwjgl-natives.jar, jinput.jar
+
+a| dist/lib/jME3-android.jar 
+a| Android Renderer 
+a| Android system 
+
+|===
+
+Optional:
+
+*  nifty-examples.jar
+*  jME3-testdata.jar
+*  nifty-style-black.jar (default nifty style)
+
+
+== API Structure
+
+For details see the link:http://javadoc.jmonkeyengine.org[http://javadoc.jmonkeyengine.org].
+
+
+== Data File Types
+[cols="3", options="header"]
+|===
+
+a| Path 
+a| File types 
+a| purpose 
+
+a| /Common/MatDefs/*/ 
+l| .glsllib 
+a| Standard ShaderLibs 
+
+a| /Common/MatDefs/*/ 
+l| .j3md 
+a| Standard Material Definitions 
+
+a| /Common/Materials/*/ 
+l| .j3m 
+a| Standard Material 
+
+a| /Interface/Fonts/ 
+l| .fnt + .png 
+a| Standard Fonts 
+
+|===
+
+See also supported <<jme3/intermediate/file_types#,File Types>>.

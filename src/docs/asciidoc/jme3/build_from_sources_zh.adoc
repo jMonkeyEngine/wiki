@@ -1,0 +1,42 @@
+= Building jMonkeyEngine 3 from the Sources
+:author: 
+:revnumber: 
+:revdate: 2016/03/17 20:48
+:keywords: 說明文件，安裝
+:relfileprefix: ../
+:imagesdir: ..
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
+
+We recommend downloading the link:https://github.com/jMonkeyEngine/sdk/releases/tag/stable[jMonkeyEngine SDK] - but of course you can also build the jMonkeyEngine yourself from the sources. In this case, you need the link:http://subversion.tigris.org[Subversion] file version system installed (svn).
+
+.  *Checkout:* Checkout the Subversion repository.
++
+[source]
+----
+svn checkout http://jmonkeyengine.googlecode.com/svn/branches/3.0final/engine jme3
+----
+
+**  You can leave login and password empty
+
+.  *Build:* Execute `ant jar`
+**  This compiles the JAR files in `dist/libs/*`
+
+.  *Javadoc:* Execute `ant javadoc` 
+**  This generates javadocs in the `dist/javadoc` directory.
+
+.  *Run:* Execute `ant run`
+**  This runs the TestChooser where you can browse examples.
+
+.  *Use:* Create a Java SE project and place all JARs from the `dist/lib` directory on the classpath.
+**  You can now extend your first game from `com.jme3.app.SimpleApplication`. 
+
+
+For a detailed description of the created jar files see <<jme3/jme3_source_structure#structure_of_jmonkeyengine3_jars,this list>>.
+
+'''
+
+學習更多關於:
+
+*  <<jme3/simpleapplication_from_the_commandline#,Setting up JME3 on the commandline (generic)>>.
+*  <<jme3/build_jme3_sources_with_netbeans#,用 NetBeans 編譯 JME3 檔案>> 

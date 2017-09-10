@@ -1,0 +1,281 @@
+= Recast Navigation for JME
+:author: 
+:revnumber: 
+:revdate: 2016/03/17 20:48
+:relfileprefix: ../../
+:imagesdir: ../..
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
+
+
+== What is Recast Navigation
+
+Recast Navigation is C++ library for path-finding in 3D, continuous space. Recast has two big modules:
+
+.  Recast
+.  Detour
+
+
+=== Recast
+
+Recast is state of the art navigation mesh construction tool set for games.
+
+*  It is automatic, which means that you can throw any level geometry at it and you will get robust mesh out
+*  It is fast which means swift turnaround times for level designers
+*  It is open source so it comes with full source and you can customize it to your heart's content.
+
+
+=== Detour
+
+Recast is accompanied with Detour, path-finding and spatial reasoning toolkit. You can use any navigation mesh with Detour, but of course the data generated with Recast fits perfectly.
+
+Detour offers simple static navigation mesh which is suitable for many simple cases, as well as tiled navigation mesh which allows you to plug in and out pieces of the mesh. The tiled mesh allows you to create systems where you stream new navigation data in and out as the player progresses the level, or you may regenerate tiles as the world changes.
+
+
+== jNavigation
+
+jNavigation is port Java library for link:https://github.com/memononen/recastnavigation[Recast navigation]. jNavigation is the project in progress, and currently it enables building link:http://en.wikipedia.org/wiki/Navigation_mesh[Navigation meshes] and path-finding for one agent (bot).
+
+
+== Example
+
+In next code is described how the user should build navigation mesh, and query for it.
+
+[source,java]
+----
+
+// Step 1. Initialize build config.
+Config config = new Config();
+
+Mesh mesh = ((Geometry) scene.getChild("terrain")).getMesh();
+            
+Vector3f minBounds = RecastBuilder.calculateMinBounds(mesh);
+Vector3f maxBounds = RecastBuilder.calculateMaxBounds(mesh);
+
+config.setMaxBounds(maxBounds);
+config.setMinBounds(minBounds);
+config.setCellSize(0.3f);
+config.setCellHeight(0.2f);
+config.setWalkableSlopeAngle(45);
+config.setWalkableClimb(1);
+config.setWalkableHeight(2);
+config.setWalkableRadius(2);
+config.setMinRegionArea(8);
+config.setMergeRegionArea(20);
+config.setBorderSize(20);
+config.setMaxEdgeLength(12);
+config.setMaxVerticesPerPoly(6);
+config.setDetailSampleMaxError(1f);
+config.setDetailSampleDistance(6);
+
+RecastBuilder.calculateGridWidth(config);
+RecastBuilder.calculatesGridHeight(config);
+
+// Step 2. Rasterize input polygon soup.
+
+//context is needed for logging that is not yet fully supported in native library.
+//It must NOT be null.
+Context context = new Context();
+
+// Allocate voxel heightfield where we rasterize our input data to.
+Heightfield heightfield = new Heightfield();
+if (!RecastBuilder.createHeightfield(context, heightfield, config)) {
+    System.out.println("Could not create solid heightfield");
+    return;
+}
+
+// Allocate array that can hold triangle area types. 
+
+// In Recast terminology, triangles are what indices in jME is. I left this,
+
+// Find triangles which are walkable based on their slope and rasterize them.
+char[] areas = RecastBuilder.markWalkableTriangles(context, config.getWalkableSlopeAngle(), mesh);
+RecastBuilder.rasterizeTriangles(context, mesh, areas, heightfield, 20);
+
+
+// Step 3. Filter walkables surfaces.
+// Once all geometry is rasterized, we do initial pass of filtering to
+// remove unwanted overhangs caused by the conservative rasterization
+// as well as filter spans where the character cannot possibly stand.
+RecastBuilder.filterLowHangingWalkableObstacles(context, config.getWalkableClimb(), heightfield);
+RecastBuilder.filterLedgeSpans(context, config, heightfield);
+RecastBuilder.filterWalkableLowHeightSpans(context, config.getWalkableHeight(), heightfield);
+       
+        
+// Step 4. Partition walkable surface to simple regions.
+// Compact the heightfield so that it is faster to handle from now on.
+// This will result more cache coherent data as well as the neighbours
+// between walkable cells will be calculated.
+CompactHeightfield compactHeightfield = new CompactHeightfield();
+       
+if (!RecastBuilder.buildCompactHeightfield(context, config, heightfield, compactHeightfield)) {
+    System.out.println("Could not build compact data");
+    return;
+}
+
+if (!RecastBuilder.erodeWalkableArea(context, config.getWalkableRadius(), compactHeightfield)) {
+    System.out.println("Could not erode");
+    return;
+}
+
+// Partition the heightfield so that we can use simple algorithm later to triangulate the walkable areas.
+// There are 3 martitioning methods, each with some pros and cons:
+// 1) Watershed partitioning
+//   - the classic Recast partitioning
+//   - creates the nicest tessellation
+//   - usually slowest
+//   - partitions the heightfield into nice regions without holes or overlaps
+//   - the are some corner cases where this method creates produces holes and overlaps
+//      - holes may appear when a small obstacles is close to large open area (triangulation can handle this)
+//      - overlaps may occur if you have narrow spiral corridors (i.e stairs), this make triangulation to fail
+//   * generally the best choice if you precompute the nacmesh, use this if you have large open areas
+// 2) Monotone partioning
+//   - fastest
+//   - partitions the heightfield into regions without holes and overlaps (guaranteed)
+//   - creates long thin polygons, which sometimes causes paths with detours
+//   * use this if you want fast navmesh generation
+String partitionType = "Sample partition watershed";
+
+if (partitionType.equals("Sample partition watershed")) {
+    if (!RecastBuilder.buildDistanceField(context, compactHeightfield)) {
+        System.out.println("Could not build distance field");
+        return;
+    }
+    if (!RecastBuilder.buildRegions(context, compactHeightfield, config)) {
+        System.out.println("Could not build watershed regions");
+        return;
+    }
+}
+
+if (partitionType.equals("Sample partition monotone")) {
+    if (!RecastBuilder.buildRegionsMonotone(context, compactHeightfield, config)) {
+        System.out.println("Could not build monotone regions");
+        return;
+    }
+}
+
+// Step 5. Trace and simplify region contours.
+// Create contours.
+ContourSet contourSet = new ContourSet();
+
+if (!RecastBuilder.buildContours(context, compactHeightfield, 2f, config.getMaxEdgeLength(), contourSet)) {
+    System.out.println("Could not create contours");
+    return;
+}
+
+// Step 6. Build polygons mesh from contours.
+// Build polygon navmesh from the contours.
+PolyMesh polyMesh = new PolyMesh();
+
+if (!RecastBuilder.buildPolyMesh(context, contourSet, config.getMaxVertsPerPoly(), polyMesh)) {
+    System.out.println("Could not triangulate contours");
+    return;
+}
+
+// Step 7. Create detail mesh which allows to access approximate height on each polygon.
+PolyMeshDetail polyMeshDetail = new PolyMeshDetail();
+
+if (!RecastBuilder.buildPolyMeshDetail(context, polyMesh, compactHeightfield, config, polyMeshDetail)) {
+    System.out.println("Could not build detail mesh.");
+    return;
+}
+
+// (Optional) Step 8. Create Detour data from Recast poly mesh.
+// The GUI may allow more max points per polygon than Detour can handle.
+// Only build the detour navmesh if we do not exceed the limit.
+if (config.getMaxVertsPerPoly() > DetourBuilder.VERTS_PER_POLYGON()) {
+    return;
+}
+NavMeshCreateParams createParams = new NavMeshCreateParams();
+createParams.getData(polyMesh);
+createParams.getData(polyMeshDetail);
+//setting optional off-mesh connections (in my example there are none)
+createParams.getData(config);
+createParams.setBuildBvTree(true);
+        
+char[] navData = DetourBuilder.createNavMeshData(createParams);
+        
+if (navData == null) {
+    System.out.println("Could not build Detour navmesh.");
+    return;
+}
+        
+NavMesh navMesh = new NavMesh();
+       
+if (!navMesh.isAllocationSuccessful()) {
+    System.out.println("Could not create Detour navmesh");
+    return;
+}
+        
+Status status;
+status = navMesh.init(navData, TileFlags.DT_TILE_FREE_DATA.value());
+if (status.isFailed()) {
+    System.out.println("Could not init Detour navmesh");
+    return;
+}
+
+NavMeshQuery query = new NavMeshQuery();
+status = query.init(navMesh, 2048);
+if (status.isFailed()) {
+    System.out.println("Could not init Detour navmesh query");
+    return;
+}
+
+----
+
+After this (if everything is successful) you can use methods in `query` that was created for path-finding purposes.
+
+
+== How to get jNavigation
+
+There is 2 ways to get jNavigation:
+
+*  as plugin form
+*  as developmental project
+
+
+=== Plugin
+
+You can download “stable version from link:https://github.com/QuietOne/jNavigationPlugin/tree/master[repository]
+
+
+=== Developmental project
+
+Instructions for downloading and setting it up:
+
+*  Download C++ wrapper from link:https://github.com/QuietOne/jNavigation-native[jNavigationNative repository]
+*  Build downloaded project with C++ compiler
+*  Download java library from link:https://github.com/QuietOne/jNavigation[jNavigation repository]
+*  In Java project in class `com.jme3.ai.navigation.utils.RecastJNI.java` change +++<abbr title="Uniform Resource Locator">URL</abbr>+++ to where your build of C++ project is.
+
+[source,java]
+----
+
+static {
+    // the URL that needs to be changed
+    System.load(".../jNavigationNative.dll");
+}
+
+----
+
+If there is problem with building C++ project see <<jme3/advanced/building_recast#,link>>.
+
+
+=== Questions & Suggestions
+
+*  For suggestion and/or question on jNavigation post on link:http://hub.jmonkeyengine.org/forum/board/development/summer-of-code/[forum]
+*  For question on Recast (C++ library) ask on link:https://groups.google.com/forum/#!forum/recastnavigation[Google groups]
+
+
+=== Source
+
+*  link:https://github.com/QuietOne/jNavigationPlugin/tree/master[jNavigation plugin repository]
+*  link:https://github.com/QuietOne/jNavigation[Developmental jNavigation repository]
+*  link:https://github.com/QuietOne/jNavigation-native[Developmental jNavigationNative repository]
+
+
+==== Useful links
+
+*  <<jme3/advanced/building_recast#,How to build the native recast bindings>>
+*  link:http://www.critterai.org/projects/nmgen_study/[Study: Navigation Mesh Generation]
+*  link:http://www.stevefsp.org/projects/rcndoc/prod/index.html[Documentation of C++ Recast library] It can be useful for tracing bugs.

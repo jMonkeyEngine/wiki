@@ -1,0 +1,159 @@
+= The Scene Graph and Other jME3 Terminology
+:author: 
+:revnumber: 
+:revdate: 2016/03/17 20:48
+:keywords: spatial, node, mesh, geometry, scenegraph, rootnode
+:relfileprefix: ../
+:imagesdir: ..
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
+
+Before you start making games, make sure you understand general <<jme3/terminology#,3D Gaming terminology>>.
+
+Second, if you are a beginner, we recommend our <<jme3/scenegraph_for_dummies#,Scene Graph for Dummies>> presentation for a visual introduction to the concept of a scene graph. 
+
+Then continue learning about jME3 concepts here.
+
+
+== Coordinate System
+
+[.right]
+image::jme3/intermediate/coordinate-system.png[coordinate-system.png,width="235",height="210",align="right"]
+
+
+The jMonkeyEngine uses a right-handed coordinate system, just as OpenGL does.
+
+The coordinate system consists of:
+
+*  The _origin_, a single central point in space.
+**  The origin point is always at coordinate zero, in Java: `new Vector3f(0,0,0)`.
+
+*  Three _coordinate axes_ that are mutually perpendicular, and meet in the origin. 
+**  The X axis starts left and goes right.
+**  The Y axis starts below and goes up.
+**  The Z axis starts away from you, and goes towards you.
+
+
+Every point in 3D space is uniquely defined by its X,Y,Z coordinates. The three numeric coordinates express how many “steps from each of the three axes a point is. The data type for all vectors in jME3 is `com.jme3.math.Vector3f`. All vectors are relative to the described coordinate system. +
+Example: The point `new Vector3f(3,-5,1)` is 3 steps to the right, 5 steps down, and 1 towards you.
+
+
+[NOTE]
+====
+The unit of meassurement (“one step) in jME3 is the *world unit*, short: wu. Typically, 1 wu is considered to be one meter. As long as you are consistant throughout your game, 1 wu can be any distance you like.
+====
+
+
+For your orientation:
+
+*  The default camera's location is `Vector3f(0.0f, 0.0f, 10.0f)`.
+*  The default camera is looking in the direction described by the (so called) negative Z unit vector `Vector3f(0.0f, 0.0f, -1.0f)`. 
+
+This means the player's point of view is on the positive side of the Z axis, looking back, towards the origin, down the Z axis.
+
+
+== How to move yourself through the 3D scene
+
+When you play a 3D game, you typically want to navigate the 3D scene. Note that by default, the mouse pointer is invisible, and the mouse is set up to control the camera rotation!
+
+By default, jME3 uses the following common navigation inputs
+[cols="3", options="header"]
+|===
+
+a| Game Inputs 
+a| Camera Motion 
+a| Player POV 
+
+a|Press the W and S keys
+a|move the camera forward, and backward
+a|you walk back and forth
+
+a|Press the A and D keys
+a|move the camera left and right
+a|you step left or right
+
+a|Press the Q and Y keys
+a|move the camera up and down
+a|you fly up and down
+
+a|Move the mouse left-right
+a|rotate the camera left/right
+a|you look left or right
+
+a|Move the mouse forwards-backwards
+a|rotate up/down
+a|you look at the sky or your feet
+
+|===
+
+These default settings are called “WASD keys and “Mouse Look. You can customize <<jme3/advanced/input_handling#,input handling>> for your game. Sorry, but these settings work best on a QWERTY/QWERTZ keyboard.
+
+
+== Scene Graph and RootNode
+
+The _scene graph_ represents your 3D world. Objects in the jME3 scene graph are called <<jme3/advanced/spatial#,Spatial>>s. Everything attached to the parent _rootNode_ is part of your scene. Your game inherits the `rootNode` object from the `SimpleApplication` class. 
+
+
+image::jme3/intermediate/scene-graph.png[scene-graph.png,width="",height="",align="center"]
+
+
+*  _Attaching_ a Spatial to the rootNode (or its child nodes) adds it to the scene; 
+*  _Detaching_ a Spatial from the rootNode (or its child nodes) removes it from the scene.
+
+All objects in the scene graph are in a parent-child relationship. When you transform (move, rotate, scale) one parent, all its children follow.
+
+
+[NOTE]
+====
+The scene graph only manages the parent-child relationship of spatials. The actual location, rotation, or scale of an object is stored inside each Spatial. 
+====
+
+
+
+== Spatials: Node vs Geometry
+
+A Spatial can be transformed (in other words, it has a location, a rotation, and a scale). A Spatial can be loaded and saved as a .3jo file. There are two types of Spatials, _Nodes_ and _Geometries_:
+[cols="10,45,45", options="header"]
+|===
+
+<a|  
+2+a| Spatial 
+
+a| Purpose: 
+2+a| A Spatial is an abstract data structure that stores transformations (translation, rotation, scale). 
+
+<a|  
+a| Geometry 
+a| Node 
+
+a| Visibility: 
+a| A visible 3-D object. 
+a| An invisible “handle for a group of objects. 
+
+a| Purpose: 
+a| A Geometry represents the “look of an object: Shape, color, texture, opacity/transparency. 
+a| A Node groups Geometries and other Nodes together: You transform a Node to affect all attached Nodes (parent-child relationship). 
+
+a| Content: 
+a| Transformations, mesh, material. 
+a| Transformations. No mesh, no material. 
+
+a| Examples: 
+a| A box, a sphere, player, a building, a piece of terrain, a vehicle, missiles, NPCs, etc… 
+a| The rootNode, the guiNode, an audioNode, a custom grouping node for a vehicle plus its passengers, etc. 
+
+|===
+
+
+== How to Use This Knowledge?
+
+Before you start creating your game, you should plan your scene graph: Which Nodes and Geometries will you need? Complete the <<jme3/beginner#,Beginner tutorials>> to learn how to load and create Spatials, how to lay out a scene by attaching, detaching, and transforming Spatials, and how to add interaction and effects to a game.
+
+The <<jme3#documentation-for-intermediate-users#,intermediate and advanced documentation>> gives you more details on how to put all the parts together to create an awesome 3D game in Java!
+
+
+== See also
+
+*  <<jme3/advanced/spatial#,Spatial>> – More details about working with Nodes and Geometries
+*  <<jme3/advanced/traverse_scenegraph#,Traverse SceneGraph>> – Find any Node or Geometry in the scenegraph.
+*  <<jme3/advanced/camera#,Camera>> – Learn more about the Camera in the scene.

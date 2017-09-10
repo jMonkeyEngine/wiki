@@ -1,0 +1,211 @@
+= Multithreading Optimization
+:author: 
+:revnumber: 
+:revdate: 2016/03/17 20:48
+:keywords: loop, game, performance, state, states, documentation
+:relfileprefix: ../../
+:imagesdir: ../..
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
+
+
+== The jME3 Threading Model
+
+jME3 is similar to Swing in that, for speed and efficiency, all changes to the scene graph must be made in a single update thread. If you make changes only in Control.update(), AppState.update(), or SimpleApplication.simpleUpdate(), this will happen automatically.  However, if you pass work to another thread, you may need to pass results back to the main jME3 thread so that scene graph changes can take place there.
+
+[source,java]
+----
+
+public void rotateGeometry(final Geometry geo, final Quaternion rot) {
+    mainApp.enqueue(new Callable<Spatial>() {
+        public Spatial call() throws Exception {
+            return geo.rotate(rot);
+        }
+    });
+}
+
+----
+
+[NOTE]
+====
+This example does not fetch the returned value by calling `get()` on the Future object returned from `enqueue()`. This means that the example method `rotateGeometry()` will return immediately and will not wait for the rotation to be processed before continuing.
+
+If the processing thread needs to wait or needs the return value then `get()` or the other methods in the returned Future object such as `isDone()` can be used.
+====
+
+First, make sure you know what <<jme3/advanced/application_states#,Application States>> and <<jme3/advanced/custom_controls#,Custom Controls>> are.
+
+More complex games may feature complex mathematical operations or artificial intelligence calculations (such as path finding for several NPCs). If you make many time-intensive calls on the same thread (in the update loop), they will block one another, and thus slow down the game to a degree that makes it unplayable. If your game requires long running tasks, you should run them concurrently on separate threads, which speeds up the application considerably.
+
+Often multithreading means having separate detached logical loops going on in parallel, which communicate about their state. (For example, one thread for AI, one Sound, one Graphics). However we recommend to use a global update loop for game logic, and do multithreading within that loop when it is appropriate. This approach scales way better to multiple cores and does not break up your code logic. 
+
+Effectively, each for-loop in the main update loop might be a chance for multithreading, if you can break it up into self-contained tasks.
+
+
+=== Java Multithreading
+
+The java.util.concurrent package provides a good foundation for multithreading and dividing work into tasks that can be executed concurrently (hence the name). The three basic components are the Executor (supervises threads), Callable Objects (the tasks), and Future Objects (the result). You can link:http://download.oracle.com/javase/tutorial/essential/concurrency/[read about the concurrent package more here], I will give just a short introduction.
+
+*  A Callable is one of the classes that gets executed on a thread in the Executor. The object represents one of several concurrent tasks (e.g, one NPC's path finding task). Each Callable is started from the updateloop by calling a method named `call()`.
+*  The Executor is one central object that manages all your Callables. Every time you schedule a Callable in the Executor, the Executor returns a Future object for it. 
+*  A Future is an object that you use to check the status of an individual Callable task. The Future also gives you the return value in case one is returned.
+
+
+=== Multithreading in jME3
+
+So how do we implement multithreading in jME3?
+
+Let's take the example of a Control that controls an NPC Spatial. The NPC Control has to compute a lengthy pathfinding operation for each NPC. If we would execute the operations directly in the simpleUpdate() loop, it would block the game  each time a NPC wants to move from A to B. Even if we move this behaviour into the update() method of a dedicated NPC Control, we would still get annoying freeze frames, because it still runs on the same update loop thread. 
+
+To avoid slowdown, we decide to keep the pathfinding operations in the NPC Control, _but execute it on another thread_.
+
+
+== Executor
+
+You create the executor object in a global AppState (or the initSimpleApp() method), in any case in a high-level place where multiple controls can access it. 
+
+[source,java]
+----
+
+/* This constructor creates a new executor with a core pool size of 4. */
+ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(4);
+
+----
+
+Pool size means the executor will keep four threads alive at any time. Having more threads in the pool means that more tasks can run concurrently. But a bigger pool only results in a speed gain if the PC can handle it! Allocating a pool  that is uselessly large just wastes memory, so you need to find a good compromise: About the same to double the size of the number of cores in the computer makes sense. 
+
+[WARNING]
+====
+Executor needs to be shut down when the application ends, in order to make the process die properly
+In your simple application you can override the destroy method and shutdown the executor: 
+====
+
+[source,java]
+----
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        executor.shutdown();
+    }
+
+----
+
+
+== Control Class Fields
+
+In the NPC Control, we create the individual objects that the thread manipulates. In our example case (the pathfinding control), the task is about locations and path arrays, so we need the following variables:
+
+[source,Java]
+----
+
+//The vector to store the desired location in:
+Vector3f desiredLocation = new Vector3f();
+//The MyWayList object that contains the result waylist:
+MyWayList wayList = null;
+//The future that is used to check the execution status:
+Future future = null;
+
+----
+
+Here we also created the Future variable to track the state of this task.
+
+
+== Control Update() Method
+
+Next let's look at the update() call of the Control where the time-intensive task starts. In our example, the task is the `findWay` Callable (which contains the pathfinding process). So instead of spelling out the pathfinding process  in the Control's update() loop, we start the process via `future = executor.submit(findWay);`.
+
+[source,java]
+----
+
+public void update(float tpf) {
+    try{
+        //If we have no waylist and not started a callable yet, do so!
+        if(wayList == null && future == null){
+            //set the desired location vector, after that we should not modify it anymore
+            //because it's being accessed on the other thread!
+            desiredLocation.set(getGoodNextLocation());
+            //start the callable on the executor
+            future = executor.submit(findWay);    //  Thread starts!
+        }
+        //If we have started a callable already, we check the status
+        else if(future != null){
+            //Get the waylist when its done
+            if(future.isDone()){
+                wayList = future.get();
+                future = null;
+            }
+            else if(future.isCancelled()){
+                //Set future to null. Maybe we succeed next time...
+                future = null;
+            }
+        }
+    } 
+    catch(Exception e){ 
+      Exceptions.printStackTrace(e);
+    }
+    if(wayList != null){
+        //.... Success! Let's process the wayList and move the NPC...
+    }
+}
+----
+
+Note how this logic makes its decision based on the Future object.
+
+Remember not to mess with the class fields after starting the thread, because they are being accessed and modified on the new thread. In more obvious terms: You cannot change the “desired location of the NPC while the path finder is calculating a different path. You have to cancel the current Future first.
+
+
+== The Callable
+
+The next code sample shows the Callable that is dedicated to performing the long-running task (here, wayfinding). This is the task that used to block the rest of the application, and is now executed on a thread of its own. You implement the task in the Callable always in an inner method named `call()`.
+
+The task code in the Callable should be self-contained! It should not write or read any data of objects that are managed by the scene graph or OpenGL thread directly. Even reading locations of Spatials can be problematic! So ideally all data that is needed for the wayfinding process should be available to the new thread when it starts already, possibly in a cloned version so no concurrent access to the data happens.
+
+In reality, you might need access to the game state. If you must read or write a current state from the scene graph, you must have a clone of the data in your thread. There are only two ways:
+
+*  Use the execution queue `application.enqueue()` to create a sub-thread that clones the info. Only disadvantage is, it may be slower. +
+The example below gets the `Vector3f location` from the scene object `mySpatial` using this way.
+*  Create a separate World class that allows safe access to its data via synchronized methods to access the scene graph. Alternatively it can also internally use `application.enqueue()`. +
+The following example gets the object `Data data = myWorld.getData();` using this way.
+
+These two ways are thread-safe, they don't mess up the game logic, and keep the Callable code readable.
+
+[source,java]
+----
+
+// A self-contained time-intensive task:
+private Callable<MyWayList> findWay = new Callable<MyWayList>(){
+    public MyWayList call() throws Exception {
+
+        //Read or write data from the scene graph -- via the execution queue:
+        Vector3f location = application.enqueue(new Callable<Vector3f>() {
+            public Vector3f call() throws Exception {
+                //we clone the location so we can use the variable safely on our thread
+                return mySpatial.getLocalTranslation().clone();
+            }
+        }).get();
+
+        // This world class allows safe access via synchronized methods
+        Data data = myWorld.getData(); 
+
+        //... Now process data and find the way ...
+
+        return wayList;
+    }
+};
+
+
+----
+
+
+=== Useful Links
+
+High level description which describes how to manage the game state and the rendering in different threads: +
+link:http://jahej.com/alt/2011_07_03_threading-and-your-game-loop.html[Threading and your game loop]. + 
+A C++ example can be found at: +
+link:http://gamasutra.com/blogs/AndreaMagnorsky/20130527/193087/Multithreading_rendering_in_a_game_engine_with_CDouble_buffer_implementation.php[Multithreading-rendering in a game engine with CDouble buffer implementation].
+
+
+=== Conclusion
+
+The cool thing about this approach is that every entity creates one self-contained Callable for the Executor, and they are all executed in parallel. In theory, you can have one thread per entity without changing anything else but the settings of the executor.

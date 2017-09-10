@@ -1,0 +1,79 @@
+= Integrating Nifty GUI: Projection
+:author:
+:revnumber:
+:revdate: 2016/03/17 20:48
+:keywords: gui, documentation, nifty, hud, texture
+:relfileprefix: ../../
+:imagesdir: ../..
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
+
+.  <<jme3/advanced/nifty_gui#,Nifty GUI Concepts>>
+.  <<jme3/advanced/nifty_gui_best_practices#,Nifty GUI Best Practices>>
+.  <<jme3/advanced/nifty_gui_xml_layout#,Nifty GUI XML Layout>> or <<jme3/advanced/nifty_gui_java_layout#,Nifty GUI Java Layout>>
+.  <<jme3/advanced/nifty_gui_overlay#,Nifty GUI Overlay>> or *Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++ Projection*
+.  <<jme3/advanced/nifty_gui_java_interaction#,Interact with the GUI from Java>>
+
+
+image::jme3/advanced/nifty-gui.png[nifty-gui.png,width="310",height="250",align="left"]
+
+
+Typically you define a key (for example escape) to switch the +++<abbr title="Graphical User Interface">GUI</abbr>+++ on and off. Then you <<jme3/advanced/nifty_gui_overlay#,overlay>> the running game with the +++<abbr title="Graphical User Interface">GUI</abbr>+++ (you will most likely pause the game then).
+
+Alternatively, you can also project the +++<abbr title="Graphical User Interface">GUI</abbr>+++ as a texture onto a mesh textures inside the game. Allthough this looks cool and “immersive, this approach is rarely used since it is difficult to record clicks this way. You can only interact with this projected +++<abbr title="Graphical User Interface">GUI</abbr>+++ by keyboard, or programmatically. You can select input fields using the arrow keys, and trigger actions using the return key.
+
+This +++<abbr title="Graphical User Interface">GUI</abbr>+++ projection variant is less commonly used than the +++<abbr title="Graphical User Interface">GUI</abbr>+++ overlay variant. Usecases for +++<abbr title="Graphical User Interface">GUI</abbr>+++ projection are, for example, a player avatar using an in-game computer screen.
+
+
+== Sample Code
+
+*  link:http://code.google.com/p/jmonkeyengine/source/browse/trunk/engine/src/test/jme3test/niftygui/TestNiftyToMesh.java[TestNiftyToMesh.java]
+
+
+== Projecting the User Interface Onto a Texture
+
+You can project the Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++ onto a texture, load the texture into a material, and assign it to a Geometry (Quads or Boxes are best).
+
+[source,java]
+----
+
+/** Create a special viewport for the Nifty GUI */
+ViewPort niftyView = renderManager.createPreView("NiftyView", new Camera(1024, 768));
+niftyView.setClearEnabled(true);
+/** Create a new NiftyJmeDisplay for the integration */
+NiftyJmeDisplay niftyDisplay = NiftyJmeDisplay.newNiftyJmeDisplay(
+  assetManager,  inputManager,  audioRenderer,  niftyView);
+/** Create a new NiftyGUI object */
+Nifty nifty = niftyDisplay.getNifty();
+/** Read your XML and initialize your custom ScreenController */
+nifty.fromXml("Interface/helloworld.xml", "start", new MySettingsScreen(data));
+
+/** Prepare a framebuffer for the texture niftytex */
+niftyView.addProcessor(niftyDisplay);
+FrameBuffer fb = new FrameBuffer(1024, 768, 0);
+fb.setDepthBuffer(Format.Depth);
+Texture2D niftytex = new Texture2D(1024, 768, Format.RGB8);
+fb.setColorTexture(niftytex);
+niftyView.setClearEnabled(true);
+niftyView.setOutputFrameBuffer(fb);
+
+/** This is the 3D cube we project the GUI on */
+Box b = new Box(Vector3f.ZERO, 1, 1, 1);
+Geometry geom = new Geometry("Box", b);
+Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+mat.setTexture("m_ColorMap", niftytex); /** Here comes the texture! */
+geom.setMaterial(mat);
+rootNode.attachChild(geom);
+
+----
+
+The MySettingsScreen class is a custom de.lessvoid.nifty.screen.ScreenController in which you implement your +++<abbr title="Graphical User Interface">GUI</abbr>+++ behaviour.  The variable `data` contains an object that you use to exchange state info with the game. See <<jme3/advanced/nifty_gui_java_interaction#,Nifty GUI Java Interaction>> for details on how to create this class.
+
+Run the code sample. You select buttons on this +++<abbr title="Graphical User Interface">GUI</abbr>+++ with the arrow keys and then press return. Note that clicking on the texture will not work!
+
+
+== Next Steps
+
+Now that you have layed out and integrated the +++<abbr title="Graphical User Interface">GUI</abbr>+++ in your app, you want to respond to user input and display the current game.
+
+*  <<jme3/advanced/nifty_gui_java_interaction#,Interact with the GUI from Java>>
