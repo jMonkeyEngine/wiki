@@ -1,4 +1,4 @@
-= Eclipse + jME3 + Android + JNI/NDK
+﻿= Eclipse + jME3 + Android + JNI/NDK
 :author:
 :revnumber:
 :revdate: 2016/03/17 20:48
@@ -14,7 +14,7 @@ While you do not have to create a project of each type to use Eclipse and this g
 The code samples provided in this guide should work for any IDE, but setting up/configuring your IDE to do what Eclipse does in this particular guide may require some creative workarounds.
 
 
-[WARNING]
+[警告]
 ====
 Please note that projects that use Android UI elements or are created using Eclipse *can not* be ported to iOS. See <<jme3/android#,this page>> on how to create a cross-platform project using the jME SDK *that can also be edited in the Eclipse IDE*. This saves you the setup work outlined below.
 ====
@@ -26,7 +26,7 @@ Please note that projects that use Android UI elements or are created using Ecli
 I will assume you already have downloaded (and built, if necessary) the JME3 binaries. If not, either download the link:http://hub.jmonkeyengine.org/downloads/[latest SDK release], link:http://updates.jmonkeyengine.org/stable/3.0/engine[engine build] (recommended for new users), or take a quick detour over to <<jme3/build_from_sources#,this guide>> to build from source (recommended for advanced users).
 
 
-[NOTE]
+[備註]
 ====
 One directory you should have on hand (or know where to find) is the location of the resulting library (JAR) files.
 ====
@@ -39,7 +39,7 @@ For the various methods of obtaining the libraries (as described above), the pat
 *  *Source*: [SDK Dir]/sdk/build/cluster/libs
 
 
-[TIP]
+[小撇步]
 ====
 Throughout the course of this guide, *do not copy JAR files* to any project directory - leave them in their original spots so they can be easily updated for when a JME3 update comes out or when you rebuild the source.
 ====
@@ -74,7 +74,7 @@ First, we need to configure our build path. Right click the new project entry an
 There are a number of libraries you're going to need to include, as the 'core' JME3 system requires them.
 
 
-[IMPORTANT]
+[重要]
 ====
 There will be many libraries in the previously identified `libs` folder that aren't initially used. Certain aspects of JME3 (for instance, collision detection) will require the appropriate JAR if your code requires that functionality. However, it is highly recommended you do NOT include every JAR in the `libs` folder due to the fact that exporting them all when they are not needed will result in a huge jar file (~60MB).
 ====
@@ -93,7 +93,7 @@ Click _Add External JARs…_, navigate to the JME3 `libs` folder (see _Setting u
 
 Add the JARs, hit _OK_, and you've successfully set up the base JME3 build path for your project.
 
-The last bit that must be added are assets. 備註 that while the SDK has a single way of managing your assets, assets can be handled in a number of ways in other IDEs.
+The last bit that must be added are assets. Note that while the SDK has a single way of managing your assets, assets can be handled in a number of ways in other IDEs.
 
 The rule for assets is that their files *must be on the build path*. This means that you can either include the inner folders directly in your project, or you can create a separate project (and thus, a separate JAR) for your assets.
 
@@ -110,8 +110,8 @@ Finally, the SDK creates a base source file for you that ends up being the main 
 
 Right click your project, go to _New → Class_, and fill out the appropriate information:
 
-*  *Package*: your package name (i.e. `com.jme3.test`)
-*  *Name*: the class name (i.e. `MyGame`)
+*  *Package: 你的套件名稱 (i.e. com.jme3.test)
+*  *Name: 這個物件名稱 (例如: MyGame)
 *  *Superclass*: `com.jme3.app.SimpleApplication`
 
 Then hit Finish. This will create and open the new class file. Eclipse should have automatically inserted the method “simpleInitApp() for you. This is where all of your game's start up code will go.
@@ -131,7 +131,7 @@ public static void main(String[] args) {
 
 === 執行中
 
-Running your JME3 project is quite simple in Eclipse. You can either link:http://help.eclipse.org/juno/index.jsp?topic=/org.eclipse.jdt.doc.user/tasks/tasks-java-local-configuration.htm[create a Java run configuration] or you can simply hit `CTRL + F11` to run the project (if Eclipse doesn't know what to do, it will ask).
+在Eclipse執行你的JME3 專案十分簡單. 你也可以 link:http://help.eclipse.org/juno/index.jsp?topic=/org.eclipse.jdt.doc.user/tasks/tasks-java-local-configuration.htm[create a Java run configuration] 或是可以簡單的按CTRL + F11 來執行專案(如果Eclipse不知道要做什麼, 它會問).
 
 
 === 包裝(Packaging)
@@ -192,7 +192,7 @@ Optionally, you can click _Next_ and specify a `.jardesc` file by checking _Save
 *  JME3 Base Project created (as described above)
 *  Android SDK downloaded and the Android 8 (2.2) target installed (higher +++<abbr title="Application Programming Interface">API</abbr>+++ versions work too but may limit compatibility when deploying)
 *  Assets compiled into a JAR (see _Packaging_ under _Assets_)
-*  link:http://developer.android.com/sdk/installing/installing-adt.html[Eclipse ADT plugin] installed
+*  link:http://developer.android.com/sdk/installing/installing-adt.html[Eclipse ADT plugin] 安裝
 
 The Android project is a slightly more involved setup project, but is still quite simple, even for new users.
 
@@ -240,7 +240,7 @@ Now that the core JME3 libraries have been added, we'll need to include our base
 
 Lastly, select the _Order and Export_ tab. Ensure that your base project (i.e. `JMEclipse-Base`), _Android Private Libraries_, _Android Dependencies_, and optionally _Google APIs_ (if you have that target enabled) are checked. This step is important, or your project's libraries/assets will NOT be exported into the end APK.
 
-Click _OK_, and your project's build path will be set up.
+點擊 OK, 然後你的專案的組件路徑將會被設定好
 
 The next step is to create the application's activity and edit `AndroidManifest.xml` to configure the project to actually use our JME3 project.
 
@@ -302,7 +302,7 @@ Packaging your Android project is too vast to entirely cover in this guide. As t
 *Prerequisites*:
 
 *  JME3 Base Project created (as described above)
-*  link:http://www3.ntu.edu.sg/home/ehchua/programming/howto/EclipseCpp_HowTo.html[Eclipse CDT plugin] installed
+*  link:http://www3.ntu.edu.sg/home/ehchua/programming/howto/EclipseCpp_HowTo.html[Eclipse CDT plugin] 安裝
 *  At least one configured toolchain for compiling on desktop platforms (Cygwin/MinGW/MSVC/GCC/etc.)
 *  Familiarity with JNI and how native libraries are included in a Java application's architecture (this section will assume you do)
 *  JDK 給 Java 6 或以上

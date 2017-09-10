@@ -1,4 +1,4 @@
-= jMonkeyEngine 3 教學(9) - 哈囉 碰撞(Collision)
+﻿= jMonkeyEngine 3 教學(9) - 哈囉 碰撞(Collision)
 :author: 
 :revnumber: 
 :revdate: 2016/03/17 20:48
@@ -8,8 +8,8 @@
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
-Previous: <<jme3/beginner/hello_picking#,Hello Picking>>,
-Next: <<jme3/beginner/hello_terrain#,Hello Terrain>>
+前一個: <<jme3/beginner/hello_picking#,哈囉 選取 (Picking)>>,
+下一個 : <<jme3/beginner/hello_terrain#,哈囉 地形 (Terrain)>>
 
 This tutorial demonstrates how you load a scene model and give it solid walls and floors for a character to walk around.
 You use a `RigidBodyControl` for the static collidable scene, and a `CharacterControl` for the mobile first-person character. You also learn how to set up the default first-person camera to work with physics-controlled navigation.
@@ -22,7 +22,7 @@ image::jme3/beginner/beginner-scene.png[beginner-scene.png,360,281,align="center
 
 == 範例程式
 
-If you don't have it yet, link:https://github.com/jMonkeyEngine/wiki/raw/master/src/docs/resources/Scenes/Town/town.zip[download the town.zip] sample scene.
+如果你還沒有, link:https://github.com/jMonkeyEngine/wiki/raw/master/src/docs/resources/Scenes/Town/town.zip[下載 town.zip] 範例場景.
 
 [source]
 ----
@@ -205,7 +205,7 @@ Run the sample. You should see a town square with houses and a monument. Use the
 
 == 了解程式碼
 
-Let's start with the class declaration:
+讓我們從物件宣告開始:
 
 [source,java]
 ----
@@ -213,7 +213,7 @@ public class HelloCollision extends SimpleApplication
         implements ActionListener { ... }
 ----
 
-You already know that SimpleApplication is the base class for all jME3 games. You make this class implement the `ActionListener` interface because you want to customize the navigational inputs later.
+你已經知道簡單應用程式是jME3遊戲中的基礎物件。你建置這個物件來實作 ActionListener介面，因為等一下你會想要自行設定操作輸入
 
 [source,java]
 ----
@@ -241,7 +241,7 @@ You initialize a few private fields:
 *  The fields `walkDirection` and the four Booleans are used for physics-controlled navigation.
 *  camDir and camLeft are temporary vectors used later when computing the walkingDirection from the cam position and rotation
 
-Let's have a look at all the details:
+讓我們看看所有的細節:
 
 
 == 初始化遊戲
@@ -287,7 +287,7 @@ For the scene, you load the `sceneModel` from a zip file, and adjust the size.
 
 ----
 
-The file `town.zip` is included as a sample model in the JME3 sources – you can link:https://github.com/jMonkeyEngine/wiki/raw/master/src/docs/resources/Scenes/Town/town.zip[download it here]. (Optionally, use any OgreXML scene of your own.) For this sample, place the zip file in the application's top level directory (that is, next to src/, assets/, build.xml).
+`town.zip`這個檔案包含一個在JME3原始碼的範例模型 – 你可以link:https://github.com/jMonkeyEngine/wiki/raw/master/src/docs/resources/Scenes/Town/town.zip[在這裡下載]. (可以選擇用任何你的OgreXML場景.)在這個範例中,壓縮檔在應用程式頂端目錄(就是src/, assets/, build.xml旁邊).
 
 [source,java]
 ----
@@ -307,7 +307,7 @@ To use collision detection, you add a RigidBodyControl to the `sceneModel` Spati
 *  Add the control to the Spatial to give it physical properties. 
 *  As always, attach the sceneModel to the rootNode to make it visible.
 
-[TIP]
+[小撇步]
 ====
 Remember to add a light source so you can see the scene.
 ====
@@ -501,7 +501,7 @@ cam.setLocation(player.getPhysicsLocation());
 ----
 
 
-[IMPORTANT]
+[重要]
 ====
 Again, do not use `setLocalTranslation()` to walk the player around. You will get it stuck by overlapping with another physical object. You can put the player in a start position with `setPhysicalLocation()` if you make sure to place it a bit above the floor and away from obstacles.
 ====

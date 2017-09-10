@@ -1,4 +1,4 @@
-= 物理: 地心引力, 碰撞, 力
+﻿建立一個碰撞形狀= 物理: 地心引力, 碰撞, 力
 :author: 
 :revnumber: 
 :revdate: 2016/03/17 20:48
@@ -12,7 +12,7 @@ A physics simulation is used in games and applications where objects are exposed
 
 The jMonkeyEngine3 has built-in support for link:http://jbullet.advel.cz[jBullet Physics] (based on link:http://bulletphysics.org[Bullet Physics]) via the `com.jme3.bullet` package. This article focuses mostly on the RigidBodyControl, but also introduces you to others. 
 
-If you are looking for info on how to respond to physics events such as collisions, read about <<jme3/advanced/physics_listeners#,Physics Listeners>>.
+如果你在尋找如何回應像是碰撞之類的物理事件的資訊,讀讀看<<jme3/advanced/physics_listeners#,Physics Listeners>>.
 
 
 == 概觀
@@ -95,7 +95,7 @@ public void simpleInitApp() {
 
 
 
-[TIP]
+[小撇步]
 ====
 In your application, you can always access the `BulletAppState` via the ApplicationStateManager: 
 
@@ -117,7 +117,7 @@ For each Spatial that you want to be physical:
 .  Attach the Spatial to the rootNode (as usual).
 .  (Optional) Implement the `PhysicsCollisionListener` interface to respond to `PhysicsCollisionEvent`s.
 
-Let's look at the details: 
+讓我們看看細節: 
 
 
 == Create a CollisionShape
@@ -211,7 +211,7 @@ a| Scale a player in the Y axis by 2: +
 The mesh-accurate shapes can use a CollisionShapeFactory as constructor (code samples see below).
 
 
-[IMPORTANT]
+[重點]
 ====
 Pick the simplest and most applicable shape for the mesh for what you want to do: If you give a box a sphere collision shape, it will roll; if you give a ball a box collision shape, it will sit on a slope. If the shape is too big, the object will seem to float; if the shape is too small it will seem to sink into the ground. During development and debugging, you can make collision shapes visible by adding the following line after the bulletAppState initialization: 
 
@@ -524,7 +524,7 @@ a| RigidBodyControl Method
 a| Motion 
 
 a| setPhysicsLocation()
-a|Positions the objects. Do not use setLocalTranslation() for physical objects. 重點: Make certain not to make CollisionShapes overlap when positioning them. 
+a|Positions the objects. Do not use setLocalTranslation() for physical objects. Important: Make certain not to make CollisionShapes overlap when positioning them. 
 
 a| setPhysicsRotation()
 a|Rotates the object. Do not use setLocalRotate() for physical objects.
