@@ -1,0 +1,122 @@
+= Atom Editor Setup for Wiki Editing
+:author: mitm001
+:revnumber:
+:revdate: 2017-09-08T23:24:11.262Z
+:relfileprefix: ../
+:imagesdir: ..
+:experimental:
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
+
+Contributing to the Wiki is now easier than it ever has been. Using the Atom editor will give you an easy to use interface that has code completion, syntax highlighting, instant AsciiDoctor previewing, with an integrated GitHub client.
+
+.Atom Editor Setup
+.  Download and install the Atom editor - https://atom.io/
+
+.  After installation is complete, you can customize the editor by selecting the `Choose A Theme` panel followed by the btn:[Theme Picker] button.
+
+.  Once you are satisfied with the customization of the editor, you will need to add several packages to make Atom AsciiDoctor compatible. Package installation is painless.
+**  From the `Install A Package` panel, select the btn:[Open Installer] button, or select `menu:Packages[Settings View>Install Packages/Themes]` from the file header.
+**  Enter "`asciidoc`" in the search box and press the btn:[Packages] button.
+** Add these packages:
++
+*language-asciidoc* +
+*asciidoc-image-helper*  +
+*asciidoc-preview* +
+*autocomplete-asciidoc*  +
+
+.  To edit the Wiki you will need to clone the wiki repository.
+**  From the 'Command Palette' (kbd:[ctrl+shift+P] or `menu:Packages[Command Palette>Toggle]`), enter "`git`" into the search box.
+**  Select btn:[GitHub: Clone].
+**  Paste `++https://github.com/jMonkeyEngine/wiki++` into the `Clone from` box. The `To directory` will automatically update when you do.
+**  When you're ready, press the btn:[Clone] button.
+
+The clone will take some time due to the size of the Wiki. Once cloned, a new `Project` tab will open on the left, and the `Git` and `GitHub Preview` tabs will open to the right. If they don't, you can open the Git tab using kbd:[ctrl+shift+9] and the GitHub Preview tab using kbd:[ctrl+shift+8]. Alternatively, you can navigate the `menu:Packages[GitHub]` menu. You will also notice in the lower right corner, on the `Status Bar`, you now have your GitHub control.
+
+Before you can commit any changes to the Wiki, you must configure at least the user.email and user.name variables for Git. You can do this via Git Bash, or manually, by following these instructions.
+
+*  link:https://help.github.com/articles/setting-your-commit-email-address-in-git/[Setting your commit email address in Git]
+*  Manually - Open your `.gitconfig` file and add,
++
+[source]
+----
+[user]
+        name = yourname
+        email = youremail
+----
+
+To maintain your privacy, setup your email settings in your GitHub account and use the `users.noreply.github.com` email address.
+
+When you edit a Wiki page, the Git tab will show any unstaged changes. When you're done making changes, you stage any or all changes, write your commit message, commit, and then push the changes.
+
+You can add more GitHub controls to the editor by adding the package `*git-plus*`.
+
+
+== Wiki Template
+
+
+To make things even easier, you can create your own Wiki template for page creation. You must first have the `file-templates` package installed. You can find this package by selecting `menu:File[Settings>Install]` and typing "`template`" into the search box.
+
+*  Once installed, from the `Command Palette` (kbd:[ctrl+shift+P] or `menu:Packages[Command Palette>Toggle]`) enter "`file`" into the search box.
+*  Select btn:[File Templates: New Template].
+*  For `Template Name`, use `Jme3 Wiki Template`, and when ready select btn:[Create].
+*  From the `Command Palette`, enter "`file`" and select btn:[File Templates: Update Template].
+*  If this is the first template it will open automatically. If not, then select the `Jme3 Wiki Template` you just created and press the btn:[Edit Template] button.
+*  Copy and paste the text below into the head of the document.
++
+[source,subs="+macros"]
+----
+= Enter Document Title Here
+:author: @author@
+:revnumber:
+:revdate: @timestamp@
+:relfileprefix: Enter path to asciidoc folder ../../
+:imagesdir: Enter path to images folder ../..
+:experimental:
+ifdef++::++env-github,env-browser[:outfilesuffix: .adoc]
+----
+*  When done, close the document and when it asks you if you want to save it select btn:[Yes] .
+
+You can now use your template when creating new Wiki documents by opening the `Command Palette`, entering "`file`" into the search box, and selecting btn:[File Templates: New File].
+
+[TIP]
+====
+To edit the template, from the `Command Palette` (kbd:[ctrl+shift+P]) type "`file`" into the search box and select: +
+`File Templates: Update Template -> Jme3 Wiki Page -> Edit Template`
+
+Save the edit when finished.
+====
+
+See also:
+
+<<wiki/wiki_header#,Anatomy of a Wiki Header>>
+
+
+== Atom Snippets
+
+
+[quote, Atom Flight Manual: Snippets]
+Snippets are an incredibly powerful way to quickly generate commonly needed code syntax from a shortcut.
+
+One advantage of using Atom as an editor for the Wiki comes from the use of link:http://flight-manual.atom.io/using-atom/sections/snippets/[Snippets]. You can see a list of available snippets for your document by using the `Command Palette` (kbd:[ctrl+shift+P] or `menu:Packages[Command Palette>Toggle]`). Enter "`snippets`" into the search box and select btn:[Snippets: Available].
+
+The Atom AsciiDoc packages add great functionality to the editor, but they do not cover everything that's possible when using AsciiDoctor syntax. You can customize the editor even further by adding your own snippets. I will get you started with your first snippet. Simply copy and paste the code below into your "`snippets.cson`" file and save.
+
+[source]
+----
+'.source.asciidoc':
+  'Internal Cross Reference':
+    'prefix': '<<'
+    'body': '<<${1:link-macro-attributes}#,${2:custom xreflabel text}>>'
+----
+
+Thereafter just type kbd:[<<]  and hit kbd:[Tab] to insert an Internal Cross Reference link. You can then use the kbd:[Tab] key to cycle through each tab stop when your ready.
+
+You can help the jMonkey community by adding new snippets. Use your editor and edit the <<wiki/atom_snippets#,Atom Snippets>> document. Make sure to announce any proposed changes on the link:https://hub.jmonkeyengine.org/[jMonkeyEngine Forum] under the topic "`Documentation`" first so others are aware and can test out your proposed change.
+
+'''
+Next steps,
+
+Read the Wiki link:https://github.com/jMonkeyEngine/wiki[README.adoc] page. +
+Add  link:http://asciidoctor.org/docs/user-manual/#introduction-to-asciidoctor[Introduction to Asciidoctor] to your favorites, you will refer to it often. +
+Start contributing.
