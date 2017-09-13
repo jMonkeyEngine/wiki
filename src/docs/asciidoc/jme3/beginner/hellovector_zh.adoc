@@ -1,0 +1,284 @@
+= 哈囉向量
+:author:
+:revnumber:
+:revdate: 2016/03/17 20:48
+:relfileprefix: ../../
+:imagesdir: ../..
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
+
+image:jme3/beginner/hellovectorsumm2.png[hellovectorsumm2.png,width="",height=""]
+
+HelloVectorSumm.java
+
+[source,java]
+----
+
+package org.jmonkey.chapter2.hellovector;
+
+import com.jme3.app.SimpleApplication;
+import com.jme3.material.Material;
+import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector3f;
+import com.jme3.renderer.RenderManager;
+import com.jme3.scene.Geometry;
+import com.jme3.scene.Node;
+import com.jme3.scene.shape.Box;
+import org.jmonkey.utils.Debug;
+import org.jmonkey.utils.MaterialUtils;
+import org.jmonkey.utils.SpatialUtils;
+
+/**
+ Example Vector Summ
+
+ @author Alex Cham aka Jcrypto
+ */
+public class HelloVectorSumm extends SimpleApplication
+{
+
+    private Node vctrNode = SpatialUtils.makeNode("vectorNode");
+    //
+    private Vector3f vctrNodeLoc = new Vector3f(64.0f, 64.0f, 64.0f);
+    private Vector3f camLocVctr = new Vector3f(512.0f, 64.0f, 0.0f);
+    //
+    private Vector3f vctrNodeSpatLoc = new Vector3f(64.0f, 128.0f, -32.0f);
+    //
+    private Vector3f vctrSumm = null;
+    private Vector3f scale = new Vector3f(8, 8, 8);
+
+    public static void main(String[] args)
+    {
+        HelloVectorSumm app = new HelloVectorSumm();
+        //app.setShowSettings(false);
+        app.start();
+    }
+
+    @Override
+    public void simpleInitApp()
+    {
+        cam.setLocation(camLocVctr);
+        cam.lookAt(Vector3f.ZERO, cam.getUp());
+        flyCam.setMoveSpeed(100.0f);
+        //
+        Debug.showNodeAxes(assetManager, rootNode, 128);
+        Debug.attachWireFrameDebugGrid(assetManager, rootNode, Vector3f.ZERO, 256, ColorRGBA.DarkGray);
+
+        //
+        Box box = new Box(1, 1, 1);
+        //
+        Material mat = MaterialUtils.makeMaterial(assetManager, "Common/MatDefs/Misc/Unshaded.j3md", ColorRGBA.Blue);
+        Geometry geom = SpatialUtils.makeGeometry(vctrNodeSpatLoc, scale, box, mat, "box");
+        vctrNode.attachChild(geom);
+        vctrNode.setLocalTranslation(vctrNodeLoc);
+        vctrSumm = vctrNodeLoc.add(vctrNodeSpatLoc);
+        //
+        Debug.showNodeAxes(assetManager, vctrNode, 4.0f);
+        Debug.showVector3fArrow(assetManager, rootNode, vctrNodeLoc, ColorRGBA.Red, "vctrNodeLoc");
+        Debug.showVector3fArrow(assetManager, vctrNode, vctrNodeSpatLoc, ColorRGBA.Green, "vctrNodeSpatLoc");
+        Debug.showVector3fArrow(assetManager, rootNode, vctrSumm, ColorRGBA.Blue, "vctrSumm");
+        //
+        rootNode.attachChild(vctrNode);
+    }
+
+    @Override
+    public void simpleUpdate(float tpf)
+    {
+        //n.move(tpf * 10, 0, 0);
+    }
+
+    @Override
+    public void simpleRender(RenderManager rm)
+    {
+        //TODO: add render code
+    }
+}
+
+----
+
+—
+
+[source,java]
+----
+
+
+package org.jmonkey.utils;
+
+import com.jme3.asset.AssetManager;
+import com.jme3.material.Material;
+import com.jme3.math.ColorRGBA;
+
+/**
+ * Example Vector Summ
+ * @author Alex Cham aka Jcrypto
+ */
+
+public class MaterialUtils
+{
+
+    public MaterialUtils()
+    {
+    }
+
+
+    //"Common/MatDefs/Misc/Unshaded.j3md"
+    public static Material makeMaterial(AssetManager am, String name, ColorRGBA color)
+    {
+        Material mat = new Material(am, name);
+        mat.setColor("Color", color);
+        return mat;
+    }
+}
+
+----
+
+—
+
+[source,java]
+----
+
+
+package org.jmonkey.utils;
+
+import com.jme3.material.Material;
+import com.jme3.math.Vector3f;
+import com.jme3.scene.Geometry;
+import com.jme3.scene.Mesh;
+import com.jme3.scene.Node;
+
+/**
+ * Example Vector Summ
+ * @author Alex Cham aka Jcrypto
+ */
+public class SpatialUtils
+{
+    //
+    public static Node makeNode(String name)
+    {
+        Node n = new Node(name);
+        return n;
+    }
+
+//
+    public static Geometry makeGeometry(Mesh mesh, Material mat, String name)
+    {
+        Geometry geom = new Geometry(name, mesh);
+        geom.setMaterial(mat);
+        return geom;
+    }
+
+    //
+    public static Geometry makeGeometry(Vector3f loc, Vector3f scl, Mesh mesh, Material mat, String name)
+    {
+        Geometry geom = new Geometry(name, mesh);
+        geom.setMaterial(mat);
+        geom.setLocalTranslation(loc);
+        geom.setLocalScale(scl);
+        return geom;
+    }
+}
+
+----
+
+—
+Debug.java
+
+[source,java]
+----
+
+
+package org.jmonkey.utils;
+
+import com.jme3.animation.AnimControl;
+import com.jme3.asset.AssetManager;
+import com.jme3.material.Material;
+import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector3f;
+import com.jme3.scene.Geometry;
+import com.jme3.scene.Node;
+import com.jme3.scene.debug.Arrow;
+import com.jme3.scene.debug.Grid;
+import com.jme3.scene.debug.SkeletonDebugger;
+import com.jme3.scene.shape.Line;
+import static org.jmonkey.utils.SpatialUtils.makeGeometry;
+
+/**
+ Example Vector Summ
+
+ @author Alex Cham aka Jcrypto
+ */
+public class Debug
+{
+
+    public static void showNodeAxes(AssetManager am, Node n, float axisLen)
+    {
+        Vector3f v = new Vector3f(axisLen, 0, 0);
+        Arrow a = new Arrow(v);
+        Material mat = new Material(am, "Common/MatDefs/Misc/Unshaded.j3md");
+        mat.setColor("Color", ColorRGBA.Red);
+        Geometry geom = new Geometry(n.getName() + "XAxis", a);
+        geom.setMaterial(mat);
+        n.attachChild(geom);
+
+
+        //
+        v = new Vector3f(0, axisLen, 0);
+        a = new Arrow(v);
+        mat = new Material(am, "Common/MatDefs/Misc/Unshaded.j3md");
+        mat.setColor("Color", ColorRGBA.Green);
+        geom = new Geometry(n.getName() + "YAxis", a);
+        geom.setMaterial(mat);
+        n.attachChild(geom);
+
+
+        //
+        v = new Vector3f(0, 0, axisLen);
+        a = new Arrow(v);
+        mat = new Material(am, "Common/MatDefs/Misc/Unshaded.j3md");
+        mat.setColor("Color", ColorRGBA.Blue);
+        geom = new Geometry(n.getName() + "ZAxis", a);
+        geom.setMaterial(mat);
+        n.attachChild(geom);
+    }
+
+    //
+    public static void showVector3fArrow(AssetManager am, Node n, Vector3f v, ColorRGBA color, String name)
+    {
+        Arrow a = new Arrow(v);
+        Material mat = MaterialUtils.makeMaterial(am, "Common/MatDefs/Misc/Unshaded.j3md", color);
+        Geometry geom = makeGeometry(a, mat, name);
+        n.attachChild(geom);
+    }
+
+    public static void showVector3fLine(AssetManager am, Node n, Vector3f v, ColorRGBA color, String name)
+    {
+        Line l = new Line(v.subtract(v), v);
+        Material mat = MaterialUtils.makeMaterial(am, "Common/MatDefs/Misc/Unshaded.j3md", color);
+        Geometry geom = makeGeometry(l, mat, name);
+        n.attachChild(geom);
+    }
+
+//Skeleton Debugger
+    public static void attachSkeleton(AssetManager am, Node player, AnimControl control)
+    {
+        SkeletonDebugger skeletonDebug = new SkeletonDebugger("skeleton", control.getSkeleton());
+        Material mat2 = new Material(am, "Common/MatDefs/Misc/Unshaded.j3md");
+        mat2.setColor("Color", ColorRGBA.Yellow);
+        mat2.getAdditionalRenderState().setDepthTest(false);
+        skeletonDebug.setMaterial(mat2);
+        player.attachChild(skeletonDebug);
+    }
+
+    ///
+    public static void attachWireFrameDebugGrid(AssetManager assetManager, Node n, Vector3f pos, Integer size, ColorRGBA color)
+    {
+        Geometry g = new Geometry("wireFrameDebugGrid", new Grid(size, size, 1.0f));//1WU
+        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+        mat.getAdditionalRenderState().setWireframe(true);
+        mat.setColor("Color", color);
+        g.setMaterial(mat);
+        g.center().move(pos);
+        n.attachChild(g);
+    }
+}
+
+----

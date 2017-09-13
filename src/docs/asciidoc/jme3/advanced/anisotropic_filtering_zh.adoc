@@ -1,0 +1,48 @@
+﻿= 各向異性過濾
+:author:
+:revnumber:
+:revdate: 2016/03/17 20:48
+:relfileprefix: ../../
+:imagesdir: ../..
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
+
+
+== 材質的各向異性過濾
+
+各向異性過濾(Anisotropic Filtering) 對電腦遊戲以及他們的材質極為重要. 大部分的遊戲使用 AnisotropicFiltering = 4/8/16. 它銳利畫你的材質在不同的視角.
+Anisotropy會讓性能降到10-40 fps, 但是結果會看起來好一點.
+
+觀看範例: link:http://i.imgur.com/0yiv9.jpg[http://i.imgur.com/0yiv9.jpg]
+
+image::jme3/advanced/anisotropy_example_mifth_01.jpg[anisotropy_example_mifth_01.jpg,width="360",height="900",align="right"]
+
+
+JME 有預設 AnisotropicFiltering = 0. 所以,如果你為 Windows/Linux/Mac..設計遊戲，你需要設定 各向異性過濾大於0.
+
+如何設定 AnisotropicFiltering = 4給所有材質的範例:
+
+[source,java]
+----
+
+        AssetEventListener asl = new AssetEventListener() {
+            public void assetLoaded(AssetKey key) {
+//                throw new UnsupportedOperationException("Not supported yet.");
+            }
+
+            public void assetRequested(AssetKey key) {
+                if (key.getExtension().equals("png") || key.getExtension().equals("jpg") || key.getExtension().equals("dds")) {
+                    System.out.println(key.getExtension());
+                    TextureKey tkey = (TextureKey) key;
+                    tkey.setAnisotropy(8);
+                }
+            }
+
+            public void assetDependencyNotFound(AssetKey parentKey, AssetKey dependentAssetKey) {
+//                throw new UnsupportedOperationException("Not supported yet.");
+            }
+        };
+
+        assetManager.addAssetEventListener(asl);
+
+----

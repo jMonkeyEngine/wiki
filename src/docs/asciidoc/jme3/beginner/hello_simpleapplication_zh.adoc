@@ -1,48 +1,62 @@
-= 第一个JME3应用程序
+﻿= jMonkeyEngine 3 教學(1) - 哈囉 簡單應用程式(SimpleApplication)
 :author: 
 :revnumber: 
 :revdate: 2016/03/17 20:48
-:keywords: beginner, intro, documentation, init, simpleapplication, basegame
+:keywords: 初學者,入門,說明文件,初始化,簡單應用程式,基本遊戲
 :relfileprefix: ../../
 :imagesdir: ../..
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
-上一篇: <<documentation_zh#下载和安装,下载和安装>>, 下一篇/ <<jme3/beginner/hello_node_zh#,节点(Node)>>
+前一個: <<jme3#installing_jmonkeyengine_3,安裝JME3>>,
+下一個: <<jme3/beginner/hello_node#,哈囉 節點 (Node)>>
 
-*预备知识:* 开始之前假设你已经<<documentation_zh#下载和安装,下载和安装jMonkeyEngine SDK>>，并且可以顺利地运行其中的一些例子。
+*Prerequisites:* This tutorial assumes that you have <<documentation#,downloaded the jMonkeyEngine SDK>>.
 
-在JME3初级系列教程的学习过程中，我们假设你使用的是<<sdk#, jMonkeyEngine SDK>>，并且是一名具有中、高级水准的Java开发者。很快你就将学会如何使用你熟悉的IDE(如NetBeans IDE、<<jme3/setting_up_jme3_in_eclipse_zh#,Eclipse>>、IntelliJ，甚至是<<jme3/simpleapplication_from_the_commandline#,命令行>>)来开发JME3项目。
+In this tutorial series, we assume that you use the jMonkeyEngine <<sdk#,SDK>>. As an intermediate or advanced Java developer, you will quickly see that, in general, you can develop jMonkeyEngine code in any integrated development environment (NetBeans IDE, Eclipse, IntelliJ) or even from the <<jme3/simpleapplication_from_the_commandline#,command line>>. 
 
-
-== 创建项目
-
-在jMonkeyEngine SDK 里：
-
-.  按 Choose File→New Project…
-.  找 JME3→Basic Game，按 Next。
-..  在 Project Name 里，填写你的游戏名字。 
-..  按 Project Location 右边 Browse 找你要放游戏的地方。
-
-.  按Finnish。
-
-如果你有别的问题的话，请阅读<<sdk/project_creation#,创建项目>>。
+OK, let's get ready to create our first jMonkeyEngine3 application.
 
 
-== 写一个程序
+== 建立專案
 
-在jMonkeyEngine SDK 里:
+In the jMonkeyEngine SDK:
 
-.  右按你的 Source Packages
-.  按 New…→Java Class
-.  在 Class Name 里放: `HelloJME3`
-.  在 Package 里放: `jme3test.helloworld`. 
-.  按 Finish.
+.  Choose File→New Project… from the main menu.
+.  In the New Project wizard, select the template JME3→Basic Game. Click Next. 
+..  Specify a project name, e.g. “HelloWorldTutorial
+..  Specify a path where to store your new project, e.g. a `jMonkeyProjects` directory in your home directory.
+
+.  Click Finish. 
+
+If you have questions, read more about <<sdk/project_creation#,Project Creation>> here.
 
 
-== 例子
+[TIP]
+====
+We recommend to go through the steps yourself, as described in the tutorials. Alternatively, you can create a project based on the <<sdk/sample_code#,JmeTests>> template in the jMonkeyEngine SDK. It will create a project that already contains the `jme3test.helloworld` samples (and many others). For example, you can use the JmeTests project to verify whether you got the solution right.
+====
 
-在HelloJME3.java里面，方静下面的Java：
+
+
+== 繼承SimpleApplication
+
+For this tutorial, you want to create a jme3test.helloworld package in your project, and create a file HelloJME3.java in it.
+
+In the jMonkeyEngine SDK:
+
+.  Right-click the Source Packages node of your project.
+.  Choose New…→Java Class to create a new file.
+.  Enter the class name: HelloJME3
+.  Enter the package name: jme3test.helloworld.
+.  Click Finish.
+
+The SDK creates the file HelloJME3.java for you.
+
+
+== 範例程式
+
+Replace the contents of the HelloJME3.java file with the following code.
 
 [source,java]
 ----
@@ -56,141 +70,227 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Box;
 import com.jme3.math.ColorRGBA;
 
-/** Sample 1 - 怎么写一个很简单的程序。
- * 放一个蓝色的立方体在 scene graph 上。
- * 用 WASD 去动 */
+/** Sample 1 - how to get started with the most simple JME 3 application.
+ * Display a blue 3D cube and view from all sides by
+ * moving the mouse and pressing the WASD keys. */
 public class HelloJME3 extends SimpleApplication {
 
     public static void main(String[] args){
         HelloJME3 app = new HelloJME3();
-        app.start(); // 开始！
+        app.start(); // start the game
     }
     
     @Override
     public void simpleInitApp() {
-        Box b = new Box(Vector3f.ZERO, 1, 1, 1); // 盖一个立方体在（0,0,0）
-        Geometry geom = new Geometry("Box", b);  // 用立方体盖一个 Geometry。
+        Box b = new Box(1, 1, 1); // create cube shape
+        Geometry geom = new Geometry("Box", b);  // create cube geometry from the shape
         Material mat = new Material(assetManager,
-          "Common/MatDefs/Misc/Unshaded.j3md");  // 图一个 Material。
-        mat.setColor("Color", ColorRGBA.Blue);   // 图蓝色在 Material 上。
-        geom.setMaterial(mat);                   // 方 Material 在立方体上。
-        rootNode.attachChild(geom);              // 放 Geometry 在 Root Node 上。（让大家看到那个 Geometry）
+          "Common/MatDefs/Misc/Unshaded.j3md");  // create a simple material
+        mat.setColor("Color", ColorRGBA.Blue);   // set color of material to blue
+        geom.setMaterial(mat);                   // set the cube's material
+        rootNode.attachChild(geom);              // make the cube appear in the scene
     }
 }
 ----
 
-按 HelloJME3，找 Run. 如果 SDK 问你要用什么 Settings，按 Default Settings。
+Right-click the HelloJME3 class and choose Run. If a jME3 settings dialog pops up, confirm the default settings.
 
-.  你会看到一个蓝色的立方体。
-.  按 WASD 去动来动去。
-.  如果你要关 HelloJME 就按 ESC。
+.  You should see a simple window displaying a 3D cube.
+.  Press the WASD keys and move the mouse to navigate around.
+.  Look at the FPS text and object count information in the bottom left. You will use this information during development, and you will remove it for the release. (To read the numbers correctly, consider that the 14 lines of text counts as 14 objects with 914 vertices.)
+.  Press Escape to close the application.
 
-
-== 软件做了什么
-
-我写了一个很简单的程序。它会盖一个蓝色的立方体.
+Congratulations! Now let's find out how it works!
 
 
-=== 开始 SimpleApplication
+== 了解程式碼
 
-看第一行。HelloJME3 extends `com.jme3.app.SimpleApplication`。 
+The code above has initialized the scene, and started the application.
+
+
+=== 執行SimpleApplication
+
+Look at the first line. Your HelloJME3.java class extends `com.jme3.app.SimpleApplication`. 
 
 [source,java]
 ----
 
 public class HelloJME3 extends SimpleApplication {
-  // ...
+  // your code...
 }
 
 ----
 
-每一个 JME3 游戏 是一个 `com.jme3.app.SimpleApplication` instance。 SimpleApplication 会帮你图上屏幕和你的3D Scene。
+Every JME3 game is an instance of the `com.jme3.app.SimpleApplication` class. The SimpleApplication class is the simplest example of an application: It manages a 3D scene graph, checks for user input, updates the game state, and automatically draws the scene to the screen. These are the core features of a game engine. You extend this simple application and customize it to create your game.
 
-JME3 从 `main()` 来开始。在 `main()` 里面，你要:
+You start every JME3 game from the main() method, as every standard Java application:
 
-.  盖一个 `SimpleAppliction` instance。（instantiate）
-.  叫它的 `start()` 去开始你的程序。
+.  Instantiate your `SimpleApplication`-based class
+.  Call the application's `start()` method to start the game engine. 
 
 [source,java]
 ----
 
     public static void main(String[] args){
-        HelloJME3 app = new HelloJME3(); // instantiate 你的游戏。
-        app.start();                     // 开始！
+        HelloJME3 app = new HelloJME3(); // instantiate the game
+        app.start();                     // start the game!
     }
 
 ----
 
+The `app.start();` line opens the application window. Let's learn how you put something into this window (the scene) next.
 
-=== 口语到 JME 语
+
+=== 了解術語
 [cols="2", options="header"]
 |===
 
-a|你要做什么
-a|怎么说在JME语言
+a|What you want to do
+a|How you say that in JME3 terminology
 
-a|你要盖一个立方体。
-a|我盖一个用 1x1x1 Box 的 Geometry。
+a|You want to create a cube.
+a|I create a Geometry with a 1x1x1 Box shape.
 
-a|你要用蓝色。
-a|我图一个资料，就放蓝色在资料上面。
+a|You want to use a blue color.
+a|I create a Material with a blue Color property.
 
-a|你要一个蓝色的立方体。
-a|我图蓝色的资料在立方体上。
+a|You want to colorize the cube blue.
+a|I set the Material of the Box Geometry.
 
-a|你要看到你的 Geometry
-a|我放 Geometry 在 Root Node 上。
+a|You want to add the cube to the scene.
+a|I attach the Box Geometry to the rootNode.
 
-a|我要我的立方体在中间
-a|我放立方体在（0,0,0）`Vector3f.ZERO`。
+a|You want the cube to appear in the center.
+a|I create the Box at the origin = at `Vector3f.ZERO`.
 
 |===
 
-如果你还是有问题，请你看<<jme3/the_scene_graph#,the Scene Graph>>。
+If you are unfamiliar with the vocabulary, read more about <<jme3/the_scene_graph#,the Scene Graph>> here.
 
 
-=== Initialize the Scene
+=== 初始化場景
 
-你的程序一开始后，就会自动叫`simpleInitApp()`。 每一个 JME3 游戏要有它。`simpleInitApp()`要方一开始要看到／做到的东西
+Look at rest of the code sample. The `simpleInitApp()` method is automatically called once at the beginning when the application starts. Every JME3 game must have this method. In the `simpleInitApp()` method, you load game objects before the game starts. 
 
 [source,java]
 ----
 
     public void simpleInitApp() {
-       ／／先看到／做到的东西...
+       // your initialization code...
     }
 
 ----
 
+The initialization code of a blue cube looks as follows:
+
 [source,java]
 ----
 
     public void simpleInitApp() {
-        Box b = new Box(Vector3f.ZERO, 1, 1, 1); // 盖一个立方体在（0,0,0）
-        Geometry geom = new Geometry("Box", b);  // 用立方体盖一个 Geometry。
+        Box b = new Box(1, 1, 1); // create a 1x1x1 box shape
+        Geometry geom = new Geometry("Box", b);  // create a cube geometry from the box shape
         Material mat = new Material(assetManager,
-          "Common/MatDefs/Misc/Unshaded.j3md");  // 图一个资料。
-        mat.setColor("Color", ColorRGBA.Blue);   // 方蓝色在资料上。
-        geom.setMaterial(mat);                   // 图资料到立方体上。
-        rootNode.attachChild(geom);              // 放 Geometry 在 Root Node 上。（让大家看到你的 Geometry）
+          "Common/MatDefs/Misc/Unshaded.j3md");  // create a simple material
+        mat.setColor("Color", ColorRGBA.Blue);   // set color of material to blue
+        geom.setMaterial(mat);                   // set the cube geometry 's material
+        rootNode.attachChild(geom);              // make the cube geometry appear in the scene
     }
 
 ----
 
+A typical JME3 game has the following initialization process:
 
-== 最后
+.  You initialize game objects:
+**  You create or load objects and position them.
+**  You make objects appear in the scene by attaching them to the `rootNode`.
+**  *Examples:* Load player, terrain, sky, enemies, obstacles, …, and place them in their start positions.
 
-你学了 SimpleApplication 的作用：
+.  You initialize variables
+**  You create variables to track the game state. 
+**  You set variables to their start values. 
+**  *Examples:* Set the `score` to 0, set `health` to 100%, …
 
-*  `simpleInitApp()` 里面放开始要看或做的东西。
-*  要是你要看到 东西，你就要放它在 `rootNode` 上。
-*  用 WASD 去动。
+.  You initialize keys and mouse actions.
+**  The following input bindings are pre-configured:
+***  W,A,S,D keys – Move around in the scene
+***  Mouse movement and arrow keys – Turn the camera
+***  Escape key – Quit the game
 
-继续去 <<jme3/beginner/hello_node#,Hello Node>> 你会学什么是，和你真么用 Scene Graph。
+**  Define your own additional keys and mouse click actions.
+**  *Examples:* Click to shoot, press Space to jump, …
+
+
+
+=== 簡單應用程式的未來
+
+
+There are plans to change SimpleApplication. Sometime back it was decided that we should really re-factor the Application class. SimpleApplication especially is a mess of 'magic' protected fields that on the one hand makes it really easy to slam some simple one-class application together, but on the other hand does new users no favors because they have no idea where 'cam' and 'assetManager' come from. Unfortunately, lots of code refers to Application and it's tough to change... especially the app states.
+
+So, we hatched a plan to convert the Application class to an interface. This would give us some freedom to iterate on a new set of application base classes. You can read about the changes link:https://hub.jmonkeyengine.org/t/jmonkeyengine-3-1-alpha-4-released/35478[here]. As said before we are envisioning a better design that is not enforced today, but that is already usable. 
+
+If you look at SimpleApplication default constructor you will understand how it works.
+
+[source,java]
+----
+public SimpleApplication() {    
+    this(new StatsAppState(), new FlyCamAppState(), new AudioListenerState(), new DebugKeysAppState());}
+----
+
+Basically the application is injected upon construction with the default AppStates. Let's look at the second constructor.
+
+[source,java]
+----
+public SimpleApplication( AppState... initialStates ) {    
+    super(initialStates);
+}
+----
+
+It allows you to specify what AppState you want for your application. So SimpleApplication is handy for test projects (I very often use it as is) but I recommend for a full blown-game to use it like this:
+
+[source,java]
+----
+public class MyGame extends SimpleApplication {
+    
+    public MyGame(){
+         super(new MyCustomSate(), new AnotherState(), ....);
+    }
+
+    public static void main(String[] args) {
+        MyGame app = new MyGame();
+        app.start();
+    }
+
+}
+----
+
+Then have all logic implemented in <<jme3/advanced/application_states#,AppStates>> and your SimpleApplication will never change much, except when you want to add a bootstrap AppState (or maybe you can have an AppState that manages AppStates...), SimpleApplication is just the list of states you are using.
+
+In future versions, all the code in SimpleApplication will be refactored in AppStates (InputHandlingState, RenderAppState, whatever) and you will decide what you want to use. However, for legacy sake we kept the code as is for now.
+
+
+== 結論
+
+You have learned that a SimpleApplication is a good starting point because it provides you with:
+
+*  A `simpleInitApp()` method where you create objects.
+*  A `rootNode` where you attach objects to make them appear in the scene.
+*  Useful default input settings that you can use for navigation in the scene.
+
+When developing a game application, you want to:
+
+.  Initialize the game scene
+.  Trigger game actions 
+.  Respond to user input.
+
+The now following tutorials teach how you accomplish these tasks with the jMonkeyEngine 3.
+
+Continue with the <<jme3/beginner/hello_node#,Hello Node>> tutorial, where you learn more details about how to initialize the game world, also known as the scene graph.
+
 '''
 
-还看:
+See also:
 
-*  <<#,下载JME3SDK>>
+*  <<documentation#,Install the jMonkeyEngine>>
 *  <<jme3/simpleapplication_from_the_commandline#,SimpleApplication From the Commandline>>
-*  <<sdk/project_creation#,写一个JME3 Project>>.
+*  <<sdk/project_creation#,Create a JME3 project>>
+*  <<jme3/advanced/application_states#,AppStates>>

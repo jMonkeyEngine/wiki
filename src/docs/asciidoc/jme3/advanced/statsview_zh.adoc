@@ -1,0 +1,115 @@
+= Optimizing Your Game Using Statistics
+:author: 
+:revnumber: 
+:revdate: 2016/03/17 20:48
+:relfileprefix: ../../
+:imagesdir: ../..
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
+
+When you create a SimpleApplication, you see the default StatsView and FpsView in the left corner. 
+The StatsView displays object statistics that are used during development, for example for debugging and optimization.
+Below the StatsView is the FpsView that displays the frames that jMonkeyEngine can render per second. 
+
+The main use case of these statistics is to find out why the application may be running slow and where to start fixing the performance.
+
+The StatsView + FpsView look like this example:
+
+[source]
+----
+
+FrameBuffers (M) = 2
+FrameBuffers (F) = 2
+FrameBuffers (S) = 2
+Textures (M) = 7 
+Textures (F) = 3 
+Textures (S) = 3
+Shaders (M) = 6
+Shaders (F) = 3
+Shaders (S) = 4
+Objects = 24
+Uniforms = 31
+Triangles = 582
+Vertices = 1148
+Frames per Second: 30
+
+----
+
+
+== On/Off
+
+You switch the StatsView on an off in the simpleInitApp() method by setting a boolean:
+
+[source,java]
+----
+ 
+setDisplayFps(false);       // to hide the FPS
+setDisplayStatView(false);  // to hide the statistics 
+
+----
+
+
+== Terminology
+
+Types of items counted:
+
+*  FrameBuffers: Total number of rendering surfaces used for off-screen rendering and render-to-texture functionality. 
+*  Textures: Total number of distinct textures used in the scene.
+*  Shaders: Total number of shaders used for effects (shading, blur, lighting, glow, etc).
+*  Objects: Total number of objects in the OpenGL pipeline. That is, objects attached to the rootNode and guiNode, etc.
+*  Uniforms: Total number of shader uniforms. Uniforms are predefined variables used as parameters in shader calculations, containing data such as matrices, vectors, time, and colors.
+*  Triangles: Total number of triangles (faces) of the meshes of all objects.
+*  Vertices: Total number of vertices (corner points) of the meshes of all the objects.
+
+Types of statistics:
+
+*  *(M) = Memory* – Number of items currently in OpenGL memory.
+*  *(F) = Frame * – Number of items used by current frame (visible).
+*  *(S) = Switches* – Number of items that were state switched in the last frame.
+
+The StatsView does not include any Physics statistics.
+
+
+== How to Interpret the FPS when Optimizing
+
+The FPS (frames per second) shows you how fast jME runs the update loop. If the FPS values goes below 30, the game slows down and runs jerky, which makes the game either frustrating or impossible to play. You need either decrease the number of operations in the update loop, or decrease memory usage (object count). 
+
+If your application grows more and more sluggish, deactivate or decrease one feature set at a time: Deactivate drop shadows, physics, anti-aliasing… Try fewer light sources, fewer NPCs, fewer samples in spheres (i.e. less smooth spheres). Temporarily replace the scene (or parts of it) with a simpler test scene to check whether the scene has to many triangles, etc. 
+
+Keep an eye on FPS and the StatsView and find out which element has the biggest impact on performance. This is where you start optimizing.
+
+
+== How to Interpret The Statistics
+
+
+[IMPORTANT]
+====
+To interpret the numbers correctly, consider that the 14 lines of text themselves already count as 14 objects with 914 vertices. You need to subtract these values from the totals for smaller performance experiments.
+====
+
+
+What do you want to avoid?
+
+.  FrameBuffers: If you don't use any post-processing effects (FilterPostProcessor), this count should be zero. The more effects you use, the more FrameBuffers are in use. If this value is high while others are normal, and your game is sluggish, you can speed up the application by using fewer post-processing effects.
+.  The Object Count (Batch Count) is a very important value that indicates how many geometries were rendered in the last frame. In general, if you keep the object count around 100-200, your game will be fast and responsive. If the count is permanently higher, hand-code rules that detach remote objects, or optimize a complex multi-material scene using: `GeometryBatchFactory.optimize(complexNode, true);` or a <<jme3/advanced/texture_atlas#,Texture Atlas>>.
+.  Triangle Counts. If your game is sluggish and triangle (polygon) count is high, then you are rendering too many, too detailed meshes. Tell your graphic designers to create models with lower polygon counts, or use a <<jme3/advanced/level_of_detail#,Level of Detail>> (LOD) optimization. The limit is around 100'000 vertices for a scene, considering that the slowest currently used graphic cards cannot handle anything beyond that. 
+.  Are any counts constantly increasing right before the game slows down or runs out of memory? Check whether you are accidentally adding objects in a loop, instead of only once.
+.  Verify that the numbers are plausible. If you think you generated a test scene out of “a few boxes, but the StatsView shows ten thousands of triangles, then you probably have extra objects out of sight somewhere (due to barely visible materials, overlapping with other objects, scaled too big or too small to see, etc). 
+**  Example: In a test scene made up of boxes, you'd expect a vertex:triangle:object ratio of 8:12:1. 
+**  Terrains, models and spheres have higher counts, depending on their size and <<jme3/advanced/level_of_detail#,Level of Detail>> (LOD). A high-poly model looks pretty in Blender, but you must find a lower-poly, low-LOD compromise if you want several large objects in one scene!
+
+.  If S (objects being switched) are high compared to F (objects used), then you use or generate too many different Materials (etc). You are unnecessarily forcing jME to re-load and re-bind objects (= Switches), which is bad for performance. Also if you have many transparent materials in your scene, this results in more switches, and you should use fewer transparent materials.
+.  If the M values (objects in memory) are high compared to F (objects used), that means a lot more GL objects are kept in memory than are actually used. This can happen in large scenes with many materials. Consider breaking the scene up and detaching objects while they are out of sight, so the built-in culling can optimize the scene.
+
+What goal are you trying to achieve in general?
+
+.  The values for (M) and (F) should be within the same order of magnitude. This means your code only loads objects that it actually needs, and that the hardware can actually handle.
+.  It's okay if Switches (S) are lower than Used in Current Frame (F).
+.  The FPS should be 30 or more on the slowest hardware that you target.
+.  10'000-50'000 vertices is a typical average value for a scene.
+'''
+
+See also:
+
+*  link:http://hub.jmonkeyengine.org/forum/topic/good-triangles-count/[What's a good triangle count?] Forum discussion
+*  <<jme3/advanced/level_of_detail#,Level of Detail>>

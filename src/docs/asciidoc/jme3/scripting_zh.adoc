@@ -1,0 +1,509 @@
+= Scripting in JME3 with Groovy. All about it!
+:author:
+:revnumber:
+:revdate: 2016/03/17 20:48
+:relfileprefix: ../
+:imagesdir: ..
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
+
+*Monkeys*,+
++
+For anyone who still ask for something like *“Scripting” with JME3*, here is it, about it at once!
+
+We nearly reach 3.0, i’m so excited about it and want to write something for it. In this post you will have a good run from Zero to Hero with Groovy and Monkey :p
+Not kidding!
+
+
+image::wiki/stll_monkey_typing.jpg[100,width="",height="",align="right"]
+
+
+[IMPORTANT]
+====
+emoji:
+*Quick question*: What this related to my other tuts emoji:confused ?+[atomixtuts]
+*Answer*: As I wrote the others, I thought I should write this first, because if no one know about Groovy, no one can understand a single line of my code emoji:confused , and it’s bad!
+====
+
+
+
+== Introduction:
+
+We will go from basic setup of Groovy in JMP and then example by example every aspect of game you can develop with Groovy.
+More advanced topic come at the end, eg: the way to get the speed of Java, meta-programing, a lot of programming patterns (PP), even AI and Constraint Programming…
+Sounds insanse? Nah ah…
+
+
+[IMPORTANT]
+====
+ Let me know if you want to write or to read other topics of Groovy or Scripting. Thanks!
+====
+
+
+Let’s start!
+
+
+== Content:
+
++
++
++
+
+.  GET STARTED
+.  LEARN GROOVY
+..  Syntax and Gotchas
+..  Meta-programming
+..  Groovy Builder – SwingBuilder
+..  Groovy – for smarty
+..  GPars
+
+.  EMBED GROOVY
+..  Groovy in JME3
+..  Groovy in JMP
+..  Groovy everywhere (snipets)
+
+.  INTO THE GAME
+..  Basic Scripts
+..  Event – Trigger Manager
+..  Configurations with Groovy
+..  AI Tricks with Groovy
+..  Build Script with Groovy
+
+.  DESIGN PATTERNS IN GROOVY GAME (WIP)
+.  ADVANCED TRICKS
+..  Hack the JVM with Groovy
+..  Codegen
+..  Groovy – Almighty God!
+
+'''
+
+
+== GET STARTED
+
+
+[TIP]
+====
+If you already know about Groovy and just curious about how to intergrate Groovy into JME3. Go straight to Part <<jme3/scripting#into_the_game,scripting>>
+====
+
+
+
+=== WHAT IS GROOVY?
+
+*Groovy*…
+
+image::wiki/groovy-logo.png[200,width="",height="",align="right"]
+
+
+is an agile and dynamic language for the Java Virtual Machine
+builds upon the strengths of Java but has additional power features inspired by languages like Python, Ruby and Smalltalk
+
+link:http://groovy.codehaus.org/[http://groovy.codehaus.org/]
+
+
+=== Highlight
+
+The shortest highlight of the language can be found here:+
+link:http://en.wikipedia.org/wiki/Groovy_%28programming_language%29[http://en.wikipedia.org/wiki/Groovy_%28programming_language%29]
+
+*  Most valid Java files are also valid Groovy files. Although the two languages are similar, Groovy code can be more compact, because it does not require all the elements that Java requires. This makes it possible for Java programmers to gradually learn Groovy by starting with familiar Java syntax before acquiring more Groovy idioms.
+
+*  Groovy features not available in Java include both static and dynamic typing (with the def keyword), closures, operator overloading, native syntax for lists and associative arrays (maps), native support for regular expressions, polymorphic iteration, expressions embedded inside strings, additional helper methods, and the safe navigation operator “?. to automatically check for nulls (for example, “variable?.method(), or “variable?.field).
+
+*  Since version 2 Groovy also supports modularity, being able to ship only the needed jars according to the project needs, thus reducing the size of groovy's lib, type checking, static compilation, Project Coin syntax enhancements, multicatch blocks and ongoing performance enhancements using JDK7's invoke dynamic instruction.
+
+*  Groovy provides native support for various markup languages such as XML and +++<abbr title="HyperText Markup Language">HTML</abbr>+++, accomplished via an inline DOM syntax. This feature enables the definition and manipulation of many types of heterogeneous data assets with a uniform and concise syntax and programming methodology.[citation needed]
+
+*  Unlike Java, a Groovy source code file can be executed as an (uncompiled) script if it contains code outside any class definition, is a class with a main method, or is a Runnable or GroovyTestCase. A Groovy script is fully parsed, compiled, and generated before execution (similar to Perl and Ruby). (This occurs under the hood, and the compiled version is not saved as an artifact of the process.)
+
+
+=== SETUP GROOVY?
+
+If you used JMP to code your game (I don’t know about Eclipse users, sorry). Go to Update Center to install Groovy plugin, then download the lastest Groovy (ver2.1) and wrap it as a Library. You are ready for the adventure!
+
+link:http://groovy.codehaus.org/Download?nc[http://groovy.codehaus.org/Download?nc]
+
+
+=== WHAT CAN BE SCRIPT
+
+_*or “TO SCRIPT OR NOT TO SCRIPT, is the PROBLEM”?*_
+
+*Everything*.
+You can do almost every thing with Groovy just like with Java.
+
+In this post i will show example by example every aspect of game you can develop with Groovy.
+
++++<u>*Pros:*</u>+++
+
+*  Scripting is very common and intuitive way to do game programing. It's common because it's shorter, cleaner, easy to read, maintain and re-use.
+
+*  Groovy is young but developed by very talent people, a lot of devoted contributors.
+
+*  Web and Enterprise in your hand. Ever heard of Grails link:http://grails.org/[http://grails.org/]?
+
+*  Multi-additions to fullfil Java. God-like in Swing, ORM, XML…
+
+*  Performance improved recently: If you worry about the performance, , in the next release, it can even get to the speed of Java, and soon to be a very competitive opponent to Scala! Read this? link:http://java.dzone.com/articles/groovy-20-performance-compared[http://java.dzone.com/articles/groovy-20-performance-compared]
+
++++<u>*Cons:*</u>+++
+It’s good, but what about the down-side?
+
+*  Can not run in Android, yet!
+*  Some things can be wrong without noticed, appeared in run-time like every scripting language
+*  Still a performance problem.
+
+
+=== WHEN TO USE SCRIPTING:
+
+Some obvious but always existing problems of Scripting.
+
+First every scripting language got the same type-safe dilemma. If you invest too much into Scripting, you fall immediately into the mess that hidden errors which are always very hard to find, only show up in run-time. The balance between benefit and hell of Scripting is thin.
+Duck-typing is not always a win-win.
+
+
+==== Not type-safe
+
+As Groovy support Duck-typing, is almost impossible to know the type, methods of the object you want to use. This can be improved if you are in Static mode but this mode simply not what we really want with Scripting purpose?
+
+So, as the question had been asked by a forum's member:
+
+[IMPORTANT]
+====
+Heh. I’d love to go Groovy myself, but I’ve been finding it very hard for me to explore the set of methods that a passed-in object supports.emoji:
+====
+
+*Answer:*
+
+From my experience, just ask you self, how “natural” your code are coded, in *OOP* sense:
+
+*Chicken.eat(rice)*
+_You know what methods and their parameter’s type, and name._
+
+*Monkey.eat(banana)*
+_You know what common in classes in a package. Without knowing the inheritance and interface they implemented._
+
+*Human.eat([chicken,rice,banana])*
+_You can guess Human are derivated from Monkey and code are coded flexible, ex: methods are multi-type, optional param. etc…_
+
+If it have that level of “natural” sense, you don’t have to learn by heart at all, so use scripting in the situation.
+
+In other hand, this very related to IDE support for such language. If you watch closely, Groovy going to have better support in Netbean:
+
+link:https://blogs.oracle.com/netbeansgroovy/entry/groovy_refactoring_in_netbeans[https://blogs.oracle.com/netbeansgroovy/entry/groovy_refactoring_in_netbeans]
+
+
+=== NOTE:
+
+*  You *CAN* use GROOVY for Java as Lua for C++ (even much more better)
+*  You *CAN* get GROOVY run as FAST as Java
+*  You *CAN* let GROOVY seamlessy intergrated with Java and other JVM languages.
+*  Last but not least, Groovy *kick* asses! :p
+
+
+== LEARN GROOVY
+
+
+[TIP]
+====
+If you already know about Groovy and just curious about how to intergrate Groovy into JME3. Go straight to Part <<jme3/scripting#into_the_game,scripting>>
+====
+
+First, Groovy is much more shorter – cleaner than Java. It seamlessly get Java to the world of functional programming, like Python, Haskell, etc, but still make Java developer feel at home. You can read much more in the Groovy site and the internet, so I will not blow it up.
+
+Anyway, let’s learn some Groovy syntax, I bet you can master it in 3 hours!
+
+GOTO <<jme3/scripting/groovy_learn#,groovy_learn>>
+
+
+=== Groovy – for smarty
+
+emoji:*So, what you can do with Groovy?*
+emoji: everything, even get laid! emoji:open_mouth
+
+I means use your imagination. I give you some examples:
+
+*  Fasten the build process
+*  Replace almost the configuration
+*  Extract infos from XML and text, web…
+*  Convert RenderMonkey, FXComposer shaders
+*  Script the Dialoge, Cinematic,…
+*  Make In-game Editor, JMP’s plugins
+*  Make a whole freaking game
+*  Even feed my dogs …
+
+[10 more]
+
+What I want to say is *Groovy* is for smarty, master it and it save you +++<u>freaking big times</u>+++ ! Java and Groovy are a sweetest combination of programing languages I ever tried beside of dozen of others.
+
+
+[IMPORTANT]
+====
+Some of the example above will be include in this post or in my AtomScript project!
+====
+
+
+
+=== Official examples & Misc
+
+Here are some website that you can find a lot of examples from simple to complicated tasks:
+
+link:http://groovy.codehaus.org/Cookbook+Examples[http://groovy.codehaus.org/Cookbook+Examples]
+
+link:http://www.groovyexamples.org/[http://www.groovyexamples.org/]
+
+link:http://snipplr.com/all/language/groovy[http://snipplr.com/all/language/groovy]
+
+link:http://rosettacode.org/wiki/Rosetta_Code[http://rosettacode.org/wiki/Rosetta_Code] ⇐ learn Groovy and java if you come from other programming languages.
+
+
+=== GPars
+
+If you already know Groovy, I recommend you to try *GPars! Groovy Parallel Systems*.
+Why? Because *it’s #$kin awesome*, that’s why?
+Every smart monkey and Java developer should know about it, to build apps and games!
+
+_The GPars framework offers Java developers intuitive and safe ways to handle Java or Groovy tasks concurrently. Leveraging the enormous flexibility of the Groovy programing language and building on proven Java technologies, we aim to make concurrent programming for multi-core hardware intuitive, robust and enjoyable._
+
+link:http://gpars.codehaus.org/[http://gpars.codehaus.org/]
+
+
+[TIP]
+====
+I will explain some concepts and usages of GPars that help me a lot in JME3′s game and other tasks!
+====
+
+
+GOTO <<jme3/scripting/gpars_usecases#,gpars_usecases>>
+
+
+== EMBED GROOVY
+
+
+[TIP]
+====
+First I recommend all who don't know much about Groovy read this official documentation link:http://groovy.codehaus.org/Embedding+Groovy[http://groovy.codehaus.org/Embedding+Groovy]
+====
+
+
+Groovy is very suitable for embeding in Java application, even game. Our intention here is to get Groovy to work with JME in few ways. Some common problems, difficulties may arised cause of the differencies, uncompatiable between Java-Groovy-Native OpenGL.
+
+So technical problem and requirement will be dicussed first, then the Design of the integration is sketched, at last the full implementation. The full source code are in the AtomScript project!
+
+
+=== OVERVIEW
+
+
+==== TECH PROBS
+
+
+==== NEED OF POWERFUL SCRIPTING SYSTEM
+
+iframe::https://docs.google.com/presentation/d/1Kc1ehI1qLbtEGe-6-q8NikY7Q77A6jvozDaX94BqX0g/embed?start=false&loop=false&delayms=3000[width="100%", height="850px", alt="", scroll="true",border="true",align="false"]
+
+
+
+==== DESIGN & ARCHITECTURE
+
+Slide
+
+
+==== IMPLEMENTATION
+
+Slide
+
+
+=== Groovy in JME3
+
+ScriptEngine
+
+ScriptBase
+
+Tools
+
+
+=== Groovy in JMP
+
+
+==== ScriptBaseTopComponent
+
+
+==== ScriptEngineModule
+
+
+==== Advanced Tricks to get JMP Scripted
+
+
+=== Groovy everywhere (snipets)
+
+
+==== Extract infos from XML and text, web…
+
+
+==== Convert RenderMonkey, FXComposer shaders
+
+GOTO <<jme3/scripting/snippets#,snippets>>
+
+
+== INTO THE GAME
+
+
+[IMPORTANT]
+====
+Grab the example code from the AtomScript project link
+====
+
+
+
+=== Basic Scripts
+
+
+==== Rotate the wheel
+
+
+==== Travel a tree
+
+
+==== Queue a task
+
+
+==== GroovyAppState
+
+
+==== ClosureCondition
+
+GOTO <<jme3/scripting/groovy_basicscripts#,groovy_basicscripts>>
+
+
+=== Event – Trigger - Manager
+
+The first idea come to my mind when think of game programming is a game cycle-update or events.
+
+In fact, frequently update and sudden event is quite opposite paradigm, the point is to get the best of both world in one design. But can we? At least I can answer partly yes. And such sollution I've seen in big database system use the same hyrid concept.
+
+I also saw in the forum, guys had conversation about Entity System, which partly envolve such design… But this one it's different. It's not general, I means that the code below tent to be used in kind of RTS game like War-craft of Starcraft, and I precisely model it like those two games. And the codes are very short, extremely short, show the power of Groovy in the usecase.
+
+GOTO <<jme3/scripting/groovy_event#,groovy_event>>
+
+
+=== Configurations with Groovy
+
+Think about the way to config your game's screen resolution, keyboard, database connection, without have to write and parse java property or XML files. Groovy script is text file but much more powerful, like it has variables, methods (def), loop (for), conditions (if-else)…etc to build complicated things (like a program), compared to just plain text.
+In short Groovy can replace almost every configuration task you can imagine. This topic about using Groovy scrips for that purpose.
+
+GOTO <<jme3/scripting/groovy_config#,groovy_config>>
+
+
+=== AI Tricks with Groovy
+
+As in the introduction above I said this wiki will include everything about Scripting… So, it should also include AI (Artifacial Intelligent) … But I'm not going to tell you all about AI in this wiki, it should be more in another wiki of some AI professiors. I just want to show how a quick implementation of simple AI models can be coded in Groovy:
+
+GOTO <<jme3/scripting/groovy/ai#,ai>>
+
+
+==== Finite State Machine
+
+What is the most simple but affective techique to make AI. It's FSM
+
+
+==== Decision Tree
+
+Builder
+
+
+==== Pattern Matching
+
+Regexp emoji:
+
+
+==== Simple Chatbot
+
+Builder + Closure emoji:
+
+
+==== Simple Goalbase Agent
+
+emoji:
+
+
+==== Simple Path finding
+
+Use Groovy extension
+emoji:
+
+
+==== Simple Steering behavior
+
+emoji:
+
+
+=== Build Script with Groovy
+
+Groovy can use Ant and Maven in a snapt. but wait… it also has its own build extension named Gradle.
+
+link:http://www.gradle.org/[http://www.gradle.org/]
+
+Check this out:
+For JME3 Desktop:
+emoji:
+
+For JME3 Android:
+link:http://tools.android.com/tech-docs/new-build-system/user-guide[http://tools.android.com/tech-docs/new-build-system/user-guide]
+
+
+== DESIGN PATTERNS IN GROOVY GAME (WIP)
+
+
+== ADVANCED TRICKS
+
+
+=== Hack the JVM with Groovy
+
+
+=== Codegen
+
+This should be in another wiki but somehow is super fit for an example of advanced Groovy usage. The project CodeGen - Code generator is my first Groovy project. It's tented to be a general code generator for Java, Groovy, GLSL and can also be a fun playground for non-developer. It inspirated by the concept of:
+
+Alice link:http://www.alice.org/index.php[http://www.alice.org/index.php]
+
+GreenFoot link:http://www.greenfoot.org/door[http://www.greenfoot.org/door]
+
+and an old plugin of PGI - a JME forum's member : PgiLogic
+link:http://hub.jmonkeyengine.org/forum/topic/dead-combinable-logic-framework/[http://hub.jmonkeyengine.org/forum/topic/dead-combinable-logic-framework/]
+
+It's going to be in a suite for making Jme3 Games : Atom framework. Visit :
+GOTO <<jme3/advanced/atom_framework#,atom_framework>>
+GOTO <<jme3/advanced/atom_framework/codegen#,codegen>>
+
+
+=== Groovy – Almighty God!
+
+
+==== Get to the speed of Java
+
+
+==== Extension and Modulize
+
+
+==== Database and ORM
+
+
+==== DSL
+
+
+==== Visit the Moon
+
+
+== CONCLUSION
+
+After reading for a while, I guess you are in love with Groovy already. You're welcome! emoji:sunglasses
+
+[WARNING]
+====
+
+This page *CAN NOT* be a full description of Groovy… but a snapshot of its good with a few home grown codes for your JME3 game!
+====
+
+
+Beside of knowing the power and the weaknesses of the language and the way to use it in your everyday life. If you want to have the full snippets, download AtomScript project.
+
+Any correction are welcome!

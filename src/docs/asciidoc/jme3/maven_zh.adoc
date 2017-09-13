@@ -1,0 +1,200 @@
+= Maven Artifacts
+:author: 
+:revnumber: 
+:revdate: 2016/03/17 20:48
+:relfileprefix: ../
+:imagesdir: ..
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
+
+You can use jME3 with maven compatible build systems.
+
+
+== jME3.1
+
+Artifacts for jME3.1 releases are available in repositories :
+
+* link:https://jcenter.bintray.com/org/jmonkeyengine/[JCenter]
+* link:https://bintray.com/jmonkeyengine/org.jmonkeyengine[Bintray repo: org.jmonkeyengine] every artifacts of the group org.jmonkeyengine (same as jcenter + few artifacts not eligible for jcenter), click on the `SET ME UP` button to view instruction for Gradle, Maven,...
+
+The group id for all jME3 libraries is `org.jmonkeyengine`.
+The following artifacts are currently available (version `3.1.0-stable`):
+
+*  jme3-android-native - Native libraries needed for Android
+*  jme3-android - Android renderer for jME3
+*  jme3-blender - Blender file loader, only works on desktop renderers
+*  jme3-bullet-native-android - Native libraries needed for bullet (not jbullet) on android (beta)
+*  jme3-bullet-native - Native libraries needed for bullet (not jbullet) on desktop (beta)
+*  jme3-bullet - Physics support using native bullet, needs jme3-bullet-native or jme3-bullet-native-android (beta)
+*  jme3-core - Core libraries needed for all jME3 projects
+*  jme3-desktop - Parts of the jME3 +++<abbr title="Application Programming Interface">API</abbr>+++ that are only compatible with desktop renderers, needed for image loading on desktop
+*  jme3-effects - Effects libraries for water and other post filters
+*  jme3-jogg - Loader for jogg audio files
+*  jme3-jogl - JOGL based renderer (optional replacement for lwjgl / lwjgl3)
+*  jme3-lwjgl - Desktop renderer for jME3
+*  jme3-lwjgl3 - NEW in jME3.1! LWJGL3-based desktop renderer for jME3 (beta)
+*  jme3-networking - jME3 networking libraries (aka spidermonkey)
+*  jme3-niftygui - NiftyGUI support for jME3 (Not available in JCenter)
+*  jme3-plugins - Loader plugins for OgreXML and jME-XML
+*  jme3-terrain - Terrain generation +++<abbr title="Application Programming Interface">API</abbr>+++
+*  jme3-jbullet - Physics support using jbullet (desktop only, not available in JCenter) *Only jme3-jbullet OR jme3-bullet can be used*
+*  jme3-ios - iOS renderer for jME3 (Not available in JCenter)
+
+For a basic desktop application to work you need to import at least
+
+*  jme3-core
+*  jme3-desktop
+*  jme3-lwjgl OR jme3-lwjgl3
+
+For a basic android application to work you need to import at least
+
+*  jme3-core
+*  jme3-android
+*  jme3-android-native
+
+=== Gradle
+
+[source]
+----
+repositories {
+    jcenter()
+    //maven { url "http://dl.bintray.com/jmonkeyengine/org.jmonkeyengine" }
+}
+
+def jme3 = [v:'3.1.0-stable', g:'org.jmonkeyengine']
+dependencies {
+	compile "${jme3.g}:jme3-core:${jme3.v}"
+	runtime "${jme3.g}:jme3-desktop:${jme3.v}"
+	runtime "${jme3.g}:jme3-lwjgl:${jme3.v}"
+}
+----
+
+=== Maven
+
+[source]
+----
+  <properties>
+    <jme3_g>org.jmonkeyengine</jme3_g>
+    <jme3_v>3.1.0-stable</jme3_v>
+  </properties>
+
+  <repositories>
+    <repository>
+      <id>jcenter</id>
+      <url>http://jcenter.bintray.com</url>
+    </repository>
+  </repositories>
+
+  <dependencies>
+    <dependency>
+      <groupId>${jme3_g}</groupId>
+      <artifactId>jme3-core</artifactId>
+      <version>${jme3_v}</version>
+    </dependency>
+    <dependency>
+      <groupId>${jme3_g}</groupId>
+      <artifactId>jme3-desktop</artifactId>
+      <version>${jme3_v}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>${jme3_g}</groupId>
+      <artifactId>jme3-lwjgl</artifactId>
+      <version>${jme3_v}</version>
+    </dependency>
+  </dependencies>
+----
+
+== jME3.0
+
+You can use jME3 with maven compatible build systems, the official maven repository for jME3:
+
+* link:https://bintray.com/jmonkeyengine/com.jme3[Bintray repo: com.jme3] (click on the `SET ME UP` button to view instruction for Gradle, Maven,...)
+
+
+The group id for all jME3 libraries is `com.jme3`, the following artifacts are currently available (version `3.0.10`):
+
+*  jme3-core - Core libraries needed for all jME3 projects
+*  jme3-effects - Effects libraries for water and other post filters
+*  jme3-networking - jME3 networking libraries (aka spidermonkey)
+*  jme3-plugins - Loader plugins for OgreXML and jME-XML
+*  jme3-jogg - Loader for jogg audio files
+*  jme3-terrain - Terrain generation +++<abbr title="Application Programming Interface">API</abbr>+++
+*  jme3-blender - Blender file loader, only works on desktop renderers
+*  jme3-jbullet - Physics support using jbullet (desktop only) *Only jme3-jbullet OR jme3-bullet can be used*
+*  jme3-bullet - Physics support using native bullet, needs jme3-bullet-natives or jme3-bullet-natives-android (alpha)
+*  jme3-bullet-natives - Native libraries needed for bullet (not jbullet) on desktop (alpha)
+*  jme3-bullet-natives-android - Native libraries needed for bullet (not jbullet) on android (alpha)
+*  jme3-niftygui - NiftyGUI support for jME3
+*  jme3-desktop - Parts of the jME3 +++<abbr title="Application Programming Interface">API</abbr>+++ that are only compatible with desktop renderers, needed for image loading on desktop
+*  jme3-lwjgl - Desktop renderer for jME3
+*  jme3-android - Android renderer for jME3
+*  jme3-ios - iOS renderer for jME3
+
+For a basic desktop application to work you need to import at least
+
+*  jme3-core
+*  jme3-desktop
+*  jme3-lwjgl
+
+For a basic android application to work you need to import at least
+
+*  jme3-core
+*  jme3-android
+
+
+=== Gradle
+
+If you happen to be using Gradle, you'll first need to add the repository, perhaps so it looks like this:
+
+[source]
+----
+repositories {
+    jcenter()
+    maven { url "http://dl.bintray.com/jmonkeyengine/com.jme3" }
+}
+
+def jme3 = [v:'3.0.10', g:'com.jme3']
+dependencies {
+	compile "${jme3.g}:jme3-core:${jme3.v}"
+	runtime "${jme3.g}:jme3-desktop:${jme3.v}"
+	runtime "${jme3.g}:jme3-lwjgl:${jme3.v}"
+}
+----
+
+=== Maven
+
+[source]
+----
+  <properties>
+    <jme3_g>com.jme3</jme3_g>
+    <jme3_v>3.0.10</jme3_v>
+  </properties>
+
+  <repositories>
+    <repository>
+      <id>com_jme3-repo</id>
+      <url>http://dl.bintray.com/jmonkeyengine/com.jme3</url>
+    </repository>
+  </repositories>
+
+  <dependencies>
+    <dependency>
+      <groupId>${jme3_g}</groupId>
+      <artifactId>jme3-core</artifactId>
+      <version>${jme3_v}</version>
+    </dependency>
+    <dependency>
+      <groupId>${jme3_g}</groupId>
+      <artifactId>jme3-desktop</artifactId>
+      <version>${jme3_v}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>${jme3_g}</groupId>
+      <artifactId>jme3-lwjgl</artifactId>
+      <version>${jme3_v}</version>
+      <scope>runtime</scope>
+    </dependency>
+  </dependencies>
+----

@@ -1,0 +1,95 @@
+= Logging and Monitoring
+:author: 
+:revnumber: 
+:revdate: 2016/03/17 20:48
+:relfileprefix: ../../
+:imagesdir: ../..
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
+
+
+== Logging Like a Newbie
+
+Many developers just use `System.out.println()` to print diagnostic strings to the terminal. The problem with that is that before the release, you have to go through all your code and make certain you removed all these `println()` calls. You do not want your customers to see them, and needlessly worry about ominous outdated debugging diagnostics. 
+
+
+== Logging Like a Pro
+
+Instead of `println()`, use the standard Java logger from `java.util.logging`. It has many advantages for professional game development:
+
+*  You tag each message with its *log level*: Severe error, informative warning, etc.
+*  You can *switch off or on printing of log messages* up to certain log level with just one line of code.
+**  During development, you would set the log level to `fine`, because you want all warnings printed.
+**  For the release, you set the log level to only report `severe` errors, and never print informative diagnostics.
+
+*  The logger message string is *localizable* and can use variables. Optimally, you localize all error messages.
+
+To print comments like a pro, you use the following logger syntax.
+
+.  Declare the logger object once per file. In the following code, replace `HelloWorld` by the name of the class where you are using this line.
++
+[source,java]
+----
+private static final Logger LOGGER = Logger.getLogger(HelloWorld.class.getName());
+----
+
+.  Declare the info that you want to include in the message. The variables (here `a, b, c`) can be any printable Java object. +
+Example: `Vector3f a = cam.getLocation();` 
+.  Put the variables in a new `Object` array. Refer to the variables as `{0},{1},{2}` etc in the message string. Variables are numbered in the order you put them into the `Object` array. 
+.  Add the logger line and specify the log level:
+**  Usecase 1: During debugging, a developer uses a warning to remind himself of a bug:
++
+[source,java]
+----
+LOGGER.log(Level.WARNING, "why is {0} set to {1} again?!", 
+                      new Object[]{a , b});
+----
+
+**  Usecase 2: For the release, you inform the customer of a problem and how to solve it. 
++
+[source,java]
+----
+LOGGER.log(Level.SEVERE, "MyGame error: {0} must not be {1} after {2}! Adjust flux generator settings.", 
+                      new Object[]{a , b , c});
+----
+
+[IMPORTANT]
+====
+As you see in the examples, you should phrase potentially “customer facing errors in a neutral way and offer _a reason and a solution_ for the error (if you don't, it has no value to your customer). If your deveopment team uses WARNINGs as replacement for casual printlns, make sure you deactivate them for the release.
+====
+
+
+More details about link:http://docs.oracle.com/javase/8/docs/api/java/util/logging/Level.html[Java log levels] here.
+
+
+== Switching the Logger on and off
+
+In the release version you will deactivate the logging output to the terminal.
+
+To deactivate the default logger for a release, you set the log level to only report `severe` messages:
+
+[source,java]
+----
+Logger.getLogger(””).setLevel(Level.SEVERE);
+----
+
+During development or a beta test, you can tune down the default logger, and set the log level to only report ``warning``s:
+
+[source,java]
+----
+Logger.getLogger(””).setLevel(Level.WARNING);
+----
+
+To activate full logging, e.g. for debugging and testing, use the `fine` level: 
+
+[source,java]
+----
+Logger.getLogger(””).setLevel(Level.FINE);
+----
+
+
+== Advanced Error Handling
+
+When an uncaught exception reaches certain parts of the jME3 system then the default response is to log the error and then exit the application. This is because an error happening every frame will rapidly fill logs with repeated failings and potentially mask or over-write the original cause of the problem or even the application may continue for a while and then suffer other errors caused by the first and make the root cause hard to determine.
+
+This behaviour can be partially modified by overriding the method handleError in SimpleApplication, for example to display a custom message to users, or to provide users with information on how to report a bug or even to change the way that the error is logged. 
