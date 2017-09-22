@@ -1,11 +1,11 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="Asciidoctor 1.5.4"><title>loading_screen</title><link rel="stylesheet" href="./asciidoctor.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="./coderay-asciidoctor.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css"></head><body class="article toc2 toc-left"><div id="header"><div id="toolbar"><a href="https://github.com/jMonkeyEngine/wiki/edit/master/src/docs/asciidoc/jme3/advanced/loading_screen.adoc"><i class="fa fa-pencil-square" aria-hidden="true"></i></a><a href="https://github.com/jMonkeyEngine/wiki/new/master/src/docs/asciidoc/jme3/advanced/"><i class="fa fa-plus-square" aria-hidden="true"></i></a><input dir="auto" style="position: relative; vertical-align: top;" spellcheck="false" autocomplete="off" class="searchbox__input aa-input" id="doc-search" name="search" placeholder="Search in the doc" required="required" type="search"></div><h1>loading_screen</h1><div class="details"><span class="author" id="author"></span><br><span id="revnumber">version ,</span> <span id="revdate">2016/03/17 20:48</span></div><div id="toc" class="toc2"><div id="toctitle">Table of Contents</div><ul class="sectlevel1"><li><a href="#nifty-loading-screen-progress-bar">Nifty Loading Screen (Progress Bar)</a><ul class="sectlevel2"><li><a href="#understanding-nifty-xml">Understanding Nifty XML</a></li></ul></li><li><a href="#creating-the-bindings-to-use-the-nifty-xml">Creating the bindings to use the Nifty XML</a><ul class="sectlevel2"><li><a href="#updating-progress-bar-over-a-number-of-frames">Updating progress bar over a number of frames</a></li><li><a href="#using-multithreading">Using multithreading</a></li></ul></li></ul></div></div><div id="content"><div class="sect2"><h3 id="nifty-loading-screen-progress-bar">Nifty Loading Screen (Progress Bar)</h3><div class="paragraph"><p>There is a good tutorial about creating a nifty progress bar here:
-<a href="http://sourceforge.net/apps/mediawiki/nifty-gui/index.php?title=Create_your_own_Control_%28A_Nifty_Progressbar%29">http://sourceforge.net/apps/mediawiki/nifty-gui/index.php?title=Create_your_own_Control_%28A_Nifty_Progressbar%29</a></p></div>
-<div class="paragraph"><p>This example will use the existing hello terrain as an example.
-It will require these 2 images inside Assets/Interface/ (save them as border.png and inner.png respectively)</p></div>
-<div class="paragraph"><p><span class="image"><img src="../../jme3/advanced/inner1.png" alt="inner1.png" width="" height=""></span>
-<span class="image"><img src="../../jme3/advanced/border1.png" alt="border1.png" width="" height=""></span></p></div>
+<link rel="stylesheet" href="./coderay-asciidoctor.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css"></head><body class="article toc2 toc-left"><div id="header"><div id="toolbar"><a href="https://github.com/jMonkeyEngine/wiki/edit/master/src/docs/asciidoc/jme3/advanced/loading_screen.adoc"><i class="fa fa-pencil-square" aria-hidden="true"></i></a><a href="https://github.com/jMonkeyEngine/wiki/new/master/src/docs/asciidoc/jme3/advanced/"><i class="fa fa-plus-square" aria-hidden="true"></i></a><input dir="auto" style="position: relative; vertical-align: top;" spellcheck="false" autocomplete="off" class="searchbox__input aa-input" id="doc-search" name="search" placeholder="Search in the doc" required="required" type="search"></div><h1>loading_screen</h1><div class="details"><span class="author" id="author"></span><br><span id="revnumber">version ,</span> <span id="revdate">2016/03/17 20:48</span></div><div id="toc" class="toc2"><div id="toctitle">Table of Contents</div><ul class="sectlevel1"><li><a href="#nifty-loading-screen-progress-bar">Nifty Loading Screen (Progress Bar)</a><ul class="sectlevel2"><li><a href="#understanding-nifty-xml">Understanding Nifty XML</a></li></ul></li><li><a href="#creating-the-bindings-to-use-the-nifty-xml">Creating the bindings to use the Nifty XML</a><ul class="sectlevel2"><li><a href="#updating-progress-bar-over-a-number-of-frames">Updating progress bar over a number of frames</a></li><li><a href="#using-multithreading">Using multithreading</a></li></ul></li></ul></div></div><div id="content"><div class="sect2"><h3 id="nifty-loading-screen-progress-bar">Nifty Loading Screen (Progress Bar)</h3><div class="paragraph"><p>This example will use the existing hello terrain as an example.
+It will require these 2 images inside Assets/Interface/ (save them as border.png and inner.png respectively).</p></div>
+<div class="paragraph"><p><span class="image"><img src="../../jme3/advanced/inner1.png" alt="inner1.png" width="" height=""></span></p></div>
+<div class="paragraph"><p><span class="image"><img src="../../jme3/advanced/border1.png" alt="border1.png" width="" height=""></span></p></div>
+<div class="paragraph"><p>You need to add the jme3-niftygui and <a href="../../sdk/sample_code.html#jme3testdata-assets">jme3-test-data</a> libraries.</p></div>
+<div class="paragraph"><p>You will need to set your projects source to JDK 8.</p></div>
 <div class="paragraph"><p>This is the progress bar at 90%:</p></div>
 <div class="paragraph"><p><span class="image"><img src="../../jme3/advanced/loadingscreen.png" alt="loadingscreen.png" width="" height=""></span></p></div>
 <div class="paragraph"><p>nifty_loading.xml</p></div>
@@ -91,31 +91,37 @@ update_bar(<span class="integer">100</span>%);</code></pre></div></div>
 <div class="sect2"><h3 id="updating-progress-bar-over-a-number-of-frames">Updating progress bar over a number of frames</h3><div class="paragraph"><p>The idea is to break down the loading of the game into discrete parts</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">jme3test</span>;
 
+<span class="keyword">import</span> <span class="include">com.jme3.app.SimpleApplication</span>;
+<span class="keyword">import</span> <span class="include">com.jme3.material.Material</span>;
 <span class="keyword">import</span> <span class="include">com.jme3.niftygui.NiftyJmeDisplay</span>;
+<span class="keyword">import</span> <span class="include">static</span> <span class="include">com.jme3.niftygui.NiftyJmeDisplay.newNiftyJmeDisplay</span>;
+<span class="keyword">import</span> <span class="include">com.jme3.renderer.Camera</span>;
+<span class="keyword">import</span> <span class="include">com.jme3.terrain.geomipmap.TerrainLodControl</span>;
+<span class="keyword">import</span> <span class="include">com.jme3.terrain.geomipmap.TerrainQuad</span>;
+<span class="keyword">import</span> <span class="include">com.jme3.terrain.heightmap.AbstractHeightMap</span>;
+<span class="keyword">import</span> <span class="include">com.jme3.terrain.heightmap.ImageBasedHeightMap</span>;
+<span class="keyword">import</span> <span class="include">com.jme3.texture.Texture</span>;
+<span class="keyword">import</span> <span class="include">com.jme3.texture.Texture.WrapMode</span>;
 <span class="keyword">import</span> <span class="include">de.lessvoid.nifty.Nifty</span>;
+<span class="keyword">import</span> <span class="include">de.lessvoid.nifty.controls.Controller</span>;
+<span class="keyword">import</span> <span class="include">de.lessvoid.nifty.controls.Parameters</span>;
 <span class="keyword">import</span> <span class="include">de.lessvoid.nifty.elements.Element</span>;
+<span class="keyword">import</span> <span class="include">de.lessvoid.nifty.elements.render.TextRenderer</span>;
 <span class="keyword">import</span> <span class="include">de.lessvoid.nifty.input.NiftyInputEvent</span>;
 <span class="keyword">import</span> <span class="include">de.lessvoid.nifty.screen.Screen</span>;
 <span class="keyword">import</span> <span class="include">de.lessvoid.nifty.screen.ScreenController</span>;
 <span class="keyword">import</span> <span class="include">de.lessvoid.nifty.tools.SizeValue</span>;
-<span class="keyword">import</span> <span class="include">com.jme3.app.SimpleApplication</span>;
-<span class="keyword">import</span> <span class="include">com.jme3.material.Material</span>;
-<span class="keyword">import</span> <span class="include">com.jme3.renderer.Camera</span>;
-<span class="keyword">import</span> <span class="include">com.jme3.terrain.geomipmap.TerrainLodControl</span>;
-<span class="keyword">import</span> <span class="include">com.jme3.terrain.heightmap.AbstractHeightMap</span>;
-<span class="keyword">import</span> <span class="include">com.jme3.terrain.geomipmap.TerrainQuad</span>;
-<span class="keyword">import</span> <span class="include">com.jme3.terrain.heightmap.ImageBasedHeightMap</span>;
-<span class="keyword">import</span> <span class="include">com.jme3.texture.Texture</span>;
-<span class="keyword">import</span> <span class="include">com.jme3.texture.Texture.WrapMode</span>;
-<span class="keyword">import</span> <span class="include">de.lessvoid.nifty.controls.Controller</span>;
-<span class="keyword">import</span> <span class="include">de.lessvoid.nifty.elements.render.TextRenderer</span>;
-<span class="keyword">import</span> <span class="include">de.lessvoid.xml.xpp3.Attributes</span>;
 <span class="keyword">import</span> <span class="include">java.util.ArrayList</span>;
 <span class="keyword">import</span> <span class="include">java.util.List</span>;
-<span class="keyword">import</span> <span class="include">java.util.Properties</span>;
-<span class="keyword">import</span> <span class="include">jme3tools.converters.ImageToAwt</span>;
 
-<span class="directive">public</span> <span class="type">class</span> <span class="class">TestLoadingScreen</span> <span class="directive">extends</span> SimpleApplication <span class="directive">implements</span> ScreenController, Controller {
+<span class="comment">/**
+ * This is the TestLoadingScreen Class of your Game. You should only do
+ * initialization here. Move your Logic into AppStates or Controls
+ *
+ * @author normenhansen
+ */</span>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">TestLoadingScreen</span> <span class="directive">extends</span> SimpleApplication <span class="directive">implements</span>
+        ScreenController, Controller {
 
     <span class="directive">private</span> NiftyJmeDisplay niftyDisplay;
     <span class="directive">private</span> Nifty nifty;
@@ -134,7 +140,7 @@ update_bar(<span class="integer">100</span>%);</code></pre></div></div>
     <span class="annotation">@Override</span>
     <span class="directive">public</span> <span class="type">void</span> simpleInitApp() {
         flyCam.setEnabled(<span class="predefined-constant">false</span>);
-        niftyDisplay = <span class="keyword">new</span> NiftyJmeDisplay(assetManager,
+        niftyDisplay = newNiftyJmeDisplay(assetManager,
                 inputManager,
                 audioRenderer,
                 guiViewPort);
@@ -150,22 +156,27 @@ update_bar(<span class="integer">100</span>%);</code></pre></div></div>
 
         <span class="keyword">if</span> (load) { <span class="comment">//loading is done over many frames</span>
             <span class="keyword">if</span> (frameCount == <span class="integer">1</span>) {
-                <span class="predefined-type">Element</span> element = nifty.getScreen(<span class="string"><span class="delimiter">&quot;</span><span class="content">loadlevel</span><span class="delimiter">&quot;</span></span>).findElementByName(<span class="string"><span class="delimiter">&quot;</span><span class="content">loadingtext</span><span class="delimiter">&quot;</span></span>);
+                <span class="predefined-type">Element</span> element = nifty.getScreen(<span class="string"><span class="delimiter">&quot;</span><span class="content">loadlevel</span><span class="delimiter">&quot;</span></span>).findElementById(
+                        <span class="string"><span class="delimiter">&quot;</span><span class="content">loadingtext</span><span class="delimiter">&quot;</span></span>);
                 textRenderer = element.getRenderer(TextRenderer.class);
 
-                mat_terrain = <span class="keyword">new</span> Material(assetManager, <span class="string"><span class="delimiter">&quot;</span><span class="content">Common/MatDefs/Terrain/Terrain.j3md</span><span class="delimiter">&quot;</span></span>);
-                mat_terrain.setTexture(<span class="string"><span class="delimiter">&quot;</span><span class="content">Alpha</span><span class="delimiter">&quot;</span></span>, assetManager.loadTexture(<span class="string"><span class="delimiter">&quot;</span><span class="content">Textures/Terrain/splat/alphamap.png</span><span class="delimiter">&quot;</span></span>));
+                mat_terrain = <span class="keyword">new</span> Material(assetManager,
+                        <span class="string"><span class="delimiter">&quot;</span><span class="content">Common/MatDefs/Terrain/Terrain.j3md</span><span class="delimiter">&quot;</span></span>);
+                mat_terrain.setTexture(<span class="string"><span class="delimiter">&quot;</span><span class="content">Alpha</span><span class="delimiter">&quot;</span></span>, assetManager.loadTexture(
+                        <span class="string"><span class="delimiter">&quot;</span><span class="content">Textures/Terrain/splat/alphamap.png</span><span class="delimiter">&quot;</span></span>));
                 setProgress(<span class="float">0.2f</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Loading grass</span><span class="delimiter">&quot;</span></span>);
 
             } <span class="keyword">else</span> <span class="keyword">if</span> (frameCount == <span class="integer">2</span>) {
-                Texture grass = assetManager.loadTexture(<span class="string"><span class="delimiter">&quot;</span><span class="content">Textures/Terrain/splat/grass.jpg</span><span class="delimiter">&quot;</span></span>);
+                Texture grass = assetManager.loadTexture(
+                        <span class="string"><span class="delimiter">&quot;</span><span class="content">Textures/Terrain/splat/grass.jpg</span><span class="delimiter">&quot;</span></span>);
                 grass.setWrap(WrapMode.Repeat);
                 mat_terrain.setTexture(<span class="string"><span class="delimiter">&quot;</span><span class="content">Tex1</span><span class="delimiter">&quot;</span></span>, grass);
                 mat_terrain.setFloat(<span class="string"><span class="delimiter">&quot;</span><span class="content">Tex1Scale</span><span class="delimiter">&quot;</span></span>, <span class="float">64f</span>);
                 setProgress(<span class="float">0.4f</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Loading dirt</span><span class="delimiter">&quot;</span></span>);
 
             } <span class="keyword">else</span> <span class="keyword">if</span> (frameCount == <span class="integer">3</span>) {
-                Texture dirt = assetManager.loadTexture(<span class="string"><span class="delimiter">&quot;</span><span class="content">Textures/Terrain/splat/dirt.jpg</span><span class="delimiter">&quot;</span></span>);
+                Texture dirt = assetManager.loadTexture(
+                        <span class="string"><span class="delimiter">&quot;</span><span class="content">Textures/Terrain/splat/dirt.jpg</span><span class="delimiter">&quot;</span></span>);
 
                 dirt.setWrap(WrapMode.Repeat);
                 mat_terrain.setTexture(<span class="string"><span class="delimiter">&quot;</span><span class="content">Tex2</span><span class="delimiter">&quot;</span></span>, dirt);
@@ -173,7 +184,8 @@ update_bar(<span class="integer">100</span>%);</code></pre></div></div>
                 setProgress(<span class="float">0.5f</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Loading rocks</span><span class="delimiter">&quot;</span></span>);
 
             } <span class="keyword">else</span> <span class="keyword">if</span> (frameCount == <span class="integer">4</span>) {
-                Texture rock = assetManager.loadTexture(<span class="string"><span class="delimiter">&quot;</span><span class="content">Textures/Terrain/splat/road.jpg</span><span class="delimiter">&quot;</span></span>);
+                Texture rock = assetManager.loadTexture(
+                        <span class="string"><span class="delimiter">&quot;</span><span class="content">Textures/Terrain/splat/road.jpg</span><span class="delimiter">&quot;</span></span>);
 
                 rock.setWrap(WrapMode.Repeat);
 
@@ -183,11 +195,13 @@ update_bar(<span class="integer">100</span>%);</code></pre></div></div>
 
             } <span class="keyword">else</span> <span class="keyword">if</span> (frameCount == <span class="integer">5</span>) {
                 AbstractHeightMap heightmap = <span class="predefined-constant">null</span>;
-                Texture heightMapImage = assetManager.loadTexture(<span class="string"><span class="delimiter">&quot;</span><span class="content">Textures/Terrain/splat/mountains512.png</span><span class="delimiter">&quot;</span></span>);
+                Texture heightMapImage = assetManager.loadTexture(
+                        <span class="string"><span class="delimiter">&quot;</span><span class="content">Textures/Terrain/splat/mountains512.png</span><span class="delimiter">&quot;</span></span>);
                 heightmap = <span class="keyword">new</span> ImageBasedHeightMap(heightMapImage.getImage());
 
                 heightmap.load();
-                terrain = <span class="keyword">new</span> TerrainQuad(<span class="string"><span class="delimiter">&quot;</span><span class="content">my terrain</span><span class="delimiter">&quot;</span></span>, <span class="integer">65</span>, <span class="integer">513</span>, heightmap.getHeightMap());
+                terrain = <span class="keyword">new</span> TerrainQuad(<span class="string"><span class="delimiter">&quot;</span><span class="content">my terrain</span><span class="delimiter">&quot;</span></span>, <span class="integer">65</span>, <span class="integer">513</span>, heightmap.
+                        getHeightMap());
                 setProgress(<span class="float">0.8f</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Positioning terrain</span><span class="delimiter">&quot;</span></span>);
 
             } <span class="keyword">else</span> <span class="keyword">if</span> (frameCount == <span class="integer">6</span>) {
@@ -199,9 +213,10 @@ update_bar(<span class="integer">100</span>%);</code></pre></div></div>
                 setProgress(<span class="float">0.9f</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Loading cameras</span><span class="delimiter">&quot;</span></span>);
 
             } <span class="keyword">else</span> <span class="keyword">if</span> (frameCount == <span class="integer">7</span>) {
-                <span class="predefined-type">List</span>&lt;Camera&gt; cameras = <span class="keyword">new</span> <span class="predefined-type">ArrayList</span>&lt;Camera&gt;();
+                <span class="predefined-type">List</span>&lt;Camera&gt; cameras = <span class="keyword">new</span> <span class="predefined-type">ArrayList</span>&lt;&gt;();
                 cameras.add(getCamera());
-                TerrainLodControl control = <span class="keyword">new</span> TerrainLodControl(terrain, cameras);
+                TerrainLodControl control = <span class="keyword">new</span> TerrainLodControl(terrain,
+                        cameras);
                 terrain.addControl(control);
                 setProgress(<span class="float">1f</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Loading complete</span><span class="delimiter">&quot;</span></span>);
 
@@ -219,7 +234,8 @@ update_bar(<span class="integer">100</span>%);</code></pre></div></div>
 
     <span class="directive">public</span> <span class="type">void</span> setProgress(<span class="directive">final</span> <span class="type">float</span> progress, <span class="predefined-type">String</span> loadingText) {
         <span class="directive">final</span> <span class="type">int</span> MIN_WIDTH = <span class="integer">32</span>;
-        <span class="type">int</span> pixelWidth = (<span class="type">int</span>) (MIN_WIDTH + (progressBarElement.getParent().getWidth() - MIN_WIDTH) * progress);
+        <span class="type">int</span> pixelWidth = (<span class="type">int</span>) (MIN_WIDTH + (progressBarElement.getParent().
+                getWidth() - MIN_WIDTH) * progress);
         progressBarElement.setConstraintWidth(<span class="keyword">new</span> SizeValue(pixelWidth + <span class="string"><span class="delimiter">&quot;</span><span class="content">px</span><span class="delimiter">&quot;</span></span>));
         progressBarElement.getParent().layoutElements();
 
@@ -241,7 +257,8 @@ update_bar(<span class="integer">100</span>%);</code></pre></div></div>
 
     <span class="annotation">@Override</span>
     <span class="directive">public</span> <span class="type">void</span> bind(Nifty nifty, Screen screen) {
-        progressBarElement = nifty.getScreen(<span class="string"><span class="delimiter">&quot;</span><span class="content">loadlevel</span><span class="delimiter">&quot;</span></span>).findElementByName(<span class="string"><span class="delimiter">&quot;</span><span class="content">progressbar</span><span class="delimiter">&quot;</span></span>);
+        progressBarElement = nifty.getScreen(<span class="string"><span class="delimiter">&quot;</span><span class="content">loadlevel</span><span class="delimiter">&quot;</span></span>).findElementById(
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">progressbar</span><span class="delimiter">&quot;</span></span>);
     }
 
     <span class="comment">// methods for Controller</span>
@@ -251,51 +268,53 @@ update_bar(<span class="integer">100</span>%);</code></pre></div></div>
     }
 
     <span class="annotation">@Override</span>
-    <span class="directive">public</span> <span class="type">void</span> bind(Nifty nifty, Screen screen, <span class="predefined-type">Element</span> elmnt, <span class="predefined-type">Properties</span> prprts, <span class="predefined-type">Attributes</span> atrbts) {
-        progressBarElement = elmnt.findElementByName(<span class="string"><span class="delimiter">&quot;</span><span class="content">progressbar</span><span class="delimiter">&quot;</span></span>);
+    <span class="directive">public</span> <span class="type">void</span> onFocus(<span class="type">boolean</span> getFocus) {
     }
 
     <span class="annotation">@Override</span>
-    <span class="directive">public</span> <span class="type">void</span> init(<span class="predefined-type">Properties</span> prprts, <span class="predefined-type">Attributes</span> atrbts) {
+    <span class="directive">public</span> <span class="type">void</span> bind(Nifty nifty, Screen screen, <span class="predefined-type">Element</span> elmnt,
+            Parameters prmtrs) {
+        progressBarElement = elmnt.findElementById(<span class="string"><span class="delimiter">&quot;</span><span class="content">progressbar</span><span class="delimiter">&quot;</span></span>);
     }
 
-    <span class="directive">public</span> <span class="type">void</span> onFocus(<span class="type">boolean</span> getFocus) {
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="type">void</span> init(Parameters prmtrs) {
     }
+
 }</code></pre></div></div>
-<div class="paragraph"><p>Note:</p></div>
-<div class="ulist"><ul><li><p>Try and add all controls near the end, as their update loops may begin executing</p></li></ul></div></div>
+<div class="admonitionblock note"><table><tr><td class="icon"><i class="fa icon-note" title="Note"></i></td><td class="content">Try and add all controls near the end, as their update loops may begin executing.</td></tr></table></div></div>
 <div class="sect2"><h3 id="using-multithreading">Using multithreading</h3><div class="paragraph"><p>For more info on multithreading: <a href="../../jme3/advanced/multithreading.html">The jME3 Threading Model</a></p></div>
-<div class="paragraph"><p>Make sure to change the XML file to point the controller to TestLoadingScreen*1*</p></div>
+<div class="paragraph"><p>Make sure to change the XML file to point the controller to TestLoadingScreen*1*.</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">jme3test</span>;
 
+<span class="keyword">import</span> <span class="include">com.jme3.app.SimpleApplication</span>;
+<span class="keyword">import</span> <span class="include">com.jme3.material.Material</span>;
 <span class="keyword">import</span> <span class="include">com.jme3.niftygui.NiftyJmeDisplay</span>;
+<span class="keyword">import</span> <span class="include">static</span> <span class="include">com.jme3.niftygui.NiftyJmeDisplay.newNiftyJmeDisplay</span>;
+<span class="keyword">import</span> <span class="include">com.jme3.renderer.Camera</span>;
+<span class="keyword">import</span> <span class="include">com.jme3.terrain.geomipmap.TerrainLodControl</span>;
+<span class="keyword">import</span> <span class="include">com.jme3.terrain.geomipmap.TerrainQuad</span>;
+<span class="keyword">import</span> <span class="include">com.jme3.terrain.heightmap.AbstractHeightMap</span>;
+<span class="keyword">import</span> <span class="include">com.jme3.terrain.heightmap.ImageBasedHeightMap</span>;
+<span class="keyword">import</span> <span class="include">com.jme3.texture.Texture</span>;
+<span class="keyword">import</span> <span class="include">com.jme3.texture.Texture.WrapMode</span>;
 <span class="keyword">import</span> <span class="include">de.lessvoid.nifty.Nifty</span>;
+<span class="keyword">import</span> <span class="include">de.lessvoid.nifty.controls.Controller</span>;
+<span class="keyword">import</span> <span class="include">de.lessvoid.nifty.controls.Parameters</span>;
 <span class="keyword">import</span> <span class="include">de.lessvoid.nifty.elements.Element</span>;
+<span class="keyword">import</span> <span class="include">de.lessvoid.nifty.elements.render.TextRenderer</span>;
 <span class="keyword">import</span> <span class="include">de.lessvoid.nifty.input.NiftyInputEvent</span>;
 <span class="keyword">import</span> <span class="include">de.lessvoid.nifty.screen.Screen</span>;
 <span class="keyword">import</span> <span class="include">de.lessvoid.nifty.screen.ScreenController</span>;
 <span class="keyword">import</span> <span class="include">de.lessvoid.nifty.tools.SizeValue</span>;
-<span class="keyword">import</span> <span class="include">com.jme3.app.SimpleApplication</span>;
-<span class="keyword">import</span> <span class="include">com.jme3.material.Material</span>;
-<span class="keyword">import</span> <span class="include">com.jme3.renderer.Camera</span>;
-<span class="keyword">import</span> <span class="include">com.jme3.terrain.geomipmap.TerrainLodControl</span>;
-<span class="keyword">import</span> <span class="include">com.jme3.terrain.heightmap.AbstractHeightMap</span>;
-<span class="keyword">import</span> <span class="include">com.jme3.terrain.geomipmap.TerrainQuad</span>;
-<span class="keyword">import</span> <span class="include">com.jme3.terrain.heightmap.ImageBasedHeightMap</span>;
-<span class="keyword">import</span> <span class="include">com.jme3.texture.Texture</span>;
-<span class="keyword">import</span> <span class="include">com.jme3.texture.Texture.WrapMode</span>;
-<span class="keyword">import</span> <span class="include">de.lessvoid.nifty.controls.Controller</span>;
-<span class="keyword">import</span> <span class="include">de.lessvoid.nifty.elements.render.TextRenderer</span>;
-<span class="keyword">import</span> <span class="include">de.lessvoid.xml.xpp3.Attributes</span>;
 <span class="keyword">import</span> <span class="include">java.util.ArrayList</span>;
 <span class="keyword">import</span> <span class="include">java.util.List</span>;
-<span class="keyword">import</span> <span class="include">java.util.Properties</span>;
 <span class="keyword">import</span> <span class="include">java.util.concurrent.Callable</span>;
 <span class="keyword">import</span> <span class="include">java.util.concurrent.Future</span>;
 <span class="keyword">import</span> <span class="include">java.util.concurrent.ScheduledThreadPoolExecutor</span>;
-<span class="keyword">import</span> <span class="include">jme3tools.converters.ImageToAwt</span>;
 
-<span class="directive">public</span> <span class="type">class</span> <span class="class">TestLoadingScreen1</span> <span class="directive">extends</span> SimpleApplication <span class="directive">implements</span> ScreenController, Controller {
+<span class="directive">public</span> <span class="type">class</span> <span class="class">TestLoadingScreen1</span> <span class="directive">extends</span> SimpleApplication <span class="directive">implements</span>
+        ScreenController, Controller {
 
     <span class="directive">private</span> NiftyJmeDisplay niftyDisplay;
     <span class="directive">private</span> Nifty nifty;
@@ -315,7 +334,7 @@ update_bar(<span class="integer">100</span>%);</code></pre></div></div>
     <span class="annotation">@Override</span>
     <span class="directive">public</span> <span class="type">void</span> simpleInitApp() {
         flyCam.setEnabled(<span class="predefined-constant">false</span>);
-        niftyDisplay = <span class="keyword">new</span> NiftyJmeDisplay(assetManager,
+        niftyDisplay = newNiftyJmeDisplay(assetManager,
                 inputManager,
                 audioRenderer,
                 guiViewPort);
@@ -330,7 +349,7 @@ update_bar(<span class="integer">100</span>%);</code></pre></div></div>
     <span class="directive">public</span> <span class="type">void</span> simpleUpdate(<span class="type">float</span> tpf) {
         <span class="keyword">if</span> (load) {
             <span class="keyword">if</span> (loadFuture == <span class="predefined-constant">null</span>) {
-                <span class="comment">//if we have not started loading yet, submit the Callable to the executor</span>
+                <span class="comment">//if we have not started loading, submit Callable to executor</span>
                 loadFuture = exec.submit(loadingCallable);
             }
             <span class="comment">//check if the execution on the other thread is done</span>
@@ -349,35 +368,44 @@ update_bar(<span class="integer">100</span>%);</code></pre></div></div>
             }
         }
     }
-    <span class="comment">//this is the callable that contains the code that is run on the other thread.</span>
-    <span class="comment">//since the assetmananger is threadsafe, it can be used to load data from any thread</span>
-    <span class="comment">//we do *not* attach the objects to the rootNode here!</span>
+    <span class="comment">//This is the callable that contains the code that is run on the other</span>
+    <span class="comment">//thread.</span>
+    <span class="comment">//Since the assetmananger is threadsafe, it can be used to load data from</span>
+    <span class="comment">//any thread.</span>
+    <span class="comment">//We do *not* attach the objects to the rootNode here!</span>
     <span class="predefined-type">Callable</span>&lt;<span class="predefined-type">Void</span>&gt; loadingCallable = <span class="keyword">new</span> <span class="predefined-type">Callable</span>&lt;<span class="predefined-type">Void</span>&gt;() {
 
+        <span class="annotation">@Override</span>
         <span class="directive">public</span> <span class="predefined-type">Void</span> call() {
 
-            <span class="predefined-type">Element</span> element = nifty.getScreen(<span class="string"><span class="delimiter">&quot;</span><span class="content">loadlevel</span><span class="delimiter">&quot;</span></span>).findElementByName(<span class="string"><span class="delimiter">&quot;</span><span class="content">loadingtext</span><span class="delimiter">&quot;</span></span>);
+            <span class="predefined-type">Element</span> element = nifty.getScreen(<span class="string"><span class="delimiter">&quot;</span><span class="content">loadlevel</span><span class="delimiter">&quot;</span></span>).findElementById(
+                    <span class="string"><span class="delimiter">&quot;</span><span class="content">loadingtext</span><span class="delimiter">&quot;</span></span>);
             textRenderer = element.getRenderer(TextRenderer.class);
 
-            mat_terrain = <span class="keyword">new</span> Material(assetManager, <span class="string"><span class="delimiter">&quot;</span><span class="content">Common/MatDefs/Terrain/Terrain.j3md</span><span class="delimiter">&quot;</span></span>);
-            mat_terrain.setTexture(<span class="string"><span class="delimiter">&quot;</span><span class="content">Alpha</span><span class="delimiter">&quot;</span></span>, assetManager.loadTexture(<span class="string"><span class="delimiter">&quot;</span><span class="content">Textures/Terrain/splat/alphamap.png</span><span class="delimiter">&quot;</span></span>));
+            mat_terrain = <span class="keyword">new</span> Material(assetManager,
+                    <span class="string"><span class="delimiter">&quot;</span><span class="content">Common/MatDefs/Terrain/Terrain.j3md</span><span class="delimiter">&quot;</span></span>);
+            mat_terrain.setTexture(<span class="string"><span class="delimiter">&quot;</span><span class="content">Alpha</span><span class="delimiter">&quot;</span></span>, assetManager.loadTexture(
+                    <span class="string"><span class="delimiter">&quot;</span><span class="content">Textures/Terrain/splat/alphamap.png</span><span class="delimiter">&quot;</span></span>));
             <span class="comment">//setProgress is thread safe (see below)</span>
             setProgress(<span class="float">0.2f</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Loading grass</span><span class="delimiter">&quot;</span></span>);
 
-            Texture grass = assetManager.loadTexture(<span class="string"><span class="delimiter">&quot;</span><span class="content">Textures/Terrain/splat/grass.jpg</span><span class="delimiter">&quot;</span></span>);
+            Texture grass = assetManager.loadTexture(
+                    <span class="string"><span class="delimiter">&quot;</span><span class="content">Textures/Terrain/splat/grass.jpg</span><span class="delimiter">&quot;</span></span>);
             grass.setWrap(WrapMode.Repeat);
             mat_terrain.setTexture(<span class="string"><span class="delimiter">&quot;</span><span class="content">Tex1</span><span class="delimiter">&quot;</span></span>, grass);
             mat_terrain.setFloat(<span class="string"><span class="delimiter">&quot;</span><span class="content">Tex1Scale</span><span class="delimiter">&quot;</span></span>, <span class="float">64f</span>);
             setProgress(<span class="float">0.4f</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Loading dirt</span><span class="delimiter">&quot;</span></span>);
 
-            Texture dirt = assetManager.loadTexture(<span class="string"><span class="delimiter">&quot;</span><span class="content">Textures/Terrain/splat/dirt.jpg</span><span class="delimiter">&quot;</span></span>);
+            Texture dirt = assetManager.loadTexture(
+                    <span class="string"><span class="delimiter">&quot;</span><span class="content">Textures/Terrain/splat/dirt.jpg</span><span class="delimiter">&quot;</span></span>);
 
             dirt.setWrap(WrapMode.Repeat);
             mat_terrain.setTexture(<span class="string"><span class="delimiter">&quot;</span><span class="content">Tex2</span><span class="delimiter">&quot;</span></span>, dirt);
             mat_terrain.setFloat(<span class="string"><span class="delimiter">&quot;</span><span class="content">Tex2Scale</span><span class="delimiter">&quot;</span></span>, <span class="float">32f</span>);
             setProgress(<span class="float">0.5f</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Loading rocks</span><span class="delimiter">&quot;</span></span>);
 
-            Texture rock = assetManager.loadTexture(<span class="string"><span class="delimiter">&quot;</span><span class="content">Textures/Terrain/splat/road.jpg</span><span class="delimiter">&quot;</span></span>);
+            Texture rock = assetManager.loadTexture(
+                    <span class="string"><span class="delimiter">&quot;</span><span class="content">Textures/Terrain/splat/road.jpg</span><span class="delimiter">&quot;</span></span>);
 
             rock.setWrap(WrapMode.Repeat);
 
@@ -386,11 +414,13 @@ update_bar(<span class="integer">100</span>%);</code></pre></div></div>
             setProgress(<span class="float">0.6f</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Creating terrain</span><span class="delimiter">&quot;</span></span>);
 
             AbstractHeightMap heightmap = <span class="predefined-constant">null</span>;
-            Texture heightMapImage = assetManager.loadTexture(<span class="string"><span class="delimiter">&quot;</span><span class="content">Textures/Terrain/splat/mountains512.png</span><span class="delimiter">&quot;</span></span>);
+            Texture heightMapImage = assetManager.loadTexture(
+                    <span class="string"><span class="delimiter">&quot;</span><span class="content">Textures/Terrain/splat/mountains512.png</span><span class="delimiter">&quot;</span></span>);
             heightmap = <span class="keyword">new</span> ImageBasedHeightMap(heightMapImage.getImage());
 
             heightmap.load();
-            terrain = <span class="keyword">new</span> TerrainQuad(<span class="string"><span class="delimiter">&quot;</span><span class="content">my terrain</span><span class="delimiter">&quot;</span></span>, <span class="integer">65</span>, <span class="integer">513</span>, heightmap.getHeightMap());
+            terrain = <span class="keyword">new</span> TerrainQuad(<span class="string"><span class="delimiter">&quot;</span><span class="content">my terrain</span><span class="delimiter">&quot;</span></span>, <span class="integer">65</span>, <span class="integer">513</span>, heightmap.
+                    getHeightMap());
             setProgress(<span class="float">0.8f</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Positioning terrain</span><span class="delimiter">&quot;</span></span>);
 
             terrain.setMaterial(mat_terrain);
@@ -399,7 +429,7 @@ update_bar(<span class="integer">100</span>%);</code></pre></div></div>
             terrain.setLocalScale(<span class="float">2f</span>, <span class="float">1f</span>, <span class="float">2f</span>);
             setProgress(<span class="float">0.9f</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Loading cameras</span><span class="delimiter">&quot;</span></span>);
 
-            <span class="predefined-type">List</span>&lt;Camera&gt; cameras = <span class="keyword">new</span> <span class="predefined-type">ArrayList</span>&lt;Camera&gt;();
+            <span class="predefined-type">List</span>&lt;Camera&gt; cameras = <span class="keyword">new</span> <span class="predefined-type">ArrayList</span>&lt;&gt;();
             cameras.add(getCamera());
             TerrainLodControl control = <span class="keyword">new</span> TerrainLodControl(terrain, cameras);
             terrain.addControl(control);
@@ -410,18 +440,18 @@ update_bar(<span class="integer">100</span>%);</code></pre></div></div>
     };
 
     <span class="directive">public</span> <span class="type">void</span> setProgress(<span class="directive">final</span> <span class="type">float</span> progress, <span class="directive">final</span> <span class="predefined-type">String</span> loadingText) {
-        <span class="comment">//since this method is called from another thread, we enqueue the changes to the progressbar to the update loop thread</span>
-        enqueue(<span class="keyword">new</span> <span class="predefined-type">Callable</span>() {
+        <span class="comment">//Since this method is called from another thread, we enqueue the</span>
+        <span class="comment">//changes to the progressbar to the update loop thread.</span>
+        enqueue(() -&gt; {
+            <span class="directive">final</span> <span class="type">int</span> MIN_WIDTH = <span class="integer">32</span>;
+            <span class="type">int</span> pixelWidth = (<span class="type">int</span>) (MIN_WIDTH + (progressBarElement.getParent().
+                    getWidth() - MIN_WIDTH) * progress);
+            progressBarElement.setConstraintWidth(<span class="keyword">new</span> SizeValue(pixelWidth
+                    + <span class="string"><span class="delimiter">&quot;</span><span class="content">px</span><span class="delimiter">&quot;</span></span>));
+            progressBarElement.getParent().layoutElements();
 
-            <span class="directive">public</span> <span class="predefined-type">Object</span> call() <span class="directive">throws</span> <span class="exception">Exception</span> {
-                <span class="directive">final</span> <span class="type">int</span> MIN_WIDTH = <span class="integer">32</span>;
-                <span class="type">int</span> pixelWidth = (<span class="type">int</span>) (MIN_WIDTH + (progressBarElement.getParent().getWidth() - MIN_WIDTH) * progress);
-                progressBarElement.setConstraintWidth(<span class="keyword">new</span> SizeValue(pixelWidth + <span class="string"><span class="delimiter">&quot;</span><span class="content">px</span><span class="delimiter">&quot;</span></span>));
-                progressBarElement.getParent().layoutElements();
-
-                textRenderer.setText(loadingText);
-                <span class="keyword">return</span> <span class="predefined-constant">null</span>;
-            }
+            textRenderer.setText(loadingText);
+            <span class="keyword">return</span> <span class="predefined-constant">null</span>;
         });
 
     }
@@ -441,7 +471,8 @@ update_bar(<span class="integer">100</span>%);</code></pre></div></div>
 
     <span class="annotation">@Override</span>
     <span class="directive">public</span> <span class="type">void</span> bind(Nifty nifty, Screen screen) {
-        progressBarElement = nifty.getScreen(<span class="string"><span class="delimiter">&quot;</span><span class="content">loadlevel</span><span class="delimiter">&quot;</span></span>).findElementByName(<span class="string"><span class="delimiter">&quot;</span><span class="content">progressbar</span><span class="delimiter">&quot;</span></span>);
+        progressBarElement = nifty.getScreen(<span class="string"><span class="delimiter">&quot;</span><span class="content">loadlevel</span><span class="delimiter">&quot;</span></span>).findElementById(
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">progressbar</span><span class="delimiter">&quot;</span></span>);
     }
 
     <span class="comment">// methods for Controller</span>
@@ -451,25 +482,28 @@ update_bar(<span class="integer">100</span>%);</code></pre></div></div>
     }
 
     <span class="annotation">@Override</span>
-    <span class="directive">public</span> <span class="type">void</span> bind(Nifty nifty, Screen screen, <span class="predefined-type">Element</span> elmnt, <span class="predefined-type">Properties</span> prprts, <span class="predefined-type">Attributes</span> atrbts) {
-        progressBarElement = elmnt.findElementByName(<span class="string"><span class="delimiter">&quot;</span><span class="content">progressbar</span><span class="delimiter">&quot;</span></span>);
-    }
-
-    <span class="annotation">@Override</span>
-    <span class="directive">public</span> <span class="type">void</span> init(<span class="predefined-type">Properties</span> prprts, <span class="predefined-type">Attributes</span> atrbts) {
-    }
-
     <span class="directive">public</span> <span class="type">void</span> onFocus(<span class="type">boolean</span> getFocus) {
     }
-
 
     <span class="annotation">@Override</span>
     <span class="directive">public</span> <span class="type">void</span> stop() {
         <span class="local-variable">super</span>.stop();
-        <span class="comment">//the pool executor needs to be shut down so the application properly exits.</span>
+        <span class="comment">//the pool executor needs to be shut down so the application properly</span>
+        <span class="comment">//exits.</span>
         exec.shutdown();
     }
-}</code></pre></div></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2017-09-22 09:30:21 +00:00</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
+
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="type">void</span> bind(Nifty nifty, Screen screen, <span class="predefined-type">Element</span> elmnt,
+            Parameters prmtrs) {
+        progressBarElement = elmnt.findElementById(<span class="string"><span class="delimiter">&quot;</span><span class="content">progressbar</span><span class="delimiter">&quot;</span></span>);
+    }
+
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="type">void</span> init(Parameters prmtrs) {
+    }
+
+}</code></pre></div></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2017-09-22 19:05:43 +00:00</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
   apiKey: 'a736b6d93de805e26ec2f49b55013fbd',
   indexName: 'jmonkeyengine',
   inputSelector: '#doc-search',
