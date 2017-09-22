@@ -310,8 +310,13 @@ update_bar(<span class="integer">100</span>%);</code></pre></div></div>
 <span class="keyword">import</span> <span class="include">java.util.ArrayList</span>;
 <span class="keyword">import</span> <span class="include">java.util.List</span>;
 <span class="keyword">import</span> <span class="include">java.util.concurrent.Callable</span>;
+<span class="keyword">import</span> <span class="include">java.util.concurrent.ExecutorService</span>;
+<span class="keyword">import</span> <span class="include">java.util.concurrent.Executors</span>;
 <span class="keyword">import</span> <span class="include">java.util.concurrent.Future</span>;
-<span class="keyword">import</span> <span class="include">java.util.concurrent.ScheduledThreadPoolExecutor</span>;
+<span class="keyword">import</span> <span class="include">java.util.concurrent.ScheduledExecutorService</span>;
+<span class="keyword">import</span> <span class="include">java.util.concurrent.TimeUnit</span>;
+<span class="keyword">import</span> <span class="include">java.util.logging.Level</span>;
+<span class="keyword">import</span> <span class="include">java.util.logging.Logger</span>;
 
 <span class="directive">public</span> <span class="type">class</span> <span class="class">TestLoadingScreen1</span> <span class="directive">extends</span> SimpleApplication <span class="directive">implements</span>
         ScreenController, Controller {
@@ -322,9 +327,11 @@ update_bar(<span class="integer">100</span>%);</code></pre></div></div>
     <span class="directive">private</span> TerrainQuad terrain;
     <span class="directive">private</span> Material mat_terrain;
     <span class="directive">private</span> <span class="type">boolean</span> load = <span class="predefined-constant">false</span>;
-    <span class="directive">private</span> <span class="predefined-type">ScheduledThreadPoolExecutor</span> exec = <span class="keyword">new</span> <span class="predefined-type">ScheduledThreadPoolExecutor</span>(<span class="integer">2</span>);
+    <span class="directive">private</span> <span class="predefined-type">ScheduledExecutorService</span> exec = <span class="predefined-type">Executors</span>.newScheduledThreadPool(<span class="integer">2</span>);
     <span class="directive">private</span> <span class="predefined-type">Future</span> loadFuture = <span class="predefined-constant">null</span>;
     <span class="directive">private</span> TextRenderer textRenderer;
+    <span class="directive">private</span> <span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">Logger</span> LOG = <span class="predefined-type">Logger</span>.getLogger(TestLoadingScreen1.class.
+            getName());
 
     <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> main(<span class="predefined-type">String</span><span class="type">[]</span> args) {
         TestLoadingScreen1 app = <span class="keyword">new</span> TestLoadingScreen1();
@@ -486,11 +493,29 @@ update_bar(<span class="integer">100</span>%);</code></pre></div></div>
     }
 
     <span class="annotation">@Override</span>
-    <span class="directive">public</span> <span class="type">void</span> stop() {
-        <span class="local-variable">super</span>.stop();
-        <span class="comment">//the pool executor needs to be shut down so the application properly</span>
-        <span class="comment">//exits.</span>
-        exec.shutdown();
+    <span class="directive">public</span> <span class="type">void</span> destroy() {
+        <span class="local-variable">super</span>.destroy();
+        shutdownAndAwaitTermination(exec);
+    }
+
+    <span class="comment">//standard shutdown process for executor</span>
+    <span class="directive">private</span> <span class="type">void</span> shutdownAndAwaitTermination(<span class="predefined-type">ExecutorService</span> pool) {
+        pool.shutdown(); <span class="comment">// Disable new tasks from being submitted</span>
+        <span class="keyword">try</span> {
+            <span class="comment">// Wait a while for existing tasks to terminate</span>
+            <span class="keyword">if</span> (!pool.awaitTermination(<span class="integer">6</span>, <span class="predefined-type">TimeUnit</span>.SECONDS)) {
+                pool.shutdownNow(); <span class="comment">// Cancel currently executing tasks</span>
+                <span class="comment">// Wait a while for tasks to respond to being cancelled</span>
+                <span class="keyword">if</span> (!pool.awaitTermination(<span class="integer">6</span>, <span class="predefined-type">TimeUnit</span>.SECONDS)) {
+                    LOG.log(<span class="predefined-type">Level</span>.SEVERE, <span class="string"><span class="delimiter">&quot;</span><span class="content">Pool did not terminate {0}</span><span class="delimiter">&quot;</span></span>, pool);
+                }
+            }
+        } <span class="keyword">catch</span> (<span class="exception">InterruptedException</span> ie) {
+            <span class="comment">// (Re-)Cancel if current thread also interrupted</span>
+            pool.shutdownNow();
+            <span class="comment">// Preserve interrupt status</span>
+            <span class="predefined-type">Thread</span>.currentThread().interrupt();
+        }
     }
 
     <span class="annotation">@Override</span>
@@ -503,7 +528,7 @@ update_bar(<span class="integer">100</span>%);</code></pre></div></div>
     <span class="directive">public</span> <span class="type">void</span> init(Parameters prmtrs) {
     }
 
-}</code></pre></div></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2017-09-22 19:05:43 +00:00</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
+}</code></pre></div></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2017-09-22 19:21:54 +00:00</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
   apiKey: 'a736b6d93de805e26ec2f49b55013fbd',
   indexName: 'jmonkeyengine',
   inputSelector: '#doc-search',
