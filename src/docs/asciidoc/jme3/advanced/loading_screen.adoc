@@ -10,13 +10,14 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 == Nifty Loading Screen (Progress Bar)
 
-There is a good tutorial about creating a nifty progress bar here:
-link:http://sourceforge.net/apps/mediawiki/nifty-gui/index.php?title=Create_your_own_Control_%28A_Nifty_Progressbar%29[http://sourceforge.net/apps/mediawiki/nifty-gui/index.php?title=Create_your_own_Control_%28A_Nifty_Progressbar%29]
+//There is a good tutorial about creating a nifty progress bar here:
+//link:http://sourceforge.net/apps/mediawiki/nifty-gui/index.php?title=Create_your_own_Control_%28//A_Nifty_Progressbar%29[http://sourceforge.net/apps/mediawiki/nifty-gui/index.php?title=Create_yo//ur_own_Control_%28A_Nifty_Progressbar%29]
 
 This example will use the existing hello terrain as an example.
 It will require these 2 images inside Assets/Interface/ (save them as border.png and inner.png respectively)
 
 image:jme3/advanced/inner1.png[inner1.png,width="",height=""]
+
 image:jme3/advanced/border1.png[border1.png,width="",height=""]
 
 This is the progress bar at 90%:
@@ -159,31 +160,37 @@ The idea is to break down the loading of the game into discrete parts
 
 package jme3test;
 
+import com.jme3.app.SimpleApplication;
+import com.jme3.material.Material;
 import com.jme3.niftygui.NiftyJmeDisplay;
+import static com.jme3.niftygui.NiftyJmeDisplay.newNiftyJmeDisplay;
+import com.jme3.renderer.Camera;
+import com.jme3.terrain.geomipmap.TerrainLodControl;
+import com.jme3.terrain.geomipmap.TerrainQuad;
+import com.jme3.terrain.heightmap.AbstractHeightMap;
+import com.jme3.terrain.heightmap.ImageBasedHeightMap;
+import com.jme3.texture.Texture;
+import com.jme3.texture.Texture.WrapMode;
 import de.lessvoid.nifty.Nifty;
+import de.lessvoid.nifty.controls.Controller;
+import de.lessvoid.nifty.controls.Parameters;
 import de.lessvoid.nifty.elements.Element;
+import de.lessvoid.nifty.elements.render.TextRenderer;
 import de.lessvoid.nifty.input.NiftyInputEvent;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
 import de.lessvoid.nifty.tools.SizeValue;
-import com.jme3.app.SimpleApplication;
-import com.jme3.material.Material;
-import com.jme3.renderer.Camera;
-import com.jme3.terrain.geomipmap.TerrainLodControl;
-import com.jme3.terrain.heightmap.AbstractHeightMap;
-import com.jme3.terrain.geomipmap.TerrainQuad;
-import com.jme3.terrain.heightmap.ImageBasedHeightMap;
-import com.jme3.texture.Texture;
-import com.jme3.texture.Texture.WrapMode;
-import de.lessvoid.nifty.controls.Controller;
-import de.lessvoid.nifty.elements.render.TextRenderer;
-import de.lessvoid.xml.xpp3.Attributes;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
-import jme3tools.converters.ImageToAwt;
 
-public class TestLoadingScreen extends SimpleApplication implements ScreenController, Controller {
+/**
+ * This is the TestLoadingScreen Class of your Game. You should only do
+ * initialization here. Move your Logic into AppStates or Controls
+ *
+ * @author normenhansen
+ */
+public class TestLoadingScreen extends SimpleApplication implements
+        ScreenController, Controller {
 
     private NiftyJmeDisplay niftyDisplay;
     private Nifty nifty;
@@ -202,7 +209,7 @@ public class TestLoadingScreen extends SimpleApplication implements ScreenContro
     @Override
     public void simpleInitApp() {
         flyCam.setEnabled(false);
-        niftyDisplay = new NiftyJmeDisplay(assetManager,
+        niftyDisplay = newNiftyJmeDisplay(assetManager,
                 inputManager,
                 audioRenderer,
                 guiViewPort);
@@ -218,22 +225,27 @@ public class TestLoadingScreen extends SimpleApplication implements ScreenContro
 
         if (load) { //loading is done over many frames
             if (frameCount == 1) {
-                Element element = nifty.getScreen("loadlevel").findElementByName("loadingtext");
+                Element element = nifty.getScreen("loadlevel").findElementById(
+                        "loadingtext");
                 textRenderer = element.getRenderer(TextRenderer.class);
 
-                mat_terrain = new Material(assetManager, "Common/MatDefs/Terrain/Terrain.j3md");
-                mat_terrain.setTexture("Alpha", assetManager.loadTexture("Textures/Terrain/splat/alphamap.png"));
+                mat_terrain = new Material(assetManager,
+                        "Common/MatDefs/Terrain/Terrain.j3md");
+                mat_terrain.setTexture("Alpha", assetManager.loadTexture(
+                        "Textures/Terrain/splat/alphamap.png"));
                 setProgress(0.2f, "Loading grass");
 
             } else if (frameCount == 2) {
-                Texture grass = assetManager.loadTexture("Textures/Terrain/splat/grass.jpg");
+                Texture grass = assetManager.loadTexture(
+                        "Textures/Terrain/splat/grass.jpg");
                 grass.setWrap(WrapMode.Repeat);
                 mat_terrain.setTexture("Tex1", grass);
                 mat_terrain.setFloat("Tex1Scale", 64f);
                 setProgress(0.4f, "Loading dirt");
 
             } else if (frameCount == 3) {
-                Texture dirt = assetManager.loadTexture("Textures/Terrain/splat/dirt.jpg");
+                Texture dirt = assetManager.loadTexture(
+                        "Textures/Terrain/splat/dirt.jpg");
 
                 dirt.setWrap(WrapMode.Repeat);
                 mat_terrain.setTexture("Tex2", dirt);
@@ -241,7 +253,8 @@ public class TestLoadingScreen extends SimpleApplication implements ScreenContro
                 setProgress(0.5f, "Loading rocks");
 
             } else if (frameCount == 4) {
-                Texture rock = assetManager.loadTexture("Textures/Terrain/splat/road.jpg");
+                Texture rock = assetManager.loadTexture(
+                        "Textures/Terrain/splat/road.jpg");
 
                 rock.setWrap(WrapMode.Repeat);
 
@@ -251,11 +264,13 @@ public class TestLoadingScreen extends SimpleApplication implements ScreenContro
 
             } else if (frameCount == 5) {
                 AbstractHeightMap heightmap = null;
-                Texture heightMapImage = assetManager.loadTexture("Textures/Terrain/splat/mountains512.png");
+                Texture heightMapImage = assetManager.loadTexture(
+                        "Textures/Terrain/splat/mountains512.png");
                 heightmap = new ImageBasedHeightMap(heightMapImage.getImage());
 
                 heightmap.load();
-                terrain = new TerrainQuad("my terrain", 65, 513, heightmap.getHeightMap());
+                terrain = new TerrainQuad("my terrain", 65, 513, heightmap.
+                        getHeightMap());
                 setProgress(0.8f, "Positioning terrain");
 
             } else if (frameCount == 6) {
@@ -267,9 +282,10 @@ public class TestLoadingScreen extends SimpleApplication implements ScreenContro
                 setProgress(0.9f, "Loading cameras");
 
             } else if (frameCount == 7) {
-                List<Camera> cameras = new ArrayList<Camera>();
+                List<Camera> cameras = new ArrayList<>();
                 cameras.add(getCamera());
-                TerrainLodControl control = new TerrainLodControl(terrain, cameras);
+                TerrainLodControl control = new TerrainLodControl(terrain,
+                        cameras);
                 terrain.addControl(control);
                 setProgress(1f, "Loading complete");
 
@@ -287,7 +303,8 @@ public class TestLoadingScreen extends SimpleApplication implements ScreenContro
 
     public void setProgress(final float progress, String loadingText) {
         final int MIN_WIDTH = 32;
-        int pixelWidth = (int) (MIN_WIDTH + (progressBarElement.getParent().getWidth() - MIN_WIDTH) * progress);
+        int pixelWidth = (int) (MIN_WIDTH + (progressBarElement.getParent().
+                getWidth() - MIN_WIDTH) * progress);
         progressBarElement.setConstraintWidth(new SizeValue(pixelWidth + "px"));
         progressBarElement.getParent().layoutElements();
 
@@ -309,7 +326,8 @@ public class TestLoadingScreen extends SimpleApplication implements ScreenContro
 
     @Override
     public void bind(Nifty nifty, Screen screen) {
-        progressBarElement = nifty.getScreen("loadlevel").findElementByName("progressbar");
+        progressBarElement = nifty.getScreen("loadlevel").findElementById(
+                "progressbar");
     }
 
     // methods for Controller
@@ -319,64 +337,65 @@ public class TestLoadingScreen extends SimpleApplication implements ScreenContro
     }
 
     @Override
-    public void bind(Nifty nifty, Screen screen, Element elmnt, Properties prprts, Attributes atrbts) {
-        progressBarElement = elmnt.findElementByName("progressbar");
+    public void onFocus(boolean getFocus) {
     }
 
     @Override
-    public void init(Properties prprts, Attributes atrbts) {
+    public void bind(Nifty nifty, Screen screen, Element elmnt,
+            Parameters prmtrs) {
+        progressBarElement = elmnt.findElementById("progressbar");
     }
 
-    public void onFocus(boolean getFocus) {
+    @Override
+    public void init(Parameters prmtrs) {
     }
+
 }
 
 ----
 
-Note:
-
-*  Try and add all controls near the end, as their update loops may begin executing
+NOTE: Try and add all controls near the end, as their update loops may begin executing.
 
 
 === Using multithreading
 
 For more info on multithreading: <<jme3/advanced/multithreading#,The jME3 Threading Model>>
 
-Make sure to change the XML file to point the controller to TestLoadingScreen*1*
+Make sure to change the XML file to point the controller to TestLoadingScreen*1*.
 
 [source,java]
 ----
 
 package jme3test;
 
+import com.jme3.app.SimpleApplication;
+import com.jme3.material.Material;
 import com.jme3.niftygui.NiftyJmeDisplay;
+import static com.jme3.niftygui.NiftyJmeDisplay.newNiftyJmeDisplay;
+import com.jme3.renderer.Camera;
+import com.jme3.terrain.geomipmap.TerrainLodControl;
+import com.jme3.terrain.geomipmap.TerrainQuad;
+import com.jme3.terrain.heightmap.AbstractHeightMap;
+import com.jme3.terrain.heightmap.ImageBasedHeightMap;
+import com.jme3.texture.Texture;
+import com.jme3.texture.Texture.WrapMode;
 import de.lessvoid.nifty.Nifty;
+import de.lessvoid.nifty.controls.Controller;
+import de.lessvoid.nifty.controls.Parameters;
 import de.lessvoid.nifty.elements.Element;
+import de.lessvoid.nifty.elements.render.TextRenderer;
 import de.lessvoid.nifty.input.NiftyInputEvent;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
 import de.lessvoid.nifty.tools.SizeValue;
-import com.jme3.app.SimpleApplication;
-import com.jme3.material.Material;
-import com.jme3.renderer.Camera;
-import com.jme3.terrain.geomipmap.TerrainLodControl;
-import com.jme3.terrain.heightmap.AbstractHeightMap;
-import com.jme3.terrain.geomipmap.TerrainQuad;
-import com.jme3.terrain.heightmap.ImageBasedHeightMap;
-import com.jme3.texture.Texture;
-import com.jme3.texture.Texture.WrapMode;
-import de.lessvoid.nifty.controls.Controller;
-import de.lessvoid.nifty.elements.render.TextRenderer;
-import de.lessvoid.xml.xpp3.Attributes;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
-import jme3tools.converters.ImageToAwt;
 
-public class TestLoadingScreen1 extends SimpleApplication implements ScreenController, Controller {
+public class TestLoadingScreen1 extends SimpleApplication implements
+        ScreenController, Controller {
 
     private NiftyJmeDisplay niftyDisplay;
     private Nifty nifty;
@@ -396,7 +415,7 @@ public class TestLoadingScreen1 extends SimpleApplication implements ScreenContr
     @Override
     public void simpleInitApp() {
         flyCam.setEnabled(false);
-        niftyDisplay = new NiftyJmeDisplay(assetManager,
+        niftyDisplay = newNiftyJmeDisplay(assetManager,
                 inputManager,
                 audioRenderer,
                 guiViewPort);
@@ -411,7 +430,7 @@ public class TestLoadingScreen1 extends SimpleApplication implements ScreenContr
     public void simpleUpdate(float tpf) {
         if (load) {
             if (loadFuture == null) {
-                //if we have not started loading yet, submit the Callable to the executor
+                //if we have not started loading, submit Callable to executor
                 loadFuture = exec.submit(loadingCallable);
             }
             //check if the execution on the other thread is done
@@ -430,35 +449,44 @@ public class TestLoadingScreen1 extends SimpleApplication implements ScreenContr
             }
         }
     }
-    //this is the callable that contains the code that is run on the other thread.
-    //since the assetmananger is threadsafe, it can be used to load data from any thread
-    //we do *not* attach the objects to the rootNode here!
+    //This is the callable that contains the code that is run on the other
+    //thread.
+    //Since the assetmananger is threadsafe, it can be used to load data from
+    //any thread.
+    //We do *not* attach the objects to the rootNode here!
     Callable<Void> loadingCallable = new Callable<Void>() {
 
+        @Override
         public Void call() {
 
-            Element element = nifty.getScreen("loadlevel").findElementByName("loadingtext");
+            Element element = nifty.getScreen("loadlevel").findElementById(
+                    "loadingtext");
             textRenderer = element.getRenderer(TextRenderer.class);
 
-            mat_terrain = new Material(assetManager, "Common/MatDefs/Terrain/Terrain.j3md");
-            mat_terrain.setTexture("Alpha", assetManager.loadTexture("Textures/Terrain/splat/alphamap.png"));
+            mat_terrain = new Material(assetManager,
+                    "Common/MatDefs/Terrain/Terrain.j3md");
+            mat_terrain.setTexture("Alpha", assetManager.loadTexture(
+                    "Textures/Terrain/splat/alphamap.png"));
             //setProgress is thread safe (see below)
             setProgress(0.2f, "Loading grass");
 
-            Texture grass = assetManager.loadTexture("Textures/Terrain/splat/grass.jpg");
+            Texture grass = assetManager.loadTexture(
+                    "Textures/Terrain/splat/grass.jpg");
             grass.setWrap(WrapMode.Repeat);
             mat_terrain.setTexture("Tex1", grass);
             mat_terrain.setFloat("Tex1Scale", 64f);
             setProgress(0.4f, "Loading dirt");
 
-            Texture dirt = assetManager.loadTexture("Textures/Terrain/splat/dirt.jpg");
+            Texture dirt = assetManager.loadTexture(
+                    "Textures/Terrain/splat/dirt.jpg");
 
             dirt.setWrap(WrapMode.Repeat);
             mat_terrain.setTexture("Tex2", dirt);
             mat_terrain.setFloat("Tex2Scale", 32f);
             setProgress(0.5f, "Loading rocks");
 
-            Texture rock = assetManager.loadTexture("Textures/Terrain/splat/road.jpg");
+            Texture rock = assetManager.loadTexture(
+                    "Textures/Terrain/splat/road.jpg");
 
             rock.setWrap(WrapMode.Repeat);
 
@@ -467,11 +495,13 @@ public class TestLoadingScreen1 extends SimpleApplication implements ScreenContr
             setProgress(0.6f, "Creating terrain");
 
             AbstractHeightMap heightmap = null;
-            Texture heightMapImage = assetManager.loadTexture("Textures/Terrain/splat/mountains512.png");
+            Texture heightMapImage = assetManager.loadTexture(
+                    "Textures/Terrain/splat/mountains512.png");
             heightmap = new ImageBasedHeightMap(heightMapImage.getImage());
 
             heightmap.load();
-            terrain = new TerrainQuad("my terrain", 65, 513, heightmap.getHeightMap());
+            terrain = new TerrainQuad("my terrain", 65, 513, heightmap.
+                    getHeightMap());
             setProgress(0.8f, "Positioning terrain");
 
             terrain.setMaterial(mat_terrain);
@@ -480,7 +510,7 @@ public class TestLoadingScreen1 extends SimpleApplication implements ScreenContr
             terrain.setLocalScale(2f, 1f, 2f);
             setProgress(0.9f, "Loading cameras");
 
-            List<Camera> cameras = new ArrayList<Camera>();
+            List<Camera> cameras = new ArrayList<>();
             cameras.add(getCamera());
             TerrainLodControl control = new TerrainLodControl(terrain, cameras);
             terrain.addControl(control);
@@ -491,18 +521,18 @@ public class TestLoadingScreen1 extends SimpleApplication implements ScreenContr
     };
 
     public void setProgress(final float progress, final String loadingText) {
-        //since this method is called from another thread, we enqueue the changes to the progressbar to the update loop thread
-        enqueue(new Callable() {
+        //Since this method is called from another thread, we enqueue the
+        //changes to the progressbar to the update loop thread.
+        enqueue(() -> {
+            final int MIN_WIDTH = 32;
+            int pixelWidth = (int) (MIN_WIDTH + (progressBarElement.getParent().
+                    getWidth() - MIN_WIDTH) * progress);
+            progressBarElement.setConstraintWidth(new SizeValue(pixelWidth
+                    + "px"));
+            progressBarElement.getParent().layoutElements();
 
-            public Object call() throws Exception {
-                final int MIN_WIDTH = 32;
-                int pixelWidth = (int) (MIN_WIDTH + (progressBarElement.getParent().getWidth() - MIN_WIDTH) * progress);
-                progressBarElement.setConstraintWidth(new SizeValue(pixelWidth + "px"));
-                progressBarElement.getParent().layoutElements();
-
-                textRenderer.setText(loadingText);
-                return null;
-            }
+            textRenderer.setText(loadingText);
+            return null;
         });
 
     }
@@ -522,7 +552,8 @@ public class TestLoadingScreen1 extends SimpleApplication implements ScreenContr
 
     @Override
     public void bind(Nifty nifty, Screen screen) {
-        progressBarElement = nifty.getScreen("loadlevel").findElementByName("progressbar");
+        progressBarElement = nifty.getScreen("loadlevel").findElementById(
+                "progressbar");
     }
 
     // methods for Controller
@@ -532,25 +563,27 @@ public class TestLoadingScreen1 extends SimpleApplication implements ScreenContr
     }
 
     @Override
-    public void bind(Nifty nifty, Screen screen, Element elmnt, Properties prprts, Attributes atrbts) {
-        progressBarElement = elmnt.findElementByName("progressbar");
-    }
-
-    @Override
-    public void init(Properties prprts, Attributes atrbts) {
-    }
-
     public void onFocus(boolean getFocus) {
     }
-
 
     @Override
     public void stop() {
         super.stop();
-        //the pool executor needs to be shut down so the application properly exits.
+        //the pool executor needs to be shut down so the application properly
+        //exits.
         exec.shutdown();
     }
-}
 
+    @Override
+    public void bind(Nifty nifty, Screen screen, Element elmnt,
+            Parameters prmtrs) {
+        progressBarElement = elmnt.findElementById("progressbar");
+    }
+
+    @Override
+    public void init(Parameters prmtrs) {
+    }
+
+}
 
 ----
