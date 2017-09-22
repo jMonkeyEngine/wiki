@@ -395,8 +395,13 @@ import de.lessvoid.nifty.tools.SizeValue;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class TestLoadingScreen1 extends SimpleApplication implements
         ScreenController, Controller {
@@ -407,9 +412,11 @@ public class TestLoadingScreen1 extends SimpleApplication implements
     private TerrainQuad terrain;
     private Material mat_terrain;
     private boolean load = false;
-    private ScheduledThreadPoolExecutor exec = new ScheduledThreadPoolExecutor(2);
+    private ScheduledExecutorService exec = Executors.newScheduledThreadPool(2);
     private Future loadFuture = null;
     private TextRenderer textRenderer;
+    private static final Logger LOG = Logger.getLogger(TestLoadingScreen1.class.
+            getName());
 
     public static void main(String[] args) {
         TestLoadingScreen1 app = new TestLoadingScreen1();
@@ -571,11 +578,29 @@ public class TestLoadingScreen1 extends SimpleApplication implements
     }
 
     @Override
-    public void stop() {
-        super.stop();
-        //the pool executor needs to be shut down so the application properly
-        //exits.
-        exec.shutdown();
+    public void destroy() {
+        super.destroy();
+        shutdownAndAwaitTermination(exec);
+    }
+
+    //standard shutdown process for executor
+    private void shutdownAndAwaitTermination(ExecutorService pool) {
+        pool.shutdown(); // Disable new tasks from being submitted
+        try {
+            // Wait a while for existing tasks to terminate
+            if (!pool.awaitTermination(6, TimeUnit.SECONDS)) {
+                pool.shutdownNow(); // Cancel currently executing tasks
+                // Wait a while for tasks to respond to being cancelled
+                if (!pool.awaitTermination(6, TimeUnit.SECONDS)) {
+                    LOG.log(Level.SEVERE, "Pool did not terminate {0}", pool);
+                }
+            }
+        } catch (InterruptedException ie) {
+            // (Re-)Cancel if current thread also interrupted
+            pool.shutdownNow();
+            // Preserve interrupt status
+            Thread.currentThread().interrupt();
+        }
     }
 
     @Override
