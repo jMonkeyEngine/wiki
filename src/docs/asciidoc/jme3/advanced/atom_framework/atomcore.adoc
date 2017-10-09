@@ -1,6 +1,6 @@
 = atomcore
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :relfileprefix: ../../../
 :imagesdir: ../../..
@@ -16,7 +16,7 @@ This is the detailed documentation of AtomCore module architecture, design decis
 
 Source: link:https://code.google.com/p/atom-game-framework/source/browse/AtomCore/[https://code.google.com/p/atom-game-framework/source/browse/AtomCore/]
 
-Javadoc: 
+Javadoc:
 
 Issues:
 
@@ -61,7 +61,7 @@ Below you will read about how each feature is implemented in AtomCore.
 
 From an abstraction level, a Game- a special kind of software (almost always):
 
-*  composed by Entities, and their Stage; 
+*  composed by Entities, and their Stage;
 *  where Actions happen in a Cycle, procedure Events;
 
 A little bit more detailed, Gameplay is the way player play the Game, has:
@@ -75,9 +75,9 @@ A little bit more detailed, Gameplay is the way player play the Game, has:
 **  Interactive mode: When player interact with the game world
 
 *  Control: The way player handle their entities
-*  League: 
+*  League:
 **  Player, Matchs, Groups and their infos &amp; activities
-**  Single: Infos, score, rewards stick to an individual 
+**  Single: Infos, score, rewards stick to an individual
 **  Multi: The way players join, left, make friend and interactive and play together…
 
 *  Status: Way to pause/continue , save/load current game
@@ -93,7 +93,7 @@ The game “software should be published in specific enviroment called Context, 
 
 [NOTE]
 ====
-This is so important to mention that every techs Atom framework are around Bean/ POJO technologies. 
+This is so important to mention that every techs Atom framework are around Bean/ POJO technologies.
 ====
 
 
@@ -129,7 +129,7 @@ In JME3 we almost see the things work like this, the “almighty” Cycle:
 
 The reason this cycle exists is because of JME3 application tied strictly with monotholic processing method, and the main convict is OpenGL.
 
-In Atom, is not actually the case!! Atom try to connect various parts of facilities in networks and try to run as independent-parallel as it can. Cycle defined as a pre-ordered routine is not suiable with the work of parallel processing and enterprise… That's why a sotiphicated customable-expandable “cycle is the heart to Atom framework which made it a solid replacement of “old JME3 cycle. 
+In Atom, is not actually the case!! Atom try to connect various parts of facilities in networks and try to run as independent-parallel as it can. Cycle defined as a pre-ordered routine is not suiable with the work of parallel processing and enterprise… That's why a sotiphicated customable-expandable “cycle is the heart to Atom framework which made it a solid replacement of “old JME3 cycle.
 
 Read more details in AtomCore's Cycle.
 
@@ -138,7 +138,7 @@ Read more details in AtomCore's Cycle.
 
 ===== As core of a whole Enterprise
 
-As a long term follower of Spring (one of Atom inspiration) : 
+As a long term follower of Spring (one of Atom inspiration) :
 link:http://spring.io/[http://spring.io/]  …
 link:http://en.wikipedia.org/wiki/Spring_framework[http://en.wikipedia.org/wiki/Spring_framework]
 
@@ -154,7 +154,7 @@ I learnt few things,eventually Spring is for Enterprise, so most of its features
 ....
 
 
-===== Entity
+==== Entity
 
 
 ===== Managers
@@ -177,7 +177,7 @@ To clean the mist of confusion about mixed of concepts a little bit, there are s
   Manager have power over its children : its handle it children; in almost scenarios child has left its Manager's list come hollow (as null)
 ....
 
-Entity related - Managers can be considered as the other piece in constrast with Entity, as it manage entity existing and activities. 
+Entity related - Managers can be considered as the other piece in constrast with Entity, as it manage entity existing and activities.
 
 Also note that Managers normally form a Tree, with Hierarchy or dependency as commonly seen in OOP.
 
@@ -210,7 +210,7 @@ In AtomCore I sketch some interface of ES in which not care much about the imple
 ==== Common implementations
 
 ....
-  Of course a framewok is almost meaningless if it just contain psuedo code or interfaces without inplementation. I also implemented some common and useful piecies of code which ready to use :p. 
+  Of course a framewok is almost meaningless if it just contain psuedo code or interfaces without inplementation. I also implemented some common and useful piecies of code which ready to use :p.
 ....
 
 
@@ -223,7 +223,7 @@ My basic form of game Cycle aka CommonCycle crafted to work well with AppState c
 The Cycle consist 6 basis methods:
 
 .  init : Lazy init and be injected with its dependencies declaretion
-.  load : Load assets or underlying data (later than its dependencies) 
+.  load : Load assets or underlying data (later than its dependencies)
 .  config : reconfig if need, even in update
 .  start : trigger start a working routine of the object
 .  update
@@ -236,7 +236,7 @@ why 6? Why cycle? The customizable version of cycle? Introduce new cycles, queue
 
 Common scenarios that almost every game have, help you to startup easily. That mean the code is there in the library, you can also overide because its very extensible!
 
-*  Manage entities: add/remove/select 
+*  Manage entities: add/remove/select
 *  Composable logic: with condition, trigger
 *  Event messaging system (network ready): as inner / outter communicate media with eventbus and non blocking network
 *  Provide user functions and controls: As State, Control, Actors
@@ -273,7 +273,7 @@ Detail:
 
 ==== Event message system
 
-With eventbus 
+With eventbus
 
 non blocking network
 
@@ -284,7 +284,7 @@ In turn, along with this pre defined cycle, some common states which ready to us
 
 *  LoadState : load / watch
 *  MenuState : select / option / ingame / exit
-*  InGameState : pause/ stop 
+*  InGameState : pause/ stop
 
 
 ==== Common Routines
@@ -294,9 +294,9 @@ Handle Tasks, Actions in good concurent way (multi threading, actor..).
 
 ===== Common Controls
 
-EntityControl 
+EntityControl
 
-SpatialEditorControl 
+SpatialEditorControl
 
 AtomCharacterControl
 
@@ -373,7 +373,7 @@ Concepts and Facilities to create and manage animations and effects.
 *  particles 		Concepts to build bigger system from smaller part [Atom concepts]
 *  sprite			Concepts for cross dimensional elements
 *  timeline		Enhance of timming framework
-*  transition		Transition between stateful objects 
+*  transition		Transition between stateful objects
 *  tween			Object interpolations.
 
 
@@ -404,7 +404,7 @@ Concepts and interfaces for connectivity and communication via networks
 
 Concepts and facilities for cinematography like games
 
-*  actor			Bridge from entities to actor framework	
+*  actor			Bridge from entities to actor framework
 *  cine			Sostiphicate cinematic framework for complex video games
 *  helpers			“Inplace controls which know about Stage. Bridge from JME3 Controls concepts
 *  input			Sostiphicate high level input system use for develop and test game
@@ -425,7 +425,7 @@ General +++<abbr title="Graphical User Interface">GUI</abbr>+++ for user interac
 
 ==== sg.atom.utils
 
-Collections of userful utilities and datastructures, algorimths here and there. 
+Collections of userful utilities and datastructures, algorimths here and there.
 
 
 [WARNING]
@@ -441,7 +441,7 @@ Concepts and interfaces to build and manage the game world and enviroment
 
 *  gen				Generate the world from data
 *  geometry		Maths for geometries
-*  lod				Level of detail framework provides a lot of methods to optimize scene and geometry. 
+*  lod				Level of detail framework provides a lot of methods to optimize scene and geometry.
 *  material		Additional to JME3 material system
 *  physics			Additional to JME3 physic system
 *  rendering		Additional to JME3 render system
