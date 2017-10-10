@@ -1,6 +1,6 @@
 = SpiderMonkey (Deprecated!)
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :keywords: documentation, network
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
@@ -48,7 +48,7 @@ SpiderMonkey creates two connections by default. A TCP connection for a reliable
 Serializing is an aspect that received a lot of attention. I wanted it to be simple for people to register their own messages, but also be able to register serializers for their own object types. The system works by registering classes to serializers. Generally, a serializer does not exist without a class it can serialize - simply because it doesn't have to: Why have a serializer when there's nothing to serialize. A lot of work has been put into making it as efficient as possible. What can be left out, is left out, and what can optimized, is optimized.
 
 
-==== Field serializer
+=== Field serializer
 
 The default serializer requires some explanation. This serializer serializes all classes that have no (registered) serializer. The field serializer works by saving all fields internally, so it can access them on serialization faster. The fields are taken, and their types are checked. They are put through a serializer again (which serializer depends, of course, on the data type). Then they are ready to be written to the buffer. As you can tell, this is quite a simple serializer, and should be used if your message don't require extra attention. See <<spidermonkey/tutorial/serializing#,this tutorial>> if you want to know how to register your own messages or serializers.
 
