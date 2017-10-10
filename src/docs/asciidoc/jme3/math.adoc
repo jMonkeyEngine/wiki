@@ -52,7 +52,7 @@ Transformations define an operation that converts points from one coordinate sys
 Visibility Determination concerns itself with minimizing the amount of data that is sent to the graphics card for rendering. Specifically, we do not want to send data that will not be seen. Data not sent to the graphics card is said to be culled. The primary focus of this section is Frustum Culling based on the Camera's view frustum. In essence, this frustum creates six standard view planes. The BoundingVolume of an object is tested against the frustum planes to determine if it is contained in the frustum. If at any point the object's bounding is outside of the plane, it is tossed out and no longer processed for rendering. This also includes any children that it managed, allowing fast culling of large sections of the scene.
 
 
-==== Fundamental Types
+=== Fundamental Types
 
 
 == ColorRGBA
@@ -196,12 +196,12 @@ jME includes two types of Matrix classes: Matrix3f and Matrix4f. Matrix3f is a 3
 Multiplying a vector with a Matrix allows the vector to be transformed. Either rotating, scaling or translating that vector.
 
 
-===== Scaling
+==== Scaling
 
 If a _diagonal Matrix_, defined by D = [d~ij~] and d~ij~ = 0 for i != j, has all positive entries it is a _scaling matrix_. If d~i~ is greater than 1 then the resulting vector will grow, while if d~i~ is less than 1 it will shrink.
 
 
-===== Rotation
+==== Rotation
 
 A _rotation matrix_ requires that the transpose and inverse are the same matrix (R^-1^ = R^T^). The _rotation matrix_ R can then be calculated as: R = I + (sin(angle)) S + (1 - cos(angle)S^2^ where S is:
 [cols="3", options="header"]
@@ -222,7 +222,7 @@ a|0
 |===
 
 
-===== Translation
+==== Translation
 
 Translation requires a 4x4 matrix, where the vector (x,y,z) is mapped to (x,y,z,1) for multiplication. The _Translation Matrix_ is then defined as:
 [cols="2", options="header"]
@@ -263,19 +263,19 @@ We have two Vectors (2f and 3f) meaning we have tuples of 2 float values or 3 fl
 === Operations
 
 
-===== Multiplication by Scalar
+==== Multiplication by Scalar
 
 A Vector can be multiplied by a scalar value to produce a second Vector with the same proportions as the first. a**V** = **V**a = &lt;aV~1~, aV~2~,…,aV~n~&gt;
 
 
-===== Addition and Subtraction
+==== Addition and Subtraction
 
 Adding or subtracting two Vectors occurs component-wise. That is the first component is added (subtracted) with the first component of the second Vector and so on.
 
 *P* + *Q* = &lt;P~1~+Q~1~, P~2~+Q~2~, …, P~n~+Q~n~&gt;
 
 
-===== Magnitude
+==== Magnitude
 
 The _magnitude_ defines the length of a Vector. A Vector of magnitude 1 is _unit length_.
 
@@ -284,7 +284,7 @@ For example, if *V* = (x, y, z), the magnitude is the square root of (x^2^ + y^2
 A Vector can be _normalized_ or made _unit length_ by multiplying the Vector by (1/magnitude).
 
 
-===== Dot Products
+==== Dot Products
 
 The dot product of two vectors is defined as:
 *P* dot *Q* = P~x~Q~x~ + P~y~Q~y~ + P~z~Q~z~
@@ -294,14 +294,14 @@ Using the dot product allows us to determine how closely two Vectors are pointin
 If the dot product is 0 then the two Vectors are _orthogonal_ or 90 degrees off.
 
 
-===== Cross Product
+==== Cross Product
 
 The Cross Product of two Vectors returns a third Vector that is prependicular to the two Vectors. This is very useful for calculating surface normals.
 
 *P* X *Q* = &lt;P~y~Q~z~ - P~z~Q~y~, P~z~Q~x~ - P~x~Q~z~, P~x~Q~y~ - P~y~Q~x~&gt;
 
 
-===== jME Class
+==== jME Class
 
 Vector3f and Vector2f store their values (x, y, z) and (x, y) respectively as floats. Most methods are straight forward, and I will leave documentation to the Javadoc.
 
@@ -348,7 +348,7 @@ These basic operations allow us to convert various rotation representations to Q
 You might wish to represent your rotations as Angle Axis pairs. That is, you define a axis of rotation and the angle with which to <<jme3/rotate#,rotate>> about this axis. <<jme3/quaternion#,Quaternion>> defines a method `fromAngleAxis` (and `fromAngleNormalAxis`) to create a Quaternion from this pair. This is acutally used quite a bit in jME demos to continually rotate objects. You can also obtain a Angle Axis rotation from an existing Quaternion using `toAngleAxis`.
 
 
-===== Example - Rotate a Spatial Using fromAngleAxis
+==== Example - Rotate a Spatial Using fromAngleAxis
 
 [source,java]
 ----
@@ -367,7 +367,7 @@ s.getLocalRotation().fromAngleAxis(angle, axis);
 You can also represent a rotation by defining three angles. The angles represent the rotation about the individual axes. Passing in a three-element array of floats defines the angles where the first element is X, second Y and third is Z. The method provided by Quaternion is `fromAngles` and can also fill an array using `toAngles`
 
 
-===== Example - Rotate a Spatial Using fromAngles
+==== Example - Rotate a Spatial Using fromAngles
 
 [source,java]
 ----
@@ -384,7 +384,7 @@ s.getLocalRotation().fromAngles(angles);
 If you have three axes that define your rotation, where the axes define the left axis, up axis and directional axis respectively) you can make use of `fromAxes` to generate the Quaternion. It should be noted that this will generate a new <<jme3/matrix#,Matrix>> object that is then garbage collected, thus, this method should not be used if it will be called many times. Again, `toAxes` will populate a Vector3f array.
 
 
-===== Example - Rotate a Spatial Using fromAxes
+==== Example - Rotate a Spatial Using fromAxes
 
 [source,java]
 ----
@@ -405,7 +405,7 @@ s.getLocalRotation().fromAxes(axes);
 Commonly you might find yourself with a <<jme3/matrix#,Matrix>> defining a rotation. In fact, it's very common to contain a rotation in a <<jme3/matrix#,Matrix>> create a Quaternion, rotate the Quaternion, and then get the <<jme3/matrix#,Matrix>> back. Quaternion contains a `fromRotationMatrix` method that will create the appropriate Quaternion based on the give <<jme3/matrix#,Matrix>>. The `toRotationMatrix` will populate a given <<jme3/matrix#,Matrix>>.
 
 
-===== Example - Rotate a Spatial Using a Rotation Matrix
+==== Example - Rotate a Spatial Using a Rotation Matrix
 
 [source,java]
 ----
@@ -428,7 +428,7 @@ As you can see there are many ways to build a Quaternion. This allows you to wor
 One of the biggest advantages to using Quaternions is allowing interpolation between two rotations. That is, if you have an initial Quaternion representing the original orientation of an object, and you have a final Quaternion representing the orientation you want the object to face, you can do this very smoothly with slerp. Simply supply the time, where time is [0, 1] and 0 is the initial rotation and 1 is the final rotation.
 
 
-===== Example - Use Slerp to Rotate Between two Quaternions
+==== Example - Use Slerp to Rotate Between two Quaternions
 
 [source,java]
 ----
@@ -494,14 +494,14 @@ FastMath provides a number of constants that can help with general math equation
 There are five major categories of functions that FastMath provides.
 
 
-===== Trig Functions
+==== Trig Functions
 
 * cos and acos - provide link:http://en.wikipedia.org/wiki/cosine[cosine] and link:https://en.wikipedia.org/wiki/Inverse_trigonometric_functions[arc cosine] values (make use of the look-up table if `USE_FAST_TRIG` is true)
 * sin and asin - provide link:http://en.wikipedia.org/wiki/sine[sine] and link:https://en.wikipedia.org/wiki/Inverse_trigonometric_functions[arc sine] values (make use of the look-up table if `USE_FAST_TRIG` is true)
 * tan and atan - provide link:http://en.wikipedia.org/wiki/tangent[tangent] and link:https://en.wikipedia.org/wiki/Inverse_trigonometric_functions[arc tangent] values
 
 
-===== Numerical Methods
+==== Numerical Methods
 
 * ceil - provides the ceiling (smallest value that is greater than or equal to a given value and an integer)of a value.
 * floor - provides the floor (largest value that is less than or equal to a given value and an integer) of a value.
@@ -516,13 +516,13 @@ There are five major categories of functions that FastMath provides.
 * invSqrt - provides the inverse link:http://en.wikipedia.org/wiki/Square_root[square root] of a value (1 / sqrt(value).
 
 
-===== Linear Algebra
+==== Linear Algebra
 
 * LERP - calculate the link:http://en.wikipedia.org/wiki/Linear_interpolation[linear interpolation] of two points given a time between 0 and 1.
 * determinant - calculates the link:http://en.wikipedia.org/wiki/determinant[determinant] of a 4x4 matrix.
 
 
-===== Geometric Functions
+==== Geometric Functions
 
 * counterClockwise - given three points (defining a triangle), the winding is determined. 1 if counter-clockwise, -1 if clockwise and 0 if the points define a line.
 * pointInsideTriangle - calculates if a point is inside a triangle.
@@ -530,7 +530,7 @@ There are five major categories of functions that FastMath provides.
 * cartesianToSpherical - converts a point from link:https://en.wikipedia.org/wiki/Cartesian[cartesian coordinates] to link:https://en.wikipedia.org/wiki/Spherical_coordinate_system[spherical coordinates].
 
 
-===== Misc.
+==== Misc.
 
 * newRandomFloat - obtains a random float.
 
@@ -609,7 +609,7 @@ Vector3f normal = new Vector3f(0,1,0);
 float constant = new Vector3f(1,1,1).dot(normal);
 Plane testPlane = new Plane(normal, constant);
 
-int side = testPlane.whichSide(new Vector3f(2,1,0);
+int side = testPlane.whichSide(new Vector3f(2,1,0));
 
 if(side == Plane.NO_SIDE) {
    System.out.println("This point lies on the plane");
