@@ -1,4 +1,4 @@
-= virtualreality
+= Virtual Reality
 :author: 
 :revnumber: 
 :revdate: 2016/10/23 11:22
@@ -16,12 +16,66 @@ Razer HDK and systems supporting OSVR
 
 Google Cardboard / GoogleVR
 
-== jMonkeyEngine 3 has built in support for SteamVR/OpenVR compatible headsets.
-See example here:
-https://hub.jmonkeyengine.org/t/official-vr-module/37830/32
+== Sample Application
 
-== gvr-android-jme (https://github.com/nordfalk/gvr-android-jme)
-Google Cardboard VR SDK 1.0 integration
+[source,java]
+----
+public class Main extends SimpleApplication {
+
+    public static void main(String[] args) {
+        AppSettings settings = new AppSettings(true);
+        settings.put(VRConstants.SETTING_VRAPI, VRConstants.SETTING_VRAPI_OPENVR_VALUE);
+        settings.put(VRConstants.SETTING_ENABLE_MIRROR_WINDOW, true);
+       
+        VREnvironment env = new VREnvironment(settings);
+        env.initialize();
+        
+    	// Checking if the VR environment is well initialized 
+    	// (access to the underlying VR system is effective, VR devices are detected).
+    	if (env.isInitialized()){
+            VRAppState vrAppState = new VRAppState(settings, env);
+            vrAppState.setMirrorWindowSize(1024, 800);
+            Main app = new Main(vrAppState);
+            app.setLostFocusBehavior(LostFocusBehavior.Disabled);
+            app.setSettings(settings);
+            app.setShowSettings(false);
+            app.start();
+        }
+    }
+    
+    public Main(AppState... appStates) {
+        super(appStates);
+    }
+
+    @Override
+    public void simpleInitApp() {
+        Box b = new Box(1, 1, 1);
+        Geometry geom = new Geometry("Box", b);
+
+        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+        mat.setColor("Color", ColorRGBA.Blue);
+        geom.setMaterial(mat);
+
+        rootNode.attachChild(geom);
+    }
+
+    @Override
+    public void simpleUpdate(float tpf) {
+        //TODO: add update code
+    }
+
+    @Override
+    public void simpleRender(RenderManager rm) {
+        //TODO: add render code
+    }
+}
+----
+Project source: https://github.com/neph1/VRSampleApplication
+
+
+== Google Cardboard VR SDK 1.0 integration
+gvr-android-jme (https://github.com/nordfalk/gvr-android-jme)
+
 
 == Legacy
 The following projects are not up to date, but may provide functionality not found in the other packages.
