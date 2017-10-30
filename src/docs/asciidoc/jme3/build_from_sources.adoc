@@ -1,6 +1,6 @@
 = Building jMonkeyEngine 3 from the Sources
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :keywords: documentation, install
 :relfileprefix: ../
@@ -8,35 +8,92 @@
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
-We recommend downloading the link:https://github.com/jMonkeyEngine/sdk/releases/tag/stable[jMonkeyEngine SDK] - but of course you can also build the jMonkeyEngine yourself from the sources. In this case, you need the link:http://subversion.tigris.org[Subversion] file version system installed (svn).
+== Disclaimer
 
-.  *Checkout:* Checkout the Subversion repository.
+Please understand that this tutorial gives you access to the latest development release of the engine. Whilst I and many others use this release to work with, it is by definition still being developed. Expect bleeding edge implementations to need work. If you don’t want that kind of hassle, please use the stable releases.
+
+
+== How to build jMonkeyEngine from GitHub source.
+
+Here is the basic outline of our goal:
+
+.  Install git client - link:https://git-scm.com/downloads[https://git-scm.com/downloads]
+.  Download jMonkeyEngine using git-client.
+.  Update jMonkeyEngine using git-client.
+.  Build jMonkeyEngine locally using gradle.
+
+Repeat steps 3 and 4 whenever any changes have been committed to the master branch.
+
+. Install Git Client: +
+website: link:https://git-scm.com/downloads[https://git-scm.com/downloads]
+
+That’s it for configuring our environment. Now we just need to get the engine and build it. The files below can all be placed in the same directory and run without admin privileges. For example, I put all of these files into `D:\programming` - and they will download/update files in the `./jmonkeyengine/ sub-directory`.
+
+[start=2]
+.  Download the Engine: `download.bat` +
+ This file downloads the engine into a dir called "`jmonkey`" using the git client.
+.  Update the Engine: `update.bat` +
+ This file downloads any changed files from github using the git client.
+.  Build the Engine: `build.bat` +
+ This file builds the engine using the gradle wrapper and places them in your local repository.
 +
-[source]
+--
+NOTE: This is USER-SPECIFIC. My files are stored in `C:\Users\James\.m2\repository`
+
+link:https://gist.github.com/jayfella/12af46c2fc4650640652b69b84b3dd01[https://gist.github.com/jayfella/12af46c2fc4650640652b69b84b3dd01]
+
+.build.bat
 ----
-svn checkout http://jmonkeyengine.googlecode.com/svn/branches/3.0final/engine jme3
+@echo off
+
+echo "Building JME engine to your local maven repo...."
+cd jmonkeyengine
+gradlew.bat -PbuildJavaDoc=true install
+cd ..
+
+cmd /k
+----
+.download.bat
+----
+@echo off
+echo "downloading engine..."
+git clone -b master --single-branch --depth 10 https://github.com/jMonkeyEngine/jMonkeyEngine/ jmonkeyengine
+----
+.update.bat
+----
+@echo off
+cd jmonkeyengine
+git pull
+cd ..
+cmd /k
+----
+--
+
+== Using the built engine in your game
+
+Add the maven plugin to your build script, and put the mavenLocal() repository in your list of repositories. Then just reference the dependencies as you would normally. Note that we are now using version 3.2.+ of the engine.
+
+----
+apply plugin: 'maven'
+
+ext.jmeVersion = "[3.2,)"
+
+repositories {
+    mavenLocal()
+}
+
+dependencies {
+    compile "org.jmonkeyengine:jme3-core:$jmeVersion"
+    compile "org.jmonkeyengine:jme3-desktop:$jmeVersion"
+    compile "org.jmonkeyengine:jme3-lwjgl:$jmeVersion"
+}
 ----
 
-**  You can leave login and password empty
-
-.  *Build:* Execute `ant jar`
-**  This compiles the JAR files in `dist/libs/*`
-
-.  *Javadoc:* Execute `ant javadoc` 
-**  This generates javadocs in the `dist/javadoc` directory.
-
-.  *Run:* Execute `ant run`
-**  This runs the TestChooser where you can browse examples.
-
-.  *Use:* Create a Java SE project and place all JARs from the `dist/lib` directory on the classpath.
-**  You can now extend your first game from `com.jme3.app.SimpleApplication`. 
-
-
-For a detailed description of the created jar files see <<jme3/jme3_source_structure#structure_of_jmonkeyengine3_jars,this list>>.
+//For a detailed description of the created jar files see <<jme3/jme3_source_structure#structure_of_jmonkeyengine3_jars,this list>>.
 
 '''
 
 Learn more about:
 
 *  <<jme3/simpleapplication_from_the_commandline#,Setting up JME3 on the commandline (generic)>>.
-*  <<jme3/build_jme3_sources_with_netbeans#,Building JME3 from the sources with NetBeans>> 
+*  <<jme3/build_jme3_sources_with_netbeans#,Building JME3 from the sources with NetBeans>>
