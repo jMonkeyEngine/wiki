@@ -8,12 +8,12 @@
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
-== Disclaimer
+== Foreword
 
-Please understand that this tutorial gives you access to the latest development release of the engine. Whilst I and many others use this release to work with, it is by definition still being developed. Expect bleeding edge implementations to need work. If you don’t want that kind of hassle, please use the <<jme3/maven#,stable releases>>.
+Please understand that this tutorial gives you access to the latest development release of the engine. Whilst many developers use this release to work with, it is by definition still being developed. Expect bleeding edge implementations to need work. If you don’t want that kind of hassle, please use the <<jme3/maven#,stable releases>>.
 
 
-== How to build jMonkeyEngine from GitHub source.
+== Build jMonkeyEngine from Github source.
 
 Here is the basic outline of our goal:
 
@@ -27,7 +27,7 @@ Repeat steps 3 and 4 whenever any changes have been committed to the master bran
 . Install Git Client: +
 website: link:https://git-scm.com/downloads[https://git-scm.com/downloads]
 
-That’s it for configuring our environment. Now we just need to get the engine and build it. The files below can all be placed in the same directory and run without admin privileges. For example, I put all of these files into `D:\programming` - and they will download/update files in the `./jmonkeyengine/ sub-directory`.
+Now we need to get the engine source using the git client and build it locally. There are 3 batch files below provided for convenience (download, update, build) and can all be placed in the same directory and run without administrator privileges. For example, you can put all of these files into `D:\programming\` - and the scripts will create, download and update files in the `./jmonkeyengine/` sub-directory.
 
 [start=2]
 .  Download the Engine: `download.bat` +
@@ -42,6 +42,13 @@ NOTE: This is USER-SPECIFIC. My files are stored in `C:\Users\James\.m2\reposito
 
 link:https://gist.github.com/jayfella/12af46c2fc4650640652b69b84b3dd01[https://gist.github.com/jayfella/12af46c2fc4650640652b69b84b3dd01]
 
+.download.bat
+----
+@echo off
+echo "downloading engine..."
+git clone -b master --single-branch --depth 10 https://github.com/jMonkeyEngine/jMonkeyEngine/ jmonkeyengine
+----
+
 .build.bat
 ----
 @echo off
@@ -53,12 +60,7 @@ cd ..
 
 cmd /k
 ----
-.download.bat
-----
-@echo off
-echo "downloading engine..."
-git clone -b master --single-branch --depth 10 https://github.com/jMonkeyEngine/jMonkeyEngine/ jmonkeyengine
-----
+
 .update.bat
 ----
 @echo off
@@ -80,6 +82,7 @@ ext.jmeVersion = "[3.2,)"
 
 repositories {
     mavenLocal()
+    jcenter()
 }
 
 dependencies {
