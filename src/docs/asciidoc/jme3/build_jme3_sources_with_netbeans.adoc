@@ -31,28 +31,29 @@ NOTE: In the following, always replace kbd:[~] with the path to your home direct
 Clone the sources from the repository.
 
 .  In NetBeans, go to `menu:Team[Git>Clone]`.
-..  Repository +++<abbr title="Uniform Resource Locator">URL</abbr>+++: +
-`link:https://github.com/jMonkeyEngine/jmonkeyengine[https://github.com/jMonkeyEngine/jmonkeyengine]`
+..  Repository +++<abbr title="Uniform Resource Locator">URL</abbr>+++:
 +
+--
+----
+https://github.com/jMonkeyEngine/jmonkeyengine
+----
+
 IMPORTANT: Use the +++<abbr title="Uniform Resource Locator">URL</abbr>+++ to your repository fork and clone your fork if a non-member and you wish to contribute.
+--
 
 ..  You can leave user/pw blank for anonymous access unless you are going to `push` a `commit`.
 ..  Specify Destination Folder. +
 Local Folder: `~/NetBeansProjects]/jmonkeyengine`
-
-.  Click btn:[Next].
-..  Select: +
+..  Click btn:[Next].
+.  Select:
 * [x] master*
+..  Click btn:[Next].
+.  Verify the auto-fill information in the `Destination Directory` dialog is correct.
+..  Optional:
+* [ ] Scan for NetBeans Projects after Clone
+..  Click btn:[Finish] and wait.
 
-.  Click btn:[Next].
-..  Verify the auto-fill information in the `Destination Directory` dialog is correct.
-..  Select: +
-* [x] `Scan for NetBeans Projects after Clone`
-
-.  Click Finish and wait.
-
-
-After some time, the `Cloned Projects` dialog will open. Select `Open Project` followed by the `jmonkeyengine` node. The `jmonkeyengine` project opens in the Project window.
+After some time the download will end.
 
 
 == Information on Pull/Pushing Commits
@@ -60,37 +61,26 @@ After some time, the `Cloned Projects` dialog will open. Select `Open Project` f
 
 You now have a local copy of the `jmonkeyengine` repository. There are a few rules you need to follow in order to contribute.
 
-.Members Pull
-Update your local copy in NetBeans by using the NetBeans command `menu:Git[Remote>Pull From Upstream]`. Everything was properly configured while cloning from the jMonkeyEngine Repository directly.
+.Members & Non-Members Pull/Push
+Update your local copy and push commits by using the NetBeans command `menu:Git[Remote>Pull From Upstream]` or `menu:Git[Remote>Push To Upstream]`.
 
-.Non-Members Pull
-Update your local copy in NetBeans by using the NetBeans command `menu:Git[Remote>Pull]`.
+.Non-Members
+To update *your fork* on GitHub:
 
-**  In the `Remote Repository` dialog you toggle:
-* [x] Specify Git Repository Location
-+
-and use the jmonkeyengine repository +++<abbr title="Uniform Resource Locator">URL</abbr>+++: `link:https://github.com/jMonkeyEngine/jmonkeyengine[https://github.com/jMonkeyEngine/jmonkeyengine]`
+.  Go to your version of the repository on GitHub.
+.  Click the btn:[New Pull Request] button at the top.
+.  Note that the jMonkeyEngine repository will be on the left and your repository will be on the right.
+.  Click the btn:[Base Fork] button and from the drop down menu select your forked repository.
+.  Select the "`compare across forks`" link.
+.  Click the btn:[Head Fork] button and from the drop down list select "`jMonkeyEngine/jmonkeyengine`".
+.  Click the green button btn:[Create pull request].
 
-.Members Push
-Update jMonkeyEngine by using the NetBeans command `menu:Git[Remote>Push To Upstream]`. Everything was properly configured while cloning from the jMonkeyEngine Repository directly.
+To submit changes to the jMonkeyEngine repository after pushing them to *your fork*:
 
-.Non-Members Push
-. Update *your fork* by using the NetBeans command `menu:Git[Remote>Push]`.
-
-**  In the `Remote Repository` dialog you toggle:
-* [x] Select Configured Git Repository Location:
-+
---
-and use the forked +++<abbr title="Uniform Resource Locator">URL</abbr>+++: `https://username@github.com/username/jmonkeyengine` where username is your username.
-
-NOTE: Note the distinction between `//github.com`: in the pull case and `//username@github.com`: in the push case.
---
-
-.  To submit changes to the jMonkeyEngine repository after pushing them to *your fork*:
-..  Go to your version of the repository on GitHub.
-..  Click the btn:[New Pull Request] button at the top.
-..  Note that the jMonkeyEngine repository will be on the left and your repository will be on the right.
-..  Click the green button btn:[Create pull request]. Give a succinct and informative title, in the comment field give a short explanation of the changes and click the green button btn:[Create pull request] again.
+.  Go to your version of the repository on GitHub.
+.  Click the btn:[New Pull Request] button at the top.
+.  Note that the jMonkeyEngine repository will be on the left and your repository will be on the right.
+.  Click the green button btn:[Create pull request]. Give a succinct and informative title, in the comment field give a short explanation of the changes and click the green button btn:[Create pull request] again.
 
 .Everyone
 NOTE: See  link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/CONTRIBUTING.md[How to contribute to jMonkeyEngine] before submitting a P/R.
@@ -128,7 +118,19 @@ For a detailed description of the separate jar files see <<jme3/jme3_source_stru
 
 == Build the Project and Run a Sample App
 
-.  btn:[RMB] select the `jmonkeyengine` project node and `Clean and Build` the project.
+[CAUTION]
+====
+When you build the engine from the root node, part of the build process includes building the header files for the jme3-bullet-native subproject. This updates the timestamp on the header files, even though you did not edit them. This will then mark them as modified, which will add them to your next commit.
+
+To prevent them from being commited, before you do anything else:
+
+.  In the Projects window, open the `jme3-bullet-native` subproject node.
+.  Navigate to the `Source Packages/<default package>` folder.
+.  Select all `.h` header files to highlight them.
+.  btn:[RMB] select the highlighted files then choose `menu:Git[Ignore>Exclude From Commit]`
+====
+
+.  btn:[RMB] select the `jmonkeyengine` project root node and `Clean and Build` the project.
 .  In the Projects window, btn:[RMB] select and then open the `jme-examples` node which contains the sample apps. You do this for any subproject you wish to make changes to.
 .  Every file in the `Source Packages` folder with a Main class (for example `jme3test.model/TestHoverTank.java` or `jme3test.games/CubeField.java`) is an app.
 .  Right-click a sample app and choose "`Run File`" (Shift-F6).
@@ -140,18 +142,23 @@ TIP: You can btn:[RMB] select the `jme-examples` node and select `Run` to start 
 
 == Optional: Javadoc Popups and Source Navigation in NetBeans
 
-If you are working on the jme3 sources:
+If you are working on the jmonkeyengine sources:
 
 .  Confirm in the Files window that the javadoc has been created in `~/NetBeansProjects/jmonkeyengine/dist/javadoc`
 .  In the editor, place the caret in a jme class and press kbd:[ctrl]-kbd:[space] to view javadoc.
 
-If you are working on a game project that depends on jme3, you will most likely have your dependencies spread around and linked to different subprojects and or folders:
+If you are working on a game project that depends on jmonkeyengine:
 
-.  In your game project, add the jme3 jar by btn:[RMB] selecting the Libraries node and selecting btn:[Add Far/Folder].
-.  Navigate to the `~/NetBeansProjects/jmonkeyengine/` folder and select the library jar you're interested in.  Check "`as relative path`" and click btn:[Open] .
+.  In the jmonkeyengine source:
+..  btn:[RMB] selecting a subproject node and choosing `menu:Tasks[install]` will install the built jars for that subproject into your local maven repositories `org.jmonkeyengine` folder, which on linux is ~/.m2, and on Windows might be in AppData, or in your home directory.
+..  btn:[RMB] selecting the root node and choosing `menu:Tasks[dist]` creates a jME3 examples distribution with all jme3 binaries, javadoc and external libraries under `~/NetBeansProjects/jmonkeyengine/dist`.
+.. btn:[RMB] selecting the root node and choosing `menu:Tasks[libDist]` builds and copies the engine binaries and sources to `~/NetBeansProjects/jmonkeyengine/build/libDist`.
+..  btn:[RMB] selecting the root node and choosing `menu:Tasks[copyLib]` copies the engine dependencies to `~/NetBeansProjects/jmonkeyengine/build/libDist/lib-ext`.
+.  In your game project, add the jme3 jar by btn:[RMB] selecting the Libraries node and selecting btn:[Add Jar/Folder].
+.  Navigate to the folder of choice and select the library jar you're interested in.  Check "`as relative path`" and click btn:[Open] .
 .  btn:[RMB] select the newly added jar and choose "`Edit`".
-.  In the `Edit Jar Reference` dialog, `JavaDoc:` btn:[Browse] to the `~/NetBeansProjects/jmonkeyengine/dist/javadoc/` folder. Check "`as relative path`" and click btn:[Open] .
-.  In the `Edit Jar Reference` dialog, `Sources:` btn:[Browse] to the `~/NetBeansProjects/jmonkeyengine/` folder that contains your sources. Usually in the subprojects `build/lib` folder (after running the "`build`" task) or `build/libDist/sources` folder (after running the "`libDist`" task). Check "`as relative path`" and click btn:[Open].
+.  In the `Edit Jar Reference` dialog, `JavaDoc:` btn:[Browse] to the `javadoc/` folder of choice. Check "`as relative path`" and click btn:[Open] .
+.  In the `Edit Jar Reference` dialog, `Sources:` btn:[Browse] to the folder of choice that contains your sources. Check "`as relative path`" and click btn:[Open].
 .  In the editor, place the caret in a jme class and press kbd:[ctrl]-kbd:[space] to view javadoc. Ctrl-click any jme3 method to jump to its definition in the sources.
 
 This tip works for any third-party JAR library that you use. (You may have to download the javadoc/sources from their home page separately).
