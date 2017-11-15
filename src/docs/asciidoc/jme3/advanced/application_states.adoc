@@ -4,6 +4,7 @@
 :revdate: 2016/03/17 20:48
 :relfileprefix: ../../
 :imagesdir: ../..
+:experimental:
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
@@ -185,6 +186,69 @@ public class MyAppState extends AbstractAppState {
 }
 ----
 
+
+== BaseAppState
+
+
+A new link:http://javadoc.jmonkeyengine.org/com/jme3/app/state/BaseAppState.html[BaseAppState] class was introduced as part of the link:https://hub.jmonkeyengine.org/t/jmonkeyengine-3-1-alpha-4-released/35478[updates] being made to the AppState interface. AbstractAppState is the most minimal of the minimal implementations of the AppState interface. You essentially still need to do everything yourself, including getting the funky enable/disable/initialized/terminate logic right. Now you just extend BaseAppState and you get onEnable() and onDisable() already worked out for you.
+
+Definition:
+
+[source,java]
+----
+public class MyBaseAppState extends BaseAppState {        
+    @Override    
+    protected void initialize(Application app) {        
+        //It is technically safe to do all initialization and cleanup in the         
+        //onEnable()/onDisable() methods. Choosing to use initialize() and         
+        //cleanup() for this is a matter of performance specifics for the         
+        //implementor.        
+        //TODO: initialize your AppState, e.g. attach spatials to rootNode    
+    }
+
+    @Override    
+    protected void cleanup(Application app) {        
+        //TODO: clean up what you initialized in the initialize method,        
+        //e.g. remove all spatials from rootNode    
+    }
+    
+    //onEnable()/onDisable() can be used for managing things that should     
+    //only exist while the state is enabled. Prime examples would be scene     
+    //graph attachment or input listener attachment.    
+    @Override    
+    protected void onEnable() {        
+        //Called when the state is fully enabled, ie: is attached and         
+        //isEnabled() is true or when the setEnabled() status changes after the         
+        //state is attached.    
+    }
+    
+    @Override    
+    protected void onDisable() {        
+        //Called when the state was previously enabled but is now disabled         
+        //either because setEnabled(false) was called or the state is being         
+        //cleaned up.    
+    }        
+    
+    @Override    
+    public void update(float tpf) {        
+        //TODO: implement behavior during runtime    
+    }
+    
+}
+----
+
+Notable BaseAppState changes are as follows:
+
+
+*  You no longer need to call super.initialize(stateManager, app) because it is now called by BaseAppState upon initialization for you.
+*  You no longer have to cast SimpleApplication to have access to AssetManager, AppStateManager, and you can even get a State directly. The getters getApplication(), getAssetManager(), getState(type) and their methods are available to you immediately. However, you still have to cast SimpleApplication to get rootNode.
+*  You no longer call super during cleanup, its done for you now.
+*  It's now safe to do all initialization and cleanup in the onEnable()/onDisable() methods.
+*  Cleanup and setEnabled now have logging built in.
+
+You use BaseAppState as you would AbstractAppState, other than mentioned above, and which one you use is entirely up to you. However, BaseAppState makes your life easier and is the recommended one to use now.
+
+See link:http://javadoc.jmonkeyengine.org/com/jme3/app/state/BaseAppState.html[BaseAppState] for more information.
 
 == Pausing and Unpausing
 

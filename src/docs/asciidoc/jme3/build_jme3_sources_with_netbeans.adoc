@@ -1,95 +1,168 @@
-= Setting up JME3 in Netbeans 6+
-:author: 
-:revnumber: 
+= Building JME3 from Sources in Netbeans 8.x
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :keywords: documentation, install
 :relfileprefix: ../
 :imagesdir: ..
+:experimental:
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
-You are welcome to try out the new jME3, and contribute patches and features! This document shows how to download, set up, build, and run the latest development version from the sources. These instructions work in NetBeans IDE 6 or better.
+You are welcome to try out the new jME3, and contribute patches and features! This document shows how to download, set up, build, and run the latest development version from the sources. These instructions work in NetBeans IDE 8.x or better.
 
-Note: In the following, always replace “~ with the path to your home directory.
+.Prerequisites
+.  Have a link:https://github.com/[GitHub account].
+.  Are a jMonkeyEngine project member.
+
+If you are not a member, you fork the repository into your GitHub account and issue pull requests from there.
+
+To fork the jMonkeyEngine repository into your GitHub Account:
+
+.  Navigate to link:https://github.com/jMonkeyEngine/jmonkeyengine[https://github.com/jMonkeyEngine/jmonkeyengine].
+.  In the menu at the top of the page, select the icon:code-fork[]*Fork* button.
+
+
+NOTE: In the following, always replace kbd:[~] with the path to your home directory.
 
 
 == Downloading the Sources
 
-Check out the sources from the repository. (The following NetBeans instructions are equivalent to executing `cd ~/NetBeansProjects; svn checkout link:http://jmonkeyengine.googlecode.com/svn/branches/3.0final/engine[http://jmonkeyengine.googlecode.com/svn/branches/3.0final/engine] jme3` on the commandline.)
+Clone the sources from the repository.
 
-.  In NetBeans go to Team &gt; Subversion &gt; Checkout
-..  Repository +++<abbr title="Uniform Resource Locator">URL</abbr>+++: `link:https://jmonkeyengine.googlecode.com/svn[https://jmonkeyengine.googlecode.com/svn]`
-..  You can leave user/pw blank for anonymous access. 
+.  In NetBeans, go to `menu:Team[Git>Clone]`.
+..  Repository +++<abbr title="Uniform Resource Locator">URL</abbr>+++:
++
+--
+----
+https://github.com/jMonkeyEngine/jmonkeyengine
+----
 
-.  Click Next
-..  Repository Folders: `branches/3.0final/engine`
-..  Enable the checkbox to Skip “engine and only checkout its contents.
-..  Local Folder: `~/NetBeansProjects/jme3`
+IMPORTANT: Use the +++<abbr title="Uniform Resource Locator">URL</abbr>+++ to your repository fork and clone your fork if a non-member and you wish to contribute.
+--
 
-.  Click Finish and wait.
+..  You can leave user/pw blank for anonymous access unless you are going to `push` a `commit`.
+..  Specify Destination Folder. +
+Local Folder: `~/NetBeansProjects]/jmonkeyengine`
+..  Click btn:[Next].
+.  Select:
+* [x] master*
+..  Click btn:[Next].
+.  Verify the auto-fill information in the `Destination Directory` dialog is correct.
+..  Optional:
+* [ ] Scan for NetBeans Projects after Clone
+..  Click btn:[Finish] and wait.
 
-The jme3 project opens in the Project window. It already includes a working ANT build script for building and running.
+After some time the download will end.
 
-Look into the Libraries node and confirm that the project depends on the following libraries in the classpath:
 
-*  j-ogg-oggd.jar        
-*  j-ogg-vorbisd.jar       
-*  jbullet.jar	         
-*  stack-alloc.jar
-*  vecmath.jar     
-*  lwjgl.jar       
-*  jME3-lwjgl-natives.jar	
-*  jinput.jar	
-*  eventbus.jar
-*  nifty-default-controls.jar                              
-*  nifty-examples.jar                              
-*  nifty-style-black.jar                              
-*  nifty.jar
-*  jglfont-core.jar                              
-*  xmlpull-xpp3.jar
-*  android.jar
-*  jME3-bullet-natives.jar
-*  gluegen-rt.jar
-*  joal.jar
-*  jogl-all.jar
-*  jME3-natives-joal.jar
-*  jME3-openal-soft-natives-android.jar
+== Information on Pull/Pushing Commits
+
+
+You now have a local copy of the `jmonkeyengine` repository. There are a few rules you need to follow in order to contribute.
+
+.Members & Non-Members Pull/Push
+Update your local copy and push commits by using the NetBeans command `menu:Git[Remote>Pull From Upstream]` or `menu:Git[Remote>Push To Upstream]`.
+
+.Non-Members
+To update *your fork* on GitHub:
+
+.  Go to your version of the repository on GitHub.
+.  Click the btn:[New Pull Request] button at the top.
+.  Note that the jMonkeyEngine repository will be on the left and your repository will be on the right.
+.  Click the btn:[Base Fork] button and from the drop down menu select your forked repository.
+.  Select the "`compare across forks`" link.
+.  Click the btn:[Head Fork] button and from the drop down list select "`jMonkeyEngine/jmonkeyengine`".
+.  Click the green button btn:[Create pull request].
+
+To submit changes to the jMonkeyEngine repository after pushing them to *your fork*:
+
+.  Go to your version of the repository on GitHub.
+.  Click the btn:[New Pull Request] button at the top.
+.  Note that the jMonkeyEngine repository will be on the left and your repository will be on the right.
+.  Click the green button btn:[Create pull request]. Give a succinct and informative title, in the comment field give a short explanation of the changes and click the green button btn:[Create pull request] again.
+
+.Everyone
+NOTE: See  link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/CONTRIBUTING.md[How to contribute to jMonkeyEngine] before submitting a P/R.
+
+
+== Verify Cloned Subprojects
+
+Look into the `Subprojects` node and confirm that the subprojects cloned:
+
+*  jme3-android
+*  jme3-android-native
+*  jme3-blender
+*  jme3-bullet
+*  jme3-bullet-native
+*  jme3-bullet-native-android
+*  jme3-core
+*  jme3-desktop
+*  jme3-effects
+*  jme3-examples
+*  jme3-ios
+*  jme3-jbullet
+*  jme3-jogg
+*  jme3-jogl
+*  jme3-lwjgl
+*  jme3-lwjgl3
+*  jme3-networking
+*  jme3-niftygui
+*  jme3-plugins
+*  jme3-terrain
+*  jme3-testdata
+*  jme3-vr
 
 For a detailed description of the separate jar files see <<jme3/jme3_source_structure#structure_of_jmonkeyengine3_jars,this list>>.
 
 
 == Build the Project and Run a Sample App
 
-.  Right-click the jme3 project node and “Clean and Build the project.
-.  In the Projects window, open the `Test` folder which contains the sample apps.
-.  Every file with a Main class (for example `jme3test.model/TestHoverTank.java` or `jme3test.game/CubeField.java`) is an app.
-.  Right-click a sample app and choose “Run File (Shift-F6).
+[CAUTION]
+====
+When you build the engine from the root node, part of the build process includes building the header files for the jme3-bullet-native subproject. This updates the timestamp on the header files, even though you did not edit them. This will then mark them as modified, which will add them to your next commit.
+
+To prevent them from being commited, before you do anything else:
+
+.  In the Projects window, open the `jme3-bullet-native` subproject node.
+.  Navigate to the `Source Packages/<default package>` folder.
+.  Select all `.h` header files to highlight them.
+.  btn:[RMB] select the highlighted files then choose `menu:Git[Ignore>Exclude From Commit]`
+====
+
+.  btn:[RMB] select the `jmonkeyengine` project root node and `Clean and Build` the project.
+.  In the Projects window, btn:[RMB] select and then open the `jme-examples` node which contains the sample apps. You do this for any subproject you wish to make changes to.
+.  Every file in the `Source Packages` folder with a Main class (for example `jme3test.model/TestHoverTank.java` or `jme3test.games/CubeField.java`) is an app.
+.  Right-click a sample app and choose "`Run File`" (Shift-F6).
 .  Generally in sample apps:
 ..  the mouse and the WASD keys control movement
 ..  the Esc key exits the application
 
-
+TIP: You can btn:[RMB] select the `jme-examples` node and select `Run` to start the `Test Chooser` app whether or not you open the project node.
 
 == Optional: Javadoc Popups and Source Navigation in NetBeans
 
-If you are working on the jme3 sources:
+If you are working on the jmonkeyengine sources:
 
-.  In the Projects window, right-click the jme3 project and choose Generate Javadoc. Wait.
-.  Confirm in the Files window that the javadoc has been created in `~/NetBeansProjects/jme3/dist/javadoc`
-.  In the editor, place the caret in a jme class and press ctrl-space to view javadoc.
+.  Confirm in the Files window that the javadoc has been created in `~/NetBeansProjects/jmonkeyengine/dist/javadoc`
+.  In the editor, place the caret in a jme class and press kbd:[ctrl]-kbd:[space] to view javadoc.
 
-If you are working on a game project that depends on jme3:
+If you are working on a game project that depends on jmonkeyengine:
 
-.  First follow the previous tip. (In the future, we may offer jme javadoc as download instead.)
-.  In your game project, right-click the Libraries node and choose “Properties.
-.  In the Library properties, select jme3.jar and click the Edit button.
-..  For the Javadoc field, browse to `~/NetBeansProjects/jme3/dist/javadoc`. Check “as relative path and click select.
-..  For the Sources field, browse to `~/NetBeansProjects/jme3/src`. Check “as relative path and click select.
-..  Click OK.
-
-.  In the editor, place the caret in a jme class and press ctrl-space to view javadoc. Ctrl-click any jme3 method to jump to its definition in the sources. 
+.  In the jmonkeyengine source:
+..  btn:[RMB] selecting a subproject node and choosing `menu:Tasks[install]` will install the built jars for that subproject into your local maven repositories `org.jmonkeyengine` folder, which on linux is ~/.m2, and on Windows might be in AppData, or in your home directory.
+..  btn:[RMB] selecting the root node and choosing `menu:Tasks[dist]` creates a jME3 examples distribution with all jme3 binaries, javadoc and external libraries under `~/NetBeansProjects/jmonkeyengine/dist`.
+.. btn:[RMB] selecting the root node and choosing `menu:Tasks[libDist]` builds and copies the engine binaries and sources to `~/NetBeansProjects/jmonkeyengine/build/libDist`.
+..  btn:[RMB] selecting the root node and choosing `menu:Tasks[copyLib]` copies the engine dependencies to `~/NetBeansProjects/jmonkeyengine/build/libDist/lib-ext`.
+.  In your game project, add the jme3 jar by btn:[RMB] selecting the Libraries node and selecting btn:[Add Jar/Folder].
+.  Navigate to the folder of choice and select the library jar you're interested in.  Check "`as relative path`" and click btn:[Open] .
+.  btn:[RMB] select the newly added jar and choose "`Edit`".
+.  In the `Edit Jar Reference` dialog, `JavaDoc:` btn:[Browse] to the `javadoc/` folder of choice. Check "`as relative path`" and click btn:[Open] .
+.  In the `Edit Jar Reference` dialog, `Sources:` btn:[Browse] to the folder of choice that contains your sources. Check "`as relative path`" and click btn:[Open].
+.  In the editor, place the caret in a jme class and press kbd:[ctrl]-kbd:[space] to view javadoc. Ctrl-click any jme3 method to jump to its definition in the sources.
 
 This tip works for any third-party JAR library that you use. (You may have to download the javadoc/sources from their home page separately).
+
 '''
 
-Sources used: link:http://code.google.com/p/jmonkeyengine/wiki/BuildJme3[BuildJme3], link:http://www.jmonkeyengine.com/forum/index.php?topic=13108.0[NetBeans tutorial from forum]
+Sources used: https://github.com/jMonkeyEngine/jmonkeyengine[https://github.com/jMonkeyEngine/jmonkeyengine]

@@ -1,4 +1,4 @@
-= virtualreality
+= Virtual Reality
 :author: 
 :revnumber: 
 :revdate: 2016/10/23 11:22
@@ -10,22 +10,73 @@ jMonkeyEngine 3 has a wide range of support for Virtual Reality (VR). The known 
 
 HTC Vive and systems supporting SteamVR/OpenVR
 
+Native Oculus Rift support (and through SteamVR)
+
 Razer HDK and systems supporting OSVR
 
 Google Cardboard / GoogleVR
 
-Legacy: Oculus Rift 0.5
+== Sample Application
 
-In any form of VR, a library is needed as support is not built in to the core of jMonkeyEngine3.
+[source,java]
+----
+public class Main extends SimpleApplication {
 
-== jMonkeyVR (https://github.com/phr00t/jMonkeyVR)
-This is the main library to use when you want wide VR support. It has full OpenVR/SteamVR support and OSVR support in the making (as of Oct 2016)
+    public static void main(String[] args) {
+        AppSettings settings = new AppSettings(true);
+        settings.put(VRConstants.SETTING_VRAPI, VRConstants.SETTING_VRAPI_OPENVR_VALUE);
+        settings.put(VRConstants.SETTING_ENABLE_MIRROR_WINDOW, true);
+       
+        VREnvironment env = new VREnvironment(settings);
+        env.initialize();
+        
+    	// Checking if the VR environment is well initialized 
+    	// (access to the underlying VR system is effective, VR devices are detected).
+    	if (env.isInitialized()){
+            VRAppState vrAppState = new VRAppState(settings, env);
+            vrAppState.setMirrorWindowSize(1024, 800);
+            Main app = new Main(vrAppState);
+            app.setLostFocusBehavior(LostFocusBehavior.Disabled);
+            app.setSettings(settings);
+            app.setShowSettings(false);
+            app.start();
+        }
+    }
+    
+    public Main(AppState... appStates) {
+        super(appStates);
+    }
 
-== jme3-osvr (https://github.com/neph1/jme3-osvr)
-Together with https://github.com/neph1/OSVR-Java provides rudimentary OSVR support (extended mode). Examples: https://github.com/neph1/jme3-osvr-examples
+    @Override
+    public void simpleInitApp() {
+        Box b = new Box(1, 1, 1);
+        Geometry geom = new Geometry("Box", b);
 
-== gvr-android-jme (https://github.com/nordfalk/gvr-android-jme)
-Google Cardboard VR SDK 1.0 integration
+        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+        mat.setColor("Color", ColorRGBA.Blue);
+        geom.setMaterial(mat);
+
+        rootNode.attachChild(geom);
+    }
+
+    @Override
+    public void simpleUpdate(float tpf) {
+        //TODO: add update code
+    }
+
+    @Override
+    public void simpleRender(RenderManager rm) {
+        //TODO: add render code
+    }
+}
+----
+Project source: https://github.com/neph1/VRSampleApplication
+
+
+== Google Cardboard VR SDK 1.0 integration
+gvr-android-jme (https://github.com/nordfalk/gvr-android-jme)
+
 
 == Legacy
-There is legacy support for Oculus Rift up to version 0.5: https://github.com/neph1/jmonkeyengine-oculus-rift
+The following projects are not up to date, but may provide functionality not found in the other packages.
+Google Cardboard up to version 0.6: https://github.com/neph1/jme-cardboard

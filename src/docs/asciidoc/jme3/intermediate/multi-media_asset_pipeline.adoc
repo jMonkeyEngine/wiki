@@ -1,6 +1,6 @@
 = Multi-Media Asset Pipeline
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :keywords: spatial, node, mesh, geometry, scenegraph, sdk
 :relfileprefix: ../../
@@ -11,32 +11,32 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 Assets are files that are not code. Your multi-media assets includes, for example, your textures (image files), models (mesh files), and sounds (audio files).
 
 *  You create textures in a graphic editor, for example link:http://gimp.org[Gimp], and export them as PNG or JPG.
-*  You <<jme3/external/blender#,create models>> in a 3D mesh editor, for example link:http://blender.org[Blender], and export them in Ogre Mesh XML or Wavefront OBJ format. 
+*  You <<jme3/external/blender#,create models>> in a 3D mesh editor, for example link:http://blender.org[Blender], and export them in Ogre Mesh XML or Wavefront OBJ format.
 *  You create sounds in an audio editor, for example link:http://audacity.sourceforge.net[Audacity], and export them as WAVE or OGG.
 
-=== Asset Pipeline
+== Asset Pipeline
 [cols="2", options="header"]
 |===
 
 a|DO
 a|DON'T
 
-a| Import original models plus textures into `assets/Textures`. 
-a| Don't leave textures or models in a folder outside your JME project: The game cannot load or reference them from there. 
+a| Import original models plus textures into `assets/Textures`.
+a| Don't leave textures or models in a folder outside your JME project: The game cannot load or reference them from there.
 
-a| Save sounds into `assets/Sounds`. 
-a| Don't leave audio files in a folder outside your JME project: The game cannot load or reference them from there. 
+a| Save sounds into `assets/Sounds`.
+a| Don't leave audio files in a folder outside your JME project: The game cannot load or reference them from there.
 
-a| Create low-polygon models. 
-a| Don't create high-polygon models, they render too slow to be useful in games. 
+a| Create low-polygon models.
+a| Don't create high-polygon models, they render too slow to be useful in games.
 
-a| Only use Diffuse Map, Normal Map, Glow Map, Specular Map in your models' materials. 
+a| Only use Diffuse Map, Normal Map, Glow Map, Specular Map in your models' materials.
 a| Don't use unsupported material properties that are not listed in the <<jme3/advanced/materials_overview#,Materials Overview>>.
 
-a| Use UV texture / texture atlases / baking for each texture map. 
+a| Use UV texture / texture atlases / baking for each texture map.
 a| Don't create models based on multiple separate textures, it will break the model into separate meshes.
 
-a| Convert original models to JME3's .j3o format. Move .j3o files into `assets/Models`. 
+a| Convert original models to JME3's .j3o format. Move .j3o files into `assets/Models`.
 a|Don't reference original Blender/Ogre/OBJ files in your load() code, because these unoptimized files are not automatically packaged into the final JAR.
 
 a|Agree on naming schemes and folder schemes with your artists early on to avoid confusion. E.g. keep naming schemes for bones and certain model parts. Try to keep your assets folder clean, its like your codes class structure.
@@ -49,7 +49,7 @@ Read on for details.
 
 == Use The Assets Folder
 
-Store your assets in subfolders of your project's `assets` directory. The `assets` directory is the default path where a JME game's <<jme3/advanced/asset_manager#,Asset Manager>> looks for files to load. 
+Store your assets in subfolders of your project's `assets` directory. The `assets` directory is the default path where a JME game's <<jme3/advanced/asset_manager#,Asset Manager>> looks for files to load.
 
 [source]
 ----
@@ -61,19 +61,19 @@ jMonkeyProjects/MyGame/assets/Models/    # .blend, .j3o
 jMonkeyProjects/MyGame/assets/Scenes/    # .j3o
 jMonkeyProjects/MyGame/assets/Shaders/   # .j3f, .vert, .frag
 jMonkeyProjects/MyGame/assets/Sounds/    # .ogg, .wav
-jMonkeyProjects/MyGame/assets/Textures/  # .jpg, .png; also .mesh.xml+.material, .mtl+.obj, 
+jMonkeyProjects/MyGame/assets/Textures/  # .jpg, .png; also .mesh.xml+.material, .mtl+.obj,
 
 ----
 
 Prepare the `asset` folder structure for your individual project:
 
-.  Agree on a directory structure with the graphic designers. 
+.  Agree on a directory structure with the graphic designers.
 .  Create subfolders of `assets` in any way that suits your project (see example above). Stick with one system.
 **  If different assets belong together, create a parallel subdirectory structure for them. +
 Example: For car models, create `Textures/vehicles/car1/`, `Materials/vehicles/car1/`, `Models/vehicles/car1/`, , `Sounds/vehicles/car1/` (etc) directories now.
 
-.  Agree on a file naming and numbering scheme with the graphic designers. 
-**  Are some assets used interchangeably? Systematic naming and numbering lets developers easily swap out assets by swapping out parts of the path String. 
+.  Agree on a file naming and numbering scheme with the graphic designers.
+**  Are some assets used interchangeably? Systematic naming and numbering lets developers easily swap out assets by swapping out parts of the path String.
 **  Decide on naming standards for naming interactive parts (arms/legs) of animated models.
 
 
@@ -90,13 +90,13 @@ See also:
 Install a graphic editor such as Gimp or Photoshop. *Consult the graphic editor's documentation for specific details how to do the following tasks.*
 
 .  Create textures in a graphic editor.
-**  Save all textures to your prepared subfolders in the `assets/Textures` directory. 
+**  Save all textures to your prepared subfolders in the `assets/Textures` directory.
 
 .  (Optional) If you plan to use JME materials that you set programmatically from the code, create .j3m materials in the SDK.
 **  Save these .j3m files into the `assets/Materials` directory.
 
 
-Storing the textures inside your project directory is necessary for the paths in JME's binary model files (.j3o) to work. Treat the paths of your assets like class names of java classes, they define a specific asset. When you later generate .j3o files, and compile class files, and distribute the application, all paths and files need to be available in their final, absolute form. 
+Storing the textures inside your project directory is necessary for the paths in JME's binary model files (.j3o) to work. Treat the paths of your assets like class names of java classes, they define a specific asset. When you later generate .j3o files, and compile class files, and distribute the application, all paths and files need to be available in their final, absolute form.
 
 
 [IMPORTANT]
@@ -117,7 +117,7 @@ Note that UV coords are part of the mesh and not part of the material, so if you
 ====
 
 
-.  Create 3D models in a mesh editor. 
+.  Create 3D models in a mesh editor.
 ..  Create efficient *low-polygon models*. High-polygon models may look pretty in static 3D art contests, but they slow down dynamic games!
 ..  <<jme3/advanced/j3m_material_files#,Create materials>> for your models either in the 3D editor, or in the jME3 SDK. Only use the following material features: *Diffuse Map or Diffuse Color (minimum); plus optionally Normal Map, Glow Map, Specular Map.* +
 Every material feature not listed in the <<jme3/advanced/materials_overview#,Materials Overview>> is unsupported and ignored by JME3's renderer.
@@ -142,12 +142,12 @@ See also: link:http://www.gamasutra.com/view/feature/2530/practical_texture_atla
 
 == Convert 3D Models to .j3o Format
 
-Convert all models and scenes to jME3's binary .j3o format to load() them. You use the jMonkeyEngine SDK to do the conversion. 
+Convert all models and scenes to jME3's binary .j3o format to load() them. You use the jMonkeyEngine SDK to do the conversion.
 
 .  Confirm that you exported the model into the `assets/Textures` directory (or subdirectories) together with all its textures.
 .  In the SDK, right-click the model and choose “Convert to j3o Binary. +
 The paths in the j3o now reference files with an absolute `assets/Textures/…` path.
-.  Now, move the .j3o into the corresponding `assets/Models/` or `assets/Scenes/` directory. 
+.  Now, move the .j3o into the corresponding `assets/Models/` or `assets/Scenes/` directory.
 .  Use the AssetManager to load() the .j3o files.
 
 This process ensures that the texture paths are correct, and it also keeps your `assets/Models` folder free from textures. You can reuse your set of textures for many models.

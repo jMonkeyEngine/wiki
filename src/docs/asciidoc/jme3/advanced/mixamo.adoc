@@ -1,6 +1,6 @@
 = Animating Blender Models With Mixamo
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2017/05/25 13:04
 :relfileprefix: ../../
 :imagesdir: ../..
@@ -8,22 +8,18 @@
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
-[NOTE]
-====
-In the near future the Mixamo website will be undergoing some changes that will have some level of effect upon how you animate your character. The only real difference that Adobe says will happen, with respect to auto-rigging your characters, is you no longer can store the assets on the Mixamo website. See this link:http://blogs.adobe.com/adobecare/2017/05/23/download-assets-from-mixamo/[notice] for more info.
-====
 
 == Using Mixamo For Model Animation
 
-With very little effort, you can use Adobes Mixamo to fully animate your Blender models. Once you understand the process that is. 
+With very little effort, you can use Adobes Mixamo to fully animate your Blender models. Once you understand the process that is.
 
 This guide requires:
 
 *  link:https://www.blender.org/download/[Blender version 2.78c] with its default settings. The exception being `Select With:`, under `menu:File[User Preferences >  Input]` is set to `Left Click`.
-*  Blender Ogre exporter 0.6.0, found <<jme3/advanced/ogrecompatibility#,here>>, enabled. 
+*  Blender Ogre exporter 0.6.0, found <<jme3/advanced/ogrecompatibility#,here>>, enabled.
 *  Blender FBX file Importing and Exporting, enabled.
 *  A Modest amount of Blender knowledge.
-*  A link:https://www.mixamo.com/[Mixamo] account.
+*  A link:https://www.mixamo.com/#/[Mixamo] account.
 
 
 == Prepare to Export
@@ -47,7 +43,7 @@ To properly animate your models there are a few rules you must follow.
 ====
 See <<jme3/advanced/3d_models#blender-buffer-clearing#,Blender Buffer Clearing>> if you don't already know how to clear your buffers.
 
-See <<jme3/external/blender#,Creating assets in Blender3D>> for help on creating jME3 compatible models. 
+See <<jme3/external/blender#,Creating assets in Blender3D>> for help on creating jME3 compatible models.
 ====
 
 == Blender FBX Export
@@ -57,19 +53,19 @@ See <<jme3/external/blender#,Creating assets in Blender3D>> for help on creating
 .  In the `Info` header, select `menu:File[Export > FBX]`.
 .  Enter a file path to export to, usually the same folder as your `.blend` file for simplicity.
 .  Enter a file name.
-.  In the `Export FBX` panel, located in the bottom left of the export dialog: 
-Main Tab:: 
+.  In the `Export FBX` panel, located in the bottom left of the export dialog:
+Main Tab::
 - [x] Selected Objects
-- Scale = 1 
+- Scale = 1
 +
 [IMPORTANT]
 ====
 Click the button next to scale to deselect btn:[Scale all data]. Failure to do so will destroy the scale of your model. If the button is selected, it will be dark in color.
 ====
 
--  Forward = -Z Forward 
+-  Forward = -Z Forward
 -  Up = Y Up
--  Which kind of object to export = Mesh 
+-  Which kind of object to export = Mesh
 Geometries Tab::
 - [x] Apply Modifiers
 .  When you are done, click the btn:[Export FBX] button to export the file.
@@ -83,10 +79,10 @@ You can save these FBX export settings by clicking the btn:[+] button next to bt
 == Mixamo FBX Import
 
 
-.  Create an link:https://www.mixamo.com/[Mixamo] account and login.
-.  Navigate to your `My Assets` folder.
-.  Select `Upload`.
+.  Create an link:https://www.mixamo.com/#/[Mixamo] account and login.
+.  From the `Default Character` panel, select `Upload Character`.
 .  Navigate to the file to be uploaded or drag and drop it onto the file up-loader.
+.  Select `Open`.
 
 [NOTE]
 ====
@@ -99,7 +95,7 @@ Generally, if at any time during the import and rigging process the model does n
 If everything went well the `Auto-Rigger` will open and your model will be facing you.  If not, fix your model in Blender before proceeding.
 
 .  If the model is facing you, click btn:[Next].
-.  In this panel you will rig your model. Place the markers as shown in the Auto-Rigger dialog image. 
+.  In this panel you will rig your model. Place the markers as shown in the Auto-Rigger dialog image.
 +
 [NOTE]
 ====
@@ -108,24 +104,25 @@ Remember that the model is facing you so its right is on your left.
 
 .  Select the LOD you are after. This is based off how many bones you want the hand of the model to have. Feel free to cycle through the options to see what each one does.
 .  When you are through click the btn:[Next] button to rig your model.
-.  When the model appears, click through to the end.
+.  When the model appears, if satisfied with the results, click `Finish`.
 
 
 == Mixamo Animations
 
 
-.  Navigate to your `My Assets`  folder. 
-.  Select the model to be rigged.
 .  In the far right panel select btn:[Find Animations].
 .  After deciding on an animation, click the animation to have it applied to your model.
-.  After the animation is applied to your model, toggle the btn:[In Place] checkbox.
+.  After the animation is applied to your model, toggle the btn:[In Place] checkbox if it's a moving animation.
 +
 [TIP]
 ====
 You can make small adjustments to the animation by using the sliders. The most common adjustment you will make is the  `Character Arm-Space`. If you find the models hands are clipping through the model then use this slider to remedy the situation.
 ====
 
-.  Click the btn:[Add To My Assets] button when finished to add the animation to your `My Animations` folder.
+.  When satisfied with the animation, select the btn:[Download] button and follow the `Mixamo Download` instructions below.
+
+If you wish to add more animations, after the download, remove the animation by clicking on the btn:[X] button located next to the animations name. Add your new animation and when satisfied, download the new animation. Repeat as often as is neccessary.
+
 
 
 == Mixamo Download
@@ -133,36 +130,31 @@ You can make small adjustments to the animation by using the sliders. The most c
 
 When downloading `*Animations*` from Mixamo:
 
-.  If the `Animation` is not already in your `Downloads` folder, navigate to your `My Animations` folder and select the animation to be downloaded.
-.  Make sure the btn:[In Place] checkbox is selected.
-.  Click the btn:[Queue Download] button.
+.  Make sure the btn:[In Place] checkbox is selected if it's a moving animation.
 .  In the `Download Settings` dialog use the default settings.
 *  Format = FBX
 *  Skin = With Skin
 * Frames per second = 30
 *  Keyframe Reduction = none
-.  Click btn:[Queue Download] to add the animation to your `Downloads` folder on Mixamo.
+.  Click btn:[Download] and save it to your computer.
 
 When downloading `*Characters*` from Mixamo:
 
-.  If the `Character` is not already in your `Downloads` folder, navigate to your `My Characters` folder and select the character to be downloaded.
-.  Select the model and then click the btn:[Queue Download] button.
 .  In the `Download Settings` dialog the `Format` is FBX and `Pose` is TPose.
-.  Click btn:[Queue Download] to add the character to your `Downloads` folder on Mixamo.
-
-In the `Downloads` folder, click the btn:[Queue Download] button under `Status`, rename the file and save it to your computer.  Preferably in the same folder as your blender file.
+.  Click btn:[Download] and save it to your computer.
 
 
 == Creating Blender Animations
 
-Download your TPose model using the instructions for downloading `*Characters*` given above. We will use it as our newly rigged model for Blender. To keep things organized we will create a `.blend` file for every animation and later use a separate `.blend` file to combine all animations into one jME3 compatible animation. 
+Download your TPose model using the instructions for downloading `*Characters*` given above. We will use it as our newly rigged model for Blender. To keep things organized we will create a `.blend` file for every animation and later use a separate `.blend` file to combine all animations into one jME3 compatible animation.
 
 The following steps apply to any animation you want to add in the future.
 
+.  Start Blender if it is not already open.
 .  In the `Info` header, at the top of the program, select `menu:File[New > Reload Startup]`.
 .  Select the default cube and delete it.
 Scene Tab::
-*  In the `Properties` panel, located at the bottom right, select the `Scene` tab. 
+*  In the `Properties` panel, located at the bottom right, select the `Scene` tab.
 *  In the `Units` panel, change the `Units of measure` to `Meters` and `Length` to `Metric`. You must *always* have these settings when importing from or exporting to Mixamo.
 +
 [TIP]
@@ -185,14 +177,14 @@ Armatures::
 -  Nothing checked
 .  When ready click btn:[Import FBX].
 .  After Blender imports the file, both the armature and model are selected, in this order, select `menu:Object[Apply > Rotation]`. Repeat this for the `Location` and `Scale`. Alternatively, select the armature and model individually and repeat the process.
-.  Select the Armature. 
+.  Select the Armature.
 .  In the `Timeline`, determine the Length of the animation by btn:[RMB] selecting the last keyframe in the timeline. +
  Set `End:` to this value.
-.  Click the btn:[|<<] button to reset timeline back to the first frame.  
+.  Click the btn:[|<<] button to reset timeline back to the first frame.
 .  In the `Info` header, change the `Default` screen layout to `Animation`.
 .  In the `Dope Sheet Editor`, change the `Dope Sheet` mode/context to `Action Editor`. The `Linked Action` will now show the action name of the animation you imported.
 .  Rename this to the name of the imported animation. In this instance it was TPose.
-.  Select the btn:[F] button to save the action. 
+.  Select the btn:[F] button to save the action.
 .  Save your file with the same name as the action.
 
 [NOTE]
@@ -211,7 +203,7 @@ If you find yourself in need of baking, the process is as follows.
 .  Using the animation file you created in the previous section, from the `Info` header, select `menu:File[Save Copy]`.
 .  Save the file somewhere other than the current folder. This will save you the effort of re-creating the animation file if you need it at some other time.
 .  In the `Info` header, change the `Default` screen layout to `Animation`.
-.  In the `Dope Sheet Editor`, change the `Dope Sheet` mode/context to `Action Editor`. 
+.  In the `Dope Sheet Editor`, change the `Dope Sheet` mode/context to `Action Editor`.
 .  Click the btn:[Action to be linked] button and select your action.
 .  In the `3d Viewport` header, with the armature selected, select `menu:Object[Animation > Bake Action]`.
 .  In the `Bake Action` dialog, deselect and set the settings as follows:
@@ -224,7 +216,7 @@ Bake Action::
 -  Bake Data = Pose
 .  When ready click btn:[OK].
 .  The `Linked Action` in the `Dope Sheet Editor` will change to the newly baked action and is named `Action`. Rename this to the name of the imported animation.
-.  Select the btn:[F] button to save the action. 
+.  Select the btn:[F] button to save the action.
 .  Save your file.
 .  Clear the old action from the `Linked Action` buffer. See <<jme3/advanced/3d_models#blender-buffer-clearing#,Blender Buffer Clearing>> for more information.
 
@@ -251,11 +243,11 @@ The models origin and the `Root` bone origin must be at the same location.
 ====
 
 . Scale the bone down or up as needed by selecting the `Tip` (ball at the narrowest part of the bone) and dragging the `Z` arrow (blue arrow) of the manipulator up or down until you are satisfied with its scale. *DO NOT CHANGE THE ANGLE OR MOVE THE BASE OF THE BONE FROM CENTER*.
-.  When satisfied with the scale, select the body of the bone to select the entire bone. 
+.  When satisfied with the scale, select the body of the bone to select the entire bone.
 Bone Tab::
-*  In the `Properties` panel, navigate to the `Bone` tab. 
+*  In the `Properties` panel, navigate to the `Bone` tab.
 *  Rename the bone to `Root`.
-*  Deselect the `Deform` panel checkbox. 
+*  Deselect the `Deform` panel checkbox.
 .  In the `3d Viewport`, select the body of the armatures `Hip` bone, the lowest bone in the center of the armature, to select the entire bone.
 .  While holding kbd:[Shift] down, btn:[LMB] select the `Root` bone.
 .  Press kbd:[Ctrl] + kbd:[P].
@@ -266,7 +258,7 @@ Data Tab::
 *  In the `Properties` panel, navigate to the `Data` tab and make sure the `Mesh` has the same name as your model.
 Material Tab::
 *  In the `Properties` panel, navigate to the `Material` tab and make sure there is one `Material` in the `Material List` and it is the same name as your model.
-*  In the `Transparency` panel, move the `Alpha` slider to 1. 
+*  In the `Transparency` panel, move the `Alpha` slider to 1.
 +
 [IMPORTANT]
 ====
@@ -275,7 +267,7 @@ There appears to be a bug where the FBX importer adds an `Alpha` map texture to 
 
 *  Deselect the checkbox of the `Transparency` panel.
 Texture Tab::
-*  In the `Properties` panel, navigate to the `Texture` tab, you will note that your texture has duplicate names in the `Texture List`. The bottom texture is actually a transparent `Alpha` texture and appears to be a bug. Select the *second* texture in the `*Texture List*` to highlight it. 
+*  In the `Properties` panel, navigate to the `Texture` tab, you will note that your texture has duplicate names in the `Texture List`. The bottom texture is actually a transparent `Alpha` texture and appears to be a bug. Select the *second* texture in the `*Texture List*` to highlight it.
 *  While holding down the kbd:[Shift] key, press the btn:[X] button next to the `*Texture Data Block*` to delete it.
 *  Select your remaining texture in the `Texture List` to highlight it. You will note the `Texture Data Block` is now red due to no texture being assigned.
 *  Click on the btn:[Browse Texture to be linked] button next to the `Texture Data Block` and select your texture.
@@ -299,11 +291,11 @@ Texture Tab::
 Your rigged file is now `Ogre` export ready. Before we go any further, we will test our export to verify it's error free.
 
 .  In the `Info` header, change the layout to `Default`.
-.  kbd:[Shift] + btn:[LMB] select your armature and your model.  
-.  From the `Info` header, select `menu:File[Export > Ogre3d]`. 
-.  Select a destination path in your games `Assets` folder, usually the `Textures` folder. 
+.  kbd:[Shift] + btn:[LMB] select your armature and your model.
+.  From the `Info` header, select `menu:File[Export > Ogre3d]`.
+.  Select a destination path in your games `Assets` folder, usually the `Textures` folder.
 .  Make sure `Selected Only` is checked and `Only Deformable Bones` is unchecked.
-.  When you're happy with your export settings click btn:[Export Ogre]. 
+.  When you're happy with your export settings click btn:[Export Ogre].
 
 If your file exports clean, proceed with the next steps. If not, fix any errors before continuing.
 
@@ -313,26 +305,26 @@ More on the `Ogre` settings can be found in <<jme3/advanced/3d_models#creating-m
 ====
 
 
-== Appending Blender Animations 
+== Appending Blender Animations
 
 Follow the directions for <<jme3/advanced/mixamo#mixamo-animations#,Mixamo Animations>>, <<jme3/advanced/mixamo#mixamo-download#,Mixamo Download>>, <<jme3/advanced/mixamo#creating-blender-animations#,Creating Blender Animations>> and <<jme3/advanced/mixamo#clearing-the-linked-action-buffer#,Clearing The Linked Action Buffer>> for all animations you wish to append to your *rigged* animation file.
 
-.  If your `Rigged` file is closed, open it. 
-.  From the `Info` header, change the Layout to `Default`. 
+.  If your `Rigged` file is closed, open it.
+.  From the `Info` header, change the Layout to `Default`.
 .  In the `3d Viewport`, select the armature of the model.
 .  From the `Info` header, select `menu:File[Append]`.
 .  Navigate to, and select the `.blend` animation file you want to append.
 .  From the folders list select the `Action` folder, followed by your action.
 .  When ready, select the btn:[Append From Library] button to finalize your selection.
 .  From the `Info` header, change your layout to `Animation`.
-.  In the `Dope Sheet Editor`, change the context to `Action Editor` if not already selected. 
+.  In the `Dope Sheet Editor`, change the context to `Action Editor` if not already selected.
 .  Click the btn:[Action to be linked] button and select your append action from the list.
 .  Select the btn:[F] button to save the action.
 .  From the `Info` header, change the layout from `Animation` to the `NLA Editing` layout we created in the <<jme3/advanced/mixamo#creating-the-rigged-animation-file#,Creating The Rigged Animation File>> section of this tutorial. You will see your append `Action` at the top of the list.
 .  From the `NLA Editor` header, select `menu:Add[Add Tracks]`. A new track has now been added to the top of the list.
 .  Click the btn:[Double Down Arrow] button next to the `Action` to push it down into the stack.
 .  btn:[LMB] select the strip to make it the only strip selected.
-.  btn:[LMB] drag the selected strip to the right until there is at least a 4 keyframe gap between the furthest strip to the right in the list and the append strip you are dragging. 
+.  btn:[LMB] drag the selected strip to the right until there is at least a 4 keyframe gap between the furthest strip to the right in the list and the append strip you are dragging.
 +
 [TIP]
 ====
@@ -343,20 +335,20 @@ When the strip is in drag mode it will be purple. While in drag mode you do not 
 +
 [TIP]
 ====
-You can use the mouse scroll wheel to shrink or expand the strip window to bring all strips into the view. 
+You can use the mouse scroll wheel to shrink or expand the strip window to bring all strips into the view.
 
 You can drag the slider, at the bottom of the strip window, to the right or left to position the strips against the side of the window.
-====  
+====
 
 .  With the mouse inside the strip window, press the kbd:[N] key to open the properties window.
 .  In the `Active Strip` panel, under `Strip Extents`, you will see the `End Frame` number. In the `Timeline`, set `End:` to this number. Every time you append an `Action` you must increase this number to equal the total length off all strips combined, including the gaps between strips.
 .  Save your file.
 
-Your file is now ready to <<jme3/advanced/mixamo#ogre-export#,export>>. 
+Your file is now ready to <<jme3/advanced/mixamo#ogre-export#,export>>.
 
 [IMPORTANT]
 ====
-Prior to export: 
+Prior to export:
 
 In the `NLA Editor` make sure no `Actions` are waiting to be pushed down into the stack. If there are, it must be removed or made into a strip prior to export.
 

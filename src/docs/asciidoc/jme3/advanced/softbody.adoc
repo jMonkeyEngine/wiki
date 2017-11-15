@@ -1,6 +1,6 @@
 = Physics : SoftBody
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :relfileprefix: ../../
 :imagesdir: ../..
@@ -42,7 +42,7 @@ The dynamics libraries for softbody (.so , .dll …) isn't (yet) prebuild for yo
 public void simpleInitApp() {
     softBodyAppState = new BulletSoftBodyAppState();
     getStateManager().attach(softBodyAppState);
-    
+
     SoftBodyWorldInfo sbwi = softBodyAppState.getPhysicsSoftSpace().getWorldInfo();
     sbwi.setGravity(Vector3f.UNIT_Y.mult(-0.981f));
 
@@ -56,9 +56,9 @@ public void simpleInitApp() {
     soft.generateClusters(8);
     soft.config().setDynamicFrictionCoef(0.8f);
     soft.config().setPoseMatchingCoef(0.2f);
-    
+
     soft.config().setCollisionsFlags(PhysicsSoftBody.Config.CL_SS + PhysicsSoftBody.Config.CL_RS);
-    
+
     soft.setPose(false, true);
     soft.setTotalMass(100, true);
     soft.randomizeConstraints();
@@ -76,7 +76,7 @@ public void simpleInitApp() {
 
 == Documentation
 
-soft mesh / surface 
+soft mesh / surface
 
 Cluster ?
 
@@ -85,13 +85,13 @@ Cluster ?
 config collision flag ?
 
 
-==== Ropes
+=== Ropes
 
 A rope can be created by creating a new SoftBody on a Mesh with Mesh.Mode.Lines.
 More informations on creating <<jme3/advanced/custom_meshes#,custom meshes>>.
 
 
-===== Example
+==== Example
 
 [source,java]
 ----
@@ -138,7 +138,7 @@ t.addControl(new SoftBodyControl(false));
 ==== Anchors
 
 An Anchors act like a weld between a SoftBody and a RigidBody.
-Adding a anchors to a soft body require to specify the SoftBody's node and the RigidBody to weld with. 
+Adding a anchors to a soft body require to specify the SoftBody's node and the RigidBody to weld with.
 
 [source,java]
 ----
@@ -155,12 +155,12 @@ An anchor bind a SoftBody's node (or Vertex) to a RigidBody, the node will be at
 
 [WARNING]
 ====
- Anchors are not yet Serialized 
+ Anchors are not yet Serialized
 ====
 
 
 
-===== Example
+==== Example
 
 [source,java]
 ----
@@ -197,12 +197,12 @@ soft.removeAnchor(8,rigid);
 
 ==== Joints
 
-Joints require SoftBodies with Clusters ( see generateClusters(int k) ). 
+Joints require SoftBodies with Clusters ( see generateClusters(int k) ).
 
 
 [WARNING]
 ====
- joint don't use values pivotA & pivotB (not yet) 
+ joint don't use values pivotA & pivotB (not yet)
 ====
 
 
@@ -229,7 +229,7 @@ public SoftAngularJoint(Vector3f axis, PhysicsSoftBody nodeA, PhysicsSoftBody no
 ----
 
 
-===== Examples
+==== Examples
 
 
 === LinearJoint
@@ -242,7 +242,7 @@ Geometry b = new Geometry("rigidBox", box);
 b.move(0, 5f, 0);
 b.addControl(new RigidBodyControl(1));
 rigid = b.getControl(RigidBodyControl.class);
-        
+
 Torus torus = new Torus(20, 10, 1f, 1.5f);
 Geometry t = new Geometry("softTorus", torus);
 t.addControl(new SoftBodyControl(true, false));
