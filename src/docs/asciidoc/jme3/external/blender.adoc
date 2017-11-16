@@ -108,29 +108,26 @@ You can use SkeletonDebugger to show the skeleton on your game in order to check
 
 [source,java]
 ----
+final Material soldier2Mat = assetManager.loadMaterial("Materials/soldier2/soldier2.j3m");
+final Spatial soldier2 = assetManager.loadModel("Models/soldier2/soldier2.j3o");
+TangentBinormalGenerator.generate(soldier2);
+soldier2.setMaterial(soldier2Mat);
 
-    final Material soldier2Mat = assetManager.loadMaterial("Materials/soldier2/soldier2.j3m");
-    final Spatial soldier2 = assetManager.loadModel("Models/soldier2/soldier2.j3o");
-    TangentBinormalGenerator.generate(soldier2);
-    soldier2.setMaterial(soldier2Mat);
+final Node soldier2Node = new Node("Soldier2 Node");
 
-    final Node soldier2Node = new Node("Soldier2 Node");
+soldier2Node.attachChild(soldier2);
+rootNode.attachChild(soldier2Node);
 
-    soldier2Node.attachChild(soldier2);
-    rootNode.attachChild(soldier2Node);
+final AnimControl animControl = soldier2.getControl(AnimControl.class);
+animControl.addListener(this);
+final AnimChannel animChannel = animControl.createChannel();
 
-    final AnimControl animControl = soldier2.getControl(AnimControl.class);
-    animControl.addListener(this);
-    final AnimChannel animChannel = animControl.createChannel();
-
-    final SkeletonDebugger skeletonDebug =
-                    new SkeletonDebugger("skeleton", animControl.getSkeleton());
-    final Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-    mat.setColor("Color", ColorRGBA.Green);
-    mat.getAdditionalRenderState().setDepthTest(false);
-    skeletonDebug.setMaterial(mat);
-    soldier2Node.attachChild(skeletonDebug);
-
+final SkeletonDebugger skeletonDebug = new SkeletonDebugger("skeleton", animControl.getSkeleton());
+final Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+mat.setColor("Color", ColorRGBA.Green);
+mat.getAdditionalRenderState().setDepthTest(false);
+skeletonDebug.setMaterial(mat);
+soldier2Node.attachChild(skeletonDebug);
 ----
 
 *  image:jme3/external/blender_finished.png[blender_finished.png,width="500",height=""]
@@ -151,40 +148,25 @@ Models for live rendering should have a low polygon count. To increase the perce
 
 *  If you use the multiresolution modifier you only need one object. Lets look at this example:
 **  image:jme3/external/1.gif[1.gif,width="150",height=""]
-
 *  Add a multiresolution modifier:
 **  image:jme3/external/3.1.gif[3.1.gif,width="300",height=""]
-
 *  There are two types of modifiers: Catmull-Clark and Simple.
 **  Simple is better for things like walls or floors.
 **  Catmull-Clark is better for objects like spheres.
-
 *  When using Catmull-Clark with a higher “subdivide value (more than 3) its good to have the “preview value above 0 and less than the subdivide level. This is because Catmull-Clark smoothes the vertices, so the normalMap is not so precise.
 *  Here is an example of Prewiew 1, it's more smooth than the original mesh:
 **  image:jme3/external/2.gif[2.gif,width="150",height=""]
-
-*  Enable “Sculpt Mode in blender and design the highPoly version of your model like here:
+*  Enable "`Sculpt`" Mode in blender and design the highPoly version of your model like here:
 **  image:jme3/external/3.gif[3.gif,width="150",height=""]
-
 *  Now go into Render Tab, and bake a normalMap using same configuration as here:
 **  image:jme3/external/4.gif[4.gif,width="300",height=""]
 
+NOTE: Remember! The actual preview affects the baking output and mesh export!
 
-
-[NOTE]
-====
-Remember! The actual preview affects the baking output and mesh export!
-====
-
-
-
-[NOTE]
-====
 Be careful: The steps above lead to terrible normal maps - use this procedure instead:
-====
 
 *  uncheck:
-* [ ] Bake from Multires
+**  [ ] Bake from Multires
 *  switch to object mode
 *  make a copy of your mesh (kbd:[SHIFT]+kbd:[D])
 *  remove the Multires modifier from the copied model
@@ -198,7 +180,7 @@ Be careful: The steps above lead to terrible normal maps - use this procedure in
 *  in the properties menu go to render
 *  use `menu:Bake[Normal]`
 *  check:
-* [x] Selected to Active
+** [x] Selected to Active
 *  use a reasonably high value for "`Margin`" (4+ pixels at least for 1024x1024 maps)
 *  don't forget to save the normal map image
 
@@ -220,7 +202,9 @@ To do this, go to the Blender Node Window
 
 
 *  Here is the colors configuration:
-**  image::jme3/external/6.gif[6.gif,width="180",height=""] //image:jme3/external/7.gif[7.gif,width="180",height=""] //image:jme3/external/8.gif[8.gif,width="180",height=""]
+**  image:jme3/external/6.gif[6.gif,width="180",height=""]
+
+//image:jme3/external/7.gif[7.gif,width="180",height=""] //image:jme3/external/8.gif[8.gif,width="180",height=""]
 
 
 //*  Sometimes it will be needed to change R and G scale and add some blur for better effect. Do it like on image below
