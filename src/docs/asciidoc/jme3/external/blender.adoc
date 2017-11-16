@@ -1,6 +1,6 @@
 = Creating assets in Blender3D
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :relfileprefix: ../../
 :imagesdir: ../..
@@ -43,7 +43,7 @@ To create an animation from scratch do the following:
 
 *  Create the armature bones, don't forget to have one root bone!
 **  Start by placing the cursor at zero.
-**  Go to the `menu:Add[Armature > Single Bone]` menu and create the root bone. 
+**  Go to the `menu:Add[Armature > Single Bone]` menu and create the root bone.
 ***  image:jme3/external/blender-add-bone.png[blender-add-bone.png,width="",height=""]
 
 **  Select the bone and go to edit mode (press kbd:[Tab]).
@@ -113,17 +113,17 @@ You can use SkeletonDebugger to show the skeleton on your game in order to check
     final Spatial soldier2 = assetManager.loadModel("Models/soldier2/soldier2.j3o");
     TangentBinormalGenerator.generate(soldier2);
     soldier2.setMaterial(soldier2Mat);
- 
+
     final Node soldier2Node = new Node("Soldier2 Node");
- 
+
     soldier2Node.attachChild(soldier2);
     rootNode.attachChild(soldier2Node);
-    
+
     final AnimControl animControl = soldier2.getControl(AnimControl.class);
     animControl.addListener(this);
     final AnimChannel animChannel = animControl.createChannel();
 
-    final SkeletonDebugger skeletonDebug = 
+    final SkeletonDebugger skeletonDebug =
                     new SkeletonDebugger("skeleton", animControl.getSkeleton());
     final Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
     mat.setColor("Color", ColorRGBA.Green);
@@ -155,7 +155,7 @@ Models for live rendering should have a low polygon count. To increase the perce
 *  Add a multiresolution modifier:
 **  image:jme3/external/3.1.gif[3.1.gif,width="300",height=""]
 
-*  There are two types of modifiers: Catmull-Clark and Simple. 
+*  There are two types of modifiers: Catmull-Clark and Simple.
 **  Simple is better for things like walls or floors.
 **  Catmull-Clark is better for objects like spheres.
 
@@ -183,10 +183,10 @@ Remember! The actual preview affects the baking output and mesh export!
 Be careful: The steps above lead to terrible normal maps - use this procedure instead:
 ====
 
-
-*  uncheck “[ ] Bake from Multires
+*  uncheck:
+* [ ] Bake from Multires
 *  switch to object mode
-*  make a copy of your mesh (SHIFT+D)
+*  make a copy of your mesh (kbd:[SHIFT]+kbd:[D])
 *  remove the Multires modifier from the copied model
 *  remove any materials from the copied model
 *  remove the armature modifier from the copied model
@@ -194,24 +194,24 @@ Be careful: The steps above lead to terrible normal maps - use this procedure in
 *  go into pose mode, clear any pose transformations
 *  the highres and lowres models should be on top of each other now
 *  select the original (highres) model
-*  hold SHIFT and select the copied (lowres) model
+*  hold kbd:[SHIFT] and select the copied (lowres) model
 *  in the properties menu go to render
-*  use Bake &gt; Normal
-*  check “[x] Selected to Active
-*  use a reasonably high value for “Margin (4+ pixels at least for 1024x1024 maps)
-*  don't forget to safe the normal map image
+*  use `menu:Bake[Normal]`
+*  check:
+* [x] Selected to Active
+*  use a reasonably high value for "`Margin`" (4+ pixels at least for 1024x1024 maps)
+*  don't forget to save the normal map image
 
 
-[NOTE]
+[WARNING]
 ====
 Be careful: in the Outliner the camera symbol (Restrict Render) must be on!
 ====
 
 
-
 == Fixing the normal colors in Blender
 
-Blender has its own normal colors standard. We need to fix the colors to prepare the normalmap for using it with the JME Lighting Material.
+Blender has its own normal colors standard. We need to fix the colors to prepare the normalmap for using it with the JME Lighting Material. You should only have to invert the green channel, the red channel should stay unchanged. The curve for the red channel should go from bottom left to top right.
 
 To do this, go to the Blender Node Window
 
@@ -220,11 +220,11 @@ To do this, go to the Blender Node Window
 
 
 *  Here is the colors configuration:
-**  image:jme3/external/6.gif[6.gif,width="180",height=""] image:jme3/external/7.gif[7.gif,width="180",height=""] image:jme3/external/8.gif[8.gif,width="180",height=""]
+**  image::jme3/external/6.gif[6.gif,width="180",height=""] //image:jme3/external/7.gif[7.gif,width="180",height=""] //image:jme3/external/8.gif[8.gif,width="180",height=""]
 
 
-*  Sometimes it will be needed to change R and G scale and add some blur for better effect. Do it like on image below
-**  image:jme3/external/exception2.gif[exception2.gif,width="",height=""]
+//*  Sometimes it will be needed to change R and G scale and add some blur for better effect. Do it like on image below
+//**  image:jme3/external/exception2.gif[exception2.gif,width="",height=""]
 
 *  After rendering, save the file to a destination you want and use it with the JME Lighting Material and the lowpoly version of the model.
 **  image:jme3/external/ready_normal.gif[ready_normal.gif,width="",height=""]
