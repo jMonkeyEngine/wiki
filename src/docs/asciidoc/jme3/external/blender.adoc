@@ -204,7 +204,7 @@ image::jme3/external/monkeyprev1.png[monkkeyprev1.png,width="50%",height=""]
 ..  Click btn:[OK] when ready.
 .  From the `File` header at the top of the `UV Image Editor`, click the btn:[Choose Screen layout] button and select "`Default`".
 .  With your mouse inside the `3D View`, tab into `Object Mode`.
-.  Now go into the Render Tab, and bake a `Normal` map using the same configuration as here:
+.  Now go into the `Render` tab, and bake a `Normal` map using the same configuration as here:
 +
 --
 image::jme3/external/4.gif[4.gif,width="300",height=""]
@@ -260,15 +260,19 @@ Because of this, you need to fix the colors to prepare the normal map for using 
 
 To do this, go to the Blender Node Window
 
-*  Here is Blender Node example. It fixes the normal colors:
+*  Here is a `Blender Node` example. It fixes the normal colors:
 +
 image::jme3/external/monkey_nodes_invert.png[monkey_nodes_invert.png,width="50%",height=""]
+
+NOTE: The output file will be saved to a sub-folder that will be created inside the `Base Path` folder you choose for the `File Output` node.
 
 *  Here are the colors configuration:
 +
 image::jme3/external/monkey_node_curve.png[monkey_node_curve.png,width="50%",height=""]
 
-*  After rendering, save the file to a destination you want and use it with the JME Lighting Material and the "`Lowpoly`" version of the model.
+NOTE: You only need the one `RGB Curves` node. The three shown here are just for demonstration purposes.
+
+*  After rendering (kbd:[F12] ), save the file to a destination you want and use it with the JME Lighting Material and the "`Lowpoly`" version of the model.
 +
 image::jme3/external/monkey_bump_invert.png[monkey_bump_invert.png,width="50%",height=""]
 
@@ -284,9 +288,11 @@ You can also use the SDK to invert the channel:
 .  When satisfied, save the change in the same format as the original image using `menu:File[Save]`.
 ====
 
-This is what the final outcome of `Normal` map baking should produce for you.
+This is what the final outcome of `Normal` map baking should produce for you. A "`Lowpoly`" model that looks like it's a "`Highpoly`" model.
 
+.Method 2 Example
 image::jme3/external/monkey_final.gif[monkey_final.gif,width="",height=""]
+
 
 === LightMap baking
 
