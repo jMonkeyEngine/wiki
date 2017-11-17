@@ -160,7 +160,7 @@ Also check out these videos and resources:
 *  link:https://docs.google.com/fileview?id=0B9hhZie2D-fENDBlZDU5MzgtNzlkYi00YmQzLTliNTQtNzZhYTJhYjEzNWNk&hl=en[Exporting OgreXML scenes from Blender 2.49 to jME]
 
 
-=== NormalMap baking
+=== Normal Map baking
 
 Models for live rendering should have a low polygon count. To increase the perceived detail of a model normal maps are commonly used in games. This tutorial will show how to create a `Normal` map from a "`Highpoly`" version of your model that you can apply to a "`Lowpoly`" version of the model in your game.
 
@@ -218,9 +218,9 @@ TIP: The asterisk kbd:[*] next to the `Image` menu item means the image has not 
 
 image::jme3/external/monkey_bump.png[monkey_bump.png,width="50%",height=""]
 
+This second method produces the best results by far:
 
 .Method 2
-
 .  Uncheck:
 **  [ ] Bake from Multires
 .  Switch to object mode.
@@ -261,20 +261,16 @@ Because of this, you need to fix the colors to prepare the normal map for using 
 To do this, go to the Blender Node Window
 
 *  Here is Blender Node example. It fixes the normal colors:
-**  image:jme3/external/5.gif[5.gif,width="500",height=""]
++
+image::jme3/external/monkey_nodes_invert.png[monkey_nodes_invert.png,width="50%",height=""]
 
+*  Here are the colors configuration:
++
+image::jme3/external/monkey_node_curve.png[monkey_node_curve.png,width="50%",height=""]
 
-*  Here is the colors configuration:
-**  image:jme3/external/6.gif[6.gif,width="180",height=""]
-
-//image:jme3/external/7.gif[7.gif,width="180",height=""] //image:jme3/external/8.gif[8.gif,width="180",height=""]
-
-
-//*  Sometimes it will be needed to change R and G scale and add some blur for better effect. Do it like on image below
-//**  image:jme3/external/exception2.gif[exception2.gif,width="",height=""]
-
-*  After rendering, save the file to a destination you want and use it with the JME Lighting Material and the lowpoly version of the model.
-**  image:jme3/external/ready_normal.gif[ready_normal.gif,width="",height=""]
+*  After rendering, save the file to a destination you want and use it with the JME Lighting Material and the "`Lowpoly`" version of the model.
++
+image::jme3/external/monkey_bump_invert.png[monkey_bump_invert.png,width="50%",height=""]
 
 [TIP]
 .Inverting Tips
@@ -287,6 +283,10 @@ You can also use the SDK to invert the channel:
 .  In the window header, press the btn:[Filters] button and choose `menu:Invert[Green]`.
 .  When satisfied, save the change in the same format as the original image using `menu:File[Save]`.
 ====
+
+This is what the final outcome of `Normal` map baking should produce for you.
+
+image::jme3/external/monkey_final.gif[monkey_final.gif,width="",height=""]
 
 === LightMap baking
 
