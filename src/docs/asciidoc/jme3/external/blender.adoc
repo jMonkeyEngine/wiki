@@ -146,43 +146,76 @@ Models for live rendering should have a low polygon count. To increase the perce
 
 == Blender modeling lowPoly & highPoly
 
-*  If you use the multiresolution modifier you only need one object. Lets look at this example:
-**  image:jme3/external/1.gif[1.gif,width="150",height=""]
-*  Add a multiresolution modifier:
-**  image:jme3/external/3.1.gif[3.1.gif,width="300",height=""]
-*  There are two types of modifiers: Catmull-Clark and Simple.
-**  Simple is better for things like walls or floors.
-**  Catmull-Clark is better for objects like spheres.
-*  When using Catmull-Clark with a higher “subdivide value (more than 3) its good to have the “preview value above 0 and less than the subdivide level. This is because Catmull-Clark smoothes the vertices, so the normalMap is not so precise.
-*  Here is an example of Prewiew 1, it's more smooth than the original mesh:
-**  image:jme3/external/2.gif[2.gif,width="150",height=""]
-*  Enable "`Sculpt`" Mode in blender and design the highPoly version of your model like here:
-**  image:jme3/external/3.gif[3.gif,width="150",height=""]
-*  Now go into Render Tab, and bake a normalMap using same configuration as here:
-**  image:jme3/external/4.gif[4.gif,width="300",height=""]
+.Method one
+If you use the multiresolution modifier you only need one object. Lets look at this example, the Blender object Monkey, with an applied "`Triangulate`" modifier:
 
-NOTE: Remember! The actual preview affects the baking output and mesh export!
+image::jme3/external/monkey.png[monkey.png,width="",height=""]
 
-Be careful: The steps above lead to terrible normal maps - use this procedure instead:
+.  Add a "`Monkey`" object by selecting the btn:[Monkey] button located on the "`Create Tab`".
+.. While in `Object Mode`, in the `Properties` panel under the `Modifiers` tab, add a `Triangulate` modifier and apply it:
+..  While in `Object Mode`, in the `Properties` panel under the `Modifiers` tab, add a `Multiresolution` modifier:
++
+--
+image::jme3/external/3.1.gif[3.1.gif,width="300",height=""]
 
-*  uncheck:
+There are two types of modifiers: Catmull-Clark and Simple.
+
+*  Simple is better for things like walls or floors.
+*  Catmull-Clark is better for objects like spheres.
+
+When using Catmull-Clark with a higher "`subdivide`" value (more than 3), its good to have the "`preview`" value above 0 and less than the subdivide level. This is because Catmull-Clark smoothes the vertices, so the normalMap is not so precise.
+
+Regardless of the choice, the larger the difference is between "`Render`" and "`Preview`", the deeper the detail is on the normal map.
+
+*  Here is an example of `Prewiew 1`, it's more smooth than the original mesh:
+
+image::jme3/external/monkeyprev1.png[monkkeyprev1.png,width="",height=""]
+--
+.  From the `File` header at the top of the 3d View, click the btn:[Choose Screen layout] button and select "`UV Editing`".
+.  In the `3d View`, select the Monkey and kbd:[Tab] into "`Edit Mode`".
+.  If the Monkey vertices are not already highlighted, press the kbd:[A] key until all vertices are highlighted.
+.  From the `3d View` header, select `menu:Mesh[UV Unwrap>Smart UV Project]`.
+..  Click the btn:[Island Margin] button once to advance the value to .03.
+..  Click btn:[OK] when ready.
+.  In the `UV Image Editor`, click the btn:[New]  button.
+..  Change the name to something like "`monkey_bump`".
+..  Optionaly, change the `Genrated Type` to "`UV Grid`".
+..  Click btn:[OK] when ready.
+.  From the `File` header at the top of the `UV Image Editor`, click the btn:[Choose Screen layout] button and select "`Default`".
+.  With your mouse inside the `3D View`, tab into `Object Mode`.
+.  Now go into the Render Tab, and bake a normalMap using the same configuration as here:
++
+image::jme3/external/4.gif[4.gif,width="300",height=""]
++
+IMPORTANT: Remember! The actual preview affects the baking output and mesh export!
+
+.  Navigate back to the `UV Image Editing` layout and save your image by selecting `menu:Image*[Save As]` from the `UV Image Editor` header.
+
+TIP: The asterick kbd:[*] next to the `Image` menu item means the image is has not yet been saved.
+
+image::jme3/external/monkey_bump.png[monkey_bump.png,width="",height=""]
+
+
+.Method 2
+
+.  Uncheck:
 **  [ ] Bake from Multires
-*  switch to object mode
-*  make a copy of your mesh (kbd:[SHIFT]+kbd:[D])
-*  remove the Multires modifier from the copied model
-*  remove any materials from the copied model
-*  remove the armature modifier from the copied model
-*  select the original (highres) model
-*  go into pose mode, clear any pose transformations
-*  the highres and lowres models should be on top of each other now
-*  select the original (highres) model
-*  hold kbd:[SHIFT] and select the copied (lowres) model
-*  in the properties menu go to render
-*  use `menu:Bake[Normal]`
-*  check:
+.  Switch to object mode.
+.  Make a copy of your mesh (kbd:[SHIFT]+kbd:[D])
+.  Remove the Multires modifier from the copied model.
+.  Remove any materials from the copied model.
+.  Remove the armature modifier from the copied model.
+.  Select the original (Highres) model.
+.  Go into pose mode, clear any pose transformations.
+.  The "`Highres`" and "`Lowres`" models should be on top of each other now.
+.  Select the original (Highres) model.
+.  Hold kbd:[SHIFT] and select the copied (Lowres) model.
+.  In the `Properties` panel, in the `Render` tab:
+..  Bake Mode: `Normal`
+..  check:
 ** [x] Selected to Active
-*  use a reasonably high value for "`Margin`" (4+ pixels at least for 1024x1024 maps)
-*  don't forget to save the normal map image
+..  Use a reasonably high value for "`Margin`" (4+ pixels at least for 1024x1024 maps).
+.  Bake and don't forget to save the normal map image.
 
 
 [WARNING]
