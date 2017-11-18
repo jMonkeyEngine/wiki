@@ -8,7 +8,7 @@
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
-This section discusses how to create and import models from Blender3D (2.78+, see bottom of page for Blender 2.49 and before) to jME3. Furthermore, it explains how you can create various typical game-related assets like normal maps of high-poly models and baked lighting maps.
+This section discusses how to create and import models from Blender3D (2.78+, see bottom of page for Blender 2.49 and before) to jME3. Furthermore, it explains how you can create various typical game-related assets like "`Normal`" maps of high-poly models and "`Baked Lighting`" maps.
 
 
 == Asset Management
@@ -23,7 +23,7 @@ Game-compatible models are models that basically only consist of a mesh and UV-m
 
 === UV Mapped Textures
 
-To successfully import a texture, the texture *has to* be UV-mapped to the model. Heres how to assign diffuse, normal and specular maps:
+To successfully import a texture, the texture *has to* be UV-mapped to the model. Heres how to assign "`Diffuse`", "`Normal`" and "`Specular`" maps:
 
 image::jme3/external/blender-material-4.png[blender-material-4.png,width="",height=""]
 image::jme3/external/blender-material-3.png[blender-material-3.png,width="",height=""]
@@ -162,7 +162,7 @@ Also check out these videos and resources:
 
 == Normal Map baking
 
-Models for live rendering should have a low polygon count. To increase the perceived detail of a model normal maps are commonly used in games. This tutorial will show how to create a `Normal` map from a "`Highpoly`" version of your model that you can apply to a "`Lowpoly`" version of the model in your game.
+Models for live rendering should have a low polygon count. To increase the perceived detail of a model, Normal maps are commonly used in games. This tutorial will show how to create a Normal map from a "`HighPoly`" version of your model that you can apply to a "`LowPoly`" version of the model in your game.
 
 
 === Blender Modeling LowPoly & HighPoly
@@ -184,9 +184,9 @@ There are two types of modifiers: Catmull-Clark and Simple.
 *  Simple is better for things like walls or floors.
 *  Catmull-Clark is better for objects like spheres.
 
-When using Catmull-Clark with a higher "`subdivide`" value (more than 3), it's good to have the "`Preview`" value above 0 and less than the subdivide level. This is because Catmull-Clark smooths the vertices, so the `Normal` map is not so precise.
+When using Catmull-Clark with a higher "`subdivide`" value (more than 3), it's good to have the "`Preview`" value above 0 and less than the subdivide level. This is because Catmull-Clark smooths the vertices, so the Normal map is not so precise.
 
-Regardless of the choice, the larger the difference is between "`Render`" and "`Preview`", the deeper the detail is on the normal map.
+Regardless of the choice, the larger the difference is between "`Render`" and "`Preview`", the deeper the detail is on the Normal map.
 
 *  Here is an example of `Preview 1`, it's more smooth than the original mesh:
 
@@ -240,7 +240,7 @@ This second method produces the best results by far:
 ..  check:
 ** [x] Selected to Active
 ..  Use a reasonably high value for "`Margin`" (4+ pixels at least for 1024x1024 maps).
-.  Bake and don't forget to save the `Normal` map image.
+.  Bake and don't forget to save the Normal map image.
 
 [IMPORTANT]
 ====
@@ -256,18 +256,18 @@ You are either missing the image for the "LowPoly" model, or in the Outliner, th
 .Normal map from Method 2
 image::jme3/external/monkey_bump2.png[monkey_bump2.png,width="50%",height=""]
 
-=== Fixing the normal colors in Blender
+=== Fixing the Normal colors in Blender
 
-There are two "`standards`" for normal maps:
+There are two "`standards`" for Normal maps:
 
 *  DirectX
 *  OpenGL
 
 The difference between them is that the green channel is inverted. One would expect that JME supports the OpenGL way, but actually JME supports the DirectX way because it’s what Blender supports and the developers of JME thought it would be easier in the Blender to JME workflow.
 
-Because of this, you need to fix the colors to prepare the normal map for using it with the JME Lighting Material. You should only have to invert the green channel, the red and blue channels should stay unchanged. The curve for the red and blue channels should go from bottom left to top right, the green from top left to bottom right.
+Because of this, you need to fix the colors to prepare the Normal map for using it with the JME Lighting Material. You should only have to invert the green channel, the red and blue channels should stay unchanged. The curve for the red and blue channels should go from bottom left to top right, the green from top left to bottom right.
 
-To do this after baking and saving the original `Normal` image:
+To do this after baking and saving the original Normal map image:
 
 . In the "`UV Editing`" layout, from the "`UV Image Editor`" header select `menu:Image[Invert>Invert Green Channel]`.
 .  Save the inverted image to a destination you want and use it with the JME Lighting Material and the "`LowPoly`" version of the model.
@@ -278,7 +278,7 @@ image::jme3/external/monkey_bump2_invert.png[monkey_bump2_invert.png,width="50%"
 [TIP]
 .Inverting Tips
 ====
-If you build the engine from source, the master branch link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/resources/Common/MatDefs/Light/PBRLighting.j3md#L39[PBR material] has a NormalType parameter that allows one to handle this in the shader instead of having to edit the normal map.
+If you build the engine from source, the master branch link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/resources/Common/MatDefs/Light/PBRLighting.j3md#L39[PBR material] has a NormalType parameter that allows one to handle this in the shader instead of having to edit the Normal map.
 
 You can also use the SDK to invert the channel:
 
@@ -287,7 +287,7 @@ You can also use the SDK to invert the channel:
 .  When satisfied, save the change in the same format as the original image using `menu:File[Save]`.
 ====
 
-This is what the final outcome of `Normal` map baking should produce for you. A "`LowPoly`" model that looks like it's a "`HighPoly`" model.
+This is what the final outcome of Normal map baking should produce for you. A "`LowPoly`" model that looks like it's a "`HighPoly`" model.
 
 .Final results (Method 2 example)
 image::jme3/external/monkey_final.gif[monkey_final.gif,width="",height=""]
