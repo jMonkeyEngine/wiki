@@ -1,6 +1,6 @@
 = jMonkeyEngine 3 Tutorial (4) - Hello Update Loop
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :keywords: documentation, state, states, intro, beginner, control, loop
 :relfileprefix: ../../
@@ -28,7 +28,7 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Box;
 
 /** Sample 4 - how to trigger repeating actions from the main event loop.
- * In this example, you use the loop to make the player character 
+ * In this example, you use the loop to make the player character
  * rotate continuously. */
 public class HelloLoop extends SimpleApplication {
 
@@ -55,32 +55,32 @@ public class HelloLoop extends SimpleApplication {
     @Override
     public void simpleUpdate(float tpf) {
         // make the player rotate:
-        player.rotate(0, 2*tpf, 0); 
+        player.rotate(0, 2*tpf, 0);
     }
 }
 ----
 
-Build and run the file: You see a constantly rotating cube. 
+Build and run the file: You see a constantly rotating cube.
 
 
 == Understanding the Code
 
-Compared to our previous code samples you note that the player Geometry is now a class field. This is because we want the update loop to be able to access and transform this Geometry. As usual, we initialize the player object in the `simpleInitApp()` method. 
+Compared to our previous code samples you note that the player Geometry is now a class field. This is because we want the update loop to be able to access and transform this Geometry. As usual, we initialize the player object in the `simpleInitApp()` method.
 
 Now have a closer look at the `simpleUpdate()` method – this is the update loop.
 
-*  The `player.rotate(0, 2*tpf, 0);` line changes the rotation of the player object. 
-*  We use the `tpf` variable (“time per frame) to time this action depending on the current frames per second rate. This simply means that the cube rotates with the same speed on fast and slow machines, and the game remains playable.
-*  When the game runs, the rotate() code is executed again and again. 
+*  The `player.rotate(0, 2*tpf, 0);` line changes the rotation of the player object.
+*  We use the `tpf` variable ("`time per frame`") to time this action depending on the current frames per second rate. This simply means that the cube rotates with the same speed on fast and slow machines, and the game remains playable.
+*  When the game runs, the rotate() code is executed again and again.
 
 
 == Using the Update Loop
 
-A rotating object is just a simple example. In the update loop, you typically have many tests and trigger various game actions. This is where you update score and health points, check for collisions, make enemies calculate their next move, roll the dice whether a trap has been set off, play random ambient sounds, and much more.  
+A rotating object is just a simple example. In the update loop, you typically have many tests and trigger various game actions. This is where you update score and health points, check for collisions, make enemies calculate their next move, roll the dice whether a trap has been set off, play random ambient sounds, and much more.
 
 *  The `simpleUpdate()` method starts running after the `simpleInitApp()` method has initialized the scene graph and state variables.
 *  JME3 executes everything in the `simpleUpdate()` method repeatedly, as fast as possible.
-..  Use the loop to poll the game state and then initiate actions. 
+..  Use the loop to poll the game state and then initiate actions.
 ..  Use the loop to trigger reactions and update the game state.
 ..  Use the loop wisely, because having too many calls in the loop also slows down the game.
 
@@ -90,15 +90,16 @@ A rotating object is just a simple example. In the update loop, you typically ha
 
 Note the the three phases of every game:
 
-*  *Init:* The `simpleInitApp()` method is executed only _once_, right at the beginning; 
-*  *Update:* The `simpleUpdate()` method runs _repeatedly_, during the game. 
+*  *Init:* The `simpleInitApp()` method is executed only _once_, right at the beginning;
+*  *Update:* The `simpleUpdate()` method runs _repeatedly_, during the game.
 *  *Render:* After every update, the jMonkeyEngine _automatically_ redraws (`renders`) the screen for you.
 
 Since rendering is automatic, initialization and updating are the two most important concepts in a SimpleApplication-based game for you:
 
-*  The `simpleInitApp()` method is the application's “first breath. +
-Here you load and create game data (once).
-*  The `simpleUpdate()` method is the application's “heartbeat (the time unit is called `ticks`). +
+*  The `simpleInitApp()` method is the application's "`first breath`".
+**  Here you load and create game data (once).
+
+*  The `simpleUpdate()` method is the application's "`heartbeat`" (the time unit is called `ticks`). +
 Here you change their properties to update the game state (repeatedly).
 
 
@@ -138,7 +139,7 @@ Link to user-proposed solutions: <<jm3/solutions#,Some proposed solutions>> +
 
 == Conclusion
 
-Now you are listening to the update loop, “the heart beat of the game, and you can add all kinds of action to it. 
+Now you are listening to the update loop, the "`heartbeat`" of the game, and you can add all kinds of action to it. 
 
 The next thing the game needs is some __inter__action! Continue learning how to <<jme3/beginner/hello_input_system#,respond to user input>>.
 
