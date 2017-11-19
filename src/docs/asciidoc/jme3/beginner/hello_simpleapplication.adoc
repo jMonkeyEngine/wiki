@@ -58,7 +58,7 @@ In the jMonkeyEngine SDK:
 
 You follow this same basic procedure for the remaining tutorials.
 
-TIP: The remaining tutorials all use the same `jme3test.helloworld` package. Just refactor the "`Main.java`" class rather than creating a new project for each.
+TIP: The remaining tutorials all use the same `jme3test.helloworld` package. You can just refactor the "`Main.java`" class rather than creating a new project for each.
 
 == Code Sample
 
@@ -98,12 +98,12 @@ public class HelloJME3 extends SimpleApplication {
 }
 ----
 
-Right-click the HelloJME3 class and choose Run. If a jME3 settings dialog pops up, confirm the default settings.
+btn:[RMB] select the `HelloJME3` class and choose `Run`. If a jME3 settings dialog pops up, confirm the default settings.
 
 .  You should see a simple window displaying a 3D cube.
-.  Press the WASD keys and move the mouse to navigate around.
+.  Press the kbd:[W] kbd:[A] kbd:[S] kbd:[D] keys and move the mouse to navigate around.
 .  Look at the FPS text and object count information in the bottom left. You will use this information during development, and you will remove it for the release. (To read the numbers correctly, consider that the 14 lines of text counts as 14 objects with 914 vertices.)
-.  Press Escape to close the application.
+.  Press kbd:[Esc]  to close the application.
 
 Congratulations! Now let's find out how it works!
 
@@ -210,26 +210,26 @@ A typical JME3 game has the following initialization process:
 **  You make objects appear in the scene by attaching them to the `rootNode`.
 **  *Examples:* Load player, terrain, sky, enemies, obstacles, …, and place them in their start positions.
 
-.  You initialize variables
+.  You initialize variables:
 **  You create variables to track the game state.
 **  You set variables to their start values.
 **  *Examples:* Set the `score` to 0, set `health` to 100%, …
 
-.  You initialize keys and mouse actions.
+.  You initialize keys and mouse actions:
 **  The following input bindings are pre-configured:
-***  W,A,S,D keys – Move around in the scene
+***  kbd:[W] kbd:[A] kbd:[S] kbd:[D] keys – Move around in the scene
 ***  Mouse movement and arrow keys – Turn the camera
-***  Escape key – Quit the game
+***  kbd:[Esc]  key – Quit the game
 
 **  Define your own additional keys and mouse click actions.
-**  *Examples:* Click to shoot, press Space to jump, …
+**  *Examples:* Click to shoot, press kbd:[Space] to jump, …
 
 
 
 === The Future of SimpleApplication
 
 
-There are plans to change SimpleApplication. Sometime back it was decided that we should really re-factor the Application class. SimpleApplication especially is a mess of 'magic' protected fields that on the one hand makes it really easy to slam some simple one-class application together, but on the other hand does new users no favors because they have no idea where 'cam' and 'assetManager' come from. Unfortunately, lots of code refers to Application and it's tough to change... especially the app states.
+There are plans to change SimpleApplication. Sometime back it was decided that we should really re-factor the Application class. SimpleApplication especially is a mess of "`magic`" protected fields that on the one hand makes it really easy to slam some simple one-class application together, but on the other hand does new users no favors because they have no idea where 'cam' and 'assetManager' come from. Unfortunately, lots of code refers to Application and it's tough to change... especially the app states.
 
 So, we hatched a plan to convert the Application class to an interface. This would give us some freedom to iterate on a new set of application base classes. You can read about the changes link:https://hub.jmonkeyengine.org/t/jmonkeyengine-3-1-alpha-4-released/35478[here]. As said before we are envisioning a better design that is not enforced today, but that is already usable.
 
