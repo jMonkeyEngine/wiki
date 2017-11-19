@@ -1,10 +1,11 @@
 = jMonkeyEngine 3 Tutorial (1) - Hello SimpleApplication
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :keywords: beginner, intro, documentation, init, simpleapplication, basegame
 :relfileprefix: ../../
 :imagesdir: ../..
+:experimental:
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
@@ -13,7 +14,7 @@ Next: <<jme3/beginner/hello_node#,Hello Node>>
 
 *Prerequisites:* This tutorial assumes that you have <<documentation#,downloaded the jMonkeyEngine SDK>>.
 
-In this tutorial series, we assume that you use the jMonkeyEngine <<sdk#,SDK>>. As an intermediate or advanced Java developer, you will quickly see that, in general, you can develop jMonkeyEngine code in any integrated development environment (NetBeans IDE, Eclipse, IntelliJ) or even from the <<jme3/simpleapplication_from_the_commandline#,command line>>. 
+In this tutorial series, we assume that you use the jMonkeyEngine <<sdk#,SDK>>. As an intermediate or advanced Java developer, you will quickly see that, in general, you can develop jMonkeyEngine code in any integrated development environment (NetBeans IDE, Eclipse, IntelliJ) or even from the <<jme3/simpleapplication_from_the_commandline#,command line>>.
 
 OK, let's get ready to create our first jMonkeyEngine3 application.
 
@@ -22,13 +23,14 @@ OK, let's get ready to create our first jMonkeyEngine3 application.
 
 In the jMonkeyEngine SDK:
 
-.  Choose File→New Project… from the main menu.
-.  In the New Project wizard, select the template JME3→Basic Game. Click Next. 
-..  Specify a project name, e.g. “HelloWorldTutorial
+.  Choose `menu:File[New Project]` from the main menu.
+.  In the New Project wizard, select the template `menu:JME3[Basic Game]`.
+.  Click btn:[Next].
+..  Specify a project name, e.g. "`HelloWorldTutorial`".
 ..  Specify a path where to store your new project, e.g. a `jMonkeyProjects` directory in your home directory.
+.  Click btn:[Finish].
 
-.  Click Finish. 
-
+This will create a basic jme3 application for an easy start with jme3. You can click the run button to run it: You will see a blue cube.
 If you have questions, read more about <<sdk/project_creation#,Project Creation>> here.
 
 
@@ -41,18 +43,22 @@ We recommend to go through the steps yourself, as described in the tutorials. Al
 
 == Extend SimpleApplication
 
-For this tutorial, you want to create a jme3test.helloworld package in your project, and create a file HelloJME3.java in it.
+For this tutorial, you need a jme3test.helloworld package in your project, with the file HelloJME3.java in it.
 
 In the jMonkeyEngine SDK:
 
-.  Right-click the Source Packages node of your project.
-.  Choose New…→Java Class to create a new file.
-.  Enter the class name: HelloJME3
-.  Enter the package name: jme3test.helloworld.
-.  Click Finish.
+.  In the `Source Packages` node of your project, btn:[RMB] select the "`mygame`" package.
+..  Choose `menu:Refactor[Rename]`
+..  Enter the New Name: `jme3test.helloworld`
+..  Click btn:[Refactor] when ready.
+.  In the newly refactored package, btn:[RMB] select the `Main.java` class.
+..   Choose `menu:Refactor[Rename]`
+..  Enter the New Name: `HelloJME3`
+..  Click btn:[Refactor] when ready.
 
-The SDK creates the file HelloJME3.java for you.
+You follow this same basic procedure for the remaining tutorials.
 
+TIP: The remaining tutorials all use the same `jme3test.helloworld` package. Just refactor the "`Main.java`" class rather than creating a new project for each.
 
 == Code Sample
 
@@ -65,7 +71,6 @@ package jme3test.helloworld;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.material.Material;
-import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Box;
 import com.jme3.math.ColorRGBA;
@@ -79,7 +84,7 @@ public class HelloJME3 extends SimpleApplication {
         HelloJME3 app = new HelloJME3();
         app.start(); // start the game
     }
-    
+
     @Override
     public void simpleInitApp() {
         Box b = new Box(1, 1, 1); // create cube shape
@@ -110,7 +115,7 @@ The code above has initialized the scene, and started the application.
 
 === Start the SimpleApplication
 
-Look at the first line. Your HelloJME3.java class extends `com.jme3.app.SimpleApplication`. 
+Look at the first line. Your HelloJME3.java class extends `com.jme3.app.SimpleApplication`.
 
 [source,java]
 ----
@@ -126,7 +131,7 @@ Every JME3 game is an instance of the `com.jme3.app.SimpleApplication` class. Th
 You start every JME3 game from the main() method, as every standard Java application:
 
 .  Instantiate your `SimpleApplication`-based class
-.  Call the application's `start()` method to start the game engine. 
+.  Call the application's `start()` method to start the game engine.
 
 [source,java]
 ----
@@ -170,7 +175,7 @@ If you are unfamiliar with the vocabulary, read more about <<jme3/the_scene_grap
 
 === Initialize the Scene
 
-Look at rest of the code sample. The `simpleInitApp()` method is automatically called once at the beginning when the application starts. Every JME3 game must have this method. In the `simpleInitApp()` method, you load game objects before the game starts. 
+Look at rest of the code sample. The `simpleInitApp()` method is automatically called once at the beginning when the application starts. Every JME3 game must have this method. In the `simpleInitApp()` method, you load game objects before the game starts.
 
 [source,java]
 ----
@@ -206,8 +211,8 @@ A typical JME3 game has the following initialization process:
 **  *Examples:* Load player, terrain, sky, enemies, obstacles, …, and place them in their start positions.
 
 .  You initialize variables
-**  You create variables to track the game state. 
-**  You set variables to their start values. 
+**  You create variables to track the game state.
+**  You set variables to their start values.
 **  *Examples:* Set the `score` to 0, set `health` to 100%, …
 
 .  You initialize keys and mouse actions.
@@ -226,13 +231,13 @@ A typical JME3 game has the following initialization process:
 
 There are plans to change SimpleApplication. Sometime back it was decided that we should really re-factor the Application class. SimpleApplication especially is a mess of 'magic' protected fields that on the one hand makes it really easy to slam some simple one-class application together, but on the other hand does new users no favors because they have no idea where 'cam' and 'assetManager' come from. Unfortunately, lots of code refers to Application and it's tough to change... especially the app states.
 
-So, we hatched a plan to convert the Application class to an interface. This would give us some freedom to iterate on a new set of application base classes. You can read about the changes link:https://hub.jmonkeyengine.org/t/jmonkeyengine-3-1-alpha-4-released/35478[here]. As said before we are envisioning a better design that is not enforced today, but that is already usable. 
+So, we hatched a plan to convert the Application class to an interface. This would give us some freedom to iterate on a new set of application base classes. You can read about the changes link:https://hub.jmonkeyengine.org/t/jmonkeyengine-3-1-alpha-4-released/35478[here]. As said before we are envisioning a better design that is not enforced today, but that is already usable.
 
 If you look at SimpleApplication default constructor you will understand how it works.
 
 [source,java]
 ----
-public SimpleApplication() {    
+public SimpleApplication() {   
     this(new StatsAppState(), new FlyCamAppState(), new AudioListenerState(), new DebugKeysAppState());}
 ----
 
@@ -240,7 +245,7 @@ Basically the application is injected upon construction with the default AppStat
 
 [source,java]
 ----
-public SimpleApplication( AppState... initialStates ) {    
+public SimpleApplication( AppState... initialStates ) {   
     super(initialStates);
 }
 ----
@@ -250,7 +255,7 @@ It allows you to specify what AppState you want for your application. So SimpleA
 [source,java]
 ----
 public class MyGame extends SimpleApplication {
-    
+
     public MyGame(){
          super(new MyCustomSate(), new AnotherState(), ....);
     }
@@ -279,7 +284,7 @@ You have learned that a SimpleApplication is a good starting point because it pr
 When developing a game application, you want to:
 
 .  Initialize the game scene
-.  Trigger game actions 
+.  Trigger game actions
 .  Respond to user input.
 
 The now following tutorials teach how you accomplish these tasks with the jMonkeyEngine 3.
