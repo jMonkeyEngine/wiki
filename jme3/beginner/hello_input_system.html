@@ -29,7 +29,7 @@ Next: <a href="../../jme3/beginner/hello_material.html">Hello Material</a></p></
         app.start();
     }
     <span class="directive">protected</span> Geometry player;
-    <span class="predefined-type">Boolean</span> isRunning = <span class="predefined-constant">true</span>;
+    <span class="directive">private</span> <span class="type">boolean</span> isRunning = <span class="predefined-constant">true</span>;
 
     <span class="annotation">@Override</span>
     <span class="directive">public</span> <span class="type">void</span> simpleInitApp() {
@@ -113,61 +113,64 @@ For example, the “Rotate action can be triggered by a click and by pressing th
 <div class="paragraph"><p>The two important methods here are the <code>ActionListener</code> with its <code>onAction()</code> method, and the <code>AnalogListener</code> with its <code>onAnalog()</code> method. In these two methods, you test for each named mapping, and call the game action you want to trigger.</p></div>
 <div class="paragraph"><p>In this example, we trigger the following actions:</p></div>
 <div class="olist arabic"><ol class="arabic"><li><p>The <em>Rotate</em> mapping triggers the action <code>player.rotate(0, value, 0)</code>.</p></li><li><p>The <em>Left</em> and <em>Right</em> mappings increase and decrease the player&#8217;s x coordinate.</p></li><li><p>The <em>Pause</em> mapping flips a boolean <code>isRunning</code>.</p></li><li><p>We also want to check the boolean <code>isRunning</code> before any action (other than unpausing) is executed.</p></li></ol></div>
-<div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">  <span class="directive">private</span> <span class="predefined-type">ActionListener</span> actionListener = <span class="keyword">new</span> <span class="predefined-type">ActionListener</span>() {
-    <span class="directive">public</span> <span class="type">void</span> onAction(<span class="predefined-type">String</span> name, <span class="type">boolean</span> keyPressed, <span class="type">float</span> tpf) {
-      <span class="keyword">if</span> (name.equals(<span class="string"><span class="delimiter">&quot;</span><span class="content">Pause</span><span class="delimiter">&quot;</span></span>) &amp;&amp; !keyPressed) {
-        isRunning = !isRunning;
-      }
-    }
-  };
+<div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">private</span> <span class="directive">final</span> <span class="predefined-type">ActionListener</span> actionListener = <span class="keyword">new</span> <span class="predefined-type">ActionListener</span>() {
+        <span class="annotation">@Override</span>
+        <span class="directive">public</span> <span class="type">void</span> onAction(<span class="predefined-type">String</span> name, <span class="type">boolean</span> keyPressed, <span class="type">float</span> tpf) {
+            <span class="keyword">if</span> (name.equals(<span class="string"><span class="delimiter">&quot;</span><span class="content">Pause</span><span class="delimiter">&quot;</span></span>) &amp;&amp; !keyPressed) {
+                isRunning = !isRunning;
+            }
+        }
+    };
 
-  <span class="directive">private</span> AnalogListener analogListener = <span class="keyword">new</span> AnalogListener() {
-    <span class="directive">public</span> <span class="type">void</span> onAnalog(<span class="predefined-type">String</span> name, <span class="type">float</span> value, <span class="type">float</span> tpf) {
-      <span class="keyword">if</span> (isRunning) {
-        <span class="keyword">if</span> (name.equals(<span class="string"><span class="delimiter">&quot;</span><span class="content">Rotate</span><span class="delimiter">&quot;</span></span>)) {
-          player.rotate(<span class="integer">0</span>, value*speed, <span class="integer">0</span>);
+    <span class="directive">private</span> <span class="directive">final</span> AnalogListener analogListener = <span class="keyword">new</span> AnalogListener() {
+        <span class="annotation">@Override</span>
+        <span class="directive">public</span> <span class="type">void</span> onAnalog(<span class="predefined-type">String</span> name, <span class="type">float</span> value, <span class="type">float</span> tpf) {
+            <span class="keyword">if</span> (isRunning) {
+                <span class="keyword">if</span> (name.equals(<span class="string"><span class="delimiter">&quot;</span><span class="content">Rotate</span><span class="delimiter">&quot;</span></span>)) {
+                    player.rotate(<span class="integer">0</span>, value * speed, <span class="integer">0</span>);
+                }
+                <span class="keyword">if</span> (name.equals(<span class="string"><span class="delimiter">&quot;</span><span class="content">Right</span><span class="delimiter">&quot;</span></span>)) {
+                    Vector3f v = player.getLocalTranslation();
+                    player.setLocalTranslation(v.x + value * speed, v.y, v.z);
+                }
+                <span class="keyword">if</span> (name.equals(<span class="string"><span class="delimiter">&quot;</span><span class="content">Left</span><span class="delimiter">&quot;</span></span>)) {
+                    Vector3f v = player.getLocalTranslation();
+                    player.setLocalTranslation(v.x - value * speed, v.y, v.z);
+                }
+            } <span class="keyword">else</span> {
+                <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Press P to unpause.</span><span class="delimiter">&quot;</span></span>);
+            }
         }
-        <span class="keyword">if</span> (name.equals(<span class="string"><span class="delimiter">&quot;</span><span class="content">Right</span><span class="delimiter">&quot;</span></span>)) {
-          Vector3f v = player.getLocalTranslation();
-          player.setLocalTranslation(v.x + value*speed, v.y, v.z);
-        }
-        <span class="keyword">if</span> (name.equals(<span class="string"><span class="delimiter">&quot;</span><span class="content">Left</span><span class="delimiter">&quot;</span></span>)) {
-          Vector3f v = player.getLocalTranslation();
-          player.setLocalTranslation(v.x - value*speed, v.y, v.z);
-        }
-      } <span class="keyword">else</span> {
-        <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Press P to unpause.</span><span class="delimiter">&quot;</span></span>);
-      }
-    }
-  };</code></pre></div></div>
+    };</code></pre></div></div>
 <div class="paragraph"><p>You can also combine both listeners into one, the engine will send the appropriate events to each method (onAction or onAnalog). For example:</p></div>
-<div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">  <span class="directive">private</span> MyCombinedListener combinedListener = <span class="keyword">new</span> MyCombinedListener();
+<div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="directive">private</span> <span class="type">class</span> <span class="class">MyCombinedListener</span> <span class="directive">implements</span> AnalogListener, <span class="predefined-type">ActionListener</span> {
 
-  <span class="directive">private</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">MyCombinedListener</span> <span class="directive">implements</span> AnalogListener, <span class="predefined-type">ActionListener</span> {
+    <span class="annotation">@Override</span>
     <span class="directive">public</span> <span class="type">void</span> onAction(<span class="predefined-type">String</span> name, <span class="type">boolean</span> keyPressed, <span class="type">float</span> tpf) {
-      <span class="keyword">if</span> (name.equals(<span class="string"><span class="delimiter">&quot;</span><span class="content">Pause</span><span class="delimiter">&quot;</span></span>) &amp;&amp; !keyPressed) {
-        isRunning = !isRunning;
-      }
+        <span class="keyword">if</span> (name.equals(<span class="string"><span class="delimiter">&quot;</span><span class="content">Pause</span><span class="delimiter">&quot;</span></span>) &amp;&amp; !keyPressed) {
+            isRunning = !isRunning;
+        }
     }
 
+    <span class="annotation">@Override</span>
     <span class="directive">public</span> <span class="type">void</span> onAnalog(<span class="predefined-type">String</span> name, <span class="type">float</span> value, <span class="type">float</span> tpf) {
-      <span class="keyword">if</span> (isRunning) {
-        <span class="keyword">if</span> (name.equals(<span class="string"><span class="delimiter">&quot;</span><span class="content">Rotate</span><span class="delimiter">&quot;</span></span>)) {
-          player.rotate(<span class="integer">0</span>, value*speed, <span class="integer">0</span>);
+        <span class="keyword">if</span> (isRunning) {
+            <span class="keyword">if</span> (name.equals(<span class="string"><span class="delimiter">&quot;</span><span class="content">Rotate</span><span class="delimiter">&quot;</span></span>)) {
+                player.rotate(<span class="integer">0</span>, value * speed, <span class="integer">0</span>);
+            }
+            <span class="keyword">if</span> (name.equals(<span class="string"><span class="delimiter">&quot;</span><span class="content">Right</span><span class="delimiter">&quot;</span></span>)) {
+                Vector3f v = player.getLocalTranslation();
+                player.setLocalTranslation(v.x + value * speed, v.y, v.z);
+            }
+            <span class="keyword">if</span> (name.equals(<span class="string"><span class="delimiter">&quot;</span><span class="content">Left</span><span class="delimiter">&quot;</span></span>)) {
+                Vector3f v = player.getLocalTranslation();
+                player.setLocalTranslation(v.x - value * speed, v.y, v.z);
+            }
+        } <span class="keyword">else</span> {
+            <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Press P to unpause.</span><span class="delimiter">&quot;</span></span>);
         }
-        <span class="keyword">if</span> (name.equals(<span class="string"><span class="delimiter">&quot;</span><span class="content">Right</span><span class="delimiter">&quot;</span></span>)) {
-          Vector3f v = player.getLocalTranslation();
-          player.setLocalTranslation(v.x + value*speed, v.y, v.z);
-        }
-        <span class="keyword">if</span> (name.equals(<span class="string"><span class="delimiter">&quot;</span><span class="content">Left</span><span class="delimiter">&quot;</span></span>)) {
-          Vector3f v = player.getLocalTranslation();
-          player.setLocalTranslation(v.x - value*speed, v.y, v.z);
-        }
-      } <span class="keyword">else</span> {
-        <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Press P to unpause.</span><span class="delimiter">&quot;</span></span>);
-      }
     }
-  }
+}
 <span class="comment">// ...</span>
 inputManager.addListener(combinedListener, <span class="keyword">new</span> <span class="predefined-type">String</span><span class="type">[]</span>{<span class="string"><span class="delimiter">&quot;</span><span class="content">Pause</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Left</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Right</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Rotate</span><span class="delimiter">&quot;</span></span>});</code></pre></div></div>
 <div class="paragraph"><p>It&#8217;s okay to use only one of the two Listeners, and not implement the other one, if you are not using this type of interaction. In the following, we have a closer look how to decide which of the two listeners is best suited for which situation.</p></div></div></div>
@@ -196,7 +199,7 @@ inputManager.addMapping("Pause",  new KeyTrigger(usersPauseKey));</pre></div></d
 <div class="admonitionblock important"><table><tr><td class="icon"><i class="fa icon-important" title="Important"></i></td><td class="content"><div class="paragraph"><p>Link to user-proposed solutions: <a href="../../jm3/solutions.html">Some proposed solutions</a><br>
 <u>Be sure to try to solve them for yourself first!</u></p></div></td></tr></table></div></div></div>
 <div class="sect1"><h2 id="conclusion">Conclusion</h2><div class="sectionbody"><div class="paragraph"><p>You are now able to add custom interactions to your game: You know that you first have to define the key mappings, and then the actions for each mapping. You have learned to respond to mouse events and to the keyboard. You understand the difference between &#8220;analog (gradually repeated) and &#8220;digital (on/off) inputs.</p></div>
-<div class="paragraph"><p>Now you can already write a little interactive game! But wouldn&#8217;t it be cooler if these old boxes were a bit more fancy? Let&#8217;s continue with learning about <a href="../../jme3/beginner/hello_material.html">materials</a>.</p></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2017-11-20 00:28:42 +00:00</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
+<div class="paragraph"><p>Now you can already write a little interactive game! But wouldn&#8217;t it be cooler if these old boxes were a bit more fancy? Let&#8217;s continue with learning about <a href="../../jme3/beginner/hello_material.html">materials</a>.</p></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2017-11-20 00:58:04 +00:00</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
   apiKey: 'a736b6d93de805e26ec2f49b55013fbd',
   indexName: 'jmonkeyengine',
   inputSelector: '#doc-search',
