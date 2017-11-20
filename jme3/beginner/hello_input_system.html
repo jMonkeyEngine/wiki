@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="./coderay-asciidoctor.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css"></head><body class="article toc2 toc-left"><div id="header"><div id="toolbar"><a href="https://github.com/jMonkeyEngine/wiki/edit/master/src/docs/asciidoc/jme3/beginner/hello_input_system.adoc"><i class="fa fa-pencil-square" aria-hidden="true"></i></a><a href="https://github.com/jMonkeyEngine/wiki/new/master/src/docs/asciidoc/jme3/beginner/"><i class="fa fa-plus-square" aria-hidden="true"></i></a><input dir="auto" style="position: relative; vertical-align: top;" spellcheck="false" autocomplete="off" class="searchbox__input aa-input" id="doc-search" name="search" placeholder="Search in the doc" required="required" type="search"></div><h1>jMonkeyEngine 3 Tutorial (5) - Hello Input System</h1><div class="details"><span class="author" id="author"></span><br><span id="revnumber">version ,</span> <span id="revdate">2016/03/17 20:48</span></div><div id="toc" class="toc2"><div id="toctitle">Table of Contents</div><ul class="sectlevel1"><li><a href="#sample-code">Sample Code</a></li><li><a href="#defining-mappings-and-triggers">Defining Mappings and Triggers</a></li><li><a href="#implementing-the-actions">Implementing the Actions</a></li><li><a href="#analog-pressed-or-released">Analog, Pressed, or Released?</a></li><li><a href="#table-of-triggers">Table of Triggers</a></li><li><a href="#exercises">Exercises</a></li><li><a href="#conclusion">Conclusion</a></li></ul></div></div><div id="content"><div id="preamble"><div class="sectionbody"><div class="paragraph"><p>Previous: <a href="../../jme3/beginner/hello_main_event_loop.html">Hello Update Loop</a>,
 Next: <a href="../../jme3/beginner/hello_material.html">Hello Material</a></p></div>
-<div class="paragraph"><p>By default, SimpleApplication sets up a camera control that allows you to steer the camera with the WASD keys, the arrow keys, and the mouse. You can use it as a flying first-person camera right away. But what if you need a third-person camera, or you want keys to trigger special game actions?</p></div>
+<div class="paragraph"><p>By default, SimpleApplication sets up a camera control that allows you to steer the camera with the <kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd> keys, the arrow keys, and the mouse. You can use it as a flying first-person camera right away. But what if you need a third-person camera, or you want keys to trigger special game actions?</p></div>
 <div class="paragraph"><p>Every game has its custom keybindings, and this tutorial explains how you define them. We first define the key presses and mouse events, and then we define the actions they should trigger.</p></div></div></div>
 <div class="sect1"><h2 id="sample-code">Sample Code</h2><div class="sectionbody"><div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">jme3test.helloworld</span>;
 
@@ -19,68 +19,74 @@ Next: <a href="../../jme3/beginner/hello_material.html">Hello Material</a></p></
 <span class="keyword">import</span> <span class="include">com.jme3.input.controls.KeyTrigger</span>;
 <span class="keyword">import</span> <span class="include">com.jme3.input.controls.MouseButtonTrigger</span>;
 
-<span class="comment">/** Sample 5 - how to map keys and mousebuttons to actions */</span>
+<span class="comment">/**
+ * Sample 5 - how to map keys and mousebuttons to actions
+ */</span>
 <span class="directive">public</span> <span class="type">class</span> <span class="class">HelloInput</span> <span class="directive">extends</span> SimpleApplication {
 
-  <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> main(<span class="predefined-type">String</span><span class="type">[]</span> args) {
-    HelloInput app = <span class="keyword">new</span> HelloInput();
-    app.start();
-  }
-  <span class="directive">protected</span> Geometry player;
-  <span class="predefined-type">Boolean</span> isRunning=<span class="predefined-constant">true</span>;
-
-  <span class="annotation">@Override</span>
-  <span class="directive">public</span> <span class="type">void</span> simpleInitApp() {
-    <span class="predefined-type">Box</span> b = <span class="keyword">new</span> <span class="predefined-type">Box</span>(<span class="integer">1</span>, <span class="integer">1</span>, <span class="integer">1</span>);
-    player = <span class="keyword">new</span> Geometry(<span class="string"><span class="delimiter">&quot;</span><span class="content">Player</span><span class="delimiter">&quot;</span></span>, b);
-    Material mat = <span class="keyword">new</span> Material(assetManager, <span class="string"><span class="delimiter">&quot;</span><span class="content">Common/MatDefs/Misc/Unshaded.j3md</span><span class="delimiter">&quot;</span></span>);
-    mat.setColor(<span class="string"><span class="delimiter">&quot;</span><span class="content">Color</span><span class="delimiter">&quot;</span></span>, ColorRGBA.Blue);
-    player.setMaterial(mat);
-    rootNode.attachChild(player);
-    initKeys(); <span class="comment">// load my custom keybinding</span>
-  }
-
-  <span class="comment">/** Custom Keybinding: Map named actions to inputs. */</span>
-  <span class="directive">private</span> <span class="type">void</span> initKeys() {
-    <span class="comment">// You can map one or several inputs to one named action</span>
-    inputManager.addMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">Pause</span><span class="delimiter">&quot;</span></span>,  <span class="keyword">new</span> KeyTrigger(KeyInput.KEY_P));
-    inputManager.addMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">Left</span><span class="delimiter">&quot;</span></span>,   <span class="keyword">new</span> KeyTrigger(KeyInput.KEY_J));
-    inputManager.addMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">Right</span><span class="delimiter">&quot;</span></span>,  <span class="keyword">new</span> KeyTrigger(KeyInput.KEY_K));
-    inputManager.addMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">Rotate</span><span class="delimiter">&quot;</span></span>, <span class="keyword">new</span> KeyTrigger(KeyInput.KEY_SPACE),
-                                      <span class="keyword">new</span> MouseButtonTrigger(MouseInput.BUTTON_LEFT));
-    <span class="comment">// Add the names to the action listener.</span>
-    inputManager.addListener(actionListener,<span class="string"><span class="delimiter">&quot;</span><span class="content">Pause</span><span class="delimiter">&quot;</span></span>);
-    inputManager.addListener(analogListener,<span class="string"><span class="delimiter">&quot;</span><span class="content">Left</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Right</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Rotate</span><span class="delimiter">&quot;</span></span>);
-
-  }
-
-  <span class="directive">private</span> <span class="predefined-type">ActionListener</span> actionListener = <span class="keyword">new</span> <span class="predefined-type">ActionListener</span>() {
-    <span class="directive">public</span> <span class="type">void</span> onAction(<span class="predefined-type">String</span> name, <span class="type">boolean</span> keyPressed, <span class="type">float</span> tpf) {
-      <span class="keyword">if</span> (name.equals(<span class="string"><span class="delimiter">&quot;</span><span class="content">Pause</span><span class="delimiter">&quot;</span></span>) &amp;&amp; !keyPressed) {
-        isRunning = !isRunning;
-      }
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> main(<span class="predefined-type">String</span><span class="type">[]</span> args) {
+        HelloInput app = <span class="keyword">new</span> HelloInput();
+        app.start();
     }
-  };
+    <span class="directive">protected</span> Geometry player;
+    <span class="predefined-type">Boolean</span> isRunning = <span class="predefined-constant">true</span>;
 
-  <span class="directive">private</span> AnalogListener analogListener = <span class="keyword">new</span> AnalogListener() {
-    <span class="directive">public</span> <span class="type">void</span> onAnalog(<span class="predefined-type">String</span> name, <span class="type">float</span> value, <span class="type">float</span> tpf) {
-      <span class="keyword">if</span> (isRunning) {
-        <span class="keyword">if</span> (name.equals(<span class="string"><span class="delimiter">&quot;</span><span class="content">Rotate</span><span class="delimiter">&quot;</span></span>)) {
-          player.rotate(<span class="integer">0</span>, value*speed, <span class="integer">0</span>);
-        }
-        <span class="keyword">if</span> (name.equals(<span class="string"><span class="delimiter">&quot;</span><span class="content">Right</span><span class="delimiter">&quot;</span></span>)) {
-          Vector3f v = player.getLocalTranslation();
-          player.setLocalTranslation(v.x + value*speed, v.y, v.z);
-        }
-        <span class="keyword">if</span> (name.equals(<span class="string"><span class="delimiter">&quot;</span><span class="content">Left</span><span class="delimiter">&quot;</span></span>)) {
-          Vector3f v = player.getLocalTranslation();
-          player.setLocalTranslation(v.x - value*speed, v.y, v.z);
-        }
-      } <span class="keyword">else</span> {
-        <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Press P to unpause.</span><span class="delimiter">&quot;</span></span>);
-      }
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="type">void</span> simpleInitApp() {
+        <span class="predefined-type">Box</span> b = <span class="keyword">new</span> <span class="predefined-type">Box</span>(<span class="integer">1</span>, <span class="integer">1</span>, <span class="integer">1</span>);
+        player = <span class="keyword">new</span> Geometry(<span class="string"><span class="delimiter">&quot;</span><span class="content">Player</span><span class="delimiter">&quot;</span></span>, b);
+        Material mat = <span class="keyword">new</span> Material(assetManager, <span class="string"><span class="delimiter">&quot;</span><span class="content">Common/MatDefs/Misc/Unshaded.j3md</span><span class="delimiter">&quot;</span></span>);
+        mat.setColor(<span class="string"><span class="delimiter">&quot;</span><span class="content">Color</span><span class="delimiter">&quot;</span></span>, ColorRGBA.Blue);
+        player.setMaterial(mat);
+        rootNode.attachChild(player);
+        initKeys(); <span class="comment">// load my custom keybinding</span>
     }
-  };
+
+    <span class="comment">/**
+     * Custom Keybinding: Map named actions to inputs.
+     */</span>
+    <span class="directive">private</span> <span class="type">void</span> initKeys() {
+        <span class="comment">// You can map one or several inputs to one named action</span>
+        inputManager.addMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">Pause</span><span class="delimiter">&quot;</span></span>,  <span class="keyword">new</span> KeyTrigger(KeyInput.KEY_P));
+        inputManager.addMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">Left</span><span class="delimiter">&quot;</span></span>,   <span class="keyword">new</span> KeyTrigger(KeyInput.KEY_J));
+        inputManager.addMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">Right</span><span class="delimiter">&quot;</span></span>,  <span class="keyword">new</span> KeyTrigger(KeyInput.KEY_K));
+        inputManager.addMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">Rotate</span><span class="delimiter">&quot;</span></span>, <span class="keyword">new</span> KeyTrigger(KeyInput.KEY_SPACE),
+                                          <span class="keyword">new</span> MouseButtonTrigger(MouseInput.BUTTON_LEFT));
+        <span class="comment">// Add the names to the action listener.</span>
+        inputManager.addListener(actionListener, <span class="string"><span class="delimiter">&quot;</span><span class="content">Pause</span><span class="delimiter">&quot;</span></span>);
+        inputManager.addListener(analogListener, <span class="string"><span class="delimiter">&quot;</span><span class="content">Left</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Right</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Rotate</span><span class="delimiter">&quot;</span></span>);
+
+    }
+
+    <span class="directive">private</span> <span class="directive">final</span> <span class="predefined-type">ActionListener</span> actionListener = <span class="keyword">new</span> <span class="predefined-type">ActionListener</span>() {
+        <span class="annotation">@Override</span>
+        <span class="directive">public</span> <span class="type">void</span> onAction(<span class="predefined-type">String</span> name, <span class="type">boolean</span> keyPressed, <span class="type">float</span> tpf) {
+            <span class="keyword">if</span> (name.equals(<span class="string"><span class="delimiter">&quot;</span><span class="content">Pause</span><span class="delimiter">&quot;</span></span>) &amp;&amp; !keyPressed) {
+                isRunning = !isRunning;
+            }
+        }
+    };
+
+    <span class="directive">private</span> <span class="directive">final</span> AnalogListener analogListener = <span class="keyword">new</span> AnalogListener() {
+        <span class="annotation">@Override</span>
+        <span class="directive">public</span> <span class="type">void</span> onAnalog(<span class="predefined-type">String</span> name, <span class="type">float</span> value, <span class="type">float</span> tpf) {
+            <span class="keyword">if</span> (isRunning) {
+                <span class="keyword">if</span> (name.equals(<span class="string"><span class="delimiter">&quot;</span><span class="content">Rotate</span><span class="delimiter">&quot;</span></span>)) {
+                    player.rotate(<span class="integer">0</span>, value * speed, <span class="integer">0</span>);
+                }
+                <span class="keyword">if</span> (name.equals(<span class="string"><span class="delimiter">&quot;</span><span class="content">Right</span><span class="delimiter">&quot;</span></span>)) {
+                    Vector3f v = player.getLocalTranslation();
+                    player.setLocalTranslation(v.x + value * speed, v.y, v.z);
+                }
+                <span class="keyword">if</span> (name.equals(<span class="string"><span class="delimiter">&quot;</span><span class="content">Left</span><span class="delimiter">&quot;</span></span>)) {
+                    Vector3f v = player.getLocalTranslation();
+                    player.setLocalTranslation(v.x - value * speed, v.y, v.z);
+                }
+            } <span class="keyword">else</span> {
+                <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Press P to unpause.</span><span class="delimiter">&quot;</span></span>);
+            }
+        }
+    };
 }</code></pre></div></div>
 <div class="paragraph"><p>Build and run the example.</p></div>
 <div class="ulist"><ul><li><p>Press the Spacebar or click to rotate the cube.</p></li><li><p>Press the J and K keys to move the cube.</p></li><li><p>Press P to pause and unpause the game. While paused, the game should not respond to any input, other than <code>P</code>.</p></li></ul></div></div></div>
@@ -190,7 +196,7 @@ inputManager.addMapping("Pause",  new KeyTrigger(usersPauseKey));</pre></div></d
 <div class="admonitionblock important"><table><tr><td class="icon"><i class="fa icon-important" title="Important"></i></td><td class="content"><div class="paragraph"><p>Link to user-proposed solutions: <a href="../../jm3/solutions.html">Some proposed solutions</a><br>
 <u>Be sure to try to solve them for yourself first!</u></p></div></td></tr></table></div></div></div>
 <div class="sect1"><h2 id="conclusion">Conclusion</h2><div class="sectionbody"><div class="paragraph"><p>You are now able to add custom interactions to your game: You know that you first have to define the key mappings, and then the actions for each mapping. You have learned to respond to mouse events and to the keyboard. You understand the difference between &#8220;analog (gradually repeated) and &#8220;digital (on/off) inputs.</p></div>
-<div class="paragraph"><p>Now you can already write a little interactive game! But wouldn&#8217;t it be cooler if these old boxes were a bit more fancy? Let&#8217;s continue with learning about <a href="../../jme3/beginner/hello_material.html">materials</a>.</p></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2017-11-19 23:53:26 +00:00</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
+<div class="paragraph"><p>Now you can already write a little interactive game! But wouldn&#8217;t it be cooler if these old boxes were a bit more fancy? Let&#8217;s continue with learning about <a href="../../jme3/beginner/hello_material.html">materials</a>.</p></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2017-11-20 00:28:42 +00:00</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
   apiKey: 'a736b6d93de805e26ec2f49b55013fbd',
   indexName: 'jmonkeyengine',
   inputSelector: '#doc-search',
