@@ -47,7 +47,7 @@ public class HelloInput extends SimpleApplication {
         app.start();
     }
     protected Geometry player;
-    Boolean isRunning = true;
+    private boolean isRunning = true;
 
     @Override
     public void simpleInitApp() {
@@ -180,33 +180,36 @@ In this example, we trigger the following actions:
 [source,java]
 ----
 
-  private ActionListener actionListener = new ActionListener() {
-    public void onAction(String name, boolean keyPressed, float tpf) {
-      if (name.equals("Pause") && !keyPressed) {
-        isRunning = !isRunning;
-      }
-    }
-  };
 
-  private AnalogListener analogListener = new AnalogListener() {
-    public void onAnalog(String name, float value, float tpf) {
-      if (isRunning) {
-        if (name.equals("Rotate")) {
-          player.rotate(0, value*speed, 0);
+    private final ActionListener actionListener = new ActionListener() {
+        @Override
+        public void onAction(String name, boolean keyPressed, float tpf) {
+            if (name.equals("Pause") && !keyPressed) {
+                isRunning = !isRunning;
+            }
         }
-        if (name.equals("Right")) {
-          Vector3f v = player.getLocalTranslation();
-          player.setLocalTranslation(v.x + value*speed, v.y, v.z);
+    };
+
+    private final AnalogListener analogListener = new AnalogListener() {
+        @Override
+        public void onAnalog(String name, float value, float tpf) {
+            if (isRunning) {
+                if (name.equals("Rotate")) {
+                    player.rotate(0, value * speed, 0);
+                }
+                if (name.equals("Right")) {
+                    Vector3f v = player.getLocalTranslation();
+                    player.setLocalTranslation(v.x + value * speed, v.y, v.z);
+                }
+                if (name.equals("Left")) {
+                    Vector3f v = player.getLocalTranslation();
+                    player.setLocalTranslation(v.x - value * speed, v.y, v.z);
+                }
+            } else {
+                System.out.println("Press P to unpause.");
+            }
         }
-        if (name.equals("Left")) {
-          Vector3f v = player.getLocalTranslation();
-          player.setLocalTranslation(v.x - value*speed, v.y, v.z);
-        }
-      } else {
-        System.out.println("Press P to unpause.");
-      }
-    }
-  };
+    };
 ----
 
 You can also combine both listeners into one, the engine will send the appropriate events to each method (onAction or onAnalog). For example:
@@ -214,33 +217,34 @@ You can also combine both listeners into one, the engine will send the appropria
 [source,java]
 ----
 
-  private MyCombinedListener combinedListener = new MyCombinedListener();
+private class MyCombinedListener implements AnalogListener, ActionListener {
 
-  private static class MyCombinedListener implements AnalogListener, ActionListener {
+    @Override
     public void onAction(String name, boolean keyPressed, float tpf) {
-      if (name.equals("Pause") && !keyPressed) {
-        isRunning = !isRunning;
-      }
+        if (name.equals("Pause") && !keyPressed) {
+            isRunning = !isRunning;
+        }
     }
 
+    @Override
     public void onAnalog(String name, float value, float tpf) {
-      if (isRunning) {
-        if (name.equals("Rotate")) {
-          player.rotate(0, value*speed, 0);
+        if (isRunning) {
+            if (name.equals("Rotate")) {
+                player.rotate(0, value * speed, 0);
+            }
+            if (name.equals("Right")) {
+                Vector3f v = player.getLocalTranslation();
+                player.setLocalTranslation(v.x + value * speed, v.y, v.z);
+            }
+            if (name.equals("Left")) {
+                Vector3f v = player.getLocalTranslation();
+                player.setLocalTranslation(v.x - value * speed, v.y, v.z);
+            }
+        } else {
+            System.out.println("Press P to unpause.");
         }
-        if (name.equals("Right")) {
-          Vector3f v = player.getLocalTranslation();
-          player.setLocalTranslation(v.x + value*speed, v.y, v.z);
-        }
-        if (name.equals("Left")) {
-          Vector3f v = player.getLocalTranslation();
-          player.setLocalTranslation(v.x - value*speed, v.y, v.z);
-        }
-      } else {
-        System.out.println("Press P to unpause.");
-      }
     }
-  }
+}
 // ...
 inputManager.addListener(combinedListener, new String[]{"Pause", "Left", "Right", "Rotate"});
 
