@@ -202,11 +202,11 @@ If you find yourself in need of baking, the process is as follows.
 
 .  Using the animation file you created in the previous section, from the `Info` header, select `menu:File[Save Copy]`.
 .  Save the file somewhere other than the current folder. This will save you the effort of re-creating the animation file if you need it at some other time.
-.  In the `Info` header, change the `Default` screen layout to `Animation`.
-.  In the `Dope Sheet Editor`, change the `Dope Sheet` mode/context to `Action Editor`.
+.  In the `Info` header, change the `Default` screen layout to `Animation`.
+.  In the `Dope Sheet Editor`, change the `Dope Sheet` mode/context to `Action Editor`.
 .  Click the btn:[Action to be linked] button and select your action.
-.  In the `3d Viewport` header, select the armature.
-.  Depending on the mode selected: 
+.  In the `3d Viewport` header, select the armature.
+*  Depending on the mode selected choose:
 .. Object Mode: `menu:Object[Animation > Bake Action]`.
 .. Pose Mode: `menu:Pose[Animation > Bake Action]`.
 .  In the `Bake Action` dialog, deselect and set the settings as follows:
@@ -217,11 +217,11 @@ Bake Action::
 - [ ] Clear Parents
 - [ ] Overwrite Current
 -  Bake Data = Pose
-.  When ready click btn:[OK].
-.  The `Linked Action` in the `Dope Sheet Editor` will change to the newly baked action and is named `Action`. Rename this to the name of the imported animation.
-.  Select the btn:[F] button to save the action.
-.  Save your file.
-.  Clear the old action from the `Linked Action` buffer. See <<jme3/advanced/3d_models#blender-buffer-clearing#,Blender Buffer Clearing>> for more information.
+.  When ready click btn:[OK].
+.  The `Linked Action` in the `Dope Sheet Editor` will change to the newly baked action and is named `Action`. Rename this to the name of the imported animation.
+.  Select the btn:[F] button to save the action.
+.  Save your file.
+.  Clear the old action from the `Linked Action` buffer. See <<jme3/advanced/3d_models#blender-buffer-clearing#,Blender Buffer Clearing>> for more information.
 
 
 == Creating The Rigged Animation File
@@ -248,9 +248,9 @@ The models origin and the `Root` bone origin must be at the same location.
 . Scale the bone down or up as needed by selecting the `Tip` (ball at the narrowest part of the bone) and dragging the `Z` arrow (blue arrow) of the manipulator up or down until you are satisfied with its scale. *DO NOT CHANGE THE ANGLE OR MOVE THE BASE OF THE BONE FROM CENTER*.
 .  When satisfied with the scale, select the body of the bone to select the entire bone.
 Bone Tab::
-*  In the `Properties` panel, navigate to the `Bone` tab.
-*  Rename the bone to `Root`.
-*  Deselect the `Deform` panel checkbox.
+..  In the `Properties` panel, navigate to the `Bone` tab.
+..  Rename the bone to `Root`.
+..  Deselect the `Deform` panel checkbox.
 .  In the `3d Viewport`, select the body of the armatures `Hip` bone, the lowest bone in the center of the armature, to select the entire bone.
 .  While holding kbd:[Shift] down, btn:[LMB] select the `Root` bone.
 .  Press kbd:[Ctrl] + kbd:[P].
@@ -258,23 +258,23 @@ Bone Tab::
 .  With the mouse inside the 3d Viewport, kbd:[Tab] out of `Edit Mode`.
 . Select your model.
 Data Tab::
-*  In the `Properties` panel, navigate to the `Data` tab and make sure the `Mesh` has the same name as your model.
+..  In the `Properties` panel, navigate to the `Data` tab and make sure the `Mesh` has the same name as your model.
 Material Tab::
-*  In the `Properties` panel, navigate to the `Material` tab and make sure there is one `Material` in the `Material List` and it is the same name as your model.
-*  In the `Transparency` panel, move the `Alpha` slider to 1.
+..  In the `Properties` panel, navigate to the `Material` tab and make sure there is one `Material` in the `Material List` and it is the same name as your model.
+..  In the `Transparency` panel, move the `Alpha` slider to 1.
 +
 [IMPORTANT]
 ====
 There appears to be a bug where the FBX importer adds an `Alpha` map texture to your model. If the `Alpha` slider is not at one, and you use the Blender importer of the SDK, or convert a .blend file, it will be transparent. `Ogre` export is unaffected.
 ====
 
-*  Deselect the checkbox of the `Transparency` panel.
+..  Deselect the checkbox of the `Transparency` panel.
 Texture Tab::
-*  In the `Properties` panel, navigate to the `Texture` tab, you will note that your texture has duplicate names in the `Texture List`. The bottom texture is actually a transparent `Alpha` texture and appears to be a bug. Select the *second* texture in the `*Texture List*` to highlight it.
-*  While holding down the kbd:[Shift] key, press the btn:[X] button next to the `*Texture Data Block*` to delete it.
-*  Select your remaining texture in the `Texture List` to highlight it. You will note the `Texture Data Block` is now red due to no texture being assigned.
-*  Click on the btn:[Browse Texture to be linked] button next to the `Texture Data Block` and select your texture.
-*  In the `Image` panel, click the btn:[Small Box] button located next to your texture's path to pack the image file.
+..  In the `Properties` panel, navigate to the `Texture` tab, you will note that your texture has duplicate names in the `Texture List`. The bottom texture is actually a transparent `Alpha` texture and appears to be a bug. Select the *second* texture in the `*Texture List*` to highlight it.
+..  While holding down the kbd:[Shift] key, press the btn:[X] button next to the `*Texture Data Block*` to delete it.
+..  Select your remaining texture in the `Texture List` to highlight it. You will note the `Texture Data Block` is now red due to no texture being assigned.
+..  Click on the btn:[Browse Texture to be linked] button next to the `Texture Data Block` and select your texture.
+..  In the `Image` panel, click the btn:[Small Box] button located next to your texture's path to pack the image file.
 .  In the `Info` header, change the layout from `Animation` to `UV Editing`.
 .  With your mouse inside the `3d Viewport` and the model still selected, kbd:[Tab] into edit mode. If your model is not completely orange press kbd:[A] untill all vertices are selected. You will see your UV Mapped mesh appear in the `UV Image Editor` window.
 .  In the `UV Image Editor`, click the btn:[Browse Image to be linked] button and select your UV image.
@@ -282,7 +282,9 @@ Texture Tab::
 .  In the `Info` header, change the layout from `UV Editing` to `Default` and then click the btn:[+] button to create a new layout.
 .  Rename this new layout `NLA Editing`.
 .  Click the `Current Editor Type` button, located at the bottom left (small box) of the `3d Viewport`, and change it from `3d View` to `NLA Editor`. Our TPose action is now visible.
-*  If the action is not visible, navigate to the `Dope Sheet Editor` and from the `Action Editor` context, select the `Action`.
++
+NOTE: If the action is not visible, navigate to the `Dope Sheet Editor` and from the `Action Editor` context, select the `Action`.
+
 .  Click the btn:[Double Down Arrow] button to push the action down into the stack.
 .  Beneath the TPose strip you will see a slider. Drag this slider to the right until your strip is nested up against the left margin of the window.
 . Save your file.
