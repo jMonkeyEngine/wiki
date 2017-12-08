@@ -28,37 +28,38 @@
     <span class="keyword">return</span> g;
 }</code></pre></div></div></div>
 <div class="sect2"><h3 id="wireframe-grid">Wireframe Grid</h3><div class="paragraph"><p>Use a wireframe grid (com.jme3.scene.debug.Grid) as a ruler or simple floor.</p></div>
-<div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="directive">private</span> Geometry attachGrid(Vector3f pos, <span class="type">int</span> size, ColorRGBA color){
-  Geometry g = <span class="keyword">new</span> Geometry(<span class="string"><span class="delimiter">&quot;</span><span class="content">wireframe grid</span><span class="delimiter">&quot;</span></span>, <span class="keyword">new</span> Grid(size, size, <span class="float">0.2f</span>) );
-  Material mat = <span class="keyword">new</span> Material(assetManager, <span class="string"><span class="delimiter">&quot;</span><span class="content">Common/MatDefs/Misc/Unshaded.j3md</span><span class="delimiter">&quot;</span></span>);
-  mat.getAdditionalRenderState().setWireframe(<span class="predefined-constant">true</span>);
-  mat.setColor(<span class="string"><span class="delimiter">&quot;</span><span class="content">Color</span><span class="delimiter">&quot;</span></span>, color);
-  g.setMaterial(mat);
-  g.center().move(pos);
-  rootNode.attachChild(g);
-  <span class="keyword">return</span> g;
+<div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="directive">private</span> Geometry attachGrid(Vector3f pos, <span class="type">int</span> size, ColorRGBA color) {
+    Geometry g = <span class="keyword">new</span> Geometry(<span class="string"><span class="delimiter">&quot;</span><span class="content">wireframe grid</span><span class="delimiter">&quot;</span></span>, <span class="keyword">new</span> Grid(size, size, <span class="float">0.2f</span>));
+    Material mat = <span class="keyword">new</span> Material(assetManager,
+                                <span class="string"><span class="delimiter">&quot;</span><span class="content">Common/MatDefs/Misc/Unshaded.j3md</span><span class="delimiter">&quot;</span></span>);
+    mat.getAdditionalRenderState().setWireframe(<span class="predefined-constant">true</span>);
+    mat.setColor(<span class="string"><span class="delimiter">&quot;</span><span class="content">Color</span><span class="delimiter">&quot;</span></span>, color);
+    g.setMaterial(mat);
+    g.center().move(pos);
+    rootNode.attachChild(g);
+    <span class="keyword">return</span> g;
 }</code></pre></div></div></div>
 <div class="sect2"><h3 id="wireframe-cube">Wireframe Cube</h3><div class="paragraph"><p>Use a wireframe cube (com.jme3.scene.debug.WireBox) as a stand-in object to see whether your code scales, positions, or orients, loaded models right.</p></div>
-<div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> Geometry attachWireBox(Vector3f pos, <span class="type">float</span> size, ColorRGBA color){
-  Geometry g = <span class="keyword">new</span> Geometry(<span class="string"><span class="delimiter">&quot;</span><span class="content">wireframe cube</span><span class="delimiter">&quot;</span></span>, <span class="keyword">new</span> WireBox(size, size, size));
-  Material mat = <span class="keyword">new</span> Material(assetManager, <span class="string"><span class="delimiter">&quot;</span><span class="content">Common/MatDefs/Misc/Unshaded.j3md</span><span class="delimiter">&quot;</span></span>);
-  mat.getAdditionalRenderState().setWireframe(<span class="predefined-constant">true</span>);
-  mat.setColor(<span class="string"><span class="delimiter">&quot;</span><span class="content">Color</span><span class="delimiter">&quot;</span></span>, color);
-  g.setMaterial(mat);
-  g.setLocalTranslation(pos);
-  rootNode.attachChild(g);
-  <span class="keyword">return</span> g;
+<div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> Geometry attachWireBox(Vector3f pos, <span class="type">float</span> size, ColorRGBA color) {
+    Geometry g = <span class="keyword">new</span> Geometry(<span class="string"><span class="delimiter">&quot;</span><span class="content">wireframe cube</span><span class="delimiter">&quot;</span></span>, <span class="keyword">new</span> WireBox(size, size, size));
+    Material mat = <span class="keyword">new</span> Material(assetManager, <span class="string"><span class="delimiter">&quot;</span><span class="content">Common/MatDefs/Misc/Unshaded.j3md</span><span class="delimiter">&quot;</span></span>);
+    mat.getAdditionalRenderState().setWireframe(<span class="predefined-constant">true</span>);
+    mat.setColor(<span class="string"><span class="delimiter">&quot;</span><span class="content">Color</span><span class="delimiter">&quot;</span></span>, color);
+    g.setMaterial(mat);
+    g.setLocalTranslation(pos);
+    rootNode.attachChild(g);
+    <span class="keyword">return</span> g;
 }</code></pre></div></div></div>
 <div class="sect2"><h3 id="wireframe-sphere">Wireframe Sphere</h3><div class="paragraph"><p>Use a wireframe sphere (com.jme3.scene.debug.WireSphere) as a stand-in object to see whether your code scales, positions, or orients, loaded models right.</p></div>
-<div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="directive">private</span> Geometry attachWireSphere(Vector3f pos, <span class="type">float</span> size, ColorRGBA color){
-  Geometry g = <span class="keyword">new</span> Geometry(<span class="string"><span class="delimiter">&quot;</span><span class="content">wireframe sphere</span><span class="delimiter">&quot;</span></span>, <span class="keyword">new</span> WireSphere(size));
-  Material mat = <span class="keyword">new</span> Material(assetManager, <span class="string"><span class="delimiter">&quot;</span><span class="content">Common/MatDefs/Misc/Unshaded.j3md</span><span class="delimiter">&quot;</span></span>);
-  mat.getAdditionalRenderState().setWireframe(<span class="predefined-constant">true</span>);
-  mat.setColor(<span class="string"><span class="delimiter">&quot;</span><span class="content">Color</span><span class="delimiter">&quot;</span></span>, color);
-  g.setMaterial(mat);
-  g.setLocalTranslation(pos);
-  rootNode.attachChild(g);
-  <span class="keyword">return</span> g;
+<div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="directive">private</span> Geometry attachWireSphere(Vector3f pos, <span class="type">float</span> size, ColorRGBA color) {
+    Geometry g = <span class="keyword">new</span> Geometry(<span class="string"><span class="delimiter">&quot;</span><span class="content">wireframe sphere</span><span class="delimiter">&quot;</span></span>, <span class="keyword">new</span> WireSphere(size));
+    Material mat = <span class="keyword">new</span> Material(assetManager, <span class="string"><span class="delimiter">&quot;</span><span class="content">Common/MatDefs/Misc/Unshaded.j3md</span><span class="delimiter">&quot;</span></span>);
+    mat.getAdditionalRenderState().setWireframe(<span class="predefined-constant">true</span>);
+    mat.setColor(<span class="string"><span class="delimiter">&quot;</span><span class="content">Color</span><span class="delimiter">&quot;</span></span>, color);
+    g.setMaterial(mat);
+    g.setLocalTranslation(pos);
+    rootNode.attachChild(g);
+    <span class="keyword">return</span> g;
 }</code></pre></div></div></div></div>
 <div class="sect1"><h2 id="wireframe-for-physics">Wireframe for Physics</h2><div class="sectionbody"><div class="paragraph"><p>You can display a wireframe of the (usually invisible) collision shape around all physical objects. Use this for debugging when analyzing unexpected behaviour. Does not work with DETACHED physics, please switch to PARALLEL or SEQUENTIAL for debugging.</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="comment">//Create the physics space.</span>
@@ -69,13 +70,12 @@ getStateManager().attach(bulletAppState);</code></pre></div></div>
 <div class="ulist"><ul><li><p>A magenta wire mesh indicates an active rigid body.</p></li><li><p>A blue wire mesh indicates a rigid body which is either new or inactive.</p></li><li><p>A yellow wire mesh indicates a ghost.</p></li><li><p>Two green arrows indicate a joint.</p></li><li><p>A pink wire mesh indicates a character.</p></li></ul></div></div></div>
 <div class="sect1"><h2 id="wireframe-for-animations">Wireframe for Animations</h2><div class="sectionbody"><div class="paragraph"><p>Making the skeleton visible inside animated models can be handy for debugging animations. The <code>control</code> object is an AnimControl, <code>player</code> is the loaded model.</p></div>
 <div class="listingblock"><div class="title">AnimControl is known to be in the main node</div>
-<div class="content"><pre class="CodeRay highlight"><code data-lang="java">     SkeletonDebugger skeletonDebug =
-         <span class="keyword">new</span> SkeletonDebugger(<span class="string"><span class="delimiter">&quot;</span><span class="content">skeleton</span><span class="delimiter">&quot;</span></span>, control.getSkeleton());
-     Material mat = <span class="keyword">new</span> Material(assetManager, <span class="string"><span class="delimiter">&quot;</span><span class="content">Common/MatDefs/Misc/Unshaded.j3md</span><span class="delimiter">&quot;</span></span>);
-     mat.setColor(<span class="string"><span class="delimiter">&quot;</span><span class="content">Color</span><span class="delimiter">&quot;</span></span>, ColorRGBA.Green);
-     mat.getAdditionalRenderState().setDepthTest(<span class="predefined-constant">false</span>);
-     skeletonDebug.setMaterial(mat);
-     player.attachChild(skeletonDebug);</code></pre></div></div>
+<div class="content"><pre class="CodeRay highlight"><code data-lang="java">SkeletonDebugger skeletonDebug = <span class="keyword">new</span> SkeletonDebugger(<span class="string"><span class="delimiter">&quot;</span><span class="content">skeleton</span><span class="delimiter">&quot;</span></span>, control.getSkeleton());
+Material mat = <span class="keyword">new</span> Material(assetManager, <span class="string"><span class="delimiter">&quot;</span><span class="content">Common/MatDefs/Misc/Unshaded.j3md</span><span class="delimiter">&quot;</span></span>);
+mat.setColor(<span class="string"><span class="delimiter">&quot;</span><span class="content">Color</span><span class="delimiter">&quot;</span></span>, ColorRGBA.Green);
+mat.getAdditionalRenderState().setDepthTest(<span class="predefined-constant">false</span>);
+skeletonDebug.setMaterial(mat);
+player.attachChild(skeletonDebug);</code></pre></div></div>
 <div class="listingblock"><div class="title">AnimControl is nested somewhere</div>
 <div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="directive">private</span> <span class="type">void</span> debugSkeleton(Node player) {
     player.depthFirstTraversal(<span class="keyword">new</span> SceneGraphVisitorAdapter() {
@@ -83,8 +83,10 @@ getStateManager().attach(bulletAppState);</code></pre></div></div>
         <span class="directive">public</span> <span class="type">void</span> visit(Node node) {
             <span class="keyword">if</span> (node.getControl(AnimControl.class) != <span class="predefined-constant">null</span>) {
                 AnimControl control = node.getControl(AnimControl.class);
-                SkeletonDebugger skeletonDebug = <span class="keyword">new</span> SkeletonDebugger(<span class="string"><span class="delimiter">&quot;</span><span class="content">skeleton</span><span class="delimiter">&quot;</span></span>, control.getSkeleton());
-                Material mat = <span class="keyword">new</span> Material(getApplication().getAssetManager(), <span class="string"><span class="delimiter">&quot;</span><span class="content">Common/MatDefs/Misc/Unshaded.j3md</span><span class="delimiter">&quot;</span></span>);
+                SkeletonDebugger skeletonDebug = <span class="keyword">new</span> SkeletonDebugger(<span class="string"><span class="delimiter">&quot;</span><span class="content">skeleton</span><span class="delimiter">&quot;</span></span>,
+                        control.getSkeleton());
+                Material mat = <span class="keyword">new</span> Material(getApplication().getAssetManager(),
+                        <span class="string"><span class="delimiter">&quot;</span><span class="content">Common/MatDefs/Misc/Unshaded.j3md</span><span class="delimiter">&quot;</span></span>);
                 mat.setColor(<span class="string"><span class="delimiter">&quot;</span><span class="content">Color</span><span class="delimiter">&quot;</span></span>, ColorRGBA.Green);
                 mat.getAdditionalRenderState().setDepthTest(<span class="predefined-constant">false</span>);
                 skeletonDebug.setMaterial(mat);
@@ -95,8 +97,8 @@ getStateManager().attach(bulletAppState);</code></pre></div></div>
 }</code></pre></div></div></div></div>
 <div class="sect1"><h2 id="example-toggle-wireframe-on-model">Example: Toggle Wireframe on Model</h2><div class="sectionbody"><div class="paragraph"><p>We assume that you have loaded a model with a material <code>mat</code>.</p></div>
 <div class="paragraph"><p>Then you can add a switch to toggle the model&#8217;s wireframe on and off, like this:</p></div>
-<div class="olist arabic"><ol class="arabic"><li><p>Create a key input trigger that switches between the two materials: E.g. we toggle when the T key is pressed.</p><div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">    inputManager.addMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">toggle wireframe</span><span class="delimiter">&quot;</span></span>, <span class="keyword">new</span> KeyTrigger(KeyInput.KEY_T));
-    inputManager.addListener(actionListener, <span class="string"><span class="delimiter">&quot;</span><span class="content">toggle wireframe</span><span class="delimiter">&quot;</span></span>);</code></pre></div></div></li><li><p>Now add the toggle action to the action listener.</p><div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="directive">private</span> <span class="predefined-type">ActionListener</span> actionListener = <span class="keyword">new</span> <span class="predefined-type">ActionListener</span>() {
+<div class="olist arabic"><ol class="arabic"><li><p>Create a key input trigger that switches between the two materials: E.g. we toggle when the T key is pressed.</p><div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">inputManager.addMapping(<span class="string"><span class="delimiter">&quot;</span><span class="content">toggle wireframe</span><span class="delimiter">&quot;</span></span>, <span class="keyword">new</span> KeyTrigger(KeyInput.KEY_T));
+inputManager.addListener(actionListener, <span class="string"><span class="delimiter">&quot;</span><span class="content">toggle wireframe</span><span class="delimiter">&quot;</span></span>);</code></pre></div></div></li><li><p>Now add the toggle action to the action listener.</p><div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="directive">private</span> <span class="predefined-type">ActionListener</span> actionListener = <span class="keyword">new</span> <span class="predefined-type">ActionListener</span>() {
     <span class="annotation">@Override</span>
     <span class="directive">public</span> <span class="type">void</span> onAction(<span class="predefined-type">String</span> name, <span class="type">boolean</span> pressed, <span class="type">float</span> tpf) {
         <span class="comment">// toggle wireframe</span>
@@ -118,7 +120,8 @@ getStateManager().attach(bulletAppState);</code></pre></div></div>
                 <span class="annotation">@Override</span>
                 <span class="directive">public</span> <span class="type">void</span> visit(Spatial spatial) {
                     <span class="keyword">if</span> (spatial <span class="keyword">instanceof</span> Geometry) {
-                        ((Geometry) spatial).getMaterial().getAdditionalRenderState().setWireframe(wireframe);
+                        ((Geometry) spatial).getMaterial()
+                                .getAdditionalRenderState().setWireframe(wireframe);
                     }
                 }
             });
@@ -175,7 +178,7 @@ getStateManager().attach(bulletAppState);</code></pre></div></div>
 }</code></pre></div></div>
 <div class="paragraph"><p>Then attach the scene processor to the <abbr title="Graphical User Interface">GUI</abbr> Viewport.</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">getViewPort().addProcessor(<span class="keyword">new</span> WireProcessor());</code></pre></div></div></div></div>
-<div class="sect1"><h2 id="see-also">See also</h2><div class="sectionbody"><div class="ulist"><ul><li><p><a href="../../jme3/advanced/spatial.html">Spatial</a> – if you can&#8217;t see certain spatials, you can modify the culling behaviour to identify problems (such as inside-out custom meshes)</p></li></ul></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2017-12-08 20:09:18 +00:00</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
+<div class="sect1"><h2 id="see-also">See also</h2><div class="sectionbody"><div class="ulist"><ul><li><p><a href="../../jme3/advanced/spatial.html">Spatial</a> – if you can&#8217;t see certain spatials, you can modify the culling behaviour to identify problems (such as inside-out custom meshes)</p></li></ul></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2017-12-08 20:26:17 +00:00</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
   apiKey: 'a736b6d93de805e26ec2f49b55013fbd',
   indexName: 'jmonkeyengine',
   inputSelector: '#doc-search',
