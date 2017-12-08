@@ -61,15 +61,16 @@ Use a wireframe grid (com.jme3.scene.debug.Grid) as a ruler or simple floor.
 [source,java]
 ----
 
-private Geometry attachGrid(Vector3f pos, int size, ColorRGBA color){
-  Geometry g = new Geometry("wireframe grid", new Grid(size, size, 0.2f) );
-  Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-  mat.getAdditionalRenderState().setWireframe(true);
-  mat.setColor("Color", color);
-  g.setMaterial(mat);
-  g.center().move(pos);
-  rootNode.attachChild(g);
-  return g;
+private Geometry attachGrid(Vector3f pos, int size, ColorRGBA color) {
+    Geometry g = new Geometry("wireframe grid", new Grid(size, size, 0.2f));
+    Material mat = new Material(assetManager,
+                                "Common/MatDefs/Misc/Unshaded.j3md");
+    mat.getAdditionalRenderState().setWireframe(true);
+    mat.setColor("Color", color);
+    g.setMaterial(mat);
+    g.center().move(pos);
+    rootNode.attachChild(g);
+    return g;
 }
 ----
 
@@ -81,15 +82,15 @@ Use a wireframe cube (com.jme3.scene.debug.WireBox) as a stand-in object to see 
 [source,java]
 ----
 
-public Geometry attachWireBox(Vector3f pos, float size, ColorRGBA color){
-  Geometry g = new Geometry("wireframe cube", new WireBox(size, size, size));
-  Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-  mat.getAdditionalRenderState().setWireframe(true);
-  mat.setColor("Color", color);
-  g.setMaterial(mat);
-  g.setLocalTranslation(pos);
-  rootNode.attachChild(g);
-  return g;
+public Geometry attachWireBox(Vector3f pos, float size, ColorRGBA color) {
+    Geometry g = new Geometry("wireframe cube", new WireBox(size, size, size));
+    Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+    mat.getAdditionalRenderState().setWireframe(true);
+    mat.setColor("Color", color);
+    g.setMaterial(mat);
+    g.setLocalTranslation(pos);
+    rootNode.attachChild(g);
+    return g;
 }
 ----
 
@@ -101,15 +102,15 @@ Use a wireframe sphere (com.jme3.scene.debug.WireSphere) as a stand-in object to
 [source,java]
 ----
 
-private Geometry attachWireSphere(Vector3f pos, float size, ColorRGBA color){
-  Geometry g = new Geometry("wireframe sphere", new WireSphere(size));
-  Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-  mat.getAdditionalRenderState().setWireframe(true);
-  mat.setColor("Color", color);
-  g.setMaterial(mat);
-  g.setLocalTranslation(pos);
-  rootNode.attachChild(g);
-  return g;
+private Geometry attachWireSphere(Vector3f pos, float size, ColorRGBA color) {
+    Geometry g = new Geometry("wireframe sphere", new WireSphere(size));
+    Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+    mat.getAdditionalRenderState().setWireframe(true);
+    mat.setColor("Color", color);
+    g.setMaterial(mat);
+    g.setLocalTranslation(pos);
+    rootNode.attachChild(g);
+    return g;
 }
 ----
 
@@ -143,13 +144,12 @@ Making the skeleton visible inside animated models can be handy for debugging an
 [source,java]
 ----
 
-     SkeletonDebugger skeletonDebug =
-         new SkeletonDebugger("skeleton", control.getSkeleton());
-     Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-     mat.setColor("Color", ColorRGBA.Green);
-     mat.getAdditionalRenderState().setDepthTest(false);
-     skeletonDebug.setMaterial(mat);
-     player.attachChild(skeletonDebug);
+SkeletonDebugger skeletonDebug = new SkeletonDebugger("skeleton", control.getSkeleton());
+Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+mat.setColor("Color", ColorRGBA.Green);
+mat.getAdditionalRenderState().setDepthTest(false);
+skeletonDebug.setMaterial(mat);
+player.attachChild(skeletonDebug);
 ----
 
 .AnimControl is nested somewhere
@@ -161,8 +161,10 @@ private void debugSkeleton(Node player) {
         public void visit(Node node) {
             if (node.getControl(AnimControl.class) != null) {
                 AnimControl control = node.getControl(AnimControl.class);
-                SkeletonDebugger skeletonDebug = new SkeletonDebugger("skeleton", control.getSkeleton());
-                Material mat = new Material(getApplication().getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
+                SkeletonDebugger skeletonDebug = new SkeletonDebugger("skeleton",
+                        control.getSkeleton());
+                Material mat = new Material(getApplication().getAssetManager(),
+                        "Common/MatDefs/Misc/Unshaded.j3md");
                 mat.setColor("Color", ColorRGBA.Green);
                 mat.getAdditionalRenderState().setDepthTest(false);
                 skeletonDebug.setMaterial(mat);
@@ -183,8 +185,8 @@ Then you can add a switch to toggle the model's wireframe on and off, like this:
 +
 [source,java]
 ----
-    inputManager.addMapping("toggle wireframe", new KeyTrigger(KeyInput.KEY_T));
-    inputManager.addListener(actionListener, "toggle wireframe");
+inputManager.addMapping("toggle wireframe", new KeyTrigger(KeyInput.KEY_T));
+inputManager.addListener(actionListener, "toggle wireframe");
 ----
 
 .  Now add the toggle action to the action listener.
@@ -222,7 +224,8 @@ private ActionListener actionListener = new ActionListener() {
                 @Override
                 public void visit(Spatial spatial) {
                     if (spatial instanceof Geometry) {
-                        ((Geometry) spatial).getMaterial().getAdditionalRenderState().setWireframe(wireframe);
+                        ((Geometry) spatial).getMaterial()
+                                .getAdditionalRenderState().setWireframe(wireframe);
                     }
                 }
             });
