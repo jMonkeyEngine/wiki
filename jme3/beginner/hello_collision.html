@@ -91,7 +91,7 @@ src/</code></pre></div></div>
     player = <span class="keyword">new</span> CharacterControl(capsuleShape, <span class="float">0.05f</span>);
     player.setJumpSpeed(<span class="integer">20</span>);
     player.setFallSpeed(<span class="integer">30</span>);
-    player.setGravity(<span class="integer">30</span>);
+    player.setGravity(<span class="keyword">new</span> Vector3f(<span class="integer">0</span>,-<span class="float">30f</span>,<span class="integer">0</span>));
     player.setPhysicsLocation(<span class="keyword">new</span> Vector3f(<span class="integer">0</span>, <span class="integer">10</span>, <span class="integer">0</span>));
 
     <span class="comment">// We attach the scene and the player to the rootnode and the physics space,</span>
@@ -140,7 +140,7 @@ src/</code></pre></div></div>
     } <span class="keyword">else</span> <span class="keyword">if</span> (binding.equals(<span class="string"><span class="delimiter">&quot;</span><span class="content">Down</span><span class="delimiter">&quot;</span></span>)) {
       down = isPressed;
     } <span class="keyword">else</span> <span class="keyword">if</span> (binding.equals(<span class="string"><span class="delimiter">&quot;</span><span class="content">Jump</span><span class="delimiter">&quot;</span></span>)) {
-      <span class="keyword">if</span> (isPressed) { player.jump(); }
+      <span class="keyword">if</span> (isPressed) { player.jump(<span class="keyword">new</span> Vector3f(<span class="integer">0</span>,<span class="integer">10</span>,<span class="integer">0</span>)); }
     }
   }
 
@@ -224,7 +224,7 @@ src/</code></pre></div></div>
 <div class="paragraph"><p>Now you use the CollisionShape to create a <code>CharacterControl</code> that represents the first-person player. The last argument of the CharacterControl constructor (here <code>.05f</code>) is the size of a step that the character should be able to surmount.</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">    player.setJumpSpeed(<span class="integer">20</span>);
     player.setFallSpeed(<span class="integer">30</span>);
-    player.setGravity(<span class="integer">30</span>);</code></pre></div></div>
+    player.setGravity(<span class="keyword">new</span> Vector3f(<span class="integer">0</span>,-<span class="float">30f</span>,<span class="integer">0</span>));</code></pre></div></div>
 <div class="paragraph"><p>Apart from step height and character size, the <code>CharacterControl</code> lets you configure jumping, falling, and gravity speeds. Adjust the values to fit your game situation.</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">    player.setPhysicsLocation(<span class="keyword">new</span> Vector3f(<span class="integer">0</span>, <span class="integer">10</span>, <span class="integer">0</span>));</code></pre></div></div>
 <div class="paragraph"><p>Finally we put the player in its starting position and update its state – remember to use <code>setPhysicsLocation()</code> instead of <code>setLocalTranslation()</code> now, since you are dealing with a physical object.</p></div></div>
@@ -260,7 +260,7 @@ src/</code></pre></div></div>
     } <span class="keyword">else</span> <span class="keyword">if</span> (binding.equals(<span class="string"><span class="delimiter">&quot;</span><span class="content">Down</span><span class="delimiter">&quot;</span></span>)) {
       <span class="keyword">if</span> (value) { down = <span class="predefined-constant">true</span>; } <span class="keyword">else</span> { down = <span class="predefined-constant">false</span>; }
     } <span class="keyword">else</span> <span class="keyword">if</span> (binding.equals(<span class="string"><span class="delimiter">&quot;</span><span class="content">Jump</span><span class="delimiter">&quot;</span></span>)) {
-      player.jump();
+      player.jump(<span class="keyword">new</span> Vector3f(<span class="integer">0</span>,<span class="integer">10</span>,<span class="integer">0</span>));
     }
   }</code></pre></div></div>
 <div class="paragraph"><p>The only movement that you do not have to implement yourself is the jumping action. The call <code>player.jump()</code> is a special method that handles a correct jumping motion for your <code>PhysicsCharacterNode</code>.</p></div>
@@ -295,7 +295,7 @@ You learned to speed up the physics calculations by using the CollisionShapeFact
 <div class="paragraph"><p>Terrains are another type of scene in which you will want to walk around. Let&#8217;s proceed with learning <a href="../../jme3/beginner/hello_terrain.html">how to generate terrains</a> now.</p></div>
 <hr>
 <div class="paragraph"><p>Related info:</p></div>
-<div class="ulist"><ul><li><p>How to load models and scenes: <a href="../../jme3/beginner/hello_asset.html">Hello Asset</a>, <a href="../../sdk/scene_explorer.html">Scene Explorer</a>, <a href="../../sdk/scene_composer.html">Scene Composer</a></p></li><li><p><a href="../../jme3/advanced/terrain_collision.html">Terrain Collision</a></p></li><li><p>To learn more about complex physics scenes, where several mobile physical objects bump into each other, read <a href="../../jme3/beginner/hello_physics.html">Hello Physics</a>.</p></li><li><p>FYI, there are simpler collision detection solutions without physics, too. Have a look at <a href="https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/collision/TestTriangleCollision.java">jme3test.collision.TestTriangleCollision.java</a>.</p></li></ul></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2018-01-06 22:22:19 +00:00</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
+<div class="ulist"><ul><li><p>How to load models and scenes: <a href="../../jme3/beginner/hello_asset.html">Hello Asset</a>, <a href="../../sdk/scene_explorer.html">Scene Explorer</a>, <a href="../../sdk/scene_composer.html">Scene Composer</a></p></li><li><p><a href="../../jme3/advanced/terrain_collision.html">Terrain Collision</a></p></li><li><p>To learn more about complex physics scenes, where several mobile physical objects bump into each other, read <a href="../../jme3/beginner/hello_physics.html">Hello Physics</a>.</p></li><li><p>FYI, there are simpler collision detection solutions without physics, too. Have a look at <a href="https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/collision/TestTriangleCollision.java">jme3test.collision.TestTriangleCollision.java</a>.</p></li></ul></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2018-01-06 22:31:07 +00:00</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
   apiKey: 'a736b6d93de805e26ec2f49b55013fbd',
   indexName: 'jmonkeyengine',
   inputSelector: '#doc-search',
