@@ -1,13 +1,13 @@
 = jME3 Application Display Settings
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :relfileprefix: ../../
 :imagesdir: ../..
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
-Every class that extends jme3.app.SimpleApplication has properties that can be configured by customizing a `com.jme3.system.AppSettings` object. 
+Every class that extends jme3.app.SimpleApplication has properties that can be configured by customizing a `com.jme3.system.AppSettings` object.
 
 
 [IMPORTANT]
@@ -29,7 +29,7 @@ public static void main(String[] args) {
   AppSettings settings = new AppSettings(true);
   settings.setResolution(640,480);
   // ... other properties, see below
-  MyGame app = new MyGame(); 
+  MyGame app = new MyGame();
   app.setSettings(settings);
   app.start();
 }
@@ -67,8 +67,8 @@ a|Default
 a|setRenderer(AppSettings.LWJGL_OPENGL1) +
 setRenderer(AppSettings.LWJGL_OPENGL2) +
 setRenderer(AppSettings.LWJGL_OPENGL3)
-a|Switch Video Renderer to OpenGL 1.1, OpenGL 2, or OpenGL 3.3. If your graphic card does not support all OpenGL2 features (`UnsupportedOperationException: GLSL and OpenGL2 is required for the LWJGL renderer`), then you can force your SimpleApplication to use OpenGL1 compatibility. (Then you still can't use special OpenGL2 features, but at least the error goes away and you can continue with the rest.) 
-a| OpenGL 2 
+a|Switch Video Renderer to OpenGL 1.1, OpenGL 2, or OpenGL 3.3. If your graphic card does not support all OpenGL2 features (`UnsupportedOperationException: GLSL and OpenGL2 is required for the LWJGL renderer`), then you can force your SimpleApplication to use OpenGL1 compatibility. (Then you still can't use special OpenGL2 features, but at least the error goes away and you can continue with the rest.)
+a| OpenGL 2
 
 a|setBitsPerPixel(32)
 a|Set the color depth. +
@@ -119,7 +119,7 @@ a|24
 .Input
 |===
 
-a|Settings Property 
+a|Settings Property
 a|Description
 a|Default
 
@@ -144,12 +144,12 @@ a|false,false
 .Audio
 |===
 
-a|Settings Property 
+a|Settings Property
 a|Description
 a|Default
 
 a|setAudioRenderer(AppSettings.LWJGL_OPENAL)
-a|Switch Audio Renderer. Currently there is only one option. 
+a|Switch Audio Renderer. Currently there is only one option.
 a|OpenAL
 
 a|setStereo3D(true)
@@ -167,7 +167,7 @@ a|Default
 
 a|setTitle("My Game")
 a|This string will be visible in the titlebar, unless the window is fullscreen.
-a|"jMonkey Engine 3.1-stable"
+a|"jMonkey Engine 3.x-stable"
 
 a|setIcons(new BufferedImage[]{ +
 ImageIO.read(new File(" ")), …});
@@ -218,14 +218,14 @@ An AppSettings object also supports the following methods to save your settings 
 *  Use `settings.load("com.foo.MyCoolGame3")` to load your settings.
 *  Use `settings2.copyFrom(settings)` to copy a settings object.
 
-Usage: 
+Usage:
 
 Provide the unique name of your jME3 application as the String argument. For example `com.foo.MyCoolGame3`.
 
 [source,java]
 ----
 
-    try { settings.save("com.foo.MyCoolGame3"); } 
+    try { settings.save("com.foo.MyCoolGame3"); }
     catch (BackingStoreException ex) { /** could not save settings */ }
 
 ----
