@@ -18,7 +18,7 @@
 <div class="paragraph"><p>from wikipedia : TopherTH at the English language Wikipedia [GFDL (<a class="bare" href="http://www.gnu.org/copyleft/fdl.html">http://www.gnu.org/copyleft/fdl.html</a>), GFDL (<a class="bare" href="http://www.gnu.org/copyleft/fdl.html">http://www.gnu.org/copyleft/fdl.html</a>) or CC-BY-SA-3.0 (<a class="bare" href="http://creativecommons.org/licenses/by-sa/3.0/">http://creativecommons.org/licenses/by-sa/3.0/</a>)], via Wikimedia Commons Here the reflected Ray is our reflection vector.</p></div>
 <div class="paragraph"><p>Here the reflected Ray is our reflection vector.</p></div>
 <div class="paragraph"><p>Unfortunately we can’t take each pixel of the env map and compute light as if it was a direct light source and hope for the best.</p></div>
-<div class="paragraph"><p>There’s crazy math around that topic, and to be honest I ddidn’tget all of it myself. So instead of explaining difficult math equations that may be confusing, I’m gonna go straight to the point : How are we going to compute lighting from the environment map?</p></div></div>
+<div class="paragraph"><p>There’s crazy math around that topic, and to be honest I didn’t get all of it myself. So instead of explaining difficult math equations that may be confusing, I’m gonna go straight to the point : How are we going to compute lighting from the environment map?</p></div></div>
 <div class="sect2"><h3 id="ibl-diffuse">IBL Diffuse</h3><div class="paragraph"><p>First we need to compute Diffuse factor from the environment map. Remember our diffuse BRDF from last post? <strong>Lambert</strong>.</p></div>
 <div class="paragraph"><p>To simplify, Lambert diffuse BRDF, as it’s used in game, is the light color multiplied by a visibility factor.</p></div>
 <div class="paragraph"><p>This visibility factor is a function of the normal of the shaded geometry and the light direction.</p></div>
@@ -37,7 +37,7 @@
 <div class="paragraph"><p><strong>Spherical Harmonics (SH) to the rescue</strong></p></div>
 <div class="paragraph"><p>What’s that again? I won’t go into explaining them in details (because I can’t actually ;-P ), but just know that it’s once again some math magic with a big name on it. Here is a post where it’s explained with simple words, in terms of what you can use them for.</p></div>
 <div class="paragraph"><p>To put it simple, SH can help us to compute the irradiance map way faster. This article explains that it all boils down to compute only 9 spherical harmonics coefficients to efficiently approximate an irradiance factor.</p></div>
-<div class="paragraph"><p>At this point you can even skip the pre computation of the irradiance map, and use those coefficients directly in your shader for each shaded pixels. That’s fast enough to be real time, and use less memory that a cube map.</p></div>
+<div class="paragraph"><p>At this point you can even skip the pre computation of the irradiance map, and use those coefficients directly in your shader for each shaded pixels. That’s fast enough to be real time, and use less memory than a cube map.</p></div>
 <div class="paragraph"><p>But still…it’s slower than one texture fetch, so I chose to compute the Irradiance map and use it in the shader.</p></div>
 <div class="paragraph"><p>With this technique I can compute a 128X128 irradiance cube map on the CPU in Java in about 200ms. Too slow to be done on each frame, but at design time that’s the blink of an eye.</p></div>
 <div style="text-align: center;" class="imageblock"><div class="content"><img src="DiffuseIBL.png" alt="DiffuseIBL" width="320" height="250"></div></div>
@@ -93,7 +93,7 @@ indirectLighting = indirectDiffuse + indirectSpecular</code></pre></div></div>
 <div class="paragraph"><p><strong>Irradiance map :</strong> Precomputed environment map that contains diffuse lighting data of the environment.</p></div>
 <div class="paragraph"><p><strong>Spherical Harmonics (SH):</strong> <a href="https://dickyjim.wordpress.com/2013/09/04/spherical-harmonics-for-beginners/">Read this</a></p></div>
 <div class="paragraph"><p><strong>Importance Sampling :</strong> A math technique to approximate the result of an integral.</p></div>
-<div class="paragraph"><p><strong>Split Sum Approximation :</strong> A way,used in Unreal Engine 4, to transform the specular radiance integral into 2 sums that can be easily baked into prefiltered textures.</p></div></div></div></div><div id="footer"><div id="footer-text"><br>Last updated 2018-01-08 20:50:32 +00:00</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
+<div class="paragraph"><p><strong>Split Sum Approximation :</strong> A way,used in Unreal Engine 4, to transform the specular radiance integral into 2 sums that can be easily baked into prefiltered textures.</p></div></div></div></div><div id="footer"><div id="footer-text"><br>Last updated 2018-01-13 17:55:16 +00:00</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
   apiKey: 'a736b6d93de805e26ec2f49b55013fbd',
   indexName: 'jmonkeyengine',
   inputSelector: '#doc-search',
