@@ -1,6 +1,6 @@
 = jMonkeyEngine 3 Tutorial (9) - Hello Collision
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :keywords: beginner, collision, control, intro, documentation, model, physics
 :relfileprefix: ../../
@@ -72,7 +72,7 @@ public class HelloCollision extends SimpleApplication
   private CharacterControl player;
   private Vector3f walkDirection = new Vector3f();
   private boolean left = false, right = false, up = false, down = false;
-  
+
   //Temporary vectors used on each frame.
   //They here to avoid instanciating new vectors on each frame
   private Vector3f camDir = new Vector3f();
@@ -116,7 +116,7 @@ public class HelloCollision extends SimpleApplication
     player = new CharacterControl(capsuleShape, 0.05f);
     player.setJumpSpeed(20);
     player.setFallSpeed(30);
-    player.setGravity(30);
+    player.setGravity(new Vector3f(0,-30f,0));
     player.setPhysicsLocation(new Vector3f(0, 10, 0));
 
     // We attach the scene and the player to the rootnode and the physics space,
@@ -165,7 +165,7 @@ public class HelloCollision extends SimpleApplication
     } else if (binding.equals("Down")) {
       down = isPressed;
     } else if (binding.equals("Jump")) {
-      if (isPressed) { player.jump(); }
+      if (isPressed) { player.jump(new Vector3f(0,10,0)); }
     }
   }
 
@@ -304,7 +304,7 @@ To use collision detection, you add a RigidBodyControl to the `sceneModel` Spati
 
 *  JME3 offers a `CollisionShapeFactory` that precalculates a mesh-accurate collision shape for a Spatial. You choose to generate a `CompoundCollisionShape` (which has MeshCollisionShapes as its children) because this type of collision shape is optimal for immobile objects, such as terrain, houses, and whole shooter levels.
 *  You set the mass to zero since a scene is static and its mass is irrevelant.
-*  Add the control to the Spatial to give it physical properties. 
+*  Add the control to the Spatial to give it physical properties.
 *  As always, attach the sceneModel to the rootNode to make it visible.
 
 [TIP]
@@ -341,7 +341,7 @@ Again, you create a CollisionShape: This time you choose a CapsuleCollisionShape
 
 [TIP]
 ====
-“Does that CollisionShape make me look fat? If you ever get confusing physics behaviour, remember to have a look at the collision shapes. Add the following line after the bulletAppState initialization to make the shapes visible: 
+“Does that CollisionShape make me look fat? If you ever get confusing physics behaviour, remember to have a look at the collision shapes. Add the following line after the bulletAppState initialization to make the shapes visible:
 
 [source,java]
 ----
@@ -359,7 +359,7 @@ Now you use the CollisionShape to create a `CharacterControl` that represents th
 
     player.setJumpSpeed(20);
     player.setFallSpeed(30);
-    player.setGravity(30);
+    player.setGravity(new Vector3f(0,-30f,0));
 
 ----
 
@@ -372,7 +372,7 @@ Apart from step height and character size, the `CharacterControl` lets you confi
 
 ----
 
-Finally we put the player in its starting position and update its state – remember to use `setPhysicsLocation()` instead of `setLocalTranslation()` now, since you are dealing with a physical object. 
+Finally we put the player in its starting position and update its state – remember to use `setPhysicsLocation()` instead of `setLocalTranslation()` now, since you are dealing with a physical object.
 
 
 === PhysicsSpace
@@ -440,7 +440,7 @@ Remember that this class implements the `ActionListener` interface, so you can c
     } else if (binding.equals("Down")) {
       if (value) { down = true; } else { down = false; }
     } else if (binding.equals("Jump")) {
-      player.jump();
+      player.jump(new Vector3f(0,10,0));
     }
   }
 ----
@@ -483,8 +483,8 @@ This last and most important code snippet goes into the `simpleUpdate()` method.
 This is how the walking is triggered:
 
 .  Initialize the vector `walkDirection` to zero. This is where you want to store the calculated walk direction.
-..  Add to `walkDirection` the recent motion vectors that you polled from the camera. This way it is posible for a character to move forward and to the left simultaneously, for example! 
-..  This one last line does the “walking magic: 
+..  Add to `walkDirection` the recent motion vectors that you polled from the camera. This way it is posible for a character to move forward and to the left simultaneously, for example!
+..  This one last line does the “walking magic:
 +
 [source,java]
 ----
@@ -512,7 +512,7 @@ Again, do not use `setLocalTranslation()` to walk the player around. You will ge
 You have learned how to load a “solid physical scene model and walk around in it with a first-person perspective.
 You learned to speed up the physics calculations by using the CollisionShapeFactory to create efficient CollisionShapes for complex Geometries. You know how to add PhysicsControls to your collidable geometries and you register them to the PhysicsSpace. You also learned to use `player.setWalkDirection(walkDirection)` to move collision-aware characters around, and not `setLocalTranslation()`.
 
-Terrains are another type of scene in which you will want to walk around. Let's proceed with learning <<jme3/beginner/hello_terrain#,how to generate terrains>> now. 
+Terrains are another type of scene in which you will want to walk around. Let's proceed with learning <<jme3/beginner/hello_terrain#,how to generate terrains>> now.
 
 '''
 

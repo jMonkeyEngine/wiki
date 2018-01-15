@@ -21,7 +21,7 @@ image::jme3/beginner/beginner-assets-models.png[beginner-assets-models.png,320,2
 
 [TIP]
 ====
-<<sdk/sample_code#,Trouble finding the files to run this sample?>> To get the assets (3D models) used in this example, add the included `jME3-testdata.jar` to your classpath. In project created with the jMonkeyEngine SDK (recommended), simply right-click your project, choose “Properties, go to “Libraries, press “Add Library and add the preconfigured “jme3-test-data library.
+<<sdk/sample_code#,Trouble finding the files to run this sample?>> To get the assets (3D models) used in this example, add the included `jME3-testdata.jar` to your classpath. In project created with the jMonkeyEngine SDK (recommended), simply right-click your project, choose "`Properties`", go to "`Libraries`", press "`Add Library`" and add the preconfigured "`jme3-test-data`" library.
 ====
 
 
@@ -95,7 +95,7 @@ public class HelloAssets extends SimpleApplication {
 }
 ----
 
-Build and run the code sample. You should see a green Ninja with a colorful teapot standing behind a wall. The text on the screen should say “Hello World.
+Build and run the code sample. You should see a green Ninja with a colorful teapot standing behind a wall. The text on the screen should say "`Hello World`".
 
 
 == The Asset Manager
@@ -103,9 +103,9 @@ Build and run the code sample. You should see a green Ninja with a colorful teap
 *By game assets we mean all multi-media files, such as models, materials, textures, whole scenes, custom shaders, music and sound files, and custom fonts.* JME3 comes with a handy AssetManager object that helps you access your assets.
 The AssetManager can load files from:
 
-*  the current classpath (the top level of your project directory),
-*  the `assets` directory of your project, and
-*  optionally, custom paths that you register.
+*  The current classpath (the top level of your project directory).
+*  The `assets` directory of your project.
+*  Optionally, custom paths that you register.
 
 The following is the recommended directory structure for storing assets in your project directoy:
 
@@ -150,12 +150,12 @@ rootNode.attachChild(wall);
 
 ----
 
-In this case, you <<jme3/beginner/hello_material#,create your own Material>> and apply it to a Geometry. You base Materials on default material descriptions (such as “Unshaded.j3md), as shown in this example.
+In this case, you <<jme3/beginner/hello_material#,create your own Material>> and apply it to a Geometry. You base Materials on default material descriptions (such as "`Unshaded.j3md`"), as shown in this example.
 
 
 === Loading Text and Fonts
 
-This example displays the text “Hello World in the default font at the bottom edge of the window. You attach text to the `guiNode` – this is a special node for flat (orthogonal) display elements. You display text to show the game score, player health, etc.
+This example displays the text "`Hello World`" in the default font at the bottom edge of the window. You attach text to the `guiNode` – this is a special node for flat (orthogonal) display elements. You display text to show the game score, player health, etc.
 The following code sample goes into the `simpleInitApp()` method.
 
 [source,java]
@@ -197,7 +197,7 @@ rootNode.addLight(sun);
 
 ----
 
-Note that you do not need to create a Material if you exported the model with a material. Remember to add a light source, as shown, otherwise the material (and the whole model) is not visible!
+NOTE: You do not need to create a Material if you exported the model with a material. Remember to add a light source, as shown, otherwise the material (and the whole model) is not visible!
 
 
 === Loading Assets From Custom Paths
@@ -244,9 +244,9 @@ See <<jme3/advanced/3d_models#creating-models-and-scenes#,creating models and sc
 
 JME3 can convert and load
 
-*  Ogre XML models + materials,
-*  Ogre DotScenes,
-*  Wavefront OBJ + MTL models,
+*  Ogre XML models + materials.
+*  Ogre DotScenes.
+*  Wavefront OBJ + MTL models.
 *  .Blend files.
 
 The `loadModel()` method loads these original file formats when you run your code directly from the SDK. If you however build the executables using the default build script, then the original model files (XML, OBJ, etc) _are not included_. This means, when you run the executable outside the SDK, and load any original models directly, you get the following error message:
@@ -267,7 +267,7 @@ But for QA test builds and for the final release build, you use *.j3o files* exc
 
 Open your JME3 Project in the jMonkeyEngine SDK.
 
-.  Right-click a .Blend, .OBJ, or .mesh.xml file in the Projects window, and choose “convert to JME3 binary.
+.  Right-click a .Blend, .OBJ, or .mesh.xml file in the Projects window, and choose "`Convert to j3o Binary`".
 .  The .j3o file appears next to the .mesh.xml file and has the same name.
 .  Update all your `loadModel()` lines accordingly. For example:
 +
@@ -279,7 +279,7 @@ Spatial ninja = assetManager.loadModel("Models/Ninja/Ninja.j3o");
 
 [TIP]
 ====
-If your executable throws a “Cannot locate resource runtime exception, check all load paths and make sure you have converted all models to .j3o files!
+If your executable throws a "`Cannot locate resource`" runtime exception, check all load paths and make sure you have converted all models to .j3o files!
 ====
 
 
@@ -290,7 +290,7 @@ If your executable throws a “Cannot locate resource runtime exception, check a
 a| Task?
 a| Solution!
 
-a| Load model W/ materials
+a| Load model W/ materials.
 a| Use the asset manager's `loadModel()` method and attach the Spatial to the rootNode.
 
 [source,java]
@@ -305,7 +305,7 @@ Spatial elephant = assetManager.loadModel("Models/Elephant/Elephant.j3o");
 rootNode.attachChild(elephant);
 ----
 
-a| Load model W/O materials
+a| Load model W/O materials.
 a| If you have a model without materials, you have to give it a material to make it visible.
 
 [source,java]
@@ -316,7 +316,7 @@ teapot.setMaterial(mat);
 rootNode.attachChild(teapot);
 ----
 
-a| Load a scene
+a| Load a scene.
 a| You load scenes just like you load models:
 
 [source,java]
