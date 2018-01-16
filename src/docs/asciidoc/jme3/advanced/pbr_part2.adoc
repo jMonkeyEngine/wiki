@@ -1,6 +1,14 @@
 = Physically Based Rendering – Part Two
+:author:
+:revnumber:
+:revdate: 2018/01/15 23:16
+:relfileprefix: ../../
+:imagesdir: ../..
+:experimental:
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
-<<pbr_part1#,In previous post>>, I explained what you had to know about Physically Based Rendering if you were an artist. If you’re a developer, and reading this article, you may have tried, or are planning  to implement your own PBR system. If you started to read some of the available literature, you’ve probably been struck by the math complexity of it, and by the lack of explanation of the big picture. You usually see articles that focus on specifics parts of the process, and don’t talk much about other parts as they are assumed easier. At some point you have to assemble all these parts, and I had a hard time figuring out how to do it in my readings. I guess it’s considered basic stuff for other authors, but I think it deserves its proper explanation.
+
+<<jme3\advanced\pbr_part1#,In Part one>>, I explained what you had to know about Physically Based Rendering if you were an artist. If you’re a developer, and reading this article, you may have tried, or are planning  to implement your own PBR system. If you started to read some of the available literature, you’ve probably been struck by the math complexity of it, and by the lack of explanation of the big picture. You usually see articles that focus on specifics parts of the process, and don’t talk much about other parts as they are assumed easier. At some point you have to assemble all these parts, and I had a hard time figuring out how to do it in my readings. I guess it’s considered basic stuff for other authors, but I think it deserves its proper explanation.
 
 I don’t pretend these articles will enlighten you to the point you are ready to implement your own system, but I hope they will give you solid basis and understanding to start reading the literature without saying “WTF?? on every line as I did.
 
@@ -18,7 +26,7 @@ So first, lets talk about lighting in games. It all boils down to 2 things :
 
 This image from wikipedia is the most simple and yet the most helpful to understand this
 
-image::Lambert2.png[Lambert2,width="320",height="250",align="center"]
+image::jme3/advanced/Lambert2.png[Lambert2,width="320",height="250",align="center"]
 By GianniG46 (Own work) [CC-BY-SA-3.0 (http://creativecommons.org/licenses/by-sa/3.0) or GFDL (http://www.gnu.org/copyleft/fdl.html)], via Wikimedia Commons
 
 To compute each of these factors, we’re going to use a function. This function answers to the delicate name of *Bidirectional Reflectance Distribution Function or BRDF*.
@@ -100,7 +108,7 @@ I chose to use the same BRDF as the ones used in Unreal Engine 4 from link:http:
 
 The most used diffuse BRDF in games. It’s very popular because it’s very cheap to compute and gives good results. This is the most simple way of computing diffuse.  link:https://en.wikipedia.org/wiki/Lambertian_reflectance[here are the details]
 
-image::DiffuseLambert.jpg[DiffuseLambert,width="320",height="250",align="center"]
+image::jme3/advanced/DiffuseLambert.jpg[DiffuseLambert,width="320",height="250",align="center"]
 Diffuse Lambert factor for a direct light source (directional light) with a yellow surface color.
 
 Some Alternatives :
@@ -118,7 +126,7 @@ This is a bit more complicated for specular. We need a physically plausible BRDF
 
 It states that at a micro level a surface is not plane, but formed of a multitude of little randomly aligned surfaces, the microfacets. Those surfaces acts as small mirrors that reflects incoming light. The idea behind this BRDF is that only some of those facets may be oriented so that the incoming light reflects to your eye. The smoother the surface, the more all facets are aligned, and the most neat is the light reflection. In the contrary, if a surface is rough, the facets are more randomly oriented so the light reflection is scattered on the surface, and the reflection looks more blurry.
 
-image::Specular.png[Specular,width="320",height="250",align="center"]
+image::jme3/advanced/DiffuseLambert.jpg[Specular,width="320",height="250",align="center"]
 Microfacet specular factor for a direct light source. On the left a smooth surface, on the right a rough one. Note how the reflection is scattered on the surface when it’s rough.
 
 The microfacet BRDF we use is called Cook-Torrance. From my readings, I couldn’t find any implementation that use another specular BRDF. It seems like this is the global form of any microfacet BRDF.
@@ -148,10 +156,8 @@ I’ve settled to use those models and approximations :
 I won’t go into the details of all the alternatives I just want to expose an overview of the whole process first.  But I’ll dive into more technical details on the terms I use, in following posts. To have a neat overview of all alternatives you can see this link:http://graphicrants.blogspot.fr/2013/08/specular-brdf-reference.html[post] on  Brian Karis’s blog.
 
 
-
 That sums up the whole process, but there is still much to explain. In next post I’ll make a focus on indirect lighting, as it’s the part that gave me the hardest time to wrap my head around. I’ll explain the Image Based Lighting technique used, and how you can compute diffuse and specular from an Environment Map.
 
-<<pbr_part3#,Next Post>>
 
 == Lexical :
 
@@ -170,3 +176,8 @@ That sums up the whole process, but there is still much to explain. In next post
 *Fresnel factor called F*. Discovered by Augustin Fresnel (frenchies are sooo clever), it describes how light reflects and refracts at the intersection of two different media (most often in computer graphics : Air and the shaded surface)
 
 *Geometry shadowing term G*. Defines the shadowing from the micro facets
+
+'''
+
+*  <<jme3\advanced\pbr_part1#,Physically Based Rendering – Part one>>
+*  <<jme3\advanced\pbr_part3#,Physically Based Rendering – Part Three>>
