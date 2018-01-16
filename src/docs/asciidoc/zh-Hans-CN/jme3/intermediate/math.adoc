@@ -1,0 +1,144 @@
+= Math Cheat Sheet
+:author: 
+:revnumber: 
+:revdate: 2016/03/17 20:48
+:relfileprefix: ../../
+:imagesdir: ../..
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
+
+
+== Formulas
+
+[NOTE]
+====
+Typically you have to string these formulas together. Look in the table for what you want, and what you have. If the two are not the same line, than you need conversion steps inbetween. E.g. if you have an angle in degrees, but the formula expects radians: 1) convert degrees to radians, 2) use the radians formula on the result.
+====
+
+[cols="3", options="header"]
+|===
+
+a|I have…
+a|I want…
+a|Formula
+
+a|normalized direction and length +
+n1,d1
+a|a vector that goes that far in that direction +
+new direction vector v0
+a|v0 = n1.mult(d1)
+
+a|point and direction vector +
+p1,v1
+a|to move the point +
+new point p0
+a|p0 = p1.add(v1)
+
+a| direction, position and distance +
+v1,p1,dist
+a|Position at distance +
+p2 
+a|v1.normalzeLocal() +
+scaledDir = v1.mult(dist) +
+p2 = p1.add(scaledDir)
+
+a|two direction vectors or normals +
+v1,v2
+a|to combine both directions +
+new direction vector v0
+a|v0 = v1.add(v2)
+
+a|two points +
+p1, p2
+a|distance between two points +
+new scalar d0
+a|d0 = p1.subtract(p2).length() +
+d0 = p1.distance(p2)
+
+a|two points +
+p1, p2
+a|the direction from p2 to p1 +
+new direction vector v0
+a|v0 = p1.substract(p2)
+
+a|two points, a fraction +
+p1, p2, h=0.5f
+a|the point “halfway (h=0.5f) between the two points +
+new interpolated point p0
+a|p0 = FastMath.interpolateLinear(h,p1,p2)
+
+a|a direction vector, an up vector +
+v, up
+a|A rotation around this up axis towards this direction +
+new Quaternion q
+a|Quaternion q = new Quaternion(); +
+q.lookAt(v,up)
+
+|===
+[cols="3", options="header"]
+|===
+
+a|I have…
+a|I want…
+a|Formula
+
+a|angle in degrees +
+a 
+a| to convert angle a from degrees to radians +
+new float angle phi
+a|phi = a / 180 * FastMath.PI; +
+OR +
+phi=a.mult(FastMath.DEG_TO_RAD); 
+
+a|angle in radians +
+phi 
+a| to convert angle phi from radians to degrees +
+new float angle a
+a|a = phi * 180 / FastMath.PI 
+
+a|radian angle and x axis +
+phi, x 
+a|to rotate around x axis +
+new quaternion q0
+a|q0.fromAngleAxis( phi, Vector3f.UNIT_X )
+
+a|radian angle and y axis +
+phi, y 
+a|to rotate around y axis +
+new quaternion q0
+a|q0.fromAngleAxis( phi, Vector3f.UNIT_Y )
+
+a|radian angle and z axis +
+phi, z 
+a|to rotate around z axis +
+new quaternion q0
+a|q0.fromAngleAxis( phi, Vector3f.UNIT_Z )
+
+a|several quaternions +
+q1, q2, q3
+a|to combine rotations, in that order +
+new quaternion q0
+a|q0 = q1.mult(q2).mult(q3)
+
+a|point and quaternion +
+p1, q1
+a|to rotate the point around origin +
+new point p0
+a|p0 = q1.mult(p1)
+
+a|angle in radians and radius +
+phi,r
+a|to arrange or move objects horizontally in a circle (with y=0) +
+x and z coordinates
+a|float x = FastMath.cos(phi)*r; +
+float z = FastMath.sin(phi)*r;
+
+|===
+
+
+== Local vs Non-local methods?
+
+*  Non-local method creates new object as return value, v remains unchanged. +
+`v2 = v.mult(); v2 = v.add(); v2 = v.subtract();` etc
+*  Local method changes v directly! +
+`v.multLocal(); v.addLocal(); v.subtractLocal();` etc

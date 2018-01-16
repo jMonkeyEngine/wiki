@@ -1,0 +1,329 @@
+= Custom Controls
+:author: 
+:revnumber: 
+:revdate: 2016/03/17 20:48
+:relfileprefix: ../../
+:imagesdir: ../..
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
+
+A `com.jme3.scene.control.Control` is a customizable jME3 interface that allows you to cleanly steer the behaviour of game entities (Spatials), such as artificially intelligent behaviour in NPCs, traps, automatic alarms and doors, animals and pets, self-steering vehicles or platforms – anything that moves and interacts. Several instances of custom Controls together implement the behaviours of a type of Spatial. 
+
+To control global game behaviour see <<jme3/advanced/application_states#,Application States>> – you often use AppStates and Control together.
+
+*  link:http://www.youtube.com/watch?v=MNDiZ9YHIpM[Quick video introduction to Custom Controls]
+
+To control the behaviour of spatials:
+
+.  Create one control for each _type of behavior_. When you add several controls to one spatial, they will be executed in the order they were added. +
+For example, one NPC can be controlled by a PhysicsControl instance and an AIControl instance.
+.  Define the custom control and implement its behaviour in the Control's update method:
+**  You can pass arguments into your custom control.
+**  In the control class, the object `spatial` gives you access to the spatial and subspatials that the control is attached to.
+**  Here you modify the `spatial`'s transformation (move, scale, rotate), play animations, check its environement, define how it acts and reacts. 
+
+.  Add an instance of the Control to a spatial to give it this behavior. The spatial's game state is updated automatically from now on. +
+[source,java]
+----
+spatial.addControl(myControl);
+----
+
+
+To implement game logic for a type of spatial, you will either extend AbstractControl (most common case), or implement the Control interface, as explained in this article.
+
+
+== Usage
+
+Use <<jme3/advanced/custom_controls#,Controls>> to implement the _behaviour of types of game entities_.
+
+*  Use Controls to add a type of behaviour (that is, methods and fields) to individual Spatials. 
+*  Each Control has its own `update()` loop that hooks into `simpleUpdate()`. Use Controls to move blocks of code out of the `simpleUpdate()` loop.
+*  One Spatial can be influenced by several Controls. (Very powerful and modular!) 
+*  Each Spatial needs its own instance of the Control. 
+*  A Control only has access to and control over the Spatial it is attached to.
+*  Controls can be saved as .j3o file together with a Spatial. 
+
+Examples: You can write
+
+*  A WalkerNavControl, SwimmerNavControl, FlyerNavControl… that defines how a type of NPC finds their way around. All NPCs can walk, some can fly, others can swim, and some can all three, etc.
+*  A PlayerNavControl that is steered by user-configurable keyboard and mouse input.
+*  A generic animation control that acts as a common interface that triggers animations (walk, stand, attack, defend) for various entities.
+*  A DefensiveBehaviourControl that remote-controls NPC behaviour in fight situations. 
+*  An IdleBehaviourControl that remote-controls NPC behaviour in neutral situations. 
+*  A DestructionControl that automatically replaces a structure with an appropriate piece of debris after collision with a projectile… 
+
+The possibilities are endless. emoji:smiley
+
+
+== Example Code
+
+Other examples include the built-in RigidBodyControl in JME's physics integration, the built-in TerrainLODControl that updates the terrain's level of detail depending on the viewer's perspective, etc.
+
+Existing examples in the code base include:
+
+*  link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/java/com/jme3/animation/AnimControl.java[AnimControl.java] allows manipulation of skeletal animation, including blending and multiple channels.
+*  link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/java/com/jme3/scene/control/CameraControl.java[CameraControl.java] allows you to sync the camera position with the position of a given spatial.
+*  link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/java/com/jme3/scene/control/BillboardControl.java[BillboardControl.java] displays a flat picture orthogonally, e.g. a speech bubble or informational dialog.
+*  link:https://github.com/jMonkeyEngine/jmonkeyengine/tree/master/jme3-bullet/src/common/java/com/jme3/bullet/control[PhysicsControl] subclasses (such as CharacterControl, RigidBodyControl, VehicleControl) allow you to add physical properties to any spatial. PhysicsControls tie into capabilities provided by the BulletAppState.
+
+
+== AbstractControl Class
+
+
+[TIP]
+====
+The most common way to create a Control is to create a class that extends AbstractControl.
+====
+
+
+The AbstractControl can be found under `com.jme3.scene.control.AbstractControl`. This is a default abstract class that implements the Control interface.
+
+*  You have access to a boolean `isEnabled()`.
+*  You have access to the Spatial object `spatial`. 
+*  You override the `controlUpdate()` method to implement the Spatial's behaviour. 
+*  You have access to a `setEnabled(boolean)` method. This activates or deactivates this Control's behaviour in this spatial temporarily. While the AbstractControl is toggled to be disabled, the `controlUpdate()` loop is no longer executed. +
+For example, you disable your IdleBehaviourControl when you enable your DefensiveBehaviourControl in a spatial.
+
+Usage: Your custom subclass implements the three methods `controlUpdate()`, `controlRender()`, `setSpatial()`, and `cloneForSpatial()` as shown here:
+
+[source,java]
+----
+public class MyControl extends AbstractControl implements Savable, Cloneable {  
+    private int index; // can have custom fields -- example     
+    
+    public MyControl(){} // empty serialization constructor    
+    
+    /** Optional custom constructor with arguments that can init custom fields.    
+      * Note: you cannot modify the spatial here yet! */  
+    public MyControl(int i){     
+        // index=i; // example   
+    }     
+    
+    /** This method is called when the control is added to the spatial,    
+      * and when the control is removed from the spatial (setting a null value).    
+      * It can be used for both initialization and cleanup. */      
+    @Override  
+    public void setSpatial(Spatial spatial) {    
+        super.setSpatial(spatial);    
+        /* Example:    
+        if (spatial != null){        
+            // initialize    
+        }else{        
+            // cleanup    
+        }    
+        */  
+    }
+    
+    /** Implement your spatial's behaviour here.    
+      * From here you can modify the scene graph and the spatial    
+      * (transform them, get and set userdata, etc).    
+      * This loop controls the spatial while the Control is enabled. */  
+    @Override  
+    protected void controlUpdate(float tpf){    
+        if(spatial != null) {      
+            // spatial.rotate(tpf,tpf,tpf); // example behaviour    
+        }  
+    }    
+    
+    @Override  
+    public Control cloneForSpatial(Spatial spatial){    
+        final MyControl control = new MyControl();    
+        /* Optional: use setters to copy userdata into the cloned control */    
+        // control.setIndex(i); // example    
+        control.setSpatial(spatial);    
+        return control;  
+    }    
+    
+    @Override  
+    protected void controlRender(RenderManager rm, ViewPort vp){     
+        /* Optional: rendering manipulation (for advanced users) */  
+    }    
+    
+    @Override  
+    public void read(JmeImporter im) throws IOException {      
+        super.read(im);      
+        // im.getCapsule(this).read(...);  
+    }    
+    
+    @Override  
+    public void write(JmeExporter ex) throws IOException {      
+        super.write(ex);      
+        // ex.getCapsule(this).write(...);  
+    }  
+}
+----
+
+See also:
+
+*  To learn more about `write()` and `read()`, see <<jme3/advanced/save_and_load#,Save and Load>>
+*  To learn more about `setUserData()`, see <<jme3/advanced/spatial#,Spatial>>.
+
+
+== The Control Interface
+
+
+[TIP]
+====
+In the less common case that you want to create a Control that also extends another class, create a custom interface that  extends jME3's Control interface. Your class can become a Control by implementing the Control interface, and at the same time extending another class.
+====
+
+
+The Control interface can be found under `com.jme3.scene.control.Control`. It has the following method signatures:
+
+*  `cloneForSpatial(Spatial)`: Clones the Control and attaches it to a clone of the given Spatial. +
+Implement this method to be able to <<jme3/advanced/save_and_load#,save() and load()>> Spatials carrying this Control. +
+The AssetManager also uses this method if the same spatial is loaded twice. You can specify which fields you want your object to reuse (e.g. collisionshapes) in this case. 
+*  `setEnabled(boolean)`: Toggles a boolean that enables or disables the Control. Goes with accessor `isEnabled();`. You test for it in the `update(float tpf)` loop before you execute anything.
+*  There are also some internal methods that you do not call from user code: `setSpatial(Spatial s)`, `update(float tpf);`, `render(RenderManager rm, ViewPort vp)`.
+
+Usage example:
+
+. Create a custom control interface.
++
+[source,java]
+----
+public interface MyControlInterface extends Control {    
+    public void setSomething(int x); // optionally, add custom methods
+}
+----
+
+. Create custom Controls implementing your Control interface.
++
+[source,java]
+----
+public class MyControl extends MyCustomClass implements MyControlInterface {
+    protected Spatial spatial;
+    
+    protected boolean enabled = true;
+    
+    public MyControl() { } // empty serialization constructor
+    
+    public MyControl(int x) { // custom constructor        
+        super(x);    
+    }
+    
+    @Override    
+    public void update(float tpf) {        
+        if (enabled && spatial != null) {            
+            // Write custom code to control the spatial here!        
+        }    
+    }        
+    
+    @Override    
+    public void render(RenderManager rm, ViewPort vp) {        
+        // optional for advanced users, e.g. to display a debug shape    
+    }        
+    
+    @Override    
+    public Control cloneForSpatial(Spatial spatial) {        
+        MyControl control = new MyControl();        
+        // set custom properties        
+        control.setSpatial(spatial);        
+        control.setEnabled(isEnabled());         
+        // set some more properties here...        
+        return control;    
+    }        
+    
+    @Override    
+    public void setEnabled(boolean enabled) {        
+        this.enabled = enabled;    
+    }        
+    
+    @Override    
+    public boolean isEnabled() {        
+        return enabled;    
+    }        
+    
+    @Override    
+    public void setSomething(int z) {        
+        // You can add custom methods ...    
+    }        
+    
+    @Override    
+    public void write(JmeExporter ex) throws IOException {        
+        super.write(ex);        
+        OutputCapsule oc = ex.getCapsule(this);        
+        oc.write(enabled, "enabled", true);        
+        oc.write(spatial, "spatial", null);        
+        // write custom variables ....    
+    }    
+    
+    @Override    
+    public void read(JmeImporter im) throws IOException {        
+        super.read(im);        
+        InputCapsule ic = im.getCapsule(this);        
+        enabled = ic.readBoolean("enabled", true);        
+        spatial = (Spatial) ic.readSavable("spatial", null);        
+        // read custom variables ....    
+    }
+}
+----
+
+
+== Best Practices
+
+
+Use the getControl() accessor to get Control objects from Spatials. No need to pass around lots of object references. Here's an example from the link:http://code.google.com/p/monkeyzone/[MonkeyZone] code:
+
+[source,java]
+----
+public class CharacterAnimControl implements Control {  
+    ...  
+    public void setSpatial(Spatial spatial) {    
+        ...    
+        animControl      = spatial.getControl(AnimControl.class);    
+        characterControl = spatial.getControl(CharacterControl.class);    
+        ...  
+    }
+}
+----
+
+You can create custom Control interfaces so a set of different Controls provide the same methods and can be accessed with the interface class type.
+
+[source,java]
+----
+public interface ManualControl extends Control {    
+    public void steerX(float value);    
+    public void steerY(float value);    
+    public void moveX(float value);    
+    public void moveY(float value);    
+    public void moveZ(float value);   
+    ...
+}
+----
+
+Then you create custom sub-Controls and implement the methods accordingly to the context:
+
+[source,java]
+----
+public class ManualVehicleControl   extends ManualControl {...}
+----
+
+and
+
+[source,java]
+----
+public class ManualCharacterControl extends ManualControl {...}
+----
+
+Then add the appropriate controls to spatials:
+
+[source,java]
+----
+
+characterSpatial.addControl(new ManualCharacterControl());
+...
+vehicleSpatial.addControl(new ManualVehicleControl());
+...
+----
+
+[TIP]
+====
+Use the getControl() method on a Spatial to get a specific Control object, and activate its behaviour!
+
+[source,java]
+----
+ManualControl c = mySpatial.getControl(ManualControl.class);
+c.steerX(steerX);
+----
+====

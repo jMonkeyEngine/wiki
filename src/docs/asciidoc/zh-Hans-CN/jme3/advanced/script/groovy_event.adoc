@@ -1,0 +1,129 @@
+= groovy_event
+:author:
+:revnumber:
+:revdate: 2016/03/17 20:48
+:relfileprefix: ../../
+:imagesdir: ../..
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
+
+
+== Event - Trigger - Manager
+
+Event , Trigger , Manager are the 3 most important terms in game programming and scripting that worth to mention in the first place!
+
+
+=== Event
+
+Event is the core element (concept) and the unit of the Messaging System. When components in the game world communicate with each other through pipelines, Messages from one object need to be sent to other objects should also aware of it (to nofity) when some thing happen that. It's called an event; and inside of the event contain piece of imformations that describe the Message.
+
+If Scripting, Event play important role too. It's almost shown up in EventHook to the cycle as: onInit, onUpdate, onClick.. It also provide ad-hoc communicate which in turn enable additional complex and flexible usage to existed systems. We will go deep into its usages later.
+
+
+==== EventBus
+
+Event paradigm is implemented differently in every software that require it, to fit with the specific requirements. Recently we (Java world) have something quite generic that suite for wide range of cases and use intuitive methods to program. It's called EventBus. And fortunately , EventBus fit very well with Groovy scripting solution (kudos!)
+
+…and few Event concepts Explained!
+
+link:http://code.google.com/p/guava-libraries/wiki/EventBusExplained[http://code.google.com/p/guava-libraries/wiki/EventBusExplained]
+
+link:http://codingjunkie.net/guava-eventbus/[http://codingjunkie.net/guava-eventbus/]
+
+
+==== Groovy Eventbus HelloWorld
+
+[source,java]
+----
+
+import com.google.common.eventbus.EventBus
+import com.google.common.eventbus.Subscribe
+
+EventBus eventBus = new EventBus();
+
+class EventHandler{
+    @Subscribe
+    public void hello(CustomEvent event){
+        println "Hello world"
+    }
+}
+
+class CustomEvent{
+
+}
+handler = new EventHandler();
+eventBus.register(handler);
+
+eventBus.post(new CustomEvent());
+
+----
+
+In this example,
+
+Here, EventBus will play the communicate media in our Groovy scripting solution.
+
+
+==== Hooks
+
+
+=== Trigger
+
+If you build up your game world's activites from Action, Trigger is the brick to build Gameplay. It's the combination of : Event + Condition → Action
+
+The concept of trigger can be describle like this: When an Event happen, if it's passed a Condition check, the Action is taken. A more detailed description envolve: the Enviroment - a specific Context of those 3 (E - C - A), Durations , Threaded or not, Executor … But here we concern the most simple form, the Context is the single specific that procedure the Event and its Global awareness.
+
+In Groovy,
+
+*  Event is Class based, mentioned in the chapter above.
+*  Condition can be modeled with a Closure
+*  Action also very suitable with a Closure representation.
+
+
+==== Example1:
+
+[source,java]
+----
+
+Example1:
+
+----
+
+
+===== Example2:
+
+[source,java]
+----
+
+Example2:
+
+----
+
+
+=== Manager
+
+Manager is the concept of who have responsibities and power over others (as its children or employee in the real world), essentially it is a list of its children, and have basic opertions like add,remove to manage that list… You can also think about it as the Control of the MVC paradigm where it is the mediator between Model and View. In JME3, you see Manager every where such as AssetManager, StateManager as the wraper of underlying functions. So, event mixed up quite a lot concepts at once, Manager in Scripting is extremely useful and fullfill the missing piece of the picture we are painting for a while here.
+
+To clean the mist of confusion about mixed of concepts a little bit, there are some practical wisdoms about Manager implementation:
+
+*  Manager acts globally, handy: usually a Singleton, or really easy to reference in script
+**  Manager wrap underlying details in intuitive way
+**  Manager share common informations
+**  Manager executions are frequently : like in an default update cycle
+**  Manager have power over its children : its handle it children; in almost scenarios child has left its Manager's list come hollow (as null)
+
+All the concepts and wisdoms is describes much more detail in Atom framework Design <<jme3/advanced/atom_framework/design#, Game architecture &amp; Design>>
+
+
+=== GQuery
+
+GQuery stand for “JQuery like in Groovy. JQuery is a famous framework in the JavaScript and Web world. GQuery try to provide some of its features, immtimate its syntax and sugars, leverage by Groovy:
+
+*  Query, select a Node Tree (like +++<abbr title="HyperText Markup Language">HTML</abbr>+++, Nifty elements,…) with a minimal Path syntax , same as XPath
+*  Hooks to Node's (components, elements..) events with Eventbus
+
+GQuery is a part of my additions for NiftyGUI, others are:
+
+*  a Groovy builder
+*  a +++<abbr title="Cascading Style Sheets">CSS</abbr>+++ (Cascaded Style Sheet) implementation (for NiftyGUI), even a LESS
+*  a simplier Localization framework
+*  a lot of scripting and functional sugar for NiftyGUI

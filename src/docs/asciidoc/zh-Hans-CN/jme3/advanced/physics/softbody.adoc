@@ -1,0 +1,286 @@
+= Physics : SoftBody
+:author:
+:revnumber:
+:revdate: 2016/03/17 20:48
+:relfileprefix: ../../
+:imagesdir: ../..
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
+
+
+[WARNING]
+====
+Writing in progress, checkout the forum for additional infos link:http://hub.jmonkeyengine.org/t/bullet-softbody-in-jme3-1/33110[http://hub.jmonkeyengine.org/t/bullet-softbody-in-jme3-1/33110]
+====
+
+what is a soft body ?
+
+how a soft body is simulated ? (  node, link, face ; spring &amp; damper )
+
+link:https://en.wikipedia.org/wiki/Soft_body_dynamics[https://en.wikipedia.org/wiki/Soft_body_dynamics]
+
+
+== Getting Started
+
+The dynamics libraries for softbody (.so , .dll …) isn't (yet) prebuild for your platform so you have to checkout the entire project from GitHub then build the project.
+
+
+=== How to :
+
+.   checkout the project from link:https://github.com/Dokthar/jmonkeyengine/tree/bullet_SoftBody[GitHub].
+.   go into the file gradle.propeties and set the line : buildNativeProjecte = true .
+.   run the command : ./gradlew build
+.   then build the sdk : ant -f ./sdk/ build-zip (or build the sdk installer)
+.   create a new project and make sure you use the following libraries : jme3-bullet-native and jme3-bullet (instead of jme3-jBullet)
+
+
+== Simple Example
+
+[source,java]
+----
+
+public void simpleInitApp() {
+    softBodyAppState = new BulletSoftBodyAppState();
+    getStateManager().attach(softBodyAppState);
+
+    SoftBodyWorldInfo sbwi = softBodyAppState.getPhysicsSoftSpace().getWorldInfo();
+    sbwi.setGravity(Vector3f.UNIT_Y.mult(-0.981f));
+
+    Geometry bunny = new Geometry("b", StandfordBunny.getMesh().deepClone());
+    Material matN = new Material(assetManager, "Common/MatDefs/Misc/ShowNormals.j3md");
+    bunny.setMaterial(matN);
+    rootNode.attachChild(bunny);
+    bunny.addControl(new SoftBodyControl(false));
+
+    PhysicsSoftBody soft = bunny.getControl(SoftBodyControl.class);
+    soft.generateClusters(8);
+    soft.config().setDynamicFrictionCoef(0.8f);
+    soft.config().setPoseMatchingCoef(0.2f);
+
+    soft.config().setCollisionsFlags(PhysicsSoftBody.Config.CL_SS + PhysicsSoftBody.Config.CL_RS);
+
+    soft.setPose(false, true);
+    soft.setTotalMass(100, true);
+    soft.randomizeConstraints();
+    softBodyAppState.getPhysicsSoftSpace().add(soft);
+
+    Box floorMesh = new Box(100f, 0.5f, 100f);
+    Geometry floor = new Geometry("floor", floorMesh);
+    floor.move(0, -5f, 0);
+    floor.addControl(new RigidBodyControl(0));
+    softBodyAppState.getPhysicsSpace().add(floor);
+}
+
+----
+
+
+== Documentation
+
+soft mesh / surface
+
+Cluster ?
+
+(generate) bending constraint ?
+
+config collision flag ?
+
+
+=== Ropes
+
+A rope can be created by creating a new SoftBody on a Mesh with Mesh.Mode.Lines.
+More informations on creating <<jme3/advanced/custom_meshes#,custom meshes>>.
+
+
+==== Example
+
+[source,java]
+----
+
+Mesh ropeMesh = new Mesh();
+Vector3f[] vertices = {
+   new Vector3f(0.00f, 0, 0),
+   new Vector3f(0.50f, 0, 0),
+   new Vector3f(1.00f, 0, 0),
+   new Vector3f(1.50f, 0, 0),
+   new Vector3f(2.00f, 0, 0),
+   new Vector3f(2.50f, 0, 0),
+   new Vector3f(3.00f, 0, 0),
+   new Vector3f(3.50f, 0, 0),
+   new Vector3f(4.00f, 0, 0)};
+int[] indices = {
+   0, 1,
+   1, 2,
+   2, 3,
+   3, 4,
+   4, 5,
+   5, 6,
+   6, 7,
+   7, 8};
+ropeMesh.setBuffer(VertexBuffer.Type.Position, 3, BufferUtils.createFloatBuffer(vertices));
+ropeMesh.setBuffer(VertexBuffer.Type.Index, 2, BufferUtils.createIntBuffer(indices));
+ropeMesh.setMode(Mesh.Mode.Lines);
+ropeMesh.updateBound();
+
+----
+
+Once you have a Line Mesh, you can do as follow :
+
+[source,java]
+----
+
+Geometry t = new Geometry("softRope", ropeMesh);
+t.move(0, 5, 0);
+t.addControl(new SoftBodyControl(false));
+
+----
+
+
+==== Anchors
+
+An Anchors act like a weld between a SoftBody and a RigidBody.
+Adding a anchors to a soft body require to specify the SoftBody's node and the RigidBody to weld with.
+
+[source,java]
+----
+
+soft.appendAnchor(nodeId, rigid);
+
+----
+
+
+=== Note
+
+An anchor bind a SoftBody's node (or Vertex) to a RigidBody, the node will be attached to a RigidBody even if there are space in between.
+
+
+[WARNING]
+====
+ Anchors are not yet Serialized
+====
+
+
+
+==== Example
+
+[source,java]
+----
+
+Geometry t = new Geometry("softRope", ropeMesh);
+Box box = new Box(1f, 1f, 1f);
+Geometry b = new Geometry("rigidBox", box);
+t.move(0, 5, 0);
+b.move(3f, 5, 0);
+
+t.addControl(new SoftBodyControl(false));
+soft = t.getControl(SoftBodyControl.class);
+soft.setMass(0, 0); // make the first ndoe static
+
+b.addControl(new RigidBodyControl(1));
+rigid = b.getControl(RigidBodyControl.class);
+
+softBodyAppState.getPhysicsSpace().add(rigid);
+softBodyAppState.getPhysicsSoftSpace().add(soft);
+
+soft.appendAnchor(8, rigid); //where 8 is the last node of the rope
+
+----
+
+Anchors can be removed as below. Note that you have to keep the node and RigidBody bind with.
+
+[source,java]
+----
+
+soft.removeAnchor(8,rigid);
+
+----
+
+
+==== Joints
+
+Joints require SoftBodies with Clusters ( see generateClusters(int k) ).
+
+
+[WARNING]
+====
+ joint don't use values pivotA & pivotB (not yet)
+====
+
+
+
+=== LinearJoint
+
+[source,java]
+----
+
+public SoftLinearJoint(Vector3f position, PhysicsSoftBody nodeA, PhysicsRigidBody nodeB, Vector3f pivotA, Vector3f pivotB);
+public SoftLinearJoint(Vector3f position, PhysicsSoftBody nodeA, PhysicsSoftBody nodeB, Vector3f pivotA, Vector3f pivotB);
+
+----
+
+
+=== AngularJoint
+
+[source,java]
+----
+
+public SoftAngularJoint(Vector3f axis, PhysicsSoftBody nodeA, PhysicsRigidBody nodeB, Vector3f pivotA, Vector3f pivotB);
+public SoftAngularJoint(Vector3f axis, PhysicsSoftBody nodeA, PhysicsSoftBody nodeB, Vector3f pivotA, Vector3f pivotB);
+
+----
+
+
+==== Examples
+
+
+=== LinearJoint
+
+[source,java]
+----
+
+Box box = new Box(3f, 1f, 3f);
+Geometry b = new Geometry("rigidBox", box);
+b.move(0, 5f, 0);
+b.addControl(new RigidBodyControl(1));
+rigid = b.getControl(RigidBodyControl.class);
+
+Torus torus = new Torus(20, 10, 1f, 1.5f);
+Geometry t = new Geometry("softTorus", torus);
+t.addControl(new SoftBodyControl(true, false));
+soft = t.getControl(SoftBodyControl.class);
+soft.generateBendingConstraints(4, soft.material());
+soft.generateClusters(4);
+
+softBodyAppState.getPhysicsSpace().add(rigid);
+softBodyAppState.getPhysicsSoftSpace().add(soft);
+
+joint = new SoftLinearJoint(Vector3f.UNIT_X, soft, rigid, new Vector3f(0f,2,0f), new Vector3f(0f,-2,0f));
+softBodyAppState.getPhysicsSoftSpace().add(joint);
+
+----
+
+
+=== AngularJoint
+
+[source,java]
+----
+
+Box box = new Box(1f, 1f, 1f);
+Geometry b = new Geometry("rigidBox", box);
+b.move(0, 5f, 0);
+b.addControl(new RigidBodyControl(1));
+rigid = b.getControl(RigidBodyControl.class);
+
+ Torus torus = new Torus(20, 10, 1f, 1.5f);
+Geometry t = new Geometry("softTorus", torus);
+t.addControl(new SoftBodyControl(true, false));
+soft = t.getControl(SoftBodyControl.class);
+soft.generateBendingConstraints(4, soft.material());
+soft.generateClusters(4);
+
+softBodyAppState.getPhysicsSpace().add(rigid);
+softBodyAppState.getPhysicsSoftSpace().add(soft);
+
+joint = new SoftAngularJoint(Vector3f.UNIT_X, soft, rigid, new Vector3f(0,0,2), new Vector3f(0, 0, 2));
+softBodyAppState.getPhysicsSoftSpace().add(joint);
+
+----

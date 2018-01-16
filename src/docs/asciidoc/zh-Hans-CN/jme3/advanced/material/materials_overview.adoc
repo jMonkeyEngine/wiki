@@ -1,0 +1,422 @@
+= Material Definition Properties
+:author: 
+:revnumber: 
+:revdate: 2016/03/17 20:48
+:keywords: material, texture, MatDefs, light, culling, RenderStates, documentation
+:relfileprefix: ../../
+:imagesdir: ../..
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
+
+In jMonkeyEngine 3, colors and textures are represented as Material objects.
+
+*  All Geometries must have Materials. To improve performance, reuse Materials for similar models, don't create a new Material object for every Geometry. (E.g. use one bark Material for several tree models.) 
+*  Each Material is based on one of jme3's default Material Definitions (.j3md files) that are included in the engine. Advanced users can create additional custom Material Definitions (see how it's done in the <<jme3/build_from_sources#,jme3 sources>>).
+
+
+[TIP]
+====
+Find out quickly <<jme3/intermediate/how_to_use_materials#,How to Use Materials>>, including the most commonly used code samples and RenderStates. +
+Or find more background info on <<jme3/advanced/material_definitions#,How to use Material Definitions>>.
+====
+
+
+
+== All Materials Definition Properties
+
+The following Materials table shows you the Material Definitions that jMonkeyEngine 3 supports. 
+
+
+[TIP]
+====
+Looks confusing? +
+1) Start learning about `Unshaded.j3md` and `Lighting.j3md`, they cover 90% of the cases. +
+2) Use <<sdk/material_editing#,the SDK's visual material editor>> to try out and save material settings easily. +
+3) The <<sdk/code_editor#,SDK's Palette>> contains drag&drop code snippets for loading materials. 
+====
+
+
+Most Material parameters are optional. For example, it is okay to specify solely the `DiffuseMap` and `NormalMap` when using `Lighting.j3md`, and leave the other texture maps empty. In this case, you are only using a subset of the possible features, but that's fine if it already makes in the material look the way that you want. You can always add more texture maps later.
+
+
+=== Unshaded Coloring and Textures
+
+jMonkeyEngine supports illuminated and unshaded Material Definitions.
+
+*  Phong Illuminated materials look more naturalistic.
+*  Unshaded materials look more abstract. 
+
+“Unshaded materials look somewhat abstract because they ignore lighting and shading. Unshaded Materials work even if the scene does not include a light source. These Materials can be single-colored or textured. For example, they are used for cards and tiles, for the sky, billboards and UI elements, for toon-style games, or for testing.
+
+[cols="20,40,40", options="header"]
+.Standard Unshaded
+|===
+
+a| Material Definition 
+a| Usage 
+<a| Material Parameters  
+
+a| Common/MatDefs/Misc/ +
+Unshaded.j3md 
+a| Standard, non-illuminated Materials. +
+Use this for simple coloring and texturing, glow, and transparency. +
+See also: <<jme3/beginner/hello_material#,Hello Material>> 
+a| *Texture Maps* +
+setTexture(“ColorMap, assetManager.loadTexture(“)); +
+setBoolean(“SeparateTexCoord,true); +
+setTexture(“LightMap, assetManager.loadTexture(“)); +
+*Colors* +
+setColor(“Color, ColorRGBA.White); +
+setBoolean(“VertexColor,true); +
+*Glow* +
+setTexture(“GlowMap, assetManager.loadTexture(“)); +
+setColor(“GlowColor, ColorRGBA.White); 
+
+|===
+
+Other useful, but less commonly used material definitions:
+
+[cols="20,40,40", options="header"]
+.Special Unshaded
+|===
+
+a| Material Definition 
+a| Usage 
+<a| Material Parameters  
+
+<a| Common/MatDefs/Misc/ +
+Sky.j3md            
+a| A solid skyblue, or use with a custom SkyDome texture. +
+See also: <<jme3/advanced/sky#,Sky>> 
+a| setTexture(“TextureCubeMap, assetManager.loadTexture(“)); +
+setBoolean(“SphereMap,true); +
+setVector3(“NormalScale, new Vector3f(0,0,0)); 
+
+a| Common/MatDefs/Terrain/ +
+Terrain.j3md 
+a| Splat textures for e.g. terrains. +
+See also: <<jme3/beginner/hello_terrain#,Hello Terrain>> 
+a| setTexture(“Tex1, assetManager.loadTexture(“)); +
+(red) +
+setFloat(“Tex1Scale,1f); +
+setTexture(“Tex2, assetManager.loadTexture(“)); +
+(green) +
+setFloat(“Tex2Scale,1f); +
+setTexture(“Tex3, assetManager.loadTexture(“)); +
+(blue) +
+setFloat(“Tex3Scale,1f); +
+setTexture(“Alpha, assetManager.loadTexture(“)); 
+
+a|Common/MatDefs/Terrain/ +
+HeightBasedTerrain.j3md
+a|A multi-layered texture for terrains. +
+Specify four textures and a Vector3f describing the region in which each texture should appear: +
+X = start height, +
+Y = end height, +
+Z = texture scale. +
+Texture regions can overlap. +
+For example: Specify a seafloor texture for the lowest areas, +
+a sandy texture for the beaches, +
+a grassy texure for inland areas, +
+and a rocky texture for mountain tops.
+a| setFloat(“terrainSize,512f); +
+setTexture(“region1ColorMap, assetManager.loadTexture(“)); +
+setTexture(“region2ColorMap, assetManager.loadTexture(“)); +
+setTexture(“region3ColorMap, assetManager.loadTexture(“)); +
+setTexture(“region4ColorMap, assetManager.loadTexture(“)); +
+setVector3(“region1, new Vector3f(0,0,0)); +
+setVector3(“region2, new Vector3f(0,0,0)); +
+setVector3(“region3, new Vector3f(0,0,0)); +
+setVector3(“region4, new Vector3f(0,0,0)); +
+*Settings for steep areas:* +
+setTexture(“slopeColorMap, assetManager.loadTexture(“)); +
+setFloat(“slopeTileFactor,1f);
+
+<a| Common/MatDefs/Misc/ +
+Particle.j3md       
+a| Used with texture masks for particle effects, or for point sprites. +
+The Quadratic value scales the particle for perspective view (link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/java/com/jme3/effect/ParticleEmitter.java[formula]). +
+Does support an optional colored glow effect. +
+See also: <<jme3/beginner/hello_effects#,Hello Effects>> 
+a| setTexture(“Texture, assetManager.loadTexture(“)); +
+setTexture(“GlowMap, assetManager.loadTexture(“)); +
+setColor(“GlowColor, ColorRGBA.White); +
+setFloat(“Quadratic,1f); +
+setBoolean(“PointSprite,true); 
+
+|===
+
+
+=== Phong Illuminated
+
+jMonkeyEngine supports illuminated and unshaded Material Definitions.
+
+*  Phong Illuminated materials look more naturalistic.
+*  Unshaded materials look more abstract.
+
+Illuminated materials require a <<jme3/advanced/light_and_shadow#,light source>> added to at least one of their parent nodes! (e.g. rootNode.) Illuminated materials are darker on the sides facing away from light sources. They use Phong illumination model (default), or the Ward isotropic gaussian specular shader (WardIso) which looks more like plastic. They do not cast <<jme3/advanced/light_and_shadow#,drop shadows>> unless you use a FilterPostProcessor. 
+
+[cols="20,40,40", options="header"]
+.Standard Illuminated
+|===
+
+a|Material Definition 
+a| Usage 
+a| Material Parameters 
+
+<a| Common/MatDefs/Light/ +
+Lighting.j3md      
+a| Commonly used Material with Phong illumination. +
+Use this material together with DiffuseMap, SpecularMap, BumpMap (NormalMaps, ParalaxMap) textures. +
+Supports shininess, transparency, and plain material colors (Diffuse, Ambient, Specular colors). +
+See also: <<jme3/beginner/hello_material#,Hello Material>> 
+<a| *Texture Maps* +
+setTexture(“DiffuseMap, assetManager.loadTexture(“)); +
+setBoolean(“UseAlpha,true); footnote:[UseAlpha specifies whether DiffuseMap uses the alpha channel]  +
+setTexture(“NormalMap, assetManager.loadTexture(“)); +
+setBoolean(“LATC,true); footnote:[LATC Specifies whether NormalMap is BC5/ATI2n/LATC/3Dc-compressed]  +
+setTexture(“SpecularMap, assetManager.loadTexture(“)); +
+setFloat(“Shininess,64f); +
+setTexture(“ParallaxMap, assetManager.loadTexture(“)); +
+setTexture(“AlphaMap, assetManager.loadTexture(“)); +
+setFloat(“AlphaDiscardThreshold,1f); +
+setTexture(“ColorRamp, assetManager.loadTexture(“)); +
+*Glow* +
+setTexture(“GlowMap, assetManager.loadTexture(“)); +
+setColor(“GlowColor, ColorRGBA.White); +
+*Performance and quality* +
+setBoolean(“VertexLighting,true); +
+setBoolean(“UseVertexColor,true); +
+setBoolean(“LowQuality,true); +
+setBoolean(“HighQuality,true); +
+*Material Colors* +
+setBoolean(“UseMaterialColors,true); +
+setColor(“Diffuse, ColorRGBA.White); +
+setColor(“Ambient, ColorRGBA.White); +
+setColor(“Specular, ColorRGBA.White); +
+*Tangent shading:* +
+setBoolean(“VTangent,true); +
+setBoolean(“Minnaert,true); footnote:[Minnaert is a shader type.] +
+setBoolean(“WardIso,true); footnote:[WardIso is a shader type.]  
+
+|===
+
+[cols="20,40,40", options="header"]
+.Special Illuminated
+|===
+
+a|Material Definitions 
+a| Usage 
+a| Material Parameters 
+
+a|Common/MatDefs/Terrain/ +
+TerrainLighting.j3md
+a|Same kind of multi-layered splat texture as Terrain.j3md, but with illumination and shading. +
+Typically used for terrains, but works on any mesh. +
+For every 3 splat textures, you need one alpha map. +
+You can use a total of 11 texture maps in the terrain's splat texture: +
+Note that diffuse and normal maps all count against that. +
+For example, you can use a maximum of 9 diffuse textures, two of which can have normal maps; +
+or, five textures with both diffuse and normal maps.
+a|*Texture Splat Maps* +
+setTexture(“DiffuseMap, assetManager.loadTexture(“)); +
+setFloat(“DiffuseMap_0_scale,1f); +
+setTexture(“NormalMap, assetManager.loadTexture(“)); +
+setTexture(“DiffuseMap_1, assetManager.loadTexture(“)); +
+setFloat(“DiffuseMap_1_scale,1f); +
+setTexture(“NormalMap_1, assetManager.loadTexture(“)); +
+setTexture(“DiffuseMap_2, assetManager.loadTexture(“)); +
+setFloat(“DiffuseMap_2_scale,1f); +
+setTexture(“NormalMap_2, assetManager.loadTexture(“)); +
+setTexture(“DiffuseMap_3, assetManager.loadTexture(“)); +
+setFloat(“DiffuseMap_3_scale,1f); +
+setTexture(“NormalMap_3, assetManager.loadTexture(“)); +
+etc, up to 11. +
+*Alpha Maps* +
+setTexture(“AlphaMap, assetManager.loadTexture(“)); +
+setTexture(“AlphaMap_1, assetManager.loadTexture(“)); +
+setTexture(“AlphaMap_2, assetManager.loadTexture(“)); +
+*Glowing* +
+setTexture(“GlowMap, assetManager.loadTexture(“)); +
+setColor(“GlowColor, ColorRGBA.White); +
+*Miscellaneous* +
+setColor(“Diffuse, ColorRGBA.White); +
+setColor(“Ambient, ColorRGBA.White); +
+setFloat(“Shininess,64f); +
+setColor(“Specular, ColorRGBA.White); +
+setTexture(“SpecularMap, assetManager.loadTexture(“)); +
+setBoolean(“WardIso,true); +
+setBoolean(“useTriPlanarMapping,true); +
+setBoolean(“isTerrainGrid,true); 
+
+<a| Common/MatDefs/Light/ +
+Reflection.j3md    
+a| Reflective glass material with environment map (CubeMap/SphereMap). See also: link:http://code.google.com/p/jmonkeyengine/source/browse/trunk/engine/src/test/jme3test/texture/TestCubeMap.java[TestCubeMap.java] 
+a| setTexture(“Texture, assetManager.loadTexture(“)); +
+setBoolean(“SphereMap,true); 
+
+|===
+
+
+=== Other: Test and Debug
+
+[cols="20,80", options="header"]
+.Testing
+|===
+
+<a| Material Definition                     
+a| Usage 
+
+<a| Common/MatDefs/Misc/ +
+ShowNormals.j3md    
+a| A color gradient calculated from the model's surface normals. You can use this built-in material to debug the generation of normals in meshes, to preview models that have no material and no lights, or as fall-back default material. This built-in material has no parameters. 
+
+|===
+
+
+== RenderStates
+
+
+[cols="3", options="header"]
+.Transparancy
+|===
+
+a|Material Option
+a|Description
+a|Example
+
+a|getAdditionalRenderState(). +
+setBlendMode(BlendMode.Off);
+a|This is the default, no transparency.
+a|Use for all opaque objects like walls, floors, people…
+
+a|getAdditionalRenderState() +
+.setBlendMode(BlendMode.Alpha);
+a|Interpolates the background pixel with the current pixel by using the current pixel's alpha.
+a|Use this for normal every-day translucency: Frosted window panes, ice, glass, alpha-blended vegetation textures… 
+
+a|getAdditionalRenderState() +
+.setDepthWrite(false);
+a|Disables writing of the pixel's depth value to the depth buffer.
+a|Use this on Materials if you have several transparent/translucent objects obscuring one another, but you want to see through both.
+
+a|getAdditionalRenderState() +
+.setAlphaFallOff(0.5f); +
+getAdditionalRenderState() +
+.setAlphaTest(true)
+a|Enables Alpha Testing with a “AlphaDiscardThreshold in the AlphaMap.
+a|Activate Alpha Testing for (partially) *transparent* objects such as foliage, hair, etc. +
+Deactivate Alpha Testing for gradually *translucent* objects, such as colored glass, smoked glass, ghosts.
+
+a|getAdditionalRenderState() +
+.setBlendMode(BlendMode.Additive);
+a|Additive alpha blending adds colors in a commutative way, i.e. the result does not depend on the order of transparent layers, since it adds the scene's background pixel color to the current pixel color. This is useful if you have lots of transparent textures overlapping and don't care about the order. +
+*Note:* Viewed in front of a white background, Additive textures become fully transparent! 
+a| This is the default for Particle.j3md-based textures that have a black color background. 
+
+a|getAdditionalRenderState() +
+.setBlendMode(BlendMode.AlphaAdditive);
+a|Same as “Additive, except first it multiplies the current pixel color by the pixel alpha.
+a|This can be used for particle effects that have alpha as background. 
+
+a|getAdditionalRenderState() +
+.setBlendMode(BlendMode.Color);
+a|Blends by color.
+a|Generally useless.
+
+a|getAdditionalRenderState() +
+.setBlendMode(BlendMode.Modulate);
+a|Multiplies the background pixel by the current pixel.
+a|?
+
+a|getAdditionalRenderState() +
+.setBlendMode(BlendMode.ModulateX2);
+a|Same as “Modulate, except the result is doubled.
+a|?
+
+a|getAdditionalRenderState() +
+.setBlendMode(BlendMode.PremultAlpha);
+a|Pre-multiplied alpha blending. E.g. if the color of the object has already been multiplied by its alpha, this is used instead of “Alpha blend mode.
+a|For use with Premult Alpha textures.
+
+|===
+
+If the DiffuseMap has an alpha channel, use:
+
+[source,java]
+----
+mat.setBoolean("UseAlpha",true);
+----
+
+Later, put the Geometry (not the Material!) in the appropriate render queue.
+[source,java]
+----
+geo.setQueueBucket(Bucket.Translucent);
+----
+or
+[source,java]
+----
+geo.setQueueBucket(Bucket.Transparent);
+----
+
+
+
+[cols="3", options="header"]
+.Culling
+|===
+
+a|Material Option
+a|Usage
+a|Example
+
+a|getAdditionalRenderState() +
+.setFaceCullMode(FaceCullMode.Back); 
+a|Activates back-face culling. Mesh faces that are facing away from the camera are not rendered, which saves time. *Backface culling is activated by default as a major optimization.* 
+a|The invisible backsides and insides of models are not calculated. 
+
+a|getAdditionalRenderState() +
+.setFaceCullMode(FaceCullMode.Off); 
+a|No meshes are culled. Both mesh faces are rendered, even if they face away from the camera. Slow.
+a|Sometimes used to debug custom meshes if you messed up some of the polygon sides, or for special shadow effects.
+
+a|getAdditionalRenderState() +
+.setFaceCullMode(FaceCullMode.Front); 
+a|Activates front-face culling. Mesh faces facing the camera are not rendered.
+a|No example – Typically not used because you wouldn't see anything meaningful.
+
+a|getAdditionalRenderState() +
+.setFaceCullMode(FaceCullMode.FrontAndBack)
+a|Culls both backfaces and frontfaces.
+a|Use this as an efficient way to make an object temporarily invisible, while keeping all its other in-game properties (such as node attachment, collision shapes, interactions, etc) active.
+
+|===
+
+
+[cols="3", options="header"]
+.Miscellaneous
+|===
+
+a|Material Option
+a|Useage
+a|Example
+
+a|getAdditionalRenderState() +
+.setColorWrite(false);
+a|Disable writing the color of pixels.
+a|Use this together with setDepthWrite(true) to write pixels only to the depth buffer, for example. 
+
+a|getAdditionalRenderState() +
+.setPointSprite(true);
+a|Enables point-sprite mode, e.g. meshes with “Mode.Points will be rendered as textured sprites. Note that gl_PointCoord must be set in the shader.
+a|Point sprites are used internally for hardware accelerated particle effects.
+
+a|getAdditionalRenderState() +
+.setPolyOffset();
+a|Enable polygon offset.
+a|Use this when you have meshes that have triangles really close to each over (e.g. link:http://en.wikipedia.org/wiki/Coplanarity[Coplanar]), it will shift the depth values to prevent link:http://en.wikipedia.org/wiki/Z-fighting[Z-fighting].
+
+|===
+
+*Related Links*
+
+*  <<jme3/advanced/material_specification#,Developer specification of the jME3 material system (.j3md,.j3m)>>

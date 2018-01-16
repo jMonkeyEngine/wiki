@@ -1,0 +1,165 @@
+= matrix
+:author:
+:revnumber:
+:revdate: 2016/03/17 20:48
+:relfileprefix: ../
+:imagesdir: ..
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
+
+
+== Matrix
+
+See link:http://javadoc.jmonkeyengine.org/com/jme3/math/Matrix3f.html[Javadoc of Matrix3f] and link:http://javadoc.jmonkeyengine.org/com/jme3/math/Matrix4f.html[Javadoc of Matrix4f]
+
+
+=== Definition
+
+A Matrix is typically used as a _linear transformation_ to map vectors to vectors. That is: Y = MX where X is a Vector and M is a Matrix applying any or all transformations (scale, rotate, translate).
+
+There are a few special matrices:
+
+_zero matrix_ is the Matrix with all zero entries.
+[cols="3", options="header"]
+|===
+
+a|0
+a|0
+a|0
+
+a|0
+a|0
+a|0
+
+a|0
+a|0
+a|0
+
+|===
+
+The _Identity Matrix_ is the matrix with 1 on the diagonal entries and 0 for all other entries.
+[cols="3", options="header"]
+|===
+
+a|1
+a|0
+a|0
+
+a|0
+a|1
+a|0
+
+a|0
+a|0
+a|1
+
+|===
+
+A Matrix is _invertible_ if there is a matrix _M^-1^_ where _MM^-1^ = M^-1^ = I_.
+
+The _transpose_ of a matrix _M = [m~ij~]_ is _M^T^ = [m~ji~]_. This causes the rows of _M_ to become the columns of _M^T^_.
+[cols="7", options="header"]
+|===
+
+a|1
+a|1
+a|1
+<a|
+a|1
+a|2
+a|3
+
+a|2
+a|2
+a|2
+a| ⇒
+a|1
+a|2
+a|3
+
+a|3
+a|3
+a|3
+<a|
+a|1
+a|2
+a|3
+
+|===
+
+A Matrix is symmetric if _M_ = _M^T^_.
+[cols="3", options="header"]
+|===
+
+a|X
+a|A
+a|B
+
+a|A
+a|X
+a|C
+
+a|B
+a|C
+a|X
+
+|===
+
+Where X, A, B, and C equal numbers
+
+jME includes two types of Matrix classes: Matrix3f and Matrix4f. Matrix3f is a 3x3 matrix and is the most commonly used (able to handle scaling and rotating), while Matrix4f is a 4x4 matrix that can also handle translation.
+
+
+=== Transformations
+
+Multiplying a <<jme3/vector#,Vector>> with a Matrix allows the <<jme3/vector#,Vector>> to be transformed. Either rotating, scaling or translating that <<jme3/vector#,Vector>>.
+
+
+==== Scaling
+
+If a _diagonal Matrix_, defined by D = [d~ij~] and d~ij~ = 0 for i != j, has all positive entries it is a _scaling matrix_. If d~i~ is greater than 1 then the resulting <<jme3/vector#,Vector>> will grow, while if d~i~ is less than 1 it will shrink.
+
+
+==== Rotation
+
+A _rotation matrix_ requires that the transpose and inverse are the same matrix (R^-1^ = R^T^). The _rotation matrix_ R can then be calculated as: R = I + (sin(angle)) S + (1 - cos(angle)S^2^ where S is:
+[cols="3", options="header"]
+|===
+
+a|0
+a|u~2~
+a|-u~1~
+
+a|-u~2~
+a|0
+a|u~0~
+
+a|u~1~
+a|-u~0~
+a|0
+
+|===
+
+
+==== Translation
+
+Translation requires a 4x4 matrix, where the <<jme3/vector#,Vector>> (x,y,z) is mapped to (x,y,z,1) for multiplication. The _Translation Matrix_ is then defined as:
+[cols="2", options="header"]
+|===
+
+a|M
+a|T
+
+a|S^T^
+a|1
+
+|===
+
+where M is the 3x3 matrix (containing any rotation/scale information), T is the translation <<jme3/vector#,Vector>> and S^T^ is the transpose Vector of T. 1 is just a constant.
+
+
+=== jME Class
+
+Both Matrix3f and Matrix4f store their values as floats and are publicly available as (m00, m01, m02, …, mNN) where N is either 2 or 3.
+
+Most methods are straight forward, and I will leave documentation to the Javadoc.

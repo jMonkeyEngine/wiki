@@ -1,0 +1,96 @@
+= Models and Scenes
+:author: 
+:revnumber: 
+:revdate: 2016/03/17 20:48
+:relfileprefix: ../../
+:imagesdir: ../..
+:experimental:
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
+
+Like <<jme3/advanced/shape#,Shape>>s, 3D models are also made up of <<jme3/advanced/mesh#,Mesh>>es, but models are more complex than Shapes. While Shapes are built into jME3, you typically create models in external 3D Mesh Editors. 
+
+
+== Using Models and Scenes with jME3
+
+To use 3D models in a jME3 application:
+
+.  Export the 3D model in Ogre XML or Wavefront OBJ format. Export Scenes as Ogre DotScene format.
+.  Save the files into a sub-directory of your jME3 `Assets` directory.
+.  In your code, you use the <<jme3/advanced/asset_manager#,Asset Manager>> to load models as <<jme3/advanced/spatial#,Spatial>>s into a jME application.
++
+[source,java]
+----
+Spatial model = assetManager.loadModel(
+    "Models/MonkeyHead/MonkeyHead.mesh.xml" );
+----
+
+[NOTE]
+====
+(For the release build:) Use the jMonkeyEngine SDK to convert models to .j3o format. You don't need this step as long you still develop and test the application within the jMonkeyEngine SDK.
+====
+
+
+== Creating Models and Scenes
+
+To create 3D models and scenes, you need a 3D Mesh Editor such as link:http://www.blender.org/[Blender], with an <<jme3/advanced/ogrecompatibility#,OgreXML Exporter>> plugin. 
+
+[TIP]
+====
+Learn how to create link:http://en.wikibooks.org/wiki/Blender_3D:_Noob_to_Pro/UV_Map_Basics[UV textures] for more complex models, it looks more professional. 
+====
+
+3D model editors are third-party products, so please consult their documentation for instructions how to use them. Here is an example workflow for Blender users:
+
+*  <<jme3/external/blender#,Creating jME3 compatible 3D models in Blender>>
+
+To export your models as Ogre XML meshes with materials:
+
+. jMonkeyEngine requires a material file to be named the same name as the model so prior to opening the export dialog make it so. The model will export files named `ModelName.mesh.xml` with a `ModelName.material`, plus (optionally) `ModelName.skeleton.xml`, and some JPG files.
+.  Open the menu `menu:File[Export > Ogre3D]` to open the exporter dialog.
+.  In the `File Path` field: Select a target sub-directory of your `Project Assets/Textures/` directory. E.g. `Project Assets/Textures/ModelName/`. See <<jme3/intermediate/best_practices#multi-media-asset-pipeline#,Best Practices>>.
+.  In the panel at the bottom left of the export window toggle the following export settings: 
+-  Swap Axis: xz-y
+- [*] Separate materials
+- [ ] Only Deformable Bones footnote:[Optional: If selected, and you have an Armature with the model, only the deform bones are exported.]
+- [ ] Export Scene footnote:[Toggle this to export your model in DotScene format]
+- [ ] Export Selected Only footnote:[Optional: If selected, you manually choose each object you want exported prior to opening the export dialog.]
+- [*] Export Meshes
+- [ ] Export Meshes Overwrite footnote:[Optional: If selected, it will overwrite the existing files in the target directory] 
+- [ ] Armature Animation footnote:[Optional: Only used if the model contains an armature.]
+-  Trim Weights footnote:[Occasionally when exporting you may get a warning complaining about vertices weighted to too many bones. You are then asked to try increasing the trim weights option. Slightly increase this spinner and try exporting again. Repeat the process until the warning goes away.]
+- [*] Export Materials
+.  Click Export Ogre.
+
+You can now use the <<sdk#,jMonkeyEngine SDK>> to <<sdk/model_loader_and_viewer#,load and view models>>. You can <<sdk/scene_composer#,create scenes>> from them and write code that loads them into your application.
+
+
+== Blender Buffer Clearing
+
+
+Before exporting your Blender models, its is recommended that you clean the buffers of any unneeded `Action`, `Material`, `Texture` or `UV Image`. This is a straight forward process that only takes a few minutes. Failure to do so can lead you into a morass of problems, like having more than one AnimControl, duplicate materials and textures, wasted space from worthless images, just to mention a few potential troubles.
+
+Clearing Blender Material, Texture, UV Image Buffers::
+.  Open the `UV Image Editor`, `Material Tab` or `Texture Tab`.
+.  Select the btn:[Browse] button located next to the material, texture or UV Image name to load the item to be cleared.
+.  While holding kbd:[Shift] down, click the btn:[X] button, also known as the btn:[Unlink datablock] button, located next to the loaded item. An item that is unlinked will show a `0` before it when viewed by selecting the btn:[Browse] button and will not be saved if you exit Blender.
+.  Save your file.
+.  From the `Info` header select `menu:File[Open Recent > Your Saved File]`, to close and re-open your file.
+
+The exception to this rule is the `Linked Action` buffer, for animations, located in the `Dope Sheet Editor`. 
+
+Clearing The Linked Action Buffer::
+.  In the `Dope Sheet Editor`, change the context to `Action Editor`.
+.  Click the `Action to be linked` button and select the action you want cleared.
+.  Deselect the btn:[F] button to prevent it from saving.
+.  Change the editor type from `Dope Sheet` to `NLA Editor`. You will see the action listed.
+.  Click the btn:[Double Down Arrow] button next to the action to push it into the stack.
+.  Click the small start next to the track name.
+.  With the mouse inside the `NLA Track List`,  press kbd:[X] to delete both the track and strip.
+.  Save your file.
+.  From the `Info` header, select `menu:File[Open Recent > Your Saved File]`.
+.  Save your file again.
+.  From the `Info` header, select `menu:File[Open Recent > Your Saved File]` again.
+.  Change back to the `Dope Sheet Editor`.
+.  Click the btn:[Browse Action to be linked] button and you will see only the baked action remains and the buffer is now clear of unwanted actions. Select your action.
+.  Save your file.

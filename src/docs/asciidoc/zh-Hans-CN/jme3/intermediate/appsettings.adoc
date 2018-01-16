@@ -1,0 +1,238 @@
+= jME3 Application Display Settings
+:author:
+:revnumber:
+:revdate: 2016/03/17 20:48
+:relfileprefix: ../../
+:imagesdir: ../..
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
+
+Every class that extends jme3.app.SimpleApplication has properties that can be configured by customizing a `com.jme3.system.AppSettings` object.
+
+
+[IMPORTANT]
+====
+Configure application settings in `main()`, before you call `app.start()` on the application object. If you change display settings during runtime, for example in `simpleInitApp()`, you must call `app.restart()` to make them take effect.
+====
+
+
+*Note:* Other runtime settings are covered in <<jme3/intermediate/simpleapplication#,SimpleApplication>>.
+
+
+== Code Samples
+
+Specify settings for a game (here called `MyGame`, or whatever you called your SimpleApplication instance) in the `main()` method before the game starts:
+
+[source,java]
+----
+public static void main(String[] args) {
+  AppSettings settings = new AppSettings(true);
+  settings.setResolution(640,480);
+  // ... other properties, see below
+  MyGame app = new MyGame();
+  app.setSettings(settings);
+  app.start();
+}
+----
+
+Set the boolean in the AppSettings contructor to true if you want to keep the default settings for values that you do not specify. Set this parameter to false if you want the application to load user settings from previous launches. In either case you can still customize individual settings.
+
+This example toggles the settings to fullscreen while the game is already running. Then it restarts the game context (not the whole game) which applies the changed settings.
+
+[source,java]
+----
+public void toggleToFullscreen() {
+  GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+  DisplayMode[] modes = device.getDisplayModes();
+  int i=0; // note: there are usually several, let's pick the first
+  settings.setResolution(modes[i].getWidth(),modes[i].getHeight());
+  settings.setFrequency(modes[i].getRefreshRate());
+  settings.setBitsPerPixel(modes[i].getBitDepth());
+  settings.setFullscreen(device.isFullScreenSupported());
+  app.setSettings(settings);
+  app.restart(); // restart the context to apply changes
+}
+----
+
+
+== Properties
+[cols="30,55,15", options="header", caption="Table A: "]
+.Video
+|===
+
+a|Settings Property
+a|Description
+a|Default
+
+a|setRenderer(AppSettings.LWJGL_OPENGL1) +
+setRenderer(AppSettings.LWJGL_OPENGL2) +
+setRenderer(AppSettings.LWJGL_OPENGL3)
+a|Switch Video Renderer to OpenGL 1.1, OpenGL 2, or OpenGL 3.3. If your graphic card does not support all OpenGL2 features (`UnsupportedOperationException: GLSL and OpenGL2 is required for the LWJGL renderer`), then you can force your SimpleApplication to use OpenGL1 compatibility. (Then you still can't use special OpenGL2 features, but at least the error goes away and you can continue with the rest.)
+a| OpenGL 2
+
+a|setBitsPerPixel(32)
+a|Set the color depth. +
+1 bpp = black and white, 2 bpp = gray, +
+4 bpp = 16 colors, 8 bpp = 256 colors, 24 or 32 bpp = “truecolor.
+a|24
+
+a|setFramerate(60)
+a|How often per second the engine should try to refresh the frame. For the release, usually 60 fps. Can be lower (30) if you need to free up the CPU for other applications. No use setting it to a higher value than the screen frequency! If the framerate goes below 30 fps, viewers start to notice choppiness or flickering.
+a|-1 (unlimited)
+
+a|setFullscreen(true)
+a|Set this to true to make the game window fill the whole screen; you need to provide a key that calls app.stop() to exit the fullscreen view gracefully (default: escape). +
+Set this to false to play the game in a normal window of its own.
+a|False (windowed)
+
+a|setHeight(480), setWidth(640) +
+setResolution(640,480)
+a|Two equivalent ways of setting the display resolution.
+a|640x480 pixels
+
+a|setSamples(4)
+a|Set multisampling to 0 to switch antialiasing off (harder edges, faster.) +
+Set multisampling to 2 or 4 to activate antialising (softer edges, may be slower.) +
+Depending on your graphic card, you may be able to set multisampling to higher values such as 8, 16, or 32 samples.
+a|0
+
+a|setVSync(true) +
+setFrequency(60)
+a|Set vertical syncing to true to time the frame buffer to coincide with the refresh frequency of the screen. VSync prevents ugly page tearing artefacts, but is a bit slower; recommened for release build. +
+Set VSync to false to deactivate vertical syncing (faster, but possible page tearing artifacts); can remain deactivated during development or for slower PCs.
+a|false +
+60 fps
+
+a|setStencilBits(8)
+a|Set the number of stencil bits. +
+This value is only relevant when the stencil buffer is being used. Specify 8 to indicate an 8-bit stencil buffer, specify 0 to disable the stencil buffer.
+a|0 (disabled)
+
+a|setDepthBits(16)
+a|Sets the number of depth bits to use. +
+The number of depth bits specifies the precision of the depth buffer. To increase precision, specify 32 bits. To decrease precision, specify 16 bits. On some platforms 24 bits might not be supported, in that case, specify 16 bits. +
+See link:https://msdn.microsoft.com/en-us/library/bb976071.aspx[What Is a Depth Buffer?] and link:https://en.wikipedia.org/wiki/Z-buffering[Z-buffering] for a more in depth explanation.
+a|24
+
+|===
+[cols="30,55,15", options="header", caption="Table B: "]
+.Input
+|===
+
+a|Settings Property
+a|Description
+a|Default
+
+a|setUseInput(false)
+a|Respond to user input by mouse and keyboard. Can be deactivated for use cases where you only display a 3D scene on the canvas without any interaction.
+a|true
+
+a|setUseJoysticks(true)
+a|Activate optional joystick support
+a|false
+
+a|setEmulateMouse(true)
+a|Enable or disable mouse emulation for touchscreen-based devices. Setting this to true converts taps on the touchscreen to clicks, and finger swiping gestures over the touchscreen into mouse axis events.
+a|false
+
+a|setEmulateMouseFlipAxis(true,true)
+a|Flips the X or Y (or both) axes for the emulated mouse. Set the first parameter to true to flip the x axis, and the second to flip the y axis.
+a|false,false
+
+|===
+[cols="30,55,15", options="header", caption="Table C: "]
+.Audio
+|===
+
+a|Settings Property
+a|Description
+a|Default
+
+a|setAudioRenderer(AppSettings.LWJGL_OPENAL)
+a|Switch Audio Renderer. Currently there is only one option.
+a|OpenAL
+
+a|setStereo3D(true)
+a|Enable 3D stereo. This feature requires hardware support from the GPU driver. See link:http://en.wikipedia.org/wiki/Quad_buffering[Quad Buffering]. Currently, your everday user's hardware does not support this, so you can ignore it for now.
+a|false
+
+|===
+[cols="30,55,15", options="header", caption="Table D: "]
+.Branding
+|===
+
+a|Settings Property
+a|Description
+a|Default
+
+a|setTitle("My Game")
+a|This string will be visible in the titlebar, unless the window is fullscreen.
+a|"jMonkey Engine 3.x-stable"
+
+a|setIcons(new BufferedImage[]{ +
+ImageIO.read(new File(" ")), …});
+a|This specifies the little application icon in the titlebar of the application (unused in MacOS?). You should specify the icon in various sizes (256,128,32,16) to look good on various operating systems. Note: This is not the application icon on the desktop.
+a|null
+
+a|setSettingsDialogImage("Interface/mysplashscreen.png")
+a|A custom splashscreen image in the `assets/Interface` directory which is displayed when the settings dialog is shown.
+a|"/com/jme3/app/Monkey.png"
+
+|===
+
+
+[TIP]
+====
+You can use `app.setShowSettings(true);` and `setSettingsDialogImage("Interface/mysplashscreen.png")` to present the user with jme3's default display settings dialog when starting the game. Use `app.setShowSettings(false);` to hide the default settings screen. Set this boolean before calling `app.start()` on the SimpleApplication.
+====
+
+
+
+== Toggling and Activating Settings
+[cols="25,75", options="header"]
+|===
+
+a|SimpleApplication method
+a|Description
+
+a|app.setShowSettings(boolean)
+a|Activate or deactivate the default settings screen before start()ing the game. If you let users use this screen, you do not need to modify the settings object. Note: Most developers implement their own custom settings screen, but the default one is useful during the alpha stages.
+
+a|app.setSettings(settings)
+a|After you have modified the properties on the settings object, you apply it to your application. Note that the settings are not automatically reloaded while the game is running.
+
+a|app.start()
+a|Every game calls start() in the beginning to initialize the game and apply the settings. Modify and set your settings before calling start().
+
+a|app.restart()
+a|Restart()ing a running game restarts the game context and applies the updated settings object. (This does not restart or reinitialize the whole game.)
+
+|===
+
+
+== Saving and Loading Settings
+
+An AppSettings object also supports the following methods to save your settings under a unique key (in this example “com.foo.MyCoolGame3):
+
+*  Use `settings.save("com.foo.MyCoolGame3")` to save your settings via standard java.io serialization.
+*  Use `settings.load("com.foo.MyCoolGame3")` to load your settings.
+*  Use `settings2.copyFrom(settings)` to copy a settings object.
+
+Usage:
+
+Provide the unique name of your jME3 application as the String argument. For example `com.foo.MyCoolGame3`.
+
+[source,java]
+----
+
+    try { settings.save("com.foo.MyCoolGame3"); }
+    catch (BackingStoreException ex) { /** could not save settings */ }
+
+----
+
+*  On Windows, the preferences are saved under the following registry key: +
+`HKEY_CURRENT_USER\Software\JavaSoft\Prefs\com\foo\MyCoolGame3`
+*  On Linux, the preferences are saved in an XML file under: +
+`$HOME/.java/.userPrefs/com/foo/MyCoolGame3`
+*  On Mac +++<abbr title="Operating System">OS</abbr>+++ X, the preferences are saved as XML file under: +
+`$HOME/Library/Preferences/com.foo.MyCoolGame3.plist`
