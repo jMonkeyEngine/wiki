@@ -1,11 +1,21 @@
 = Physically Based Rendering – Part Three
+:author:
+:revnumber:
+:revdate: 2018/01/15 23:16
+:relfileprefix: ../../
+:imagesdir: ../..
+:experimental:
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
-image::irradianceMap.png[irradianceMap,width="320",height="250",align="center"]
-*Note* : after several discussions in the team, I realized that some points were not clear in the  “PBR for artists” post. I’ve made an update with additional information on how to handle metalness and specular. <<pbr_part1#,I invite you to read it>>.
+
+image::jme3/advanced/irradianceMap.png[irradianceMap,width="320",height="250",align="center"]
+*Note* : after several discussions in the team, I realized that some points were not clear in the  “PBR for artists” post. I’ve made an update with additional information on how to handle metalness and specular. I invite you to read it.
+
+<<jme3\advanced\pbr_part1#,Physically Based Rendering – Part one>>
 
 == Image Based Lighting in PBR
 
-In the <<pbr_part2#,previous post>>, I talked about the basics of PBR for developers, and explained the different steps of the lighting process with PBR.
+In <<jme3/advanced/pbr_part2#,Physically Based Rendering – Part Two>>, I talked about the basics of PBR for developers, and explained the different steps of the lighting process with PBR.
 
 As said before, PBR does not necessarily imply to have indirect lighting, But that’s what makes it look so good.
 
@@ -33,7 +43,7 @@ How do we fetch a pixel from an environment map? We need a vector. Often called 
 
 A picture worth thousand words
 
-image::Cube_mapped_reflection_example.jpg[Cube_mapped_reflection_example,width="320",height="250",align="center"]
+image::jme3/advanced/Cube_mapped_reflection_example.jpg[Cube_mapped_reflection_example,width="320",height="250",align="center"]
 from wikipedia : TopherTH at the English language Wikipedia [GFDL (http://www.gnu.org/copyleft/fdl.html), GFDL (http://www.gnu.org/copyleft/fdl.html) or CC-BY-SA-3.0 (http://creativecommons.org/licenses/by-sa/3.0/)], via Wikimedia Commons Here the reflected Ray is our reflection vector.
 
 Here the reflected Ray is our reflection vector.
@@ -58,7 +68,7 @@ But what’s the light color for a given point?
 
 Technically, every pixel in the environment map is a light source, so a shaded point is lighten by a vast amount of pixels.
 
-image::irradiance.png[irradiance,width="320",height="250",align="center"]
+image::jme3/advanced/irradiance.png[irradiance,width="320",height="250",align="center"]
 
 In this picture the orange area represent the light rays coming from the cube map to the shaded pixel, that we have to consider to properly compute the light color. So the idea would be, for each shaded pixel, to fetch all that texels and combine the colors.
 
@@ -66,7 +76,7 @@ As you can image that’s not practical for a real time rendering pipeline. Even
 
 Fortunately, We can use something called an *Irradiance map*. An irradiance map is basically the afford mentioned computation…except that it’s precomputed and baked into a texture. In practice here is what it looks like.
 
-image::irradianceMap.png[irradianceMap,width="320",height="250",align="center"]
+image::jme3/advanced/irradianceMap.png[irradianceMap,width="320",height="250",align="center"]
 On the left the original cube map, on the right, the pre computed irradiance map.
 
 So at run time you just have to do one texture fetch in that map with the reflection vector. Pretty cool heh?
@@ -85,7 +95,7 @@ But still…it’s slower than one texture fetch, so I chose to compute the Irra
 
 With this technique I can compute a 128X128 irradiance cube map on the CPU in Java in about 200ms. Too slow to be done on each frame, but at design time that’s the blink of an eye.
 
-image::DiffuseIBL.png[DiffuseIBL,width="320",height="250",align="center"]
+image::jme3/advanced/DiffuseIBL.png[DiffuseIBL,width="320",height="250",align="center"]
 Here is the diffuse effect of indirect lighting using an irradiance cube map
 
 === IBL Specular
@@ -94,7 +104,7 @@ Indirect diffuse is cool, but we want “shiny”!! Shiny implies specular light
 
 It’s important to understand what we want as a specular reflection. We want it to be very neat when the roughness is low and very blurry when it’s high.
 
-image::Roughness.png[Roughness,width="320",height="250",align="center"]
+image::jme3/advanced/Roughness.png[Roughness,width="320",height="250",align="center"]
 As roughness increase the reflection gets more blurry.
 
 To do this, we have to resolve an integral called the *radiance integral.*
@@ -121,13 +131,13 @@ But that’s not all, we also want to “bake” the specular BRDF in the map, s
 
 But, as we are preprocessing the map, we don’t have any information about the shaded surface normal and view direction. So we are going to assume they are all the same, and equal to the envVector we’ll use to fetch pixels from the map. Also we assume that the shading point is exactly at the center of the cube map.
 
-image::prefilteredEnvMapSampling.png[prefilteredEnvMapSampling,width="320",height="250",align="center"]
+image::jme3/advanced/prefilteredEnvMapSampling.png[prefilteredEnvMapSampling,width="320",height="250",align="center"]
 
 This is an approximation again, and it has a cost in quality, but we’re all for approximation as long as it’s perform faster while still looking good, right?
 
 Here is what the result looks like
 
-image::PrefilteredEnvMap.png[PrefilteredEnvMap,width="320",height="250",align="center"]
+image::jme3/advanced/PrefilteredEnvMap.png[PrefilteredEnvMap,width="320",height="250",align="center"]
 The prefiltered environment map, with the different mip levels. notice how the blur increases through them.
 
 So now we can evaluate the first sum of the split sum approximation with a single texture fetch. We are going to compute the Lod level (the mip level where to fetch the texel) according to the roughness.
@@ -146,7 +156,7 @@ So basically we can bake all combinations into a 2D map. roughness and N.L will 
 
 Here is what it looks like :
 
-image::integrateBrdf.png[integrateBrdf,width="320",height="250",align="center"]
+image::jme3/advanced/integrateBrdf.png[integrateBrdf,width="320",height="250",align="center"]
 
 The nice part is that this map is constant for white light. It does not depends on the environment. So you can bake it once and for all then use it as an asset in your shaders.
 
@@ -154,7 +164,7 @@ Now we have to combine values fetched from these maps to get the specular lighti
 
 Here is what indirect specular alone, looks like, with a roughness of 0.1.
 
-image::IndirectSpeculra.png[IndirectSpeculra,width="320",height="250",align="center"]
+image::jme3/advanced/IndirectSpeculra.png[IndirectSpeculra,width="320",height="250",align="center"]
 
 *So in the end :*
 
@@ -187,3 +197,8 @@ That concludes the post. Quite a lot of information to process. Now you should h
 *Importance Sampling :* A math technique to approximate the result of an integral.
 
 *Split Sum Approximation :* A way,used in Unreal Engine 4, to transform the specular radiance integral into 2 sums that can be easily baked into prefiltered textures.
+
+'''
+
+*  <<jme3\advanced\pbr_part1#,Physically Based Rendering – Part one>>
+*  <<jme3/advanced/pbr_part2#,Physically Based Rendering – Part Two>>
