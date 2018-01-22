@@ -1,44 +1,45 @@
 = jMonkeyEngine SDK: Material Editor
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :keywords: documentation, sdk, material, file, texture
 :relfileprefix: ../
 :imagesdir: ..
+:experimental:
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
-If you are looking for background information, read about <<jme3/advanced/material_definitions#,Material Definitions>> and <<jme3/advanced/j3m_material_files#,j3M Material Files>>. 
-You can <<jme3/advanced/j3m_material_files#,write .j3m files in a text editor>>, or <<sdk/material_editing#,use the jMonkeyEngine SDK to generate>> them for you as described in this article.
+If you are looking for background information, read about <<jme3/advanced/material_definitions#,Material Definitions>> and <<jme3/advanced/j3m_material_files#,j3M Material Files>>.
+You can <<jme3/advanced/j3m_material_files#,write .j3m files in a text editor>>, or use the jMonkeyEngine SDK to generate them for you as described in this article.
 
 
 == Materials
 
-The jMonkeyEngine uses a special Material format, which comes in .j3m files. You use .j3m files to store sets of material properties that you use repeatedly. This enables you write one short line of code that simply loads the presets from a custom .j3m file. Without a .j3m file you need to write several lines of material property setters every time when you want to use a non-default material. 
+The jMonkeyEngine uses a special Material format, which comes in .j3m files. You use .j3m files to store sets of material properties that you use repeatedly. This enables you write one short line of code that simply loads the presets from a custom .j3m file. Without a .j3m file you need to write several lines of material property setters every time when you want to use a non-default material.
 
 
 == Creating .j3m Materials
 
-
+[float.right]
 image::sdk/material-editor.png[material-editor.png,width="275",height="245",align="right"]
 
 
-To create new .j3m files in the jMonkeyEngine SDK,
+To create new .j3m files in the jMonkeyEngine SDK:
 
-.  Right-click the `assets/Materials` directory and choose New… &gt; Other.
-.  In the New File Wizard, choose Material &gt; Empty Material File, and click Next.
+.  btn:[RMB] select the `assets/Materials` directory and choose `menu:New[Other]`.
+.  In the New File Wizard, choose `menu:Material[Empty Material File]`, and click btn:[Next].
 .  Give the file a name, for example `mat_wall` for a wall material.
 .  A new file `mat_wall.j3m` is created in the Materials directory and opens in the Material Editor.
 
-You can edit the source of the material, or use the user-friendly visual editor to set the properties of the material. Set the properties to the same values as you would otherwise specify with setters on a Material object in Java code: 
+You can edit the source of the material, or use the user-friendly visual editor to set the properties of the material. Set the properties to the same values as you would otherwise specify with setters on a Material object in Java code:
 
 [source,java]
 ----
 Material mat_wall = new Material(
     assetManager, "Common/MatDefs/Light/Lighting.j3md");
-mat_wall.setTexture("DiffuseMap", 
+mat_wall.setTexture("DiffuseMap",
     assetManager.loadTexture("Textures/wall_diffuse.png"));
-mat_wall.setTexture("NormalMap", 
+mat_wall.setTexture("NormalMap",
     assetManager.loadTexture("Textures/wall_normals.png"));
 mat_wall.setFloat("Shininess", 5f);
 ----
@@ -56,12 +57,12 @@ Material my brick wall : Common/MatDefs/Light/Lighting.j3md {
 }
 ----
 
-You can modify the source code of the j3m file in the “source tab of the Material Editor.
+You can modify the source code of the j3m file in the "`source`" tab of the Material Editor.
 
 
 == Using .j3m Materials
 
-
+[float.right]
 image::sdk/applymaterial.jpg[applymaterial.jpg,width="180",height="300",align="right"]
 
 
@@ -69,21 +70,25 @@ When the material is ready and saved into your projects assets directory, you ca
 
 In the jMonkeyEngine SDK
 
-.  Right-click the j3o file and select “Edit in SceneComposer
-.  Open the SceneExplorer window
+.  btn:[RMB] select the j3o file and choose `Edit in SceneComposer`.
+.  You can open the SceneExplorer window by selecting `menu:Window[SceneExplorer]` from the menu bar, if it's not already open.
 .  In the SceneExplorer, click the geometry to which you want to assign the material.
-.  Open the Properties window
-.  Assign the .j3m material to the .j3o in the Properties&gt;Geometry&gt;Material section
+.  Open the Properties window.
+.  Assign the .j3m material to the .j3o in the `menu:Properties[Geometry>Material]` section.
++
+TIP: If the .j3o file already has a material assigned to it from exporting/importing, you can generate the material by selecting "`create j3m file`" instead. This will place a .j3m under `assets/Materials/Generated` and assign it to your .j3o.
+
 .  Save the j3o and load it into you game.
 
 Or in your Java code
 
-*  Use a loader and a setter to assign the material to a Geometry
+*  Use a loader and a setter to assign the material to a Geometry.
 
 [source,java]
 ----
 mywall.setMaterial(assetManager.loadMaterial( "Materials/mat_wall.j3m"));
 ----
+
 '''
 
 *See also:*
@@ -91,6 +96,6 @@ mywall.setMaterial(assetManager.loadMaterial( "Materials/mat_wall.j3m"));
 *  <<jme3/advanced/material_specification#,Developer specification of the jME3 material system (.j3md,.j3m)>>
 *  <<jme3/beginner/hello_material#,Hello Material>>
 *  <<jme3/advanced/materials_overview#,Materials Overview>>
-*  <<jme3/advanced/material_definitions#,Material Definitions>> 
+*  <<jme3/advanced/material_definitions#,Material Definitions>>
 *  <<jme3/advanced/j3m_material_files#,j3M Material Files>>
 *  <<sdk/neotexture#,Neotexture>> (Procedural textures)
