@@ -10,7 +10,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 Official translations of the wiki are not practical due to varying dialects, dodgy translator programs, and the increased workload needed to officially support the translations. A different approach is to have monkeys, who wish to contribute to the community, run their own translation of the wiki.
 
-This tutorial will go into the details of how to setup a copy of the wiki on link:https://github.com/[GitHub] that looks and feels like the official wiki, including link:https://github.com/marketplace/travis-ci/plan/MDIyOk1hcmtldHBsYWNlTGlzdGluZ1BsYW43MA==#pricing-and-setup[Travis-CI] automatically converting your AsciiDoc content to HTML, then publishing those files on each commit.
+This tutorial will go into the details of how to setup a copy of the wiki on link:https://github.com/[GitHub] that looks and feels like the official wiki, including link:https://github.com/marketplace/travis-ci[Travis-CI] automatically converting your AsciiDoc content to HTML, then publishing those files on each commit.
 
 You are not required to translate every page or even mirror changes to the official wiki. What is required is a linked wiki be robust enough to actually help other monkeys and that the content is kept current. If it's deemed worthy, a link to your repository, whether its stored on your own domain or not, will be added to the main page of the wiki under the <<documentation#languages#,Languages>> topic.
 
@@ -85,7 +85,7 @@ You will need to copy this token into someplace you trust. It'll never be shown 
 
 .Travis CI
 .  Click your name icon and select `menu:Settings[Billing>Marketplace]` or the "`Marketplace`" link at the top of the page header.
-.  Click the "Travis-CI" link. If you don't see one listed, find it using the search box.
+.  Click the "`Travis-CI`" link. If you don't see one listed, find it using the search box.
 .  Scroll to the bottom of the page and under "`Pricing and setup`" select the "`Open Source`" option if this is a public_repo or the payment plan of your choice.
 ..  When ready, select the btn:[Install] button.
 ..  Click through until you are redirected to the Travis-Ci website.
@@ -96,7 +96,7 @@ TIP: You can’t see your project on the list? Click on the Sync account button 
 .  Click the icon:cog[]  cog to go to the settings tab and configure it.
 ..  Check some options on General:
 ...  check the Build only if .travis.yml is present option.
-...  check the Build pushed options.
+...  Check the Build pushed options.
 ..  Create some Environment Variables that will be used in .travis.yml file:
 ...  GH_TOKEN: the token created on previous step.
 +
@@ -165,7 +165,7 @@ git update-index --chmod=+x gradlew
 git push
 ----
 
-..  If you dont have Git, then edit the travis.yml file and add this after the `branches:` command.
+..  If you dont have Git, then edit the `travis.yml` file and add this after the `branches:` command.
 +
 .No Git Installed
 [source]
@@ -197,6 +197,13 @@ At minimum, you still have to change the attributes "`endpoint-url`", "`wiki_lin
 ..  Replace it with your `*gh-pages*` address `pass:[https://username.github.io/repo-name]`.
 ..  Find the official wiki `*repository*` address of `pass:[https://github.com/jMonkeyEngine/wiki]`.
 ..  Replace it with your `*repository*` address of `pass:[https://github.com/username/repo-name]`.
+.  Change the link:https://docs.travis-ci.com/user/status-images/[build status link] for your repository in the README.adoc page.
++
+[source]
+----
+image:https://travis-ci.org/jMonkeyEngine/wiki.svg?branch=master["Build Status", link="https://travis-ci.org/jMonkeyEngine/wiki"]
+----
+
 .  After you have done all the above, commit and push to your wiki repository.
 
 .Atom Editor
@@ -205,6 +212,13 @@ At minimum, you still have to change the attributes "`endpoint-url`", "`wiki_lin
 ..  Enter your `*gh-pages*` address `pass:[https://username.github.io/repo-name]` in the "`Replace All`" box and when ready, select the btn:[Replace All] button.
 ..  Enter the official wiki `*repository*` address of `pass:[https://github.com/jMonkeyEngine/wiki]` into the search box and then select the btn:[Find All] button.
 ..  Enter your `*repository*` address of `pass:[https://github.com/username/repo-name]` in the "`Replace All`" box and when ready, select the btn:[Replace All] button.
+.  Change the link:https://docs.travis-ci.com/user/status-images/[build status link] for your repository in the README.adoc page.
++
+[source]
+----
+image:https://travis-ci.org/jMonkeyEngine/wiki.svg?branch=master["Build Status", link="https://travis-ci.org/jMonkeyEngine/wiki"]
+----
+
 .  After you have done all the above, `menu:File[Save All]`.
 .  Open the Git panel, `menu:Packages[GitHub>Toggle Git Tab]` or kbd:[Ctrl] + kbd:[9].
 .. Stage All.
