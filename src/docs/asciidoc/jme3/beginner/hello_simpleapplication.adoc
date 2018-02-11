@@ -226,7 +226,7 @@ A typical JME3 game has the following initialization process:
 
 
 
-=== The Future of SimpleApplication
+== The Future of SimpleApplication
 
 
 There are plans to change SimpleApplication. Sometime back it was decided that we should really re-factor the Application class. SimpleApplication especially is a mess of "`magic`" protected fields that on the one hand makes it really easy to slam some simple one-class application together, but on the other hand does new users no favors because they have no idea where 'cam' and 'assetManager' come from. Unfortunately, lots of code refers to Application and it's tough to change... especially the app states.
@@ -271,6 +271,24 @@ public class MyGame extends SimpleApplication {
 Then have all logic implemented in <<jme3/advanced/application_states#,AppStates>> and your SimpleApplication will never change much, except when you want to add a bootstrap AppState (or maybe you can have an AppState that manages AppStates...), SimpleApplication is just the list of states you are using.
 
 In future versions, all the code in SimpleApplication will be refactored in AppStates (InputHandlingState, RenderAppState, whatever) and you will decide what you want to use. However, for legacy sake we kept the code as is for now.
+
+If you follow this recommendation, when the changes are finalized, you will only need to do a few things different from now to make your old apps work and to create new ones.
+
+..  Extend BaseApplication rather than SimpleApplication when creating new apps.
+..  Update your existing apps by changing SimpleApplication to BaseApplication in your main class.
+..  Change any references you have made to SimpleApplication's protected fields.
++
+--
+For example, rather than turning off the FlyCam() like so,
+[source, java]
+----
+flyCam.setEnabled(false);
+----
+
+You would just leave the statement `new FlyCamAppState()` out of the constructor instead.
+--
+
+SimpleApplication will be around for some time as it will take time for people to migrate to BaseApplication, but AppStates make life easier anyway so you may as well start using them.
 
 
 == Conclusion
