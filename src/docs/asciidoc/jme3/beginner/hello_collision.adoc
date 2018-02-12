@@ -116,7 +116,12 @@ public class HelloCollision extends SimpleApplication
     player = new CharacterControl(capsuleShape, 0.05f);
     player.setJumpSpeed(20);
     player.setFallSpeed(30);
+    // pre jME3.2
+    // player.setGravity(30f);
+
+    // >= jME3.2
     player.setGravity(new Vector3f(0,-30f,0));
+
     player.setPhysicsLocation(new Vector3f(0, 10, 0));
 
     // We attach the scene and the player to the rootnode and the physics space,
@@ -165,7 +170,11 @@ public class HelloCollision extends SimpleApplication
     } else if (binding.equals("Down")) {
       down = isPressed;
     } else if (binding.equals("Jump")) {
-      if (isPressed) { player.jump(new Vector3f(0,10,0)); }
+      // pre jME3.2
+      //if (isPressed) { player.jump();}
+
+      // >= jME3.2
+      player.jump(new Vector3f(0,20f,0));
     }
   }
 
@@ -359,6 +368,10 @@ Now you use the CollisionShape to create a `CharacterControl` that represents th
 
     player.setJumpSpeed(20);
     player.setFallSpeed(30);
+    // pre jME3.2
+    // player.setGravity(30f);
+
+    // >= jME3.2
     player.setGravity(new Vector3f(0,-30f,0));
 
 ----
@@ -440,7 +453,11 @@ Remember that this class implements the `ActionListener` interface, so you can c
     } else if (binding.equals("Down")) {
       if (value) { down = true; } else { down = false; }
     } else if (binding.equals("Jump")) {
-      player.jump(new Vector3f(0,10,0));
+      // pre jME3.2
+      //if (isPressed) { player.jump();}
+
+      // >= jME3.2
+      player.jump(new Vector3f(0,20f,0));
     }
   }
 ----
