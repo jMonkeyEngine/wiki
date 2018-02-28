@@ -1,17 +1,17 @@
 = Light and Shadow
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :relfileprefix: ../../
 :imagesdir: ../..
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
-image:jme3/advanced/shading-ani.gif[Examples of shading and lighting.,width="",height=""]
+image::jme3/advanced/shading-ani.gif[Examples of shading and lighting.,width="",height=""]
 
 Light and Shadow are two separate things in 3D engines, although we percieve them together in real life:
 
-*  Lighting means that an object is brighter on the side facing the light direction, and darker on the backside. Computationally, this is relatively easy. 
+*  Lighting means that an object is brighter on the side facing the light direction, and darker on the backside. Computationally, this is relatively easy.
 *  Lighting does not mean that objects cast a shadow on the floor or other objects: Activating shadow processing is an additional step described here. Since casting shadows has an impact on performance, drop shadows and ambient occlusion shading are not activated by default.
 
 
@@ -24,20 +24,20 @@ A light source with a direction or location is required for all Geometries with 
 
 == Light Sources and Colors
 
-
+[.right.text-left]
 image::jme3/advanced/light-sources.png[A lit scene with multiple light sources,width="300",height="200",align="right"]
 
 
-You can add several types of light sources to a scene using `rootNode.addLight(mylight)`. 
+You can add several types of light sources to a scene using `rootNode.addLight(mylight)`.
 
 The available light sources in `com.​jme3.​light` are:
 
-*  SpotLight 
+*  SpotLight
 *  PointLight
 *  AmbientLight
 *  DirectionalLight
 
-You control the color and intensity of each light source. Typically you set the color to white (`new ColorRGBA(1.0f,1.0f,1.0f,1.0f)` or `ColorRGBA.White`), which makes all scene elements appear in their natural color. 
+You control the color and intensity of each light source. Typically you set the color to white (`new ColorRGBA(1.0f,1.0f,1.0f,1.0f)` or `ColorRGBA.White`), which makes all scene elements appear in their natural color.
 
 You can choose to use lights in other colors than white, or darker colors. This influences the scene's atmosphere and will make the scene appear colder (e.g. `ColorRGBA.Cyan`) or warmer (`ColorRGBA.Yellow`), brighter (higher values) or darker (lower values).
 
@@ -46,7 +46,7 @@ You can get a list of all lights added to a Spatial by calling `getWorldLightLis
 
 === PointLight
 
-
+[.right.text-left]
 image::jme3/advanced/elephant-pointlights.png[An elephant model illuminated by pointlights,width="300",height="205",align="right"]
 
 
@@ -66,11 +66,11 @@ rootNode.addLight(lamp_light);
 
 === DirectionalLight
 
-
+[.right.text-left]
 image::jme3/advanced/house-directionallight.png[A house model illuminated with a sun-like directional light,width="300",height="210",align="right"]
 
 
-A DirectionalLight has no position, only a direction. It sends out parallel beams of light and is considered “infinitely far away. You typically have one directional light per scene. A DirectionalLight can be used together with shadows. 
+A DirectionalLight has no position, only a direction. It sends out parallel beams of light and is considered “infinitely far away. You typically have one directional light per scene. A DirectionalLight can be used together with shadows.
 
 *Typically example:* Sun light.
 
@@ -85,7 +85,7 @@ rootNode.addLight(sun);
 
 === SpotLight
 
-
+[.right.text-left]
 image::jme3/advanced/spotlight.png[Spotlight,width="",height="",align="right"]
 
 
@@ -110,9 +110,9 @@ If you want the spotlight to follow the flycam, repeat the setDirection(…) and
 
 === AmbientLight
 
-An AmbientLight simply influences the brightness and color of the scene globally. It has no direction and no location and shines equally everywhere. An AmbientLight does not cast any shadows, and it lights all sides of Geometries evenly, which makes 3D objects look unnaturally flat; this is why you typically do not use an AmbientLight alone without one of the other lights.  
+An AmbientLight simply influences the brightness and color of the scene globally. It has no direction and no location and shines equally everywhere. An AmbientLight does not cast any shadows, and it lights all sides of Geometries evenly, which makes 3D objects look unnaturally flat; this is why you typically do not use an AmbientLight alone without one of the other lights.
 
-*Typical example:* Regulate overall brightness, tinge the whole scene in a warm or cold color. 
+*Typical example:* Regulate overall brightness, tinge the whole scene in a warm or cold color.
 
 [source,java]
 ----
@@ -127,7 +127,6 @@ rootNode.addLight(al);
 You can increase the brightness of a light source gradually by multiplying the light color to values greater than 1.0f. +
 Example: `mylight.setColor(ColorRGBA.White.mult(1.3f));`
 ====
-
 
 
 == Light Follows Spatial
@@ -147,13 +146,6 @@ spatial.addControl(lightControl); // this spatial controls the position of this 
 Obviously, this does not apply to AmbientLights, which have no position.
 
 
-== BasicShadowRenderer (deprecated)
-
-Full code sample
-
-*  link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/light/TestShadow.java[TestShadow.java]
-
-
 == Casting Shadows
 
 For each type of non-ambient light source, JME3 implements two ways to simulate geometries casting shadows on other geometries:
@@ -164,25 +156,25 @@ For each type of non-ambient light source, JME3 implements two ways to simulate 
 [cols="3", options="header"]
 |===
 
-a| light source class 
-a| shadow renderer class 
-a| shadow filter class 
+a| light source class
+a| shadow renderer class
+a| shadow filter class
 
-a| DirectionalLight 
-a| DirectionalLightShadowRenderer 
-a| DirectionalLightShadowFilter 
+a| DirectionalLight
+a| DirectionalLightShadowRenderer
+a| DirectionalLightShadowFilter
 
-a| PointLight 
-a| PointLightShadowRenderer 
-a| PointLightShadowFilter 
+a| PointLight
+a| PointLightShadowRenderer
+a| PointLightShadowFilter
 
-a| SpotLight 
-a| SpotLightShadowRenderer 
-a| SpotLightShadowFilter 
+a| SpotLight
+a| SpotLightShadowRenderer
+a| SpotLightShadowFilter
 
-a| AmbientLight 
-a| (not applicable) 
-a| (not applicable) 
+a| AmbientLight
+a| (not applicable)
+a| (not applicable)
 
 |===
 
@@ -194,7 +186,7 @@ Shadow calculations (cast and receive) have a performance impact, so use them sp
 ----
 
 spatial.setShadowMode(ShadowMode.Inherit);     // This is the default setting for new spatials.
-rootNode.setShadowMode(ShadowMode.Off);        // Disable shadows for the whole scene, except where overridden. 
+rootNode.setShadowMode(ShadowMode.Off);        // Disable shadows for the whole scene, except where overridden.
 wall.setShadowMode(ShadowMode.CastAndReceive); // The wall can cast shadows and also receive them.
 floor.setShadowMode(ShadowMode.Receive);       // Any shadows cast by the floor would be hidden by it.
 airplane.setShadowMode(ShadowMode.Cast);       // There's nothing above the airplane to cast shadows on it.
@@ -213,62 +205,42 @@ Here is the key code fragment:
 [source,java]
 ----
 
-        DirectionalLight sun = new DirectionalLight();
-        sun.setColor(ColorRGBA.White);
-        sun.setDirection(cam.getDirection());
-        rootNode.addLight(sun);
+DirectionalLight sun = new DirectionalLight();
+sun.setColor(ColorRGBA.White);
+sun.setDirection(cam.getDirection());
+rootNode.addLight(sun);
 
-        /* Drop shadows */
-        final int SHADOWMAP_SIZE=1024;
-        DirectionalLightShadowRenderer dlsr = new DirectionalLightShadowRenderer(assetManager, SHADOWMAP_SIZE, 3);
-        dlsr.setLight(sun);
-        viewPort.addProcessor(dlsr);
+/* Drop shadows */
+final int SHADOWMAP_SIZE=1024;
+DirectionalLightShadowRenderer dlsr = new DirectionalLightShadowRenderer(assetManager, SHADOWMAP_SIZE, 3);
+dlsr.setLight(sun);
+viewPort.addProcessor(dlsr);
 
-        DirectionalLightShadowFilter dlsf = new DirectionalLightShadowFilter(assetManager, SHADOWMAP_SIZE, 3);
-        dlsf.setLight(sun);
-        dlsf.setEnabled(true);
-        FilterPostProcessor fpp = new FilterPostProcessor(assetManager);
-        fpp.addFilter(dlsf);
-        viewPort.addProcessor(fpp);
+DirectionalLightShadowFilter dlsf = new DirectionalLightShadowFilter(assetManager, SHADOWMAP_SIZE, 3);
+dlsf.setLight(sun);
+dlsf.setEnabled(true);
+FilterPostProcessor fpp = new FilterPostProcessor(assetManager);
+fpp.addFilter(dlsf);
+viewPort.addProcessor(fpp);
 
 ----
 
 Constructor arguments:
- * your AssetManager object
- * size of the rendered shadow maps, in pixels per side (512, 1024, 2048, etc…)
- * the number of shadow maps rendered (more shadow maps = better quality, but slower)
+
+*  Your AssetManager object.
+*  Size of the rendered shadow maps, in pixels per side (512, 1024, 2048, etc…).
+*  The number of shadow maps rendered (more shadow maps = better quality, but slower).
 
 Properties you can set:
- * setDirection(Vector3f) – the direction of the light
- * setLambda(0.65f) – to reduce the split size
- * setShadowIntensity(0.7f) – shadow darkness (1=black, 0=invisible)
- * setShadowZextend(float) – distance from camera to which shadows will be computed
 
-
-== Parallel-Split Shadow Map (deprecated)
-
-Full sample code
-
-*  link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/light/TestPssmShadow.java[TestPssmShadow.java]
-
-
-image::jme3/advanced/shadow.png[A lit scene with PSSM drop shadows,width="300",height="200",align="right"]
-
-
-[source,java]
-----
-private PssmShadowRenderer pssmRenderer;
-...
-public void simpleInitApp() {
-    ....
-    pssmRenderer = new PssmShadowRenderer(assetManager, 1024, 3);
-    pssmRenderer.setDirection(new Vector3f(-.5f,-.5f,-.5f).normalizeLocal()); // light direction
-    viewPort.addProcessor(pssmRenderer);
-
-----
+*  setDirection(Vector3f) – the direction of the light
+*  setLambda(0.65f) – to reduce the split size
+*  setShadowIntensity(0.7f) – shadow darkness (1=black, 0=invisible)
+*  setShadowZextend(float) – distance from camera to which shadows will be computed
 
 
 == Screen Space Ambient Occlusion
+
 
 Full sample code
 
@@ -290,4 +262,4 @@ viewPort.addProcessor(fpp);
 
 ----
 
-image:jme3/advanced/shading-textured-ani.gif[Shading with and without Ambient Occlusion,width="",height=""]
+image::jme3/advanced/shading-textured-ani.gif[Shading with and without Ambient Occlusion,width="",height=""]
