@@ -11,22 +11,22 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 == Shaders Basics
 
-Shaders are sets of instructions that are executed on the GPU. They are used to take advantage of hardware acceleration available on the GPU for rendering purposes. 
+Shaders are sets of instructions that are executed on the GPU. They are used to take advantage of hardware acceleration available on the GPU for rendering purposes.
 
-This paper only covers Vertex and Fragment shaders because they are the only ones supported by JME3 for the moment. Be aware that there are some other types of shaders (geometry, tessellation,…). 
+This paper only covers Vertex and Fragment shaders because they are the only ones supported by JME3 for the moment. Be aware that there are some other types of shaders (geometry, tessellation,…).
 
 There are multiple frequently used languages that you may encounter to code shaders but as JME3 is based on OpenGL, shaders in JME use GLSL and any example in this paper will be written in GLSL.
 
 
 === How Does it work?
 
-To keep it Simple: The Vertex shader is executed once for each vertex in the view, then the Fragment shader (also called the Pixel shader) is executed once for each pixel on the screen. 
+To keep it Simple: The Vertex shader is executed once for each vertex in the view, then the Fragment shader (also called the Pixel shader) is executed once for each pixel on the screen.
 
-The main purpose of the Vertex shader is to compute the screen coordinate of a vertex (where this vertex will be displayed on screen) while the main purpose of the Fragment shader is to compute the color of a pixel. 
+The main purpose of the Vertex shader is to compute the screen coordinate of a vertex (where this vertex will be displayed on screen) while the main purpose of the Fragment shader is to compute the color of a pixel.
 
-This is a very simplified graphic to describe the call stack: 
+This is a very simplified graphic to describe the call stack:
 
-image:jme3/advanced/jme3andshaders.png[jme3andshaders.png,width="",height="", align="left] 
+image:jme3/advanced/jme3andshaders.png[jme3andshaders.png,width="",height="", align="left]
 
 The main program sends mesh data to the vertex shader (vertex position in object space, normals, tangents, etc..). The vertex shader computes the screen position of the vertex and sends it to the Fragment shader. The fragment shader computes the color, and the result is displayed on screen or in a texture.
 
@@ -39,12 +39,12 @@ There are different types of scope for variables in a shader:
 *  attribute: Per-vertex variables passed by the engine to the shader, like position, normal, etc (Mesh data in the graphic)
 *  varying: Variables passed from the vertex shader to the fragment shader.
 
-There is a large panel of variable types to be used, for more information about it I recommend reading the GLSL specification link:http://www.opengl.org/registry/doc/GLSLangSpec.Full.1.20.8.pdf[here]. 
+There is a large panel of variable types to be used, for more information about it I recommend reading the GLSL specification link:http://www.opengl.org/registry/doc/GLSLangSpec.Full.1.20.8.pdf[here].
 
 
 === Spaces and Matrices
 
-To understand the coming example you must know about the different spaces in 3D computer graphics, and the matrices used to translate coordinate from one space to another. 
+To understand the coming example you must know about the different spaces in 3D computer graphics, and the matrices used to translate coordinate from one space to another.
 
 image:jme3/advanced/jme3andshaders-1.png[jme3andshaders-1.png,width="",height="", align="left"]
 
@@ -53,9 +53,9 @@ The engine passes the object space coordinates to the vertex shader. We need to 
 
 === Simple example: rendering a solid color on an object
 
-Here is the simplest application to shaders, rendering a solid color. 
+Here is the simplest application to shaders, rendering a solid color.
 
-Vertex Shader: 
+Vertex Shader:
 
 [source,java]
 ----
@@ -78,7 +78,7 @@ void main(){
 
 ----
 
-Fragment Shader : 
+Fragment Shader :
 
 [source,java]
 ----
@@ -98,10 +98,10 @@ For example applying this shader to a sphere would render a solid blue sphere on
 == How to use shaders in JME3
 
 
-You probably heard that JME3 is "`shader oriented`", but what does that mean? + 
-Usually, to use shaders you must create a program. This program specifies the vertex shader and the fragment shader to use. JME3 encloses this in the material system. Every material in JME3 uses shaders. 
+You probably heard that JME3 is "`shader oriented`", but what does that mean? +
+Usually, to use shaders you must create a program. This program specifies the vertex shader and the fragment shader to use. JME3 encloses this in the material system. Every material in JME3 uses shaders.
 
-For example let’s have a look at the SolidColor.j3md file : 
+For example let’s have a look at the SolidColor.j3md file :
 
 [source,java]
 ----
@@ -164,11 +164,11 @@ These uniforms are passed to the shader without having to declare them in the j3
 
 === JME3 attributes
 
-Those are different attributes that are always passed to your shader. 
+Those are different attributes that are always passed to your shader.
 
-You can find a complete list of those attribute in the Type enum of the VertexBuffer in link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/java/com/jme3/scene/VertexBuffer.java[VertexBuffer.java]. 
+You can find a complete list of those attribute in the Type enum of the VertexBuffer in link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/java/com/jme3/scene/VertexBuffer.java[VertexBuffer.java].
 
-[NOTE] 
+[NOTE]
 ====
 In the shader the attributes names will be prefixed by an “in”.
 ====
@@ -192,7 +192,7 @@ Any uniform has to be declared in the material definition file (.j3md) in the �
 
 ----
 
-You can also pass some define to your vertex/fragment programs to know if an uniform as been declared. 
+You can also pass some define to your vertex/fragment programs to know if an uniform as been declared.
 
 You simply add it in the Defines section of your Technique in the definition file.
 
@@ -205,9 +205,9 @@ You simply add it in the Defines section of your Technique in the definition fil
 
 ----
 
-For integer and floating point parameters, the define will contain the value that was set. 
+For integer and floating point parameters, the define will contain the value that was set.
 
-For all other types of parameters, the value 1 is defined. 
+For all other types of parameters, the value 1 is defined.
 
 If no value is set for that parameter, the define is not declared in the shader.
 
@@ -217,7 +217,7 @@ there are setXXXX methods for any type of uniform you want to pass.
 [source,java]
 ----
 
-   material.setColor("Color", new ColorRGBA(1.0f, 0.0f, 0.0f, 1.0f); // red color
+   material.setColor("Color", new ColorRGBA(1.0f, 0.0f, 0.0f, 1.0f)); // red color
    material.setTexture("ColorMap", myTexture); // bind myTexture for that sampler uniform
 
 ----
@@ -240,12 +240,12 @@ The uniforms will be populated at runtime with the value you sent.
 
 === Example: Adding Color Keying to the Lighting.j3md Material Definition
 
-Color Keying is useful in games involving many players. It consists of adding some player-specific color on models textures. The easiest way of doing this is to use a keyMap which will contain the amount of color to add in its alpha channel. 
+Color Keying is useful in games involving many players. It consists of adding some player-specific color on models textures. The easiest way of doing this is to use a keyMap which will contain the amount of color to add in its alpha channel.
 
 Here I will use this color map: +
-link:http://wstaw.org/m/2011/10/24/plasma-desktopxB2787.jpg[http://wstaw.org/m/2011/10/24/plasma-desktopxB2787.jpg] +
+image:http://wstaw.org/m/2011/10/24/plasma-desktopxB2787.jpg[http://wstaw.org/m/2011/10/24/plasma-desktopxB2787.jpg] +
 to blend color on this texture: +
-link:http://wstaw.org/m/2011/10/24/plasma-desktopbq2787.jpg[http://wstaw.org/m/2011/10/24/plasma-desktopbq2787.jpg] 
+image:http://wstaw.org/m/2011/10/24/plasma-desktopbq2787.jpg[http://wstaw.org/m/2011/10/24/plasma-desktopbq2787.jpg]
 
 We need to pass 2 new parameters to the Lighting.j3md definition, MaterialParameters section:
 
@@ -287,16 +287,18 @@ if we need to blend it:
 [source,java]
 ----
 
-    #ifdef KEYMAP
-      vec4 keyColor = texture2D(m_KeyMap, newTexCoord);
-      diffuseColor.rgb = (1.0-keyColor.a) * diffuseColor.rgb + keyColor.a * m_KeyColor.rgb;
-    #endif
+#ifdef KEYMAP
+  vec4 keyColor = texture2D(m_KeyMap, newTexCoord);
+  diffuseColor.rgb = (1.0-keyColor.a) * diffuseColor.rgb + keyColor.a * m_KeyColor.rgb;
+#endif
 
 ----
 
-This way, a transparent pixel in the KeyMap texture doesn't modify the color. A black pixel replaces it for the m_KeyColor and values in between are blended. 
+This way, a transparent pixel in the KeyMap texture doesn't modify the color. A black pixel replaces it for the m_KeyColor and values in between are blended.
 
-A result preview can be seen here: link:http://wstaw.org/m/2011/10/24/plasma-desktopuV2787.jpg[http://wstaw.org/m/2011/10/24/plasma-desktopuV2787.jpg]
+A result preview can be seen here:
+
+image::http://wstaw.org/m/2011/10/24/plasma-desktopuV2787.jpg[http://wstaw.org/m/2011/10/24/plasma-desktopuV2787.jpg]
 
 
 === Step by step
@@ -323,7 +325,7 @@ A result preview can be seen here: link:http://wstaw.org/m/2011/10/24/plasma-des
 
 === JME3 and OpenGL 3 & 4 compatibility
 
-GLSL 1.0 to 1.2 comes with built in attributes and uniforms (ie, gl_Vertex, gl_ModelViewMatrix, etc…). Those attributes are deprecated since GLSL 1.3 (opengl 3), hence JME3 global uniforms and attributes. 
+GLSL 1.0 to 1.2 comes with built in attributes and uniforms (ie, gl_Vertex, gl_ModelViewMatrix, etc…). Those attributes are deprecated since GLSL 1.3 (opengl 3), hence JME3 global uniforms and attributes.
 
 Here is a list of deprecated attributes and their equivalent in JME3.
 
