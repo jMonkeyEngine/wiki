@@ -11,23 +11,23 @@
 <div class="paragraph"><p>You control the color and intensity of each light source. Typically you set the color to white (<code>new ColorRGBA(1.0f,1.0f,1.0f,1.0f)</code> or <code>ColorRGBA.White</code>), which makes all scene elements appear in their natural color.</p></div>
 <div class="paragraph"><p>You can choose to use lights in other colors than white, or darker colors. This influences the scene&#8217;s atmosphere and will make the scene appear colder (e.g. <code>ColorRGBA.Cyan</code>) or warmer (<code>ColorRGBA.Yellow</code>), brighter (higher values) or darker (lower values).</p></div>
 <div class="paragraph"><p>You can get a list of all lights added to a Spatial by calling <code>getWorldLightList()</code> (includes inherited lights) or <code>getLocalLightList()</code> (only directly added lights), and iterating over the result.</p></div>
-<div class="sect2"><h3 id="pointlight">PointLight</h3><div style="text-align: right;" class="imageblock right text-left"><div class="content"><img src="../../jme3/advanced/elephant-pointlights.png" alt="An elephant model illuminated by pointlights" width="300" height="205"></div></div>
-<div class="paragraph"><p>A PointLight has a location and shines from there in all directions as far as its radius reaches. The light intensity decreases with increased distance from the light source. A PointLight can be used to cast shadows along with a PointLightShadowRenderer (see the Casting Shadows section)</p></div>
+<div class="sect2"><h3 id="pointlight">PointLight</h3><div class="openblock float-group"><div class="content"><div style="text-align: right;" class="imageblock right text-left"><div class="content"><img src="../../jme3/advanced/elephant-pointlights.png" alt="An elephant model illuminated by pointlights" width="300" height="205"></div></div>
+<div class="paragraph"><p>A PointLight has a location and shines from there in all directions as far as its radius reaches. The light intensity decreases with increased distance from the light source. A PointLight can be used to cast shadows along with a PointLightShadowRenderer (see the Casting Shadows section)</p></div></div></div>
 <div class="paragraph"><p><strong>Typical example:</strong> Lamp, lightbulb, torch, candle.</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">PointLight lamp_light = <span class="keyword">new</span> PointLight();
 lamp_light.setColor(ColorRGBA.Yellow);
 lamp_light.setRadius(<span class="float">4f</span>);
 lamp_light.setPosition(<span class="keyword">new</span> Vector3f(lamp_geo.getLocalTranslation()));
 rootNode.addLight(lamp_light);</code></pre></div></div></div>
-<div class="sect2"><h3 id="directionallight">DirectionalLight</h3><div style="text-align: right;" class="imageblock right text-left"><div class="content"><img src="../../jme3/advanced/house-directionallight.png" alt="A house model illuminated with a sun-like directional light" width="300" height="210"></div></div>
-<div class="paragraph"><p>A DirectionalLight has no position, only a direction. It sends out parallel beams of light and is considered “infinitely far away. You typically have one directional light per scene. A DirectionalLight can be used together with shadows.</p></div>
+<div class="sect2"><h3 id="directionallight">DirectionalLight</h3><div class="openblock float-group"><div class="content"><div style="text-align: right;" class="imageblock right text-left"><div class="content"><img src="../../jme3/advanced/house-directionallight.png" alt="A house model illuminated with a sun-like directional light" width="300" height="210"></div></div>
+<div class="paragraph"><p>A DirectionalLight has no position, only a direction. It sends out parallel beams of light and is considered “infinitely far away. You typically have one directional light per scene. A DirectionalLight can be used together with shadows.</p></div></div></div>
 <div class="paragraph"><p><strong>Typically example:</strong> Sun light.</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">DirectionalLight sun = <span class="keyword">new</span> DirectionalLight();
 sun.setColor(ColorRGBA.White);
 sun.setDirection(<span class="keyword">new</span> Vector3f(-<span class="float">.5f</span>,-<span class="float">.5f</span>,-<span class="float">.5f</span>).normalizeLocal());
 rootNode.addLight(sun);</code></pre></div></div></div>
-<div class="sect2"><h3 id="spotlight">SpotLight</h3><div style="text-align: right;" class="imageblock right text-left"><div class="content"><img src="../../jme3/advanced/spotlight.png" alt="Spotlight" width="" height=""></div></div>
-<div class="paragraph"><p>A SpotLight sends out a distinct beam or cone of light. A SpotLight has a direction, a position, distance (range) and two angles. The inner angle is the central maximum of the light cone, the outer angle the edge of the light cone. Everything outside the light cone&#8217;s angles is not affected by the light.</p></div>
+<div class="sect2"><h3 id="spotlight">SpotLight</h3><div class="openblock float-group"><div class="content"><div style="text-align: right;" class="imageblock right text-left"><div class="content"><img src="../../jme3/advanced/spotlight.png" alt="Spotlight" width="" height=""></div></div>
+<div class="paragraph"><p>A SpotLight sends out a distinct beam or cone of light. A SpotLight has a direction, a position, distance (range) and two angles. The inner angle is the central maximum of the light cone, the outer angle the edge of the light cone. Everything outside the light cone&#8217;s angles is not affected by the light.</p></div></div></div>
 <div class="paragraph"><p><strong>Typical Example:</strong> Flashlight</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">SpotLight spot = <span class="keyword">new</span> SpotLight();
 spot.setSpotRange(<span class="float">100f</span>);                           <span class="comment">// distance</span>
@@ -95,7 +95,7 @@ viewPort.addProcessor(fpp);</code></pre></div></div>
 SSAOFilter ssaoFilter = <span class="keyword">new</span> SSAOFilter(<span class="float">12.94f</span>, <span class="float">43.92f</span>, <span class="float">0.33f</span>, <span class="float">0.61f</span>);
 fpp.addFilter(ssaoFilter);
 viewPort.addProcessor(fpp);</code></pre></div></div>
-<div class="imageblock"><div class="content"><img src="../../jme3/advanced/shading-textured-ani.gif" alt="Shading with and without Ambient Occlusion" width="" height=""></div></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2018-02-28 16:04:55 +00:00</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
+<div class="imageblock"><div class="content"><img src="../../jme3/advanced/shading-textured-ani.gif" alt="Shading with and without Ambient Occlusion" width="" height=""></div></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2018-02-28 16:23:40 +00:00</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
   apiKey: 'a736b6d93de805e26ec2f49b55013fbd',
   indexName: 'jmonkeyengine',
   inputSelector: '#doc-search',
