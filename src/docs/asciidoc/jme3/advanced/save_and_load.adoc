@@ -1,6 +1,6 @@
 = Saving and Loading Games (.j3o)
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :keywords: convert, j3o, models, load, save, documentation, serialization, import, export, spatial, node, mesh, geometry, scenegraph, sdk
 :relfileprefix: ../../
@@ -8,7 +8,7 @@
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
-Spatials (that is Nodes and Geometries) can contain audio and light nodes, particle emitters, controls, and user data (player score, health, inventory, etc). For your game distribution, you must convert all original models to a faster binary format. You save individual Spatials as well as scenes using `com.jme3.export.binary.BinaryExporter`. 
+Spatials (that is Nodes and Geometries) can contain audio and light nodes, particle emitters, controls, and user data (player score, health, inventory, etc). For your game distribution, you must convert all original models to a faster binary format. You save individual Spatials as well as scenes using `com.jme3.export.binary.BinaryExporter`.
 
 The jMonkeyEngine's binary file format is called `.j3o`. You can convert, view and edit .j3o files and their materials in the jMonkeyEngine <<sdk#,SDK>> and compose scenes (this does not include editing meshes). For the conversion, you can either use the BinaryExporters, or a context menu in the SDK.
 
@@ -71,7 +71,7 @@ The following example overrides `simpleInitApp()` in SimpleApplication to load `
      loadedNode.setName("loaded node");
      rootNode.attachChild(loadedNode);
   }
-   
+
 ----
 
 
@@ -135,15 +135,13 @@ public class MyCustomClass implements Savable {
 To make a custom class savable:
 
 .  Implement `Savable` and add the `write()` and `read()` methods as shown in the example above.
-.  Do the following for each non-temporary class field: 
-**  Add one line that ``write()``s the data to the JmeExport output capsule. 
+.  Do the following for each non-temporary class field:
+**  Add one line that ``write()``s the data to the JmeExport output capsule.
 ***  Specify the variable to save, give it a String name (can be the same as the variable name), and specify a default value.
 
-**  Add one line that ``read…()``s the data to the JmeImport input capsule. 
+**  Add one line that ``read…()``s the data to the JmeImport input capsule.
 ***  On the left side of the assignment, specify the class field that you are restoring
 ***  On the right side, use the appropriate `capsule.read…()` method for the data type. Specify the String name of the variable (must be the same as you used in the `write()` method), and again specify a default value.
-
-
 
 
 [IMPORTANT]
@@ -151,3 +149,53 @@ To make a custom class savable:
 As with all serialization, remember that if you ever change data types in custom classes, the updated read() methods will no longer be able to read your old files. Also there has to be a constructor that takes no Parameters.
 ====
 
+== Default Value
+
+The default value plays an important role in what data is saved to file.
+
+.write()
+[source, java]
+----
+public void write(int value, String name, int defVal) throws IOException {
+    if (value == defVal)
+        return;
+    writeAlias(name, BinaryClassField.INT);
+    write(value);
+}
+
+----
+
+
+The write methods of the link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/445f7ed010199d30c484fe75bacef4b87f2eb38e/jme3-core/src/plugins/java/com/jme3/export/binary/BinaryOutputCapsule.java[BinaryOutputCapsule.java ] class do not write the `defVal` to file. Instead, they check to see if `value` is equal to `defVal`, and if so, will not write anything at all.
+
+There are very good reasons to do this.
+
+.  It takes less space if everything is a default value.
+.  You may decide on new defaults later and your objects will automatically upgrade if they didn’t have specifically overridden values.
+
+.read()
+[source, java]
+----
+public int readInt(String name, int defVal) throws IOException {
+    BinaryClassField field = cObj.nameFields.get(name);
+    if (field == null || !fieldData.containsKey(field.alias))
+        return defVal;
+    return ((Integer) fieldData.get(field.alias)).intValue();
+}
+----
+
+
+When reading your saved file, the link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/445f7ed010199d30c484fe75bacef4b87f2eb38e/jme3-core/src/plugins/java/com/jme3/export/binary/BinaryClassField.java[BinaryInputCapsule.java] class will see that the `name` field is `null` and this is when the defVal is set. If you rely on the compiler to initialize class or instance variables for you, this can lead too unintended consequences.
+
+For example:
+[source, java]
+----
+capsule.write(someIntValue,   "someIntValue",   1);
+----
+If you let the compiler initialize `someIntValue`, it will initialize to zero and if it's not changed after initialization, zero will be written to file.
+
+[source, java]
+----
+someIntValue   = capsule.readInt(    "someIntValue",   1);
+----
+Now when `read` is called, it will see the "`someIntValue`" name and set the `someIntValue` variable to zero. Not one, as you were expecting.
