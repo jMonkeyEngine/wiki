@@ -185,7 +185,11 @@ public int readInt(String name, int defVal) throws IOException {
 ----
 
 
-When reading your saved file, the link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/445f7ed010199d30c484fe75bacef4b87f2eb38e/jme3-core/src/plugins/java/com/jme3/export/binary/BinaryClassField.java[BinaryInputCapsule.java] class will see that the `name` field is `null` and this is when the defVal is set. If you rely on the compiler to initialize class or instance variables for you, this can lead too unintended consequences.
+When reading your saved file, the link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/445f7ed010199d30c484fe75bacef4b87f2eb38e/jme3-core/src/plugins/java/com/jme3/export/binary/BinaryClassField.java[BinaryInputCapsule.java] class will see that the `name` field is `null` and this is when the defVal is set.
+
+[NOTE]
+====
+If you rely on the compiler to initialize class or instance variables for you, this can lead too unintended consequences.
 
 For example:
 [source, java]
@@ -199,3 +203,5 @@ If you let the compiler initialize `someIntValue`, it will initialize to zero an
 someIntValue   = capsule.readInt(    "someIntValue",   1);
 ----
 Now when `read` is called, it will see the "`someIntValue`" name and set the `someIntValue` variable to zero. Not one, as you were expecting. Keep this in mind when using Savable.
+
+====
