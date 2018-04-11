@@ -1,13 +1,13 @@
 = Nifty GUI - Best Practices
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :relfileprefix: ../../
 :imagesdir: ../..
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
-This page is a short list of best practices that you should know of when starting to use Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++. The JME3 tutorials focus on JME3-Nifty integration related details. You will find more features in the link:http://sourceforge.net/projects/nifty-gui/files/nifty-gui/nifty-gui-the-manual-v1.0.pdf/download[Nifty GUI Manual].
+This page is a short list of best practices that you should know of when starting to use Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++. The JME3 tutorials focus on JME3-Nifty integration related details. You will find more features in the link:https://versaweb.dl.sourceforge.net/project/nifty-gui/nifty-gui/1.3.2/nifty-gui-the-manual-1.3.2.pdf[Nifty GUI Manual].
 
 .  <<jme3/advanced/nifty_gui#,Nifty GUI Concepts>>
 .  *Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++ Best Practices*
@@ -20,15 +20,15 @@ This page is a short list of best practices that you should know of when startin
 
 You can build Nifty GUIs using XML or Java syntax. Which one should you choose? The XML and Java syntax are equivalent, so is it an either-or choice? Not quite. You typically use XML and Java together.
 
-*  Build your basic static UI layout using XML - it's cleaner to write and read. 
+*  Build your basic static UI layout using XML - it's cleaner to write and read.
 *  Use Java syntax to control the dynamic parts of the +++<abbr title="Graphical User Interface">GUI</abbr>+++ at runtime - it's easier to interact with object-oriented code.
-*  *Example:* You design two UIs with slightly different XML layouts for mobile and desktop. If you use the same IDs for equivalent elements, your dynamic Java code works the same no matter which of the two base XML layout you use it on. This allows you to switch between a phone and a desktop UI by simply swapping one base XML file. 
+*  *Example:* You design two UIs with slightly different XML layouts for mobile and desktop. If you use the same IDs for equivalent elements, your dynamic Java code works the same no matter which of the two base XML layout you use it on. This allows you to switch between a phone and a desktop UI by simply swapping one base XML file.
 
 
 == Edit and Preview XML in the SDK
 
-*  Use the <<sdk#,jMonkeyEngine SDK>> New File wizard to create a new XML file (from the +++<abbr title="Graphical User Interface">GUI</abbr>+++ category, “Empty Nifty File). 
-*  The <<sdk#,jMonkeyEngine SDK>> includes an XML editor and a special previewer for Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++ files. 
+*  Use the <<sdk#,jMonkeyEngine SDK>> New File wizard to create a new XML file (from the +++<abbr title="Graphical User Interface">GUI</abbr>+++ category, "`Empty Gui`").
+*  The <<sdk#,jMonkeyEngine SDK>> includes an XML editor and a special previewer for Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++ files.
 *  When you open an XML file, you can switch between XML Editor and +++<abbr title="Graphical User Interface">GUI</abbr>+++ Preview mode.
 
 Tip: The +++<abbr title="Graphical User Interface">GUI</abbr>+++ category in the New File wizard also contains Nifty code samples.
@@ -36,7 +36,7 @@ Tip: The +++<abbr title="Graphical User Interface">GUI</abbr>+++ category in the
 
 == Validate the XML before loading
 
-The link:http://nifty-gui.sourceforge.net/projects/nifty/apidocs/de/lessvoid/nifty/Nifty.html[Nifty class] has _validateXml()_ method that takes the same input XML argument as _fromXml()_. Nifty does not validate the Xml by default, and will blow up in surprising ways if your XML does not conform to the schema. Adding the validation step will save you debugging time. You can validate right before loading, or in your unit tests. 
+The link:http://nifty-gui.sourceforge.net/projects/1.4.2/nifty/nifty/apidocs/index.html?de/lessvoid/nifty/Nifty.html[Nifty class] has _validateXml()_ method that takes the same input XML argument as _fromXml()_. Nifty does not validate the Xml by default, and will blow up in surprising ways if your XML does not conform to the schema. Adding the validation step will save you debugging time. You can validate right before loading, or in your unit tests.
 
 
 == Use Code Completion
@@ -46,8 +46,7 @@ The link:http://nifty-gui.sourceforge.net/projects/nifty/apidocs/de/lessvoid/nif
 ----
 
 <?xml version="1.0" encoding="UTF-8"?>
-<nifty xmlns="http://nifty-gui.sourceforge.net/nifty-1.3.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://nifty-gui.sourceforge.net/nifty-1.3.xsd http://nifty-gui.sourceforge.net/nifty-1.3.xsd">
+<nifty xmlns="http://nifty-gui.lessvoid.com/nifty-gui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://raw.githubusercontent.com/void256/nifty-gui/1.4/nifty-core/src/main/resources/nifty.xsd https://raw.githubusercontent.com/void256/nifty-gui/1.4/nifty-core/src/main/resources/nifty.xsd">
      <!-- Your IDE now tells you that one <screen></screen> element is expected here, etc. -->
 </nifty>
 
@@ -58,7 +57,7 @@ The link:http://nifty-gui.sourceforge.net/projects/nifty/apidocs/de/lessvoid/nif
 
 == Use the ID String Right
 
-*  If you want to interact with an element, give it an ID (String). 
+*  If you want to interact with an element, give it an ID (String).
 *  Use transparent ID-less panels as anonymous spacers.
 
 
@@ -79,7 +78,7 @@ Screens, layers, and panels…
 
 [TIP]
 ====
-During development (and during a tutorial), the following debug code makes all panels visible. This helps you arrange them and find errors. 
+During development (and during a tutorial), the following debug code makes all panels visible. This helps you arrange them and find errors.
 
 [source,java]
 ----
@@ -88,4 +87,3 @@ nifty.setDebugOptionPanelColors(true);
 
 Before the release, and during testing, set the debug view to false again.
 ====
-
