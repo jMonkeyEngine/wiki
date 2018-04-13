@@ -74,6 +74,8 @@ Afterwards create the directory `assets/Interface/Fonts` and add a new font, e.g
 .  Click the btn:[Next >] button when ready.
 .  Accept the defaults by selecting btn:[Finish].
 
+Lastly, see: <<jme3/advanced/nifty_gui_overlay#,Nifty Gui Overlay>> on how to setup your game to display your GUI.
+
 One XML file can contain several, or even all screens. As a reminder: Nifty displays one screen at a time; a screen contains several layers on top of one another; each layer contains panels that are embedded into another; the panels contain the actual content (text, images, or controls).
 
 
@@ -97,8 +99,6 @@ The following minimal XML file contains a start screen and a HUD screen. (Neithe
 ----
 
 Every Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++ must have a start screen. The others (in this example, the HUD screen) are optional.
-
-See: <<jme3/advanced/nifty_gui_overlay#,Nifty Gui Overlay>> on how to setup your game to display your GUI.
 
 NOTE: In the following examples, the XML schema header is abbreviated to just `<nifty>`.
 
@@ -142,21 +142,16 @@ A panel is the inner-most container (that will contain the actual content: text,
 [source,xml]
 ----
 
-      <panel id="panel_top" height="25%" width="75%" align="center" childLayout="center"
-             backgroundColor="#f008">
-      </panel>
-      <panel id="panel_mid" height="50%" width="75%" align="center" childLayout="center"
-             backgroundColor="#0f08">
-      </panel>
-      <panel id="panel_bottom" height="25%" width="75%" align="center" childLayout="horizontal"
-             backgroundColor="#00f8">
-        <panel id="panel_bottom_left" height="50%" width="50%" valign="center" childLayout="center"
-             backgroundColor="#44f8">
-        </panel>
-        <panel id="panel_bottom_right" height="50%" width="50%" valign="center" childLayout="center"
-             backgroundColor="#88f8">
-        </panel>
-      </panel>
+<panel id="panel_top" height="25%" width="75%" align="center" childLayout="center" backgroundColor="#f008">
+</panel>
+<panel id="panel_mid" height="50%" width="75%" align="center" childLayout="center" backgroundColor="#0f08">
+</panel>
+<panel id="panel_bottom" height="25%" width="75%" align="center" childLayout="horizontal" backgroundColor="#00f8">
+  <panel id="panel_bottom_left" height="50%" width="50%" valign="center" childLayout="center" backgroundColor="#44f8">
+  </panel>
+  <panel id="panel_bottom_right" height="50%" width="50%" valign="center" childLayout="center" backgroundColor="#88f8">
+  </panel>
+</panel>
 
 ----
 
@@ -165,22 +160,17 @@ The following panels go into in the `hud` screen's `foreground` layer:
 [source,xml]
 ----
 
-      <panel id="panel_left" width="80%" height="100%" childLayout="vertical"
-      backgroundColor="#0f08">
-        <!-- spacer -->
-      </panel>
-      <panel id="panel_right" width="20%" height="100%" childLayout="vertical"
-      backgroundColor="#00f8" >
-        <panel id="panel_top_right1" width="100%" height="15%" childLayout="center"
-             backgroundColor="#00f8">
-        </panel>
-        <panel id="panel_top_right2" width="100%" height="15%" childLayout="center"
-             backgroundColor="#44f8">
-        </panel>
-        <panel id="panel_bot_right" width="100%" height="70%" valign="center"
-             backgroundColor="#88f8">
-        </panel>
-      </panel>
+<panel id="panel_left" width="80%" height="100%" childLayout="vertical" backgroundColor="#0f08">
+  <!-- spacer -->
+</panel>
+<panel id="panel_right" width="20%" height="100%" childLayout="vertical" backgroundColor="#00f8" >
+  <panel id="panel_top_right1" width="100%" height="15%" childLayout="center" backgroundColor="#00f8">
+  </panel>
+  <panel id="panel_top_right2" width="100%" height="15%" childLayout="center" backgroundColor="#44f8">
+  </panel>
+  <panel id="panel_bot_right" width="100%" height="70%" valign="center" backgroundColor="#88f8">
+  </panel>
+</panel>
 
 ----
 
@@ -188,7 +178,6 @@ The result should look as follows:
 
 
 image::jme3/advanced/nifty-gui-panels.png[nifty-gui-panels.png,width="",height="",align="center"]
-
 
 
 == Adding Content to Panels
@@ -204,9 +193,9 @@ link:https://github.com/jMonkeyEngine/wiki/blob/master/src/docs/images/jme3/adva
 [source,xml]
 ----
 
-    <layer id="background" childLayout="center">
-        <image filename="Interface/start-background.png"></image>
-    </layer>
+<layer id="background" childLayout="center">
+    <image filename="Interface/start-background.png"></image>
+</layer>
 
 ----
 
@@ -215,20 +204,21 @@ The link:https://github.com/jMonkeyEngine/wiki/blob/master/src/docs/images/jme3/
 [source,xml]
 ----
 
-    <layer id="background" childLayout="center">
-        <image filename="Interface/hud-frame.png"></image>
-    </layer>
+<layer id="background" childLayout="center">
+    <image filename="Interface/hud-frame.png"></image>
+</layer>
 
 ----
 
-In order to make the hud-frame.png independent of the screen resolution you are using, you could use the `imageMode` attribute on the image element https://versaweb.dl.sourceforge.net/project/nifty-gui/nifty-gui/1.3.2/nifty-gui-the-manual-1.3.2.pdf[Nifty GUI - the Manual: Images (ImageMode=resize)].
+In order to make the hud-frame.png independent of the screen resolution you are using, you could use the `imageMode` attribute on the image element link:https://versaweb.dl.sourceforge.net/project/nifty-gui/nifty-gui/1.3.2/nifty-gui-the-manual-1.3.2.pdf[Nifty GUI - the Manual: Images (ImageMode=resize)].
 
 [source,xml]
 ----
 
-    <layer id="background" childLayout="center">
-        <image filename="Interface/hud-frame.png" imageMode="resize:40,490,110,170,40,560,40,270,40,560,40,40" width="100%" height="100%"/>
-    </layer>
+<layer id="background" childLayout="center">
+    <image filename="Interface/hud-frame.png" imageMode="resize:40,490,110,170,40,560,40,270,40,560,40,40" width="100%" height="100%">
+    </image>
+</layer>
 
 ----
 
@@ -238,10 +228,10 @@ In the `hud` screen's `foreground` layer, add the following image element:
 [source,xml]
 ----
 
-        <panel id="panel_top_right2" width="100%" height="15%" childLayout="center">
-            <image filename="Interface/face1.png" valign="center" align="center" height="50%" width="30%" >
-            </image>
-        </panel>
+<panel id="panel_top_right2" width="100%" height="15%" childLayout="center">
+    <image filename="Interface/face1.png" valign="center" align="center" height="50%" width="30%" >
+    </image>
+</panel>
 
 ----
 
@@ -255,9 +245,9 @@ The game title is a typical example of static text. In the `start` screen, add t
 [source,xml]
 ----
 
-      <panel id="panel_top" height="25%" width="75%" align="center" childLayout="center">
-          <text text="My Cool Game" font="Interface/Fonts/Default.fnt" width="100%" height="100%" />
-      </panel>
+<panel id="panel_top" height="25%" width="75%" align="center" childLayout="center">
+    <text text="My Cool Game" font="Interface/Fonts/Default.fnt" width="100%" height="100%" />
+</panel>
 
 ----
 
@@ -266,11 +256,10 @@ For longer pieces of static text, such as an introduction, you can use wrap="`tr
 [source,xml]
 ----
 
-      <panel id="panel_mid" height="50%" width="75%" align="center" childLayout="center">
-        <text text="Here goes some text describing the game and the rules and stuff. Incidentally,
-         the text is quite long and needs to wrap at the end of lines. ..."
-        font="Interface/Fonts/Default.fnt" width="100%" height="100%" wrap="true" />
-      </panel>
+<panel id="panel_mid" height="50%" width="75%" align="center" childLayout="center">
+    <text text="Here goes some text describing the game and the rules and stuff. Incidentally, the text is quite long and needs to wrap at the end of lines. ..."
+          font="Interface/Fonts/Default.fnt" width="100%" height="100%" wrap="true" />
+</panel>
 
 ----
 
@@ -285,8 +274,8 @@ Before you can use any control, you must load a Control Definition first. Add th
 [source,xml]
 ----
 
-  <useStyles filename="nifty-default-styles.xml" />
-  <useControls filename="nifty-default-controls.xml" />
+<useStyles filename="nifty-default-styles.xml" />
+<useControls filename="nifty-default-controls.xml" />
 
 ----
 
@@ -301,9 +290,9 @@ In the `hud` screen's `foreground` layer, add the following text element:
 [source,xml]
 ----
 
-        <panel id="panel_top_right" height="100%" width="15%" childLayout="center">
-            <control name="label" color="#000" text="123" width="100%" height="100%" />
-        </panel>
+<panel id="panel_top_right1" width="100%" height="15%" childLayout="center">
+    <control name="label" color="#000" text="123" width="100%" height="100%" />
+</panel>
 
 ----
 
@@ -317,20 +306,20 @@ Our +++<abbr title="Graphical User Interface">GUI</abbr>+++ plan asks for two bu
 [source,xml]
 ----
 
-        <panel id="panel_bottom_left" height="50%" width="50%" valign="center" childLayout="center">
-          <control name="button" label="Start" id="StartButton" align="center" valign="center">
-          </control>
-        </panel>
-        <panel id="panel_bottom_right" height="50%" width="50%" valign="center" childLayout="center">
-          <control name="button" label="Quit" id="QuitButton" align="center" valign="center">
-          </control>
-        </panel>
+<panel id="panel_bottom_left" height="50%" width="50%" valign="center" childLayout="center">
+  <control name="button" label="Start" id="StartButton" align="center" valign="center">
+  </control>
+</panel>
+<panel id="panel_bottom_right" height="50%" width="50%" valign="center" childLayout="center">
+  <control name="button" label="Quit" id="QuitButton" align="center" valign="center">
+  </control>
+</panel>
 
 ----
 
 Note that these controls don't do anything yet – we'll get to that soon.
 
-Now remove all *backgroundColor=““* tags from your code. They were only needed to show the layout.
+Now remove all *backgroundColor=""* tags from your code. They were only needed to show the layout.
 
 Your screen.xml should look like this:
 
@@ -338,47 +327,54 @@ Your screen.xml should look like this:
 ----
 
 <?xml version="1.0" encoding="UTF-8"?>
-<nifty xmlns="http://nifty-gui.sourceforge.net/nifty-1.3.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nifty-gui.sourceforge.net/nifty-1.3.xsd http://nifty-gui.sourceforge.net/nifty-1.3.xsd">
-  <useStyles filename="nifty-default-styles.xml" />
-  <useControls filename="nifty-default-controls.xml" />
-  <screen id="start">
-    <layer id="background" childLayout="center">
-      <image filename="Interface/start-background.png"></image>
-    </layer>
-    <layer id="foreground" childLayout="vertical">
-      <panel id="panel_top" height="25%" width="75%" align="center" childLayout="center">
-        <text text="My Cool Game" font="Interface/Fonts/Default.fnt" width="100%" height="100%" />
-      </panel>
-      <panel id="panel_mid" height="50%" width="75%" align="center" childLayout="center">
-        <text text="Here goes some text describing the game and the rules and stuff. Incidentally, the text is quite long and needs to wrap at the end of lines. ..." font="Interface/Fonts/Default.fnt" width="100%" height="100%" wrap="true" />
-      </panel>
-      <panel id="panel_bottom" height="25%" width="75%" align="center" childLayout="horizontal" >
-        <panel id="panel_bottom_left" height="50%" width="50%" valign="center" childLayout="center">
-          <control name="button" label="Start" id="StartButton" align="center" valign="center"></control>
-        </panel>
-        <panel id="panel_bottom_right" height="50%" width="50%" valign="center" childLayout="center">
-          <control name="button" label="Quit" id="QuitButton" align="center" valign="center"></control>
-        </panel>
-      </panel>
-    </layer>
-  </screen>
-  <screen id="hud">
-    <layer id="background" childLayout="center">
-      <image filename="Interface/hud-frame.png"></image>
-    </layer>
-    <layer id="foreground" childLayout="horizontal">
-      <panel id="panel_left" width="80%" height="100%" childLayout="vertical" ></panel>
-      <panel id="panel_right" width="20%" height="100%" childLayout="vertical">
-        <panel id="panel_top_right1" width="100%" height="15%" childLayout="center">
-          <control name="label" color="#000" text="123" width="100%" height="100%" />
-        </panel>
-        <panel id="panel_top_right2" width="100%" height="15%" childLayout="center">
-          <image filename="Interface/face1.png" valign="center" align="center" height="50%" width="30%" ></image>
-        </panel>
-        <panel id="panel_bot_right" width="100%" height="70%" valign="center" ></panel>
-      </panel>
-    </layer>
-  </screen>
+<nifty xmlns="http://nifty-gui.lessvoid.com/nifty-gui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://raw.githubusercontent.com/void256/nifty-gui/1.4/nifty-core/src/main/resources/nifty.xsd https://raw.githubusercontent.com/void256/nifty-gui/1.4/nifty-core/src/main/resources/nifty.xsd">
+    <useStyles filename="nifty-default-styles.xml" />
+    <useControls filename="nifty-default-controls.xml" />
+    <screen id="start">
+        <layer id="background" childLayout="center">
+            <image filename="Interface/start-background.png"></image>
+        </layer>
+        <layer id="foreground" childLayout="vertical">
+            <panel id="panel_top" height="25%" width="75%" align="center" childLayout="center">
+                <text text="My Cool Game" font="Interface/Fonts/Default.fnt" width="100%" height="100%" />
+            </panel>
+            <panel id="panel_mid" height="50%" width="75%" align="center" childLayout="center">
+                <text text="Here goes some text describing the game and the rules and stuff. Incidentally, the text is quite long and needs to wrap at the end of lines. ..."
+                      font="Interface/Fonts/Default.fnt" width="100%" height="100%" wrap="true" />
+            </panel>
+            <panel id="panel_bottom" height="25%" width="75%" align="center" childLayout="horizontal">
+                <panel id="panel_bottom_left" height="50%" width="50%" valign="center" childLayout="center">
+                    <control name="button" label="Start" id="StartButton" align="center" valign="center">
+                    </control>
+                </panel>
+                <panel id="panel_bottom_right" height="50%" width="50%" valign="center" childLayout="center">
+                    <control name="button" label="Quit" id="QuitButton" align="center" valign="center">
+                    </control>
+                </panel>
+            </panel>
+        </layer>
+    </screen>
+    <screen id="hud">
+        <layer id="background" childLayout="center">
+            <image filename="Interface/hud-frame.png" imageMode="resize:40,490,110,170,40,560,40,270,40,560,40,40" width="100%" height="100%">
+            </image>
+        </layer>
+        <layer id="foreground" childLayout="horizontal">
+            <panel id="panel_left" width="80%" height="100%" childLayout="vertical">
+            </panel>
+            <panel id="panel_right" width="20%" height="100%" childLayout="vertical">
+                <panel id="panel_top_right1" width="100%" height="15%" childLayout="center">
+                    <control name="label" color="#000" text="123" width="100%" height="100%" />
+                </panel>
+                <panel id="panel_top_right2" width="100%" height="15%" childLayout="center">
+                    <image filename="Interface/face1.png" valign="center" align="center" height="50%" width="30%" >
+                    </image>
+                </panel>
+                <panel id="panel_bot_right" width="100%" height="70%" valign="center">
+                </panel>
+            </panel>
+        </layer>
+    </screen>
 </nifty>
 
 ----
@@ -386,7 +382,7 @@ Your screen.xml should look like this:
 
 ==== Other Controls
 
-Nifty additionally offers many customizable controls such as check boxes, text fields, menus, chats, tabs, … See also link:http://sourceforge.net/apps/mediawiki/nifty-gui/index.php?title=Elements[Elements] on the Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++ site.
+Nifty additionally offers many customizable controls such as check boxes, text fields, menus, chats, tabs, … See also link:https://versaweb.dl.sourceforge.net/project/nifty-gui/nifty-gui/1.3.2/nifty-gui-the-manual-1.3.2.pdf[Nifty GUI - the Manual: Elements] on the Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++ site.
 
 
 == Intermediate Result
