@@ -3,9 +3,9 @@
 <link rel="stylesheet" href="./coderay-asciidoctor.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css"></head><body class="article toc2 toc-left"><div id="header"><div id="toolbar"><a href="https://github.com/jMonkeyEngine/wiki/edit/master/src/docs/asciidoc/jme3/advanced/nifty_gui_java_interaction.adoc"><i class="fa fa-pencil-square" aria-hidden="true"></i></a><a href="https://github.com/jMonkeyEngine/wiki/new/master/src/docs/asciidoc/jme3/advanced/"><i class="fa fa-plus-square" aria-hidden="true"></i></a><input dir="auto" style="position: relative; vertical-align: top;" spellcheck="false" autocomplete="off" class="searchbox__input aa-input" id="doc-search" name="search" placeholder="Search in the doc" required="required" type="search"></div><h1>Interacting with the GUI from Java</h1><div class="details"><span class="author" id="author"></span><br><span id="revnumber">version ,</span> <span id="revdate">2016/03/17 20:48</span></div><div id="toc" class="toc2"><div id="toctitle">Table of Contents</div><ul class="sectlevel1"><li><a href="#connect-gui-to-java-controller">Connect GUI to Java Controller</a></li><li><a href="#make-gui-and-java-interact">Make GUI and Java Interact</a><ul class="sectlevel2"><li><a href="#gui-calls-a-void-java-method">GUI Calls a Void Java Method</a></li><li><a href="#gui-gets-return-value-from-java-method">GUI Gets Return Value from Java Method</a></li><li><a href="#java-modifies-nifty-elements-and-events">Java Modifies Nifty Elements and Events</a></li></ul></li><li><a href="#next-steps">Next Steps</a></li></ul></div></div><div id="content"><div id="preamble"><div class="sectionbody"><div class="olist arabic"><ol class="arabic"><li><p><a href="../../jme3/advanced/nifty_gui.html">Nifty GUI Concepts</a></p></li><li><p><a href="../../jme3/advanced/nifty_gui_best_practices.html">Nifty GUI Best Practices</a></p></li><li><p><a href="../../jme3/advanced/nifty_gui_xml_layout.html">Nifty GUI XML Layout</a> or <a href="../../jme3/advanced/nifty_gui_java_layout.html">Nifty GUI Java Layout</a></p></li><li><p><a href="../../jme3/advanced/nifty_gui_overlay.html">Nifty GUI Overlay</a> or <a href="../../jme3/advanced/nifty_gui_projection.html">Nifty GUI Projection</a></p></li><li><p><strong>Nifty <abbr title="Graphical User Interface">GUI</abbr> Java Interaction</strong></p></li></ol></div>
 <div class="paragraph"><p>In the previous parts of the tutorial, you created a two-screen user interface. But it is still static, and when you click the buttons, nothing happens yet. The purpose of the <abbr title="Graphical User Interface">GUI</abbr> is to communicate with your Java classes: Your game needs to know what the users clicked, which settings they chose, which values they entered into a field, etc. Similarly, the user needs to know what the currently game state is (score, health, etc).</p></div></div></div>
 <div class="sect1"><h2 id="connect-gui-to-java-controller">Connect GUI to Java Controller</h2><div class="sectionbody"><div class="paragraph"><p>To let a Nifty screen communicate with the Java application, you register a <code>ScreenController</code> to every NiftyGUI screen. You create a ScreenController by creating a Java class that implements the <code>de.lessvoid.nifty.screen.ScreenController</code> interface and its abstract methods.</p></div>
-<div class="paragraph"><p>Create an AppState <strong>MyStartScreen</strong>.java file in your package. ( Rightclick on your package → New → Other… → JME3 Classes → New AppState)</p></div>
-<div class="paragraph"><p><strong>Pro Tip:</strong> Since you are writing a jME3 application, you can additionally make the ScreenController class extend the <a href="../../jme3/advanced/application_states.html">AbstractAppState</a> class! This gives the ScreenController access to the application object and to the update loop!</p></div>
-<div class="paragraph"><p>Now add <strong>implements ScreenController</strong> to <em>public class MyStartScreen extends AbstractAppState{</em> and add <strong>import de.lessvoid.nifty.screen.ScreenController;</strong></p></div>
+<div class="paragraph"><p>Create an AppState <strong>MyStartScreen</strong>.java file in your package. ( <b class="button">RMB</b> click on your package and select <code><span class="menuseq"><span class="menu">New</span>&#160;&#9656; <span class="submenu">Other</span>&#160;&#9656; <span class="submenu">JME3 Classes</span>&#160;&#9656; <span class="menuitem">New BaseAppState</span></span></code>)</p></div>
+<div class="paragraph"><p><strong>Pro Tip:</strong> Since you are writing a jME3 application, you can additionally make the ScreenController class extend the <a href="../../jme3/advanced/application_states.html">BaseAppState</a> class! This gives the ScreenController access to the application object and to the update loop!</p></div>
+<div class="paragraph"><p>Now add <strong>implements ScreenController</strong> to <em>public class MyStartScreen extends BaseAppState{</em> and add <strong>import de.lessvoid.nifty.screen.ScreenController;</strong></p></div>
 <div class="paragraph"><p>Continue with adding:</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">import</span> <span class="include">de.lessvoid.nifty.screen.Screen</span>;
 
@@ -22,52 +22,80 @@ public <span class="type">void</span> bind(Nifty nifty, Screen screen) {
 <span class="directive">public</span> <span class="type">void</span> onEndScreen() {
     <span class="keyword">throw</span> <span class="keyword">new</span> <span class="exception">UnsupportedOperationException</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">Not supported yet.</span><span class="delimiter">&quot;</span></span>);
 }</code></pre></div></div>
-<div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="comment">/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */</span>
-<span class="keyword">package</span> <span class="namespace">mygame</span>;
+<div class="listingblock"><div class="title">Complete BaseAppState file</div>
+<div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">mygame</span>;
 
 <span class="keyword">import</span> <span class="include">com.jme3.app.Application</span>;
-<span class="keyword">import</span> <span class="include">com.jme3.app.state.AbstractAppState</span>;
-<span class="keyword">import</span> <span class="include">com.jme3.app.state.AppStateManager</span>;
+<span class="keyword">import</span> <span class="include">com.jme3.app.state.BaseAppState</span>;
 <span class="keyword">import</span> <span class="include">de.lessvoid.nifty.Nifty</span>;
 <span class="keyword">import</span> <span class="include">de.lessvoid.nifty.screen.Screen</span>;
 <span class="keyword">import</span> <span class="include">de.lessvoid.nifty.screen.ScreenController</span>;
 
-<span class="directive">public</span> <span class="type">class</span> <span class="class">MyStartScreen</span> <span class="directive">extends</span> AbstractAppState <span class="directive">implements</span> ScreenController {
+<span class="directive">public</span> <span class="type">class</span> <span class="class">MyStartScreen</span> <span class="directive">extends</span> BaseAppState <span class="directive">implements</span> ScreenController {
 
-    <span class="annotation">@Override</span>
-    <span class="directive">public</span> <span class="type">void</span> initialize(AppStateManager stateManager, Application app) {
-        <span class="local-variable">super</span>.initialize(stateManager, app);
-        <span class="comment">//TODO: initialize your AppState, e.g. attach spatials to rootNode</span>
-        <span class="comment">//this is called on the OpenGL thread after the AppState has been attached</span>
-    }
+  <span class="annotation">@Override</span>
+  <span class="directive">protected</span> <span class="type">void</span> initialize(Application app) {
+      <span class="comment">//It is technically safe to do all initialization and cleanup in the</span>
+      <span class="comment">//onEnable()/onDisable() methods. Choosing to use initialize() and</span>
+      <span class="comment">//cleanup() for this is a matter of performance specifics for the</span>
+      <span class="comment">//implementor.</span>
+      <span class="comment">//TODO: initialize your AppState, e.g. attach spatials to rootNode</span>
+  }
 
-    <span class="annotation">@Override</span>
-    <span class="directive">public</span> <span class="type">void</span> update(<span class="type">float</span> tpf) {
-        <span class="comment">//TODO: implement behavior during runtime</span>
-    }
+  <span class="annotation">@Override</span>
+  <span class="directive">protected</span> <span class="type">void</span> cleanup(Application app) {
+      <span class="comment">//TODO: clean up what you initialized in the initialize method,</span>
+      <span class="comment">//e.g. remove all spatials from rootNode</span>
+  }
 
-    <span class="annotation">@Override</span>
-    <span class="directive">public</span> <span class="type">void</span> cleanup() {
-        <span class="local-variable">super</span>.cleanup();
-        <span class="comment">//TODO: clean up what you initialized in the initialize method,</span>
-        <span class="comment">//e.g. remove all spatials from rootNode</span>
-        <span class="comment">//this is called on the OpenGL thread after the AppState has been detached</span>
-    }
+  <span class="comment">//onEnable()/onDisable() can be used for managing things that should</span>
+  <span class="comment">//only exist while the state is enabled. Prime examples would be scene</span>
+  <span class="comment">//graph attachment or input listener attachment.</span>
+  <span class="annotation">@Override</span>
+  <span class="directive">protected</span> <span class="type">void</span> onEnable() {
+      <span class="comment">//Called when the state is fully enabled, ie: is attached and</span>
+      <span class="comment">//isEnabled() is true or when the setEnabled() status changes after the</span>
+      <span class="comment">//state is attached.</span>
+  }
 
-    <span class="directive">public</span> <span class="type">void</span> bind(Nifty nifty, Screen screen) {
-        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="exception">UnsupportedOperationException</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">Not supported yet.</span><span class="delimiter">&quot;</span></span>);
-    }
+  <span class="annotation">@Override</span>
+  <span class="directive">protected</span> <span class="type">void</span> onDisable() {
+      <span class="comment">//Called when the state was previously enabled but is now disabled</span>
+      <span class="comment">//either because setEnabled(false) was called or the state is being</span>
+      <span class="comment">//cleaned up.</span>
+  }
 
-    <span class="directive">public</span> <span class="type">void</span> onStartScreen() {
-        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="exception">UnsupportedOperationException</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">Not supported yet.</span><span class="delimiter">&quot;</span></span>);
-    }
+  <span class="annotation">@Override</span>
+  <span class="directive">public</span> <span class="type">void</span> update(<span class="type">float</span> tpf) {
+      <span class="comment">//TODO: implement behavior during runtime</span>
+  }
 
-    <span class="directive">public</span> <span class="type">void</span> onEndScreen() {
-        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="exception">UnsupportedOperationException</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">Not supported yet.</span><span class="delimiter">&quot;</span></span>);
-    }
+  <span class="comment">/**
+   * Bind this ScreenController to a screen. This happens right before the
+   * onStartScreen STARTED and only exactly once for a screen!
+   * @param nifty nifty
+   * @param screen screen
+   */</span>
+  <span class="annotation">@Override</span>
+  <span class="directive">public</span> <span class="type">void</span> bind(Nifty nifty, Screen screen) {
+      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="exception">UnsupportedOperationException</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">Not supported yet.</span><span class="delimiter">&quot;</span></span>);
+  }
+
+  <span class="comment">/**
+   * called right after the onStartScreen event ENDED.
+   */</span>
+  <span class="annotation">@Override</span>
+  <span class="directive">public</span> <span class="type">void</span> onStartScreen() {
+      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="exception">UnsupportedOperationException</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">Not supported yet.</span><span class="delimiter">&quot;</span></span>);
+  }
+
+  <span class="comment">/**
+   * called right after the onEndScreen event ENDED.
+   */</span>
+  <span class="annotation">@Override</span>
+  <span class="directive">public</span> <span class="type">void</span> onEndScreen() {
+      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="exception">UnsupportedOperationException</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">Not supported yet.</span><span class="delimiter">&quot;</span></span>);
+  }
 }</code></pre></div></div>
 <div class="paragraph"><p>The name and package of your custom ScreenController class (here <code>mygame.MyStartScreen</code>) goes into the controller parameter of the respective XML screen it belongs to. For example:</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;nifty&gt;</span>
@@ -76,29 +104,33 @@ public <span class="type">void</span> bind(Nifty nifty, Screen screen) {
   <span class="tag">&lt;/screen&gt;</span>
 <span class="tag">&lt;/nifty&gt;</span></code></pre></div></div>
 <div class="paragraph"><p>Or the same in a Java syntax, respectively:</p></div>
-<div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">  nifty.addScreen(<span class="string"><span class="delimiter">&quot;</span><span class="content">start</span><span class="delimiter">&quot;</span></span>, <span class="keyword">new</span> ScreenBuilder(<span class="string"><span class="delimiter">&quot;</span><span class="content">start</span><span class="delimiter">&quot;</span></span>) {{
-      controller(<span class="keyword">new</span> mygame.MyStartScreen())}});</code></pre></div></div>
-<div class="paragraph"><p>Now the Java class <code>MyStartScreen</code> and this <abbr title="Graphical User Interface">GUI</abbr> screen (<code>start</code>) are connected. For this example you can also connect the <code>hud</code> screen to MyStartScreen.</p></div></div></div>
+<div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">nifty.addScreen(<span class="string"><span class="delimiter">&quot;</span><span class="content">start</span><span class="delimiter">&quot;</span></span>, <span class="keyword">new</span> ScreenBuilder(<span class="string"><span class="delimiter">&quot;</span><span class="content">start</span><span class="delimiter">&quot;</span></span>) {{
+  controller(<span class="keyword">new</span> mygame.MyStartScreen());
+}}.build(nifty));</code></pre></div></div>
+<div class="paragraph"><p>Now the Java class <code>MyStartScreen</code> and this <abbr title="Graphical User Interface">GUI</abbr> screen (<code>start</code>) are connected. For this example you can also connect the <code>hud</code> screen to MyStartScreen.</p></div>
+<div class="paragraph"><p>See also: <a href="https://versaweb.dl.sourceforge.net/project/nifty-gui/nifty-gui/1.3.2/nifty-gui-the-manual-1.3.2.pdf">Nifty GUI - the Manual: Elements (Screen Controller)</a></p></div></div></div>
 <div class="sect2"><h3 id="make-gui-and-java-interact">Make GUI and Java Interact</h3><div class="paragraph"><p>In most cases, you will want to pass game data in and out of the ScreenController. Note that you can pass any custom arguments from your Java class into your ScreenController constructor (<code>public MyStartScreen(GameData data) {}</code>).</p></div>
 <div class="paragraph"><p>Use any combination of the three following approaches to make Java classes interact with the <abbr title="Graphical User Interface">GUI</abbr>.</p></div>
 <div class="sect2"><h3 id="gui-calls-a-void-java-method">GUI Calls a Void Java Method</h3><div class="paragraph"><p>This is how you respond to an <abbr title="Graphical User Interface">GUI</abbr> interaction such as clicks in XML GUIs:</p></div>
-<div class="olist arabic"><ol class="arabic"><li><p>Add <code>visibleToMouse=“true</code> to the parent element!</p></li><li><p>Embed the <code>&lt;interact /&gt;</code> element into the parent element.</p></li><li><p>Specify the Java methods that you want to call when the users performs certain actions, such as clicking. +Example: <code>&lt;interact onClick=“startGame(hud) /&gt;</code></p></li></ol></div>
+<div class="olist arabic"><ol class="arabic"><li><p>Add <code>visibleToMouse="true"</code> to the parent element!</p></li><li><p>Embed the <code>&lt;interact /&gt;</code> element into the parent element.</p></li><li><p>Specify the Java methods that you want to call when the users performs certain actions, such as clicking.<br>
+Example: <code>&lt;interact onClick="startGame(hud)" /&gt;</code></p></li></ol></div>
 <div class="paragraph"><p>Or this is how you respond to an <abbr title="Graphical User Interface">GUI</abbr> interaction such as clicks in Java GUIs:</p></div>
-<div class="olist arabic"><ol class="arabic"><li><p>Add <code>visibleToMouse(true);</code> to the parent element!</p></li><li><p>Embed one of the <code>interact…()</code> elements into the parent element</p></li><li><p>Specify the Java method that you want to call after the interaction. +Example: <code>interactOnClick(“startGame(hud));</code></p></li></ol></div>
+<div class="olist arabic"><ol class="arabic"><li><p>Add <code>visibleToMouse(true);</code> to the parent element!</p></li><li><p>Embed one of the <code>interact…()</code> elements into the parent element.</p></li><li><p>Specify the Java method that you want to call after the interaction.<br>
+Example: <code>interactOnClick("startGame(hud)");</code></p></li></ol></div>
 <div class="paragraph"><p>In the following example, we call the <code>startGame()</code> method when the player clicks the Start button, and <code>quitGame()</code> when the player clicks the Quit button.</p></div>
-<div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="xml">        <span class="tag">&lt;panel</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">panel_bottom_left</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">height</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">50%</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">width</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">50%</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">valign</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">center</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">childLayout</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">center</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-          <span class="tag">&lt;control</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">button</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">label</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">Start</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">StartButton</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">align</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">center</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">valign</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">center</span><span class="delimiter">&quot;</span></span>
-          <span class="attribute-name">visibleToMouse</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span> <span class="tag">&gt;</span>
-            <span class="tag">&lt;interact</span> <span class="attribute-name">onClick</span>=<span class="string"><span class="delimiter">&quot;</span>startGame(hud)<span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-          <span class="tag">&lt;/control&gt;</span>
-        <span class="tag">&lt;/panel&gt;</span>
+<div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;panel</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">panel_bottom_left</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">height</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">50%</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">width</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">50%</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">valign</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">center</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">childLayout</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">center</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+  <span class="tag">&lt;control</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">button</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">label</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">Start</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">StartButton</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">align</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">center</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">valign</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">center</span><span class="delimiter">&quot;</span></span>
+    <span class="attribute-name">visibleToMouse</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span> <span class="tag">&gt;</span>
+    <span class="tag">&lt;interact</span> <span class="attribute-name">onClick</span>=<span class="string"><span class="delimiter">&quot;</span>startGame(hud)<span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+  <span class="tag">&lt;/control&gt;</span>
+<span class="tag">&lt;/panel&gt;</span>
 
-        <span class="tag">&lt;panel</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">panel_bottom_right</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">height</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">50%</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">width</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">50%</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">valign</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">center</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">childLayout</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">center</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-          <span class="tag">&lt;control</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">button</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">label</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">Quit</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">QuitButton</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">align</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">center</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">valign</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">center</span><span class="delimiter">&quot;</span></span>
-          <span class="attribute-name">visibleToMouse</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span> <span class="tag">&gt;</span>
-            <span class="tag">&lt;interact</span> <span class="attribute-name">onClick</span>=<span class="string"><span class="delimiter">&quot;</span>quitGame()<span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
-          <span class="tag">&lt;/control&gt;</span>
-        <span class="tag">&lt;/panel&gt;</span></code></pre></div></div>
+<span class="tag">&lt;panel</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">panel_bottom_right</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">height</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">50%</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">width</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">50%</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">valign</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">center</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">childLayout</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">center</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+  <span class="tag">&lt;control</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">button</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">label</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">Quit</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">QuitButton</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">align</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">center</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">valign</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">center</span><span class="delimiter">&quot;</span></span>
+    <span class="attribute-name">visibleToMouse</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span> <span class="tag">&gt;</span>
+    <span class="tag">&lt;interact</span> <span class="attribute-name">onClick</span>=<span class="string"><span class="delimiter">&quot;</span>quitGame()<span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+  <span class="tag">&lt;/control&gt;</span>
+<span class="tag">&lt;/panel&gt;</span></code></pre></div></div>
 <div class="paragraph"><p>Or the same in a Java syntax, respectively:</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">control(<span class="keyword">new</span> ButtonBuilder(<span class="string"><span class="delimiter">&quot;</span><span class="content">StartButton</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Start</span><span class="delimiter">&quot;</span></span>) {{
   alignCenter();
@@ -118,8 +150,8 @@ control(<span class="keyword">new</span> ButtonBuilder(<span class="string"><spa
   visibleToMouse(<span class="predefined-constant">true</span>);
   interactOnClick(<span class="string"><span class="delimiter">&quot;</span><span class="content">quitGame()</span><span class="delimiter">&quot;</span></span>);
 }});</code></pre></div></div>
-<div class="paragraph"><p>Back in the MyStartScreen class, you specify what the <code>startGame()</code> and <code>quitGame()</code> methods do. As you see, you can pass String arguments (here <code>hud</code>) in the method call. You also see that you have access to the app object.</p></div>
-<div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">MyStartScreen</span> <span class="directive">implements</span> ScreenController {
+<div class="paragraph"><p>Back in the MyStartScreen class, you specify what the <code>startGame()</code> and <code>quitGame()</code> methods do. As you see, you can pass String arguments (here <code>hud</code>) in the method call. You also see that you have access to the Application object.</p></div>
+<div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">MyStartScreen</span> <span class="directive">extends</span> BaseAppState <span class="directive">implements</span> ScreenController {
   ...
 
   <span class="comment">/** custom methods */</span>
@@ -129,13 +161,13 @@ control(<span class="keyword">new</span> ButtonBuilder(<span class="string"><spa
   }
 
   <span class="directive">public</span> <span class="type">void</span> quitGame() {
-    app.stop();
+    getApplication().stop();
   }
 
   ...
 }</code></pre></div></div>
 <div class="paragraph"><p>The startGame() example simply switches the <abbr title="Graphical User Interface">GUI</abbr> to the <code>hud</code> screen when the user clicks Start. Of course, in a real game, you would perform more steps here: Load the game level, switch to in-game input and navigation handling, set a custom <code>running</code> boolean to true, attach custom in-game AppStates – and lots more.</p></div>
-<div class="paragraph"><p>The quitGame() example shows that you have access to the application <code>app</code> object because you made the ScreenController extend AbstractAppState.  (If you&#8217;re creating code from this example, note that you&#8217;ll need to make sure <code>app</code> is initialized before you can successfully call its methods.)</p></div></div>
+<div class="paragraph"><p>The quitGame() example shows that you have access to the Application object because you made the ScreenController extend BaseAppState.</p></div></div>
 <div class="sect2"><h3 id="gui-gets-return-value-from-java-method">GUI Gets Return Value from Java Method</h3><div class="paragraph"><p>When the Nifty <abbr title="Graphical User Interface">GUI</abbr> is initialized, you can get data from Java. In this example, the Java class <code>getPlayerName()</code> in <code>MyStartScreen</code> defines the Text that is displayed in the textfield before the words <code>'s Cool Game</code>.</p></div>
 <div class="paragraph"><p>First define a Java method in the screen controller, in this example, <code>getPlayerName()</code>.</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">MySettingsScreen</span> <span class="directive">implements</span> ScreenController {
@@ -154,7 +186,7 @@ control(<span class="keyword">new</span> ButtonBuilder(<span class="string"><spa
   width(<span class="string"><span class="delimiter">&quot;</span><span class="content">100%</span><span class="delimiter">&quot;</span></span>);
 }});</code></pre></div></div>
 <div class="paragraph"><p>You can use this for Strings and numeric values (e.g. when you read settings from a file, you display the results in the <abbr title="Graphical User Interface">GUI</abbr>) and also for methods with side effects.</p></div></div>
-<div class="sect2"><h3 id="java-modifies-nifty-elements-and-events">Java Modifies Nifty Elements and Events</h3><div class="paragraph"><p>You can also alter the appearance and functions of your nifty elements from Java. Make certain that the element that you want to alter has its <code>id=“name</code> attribute set, so you can identy and address it.</p></div>
+<div class="sect2"><h3 id="java-modifies-nifty-elements-and-events">Java Modifies Nifty Elements and Events</h3><div class="paragraph"><p>You can also alter the appearance and functions of your nifty elements from Java. Make certain that the element that you want to alter has its <code>id="name"</code> attribute set, so you can identy and address it.</p></div>
 <div class="paragraph"><p>Here&#8217;s an example of how to change an image called <code>playerhealth</code>:</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// load or create new image</span>
 NiftyImage img = nifty.getRenderEngine().createImage(<span class="string"><span class="delimiter">&quot;</span><span class="content">Interface/Images/face2.png</span><span class="delimiter">&quot;</span></span>, <span class="predefined-constant">false</span>);
@@ -162,7 +194,7 @@ NiftyImage img = nifty.getRenderEngine().createImage(<span class="string"><span 
 <span class="predefined-type">Element</span> niftyElement = nifty.getCurrentScreen().findElementByName(<span class="string"><span class="delimiter">&quot;</span><span class="content">playerhealth</span><span class="delimiter">&quot;</span></span>);
 <span class="comment">// swap old with new image</span>
 niftyElement.getRenderer(ImageRenderer.class).setImage(img);</code></pre></div></div>
-<div class="paragraph"><p>The same is valid for other elements, for example a text label “score:</p></div>
+<div class="paragraph"><p>The same is valid for other elements, for example a text label &#8220;score&#8221;:</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// find old text</span>
 <span class="predefined-type">Element</span> niftyElement = nifty.getCurrentScreen().findElementByName(<span class="string"><span class="delimiter">&quot;</span><span class="content">score</span><span class="delimiter">&quot;</span></span>);
 <span class="comment">// swap old with new text</span>
@@ -173,7 +205,7 @@ niftyElement.getElementInteraction().getPrimary().setOnMouseOver(<span class="ke
 <div class="paragraph"><p>For this to work, there already needs to be a (possibly inactive) <code>&lt;interact /&gt;</code> tag inside your xml element:</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;interact</span> <span class="attribute-name">onClick</span>=<span class="string"><span class="delimiter">&quot;</span>doNothing()<span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span></code></pre></div></div></div></div>
 <div class="sect1"><h2 id="next-steps">Next Steps</h2><div class="sectionbody"><div class="paragraph"><p>You&#8217;re done with the basic Nifty <abbr title="Graphical User Interface">GUI</abbr> for jME3 tutorial. You can proceed to advanced topics and learn how add controls and effects:</p></div>
-<div class="ulist"><ul><li><p><a href="../../jme3/advanced/nifty_gui_scenarios.html">Nifty GUI Scenarios</a></p></li><li><p><a href="http://sourceforge.net/projects/nifty-gui/files/nifty-gui/nifty-gui-the-manual-v1.0.pdf/download">Nifty GUI - the Manual</a></p></li></ul></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2018-04-14 02:09:52 +00:00</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
+<div class="ulist"><ul><li><p><a href="../../jme3/advanced/nifty_gui_scenarios.html">Nifty GUI Scenarios</a></p></li><li><p><a href="https://versaweb.dl.sourceforge.net/project/nifty-gui/nifty-gui/1.3.2/nifty-gui-the-manual-1.3.2.pdf">Nifty GUI - the Manual</a></p></li></ul></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2018-04-17 16:17:04 +00:00</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
   apiKey: 'a736b6d93de805e26ec2f49b55013fbd',
   indexName: 'jmonkeyengine',
   inputSelector: '#doc-search',
