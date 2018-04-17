@@ -48,7 +48,7 @@ import de.lessvoid.nifty.builder.ScreenBuilder;
 import de.lessvoid.nifty.controls.button.builder.ButtonBuilder;
 import de.lessvoid.nifty.screen.DefaultScreenController;
 
-public class MyStartScreenJava extends BaseAppState {
+public class MyStartScreen extends BaseAppState {
 
     @Override
     protected void initialize(Application app) {
@@ -189,7 +189,7 @@ Every Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++ must have a 
 
 === Make Layers
 
-The following Java code shows how we add layers to the start screen and HUD screen:
+The following Java code shows how we add layers to the start screen and HUD screen. Add the following to your `Screen.java` file:
 
 [source,java]
 ----
@@ -368,7 +368,7 @@ See also link:https://versaweb.dl.sourceforge.net/project/nifty-gui/nifty-gui/1.
 
 === Add Images
 
-The start-background.png image is a fullscreen background picture. In the `start` screen, add the following image element:
+The `start-background.png` image is a fullscreen background picture. In the `start` screen, add the following image element:
 
 [source,java]
 ----
@@ -390,7 +390,7 @@ nifty.addScreen("start", new ScreenBuilder("start") {{
 
 ----
 
-The hud-frame.png image is a transparent frame that we use as HUD decoration. In the `hud` screen, add the following image element:
+The `hud-frame.png` image is a transparent frame that we use as HUD decoration. In the `hud` screen, add the following image element:
 
 [source,java]
 ----
@@ -412,7 +412,7 @@ nifty.addScreen("hud", new ScreenBuilder("hud") {{
 
 ----
 
-The face1.png image is an image that you want to use as a status icon.
+The `face1.png` image is an image that you want to use as a status icon.
 In the `hud` screens `foreground` layer, add the following image element:
 
 [source,java]
@@ -479,7 +479,7 @@ panel(new PanelBuilder("panel_mid") {{
     // add text
     text(new TextBuilder() {{
         text("Here goes some text describing the game and the rules and stuff. "
-                + "Incidentally, the text is quite long and needs to wrap at the end of lines. ");
+           + "Incidentally, the text is quite long and needs to wrap at the end of lines.");
         font("Interface/Fonts/Default.fnt");
         wrap(true);
         height("100%");
@@ -571,6 +571,22 @@ panel(new PanelBuilder("panel_bottom_right") {{
 ----
 
 Note that these controls don't do anything yet – we'll get to that soon.
+
+
+==== Other Controls
+
+Nifty additionally offers many customizable controls such as check boxes, text fields, menus, chats, tabs, … See also link:https://versaweb.dl.sourceforge.net/project/nifty-gui/nifty-gui/1.3.2/nifty-gui-the-manual-1.3.2.pdf[Nifty GUI - the Manual: Elements].
+
+
+== Intermediate Result
+
+When you preview this code in the jMonkeyEngine SDK, our tutorial demo should looks as follows: A start screen with two buttons, and a game screen with a simple HUD frame and a blue cube (which stands for any jME3 game content).
+
+TIP: Remove all lines that set background colors, you only needed them to see the arrangement.
+
+
+image::jme3/advanced/nifty-gui-simple-demo.png[nifty-gui-simple-demo.png,width="",height="",align="center"]
+
 
 Your `Screen.java` file should look like this:
 
@@ -816,24 +832,6 @@ public class Screen extends BaseAppState {
 
 ----
 
-
-
-==== Other Controls
-
-Nifty additionally offers many customizable controls such as check boxes, text fields, menus, chats, tabs, … See also link:https://versaweb.dl.sourceforge.net/project/nifty-gui/nifty-gui/1.3.2/nifty-gui-the-manual-1.3.2.pdf[Nifty GUI - the Manual: Elements].
-
-
-== Intermediate Result
-
-When you preview this code in the jMonkeyEngine SDK, our tutorial demo should looks as follows: A start screen with two buttons, and a game screen with a simple HUD frame and a blue cube (which stands for any jME3 game content).
-
-TIP: Remove all lines that set background colors, you only needed them to see the arrangement.
-
-
-image::jme3/advanced/nifty-gui-simple-demo.png[nifty-gui-simple-demo.png,width="",height="",align="center"]
-
-
-
 == Nifty Java Settings
 
 Before initializing the nifty screens, you set up properties and register media.
@@ -843,13 +841,13 @@ Before initializing the nifty screens, you set up properties and register media.
 a| Nifty Method
 a| Description
 
-a| registerSound("`mysound`", "`Interface/abc.wav`");
+a| registerSound("mysound", "Interface/abc.wav");
 a|
 
-a| registerMusic("`mymusic`", "`Interface/xyz.ogg`");
+a| registerMusic("mymusic", "Interface/xyz.ogg");
 a|
 
-a| registerMouseCursor("`mypointer`", "`Interface/abc.png`", 5, 4);
+a| registerMouseCursor("mypointer", "Interface/abc.png", 5, 4);
 a|
 
 a| registerEffect(?);
