@@ -1,6 +1,6 @@
-= Nifty GUI 1.3 - Usecase Scenarios
-:author: 
-:revnumber: 
+= Nifty GUI 1.4.2 - Usecase Scenarios
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :keywords: gui, documentation, nifty, hud, click, state, states, sound, effect
 :relfileprefix: ../../
@@ -8,7 +8,7 @@
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
-This document contains typical NiftyGUI usecase scenarios, such as adding effects, game states, and creating typical game screens. 
+This document contains typical NiftyGUI usecase scenarios, such as adding effects, game states, and creating typical game screens.
 
 Requirements: These tips assume that you have read and understood the <<jme3/advanced/nifty_gui#,Creating JME3 User Interfaces with Nifty GUI>> tutorial, and have already laid out a basic +++<abbr title="Graphical User Interface">GUI</abbr>+++ that interacts with your JME3 application. Here you learn how you integrate the +++<abbr title="Graphical User Interface">GUI</abbr>+++ better, and add effects and advanced controls.
 
@@ -17,8 +17,8 @@ Requirements: These tips assume that you have read and understood the <<jme3/adv
 
 In a JME game, you typically have three game states:
 
-.  Stopped: The game is stopped, a StartScreen is displayed. 
-.  Running: The game is running, the in-game HudScreen is displayed. 
+.  Stopped: The game is stopped, a StartScreen is displayed.
+.  Running: The game is running, the in-game HudScreen is displayed.
 .  Paused: The game is paused, a PausedScreen is displayed.
 
 (Aside: Additionally, the Stopped state often contains a LoadScreen, LogonScreen, OptionsScreen, CharacterCreationScreen, HighScoreScreen, CreditsScreen, etc. Some games let you access the OptionsScreen in the Paused state as well. The Running state can also contain an InventoryScreen, ItemShopScreen, StatsScreen, SkillScreen, etc.)
@@ -34,63 +34,89 @@ When the player switches between game states, you detach one set of AppStates, a
 
 == Get Access to Application and Update Loop
 
-Since you are writing a jME3 application, you can additionally make any ScreenController class extend the <<jme3/advanced/application_states#,AbstractAppState>> class. 
+Since you are writing a jME3 application, you can additionally make any ScreenController class extend the <<jme3/advanced/application_states#,BaseAppState>> class.
 This gives the ScreenController access to the application object and to the update loop!
 
 [source,java]
 ----
 
-public class StartScreenState extends AbstractAppState {
+public class StartScreenState extends BaseAppState implements ScreenController {
 
-  private ViewPort viewPort;
-  private Node rootNode;
-  private Node guiNode;
-  private AssetManager assetManager;
-  private Node localRootNode = new Node("Start Screen RootNode");
-  private Node localGuiNode = new Node("Start Screen GuiNode");
-  private final ColorRGBA backgroundColor = ColorRGBA.Gray;  
+    private Node localRootNode = new Node("Start Screen RootNode");
+    private Node localGuiNode = new Node("Start Screen GuiNode");
+    private final ColorRGBA backgroundColor = ColorRGBA.Gray;
 
-public StartScreenState(SimpleApplication app){
-    this.rootNode     = app.getRootNode();
-    this.viewPort     = app.getViewPort();
-    this.guiNode      = app.getGuiNode();
-    this.assetManager = app.getAssetManager();  
-  }
+    public StartScreenState() {
+    }
 
-  @Override
-  public void initialize(AppStateManager stateManager, Application app) {
-    super.initialize(stateManager, app);
-    
-    rootNode.attachChild(localRootNode);
-    guiNode.attachChild(localGuiNode);
-    viewPort.setBackgroundColor(backgroundColor);
-    
-    /** init the screen */    
-  }
+    @Override
+    protected void initialize(Application app) {
+        //It is technically safe to do all initialization and cleanup in the
+        //onEnable()/onDisable() methods. Choosing to use initialize() and
+        //cleanup() for this is a matter of performance specifics for the
+        //implementor.
+        //TODO: initialize your AppState, e.g. attach spatials to rootNode
+        ((SimpleApplication) app).getRootNode().attachChild(localRootNode);
+        ((SimpleApplication) app).getGuiNode().attachChild(localGuiNode);
+        ((SimpleApplication) app).getViewPort().setBackgroundColor(backgroundColor);
 
-  @Override
-  public void update(float tpf) {
-    /** any main loop action happens here */
-  }
-  
-  @Override
-  public void cleanup() {
-    rootNode.detachChild(localRootNode);
-    guiNode.detachChild(localGuiNode);
-    
-    super.cleanup();
-  }
-  
+        /** init the screen */
+    }
+
+    @Override
+    protected void cleanup(Application app) {
+        //TODO: clean up what you initialized in the initialize method,
+        //e.g. remove all spatials from rootNode
+        ((SimpleApplication) app).getRootNode().detachChild(localRootNode);
+        ((SimpleApplication) app).getGuiNode().detachChild(localGuiNode);
+    }
+
+    //onEnable()/onDisable() can be used for managing things that should
+    //only exist while the state is enabled. Prime examples would be scene
+    //graph attachment or input listener attachment.
+    @Override
+    protected void onEnable() {
+        //Called when the state is fully enabled, ie: is attached and
+        //isEnabled() is true or when the setEnabled() status changes after the
+        //state is attached.
+    }
+
+    @Override
+    protected void onDisable() {
+        //Called when the state was previously enabled but is now disabled
+        //either because setEnabled(false) was called or the state is being
+        //cleaned up.
+    }
+
+    @Override
+    public void update(float tpf) {
+        //TODO: implement behavior during runtime
+    }
+
+    @Override
+    public void bind(Nifty nifty, Screen screen) {
+    }
+
+    @Override
+    public void onStartScreen() {
+    }
+
+    @Override
+    public void onEndScreen() {
+    }
+
 }
+
 ----
 
 
 [IMPORTANT]
 ====
-It is not sufficient to just inherit from AbstractAppState. You need to instantiate your controller class, register it with app's stateManager and then pass it to nifty. See code sample below.
+It is not sufficient to just inherit from BaseAppState. You need to instantiate your controller class, register it with app's stateManager and then pass it to nifty. Remember, to connect a screen with a ScreenController you still need to specify the fully qualified class name of
+your ScreenController in the controller attribute of the <screen> tag in the xml file. See code sample below.
 ====
 
-
+.XML example
 [source,java]
 ----
 
@@ -113,13 +139,13 @@ public class TestNiftyGui extends SimpleApplication {
 a|Variable
 a|Description
 
-a|${CALL.myMethod()} 
+a|${CALL.myMethod()}
 a| Calls a method in the current ScreenController and gets the method's return String. The method can also be void and have a side effect, e.g. play a sound etc.
 
 a|${ENV.HOME}
 a| Returns the path to user's home directory.
 
-a|${ENV.key} 
+a|${ENV.key}
 a| Looks up `key` in the environment variables. Use it like Java's System.getEnv(“key).
 
 a|${PROP.key}
@@ -127,7 +153,7 @@ a| looks up `key` in the Nifty properties. Use Nifty.setGlobalproperties(propert
 
 |===
 
-See also: link:http://sourceforge.net/apps/mediawiki/nifty-gui/index.php?title=MarkUp[http://sourceforge.net/apps/mediawiki/nifty-gui/index.php?title=MarkUp]
+See also: link:https://versaweb.dl.sourceforge.net/project/nifty-gui/nifty-gui/1.3.2/nifty-gui-the-manual-1.3.2.pdf[Nifty GUI - the Manual: XML GUI (Special XML Markup)]
 
 
 == Use ScreenControllers for Mutally Exclusive Functionality
@@ -172,7 +198,8 @@ Here is an example that moves a panel when the startScreen opens. You place an &
 
 Learn more from the NiftyGUI page:
 
-*  link:http://sourceforge.net/apps/mediawiki/nifty-gui/index.php?title=Effects[http://sourceforge.net/apps/mediawiki/nifty-gui/index.php?title=Effects]
+*  link:https://versaweb.dl.sourceforge.net/project/nifty-gui/nifty-gui/1.3.2/nifty-gui-the-manual-1.3.2.pdf[Nifty GUI - the Manual: Effects]
+*  link:https://github.com/nifty-gui/nifty-gui/wiki/Effects[Effects] 
 
 
 == Add Sound Effects
@@ -208,12 +235,12 @@ To pass the clickLoc as two ints, you can use the special `(int x, int y)` synta
 
 ----
 
-In the Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++ screen code (e.g. XML file) you must call the `(int x, int y)` method _without_ any parameters! 
+In the Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++ screen code (e.g. XML file) you must call the `(int x, int y)` method _without_ any parameters!
 
 [source,xml]
 ----
 
-<interact onClick="clicked()"/>  
+<interact onClick="clicked()"/>
 
 ----
 
@@ -223,7 +250,7 @@ You can name the method (here `clicked`) what ever you like, as long as you keep
 == Load Several XML Files
 
 The basic Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++ example showed how to use the `nifty.fromXML()` method to load one XML file containing all Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++ screens.
-The following code sample shows how you can load several XML files into one nifty object. Loading several files with `nifty.addXml()` allows you to split up each screen into one XML file, instead of all into one hard-to-read XML file. 
+The following code sample shows how you can load several XML files into one nifty object. Loading several files with `nifty.addXml()` allows you to split up each screen into one XML file, instead of all into one hard-to-read XML file.
 
 [source,java]
 ----
@@ -244,9 +271,9 @@ guiViewPort.addProcessor(niftyDisplay);
 
 == Register additional explicit screen controllers
 
-In addition to the `nifty.addXml()` methods to attach many nifty XML files, there exists a `nifty.registerScreenController()` method to explicitly attach more screen controllers. 
+In addition to the `nifty.addXml()` methods to attach many nifty XML files, there exists a `nifty.registerScreenController()` method to explicitly attach more screen controllers.
 
-The following code sample shows how you can explicitly attach several screen controllers before adding the XML file to nifty, which would otherwise cause nifty to implicitly instantiate the screen controller class. 
+The following code sample shows how you can explicitly attach several screen controllers before adding the XML file to nifty, which would otherwise cause nifty to implicitly instantiate the screen controller class.
 
 [source,java]
 ----
@@ -266,21 +293,21 @@ By default, your Nifty XML screens use the built.in styles:
 
 [source,xml]
 ----
- <useStyles filename="nifty-default-styles.xml" /> 
+ <useStyles filename="nifty-default-styles.xml" />
 ----
 
 But you can switch to a set of custom styles in your game project's asset directory like this:
 
 [source,xml]
 ----
- <useStyles filename="Interface/Styles/myCustomStyles.xml" /> 
+ <useStyles filename="Interface/Styles/myCustomStyles.xml" />
 ----
 
 Inside myCustomStyles.xml you define styles like this:
 
 [source,xml]
 ----
-	
+
 <?xml version="1.0" encoding="UTF-8"?>
 <nifty-styles>
   <useStyles filename="Interface/Styles/Font/myCustomFontStyle.xml" />
@@ -291,9 +318,10 @@ Inside myCustomStyles.xml you define styles like this:
 
 ----
 
-Learn more about how to create styles by looking at the link:http://sourceforge.net/apps/mediawiki/nifty-gui/index.php?title=Build_from_Source[Nifty GUI source code] for “nifty-style-black”. Copy it as a template and change it to create your own style.
+Learn more about how to create styles by looking at the link:https://github.com/nifty-gui/nifty-gui/wiki/Working-from-Source[Nifty GUI source code] for “nifty-style-black”. Copy it as a template and change it to create your own style.
+
 '''
 
 Learn more from the NiftyGUI page:
 
-*  link:http://sourceforge.net/apps/mediawiki/nifty-gui/index.php?title=Effects[http://sourceforge.net/apps/mediawiki/nifty-gui/index.php?title=Effects]
+*  link:https://github.com/nifty-gui/nifty-gui/wiki/Effects[https://github.com/nifty-gui/nifty-gui/wiki/Effects]
