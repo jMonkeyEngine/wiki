@@ -1,6 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="Asciidoctor 1.5.4"><meta name="keywords" content="gui, documentation, nifty, hud, click, state, states, sound, effect"><title>Nifty GUI 1.3 - Usecase Scenarios</title><link rel="stylesheet" href="./asciidoctor.css">
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="Asciidoctor 1.5.4"><meta name="keywords" content="gui, documentation, nifty, hud, click, state, states, sound, effect"><title>Nifty GUI 1.4.2 - Usecase Scenarios</title><link rel="stylesheet" href="./asciidoctor.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="./coderay-asciidoctor.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css"></head><body class="article toc2 toc-left"><div id="header"><div id="toolbar"><a href="https://github.com/jMonkeyEngine/wiki/edit/master/src/docs/asciidoc/jme3/advanced/nifty_gui_scenarios.adoc"><i class="fa fa-pencil-square" aria-hidden="true"></i></a><a href="https://github.com/jMonkeyEngine/wiki/new/master/src/docs/asciidoc/jme3/advanced/"><i class="fa fa-plus-square" aria-hidden="true"></i></a><input dir="auto" style="position: relative; vertical-align: top;" spellcheck="false" autocomplete="off" class="searchbox__input aa-input" id="doc-search" name="search" placeholder="Search in the doc" required="required" type="search"></div><h1>Nifty GUI 1.3 - Usecase Scenarios</h1><div class="details"><span class="author" id="author"></span><br><span id="revnumber">version ,</span> <span id="revdate">2016/03/17 20:48</span></div><div id="toc" class="toc2"><div id="toctitle">Table of Contents</div><ul class="sectlevel1"><li><a href="#switch-game-states">Switch Game States</a></li><li><a href="#get-access-to-application-and-update-loop">Get Access to Application and Update Loop</a></li><li><a href="#know-your-variables">Know Your Variables</a></li><li><a href="#use-screencontrollers-for-mutally-exclusive-functionality">Use ScreenControllers for Mutally Exclusive Functionality</a></li><li><a href="#create-a-loading-screen">Create a "Loading&#8230;&#8203;" Screen</a></li><li><a href="#create-a-popup-menu">Create a Popup Menu</a></li><li><a href="#add-visual-effects">Add Visual Effects</a></li><li><a href="#add-sound-effects">Add Sound Effects</a></li><li><a href="#pass-clickloc-from-nifty-to-java">Pass ClickLoc From Nifty to Java</a></li><li><a href="#load-several-xml-files">Load Several XML Files</a></li><li><a href="#register-additional-explicit-screen-controllers">Register additional explicit screen controllers</a></li><li><a href="#design-your-own-styles">Design Your Own Styles</a></li></ul></div></div><div id="content"><div id="preamble"><div class="sectionbody"><div class="paragraph"><p>This document contains typical NiftyGUI usecase scenarios, such as adding effects, game states, and creating typical game screens.</p></div>
+<link rel="stylesheet" href="./coderay-asciidoctor.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css"></head><body class="article toc2 toc-left"><div id="header"><div id="toolbar"><a href="https://github.com/jMonkeyEngine/wiki/edit/master/src/docs/asciidoc/jme3/advanced/nifty_gui_scenarios.adoc"><i class="fa fa-pencil-square" aria-hidden="true"></i></a><a href="https://github.com/jMonkeyEngine/wiki/new/master/src/docs/asciidoc/jme3/advanced/"><i class="fa fa-plus-square" aria-hidden="true"></i></a><input dir="auto" style="position: relative; vertical-align: top;" spellcheck="false" autocomplete="off" class="searchbox__input aa-input" id="doc-search" name="search" placeholder="Search in the doc" required="required" type="search"></div><h1>Nifty GUI 1.4.2 - Usecase Scenarios</h1><div class="details"><span class="author" id="author"></span><br><span id="revnumber">version ,</span> <span id="revdate">2016/03/17 20:48</span></div><div id="toc" class="toc2"><div id="toctitle">Table of Contents</div><ul class="sectlevel1"><li><a href="#switch-game-states">Switch Game States</a></li><li><a href="#get-access-to-application-and-update-loop">Get Access to Application and Update Loop</a></li><li><a href="#know-your-variables">Know Your Variables</a></li><li><a href="#use-screencontrollers-for-mutally-exclusive-functionality">Use ScreenControllers for Mutally Exclusive Functionality</a></li><li><a href="#create-a-loading-screen">Create a "Loading&#8230;&#8203;" Screen</a></li><li><a href="#create-a-popup-menu">Create a Popup Menu</a></li><li><a href="#add-visual-effects">Add Visual Effects</a></li><li><a href="#add-sound-effects">Add Sound Effects</a></li><li><a href="#pass-clickloc-from-nifty-to-java">Pass ClickLoc From Nifty to Java</a></li><li><a href="#load-several-xml-files">Load Several XML Files</a></li><li><a href="#register-additional-explicit-screen-controllers">Register additional explicit screen controllers</a></li><li><a href="#design-your-own-styles">Design Your Own Styles</a></li></ul></div></div><div id="content"><div id="preamble"><div class="sectionbody"><div class="paragraph"><p>This document contains typical NiftyGUI usecase scenarios, such as adding effects, game states, and creating typical game screens.</p></div>
 <div class="paragraph"><p>Requirements: These tips assume that you have read and understood the <a href="../../jme3/advanced/nifty_gui.html">Creating JME3 User Interfaces with Nifty GUI</a> tutorial, and have already laid out a basic <abbr title="Graphical User Interface">GUI</abbr> that interacts with your JME3 application. Here you learn how you integrate the <abbr title="Graphical User Interface">GUI</abbr> better, and add effects and advanced controls.</p></div></div></div>
 <div class="sect1"><h2 id="switch-game-states">Switch Game States</h2><div class="sectionbody"><div class="paragraph"><p>In a JME game, you typically have three game states:</p></div>
 <div class="olist arabic"><ol class="arabic"><li><p>Stopped: The game is stopped, a StartScreen is displayed.</p></li><li><p>Running: The game is running, the in-game HudScreen is displayed.</p></li><li><p>Paused: The game is paused, a PausedScreen is displayed.</p></li></ol></div>
@@ -8,52 +8,78 @@
 <div class="paragraph"><p>In JME, game states are implemented as custom <a href="../../jme3/advanced/application_states.html">AppState</a> objects. Write each AppState so it brings its own input mappings, rootNode content, update loop behaviour, etc with it.</p></div>
 <div class="olist arabic"><ol class="arabic"><li><p>Stopped: StartScreen AppState + GuiInputs AppState</p></li><li><p>Paused: PausedScreen AppState + GuiInputs AppState</p></li><li><p>Running: HudScreen AppState + InGameInputs AppState + BulletAppState (jme physics), …</p></li></ol></div>
 <div class="paragraph"><p>When the player switches between game states, you detach one set of AppStates, and attach another. For example, when the player pauses the running game, you use a boolean switch to pause the game loop and deactivate the game inputs (shooting, navigation). The screen is overlayed with a PausedScreen, which contains a visible mouse pointer and a Continue button. When the player clicks Continue, the mouse pointer is deactivated, the in-game input and navigational mappings are activated, and the game loop continues.</p></div></div></div>
-<div class="sect1"><h2 id="get-access-to-application-and-update-loop">Get Access to Application and Update Loop</h2><div class="sectionbody"><div class="paragraph"><p>Since you are writing a jME3 application, you can additionally make any ScreenController class extend the <a href="../../jme3/advanced/application_states.html">AbstractAppState</a> class.
+<div class="sect1"><h2 id="get-access-to-application-and-update-loop">Get Access to Application and Update Loop</h2><div class="sectionbody"><div class="paragraph"><p>Since you are writing a jME3 application, you can additionally make any ScreenController class extend the <a href="../../jme3/advanced/application_states.html">BaseAppState</a> class.
 This gives the ScreenController access to the application object and to the update loop!</p></div>
-<div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">StartScreenState</span> <span class="directive">extends</span> AbstractAppState {
+<div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">StartScreenState</span> <span class="directive">extends</span> BaseAppState <span class="directive">implements</span> ScreenController {
 
-  <span class="directive">private</span> ViewPort viewPort;
-  <span class="directive">private</span> Node rootNode;
-  <span class="directive">private</span> Node guiNode;
-  <span class="directive">private</span> AssetManager assetManager;
-  <span class="directive">private</span> Node localRootNode = <span class="keyword">new</span> Node(<span class="string"><span class="delimiter">&quot;</span><span class="content">Start Screen RootNode</span><span class="delimiter">&quot;</span></span>);
-  <span class="directive">private</span> Node localGuiNode = <span class="keyword">new</span> Node(<span class="string"><span class="delimiter">&quot;</span><span class="content">Start Screen GuiNode</span><span class="delimiter">&quot;</span></span>);
-  <span class="directive">private</span> <span class="directive">final</span> ColorRGBA backgroundColor = ColorRGBA.Gray;
+    <span class="directive">private</span> Node localRootNode = <span class="keyword">new</span> Node(<span class="string"><span class="delimiter">&quot;</span><span class="content">Start Screen RootNode</span><span class="delimiter">&quot;</span></span>);
+    <span class="directive">private</span> Node localGuiNode = <span class="keyword">new</span> Node(<span class="string"><span class="delimiter">&quot;</span><span class="content">Start Screen GuiNode</span><span class="delimiter">&quot;</span></span>);
+    <span class="directive">private</span> <span class="directive">final</span> ColorRGBA backgroundColor = ColorRGBA.Gray;
 
-<span class="directive">public</span> StartScreenState(SimpleApplication app){
-    <span class="local-variable">this</span>.rootNode     = app.getRootNode();
-    <span class="local-variable">this</span>.viewPort     = app.getViewPort();
-    <span class="local-variable">this</span>.guiNode      = app.getGuiNode();
-    <span class="local-variable">this</span>.assetManager = app.getAssetManager();
-  }
+    <span class="directive">public</span> StartScreenState() {
+    }
 
-  <span class="annotation">@Override</span>
-  <span class="directive">public</span> <span class="type">void</span> initialize(AppStateManager stateManager, Application app) {
-    <span class="local-variable">super</span>.initialize(stateManager, app);
+    <span class="annotation">@Override</span>
+    <span class="directive">protected</span> <span class="type">void</span> initialize(Application app) {
+        <span class="comment">//It is technically safe to do all initialization and cleanup in the</span>
+        <span class="comment">//onEnable()/onDisable() methods. Choosing to use initialize() and</span>
+        <span class="comment">//cleanup() for this is a matter of performance specifics for the</span>
+        <span class="comment">//implementor.</span>
+        <span class="comment">//TODO: initialize your AppState, e.g. attach spatials to rootNode</span>
+        ((SimpleApplication) app).getRootNode().attachChild(localRootNode);
+        ((SimpleApplication) app).getGuiNode().attachChild(localGuiNode);
+        ((SimpleApplication) app).getViewPort().setBackgroundColor(backgroundColor);
 
-    rootNode.attachChild(localRootNode);
-    guiNode.attachChild(localGuiNode);
-    viewPort.setBackgroundColor(backgroundColor);
+        <span class="comment">/** init the screen */</span>
+    }
 
-    <span class="comment">/** init the screen */</span>
-  }
+    <span class="annotation">@Override</span>
+    <span class="directive">protected</span> <span class="type">void</span> cleanup(Application app) {
+        <span class="comment">//TODO: clean up what you initialized in the initialize method,</span>
+        <span class="comment">//e.g. remove all spatials from rootNode</span>
+        ((SimpleApplication) app).getRootNode().detachChild(localRootNode);
+        ((SimpleApplication) app).getGuiNode().detachChild(localGuiNode);
+    }
 
-  <span class="annotation">@Override</span>
-  <span class="directive">public</span> <span class="type">void</span> update(<span class="type">float</span> tpf) {
-    <span class="comment">/** any main loop action happens here */</span>
-  }
+    <span class="comment">//onEnable()/onDisable() can be used for managing things that should</span>
+    <span class="comment">//only exist while the state is enabled. Prime examples would be scene</span>
+    <span class="comment">//graph attachment or input listener attachment.</span>
+    <span class="annotation">@Override</span>
+    <span class="directive">protected</span> <span class="type">void</span> onEnable() {
+        <span class="comment">//Called when the state is fully enabled, ie: is attached and</span>
+        <span class="comment">//isEnabled() is true or when the setEnabled() status changes after the</span>
+        <span class="comment">//state is attached.</span>
+    }
 
-  <span class="annotation">@Override</span>
-  <span class="directive">public</span> <span class="type">void</span> cleanup() {
-    rootNode.detachChild(localRootNode);
-    guiNode.detachChild(localGuiNode);
+    <span class="annotation">@Override</span>
+    <span class="directive">protected</span> <span class="type">void</span> onDisable() {
+        <span class="comment">//Called when the state was previously enabled but is now disabled</span>
+        <span class="comment">//either because setEnabled(false) was called or the state is being</span>
+        <span class="comment">//cleaned up.</span>
+    }
 
-    <span class="local-variable">super</span>.cleanup();
-  }
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="type">void</span> update(<span class="type">float</span> tpf) {
+        <span class="comment">//TODO: implement behavior during runtime</span>
+    }
+
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="type">void</span> bind(Nifty nifty, Screen screen) {
+    }
+
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="type">void</span> onStartScreen() {
+    }
+
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> <span class="type">void</span> onEndScreen() {
+    }
 
 }</code></pre></div></div>
-<div class="admonitionblock important"><table><tr><td class="icon"><i class="fa icon-important" title="Important"></i></td><td class="content"><div class="paragraph"><p>It is not sufficient to just inherit from AbstractAppState. You need to instantiate your controller class, register it with app&#8217;s stateManager and then pass it to nifty. See code sample below.</p></div></td></tr></table></div>
-<div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">TestNiftyGui</span> <span class="directive">extends</span> SimpleApplication {
+<div class="admonitionblock important"><table><tr><td class="icon"><i class="fa icon-important" title="Important"></i></td><td class="content"><div class="paragraph"><p>It is not sufficient to just inherit from BaseAppState. You need to instantiate your controller class, register it with app&#8217;s stateManager and then pass it to nifty. Remember, to connect a screen with a ScreenController you still need to specify the fully qualified class name of
+your ScreenController in the controller attribute of the &lt;screen&gt; tag in the xml file. See code sample below.</p></div></td></tr></table></div>
+<div class="listingblock"><div class="title">XML example</div>
+<div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">TestNiftyGui</span> <span class="directive">extends</span> SimpleApplication {
   <span class="directive">public</span> <span class="type">void</span> simpleInitApp() {
      StartScreenState startScreenState = <span class="keyword">new</span> StartScreenState(<span class="local-variable">this</span>);
      stateManager.attach(startScreenState);
@@ -62,7 +88,7 @@ This gives the ScreenController access to the application object and to the upda
   }
 }</code></pre></div></div></div></div>
 <div class="sect1"><h2 id="know-your-variables">Know Your Variables</h2><div class="sectionbody"><table class="tableblock frame-all grid-all spread"><colgroup><col style="width: 50%;"><col style="width: 50%;"></colgroup><thead><tr><th class="tableblock halign-left valign-top">Variable</th><th class="tableblock halign-left valign-top">Description</th></tr></thead><tbody><tr><td class="tableblock halign-left valign-top"><div><div class="paragraph"><p>${CALL.myMethod()}</p></div></div></td><td class="tableblock halign-left valign-top"><div><div class="paragraph"><p>Calls a method in the current ScreenController and gets the method&#8217;s return String. The method can also be void and have a side effect, e.g. play a sound etc.</p></div></div></td></tr><tr><td class="tableblock halign-left valign-top"><div><div class="paragraph"><p>${ENV.HOME}</p></div></div></td><td class="tableblock halign-left valign-top"><div><div class="paragraph"><p>Returns the path to user&#8217;s home directory.</p></div></div></td></tr><tr><td class="tableblock halign-left valign-top"><div><div class="paragraph"><p>${ENV.key}</p></div></div></td><td class="tableblock halign-left valign-top"><div><div class="paragraph"><p>Looks up <code>key</code> in the environment variables. Use it like Java&#8217;s System.getEnv(“key).</p></div></div></td></tr><tr><td class="tableblock halign-left valign-top"><div><div class="paragraph"><p>${PROP.key}</p></div></div></td><td class="tableblock halign-left valign-top"><div><div class="paragraph"><p>looks up <code>key</code> in the Nifty properties. Use Nifty.setGlobalproperties(properties) and Nifty.getGlobalproperties(“key). Or SystemGetProperties(key);</p></div></div></td></tr></tbody></table>
-<div class="paragraph"><p>See also: <a href="http://sourceforge.net/apps/mediawiki/nifty-gui/index.php?title=MarkUp">http://sourceforge.net/apps/mediawiki/nifty-gui/index.php?title=MarkUp</a></p></div></div></div>
+<div class="paragraph"><p>See also: <a href="https://versaweb.dl.sourceforge.net/project/nifty-gui/nifty-gui/1.3.2/nifty-gui-the-manual-1.3.2.pdf">Nifty GUI - the Manual: XML GUI (Special XML Markup)</a></p></div></div></div>
 <div class="sect1"><h2 id="use-screencontrollers-for-mutally-exclusive-functionality">Use ScreenControllers for Mutally Exclusive Functionality</h2><div class="sectionbody"><div class="paragraph"><p>Technically you are free to create one ScreenController class for each screen, or reuse the same ScreenController for all or some of them. In the end it may be best to create individual ScreenControllers for functionality that is mutually exclusive.</p></div>
 <div class="paragraph"><p>For example, create a <code>MyHudScreen.java</code> for the <code>hud</code> screen, and a <code>MyStartScreen.java</code> for the <code>start</code> screen.</p></div>
 <div class="ulist"><ul><li><p>Include all user interface methods that are needed during the game (while the HUD is up) in <code>MyHudScreen.java</code>. Then make this class control all screens that can be up during the game (the HUD screen, a MiniMap screen, an Inventory screen, an Abilities or Skills screen, etc). All these screens possibly share data (game data, player data), so it makes sense to control them all with methods of the same <code>MyHudScreen.java</code> class.</p></li><li><p>The start screen, however, is mostly independent of the running game. Include all user interface methods that are needed outside the game (while you are on the start screen) in <code>MyStartScreen.java</code>. Then make this class control all screens that can be up outside the game (the Start screen, a Settings/Options screen, a HighScore screen, etc). All these classes need to read and write saved game data, so it makes sense to control them all with methods of the same <code>MyStartScreen.java</code> class.</p></li></ul></div></div></div>
@@ -77,7 +103,7 @@ This gives the ScreenController access to the application object and to the upda
   <span class="tag">&lt;/effect&gt;</span>
 <span class="tag">&lt;/panel&gt;</span></code></pre></div></div>
 <div class="paragraph"><p>Learn more from the NiftyGUI page:</p></div>
-<div class="ulist"><ul><li><p><a href="http://sourceforge.net/apps/mediawiki/nifty-gui/index.php?title=Effects">http://sourceforge.net/apps/mediawiki/nifty-gui/index.php?title=Effects</a></p></li></ul></div></div></div>
+<div class="ulist"><ul><li><p><a href="https://versaweb.dl.sourceforge.net/project/nifty-gui/nifty-gui/1.3.2/nifty-gui-the-manual-1.3.2.pdf">Nifty GUI - the Manual: Effects</a></p></li><li><p><a href="https://github.com/nifty-gui/nifty-gui/wiki/Effects">Effects</a></p></li></ul></div></div></div>
 <div class="sect1"><h2 id="add-sound-effects">Add Sound Effects</h2><div class="sectionbody"><div class="paragraph"><p>Playing sounds using Nifty is also possible with a <code>playSound</code> effect as trigger. Remember to first register the sound that you want to play:</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;registerSound</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">myclick</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">filename</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">Interface/sounds/ButtonClick.ogg</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
 ...
@@ -125,10 +151,10 @@ nifty.addXml(<span class="string"><span class="delimiter">&quot;</span><span cla
   <span class="tag">&lt;useStyles</span> <span class="attribute-name">filename</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">Interface/Styles/Label/myCustomLabelStyle.xml</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
   ...
 <span class="tag">&lt;/nifty-styles&gt;</span></code></pre></div></div>
-<div class="paragraph"><p>Learn more about how to create styles by looking at the <a href="http://sourceforge.net/apps/mediawiki/nifty-gui/index.php?title=Build_from_Source">Nifty GUI source code</a> for “nifty-style-black”. Copy it as a template and change it to create your own style.
-'''</p></div>
+<div class="paragraph"><p>Learn more about how to create styles by looking at the <a href="https://github.com/nifty-gui/nifty-gui/wiki/Working-from-Source">Nifty GUI source code</a> for “nifty-style-black”. Copy it as a template and change it to create your own style.</p></div>
+<hr>
 <div class="paragraph"><p>Learn more from the NiftyGUI page:</p></div>
-<div class="ulist"><ul><li><p><a href="http://sourceforge.net/apps/mediawiki/nifty-gui/index.php?title=Effects">http://sourceforge.net/apps/mediawiki/nifty-gui/index.php?title=Effects</a></p></li></ul></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2018-04-18 22:45:28 +00:00</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
+<div class="ulist"><ul><li><p><a href="https://github.com/nifty-gui/nifty-gui/wiki/Effects">https://github.com/nifty-gui/nifty-gui/wiki/Effects</a></p></li></ul></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2018-04-18 22:52:26 +00:00</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
   apiKey: 'a736b6d93de805e26ec2f49b55013fbd',
   indexName: 'jmonkeyengine',
   inputSelector: '#doc-search',
