@@ -112,7 +112,7 @@ Delete all from the file and add following code.
 ----
 
 <nifty>
-  <screen id="start">
+  <screen id="start" controller="de.lessvoid.nifty.screen.DefaultScreenController">
     <layer id="background" backgroundColor="#000f">
       <!-- ... -->
     </layer>
@@ -120,7 +120,7 @@ Delete all from the file and add following code.
       <!-- ... -->
     </layer>
   </screen>
-  <screen id="hud">
+  <screen id="hud" controller="de.lessvoid.nifty.screen.DefaultScreenController">
     <layer id="background" backgroundColor="#000f">
       <!-- ... -->
     </layer>
@@ -132,7 +132,8 @@ Delete all from the file and add following code.
 
 ----
 
-In a layer, you can now add panels and arrange them. Panels are containers that mark the areas where you want to display text, images, or controls (buttons etc) later.
+In a layer, you can now add panels and arrange them. Panels are containers that mark the areas where you want to display text, images, or controls (buttons etc) later. To connect a screen with a ScreenController you need to specify the fully qualified class name of
+your ScreenController in the controller attribute of the <screen> tag. For this example, we use the `DefaultScreenController`. 
 
 
 === Make Panels
@@ -342,7 +343,7 @@ Your screen.xml should look like this:
 <nifty xmlns="http://nifty-gui.lessvoid.com/nifty-gui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://raw.githubusercontent.com/void256/nifty-gui/1.4/nifty-core/src/main/resources/nifty.xsd https://raw.githubusercontent.com/void256/nifty-gui/1.4/nifty-core/src/main/resources/nifty.xsd">
     <useStyles filename="nifty-default-styles.xml"/>
     <useControls filename="nifty-default-controls.xml"/>
-    <screen id="start">
+    <screen id="start" controller="de.lessvoid.nifty.screen.DefaultScreenController">
         <layer id="background" childLayout="center">
             <image filename="Interface/start-background.png"></image>
         </layer>
@@ -373,7 +374,7 @@ Your screen.xml should look like this:
             </panel>
         </layer>
     </screen>
-    <screen id="hud">
+    <screen id="hud" controller="de.lessvoid.nifty.screen.DefaultScreenController">
         <layer id="background" childLayout="center">
             <image filename="Interface/hud-frame.png"
               imageMode="resize:40,490,110,170,40,560,40,270,40,560,40,40" width="100%"
