@@ -1,6 +1,6 @@
 = Application States
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :relfileprefix: ../../
 :imagesdir: ../..
@@ -18,21 +18,21 @@ The `com.jme3.app.state.AppState` class is a customizable jME3 interface that al
 
 There are situations during your game development where you think:
 
-*  Mouse and key inputs are handled differently in-game versus in the main menu. Can I group a set of input handler settings, and activate and deactivate them all in one step?  
+*  Mouse and key inputs are handled differently in-game versus in the main menu. Can I group a set of input handler settings, and activate and deactivate them all in one step?
 *  I have the in-game scene, and a character editor, and a Captain's Quarters screen. Can I group a set of nodes and behaviours, and swap them in and out in one step?
-*  When I pause the game, I want the character's “idle animation to continue, but all other loops and game events should stop. How do I define what happens when the game is paused/unpaused? 
+*  When I pause the game, I want the character's "`idle`" animation to continue, but all other loops and game events should stop. How do I define what happens when the game is paused/unpaused?
 *  I have a conditional block that takes up a lot of space in my simpleUpdate() loop. Can I wrap up this block of code, and switch it on and off in one step?
-*  Can I package everything that belongs in-game, and everything that belongs to the menu screen, and switch between these two “big states in one step? 
+*  Can I package everything that belongs in-game, and everything that belongs to the menu screen, and switch between these two "`big`" states in one step?
 
 You can! This is what AppStates are there for. An AppState class is subset of (or an extension to) your application. Every AppState class has access to all fields in your main application (AssetManager, ViewPort, StateManager, InputManager, RootNode, GuiNode, etc) and hooks into the main update loop. An AppState can contain:
 
-*  a subset of class fields, functions, methods (game state data and accessors), 
-*  a subset of +++<abbr title="Graphical User Interface">GUI</abbr>+++ elements and their listeners, 
-*  a subset of input handlers and mappings, 
-*  a subset of nodes that you load and attach to the rootNode, 
-*  a subset of conditional actions that you branch to in the simpleUpdate() loop, 
+*  a subset of class fields, functions, methods (game state data and accessors),
+*  a subset of +++<abbr title="Graphical User Interface">GUI</abbr>+++ elements and their listeners,
+*  a subset of input handlers and mappings,
+*  a subset of nodes that you load and attach to the rootNode,
+*  a subset of conditional actions that you branch to in the simpleUpdate() loop,
 *  a subset of other AppStates and Controls
-*  … or combinations thereof. 
+*  … or combinations thereof.
 
 
 === Supported Features
@@ -41,10 +41,10 @@ Each AppState lets you define what happens to it in the following situations:
 
 *  *The AppState is initialized:* You load and initialize game data, InputHandlers, AppStates and Controls and attach nodes. +
 The AppState executes its own simpleInitApp() method when it is attached, so to speak.
-*  *The AppState has been enabled (unpaused):* This toggles a boolean isEnabled() to true. Here you attach nodes and listeners that should become active while it's running. 
+*  *The AppState has been enabled (unpaused):* This toggles a boolean isEnabled() to true. Here you attach nodes and listeners that should become active while it's running.
 *  *While the AppState is running/paused:* You can poll isEnabled() to define paused and unpaused game behaviour in the update() loop. In update(), you poll and modify the game state, modify the scene graph, and trigger events. Test if `!isEnabled()`, and write code that skips the running sections of this AppState's `update()` loop. +
-Each AppState has its own update loop, which hooks into the main simpleUpdate() loop (callback). 
-*  *The AppState has been disabled (paused):* This toggles a boolean isEnabled() to false. Here you switch all objects to their specific “paused behaviour. 
+Each AppState has its own update loop, which hooks into the main simpleUpdate() loop (callback).
+*  *The AppState has been disabled (paused):* This toggles a boolean isEnabled() to false. Here you switch all objects to their specific "`paused`" behaviour.
 *  *The AppState is cleaned up:* Here you decide what happens when the AppState is detached. Save this AppState's game state, unregister Controls and InputHandlers, detach related AppStates, detach nodes from the rootNode, etc.
 
 
@@ -59,7 +59,7 @@ AppStates are extremely handy to swap out, or pause/unpause whole sets of other 
 
 To implement game logic:
 
-.  Create one AbstractAppState instance for each set of game mechanics. 
+.  Create one AbstractAppState instance for each set of game mechanics.
 .  Implement game behaviour in the AppState's update() method.
 **  You can pass custom data as arguments in the constructor.
 **  The AppState has access to everything inside the app's scope via the Application `app` object.
@@ -91,7 +91,7 @@ a|AppState Method
 a|Usage
 
 a|initialize(asm,app)
-a|When this AppState is added to the game, the RenderThread initializes the AppState and then calls this method. You can modify the scene graph from here (e.g. attach nodes). To get access to the main app, call: 
+a|When this AppState is added to the game, the RenderThread initializes the AppState and then calls this method. You can modify the scene graph from here (e.g. attach nodes). To get access to the main app, call:
 [source,java]
 ----
 super.initialize(stateManager, app);
@@ -110,14 +110,14 @@ a|Your implementations of this interface should return the correct respective bo
 
 a|setEnabled(true) +
 setEnabled(false)
-a|Temporarily enables or disables an AppState. (See AbstractAppState) 
+a|Temporarily enables or disables an AppState. (See AbstractAppState)
 
 a|isEnabled()
 a|Test whether AppState is enabled or disabled. Your implementation should consider the boolean. (See AbstractAppState)
 
 a|stateAttached(asm) +
 stateDetached(asm)
-a|The AppState knows when it is attached to, or detached from, the AppStateManager, and triggers these two methods. Don't modify the scene graph from here! (Typically not used.) 
+a|The AppState knows when it is attached to, or detached from, the AppStateManager, and triggers these two methods. Don't modify the scene graph from here! (Typically not used.)
 
 a|render(RenderManager rm)
 a|Renders the state, plus your optional customizations. (Typically not used.)
@@ -140,19 +140,19 @@ public class MyAppState extends AbstractAppState {
 
     private SimpleApplication app;
 
-    private Node x = new Node("x");  // some custom class fields...    
-    public Node getX(){ return x; }  // some custom methods... 
-    
+    private Node x = new Node("x");  // some custom class fields...
+    public Node getX(){ return x; }  // some custom methods...
+
     @Override
     public void initialize(AppStateManager stateManager, Application app) {
-      super.initialize(stateManager, app); 
+      super.initialize(stateManager, app);
       this.app = (SimpleApplication)app;          // cast to a more specific class
-      
+
       // init stuff that is independent of whether state is PAUSED or RUNNING
       this.app.getRootNode().attachChild(getX()); // modify scene graph...
       this.app.doSomething();                     // call custom methods...
    }
-    
+
    @Override
     public void cleanup() {
       super.cleanup();
@@ -174,7 +174,7 @@ public class MyAppState extends AbstractAppState {
         ...
       }
     }
-    
+
     // Note that update is only called while the state is both attached and enabled.
     @Override
     public void update(float tpf) {
@@ -182,7 +182,7 @@ public class MyAppState extends AbstractAppState {
       this.app.getRootNode().getChild("blah").scale(tpf); // modify scene graph...
       x.setUserData(...);                                 // call some methods...
     }
-    
+
 }
 ----
 
@@ -196,42 +196,42 @@ Definition:
 
 [source,java]
 ----
-public class MyBaseAppState extends BaseAppState {        
-    @Override    
-    protected void initialize(Application app) {        
-        //It is technically safe to do all initialization and cleanup in the         
-        //onEnable()/onDisable() methods. Choosing to use initialize() and         
-        //cleanup() for this is a matter of performance specifics for the         
-        //implementor.        
-        //TODO: initialize your AppState, e.g. attach spatials to rootNode    
+public class MyBaseAppState extends BaseAppState {       
+    @Override   
+    protected void initialize(Application app) {       
+        //It is technically safe to do all initialization and cleanup in the        
+        //onEnable()/onDisable() methods. Choosing to use initialize() and        
+        //cleanup() for this is a matter of performance specifics for the        
+        //implementor.       
+        //TODO: initialize your AppState, e.g. attach spatials to rootNode   
     }
 
-    @Override    
-    protected void cleanup(Application app) {        
-        //TODO: clean up what you initialized in the initialize method,        
-        //e.g. remove all spatials from rootNode    
+    @Override   
+    protected void cleanup(Application app) {       
+        //TODO: clean up what you initialized in the initialize method,       
+        //e.g. remove all spatials from rootNode   
     }
-    
-    //onEnable()/onDisable() can be used for managing things that should     
-    //only exist while the state is enabled. Prime examples would be scene     
-    //graph attachment or input listener attachment.    
-    @Override    
-    protected void onEnable() {        
-        //Called when the state is fully enabled, ie: is attached and         
-        //isEnabled() is true or when the setEnabled() status changes after the         
-        //state is attached.    
+
+    //onEnable()/onDisable() can be used for managing things that should    
+    //only exist while the state is enabled. Prime examples would be scene    
+    //graph attachment or input listener attachment.   
+    @Override   
+    protected void onEnable() {       
+        //Called when the state is fully enabled, ie: is attached and        
+        //isEnabled() is true or when the setEnabled() status changes after the        
+        //state is attached.   
     }
     
-    @Override    
-    protected void onDisable() {        
-        //Called when the state was previously enabled but is now disabled         
-        //either because setEnabled(false) was called or the state is being         
-        //cleaned up.    
-    }        
-    
-    @Override    
-    public void update(float tpf) {        
-        //TODO: implement behavior during runtime    
+    @Override   
+    protected void onDisable() {       
+        //Called when the state was previously enabled but is now disabled        
+        //either because setEnabled(false) was called or the state is being        
+        //cleaned up.   
+    }       
+
+    @Override   
+    public void update(float tpf) {       
+        //TODO: implement behavior during runtime   
     }
     
 }

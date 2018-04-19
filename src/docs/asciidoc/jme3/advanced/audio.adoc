@@ -1,6 +1,6 @@
 = Audio in jME3
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :keywords: sound, documentation, environment
 :relfileprefix: ../../
@@ -23,7 +23,7 @@ You cannot loop streamed sounds.
 
 The main jME audio class to look at is `com.jme3.audio.AudioNode`. When creating a new audio node you need to declare whether how you want to load this sound:
 
-*  *Buffered:* By default, a new audio node is buffered. This means jME3 loads the whole file into memory before playing. Use this for short sounds. You create a buffered sound  by setting DataType.Buffer, or using no DataType at all: 
+*  *Buffered:* By default, a new audio node is buffered. This means jME3 loads the whole file into memory before playing. Use this for short sounds. You create a buffered sound  by setting DataType.Buffer, or using no DataType at all:
 [source,java]
 ----
 AudioNode boom = new AudioNode(assetManager, "Sound/boom.wav");
@@ -47,13 +47,13 @@ a|AudioNode Method
 a|Usage
 
 a|getStatus()
-a|Returns either AudioSource.Status.Playing, AudioSource.Status.Stopped, or AudioSource.Status.Paused. 
+a|Returns either AudioSource.Status.Playing, AudioSource.Status.Stopped, or AudioSource.Status.Paused.
 
 a|getVolume()
-a|Returns the volume. 
+a|Returns the volume.
 
 a|getPitch()
-a|Returns the pitch. 
+a|Returns the pitch.
 
 |===
 
@@ -75,10 +75,10 @@ a|setTimeOffset(0.5f)
 a|Play the sound starting at a 0.5 second offset from the beginning. Default is 0.
 
 a|setPitch(1)
-a|Makes the sound play in a higher or lower pitch. Default is 1. 2 is twice as high, .5f is half as high. 
+a|Makes the sound play in a higher or lower pitch. Default is 1. 2 is twice as high, .5f is half as high.
 
 a|setVolume(1)
-a|Sets the volume gain. 1 is the default volume, 2 is twice as loud, etc. 0 is silent/mute. 
+a|Sets the volume gain. 1 is the default volume, 2 is twice as loud, etc. 0 is silent/mute.
 
 a|setRefDistance(50f)
 a|The reference distance controls how far a sound can still be heard at 50% of its original volume (_this is assuming an exponential fall-off!_). A sound with a high RefDist can be heard loud over wide distances; a sound with a low refDist can only be heard when the listener is close by. Default is 10 world units.
@@ -106,7 +106,7 @@ a|All 3D effects switched off. This sound is global and plays in headspace (it a
 
 a|setLooping(true)
 a|Configures the sound to be a loop: After the sound plays, it repeats from the beginning, until you call stop() or pause(). Good for music and ambient background noises. +
-*Before 3.1-alpha2, Looping does not work on streamed sounds.* 
+*Before 3.1-alpha2, Looping does not work on streamed sounds.*
 
 |===
 
@@ -124,7 +124,7 @@ setLocalTranslation(…)
 a|Activates 3D audio: The sound appears to come from a certain position, where it is loudest. Position the AudioNode in the 3D scene, or move it with mobile players or NPCs.
 
 a|setReverbEnabled(true)
-a|Reverb is a 3D echo effect that only makes sense with positional AudioNodes. Use Audio Environments to make scenes sound as if they were “outdoors, or “indoors in a large or small room, etc. The reverb effect is defined by the `com.jme3.audio.Environment` that the `audioRenderer` is in. See “Setting Audio Environment Properties below. 
+a|Reverb is a 3D echo effect that only makes sense with positional AudioNodes. Use Audio Environments to make scenes sound as if they were "`outdoors`", or "`indoors`" in a large or small room, etc. The reverb effect is defined by the `com.jme3.audio.Environment` that the `audioRenderer` is in. See "`Setting Audio Environment Properties`" below.
 
 |===
 
@@ -145,7 +145,7 @@ a|AudioNode Method
 a|Usage
 
 a|setDirectional(true) +
-setDirection(…) 
+setDirection(…)
 a|Activates 3D audio: This sound can only be heard from a certain direction. Specify the direction and angle in the 3D scene if you have setDirectional() true. Use this to restrict noises that should not be heard, for example, through a wall.
 
 a|setInnerAngle() +
@@ -157,7 +157,7 @@ a|Set the angle in degrees for the directional audio. The angle is relative to t
 
 [IMPORTANT]
 ====
-Directional 3D sounds require an AudioListener object in the scene (representing the player's ears). 
+Directional 3D sounds require an AudioListener object in the scene (representing the player's ears).
 ====
 
 
@@ -213,7 +213,7 @@ The default AudioListener object `listener` in `SimpleApplication` is the user's
 
 == Setting Audio Environment Properties
 
-Optionally, You can choose from the following environmental presets from `com.jme3.audio.Environment`. This presets influence subtle echo effects (reverb) that evoke associations of different environments in your users. That is, it makes you scene sound “indoors or “outdoors etc. You use Audio Environments together with `setReverbEnabled(true)` on positional AudioNodes (see above).
+Optionally, You can choose from the following environmental presets from `com.jme3.audio.Environment`. This presets influence subtle echo effects (reverb) that evoke associations of different environments in your users. That is, it makes you scene sound "`indoors`" or "`outdoors`" etc. You use Audio Environments together with `setReverbEnabled(true)` on positional AudioNodes (see above).
 
 [cols="11", options="header"]
 |===
@@ -230,7 +230,7 @@ a|reflDelay
 a|lateGain
 a|lateDelay
 
-<a|Garage      
+<a|Garage
 a|1.00f
 a|1.0f
 a|1.0f
@@ -242,7 +242,7 @@ a|0.0039f
 a|0.661f
 a|0.0137f
 
-<a|Dungeon     
+<a|Dungeon
 a|0.75f
 a|1.0f
 a|1.0f
@@ -254,7 +254,7 @@ a|0.0026f
 a|0.930f
 a|0.0103f
 
-<a|Cavern      
+<a|Cavern
 a|0.50f
 a|1.0f
 a|1.0f
@@ -266,7 +266,7 @@ a|0.0103f
 a|0.930f
 a|0.0410f
 
-a|AcousticLab 
+a|AcousticLab
 a|0.50f
 a|1.0f
 a|1.0f
@@ -278,7 +278,7 @@ a|0.0020f
 a|0.810f
 a|0.0080f
 
-<a|Closet      
+<a|Closet
 a|1.00f
 a|1.0f
 a|1.0f
@@ -293,7 +293,7 @@ a|0.0006f
 |===
 
 .  Activate a Environment preset
-**  Either use a default, e.g. make you scene sounds like a dungeon environment: 
+**  Either use a default, e.g. make you scene sounds like a dungeon environment:
 +
 [source,java]
 ----
@@ -310,7 +310,7 @@ audioRenderer.setEnvironment(
 ----
 
 
-.  Activate 3D audio for certain sounds: 
+.  Activate 3D audio for certain sounds:
 +
 [source,java]
 ----
@@ -326,11 +326,10 @@ A sound engineer can create a custom `com.​jme3.​audio.Environment` object a
 ====
 
 
-Advanced users find more info about OpenAL and its features here: link:http://web.archive.org/web/20130327063429/http://connect.creativelabs.com/openal/Documentation/OpenAL_Programmers_Guide.pdf[OpenAL 1.1 Specification]. 
+Advanced users find more info about OpenAL and its features here: link:http://web.archive.org/web/20130327063429/http://connect.creativelabs.com/openal/Documentation/OpenAL_Programmers_Guide.pdf[OpenAL 1.1 Specification].
 
 
 [IMPORTANT]
 ====
 It depends on the hardware whether audio effects are supported (if not, you get the message `OpenAL EFX not available! Audio effects won't work.`)
 ====
-
