@@ -18,7 +18,7 @@ The bloom filter supports a glow map or a glow color.</p></div>
 Here you can see the diffuse map of the tank, and the associated glow map that only contains the parts of the texture that will glow and their glowing color:<br>
 <span class="image"><img src="../../jme3/advanced/tank_diffuse_ss.png" alt="Tank diffuse map" width="" height=""></span>
 <span class="image"><img src="../../jme3/advanced/tank_glow_map_ss.png" alt="Tank glow map" width="" height=""></span></p></div>
-<div class="paragraph"><p>Glow maps work with Lighting.j3md, Particles.j3md and SolidColor.j3md material definitions.
+<div class="paragraph"><p>Glow maps work with Lighting.j3md, Particles.j3md and Unshaded.j3md material definitions.
 The tank material looks like this :</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code>Material My Material : Common/MatDefs/Light/Lighting.j3md {
      MaterialParameters {
@@ -44,7 +44,7 @@ The tank material looks like this :</p></div>
 <div class="sect2"><h3 id="bloom-with-a-glow-color">Bloom with a glow color</h3><div class="paragraph"><p>Sometimes you need an entire object to glow, not just parts of it.
 In this case you&#8217;ll need to use the glow color parameter.</p></div>
 <div class="sect2"><h3 id="usage-2">Usage</h3><div class="olist arabic"><ol class="arabic"><li><p>Create a material for your object and set the GlowColor parameter</p></li><li><p>Create a FilterPostProcessor</p></li><li><p>Create a BloomFilter with the GlowMode.Objects parameter</p></li><li><p>Add the filter to the processor</p></li><li><p>Add the processor to the viewPort</p></li></ol></div>
-<div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code>    Material mat = new Material(getAssetManager(), "Common/MatDefs/Misc/SolidColor.j3md");
+<div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code>    Material mat = new Material(getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
     mat.setColor("Color", ColorRGBA.Green);
     mat.setColor("GlowColor", ColorRGBA.Green);
     fpp=new FilterPostProcessor(assetManager);
@@ -95,7 +95,7 @@ In your material definition you need to add those lines in the MaterialParameter
 <div class="sect2"><h3 id="make-a-glowing-object-stop-to-glow">Make a glowing object stop to glow</h3><div class="paragraph"><p>If you are using a glow map, remove the texture from the material.</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code>material.clearTextureParam("GlowMap");</code></pre></div></div>
 <div class="paragraph"><p>If you are using a glow color, set it to black</p></div>
-<div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code>material.setColor("GlowColor",ColorRGBA.Black);</code></pre></div></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2018-04-19 18:38:42 +00:00</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
+<div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code>material.setColor("GlowColor",ColorRGBA.Black);</code></pre></div></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2018-04-22 20:39:32 +00:00</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
   apiKey: 'a736b6d93de805e26ec2f49b55013fbd',
   indexName: 'jmonkeyengine',
   inputSelector: '#doc-search',
