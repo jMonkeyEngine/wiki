@@ -116,7 +116,10 @@ public class HelloCollision extends SimpleApplication
     player = new CharacterControl(capsuleShape, 0.05f);
     player.setJumpSpeed(20);
     player.setFallSpeed(30);
-    // pre jME3.2
+
+    //Some methods used for setting gravity related variables were deprecated in
+    //the 3.2 version of the engine. Choose the method that matches your version
+    //of the engine.
     // player.setGravity(30f);
 
     // >= jME3.2
@@ -170,11 +173,13 @@ public class HelloCollision extends SimpleApplication
     } else if (binding.equals("Down")) {
       down = isPressed;
     } else if (binding.equals("Jump")) {
-      // pre jME3.2
+      //Some methods used for setting gravity related variables were deprecated in
+      //the 3.2 version of the engine. Choose the method that matches your version
+      //of the engine.
       //if (isPressed) { player.jump();}
 
       // >= jME3.2
-      player.jump(new Vector3f(0,20f,0));
+      if (isPressed) { player.jump(new Vector3f(0,20f,0));}
     }
   }
 
