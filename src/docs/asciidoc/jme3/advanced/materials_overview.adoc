@@ -24,7 +24,7 @@ Or find more background info on <<jme3/advanced/material_definitions#,How to use
 
 == All Materials Definition Properties
 
-The following Materials table shows you the Material Definitions that jMonkeyEngine 3 supports.
+The following Materials table shows the Material Definitions that jMonkeyEngine 3 supports.
 
 
 [TIP]
@@ -78,7 +78,7 @@ setColor("`GlowColor`", ColorRGBA.White);
 
 Other useful, but less commonly used material definitions:
 
-[cols="20,35,45", options="header"]
+[cols="20,30,50", options="header"]
 .Special Unshaded
 |===
 
@@ -88,7 +88,7 @@ a| Usage
 
 <a| Common/MatDefs/Misc/ +
 Sky.j3md
-a| A solid skyblue, or use with a custom SkyDome texture.
+a| A solid sky blue, or use with a custom SkyDome texture.
 
 See also: <<jme3/advanced/sky#,Sky>>
 a| setTexture("`TextureCubeMap`", assetManager.loadTexture("`name`")); +
@@ -97,7 +97,7 @@ setVector3("`NormalScale`", new Vector3f(0,0,0));
 
 a| Common/MatDefs/Terrain/ +
 Terrain.j3md
-a| Splat textures for e.g. terrains.
+a| Splat textures for, e.g. terrains.
 
 See also: <<jme3/beginner/hello_terrain#,Hello Terrain>>
 a| setTexture("`Tex1`", assetManager.loadTexture("`name`")); +
@@ -171,7 +171,7 @@ jMonkeyEngine supports illuminated and unshaded Material Definitions.
 
 Illuminated materials require a <<jme3/advanced/light_and_shadow#,light source>> added to at least one of their parent nodes! (e.g. rootNode.) Illuminated materials are darker on the sides facing away from light sources. They use Phong illumination model (default), or the Ward isotropic gaussian specular shader (WardIso) which looks more like plastic. They do not cast <<jme3/advanced/light_and_shadow#,drop shadows>> unless you use a FilterPostProcessor.
 
-[cols="20,35,45", options="header"]
+[cols="20,30,50", options="header"]
 .Standard Illuminated
 |===
 
@@ -219,7 +219,7 @@ setBoolean("`WardIso`",true); footnote:[WardIso is a shader type.]
 
 |===
 
-[cols="20,35,45", options="header"]
+[cols="20,30,50", options="header"]
 .Special Illuminated
 |===
 
@@ -233,7 +233,7 @@ a|Same kind of multi-layered splat texture as Terrain.j3md, but with illuminatio
 
 Typically used for terrains, but works on any mesh.
 
-For every 3 splat textures, you need one alpha map.
+For every three splat textures, you need one alpha map.
 
 You can use a total of 11 texture maps in the terrain's splat texture:
 
@@ -241,7 +241,7 @@ Note that diffuse and normal maps all count against that.
 
 For example:
 
-You can use a maximum of 9 diffuse textures, two of which can have normal maps; or, five textures with both diffuse and normal maps.
+You can use a maximum of nine diffuse textures, two of which can have normal maps; or, five textures with both diffuse and normal maps.
 a|*Texture Splat Maps* +
 setTexture("`DiffuseMap`", assetManager.loadTexture("`name`")); +
 setFloat("`DiffuseMap_0_scale`",1f); +
@@ -295,7 +295,7 @@ a| Usage
 
 <a| Common/MatDefs/Misc/ +
 ShowNormals.j3md
-a| A color gradient calculated from the model's surface normals. You can use this built-in material to debug the generation of normals in meshes, to preview models that have no material and no lights, or as fall-back default material. This built-in material has no parameters.
+a| A color gradient calculated from the model's surface normal's. You can use this built-in material to debug the generation of normal's in meshes, to preview models that have no material and no lights, or as fall-back default material. This built-in material has no parameters.
 
 |===
 
@@ -338,7 +338,7 @@ Deactivate Alpha Testing for gradually *translucent* objects, such as colored gl
 
 a|getAdditionalRenderState() +
 .setBlendMode(BlendMode.Additive);
-a|Additive alpha blending adds colors in a commutative way, i.e. the result does not depend on the order of transparent layers, since it adds the scene's background pixel color to the current pixel color. This is useful if you have lots of transparent textures overlapping and don't care about the order.
+a|Additive alpha blending adds colors in a commutative way, i.e. the result does not depend on the order of transparent layers since it adds the scene's background pixel color to the current pixel color. This is useful if you have many transparent textures overlapping and don't care about the order.
 
 *Note:* Viewed in front of a white background, Additive textures become fully transparent!
 a| This is the default for Particle.j3md-based textures that have a black color background.
@@ -418,7 +418,7 @@ a|No example – Typically not used because you wouldn't see anything meaningful
 a|getAdditionalRenderState() +
 .setFaceCullMode(FaceCullMode.FrontAndBack)
 a|Culls both backfaces and frontfaces.
-a|Use this as an efficient way to make an object temporarily invisible, while keeping all its other in-game properties (such as node attachment, collision shapes, interactions, etc) active.
+a|Use this as an efficient way to make an object temporarily invisible, while keeping all its other in-game properties (such as node attachment, collision shapes, interactions, etc.) active.
 
 |===
 
@@ -438,7 +438,9 @@ a|Use this together with setDepthWrite(true) to write pixels only to the depth b
 
 a|getAdditionalRenderState() +
 .setPointSprite(true);
-a|Enables point-sprite mode, e.g. meshes with "`Mode`".Points will be rendered as textured sprites. Note that gl_PointCoord must be set in the shader.
+a|Enables point-sprite mode, e.g. meshes with "`Mode`".Points will be rendered as textured sprites.
+
+Note that gl_PointCoord must be set in the shader.
 a|Point sprites are used internally for hardware accelerated particle effects.
 
 a|getAdditionalRenderState() +
