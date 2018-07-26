@@ -15,7 +15,7 @@ Or find more background info on <a href="../../jme3/advanced/material_definition
 <div class="paragraph"><p>&#8220;Unshaded&#8221; materials look somewhat abstract because they ignore lighting and shading. Unshaded Materials work even if the scene does not include a light source. These Materials can be single-colored or textured. For example, they are used for cards and tiles, for the sky, billboards and UI elements, for toon-style games, or for testing.</p></div>
 <table class="tableblock frame-all grid-all spread"><caption class="title">Table 1. Standard Unshaded</caption><colgroup><col style="width: 20%;"><col style="width: 25%;"><col style="width: 55%;"></colgroup><thead><tr><th class="tableblock halign-left valign-top">Material Definition</th><th class="tableblock halign-left valign-top">Usage</th><th class="tableblock halign-left valign-top">Material Parameters</th></tr></thead><tbody><tr><td class="tableblock halign-left valign-top"><div><div class="paragraph"><p>Common/MatDefs/Misc/<br>
 Unshaded.j3md</p></div></div></td><td class="tableblock halign-left valign-top"><div><div class="paragraph"><p>Standard, non-illuminated Materials.</p></div>
-<div class="paragraph"><p>Use this for simple coloring and texturing, glow, and transparency.</p></div>
+<div class="paragraph"><p>Use this for simple coloring, texturing, glow, and transparency.</p></div>
 <div class="paragraph"><p>See also: <a href="../../jme3/beginner/hello_material.html">Hello Material</a></p></div></div></td><td class="tableblock halign-left valign-top"><div><div class="paragraph"><p><strong>Texture Maps</strong><br>
 setTexture(&#8220;ColorMap&#8221;, assetManager.loadTexture(&#8220;name&#8221;));<br>
 setBoolean(&#8220;SeparateTexCoord&#8221;,true);<br>
@@ -47,8 +47,8 @@ HeightBasedTerrain.j3md</p></div></div></td><td class="tableblock halign-left va
 <div class="paragraph"><p>Specify four textures and a Vector3f describing the region in which each texture should appear:</p></div>
 <div class="paragraph"><p>X = start height,<br>
 Y = end height,<br>
-Z = texture scale.<br>
-Texture regions can overlap.</p></div>
+Z = texture scale.</p></div>
+<div class="paragraph"><p>Texture regions can overlap.</p></div>
 <div class="paragraph"><p>For example:</p></div>
 <div class="paragraph"><p>Specify a seafloor texture for the lowest areas.</p></div>
 <div class="paragraph"><p>A sandy texture for the beaches.</p></div>
@@ -66,7 +66,7 @@ setVector3(&#8220;region4&#8221;, new Vector3f(0,0,0));<br>
 setTexture(&#8220;slopeColorMap&#8221;, assetManager.loadTexture(&#8220;name&#8221;));<br>
 setFloat(&#8220;slopeTileFactor&#8221;,1f);</p></div></div></td></tr><tr><td class="tableblock halign-left valign-top"><div><div class="paragraph"><p>Common/MatDefs/Misc/<br>
 Particle.j3md</p></div></div></td><td class="tableblock halign-left valign-top"><div><div class="paragraph"><p>Used with texture masks for particle effects, or for point sprites.</p></div>
-<div class="paragraph"><p>The Quadratic value scales the particle for perspective view (<a href="https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/java/com/jme3/effect/ParticleEmitter.java">formula</a>).</p></div>
+<div class="paragraph"><p>The Quadratic value scales the particle for perspective view. (<a href="https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/java/com/jme3/effect/ParticleEmitter.java">formula</a>)</p></div>
 <div class="paragraph"><p>Does support an optional colored glow effect.</p></div>
 <div class="paragraph"><p>See also: <a href="../../jme3/beginner/hello_effects.html">Hello Effects</a></p></div></div></td><td class="tableblock halign-left valign-top"><div><div class="paragraph"><p>setTexture(&#8220;Texture&#8221;, assetManager.loadTexture(&#8220;name&#8221;));<br>
 setTexture(&#8220;GlowMap&#8221;, assetManager.loadTexture(&#8220;name&#8221;));<br>
@@ -79,7 +79,7 @@ setBoolean(&#8220;PointSprite&#8221;,true);</p></div></div></td></tr></tbody></t
 <table class="tableblock frame-all grid-all spread"><caption class="title">Table 3. Standard Illuminated</caption><colgroup><col style="width: 20%;"><col style="width: 25%;"><col style="width: 55%;"></colgroup><thead><tr><th class="tableblock halign-left valign-top">Material Definition</th><th class="tableblock halign-left valign-top">Usage</th><th class="tableblock halign-left valign-top">Material Parameters</th></tr></thead><tbody><tr><td class="tableblock halign-left valign-top"><div><div class="paragraph"><p>Common/MatDefs/Light/<br>
 Lighting.j3md</p></div></div></td><td class="tableblock halign-left valign-top"><div><div class="paragraph"><p>Commonly used Material with Phong illumination.</p></div>
 <div class="paragraph"><p>Use this material together with DiffuseMap, SpecularMap, BumpMap (NormalMaps, ParalaxMap) textures.</p></div>
-<div class="paragraph"><p>Supports shininess, transparency, and plain material colors (Diffuse, Ambient, Specular colors).</p></div>
+<div class="paragraph"><p>Supports shininess, transparency, and plain material colors (Diffuse, Ambient, Specular).</p></div>
 <div class="paragraph"><p>See also: <a href="../../jme3/beginner/hello_material.html">Hello Material</a></p></div></div></td><td class="tableblock halign-left valign-top"><div><div class="paragraph"><p><strong>Texture Maps</strong><br>
 setTexture(&#8220;DiffuseMap&#8221;, assetManager.loadTexture(&#8220;name&#8221;));<br>
 setBoolean(&#8220;UseAlpha&#8221;,true); <span class="footnote">[<a class="footnote" id="_footnoteref_1" href="#_footnote_1" title="View footnote.">1</a>]</span> <br>
@@ -183,7 +183,7 @@ setBlendMode(BlendMode.Off);</p></div></div></td><td class="tableblock halign-le
 <div class="paragraph"><p>Note that gl_PointCoord must be set in the shader.</p></div></div></td><td class="tableblock halign-left valign-top"><div><div class="paragraph"><p>Point sprites are used internally for hardware accelerated particle effects.</p></div></div></td></tr><tr><td class="tableblock halign-left valign-top"><div><div class="paragraph"><p>getAdditionalRenderState()<br>
 .setPolyOffset();</p></div></div></td><td class="tableblock halign-left valign-top"><div><div class="paragraph"><p>Enable polygon offset.</p></div></div></td><td class="tableblock halign-left valign-top"><div><div class="paragraph"><p>Use this when you have meshes that have triangles really close to each over (e.g. <a href="http://en.wikipedia.org/wiki/Coplanarity">Coplanar</a>), it will shift the depth values to prevent <a href="http://en.wikipedia.org/wiki/Z-fighting">Z-fighting</a>.</p></div></div></td></tr></tbody></table>
 <div class="paragraph"><p><strong>Related Links</strong></p></div>
-<div class="ulist"><ul><li><p><a href="../../jme3/advanced/material_specification.html">Developer specification of the jME3 material system (.j3md,.j3m)</a></p></li></ul></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2018-07-26 16:23:18 +00:00</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
+<div class="ulist"><ul><li><p><a href="../../jme3/advanced/material_specification.html">Developer specification of the jME3 material system (.j3md,.j3m)</a></p></li></ul></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2018-07-26 16:44:59 +00:00</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
   apiKey: 'a736b6d93de805e26ec2f49b55013fbd',
   indexName: 'jmonkeyengine',
   inputSelector: '#doc-search',
