@@ -58,8 +58,10 @@ a| Usage
 
 a| Common/MatDefs/Misc/ +
 Unshaded.j3md
-a| Standard, non-illuminated Materials. +
-Use this for simple coloring and texturing, glow, and transparency. +
+a| Standard, non-illuminated Materials.
+
+Use this for simple coloring and texturing, glow, and transparency.
+
 See also: <<jme3/beginner/hello_material#,Hello Material>>
 a| *Texture Maps* +
 setTexture("`ColorMap`", assetManager.loadTexture("`name`")); +
@@ -86,7 +88,8 @@ a| Usage
 
 <a| Common/MatDefs/Misc/ +
 Sky.j3md
-a| A solid skyblue, or use with a custom SkyDome texture. +
+a| A solid skyblue, or use with a custom SkyDome texture.
+
 See also: <<jme3/advanced/sky#,Sky>>
 a| setTexture("`TextureCubeMap`", assetManager.loadTexture("`name`")); +
 setBoolean("`SphereMap`",true); +
@@ -94,7 +97,8 @@ setVector3("`NormalScale`", new Vector3f(0,0,0));
 
 a| Common/MatDefs/Terrain/ +
 Terrain.j3md
-a| Splat textures for e.g. terrains. +
+a| Splat textures for e.g. terrains.
+
 See also: <<jme3/beginner/hello_terrain#,Hello Terrain>>
 a| setTexture("`Tex1`", assetManager.loadTexture("`name`")); +
 (red) +
@@ -109,16 +113,24 @@ setTexture("`Alpha`", assetManager.loadTexture("`name`"));
 
 a|Common/MatDefs/Terrain/ +
 HeightBasedTerrain.j3md
-a|A multi-layered texture for terrains. +
-Specify four textures and a Vector3f describing the region in which each texture should appear: +
+a|A multi-layered texture for terrains.
+
+Specify four textures and a Vector3f describing the region in which each texture should appear:
+
 X = start height, +
 Y = end height, +
 Z = texture scale. +
-Texture regions can overlap. +
-For example: Specify a seafloor texture for the lowest areas, +
-a sandy texture for the beaches, +
-a grassy texure for inland areas, +
-and a rocky texture for mountain tops.
+Texture regions can overlap.
+
+For example:
+
+Specify a seafloor texture for the lowest areas.
+
+A sandy texture for the beaches.
+
+A grassy texture for inland areas.
+
+A rocky texture for mountain tops.
 a| setFloat("`terrainSize`",512f); +
 setTexture("`region1ColorMap`", assetManager.loadTexture("`name`")); +
 setTexture("`region2ColorMap`", assetManager.loadTexture("`name`")); +
@@ -134,9 +146,12 @@ setFloat("`slopeTileFactor`",1f);
 
 <a| Common/MatDefs/Misc/ +
 Particle.j3md
-a| Used with texture masks for particle effects, or for point sprites. +
-The Quadratic value scales the particle for perspective view (link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/java/com/jme3/effect/ParticleEmitter.java[formula]). +
-Does support an optional colored glow effect. +
+a| Used with texture masks for particle effects, or for point sprites.
+
+The Quadratic value scales the particle for perspective view (link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/java/com/jme3/effect/ParticleEmitter.java[formula]).
+
+Does support an optional colored glow effect.
+
 See also: <<jme3/beginner/hello_effects#,Hello Effects>>
 a| setTexture("`Texture`", assetManager.loadTexture("`name`")); +
 setTexture("`GlowMap`", assetManager.loadTexture("`name`")); +
@@ -166,9 +181,12 @@ a| Material Parameters
 
 <a| Common/MatDefs/Light/ +
 Lighting.j3md
-a| Commonly used Material with Phong illumination. +
-Use this material together with DiffuseMap, SpecularMap, BumpMap (NormalMaps, ParalaxMap) textures. +
-Supports shininess, transparency, and plain material colors (Diffuse, Ambient, Specular colors). +
+a| Commonly used Material with Phong illumination.
+
+Use this material together with DiffuseMap, SpecularMap, BumpMap (NormalMaps, ParalaxMap) textures.
+
+Supports shininess, transparency, and plain material colors (Diffuse, Ambient, Specular colors).
+
 See also: <<jme3/beginner/hello_material#,Hello Material>>
 <a| *Texture Maps* +
 setTexture("`DiffuseMap`", assetManager.loadTexture("`name`")); +
@@ -201,7 +219,7 @@ setBoolean("`WardIso`",true); footnote:[WardIso is a shader type.]
 
 |===
 
-[cols="20,40,40", options="header"]
+[cols="20,35,45", options="header"]
 .Special Illuminated
 |===
 
@@ -211,13 +229,19 @@ a| Material Parameters
 
 a|Common/MatDefs/Terrain/ +
 TerrainLighting.j3md
-a|Same kind of multi-layered splat texture as Terrain.j3md, but with illumination and shading. +
-Typically used for terrains, but works on any mesh. +
-For every 3 splat textures, you need one alpha map. +
-You can use a total of 11 texture maps in the terrain's splat texture: +
-Note that diffuse and normal maps all count against that. +
-For example, you can use a maximum of 9 diffuse textures, two of which can have normal maps; +
-or, five textures with both diffuse and normal maps.
+a|Same kind of multi-layered splat texture as Terrain.j3md, but with illumination and shading.
+
+Typically used for terrains, but works on any mesh.
+
+For every 3 splat textures, you need one alpha map.
+
+You can use a total of 11 texture maps in the terrain's splat texture:
+
+Note that diffuse and normal maps all count against that.
+
+For example:
+
+You can use a maximum of 9 diffuse textures, two of which can have normal maps; or, five textures with both diffuse and normal maps.
 a|*Texture Splat Maps* +
 setTexture("`DiffuseMap`", assetManager.loadTexture("`name`")); +
 setFloat("`DiffuseMap_0_scale`",1f); +
@@ -251,7 +275,9 @@ setBoolean("`isTerrainGrid`",true);
 
 <a| Common/MatDefs/Light/ +
 Reflection.j3md
-a| Reflective glass material with environment map (CubeMap/SphereMap). See also: link:http://code.google.com/p/jmonkeyengine/source/browse/trunk/engine/src/test/jme3test/texture/TestCubeMap.java[TestCubeMap.java]
+a| Reflective glass material with environment map (CubeMap/SphereMap).
+
+See also: link:http://code.google.com/p/jmonkeyengine/source/browse/trunk/engine/src/test/jme3test/texture/TestCubeMap.java[TestCubeMap.java]
 a| setTexture("`Texture`", assetManager.loadTexture("`name`")); +
 setBoolean("`SphereMap`",true);
 
@@ -301,16 +327,19 @@ a|Disables writing of the pixel's depth value to the depth buffer.
 a|Use this on Materials if you have several transparent/translucent objects obscuring one another, but you want to see through both.
 
 a|getAdditionalRenderState() +
-.setAlphaFallOff(0.5f); +
+.setAlphaFallOff(0.5f);
+
 getAdditionalRenderState() +
 .setAlphaTest(true)
 a|Enables Alpha Testing with a "`AlphaDiscardThreshold`" in the AlphaMap.
-a|Activate Alpha Testing for (partially) *transparent* objects such as foliage, hair, etc. +
+a|Activate Alpha Testing for (partially) *transparent* objects such as foliage, hair, etc.
+
 Deactivate Alpha Testing for gradually *translucent* objects, such as colored glass, smoked glass, ghosts.
 
 a|getAdditionalRenderState() +
 .setBlendMode(BlendMode.Additive);
-a|Additive alpha blending adds colors in a commutative way, i.e. the result does not depend on the order of transparent layers, since it adds the scene's background pixel color to the current pixel color. This is useful if you have lots of transparent textures overlapping and don't care about the order. +
+a|Additive alpha blending adds colors in a commutative way, i.e. the result does not depend on the order of transparent layers, since it adds the scene's background pixel color to the current pixel color. This is useful if you have lots of transparent textures overlapping and don't care about the order.
+
 *Note:* Viewed in front of a white background, Additive textures become fully transparent!
 a| This is the default for Particle.j3md-based textures that have a black color background.
 
@@ -371,7 +400,9 @@ a|Example
 
 a|getAdditionalRenderState() +
 .setFaceCullMode(FaceCullMode.Back);
-a|Activates back-face culling. Mesh faces that are facing away from the camera are not rendered, which saves time. *Backface culling is activated by default as a major optimization.*
+a|Activates back-face culling. Mesh faces that are facing away from the camera are not rendered, which saves time.
+
+*Backface culling is activated by default as a major optimization.*
 a|The invisible backsides and insides of models are not calculated.
 
 a|getAdditionalRenderState() +
