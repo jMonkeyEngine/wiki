@@ -1,4 +1,4 @@
-= Particle Emmitter Settings
+= Particle Emmitter Settings 2
 :author:
 :revnumber:
 :revdate: 2016/03/17 20:48
@@ -65,93 +65,200 @@ Choose one of the following mesh shapes
 == Configure Parameters
 
 Not all of these parameters are required for all kinds of effects. If you don't specify one of them, a default value will be used.
-[cols="15,25,20,40", options="header"]
+[cols="3", options="header"]
 |===
 
 <a| Parameter
 <a| Method
 a| Default
-a| Description
 
 <a| number
 a| `setNumParticles()`
 <a|
-a| The maximum number of particles visible at the same time. Specified by user in constructor.
+3+a| The maximum number of particles visible at the same time. Specified by user in constructor.
+
+|===
+
+[cols="3", options="header"]
+|===
+
+<a| Parameter
+<a| Method
+a| Default
 
 <a| emission rate
 a| `setParticlesPerSec()`
 a| 20
-a| Density of the effect, how many new particles are emitted per second. +
+3+a| Density of the effect, how many new particles are emitted per second. +
 Set to zero to control the start/end of the effect. +
 Set to a number for a constantly running effect.
+
+|===
+
+[cols="3", options="header"]
+|===
+
+<a| Parameter
+<a| Method
+a| Default
 
 <a| size
 a| `setStartSize()`, `setEndSize()`
 a| 0.2f, 2f
-a| The radius of the scaled sprite image. Set both to same value for constant size effect. +
+3+a| The radius of the scaled sprite image. Set both to same value for constant size effect. +
 Set to different values for shrink/grow effect.
+
+|===
+
+[cols="3", options="header"]
+|===
+
+<a| Parameter
+<a| Method
+a| Default
 
 <a| color
 a| `setStartColor()`, `setEndColor()`
 a| gray
-a| Controls how the opaque (non-black) parts of the texture are colorized. +
+3+a| Controls how the opaque (non-black) parts of the texture are colorized. +
 Set both to the same color for single-colored effects (e.g. fog, debris). +
 Set both to different colors for a gradient effect (e.g. fire).
 
+|===
+
+[cols="3", options="header"]
+|===
+
+<a| Parameter
+<a| Method
+a| Default
+
 <a| direction/velocity
-a| `getParticleInfluencer(). setInitialVelocity(initialVelocity)`
+a| `getParticleInfluencer().setInitialVelocity(initialVelocity)`
 a| Vector3f(0,0,0)
-a| A vector specifying the initial direction and speed of particles. The longer the vector, the faster.
+3+a| A vector specifying the initial direction and speed of particles. The longer the vector, the faster.
+
+|===
+
+[cols="3", options="header"]
+|===
+
+<a| Parameter
+<a| Method
+a| Default
 
 <a| fanning out
 a| `getParticleInfluencer().setVelocityVariation(variation)`
 a| 0.2f
-a| How much the direction (`setInitialVelocity()`) can vary among particles. Use a value between 1 and 0 to create a directed swarm-like cloud of particles. +
+3+a| How much the direction (`setInitialVelocity()`) can vary among particles. Use a value between 1 and 0 to create a directed swarm-like cloud of particles. +
 1 = Maximum variation, particles emit in random 360° directions (e.g. explosion, butterflies). +
 0.5f = particles are emitted within 180° of the initial direction. +
 0 = No variation, particles fly in a straight line in direction of start velocity (e.g. lasergun blasts).
+
+|===
+
+[cols="3", options="header"]
+|===
+
+<a| Parameter
+<a| Method
+a| Default
 
 a| direction +
 (pick one)
 a| `setFacingVelocity()`
 a| false
-a| true = Flying particles pitch in the direction they're flying (e.g. missiles). +
+3+a| true = Flying particles pitch in the direction they're flying (e.g. missiles). +
 false = Particles keep flying rotated the way they started (e.g. debris).
+
+|===
+
+[cols="3", options="header"]
+|===
+
+<a| Parameter
+<a| Method
+a| Default
 
 a| direction +
 (pick one)
 a| `setFaceNormal()`
 a| Vector3f.NAN
-a| Vector3f = Flying particles face in the given direction (e.g. horizontal shockwave faces up = Vector3f.UNIT_Y). +
+3+a| Vector3f = Flying particles face in the given direction (e.g. horizontal shockwave faces up = Vector3f.UNIT_Y). +
 Vector3f.NAN = Flying particles face the camera.
+
+|===
+
+[cols="3", options="header"]
+|===
+
+<a| Parameter
+<a| Method
+a| Default
 
 <a| lifetime
 a| `setLowLife()`, `setHighLife()`
 a| 3f, 7f
-a| The time period before a particle fades is set to a random value between minimum and maximum; minimum must be smaller than maximum. A minimum < 1f makes the effect more busy, a higher minimum looks more steady. Use a maximum < 1f for short bursts, and higher maxima for long lasting swarms or smoke. Set maximum and minimum to similar values to create an evenly spaced effect (e.g. fountain), set the to very different values to create a distorted effect (e.g. fire with individual long flames).
+3+a| The time period before a particle fades is set to a random value between minimum and maximum; minimum must be smaller than maximum. A minimum < 1f makes the effect more busy, a higher minimum looks more steady. Use a maximum < 1f for short bursts, and higher maxima for long lasting swarms or smoke. Set maximum and minimum to similar values to create an evenly spaced effect (e.g. fountain), set the to very different values to create a distorted effect (e.g. fire with individual long flames).
+
+|===
+
+[cols="3", options="header"]
+|===
+
+<a| Parameter
+<a| Method
+a| Default
 
 <a| spinning
 a| `setRotateSpeed()`
 a| 0f
-a| 0 = Flying particles don't spin while flying (e.g. smoke, insects, controlled projectiles). +
+3+a| 0 = Flying particles don't spin while flying (e.g. smoke, insects, controlled projectiles). +
 > 0 = How fast particle spins while flying (e.g. debris, shuriken, missiles out of control).
+
+|===
+
+[cols="3", options="header"]
+|===
+
+<a| Parameter
+<a| Method
+a| Default
 
 <a| rotation
 a| `setRandomAngle()`
 a| false
-a| true = The particle sprite is rotated at a random angle when it is emitted (e.g. explosion, debris). +
+3+a| true = The particle sprite is rotated at a random angle when it is emitted (e.g. explosion, debris). +
 false = Particles fly straight like you drew them in the sprite texture (e.g. insects).
+
+|===
+
+[cols="3", options="header"]
+|===
+
+<a| Parameter
+<a| Method
+a| Default
 
 <a| gravity
 a| `setGravity()`
 a| Vector3f(0.0f,0.1f,0.0f)
-a| Particles fall in the direction of the vector (e.g. debris, sparks). +
+3+a| Particles fall in the direction of the vector (e.g. debris, sparks). +
 (0,0,0) = Particles keep flying in start direction (e.g. flames, zero-gravity explosion.)
+
+|===
+
+[cols="3", options="header"]
+|===
+
+<a| Parameter
+<a| Method
+a| Default
 
 <a| start area
 a|`setShape(new EmitterSphereShape( Vector3f.ZERO, 2f));`
 a|EmitterPointShape()
-a|By default, particles are emitted from the emitters location (a point). You can increase the emitter shape to occupy a sphere, so that the start point of new particles can be anywhere inside the sphere, which makes the effect a bit more irregular.
+3+a| By default, particles are emitted from the emitters location (a point). You can increase the emitter shape to occupy a sphere, so that the start point of new particles can be anywhere inside the sphere, which makes the effect a bit more irregular.
 
 |===
 
