@@ -72,37 +72,37 @@ Not all of these parameters are required for all kinds of effects. If you don't 
 <a| Method
 a| Default
 
-.2+<a| number
+.2+.<a| number
 a| `setNumParticles()`
 <a|
 2+a| The maximum number of particles visible at the same time. Specified by user in constructor.
 
-.2+<a| emission rate
+.2+.<a| emission rate
 a| `setParticlesPerSec()`
 a| 20
 2+a| Density of the effect, how many new particles are emitted per second. +
 Set to zero to control the start/end of the effect. +
 Set to a number for a constantly running effect.
 
-.2+<a| size
+.2+.<a| size
 a| `setStartSize()`, `setEndSize()`
 a| 0.2f, 2f
 2+a| The radius of the scaled sprite image. Set both to same value for constant size effect. +
 Set to different values for shrink/grow effect.
 
-.2+<a| color
+.2+.<a| color
 a| `setStartColor()`, `setEndColor()`
 a| gray
 2+a| Controls how the opaque (non-black) parts of the texture are colorized. +
 Set both to the same color for single-colored effects (e.g. fog, debris). +
 Set both to different colors for a gradient effect (e.g. fire).
 
-.2+<a| direction/velocity
+.2+.<a| direction/velocity
 a| `getParticleInfluencer().setInitialVelocity(initialVelocity)`
 a| Vector3f(0,0,0)
 2+a| A vector specifying the initial direction and speed of particles. The longer the vector, the faster.
 
-.2+<a| fanning out
+.2+.<a| fanning out
 a| `getParticleInfluencer().setVelocityVariation(variation)`
 a| 0.2f
 2+a| How much the direction (`setInitialVelocity()`) can vary among particles. Use a value between 1 and 0 to create a directed swarm-like cloud of particles. +
@@ -124,30 +124,30 @@ a| Vector3f.NAN
 2+a| Vector3f = Flying particles face in the given direction (e.g. horizontal shockwave faces up = Vector3f.UNIT_Y). +
 Vector3f.NAN = Flying particles face the camera.
 
-.2+<a| lifetime
+.2+.<a| lifetime
 a| `setLowLife()`, `setHighLife()`
 a| 3f, 7f
 2+a| The time period before a particle fades is set to a random value between minimum and maximum; minimum must be smaller than maximum. A minimum < 1f makes the effect more busy, a higher minimum looks more steady. Use a maximum < 1f for short bursts, and higher maxima for long lasting swarms or smoke. Set maximum and minimum to similar values to create an evenly spaced effect (e.g. fountain), set the to very different values to create a distorted effect (e.g. fire with individual long flames).
 
-.2+<a| spinning
+.2+.<a| spinning
 a| `setRotateSpeed()`
 a| 0f
 2+a| 0 = Flying particles don't spin while flying (e.g. smoke, insects, controlled projectiles). +
 > 0 = How fast particle spins while flying (e.g. debris, shuriken, missiles out of control).
 
-.2+<a| rotation
+.2+.<a| rotation
 a| `setRandomAngle()`
 a| false
 2+a| true = The particle sprite is rotated at a random angle when it is emitted (e.g. explosion, debris). +
 false = Particles fly straight like you drew them in the sprite texture (e.g. insects).
 
-.2+<a| gravity
+.2+.<a| gravity
 a| `setGravity()`
 a| Vector3f(0.0f,0.1f,0.0f)
 2+a| Particles fall in the direction of the vector (e.g. debris, sparks). +
 (0,0,0) = Particles keep flying in start direction (e.g. flames, zero-gravity explosion.)
 
-.2+<a| start area
+.2+.<a| start area
 a|`setShape(new EmitterSphereShape( Vector3f.ZERO, 2f));`
 a|EmitterPointShape()
 2+a| By default, particles are emitted from the emitters location (a point). You can increase the emitter shape to occupy a sphere, so that the start point of new particles can be anywhere inside the sphere, which makes the effect a bit more irregular.
