@@ -65,104 +65,91 @@ Choose one of the following mesh shapes
 == Configure Parameters
 
 Not all of these parameters are required for all kinds of effects. If you don't specify one of them, a default value will be used.
-[cols="15,65,20", options="header"]
+[cols="20,60,20", options="header"]
 |===
 
 <a| Parameter
 <a| Method
 a| Default
 
-<a| number
+.2+<a| number
 a| `setNumParticles()`
 <a|
-|
 2+a| The maximum number of particles visible at the same time. Specified by user in constructor.
 
-<a| emission rate
+.2+<a| emission rate
 a| `setParticlesPerSec()`
 a| 20
-|
 2+a| Density of the effect, how many new particles are emitted per second. +
 Set to zero to control the start/end of the effect. +
 Set to a number for a constantly running effect.
 
-<a| size
+.2+<a| size
 a| `setStartSize()`, `setEndSize()`
 a| 0.2f, 2f
-|
 2+a| The radius of the scaled sprite image. Set both to same value for constant size effect. +
 Set to different values for shrink/grow effect.
 
-<a| color
+.2+<a| color
 a| `setStartColor()`, `setEndColor()`
 a| gray
-|
 2+a| Controls how the opaque (non-black) parts of the texture are colorized. +
 Set both to the same color for single-colored effects (e.g. fog, debris). +
 Set both to different colors for a gradient effect (e.g. fire).
 
-<a| direction/velocity
+.2+<a| direction/velocity
 a| `getParticleInfluencer().setInitialVelocity(initialVelocity)`
 a| Vector3f(0,0,0)
-|
 2+a| A vector specifying the initial direction and speed of particles. The longer the vector, the faster.
 
-<a| fanning out
+.2+<a| fanning out
 a| `getParticleInfluencer().setVelocityVariation(variation)`
 a| 0.2f
-|
 2+a| How much the direction (`setInitialVelocity()`) can vary among particles. Use a value between 1 and 0 to create a directed swarm-like cloud of particles. +
 1 = Maximum variation, particles emit in random 360° directions (e.g. explosion, butterflies). +
 0.5f = particles are emitted within 180° of the initial direction. +
 0 = No variation, particles fly in a straight line in direction of start velocity (e.g. lasergun blasts).
 
-a| direction +
+.2+a| direction +
 (pick one)
 a| `setFacingVelocity()`
 a| false
-|
 2+a| true = Flying particles pitch in the direction they're flying (e.g. missiles). +
 false = Particles keep flying rotated the way they started (e.g. debris).
 
-a| direction +
+.2+a| direction +
 (pick one)
 a| `setFaceNormal()`
 a| Vector3f.NAN
-|
 2+a| Vector3f = Flying particles face in the given direction (e.g. horizontal shockwave faces up = Vector3f.UNIT_Y). +
 Vector3f.NAN = Flying particles face the camera.
 
-<a| lifetime
+.2+<a| lifetime
 a| `setLowLife()`, `setHighLife()`
 a| 3f, 7f
-|
 2+a| The time period before a particle fades is set to a random value between minimum and maximum; minimum must be smaller than maximum. A minimum < 1f makes the effect more busy, a higher minimum looks more steady. Use a maximum < 1f for short bursts, and higher maxima for long lasting swarms or smoke. Set maximum and minimum to similar values to create an evenly spaced effect (e.g. fountain), set the to very different values to create a distorted effect (e.g. fire with individual long flames).
 
-<a| spinning
+.2+<a| spinning
 a| `setRotateSpeed()`
 a| 0f
-|
 2+a| 0 = Flying particles don't spin while flying (e.g. smoke, insects, controlled projectiles). +
 > 0 = How fast particle spins while flying (e.g. debris, shuriken, missiles out of control).
 
-<a| rotation
+.2+<a| rotation
 a| `setRandomAngle()`
 a| false
-|
 2+a| true = The particle sprite is rotated at a random angle when it is emitted (e.g. explosion, debris). +
 false = Particles fly straight like you drew them in the sprite texture (e.g. insects).
 
-<a| gravity
+.2+<a| gravity
 a| `setGravity()`
 a| Vector3f(0.0f,0.1f,0.0f)
-|
 2+a| Particles fall in the direction of the vector (e.g. debris, sparks). +
 (0,0,0) = Particles keep flying in start direction (e.g. flames, zero-gravity explosion.)
 
-<a| start area
+.2+<a| start area
 a|`setShape(new EmitterSphereShape( Vector3f.ZERO, 2f));`
 a|EmitterPointShape()
-|
 2+a| By default, particles are emitted from the emitters location (a point). You can increase the emitter shape to occupy a sphere, so that the start point of new particles can be anywhere inside the sphere, which makes the effect a bit more irregular.
 
 |===
