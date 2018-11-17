@@ -1,6 +1,6 @@
 = Multiple Camera Views
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :keywords: camera, documentation
 :relfileprefix: ../../
@@ -17,16 +17,16 @@ The packages used in this example are `com.jme3.renderer.Camera` and `com.jme3.r
 
 The default viewPort is as big as the window. If you have several, they must be of different sizes, either overlapping or adjacent to one another. How do you tell jME which of the ViewPorts should appear where on the screen, and how big they should be?
 
-Imagine the window as a 1.0f x 1.0f rectangle. The default cam's viewPort is set to 
+Imagine the window as a 1.0f x 1.0f rectangle. The default cam's viewPort is set to
 
 [source,java]
 ----
 cam.setViewPort(0f, 1f, 0f, 1f);
 ----
 
-This setting makes the ViewPort take up the whole rectangle. 
+This setting makes the ViewPort take up the whole rectangle.
 
-The four values are read in the following order: 
+The four values are read in the following order:
 
 [source,java]
 ----
@@ -46,7 +46,7 @@ cam2.setViewPort( 0.5f , 1.0f   ,   0.0f , 0.5f );
 
 ----
 
-These viewport parameters are, (in this order) the left-right extend, and the bottom-top extend of a views's rectangle on the screen. 
+These viewport parameters are, (in this order) the left-right extend, and the bottom-top extend of a views's rectangle on the screen.
 
 [source]
 ----
@@ -67,14 +67,14 @@ Example: Cam2's rectangle is in the bottom right: It extends from mid (x1=0.5f) 
 
 [IMPORTANT]
 ====
-If you scale the views in a way so that the aspect ratio of a ViewPort is different than the window's aspect ratio, then the ViewPort appears distorted. In these cases, you must recreate (not clone) the ViewPort's cam object with the right aspect ratio. For example: `Camera cam5 = new Camera(100,100);` 
+If you scale the views in a way so that the aspect ratio of a ViewPort is different than the window's aspect ratio, then the ViewPort appears distorted. In these cases, you must recreate (not clone) the ViewPort's cam object with the right aspect ratio. For example: `Camera cam5 = new Camera(100,100);`
 ====
 
 
 
 == Four-Time Split Screen
 
-In this example, you create four views (2x2) with the same aspect ratio as the window, but each is only half the width and height. 
+In this example, you create four views (2x2) with the same aspect ratio as the window, but each is only half the width and height.
 
 
 === Set up the First View
@@ -88,7 +88,7 @@ cam.setViewPort(.5f, 1f, 0f, 0.5f); // Resize the viewPort to half its size, bot
 
 ----
 
-Optionally, place the main camera in the scene and rotate it in its start position. 
+Optionally, place the main camera in the scene and rotate it in its start position.
 
 [source,java]
 ----
@@ -100,14 +100,15 @@ cam.setRotation(new Quaternion (-0.07f, 0.92f, -0.25f, -0.27f));
 
 === Set Up Three More Views
 
-Here is the outline for how you create the three other cams and viewPorts (link:http://code.google.com/p/jmonkeyengine/source/browse/trunk/engine/src/test/jme3test/renderer/TestMultiViews.java[Full code sample is here].) In the code snippet, `cam_n` stand for `cam_2` - `cam_4`, respectively, same for `view_n`.
+Here is the outline for how you create the three other cams and viewPorts (link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/renderer/TestMultiViews.java[Full code sample is here].) In the code snippet, `cam_n` stand for `cam_2` - `cam_4`, respectively, same for `view_n`.
 
 .  Clone the first cam to reuse its settings
 .  Resize and position the cam's viewPort with setViewPort().
 .  (Optionally) Move the cameras in the scene and rotate them so they face what you want to see.
 .  Create a ViewPort for each camera
 .  Reset the camera's enabled statuses
-.  Attach the Node to be displayed to this ViewPort. +The camera doesn't have to look at the rootNode, but that is the most common use case.
+.  Attach the Node to be displayed to this ViewPort. +
+The camera doesn't have to look at the rootNode, but that is the most common use case.
 
 Here is the abstract code sample for camera `n`:
 
@@ -118,7 +119,7 @@ Camera cam_n    = cam.clone();
 cam_n.setViewPort(...); // resize the viewPort
 cam_n.setLocation(new Vector3f(...));
 cam_n.setRotation(new Quaternion(...));
-        
+
 ViewPort view_n = renderManager.createMainView("View of camera #n", cam_n);
 view_n.setClearEnabled(true);
 view_n.attachScene(rootNode);
