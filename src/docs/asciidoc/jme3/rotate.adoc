@@ -160,7 +160,7 @@ Does the object end up in an unexpected location, or at an unexpected angle? If 
 .  3-D transformations are non-commutative! This means it often makes a huge difference whether you first move a node and then rotate it around an axis, or first rotate the node around an axis and then move it. Make sure you code does what you mean to do.
 .  Are you intending to rotate around the object's origin along an axis, or around another pivot point outside the object? If you are trying to _rotate an object around a pivot point_, you have to create an (invisible) pivot node first, and attach the object to it. Then apply the rotation to the _parental pivot node_, not to the child object itself!
 .  Did you enter the angle in degrees (0 - 360°) or radians (0 - 2*PI)? A 3D engine expects radians, so make sure to convert your values! Formula: `g° = FastMath.PI * g / 180`
-. Did you modify one of the pre-made constants like this?
+.  Did you modify one of the pre-made constants like this?
 +
 --
 [source, java]
@@ -171,7 +171,7 @@ Quaternion.IDENTITY.fromAngleAxis(-FastMath.HALF_PI, Vector3f.UNIT_X);
 
 This looks normal enough, after-all, this is a constant right? Sorta, what you are really doing is setting a value to the static final constant `Quaternion.IDENTITY`.
 
-To quote one of the core team members,
+To quote one of the core team members.
 ****
 .Do not modify the “constants”. You will have a shit-ton of really messed up errors.
 [quote, pspeed, Core Team Member]
