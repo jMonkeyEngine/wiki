@@ -27,17 +27,17 @@ This guide requires:
 To properly animate your models there are a few rules you must follow.
 
 *  Read the link:https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html[Common Questions] guide before you do anything else.
-*  Clean up your Blender file prior to exporting. This means you have a game ready model that will become the base for all your animations. The following checklist is provided for your convenience.
+*  Clean up your Blender file prior to exporting. This means you have a game ready model that will become the base for all your animations. Do this in a copy of your file so you have the original as a backup. The following checklist is provided for your convenience.
 [%interactive]
 - [ ] You have no Animations.
-- [ ] You have UV Mapped your model.
+- [ ] You have applied a triangulate modifier. Some exporters other than Ogre, have an option to apply the modifier on export. This would be the preferred method. Ogre doesn't have this feature.
+- [ ] You have UV Mapped your model. It isn't required by Mixamo, just for loading your models into jme.
 - [ ] Your models origin is at the base of the mesh.
-- [ ] You have one Material named the same as your mesh.
-- [ ] You have baked and packed your Texture. For this tutorial we use a diffuse texture (i.e. your using a texture atlas), no normal or specular maps.
-- [ ] You have cleared the UV, Material and Texture buffers of unused images, materials and textures.
-- [ ] There are no `Actions` stored in the `Dope Sheet Editor` buffer.  Open the `Action Editor` context, select the btn:[Browse Action to be linked] button to check there are no stored actions.
+- [ ] You have your materials and textures done for your model. It isn't required by Mixamo, just for loading your model into jme.
+  - [ ] You have cleared the UV, Material and Texture buffers of unused images, materials and textures. It isn't required by Mixamo, just makes your models cleaner for jme.
+- [ ] There are no `Actions` stored in the `Dope Sheet Editor` buffer.  Open the `Action Editor` context, select the btn:[Browse Action to be linked] button to check there are no stored actions. See the links below.
 - [ ] You have applied the Location, Rotation, and Scale to your model.
-- [ ] *MOST IMPORTANT OF ALL*, in the `menu:Properties Panel[Scene Tab > Units Panel]` set the btn:[Unit of Measure] to Meters and the Length to Metric. Adobe uses centimeters for the FBX exporter and if this is not set the models scale will be unusual to say the least. Besides that, JME3 uses 1 WU = 1 Meter so this will keep things consistent. If you are doing this now, you may have to re-scale your model before proceeding.
+- [ ] *MOST IMPORTANT OF ALL*, in the `menu:Properties Panel[Scene Tab > Units Panel]` set the btn:[Unit of Measure] to Meters and the Length to Metric. Adobe uses centimeters for the FBX exporter and if this is not set the models scale will be unusual to say the least. JME3 uses 1 WU = whatever you determine but meters will make things easier for all aspects of your modeling. If you are doing this now, you may have to re-scale your model before proceeding.
 
 [TIP]
 ====
@@ -196,7 +196,7 @@ Mixamo sets the rotation mode of bones to `Quaternion` as is appropriate for pre
 == Action Baking
 
 
-There are many ways to export or import files for jMonkeyEngine. If you plan to use a method other than `Ogre Exporter`, you may need to bake your actions. Baking is a destructive process so it is recommended that *after* completion of <<jme3/advanced/mixamo#creating-blender-animations#, Creating Blender Animations>>, test the animation in-game.
+There are many ways to export or import files for jMonkeyEngine. If you plan to use a method other than `Ogre Exporter`, you may need to bake your actions. Baking is a destructive process so it is recommended that *after* completion of <<jme3/advanced/mixamo#creating-blender-animations#, Creating Blender Animations>>, test the animation in-game. If your animations are all messed up, try baking them or use a different exporter.
 
 If you find yourself in need of baking, the process is as follows.
 
