@@ -169,8 +169,8 @@ The code for this particle system can be found <a href="https://code.google.com/
         cam.setLocation(<span class="keyword">new</span> Vector3f(<span class="integer">0</span>, <span class="integer">10</span>, -<span class="integer">10</span>));
         cam.lookAt(Vector3f.ZERO, Vector3f.UNIT_Y);
     }</code></pre></div></div>
-<div class="paragraph"><p>The result should look something like:
-<span class="image"><img src="../../jme3/contributions/youtube_spjqag99hy" alt="youtube_spjqag99hy" width="" height=""></span></p></div></div></div>
+<div class="paragraph"><p>The result should look something like:</p></div>
+<div class="ulist"><ul><li><p><a href="https://www.youtube.com/watch?v=_Spjqag99HY">Video: Particle Emitter Example 1</a></p></li></ul></div></div></div>
 <div class="sect1"><h2 id="using-a-mesh-as-the-particle-source">Using a mesh as the particle source</h2><div class="sectionbody"><div class="paragraph"><p>There is a model of a monkeys head in the test data that is used in this example, although you can use any other model you like. Just make sure you can find the geometry within the model for the next step.</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">    <span class="annotation">@Override</span>
     <span class="directive">public</span> <span class="type">void</span> simpleInitApp() {
@@ -231,7 +231,7 @@ The code for this particle system can be found <a href="https://code.google.com/
 <span class="comment">// Finally attach the geometry to the rootNode in order to start the particles running</span>
         rootNode.attachChild(pCtrl.getGeometry());</code></pre></div></div>
 <div class="paragraph"><p>Again this is just a very simple example, much more sophisticated fire effects are possible with the use of the right textures and mixture of emitters and influencers. The result though should look something like this:</p></div>
-<div class="paragraph"><p><span class="image"><img src="../../jme3/contributions/youtube_w_zgjhz2au" alt="youtube_w_zgjhz2au" width="" height=""></span></p></div></div></div>
+<div class="ulist"><ul><li><p><a href="https://www.youtube.com/watch?v=W__zGJHZ2AU">Video: Particle Emitter Example 2</a></p></li></ul></div></div></div>
 <div class="sect1"><h2 id="meshes-and-weighted-meshes">Meshes and Weighted Meshes</h2><div class="sectionbody"><div class="paragraph"><p>The previous example uses a MeshSource, this picks a random triangle from the mesh without any regard given to the size of different triangles. This means areas with small triangles are actually more likely to emit particles than areas with large triangles. For most meshes this is not visible, however there is a WeightedMeshSource available if this should be a problem.</p></div>
 <div class="paragraph"><p>The WeightedMeshSource scans the mesh and works out a weight for each triangle based on its relative size, so that the result is an even spread of particles even with very large differences in triangle sizes. There are some limitations with this though:</p></div>
 <div class="olist arabic"><ol class="arabic"><li><p>The WeightedMeshSource consumes more memory as it needs to remember the weights</p></li><li><p>The WeightedMeshSource is slower as it needs to do more work to pick a triangle</p></li><li><p>The WeightedMeshSource does not update automatically if the mesh changes, if triangles are added they will not emit, if triangles are removed it could cause a crash. If triangles change shape then the weights are not updated.</p></li></ol></div>
@@ -300,8 +300,8 @@ The code for this particle system can be found <a href="https://code.google.com/
 
         rootNode.attachChild(rockCtrl.getGeometry());
     }</code></pre></div></div>
-<div class="paragraph"><p>The result should look like:
-<span class="image"><img src="../../jme3/contributions/youtube_a7y53uf8giw" alt="youtube_a7y53uf8giw" width="" height=""></span></p></div>
+<div class="paragraph"><p>The result should look like:</p></div>
+<div class="ulist"><ul><li><p><a href="https://www.youtube.com/watch?v=a7y53UF8Giw">Video: Particle Emitter Example 3</a></p></li></ul></div>
 <div class="paragraph"><p>Any number and mixture of models can be used, although as it is all a single mesh the same material must be used for all of them. It is recommended to keep a similar number of vertices for each of the models but that is not a strict requirement.</p></div></div></div>
 <div class="sect1"><h2 id="emitting-particles-from-particles">Emitting Particles from Particles</h2><div class="sectionbody"><div class="paragraph"><p>To add more dramatic effects sometimes you want to emit particles from particles, this could be done simply by attaching a MeshSource for the second controller to the mesh from the first controller. There are a number of limitations to this approach though, which will be demonstrated now:</p></div>
 <div class="paragraph"><p>Adding the following code:</p></div>
@@ -323,13 +323,13 @@ The code for this particle system can be found <a href="https://code.google.com/
 
         rootNode.attachChild(pCtrl.getGeometry());</code></pre></div></div>
 <div class="paragraph"><p>Results in something that looks like this:</p></div>
-<div class="paragraph"><p><span class="image"><img src="../../jme3/contributions/youtube_wgr5rzf9apg" alt="youtube_wgr5rzf9apg" width="" height=""></span></p></div>
+<div class="ulist"><ul><li><p><a href="https://www.youtube.com/watch?v=WGR5RzF9APg">Video: Particle Emitter Example 3</a></p></li></ul></div>
 <div class="paragraph"><p>You can see that while dramatic the fire is left behind each particle, this is because although it is emitted from the face of the particle at its current position it has no knowledge of how that particle is moving.</p></div>
 <div class="paragraph"><p>To allow for this we also offer a different emitter, this allows one ParticleController to act as the source for another. The emitted particles are then able to start with the same velocity and rotation of the particle they are being emitted from and then move onwards from there as appropriate.</p></div>
 <div class="paragraph"><p>Leave everything else the same but change the MeshSource into</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">                <span class="keyword">new</span> ParticleParticleSource(rockCtrl),</code></pre></div></div>
-<div class="paragraph"><p>You can see that this gives much better results:
-<span class="image"><img src="../../jme3/contributions/youtube_2blbzvm0ezq" alt="youtube_2blbzvm0ezq" width="" height=""></span></p></div>
+<div class="paragraph"><p>You can see that this gives much better results:</p></div>
+<div class="ulist"><ul><li><p><a href="https://www.youtube.com/watch?v=2BlBZVM0EZQ">Video: Particle Emitter Example 4</a></p></li></ul></div>
 <div class="paragraph"><p>There is a lot of falling rocks and fire here, but not much in the way of smoke. That could be added using a multi-colour emitter as previously, but the standard particle material is additive. That means it can only make colours brighter, never darker. For smoke it should be able to darken as well as lighten.</p></div>
 <div class="paragraph"><p>To add smoke we can add a third emitter after the other two:</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// Construct a new material for the smoke based off the default particle material</span>
@@ -367,12 +367,12 @@ The code for this particle system can be found <a href="https://code.google.com/
                     <span class="keyword">new</span> Vector3f(<span class="float">0.5f</span>, <span class="float">0.5f</span>, <span class="float">0.5f</span>)));
 
         rootNode.attachChild(pCtrl.getGeometry());</code></pre></div></div>
-<div class="paragraph"><p>The results look something like:
-<span class="image"><img src="../../jme3/contributions/youtube_01qcbgbvf-c" alt="youtube_01qcbgbvf-c" width="" height=""></span></p></div>
+<div class="paragraph"><p>The results look something like:</p></div>
+<div class="ulist"><ul><li><p><a href="https://www.youtube.com/watch?v=01qCBGBvf-c">Video: Particle Emitter Example 5</a></p></li></ul></div>
 <div class="paragraph"><p>To complete the effect one final line of code adds a skybox (using another texture that can be find in the test data):</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">        rootNode.attachChild(SkyFactory.createSky(assetManager, <span class="string"><span class="delimiter">&quot;</span><span class="content">Textures/BrightSky.dds</span><span class="delimiter">&quot;</span></span>, <span class="predefined-constant">false</span>));</code></pre></div></div>
 <div class="paragraph"><p>Now we have the final effect which looks like:</p></div>
-<div class="paragraph"><p><span class="image"><img src="../../jme3/contributions/youtube_udewajw4lxu" alt="youtube_udewajw4lxu" width="" height=""></span></p></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2019-01-07 06:15:31 +00:00</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
+<div class="ulist"><ul><li><p><a href="https://www.youtube.com/watch?v=uDeWAjw4LxU">Video: Particle Emitter Example 6</a></p></li></ul></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2019-01-10 18:18:13 +00:00</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
   apiKey: 'a736b6d93de805e26ec2f49b55013fbd',
   indexName: 'jmonkeyengine',
   inputSelector: '#doc-search',
