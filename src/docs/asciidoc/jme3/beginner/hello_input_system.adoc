@@ -333,6 +333,29 @@ KeyTrigger(KeyInput.KEY_RIGHT)
 If you don't recall an input constant during development, you benefit from an IDE's code completion functionality: Place the caret after e.g. `KeyInput.|` and trigger code completion to select possible input identifiers.
 ====
 
+== Listening For Joystick Connections
+
+Note: Joystick Connection/Disconnection events are only available in *LWJGL3*.
+
+If your game requires handling the addition and removal of new joystick devices you can subscribe to a joystick connection listener.
+This will give you the opportunity to enable joystick movement, pause the game if the joystick is disconnected, change keybindings to mouse/keyboard.
+
+[source, java]
+----
+inputManager.addJoystickConnectionListener(new JoystickConnectionListener() {
+            @Override
+            public void onConnected(Joystick joystick) {
+                System.out.println("Joystick connected: " + joystick.getName());
+            }
+
+            @Override
+            public void onDisconnected(Joystick joystick) {
+                System.out.println("Joystick Disconnected: " + joystick.getName());
+            }
+        });
+----
+
+
 == Exercises
 
 .  Add mappings for moving the player (box) up and down with the H and L keys!
