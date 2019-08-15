@@ -7,7 +7,7 @@
 :experimental:
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
-This section discussions how to export scenes from Blender (2.8+) in glTF format appropriate for use by `AssetManager.loadModel`.
+This section discusses how to export scenes from Blender (2.8+) in glTF format appropriate for use by `AssetManager.loadModel`.
 
 == Background
 
@@ -17,7 +17,7 @@ jME3 introduced a loader for glTF in 2017 (written by nehon) and it has since be
 
 Ultimately all jME projects should use the `.j3o` format for storing assets. However during development a format is required to export scenes from Blender in a format suitable for conversion (either through the SDK or directly through code).
 
-Use of glTF (or another standard format) has a significant advantage of direct import of `.blend` files: new versions of Blender with significant enhancements are released fairly regularly. Using a standard format allows new features to be used without requiring updates to the Blender importer.
+Use of glTF (or another standard format) has a significant advantage over direct import of `.blend` files: new versions of Blender with significant enhancements are released fairly regularly. Using a standard format allows new features to be used without requiring updates to the Blender importer.
 
 [NOTE]
 Blender 2.7 had a number of problems in exporting glTF; these notes refer exclusively to Blender 2.8+
@@ -31,10 +31,13 @@ Before exporting a model all transforms need to be applied. This performs the re
 == Animations
 
 . Blender supports non-linear transitions using F-Curves. However the glTF importer only supports linear transitions. There are 2 ways to ensure all transitions are linear:
-.. In the graph editor, select all transitions and convert them to linear
-.. At export time, force sampling using `export_force_sampling=True`. By default a sample is created from each frame of the animation. This can be changed using `export_frame_step=n` where n is number of frames between samples
-. jME does not support IK constraints. These need to baked into keyframes before export.
+.. In Blender 2.8, go to the graph editor, select all keys (menu select/all) and then change to linear interpolation (menu key/interpolation mode/linear).
+.. At export time, force the export to create interpolated keyframes using sampling. This can be done in Python using `export_force_sampling=True` or selecting `Always Sample Animations` in the `Animation` tab of the export function. By default a sample is created from each frame of the animation. This can be changed in Python using `export_frame_step=n` where n is number of frames between samples or changing the sampling rate in the `Animation` tab of the export function.
+. Blender has a powerful tool to allow bones to be posed by just specifying the position of the final bone in a chain and allowing Blender to work out where to position attached bones. This tool is a bone constraint called IK (Inverse Kinematics) and it can save a lot of time in building animations. However jME does not support IK constraints so any use of IK needs to be "baked" before the export. To do this, select the appropriate bone, go to the bone contraints tab and apply the IK constraint. A useful workflow is to save the file, bake the constrain, export to glTF then revert to the saved file to restore the IK constraint.
 . A (potentially) confusing aspect of the export is that all animation actions will be children of the armature node, not the object node. However the action currently being tweaked will be linked under the object node. If you add the object node after import to the jME scene (e.g. by using `getChild` to find it by name) then the only available animation will be the one that is active when the export occurs. To solve this problem make sure you search for and add the parent armature node.
+
+[NOTE]
+glTF models loaded using JME 3.3 will automatically create animations that use the new animation system introduced in JME 3.3. see https://hub.jmonkeyengine.org/t/monkanim-v2/39877 for more info about the new animation system.
 
 == Materials
 
@@ -47,7 +50,7 @@ All of the rules associated with defining materials in Blender suitable for use 
 
 == Shape Keys
 
-Shape keys in Blender are used to apply a deformation to a mesh without changing the underlying vertices. The glTF exporter ignores shape keys unless they are part of an animation.
+Shape keys in Blender are used to apply a deformation to a mesh without changing the underlying vertices. The glTF exporter ignores shape keys unless they are part of an animation. To include shape keys in the export, select the `Shape Keys` option in the `Animation` tab of the glTF export options.
 
 == Export options
 
@@ -72,6 +75,73 @@ The structure of the nodes following import will roughly match their structure i
 . If an object has a single material, the corresponding node in the imported structure will have type `Geometry` with the object's mesh and the associated material.
 . If an object has more than one material, the corresponding node will have type `Node` with 1 child per material. Each of these children will be a `Geometry` with the associated material and a mesh containing the vertices assigned to the material.
 
+For example, if a blender scene has the following structure
+
+....
+Scene collection
+    Collection A
+        Tree (Object)
+            Tree_Mesh (Mesh)
+        Car (Object)
+            Car_Mesh (Mesh)
+                Body (Material)
+        House (Object)
+            House_Mesh (Mesh)
+                Walls (Material)
+                Roof (Material)
+    Collection B
+        Person_Armature (Armature)
+            Root (Bone)
+                Head (Bone)
+            Animations
+                Walk (Action)
+                NLA Tracks
+                    NLA Track
+                        Run (Action)
+            Person (Object)
+                Animation
+                    Walk (Action link)
+                Person_Mesh
+....
+
+Then after export to glTF format and import to jME it will look like:
+
+....
+Scene (Node)
+    Tree (Geometry)
+        Default (Material)
+    Car (Geometry)
+        Body (Material)
+    House (Node)
+        House_1 (Geometry)
+            Walls (Material)
+        House_1 (Geometry)
+            Roof (Material)
+    Person_Armature (Node)
+        Animations (Animation Control)
+            Walk (Animation)
+            Run (Animation)
+        Person (Geometry)
+            Animations (Animation Control)
+                Walk (Animation)
+....
+
+For example, the animated person could be loaded with a custom material assigned as follows:
+
+[source,java]
+----
+ModelKey key = new ModelKey("Models/model.glb");
+Node scene = (Node)assetManager.loadModel(key);
+Node person = scene.getChild("Person_Armature");
+Geometry geometry = (Geometry)person.getChild("Person");
+geometry.setMaterial(customMaterial);
+root.attachChild(person);
+----
+
 == Additional Reading
 
 Thread announcing glTF support: https://hub.jmonkeyengine.org/t/jme-gltf-support/39174
+
+Documentation for the python export functions https://docs.blender.org/api/current/bpy.ops.export_scene.html
+
+glTF specification https://github.com/KhronosGroup/glTF/tree/master/specification/2.0
