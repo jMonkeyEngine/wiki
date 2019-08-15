@@ -1,0 +1,77 @@
+= Exporting scenes from Blender 2.8 to jME using glTF
+:author:
+:revnumber:
+:revdate: 2019/08/11 20:48
+:relfileprefix: ../../
+:imagesdir: ../..
+:experimental:
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
+This section discussions how to export scenes from Blender (2.8+) in glTF format appropriate for use by `AssetManager.loadModel`.
+
+== Background
+
+glTF (GL Transmission Format) is a specification for transmitting 3D scenes between applications. The specification is owned by Khronos Group but is publicly available and can be used royalty free. It is growing in popularity as a robust and efficient transmission mechanism.
+
+jME3 introduced a loader for glTF in 2017 (written by nehon) and it has since been included as a standard part of the `jme3-plugins` target. There are some limitations of the importer which can be avoided by following the guidelines below.
+
+Ultimately all jME projects should use the `.j3o` format for storing assets. However during development a format is required to export scenes from Blender in a format suitable for conversion (either through the SDK or directly through code).
+
+Use of glTF (or another standard format) has a significant advantage of direct import of `.blend` files: new versions of Blender with significant enhancements are released fairly regularly. Using a standard format allows new features to be used without requiring updates to the Blender importer.
+
+[NOTE]
+Blender 2.7 had a number of problems in exporting glTF; these notes refer exclusively to Blender 2.8+
+
+== Creating Models
+
+Details of how to create models in Blender that are compatible with jME are given at <<jme3/external/blender>>. Follow all details on that page for creating models before attempting an export.
+
+Before exporting a model all transforms need to be applied. This performs the required transforms on the vertices in a mesh to reset the transforms on the object. To apply all transforms in Blender 2.8, select each object (in object mode, not edit mode) then choose from the `Object` menu `Apply/All Transforms`.
+
+== Animations
+
+. Blender supports non-linear transitions using F-Curves. However the glTF importer only supports linear transitions. There are 2 ways to ensure all transitions are linear:
+.. In the graph editor, select all transitions and convert them to linear
+.. At export time, force sampling using `export_force_sampling=True`. By default a sample is created from each frame of the animation. This can be changed using `export_frame_step=n` where n is number of frames between samples
+. jME does not support IK constraints. These need to baked into keyframes before export.
+. A (potentially) confusing aspect of the export is that all animation actions will be children of the armature node, not the object node. However the action currently being tweaked will be linked under the object node. If you add the object node after import to the jME scene (e.g. by using `getChild` to find it by name) then the only available animation will be the one that is active when the export occurs. To solve this problem make sure you search for and add the parent armature node.
+
+== Materials
+
+All of the rules associated with defining materials in Blender suitable for use in jME apply when glTF is used as the import/export format.
+
+. Blender supports lots of different types of shaders and complex materials with several different renderers. glTF supports a relatively basic set of PBR attributes. If the primary purpose of the materials is to produce glTF exported models use a simple `Principled BSDF` node in your materials with the following settings:
+.. Metalling and roughness values
+.. Base color
+.. Diffuse and Normal (bump) textures
+
+== Shape Keys
+
+Shape keys in Blender are used to apply a deformation to a mesh without changing the underlying vertices. The glTF exporter ignores shape keys unless they are part of an animation.
+
+== Export options
+
+Blender 2.8 supports many options when exporting in glTF format. Most of the default options work fine.
+
+You have 3 options of the format to export,
+. `GLB`: a single file in binary format (the default)
+. `GLTF_EMBEDDED`: a single file in JSON format
+. `GLTF_SEPERATE`: multiple files for separate objects, textures etc.
+
+The `GLB` format is the most efficient so use it unless you need to debug the output or edit it prior to import for any reason.
+
+The export can be performed manually (File/Export/GLTF 2.0) or via a Python script. If using a script to export, the following command will export the entire scene to the current directory in `.glb` format with recommended options.
+
+`bpy.ops.export_scene.gltf(filepath=filename, export_materials=False, export_force_sampling=True, check_existing=False)`
+
+== Import structure
+
+The structure of the nodes following import will roughly match their structure in Blender. Note the following exceptions:
+. There is no equivalent in glTF to Blender collections. These will not be represented in the imported structure.
+. If an object has no material, a default material will be created for it.
+. If an object has a single material, the corresponding node in the imported structure will have type `Geometry` with the object's mesh and the associated material.
+. If an object has more than one material, the corresponding node will have type `Node` with 1 child per material. Each of these children will be a `Geometry` with the associated material and a mesh containing the vertices assigned to the material.
+
+== Additional Reading
+
+Thread announcing glTF support: https://hub.jmonkeyengine.org/t/jme-gltf-support/39174
