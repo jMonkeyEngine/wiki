@@ -34,10 +34,8 @@ Before exporting a model all transforms need to be applied. This performs the re
 .. In Blender 2.8, go to the graph editor, select all keys (menu select/all) and then change to linear interpolation (menu key/interpolation mode/linear).
 .. At export time, force the export to create interpolated keyframes using sampling. This can be done in Python using `export_force_sampling=True` or selecting `Always Sample Animations` in the `Animation` tab of the export function. By default a sample is created from each frame of the animation. This can be changed in Python using `export_frame_step=n` where n is number of frames between samples or changing the sampling rate in the `Animation` tab of the export function.
 . Blender has a powerful tool to allow bones to be posed by just specifying the position of the final bone in a chain and allowing Blender to work out where to position attached bones. This tool is a bone constraint called IK (Inverse Kinematics) and it can save a lot of time in building animations. However jME does not support IK constraints so any use of IK needs to be "baked" before the export. To do this, select the appropriate bone, go to the bone contraints tab and apply the IK constraint. A useful workflow is to save the file, bake the constrain, export to glTF then revert to the saved file to restore the IK constraint.
-. A (potentially) confusing aspect of the export is that all animation actions will be children of the armature node, not the object node. However the action currently being tweaked will be linked under the object node. If you add the object node after import to the jME scene (e.g. by using `getChild` to find it by name) then the only available animation will be the one that is active when the export occurs. To solve this problem make sure you search for and add the parent armature node.
-
-[NOTE]
-glTF models loaded using JME 3.3 will automatically create animations that use the new animation system introduced in JME 3.3. see https://hub.jmonkeyengine.org/t/monkanim-v2/39877 for more info about the new animation system.
+. All actions in Blender will be added as animations to the `Node` corresponding to the armature. In addition, the action last tweaked within Blender will also be added as an animation to the object's node. This is just an artifact of the organisation of actions within Blender and should be ignored within jME.
+. glTF models loaded using jME 3.3 will create animations that use the new animation system introduced in jME 3.3. see https://hub.jmonkeyengine.org/t/monkanim-v2/39877 for more info about the new animation system.
 
 == Materials
 
@@ -51,6 +49,9 @@ All of the rules associated with defining materials in Blender suitable for use 
 == Shape Keys
 
 Shape keys in Blender are used to apply a deformation to a mesh without changing the underlying vertices. The glTF exporter ignores shape keys unless they are part of an animation. To include shape keys in the export, select the `Shape Keys` option in the `Animation` tab of the glTF export options.
+
+[NOTE]
+Shape keys are only supported in jME 3.3
 
 == Export options
 
@@ -137,6 +138,17 @@ Geometry geometry = (Geometry)person.getChild("Person");
 geometry.setMaterial(customMaterial);
 root.attachChild(person);
 ----
+
+And an animation for the model could be run as follows:
+
+[source,java]
+----
+AnimControl animControl = person.getControl(AnimControl.class);
+AnimChannel animChannel = animControl.createChannel();
+animChannel.setAnim("Run");
+----
+
+See <<jme3/advanced/animation>> for further details on using animations in your code.
 
 == Additional Reading
 
