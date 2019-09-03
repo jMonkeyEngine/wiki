@@ -226,6 +226,14 @@ a|Restart()ing a running game restarts the game context and applies the updated 
 
 == Saving and Loading Settings
 
+[CAUTION]
+====
+Due to a current bug and inconsistent behavior observed related to the preferences save location, to ensure correct behavior, save() and load() should only use forward slashes (/) and must be all lowercase.
+
+More information can be found link:https://github.com/jMonkeyEngine/jmonkeyengine/issues/1161[here].
+====
+
+
 An AppSettings object also supports the following methods to save your settings under a unique key (in this example "`com/foo/mycoolgame3`"):
 
 *  Use `settings.save("com/foo/mycoolgame3")` to save your settings via standard java.io serialization.
@@ -250,5 +258,3 @@ Provide the unique name of your jME3 application as the String argument. For exa
 `$HOME/.java/.userPrefs/com/foo/mycoolgame3`
 *  On Mac +++<abbr title="Operating System">OS</abbr>+++ X, the preferences are saved as XML file under: +
 `$HOME/Library/Preferences/com.foo.mycoolgame3.plist`
-
-CAUTION: Due to a current bug and inconsistent behavior observed related to the preferences save location, to ensure correct behavior, save() and load() should only use forward slashes (/) and must be all lowercase. More information can be found link:https://github.com/jMonkeyEngine/jmonkeyengine/issues/1161[here].
