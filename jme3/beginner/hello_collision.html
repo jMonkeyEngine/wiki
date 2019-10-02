@@ -82,25 +82,17 @@ src/</code></pre></div></div>
     landscape = <span class="keyword">new</span> RigidBodyControl(sceneShape, <span class="integer">0</span>);
     sceneModel.addControl(landscape);
 
-    <span class="comment">// We set up collision detection for the player by creating</span>
-    <span class="comment">// a capsule collision shape and a CharacterControl.</span>
-    <span class="comment">// The CharacterControl offers extra settings for</span>
-    <span class="comment">// size, stepheight, jumping, falling, and gravity.</span>
-    <span class="comment">// We also put the player in its starting position.</span>
+    <span class="comment">/**
+     * We set up collision detection for the player by creating
+     * a capsule collision shape and a CharacterControl.
+     * The CharacterControl offers extra settings for
+     * size, stepheight, jumping, falling, and gravity.
+     * We also put the player in its starting position.
+     */</span>
     CapsuleCollisionShape capsuleShape = <span class="keyword">new</span> CapsuleCollisionShape(<span class="float">1.5f</span>, <span class="float">6f</span>, <span class="integer">1</span>);
     player = <span class="keyword">new</span> CharacterControl(capsuleShape, <span class="float">0.05f</span>);
     player.setJumpSpeed(<span class="integer">20</span>);
     player.setFallSpeed(<span class="integer">30</span>);
-
-    <span class="comment">//Some methods used for setting gravity related variables were deprecated in</span>
-    <span class="comment">//the 3.2 version of the engine. Choose the method that matches your version</span>
-    <span class="comment">//of the engine.</span>
-    <span class="comment">// &lt; jME3.2</span>
-    <span class="comment">// player.setGravity(30f);</span>
-
-    <span class="comment">// &gt;= jME3.2</span>
-    player.setGravity(<span class="keyword">new</span> Vector3f(<span class="integer">0</span>,-<span class="float">30f</span>,<span class="integer">0</span>));
-
     player.setPhysicsLocation(<span class="keyword">new</span> Vector3f(<span class="integer">0</span>, <span class="integer">10</span>, <span class="integer">0</span>));
 
     <span class="comment">// We attach the scene and the player to the rootnode and the physics space,</span>
@@ -108,6 +100,11 @@ src/</code></pre></div></div>
     rootNode.attachChild(sceneModel);
     bulletAppState.getPhysicsSpace().add(landscape);
     bulletAppState.getPhysicsSpace().add(player);
+
+    <span class="comment">// You can change the gravity of individual physics objects after they are</span>
+    <span class="comment">// added to the PhysicsSpace.</span>
+    player.setGravity(<span class="keyword">new</span> Vector3f(<span class="integer">0</span>,-<span class="float">30f</span>,<span class="integer">0</span>));
+
   }
 
   <span class="directive">private</span> <span class="type">void</span> setUpLight() {
@@ -212,7 +209,7 @@ src/</code></pre></div></div>
     flyCam.setMoveSpeed(<span class="integer">100</span>);
     setUpKeys();
     setUpLight();</code></pre></div></div>
-<div class="olist arabic"><ol class="arabic"><li><p>You set the background color to light blue, since this is a scene with a sky.</p></li><li><p>You repurpose the default camera control “flyCam as first-person camera and set its speed.</p></li><li><p>The auxiliary method <code>setUpLights()</code> adds your light sources.</p></li><li><p>The auxiliary method <code>setUpKeys()</code> configures input mappings–we will look at it later.</p></li></ol></div>
+<div class="olist arabic"><ol class="arabic"><li><p>You set the background color to light blue, since this is a scene with a sky.</p></li><li><p>You repurpose the default camera control &#8220;flyCam&#8221; as first-person camera and set its speed.</p></li><li><p>The auxiliary method <code>setUpLights()</code> adds your light sources.</p></li><li><p>The auxiliary method <code>setUpKeys()</code> configures input mappings–we will look at it later.</p></li></ol></div>
 <div class="sect2"><h3 id="the-physics-controlled-scene">The Physics-Controlled Scene</h3><div class="paragraph"><p>The first thing you do in every physics game is create a BulletAppState object. It gives you access to jME3&#8217;s jBullet integration which handles physical forces and collisions.</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">    bulletAppState = <span class="keyword">new</span> BulletAppState();
     stateManager.attach(bulletAppState);</code></pre></div></div>
@@ -235,7 +232,7 @@ src/</code></pre></div></div>
 <div class="paragraph"><p>Again, you create a CollisionShape: This time you choose a CapsuleCollisionShape, a cylinder with a rounded top and bottom. This shape is optimal for a person: It&#8217;s tall and the roundness helps to get stuck less often on obstacles.</p></div>
 <div class="ulist"><ul><li><p>Supply the CapsuleCollisionShape constructor with the desired radius and height of the bounding capsule to fit the shape of your character. In this example the character is 2*1.5f units wide, and 6f units tall.</p></li><li><p>The final integer argument specifies the orientation of the cylinder: 1 is the Y-axis, which fits an upright person. For animals which are longer than high you would use 0 or 2 (depending on how it is rotated).</p></li></ul></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">    player = <span class="keyword">new</span> CharacterControl(capsuleShape, <span class="float">0.05f</span>);</code></pre></div></div>
-<div class="admonitionblock tip"><table><tr><td class="icon"><i class="fa icon-tip" title="Tip"></i></td><td class="content"><div class="paragraph"><p>“Does that CollisionShape make me look fat? If you ever get confusing physics behaviour, remember to have a look at the collision shapes. Add the following line after the bulletAppState initialization to make the shapes visible:</p></div>
+<div class="admonitionblock tip"><table><tr><td class="icon"><i class="fa icon-tip" title="Tip"></i></td><td class="content"><div class="paragraph"><p>&#8220;Does that CollisionShape make me look fat?&#8221; If you ever get confusing physics behaviour, remember to have a look at the collision shapes. Add the following line after the bulletAppState initialization to make the shapes visible:</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">bulletAppState.setDebugEnabled(<span class="predefined-constant">true</span>);</code></pre></div></div></td></tr></table></div>
 <div class="paragraph"><p>Now you use the CollisionShape to create a <code>CharacterControl</code> that represents the first-person player. The last argument of the CharacterControl constructor (here <code>.05f</code>) is the size of a step that the character should be able to surmount.</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">    player.setJumpSpeed(<span class="integer">20</span>);
@@ -296,7 +293,7 @@ src/</code></pre></div></div>
   }</code></pre></div></div>
 <div class="paragraph"><p>The only movement that you do not have to implement yourself is the jumping action. The call <code>player.jump(new Vector3f(0,20f,0))</code> is a special method that handles a correct jumping motion for your <code>PhysicsCharacterNode</code>.</p></div>
 <div class="paragraph"><p>For all other directions: Every time the user presses one of the WASD keys, you <em>keep track</em> of the direction the user wants to go, by storing this info in four directional Booleans. No actual walking happens here yet. The update loop is what acts out the directional info stored in the booleans, and makes the player move, as shown in the next code snippet:</p></div></div>
-<div class="sect2"><h3 id="3-setwalkdirection">3. setWalkDirection()</h3><div class="paragraph"><p>Previously in the <code>onAction()</code> method, you have collected the info in which direction the user wants to go in terms of “forward or “left. In the update loop, you repeatedly poll the current rotation of the camera. You calculate the actual vectors to which “forward or “left corresponds in the coordinate system.</p></div>
+<div class="sect2"><h3 id="3-setwalkdirection">3. setWalkDirection()</h3><div class="paragraph"><p>Previously in the <code>onAction()</code> method, you have collected the info in which direction the user wants to go in terms of &#8220;forward&#8221; or &#8220;left&#8221;. In the update loop, you repeatedly poll the current rotation of the camera. You calculate the actual vectors to which &#8220;forward&#8221; or &#8220;left&#8221; corresponds in the coordinate system.</p></div>
 <div class="paragraph"><p>This last and most important code snippet goes into the <code>simpleUpdate()</code> method.</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"> <span class="directive">public</span> <span class="type">void</span> simpleUpdate(<span class="type">float</span> tpf) {
         camDir.set(cam.getDirection()).multLocal(<span class="float">0.6f</span>);
@@ -318,15 +315,15 @@ src/</code></pre></div></div>
         cam.setLocation(player.getPhysicsLocation());
     }</code></pre></div></div>
 <div class="paragraph"><p>This is how the walking is triggered:</p></div>
-<div class="olist arabic"><ol class="arabic"><li><p>Initialize the vector <code>walkDirection</code> to zero. This is where you want to store the calculated walk direction.</p><div class="olist loweralpha"><ol class="loweralpha" type="a"><li><p>Add to <code>walkDirection</code> the recent motion vectors that you polled from the camera. This way it is posible for a character to move forward and to the left simultaneously, for example!</p></li><li><p>This one last line does the “walking magic:</p><div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">player.setWalkDirection(walkDirection);</code></pre></div></div>
+<div class="olist arabic"><ol class="arabic"><li><p>Initialize the vector <code>walkDirection</code> to zero. This is where you want to store the calculated walk direction.</p><div class="olist loweralpha"><ol class="loweralpha" type="a"><li><p>Add to <code>walkDirection</code> the recent motion vectors that you polled from the camera. This way it is posible for a character to move forward and to the left simultaneously, for example!</p></li><li><p>This one last line does the &#8220;walking&#8221; magic:</p><div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">player.setWalkDirection(walkDirection);</code></pre></div></div>
 <div class="paragraph"><p>Always use <code>setWalkDirection()</code> to make a physics-controlled object move continuously, and the physics engine handles collision detection for you.</p></div></li><li><p>Make the first-person camera object follow along with the physics-controlled player:</p><div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">cam.setLocation(player.getPhysicsLocation());</code></pre></div></div></li></ol></div></li></ol></div>
 <div class="admonitionblock important"><table><tr><td class="icon"><i class="fa icon-important" title="Important"></i></td><td class="content"><div class="paragraph"><p>Again, do not use <code>setLocalTranslation()</code> to walk the player around. You will get it stuck by overlapping with another physical object. You can put the player in a start position with <code>setPhysicalLocation()</code> if you make sure to place it a bit above the floor and away from obstacles.</p></div></td></tr></table></div></div></div>
-<div class="sect1"><h2 id="conclusion">Conclusion</h2><div class="sectionbody"><div class="paragraph"><p>You have learned how to load a “solid physical scene model and walk around in it with a first-person perspective.
+<div class="sect1"><h2 id="conclusion">Conclusion</h2><div class="sectionbody"><div class="paragraph"><p>You have learned how to load a &#8220;solid&#8221; physical scene model and walk around in it with a first-person perspective.
 You learned to speed up the physics calculations by using the CollisionShapeFactory to create efficient CollisionShapes for complex Geometries. You know how to add PhysicsControls to your collidable geometries and you register them to the PhysicsSpace. You also learned to use <code>player.setWalkDirection(walkDirection)</code> to move collision-aware characters around, and not <code>setLocalTranslation()</code>.</p></div>
 <div class="paragraph"><p>Terrains are another type of scene in which you will want to walk around. Let&#8217;s proceed with learning <a href="../../jme3/beginner/hello_terrain.html">how to generate terrains</a> now.</p></div>
 <hr>
 <div class="paragraph"><p>Related info:</p></div>
-<div class="ulist"><ul><li><p>How to load models and scenes: <a href="../../jme3/beginner/hello_asset.html">Hello Asset</a>, <a href="../../sdk/scene_explorer.html">Scene Explorer</a>, <a href="../../sdk/scene_composer.html">Scene Composer</a></p></li><li><p><a href="../../jme3/advanced/terrain_collision.html">Terrain Collision</a></p></li><li><p>To learn more about complex physics scenes, where several mobile physical objects bump into each other, read <a href="../../jme3/beginner/hello_physics.html">Hello Physics</a>.</p></li><li><p>FYI, there are simpler collision detection solutions without physics, too. Have a look at <a href="https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/collision/TestTriangleCollision.java">jme3test.collision.TestTriangleCollision.java</a>.</p></li></ul></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2019-10-02 21:43:03 +00:00</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
+<div class="ulist"><ul><li><p>How to load models and scenes: <a href="../../jme3/beginner/hello_asset.html">Hello Asset</a>, <a href="../../sdk/scene_explorer.html">Scene Explorer</a>, <a href="../../sdk/scene_composer.html">Scene Composer</a></p></li><li><p><a href="../../jme3/advanced/terrain_collision.html">Terrain Collision</a></p></li><li><p>To learn more about complex physics scenes, where several mobile physical objects bump into each other, read <a href="../../jme3/beginner/hello_physics.html">Hello Physics</a>.</p></li><li><p>FYI, there are simpler collision detection solutions without physics, too. Have a look at <a href="https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/collision/TestTriangleCollision.java">jme3test.collision.TestTriangleCollision.java</a>.</p></li></ul></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2019-10-02 21:48:04 +00:00</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
   apiKey: 'a736b6d93de805e26ec2f49b55013fbd',
   indexName: 'jmonkeyengine',
   inputSelector: '#doc-search',
