@@ -1,10 +1,11 @@
 = jMonkeyEngine 3 Tutorial (12) - Hello Effects
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :keywords: beginner, documentation, intro, transparency, effect
 :relfileprefix: ../../
 :imagesdir: ../..
+:experimental:
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
@@ -26,15 +27,15 @@ When you see one of the following in a game, then a particle system is likely be
 
 These scene elements cannot be modeled by meshes. In very simple terms:
 
-*  The difference between an explosion and a dust cloud is the speed of the particle effect. 
-*  The difference between flames and a waterfall is the direction and the color of the particle effect. 
+*  The difference between an explosion and a dust cloud is the speed of the particle effect.
+*  The difference between flames and a waterfall is the direction and the color of the particle effect.
 
-Particle effects can be animated (e.g. sparks, drops) and static (strands of grass, hair). Non-particle effects include bloom/glow, and motion blur/afterimage. In this tutorial you learn how to make animated particles (com.jme3.effect). 
+Particle effects can be animated (e.g. sparks, drops) and static (strands of grass, hair). Non-particle effects include bloom/glow, and motion blur/afterimage. In this tutorial you learn how to make animated particles (com.jme3.effect).
 
 
 [TIP]
 ====
-To use the example assets in a new jMonkeyEngine SDK project, right-click your project, select “Properties, go to “Libraries, press “Add Library and add the “jme3-test-data library.
+To use the example assets in a new jMonkeyEngine SDK project, btn:[RMB] click your project, select menu:Properties[Libraries>Add Library] and add the "`jme3-test-data`" library.
 ====
 
 
@@ -63,14 +64,14 @@ public class HelloEffects extends SimpleApplication {
   @Override
   public void simpleInitApp() {
 
-    ParticleEmitter fire = 
+    ParticleEmitter fire =
             new ParticleEmitter("Emitter", ParticleMesh.Type.Triangle, 30);
-    Material mat_red = new Material(assetManager, 
+    Material mat_red = new Material(assetManager,
             "Common/MatDefs/Misc/Particle.j3md");
     mat_red.setTexture("Texture", assetManager.loadTexture(
             "Effects/Explosion/flame.png"));
     fire.setMaterial(mat_red);
-    fire.setImagesX(2); 
+    fire.setImagesX(2);
     fire.setImagesY(2); // 2x2 texture animation
     fire.setEndColor(  new ColorRGBA(1f, 0f, 0f, 1f));   // red
     fire.setStartColor(new ColorRGBA(1f, 1f, 0f, 0.5f)); // yellow
@@ -83,14 +84,14 @@ public class HelloEffects extends SimpleApplication {
     fire.getParticleInfluencer().setVelocityVariation(0.3f);
     rootNode.attachChild(fire);
 
-    ParticleEmitter debris = 
+    ParticleEmitter debris =
             new ParticleEmitter("Debris", ParticleMesh.Type.Triangle, 10);
-    Material debris_mat = new Material(assetManager, 
+    Material debris_mat = new Material(assetManager,
             "Common/MatDefs/Misc/Particle.j3md");
     debris_mat.setTexture("Texture", assetManager.loadTexture(
             "Effects/Explosion/Debris.png"));
     debris.setMaterial(debris_mat);
-    debris.setImagesX(3); 
+    debris.setImagesX(3);
     debris.setImagesY(3); // 3x3 texture animation
     debris.setRotateSpeed(4);
     debris.setSelectRandomImage(true);
@@ -114,21 +115,21 @@ link:https://github.com/jMonkeyEngine/jmonkeyengine/tree/master/jme3-examples/sr
 image::jme3/beginner/Debris.png[Debris.png,96,96]
 
 
-Start by choosing a material texture for your effect. If you provide the emitter with a set of textures (see image), it can use them either for variation (random order), or as animation steps (fixed order). 
+Start by choosing a material texture for your effect. If you provide the emitter with a set of textures (see image), it can use them either for variation (random order), or as animation steps (fixed order).
 
-Setting emitter textures works just as you have already learned in previous chapters. This time you base the material on the `Particle.j3md` material definition. Let's have a closer look at the material for the Debris effect. 
+Setting emitter textures works just as you have already learned in previous chapters. This time you base the material on the `Particle.j3md` material definition. Let's have a closer look at the material for the Debris effect.
 
 [source,java]
 ----
 
-    ParticleEmitter debris = 
+    ParticleEmitter debris =
             new ParticleEmitter("Debris", ParticleMesh.Type.Triangle, 10);
-    Material debris_mat = new Material(assetManager, 
+    Material debris_mat = new Material(assetManager,
             "Common/MatDefs/Misc/Particle.j3md");
     debris_mat.setTexture("Texture", assetManager.loadTexture(
             "Effects/Explosion/Debris.png"));
     debris.setMaterial(debris_mat);
-    debris.setImagesX(3); 
+    debris.setImagesX(3);
     debris.setImagesY(3); // 3x3 texture animation
     debris.setSelectRandomImage(true);
         ...
@@ -141,9 +142,9 @@ The debris texture has 3x3 frames.
 .  Optionally, tell the Emitter whether the animation steps are to be at random, or in order. +
 For the debris, the frames play at random.
 
-As you see in the debris example, texture animations improve effects because each “flame or “piece of debris now looks different. Also think of electric or magic effects, where you can create very interesting animations by using an ordered morphing series of lightning bolts; or flying leaves or snow flakes, for instance.
+As you see in the debris example, texture animations improve effects because each "`flame`" or "`piece`" of debris now looks different. Also think of electric or magic effects, where you can create very interesting animations by using an ordered morphing series of lightning bolts; or flying leaves or snow flakes, for instance.
 
-The fire material is created the same way, just using “Effects/Explosion/flame.png texture, which has with 2x2 ordered animation steps.
+The fire material is created the same way, just using "`Effects/Explosion/flame.png`" texture, which has with 2x2 ordered animation steps.
 
 
 === Default Particle Textures
@@ -152,29 +153,29 @@ The following particle textures included in `test-data.jar`. You can copy and us
 [cols="3", options="header"]
 |===
 
-<a| Texture Path                     
-a| Dimension 
-a| Preview 
+<a| Texture Path
+a| Dimension
+a| Preview
 
-<a| Effects/Explosion/Debris.png     
-<a| 3*3  
-a| image:jme3/beginner/Debris.png[Debris.png,32,32] 
+<a| Effects/Explosion/Debris.png
+<a| 3*3
+a| image:jme3/beginner/Debris.png[Debris.png,32,32]
 
-<a| Effects/Explosion/flame.png      
-<a| 2*2  
-a| image:jme3/beginner/flame.png[flame.png,32,32] 
+<a| Effects/Explosion/flame.png
+<a| 2*2
+a| image:jme3/beginner/flame.png[flame.png,32,32]
 
-<a| Effects/Explosion/shockwave.png  
-<a| 1*1  
-a| image:jme3/beginner/shockwave.png[shockwave.png,32,32] 
+<a| Effects/Explosion/shockwave.png
+<a| 1*1
+a| image:jme3/beginner/shockwave.png[shockwave.png,32,32]
 
-a| Effects/Explosion/smoketrail.png 
-<a| 1*3  
-a| image:jme3/beginner/smoketrail.png[smoketrail.png,32,32] 
+a| Effects/Explosion/smoketrail.png
+<a| 1*3
+a| image:jme3/beginner/smoketrail.png[smoketrail.png,32,32]
 
-<a| Effects/Smoke/Smoke.png          
-a| 1*15 
-a| image:jme3/beginner/Smoke.png[Smoke.png,96,32] 
+<a| Effects/Smoke/Smoke.png
+a| 1*15
+a| image:jme3/beginner/Smoke.png[Smoke.png,96,32]
 
 |===
 
@@ -188,18 +189,18 @@ For your game, you will likely create custom particle textures. Look at the fire
 [source,java]
 ----
 
-    ParticleEmitter fire = 
+    ParticleEmitter fire =
             new ParticleEmitter("Emitter", ParticleMesh.Type.Triangle, 30);
-    Material mat_red = new Material(assetManager, 
+    Material mat_red = new Material(assetManager,
             "Common/MatDefs/Misc/Particle.j3md");
     mat_red.setTexture("Texture", assetManager.loadTexture(
             "Effects/Explosion/flame.png"));
     fire.setMaterial(mat_red);
-    fire.setImagesX(2); 
+    fire.setImagesX(2);
     fire.setImagesY(2); // 2x2 texture animation
     fire.setEndColor(  new ColorRGBA(1f, 0f, 0f, 1f));   // red
     fire.setStartColor(new ColorRGBA(1f, 1f, 0f, 0.5f)); // yellow
-    
+
 ----
 
 [.right]
@@ -208,18 +209,18 @@ image::jme3/beginner/flame.png[flame.png,96,96]
 
 Compare the texture with the resulting effect.
 
-*  Black parts of the image become fully transparent. 
+*  Black parts of the image become fully transparent.
 *  White/gray parts of the image are translucent and get colorized.
 *  You set the color using `setStartColor()` and `setEndColor()`. +
-For fire, is's a gradient from yellow to red. 
+For fire, is's a gradient from yellow to red.
 *  By default, the animation is played in order and loops.
 
-Create a grayscale texture in a graphic editor, and save it to your `assets/Effects` directory. If you split up one image file into x*y animation steps, make sure each square is of equal size–just as you see in the examples here. 
+Create a grayscale texture in a graphic editor, and save it to your `assets/Effects` directory. If you split up one image file into x*y animation steps, make sure each square is of equal size–just as you see in the examples here.
 
 
 === Emitter Parameters
 
-A particle system is always centered around an emitter. 
+A particle system is always centered around an emitter.
 
 Use the `setShape()` method to change the EmitterShape:
 
@@ -227,79 +228,79 @@ Use the `setShape()` method to change the EmitterShape:
 *  EmitterSphereShape(Vector3f.ZERO,2f) – particles emit from a sphere-sized area
 *  EmitterBoxShape(new Vector3f(-1f,-1f,-1f),new Vector3f(1f,1f,1f)) – particles emit from a box-sized area
 
-Example: 
+Example:
 
 [source,java]
 ----
 emitter.setShape(new EmitterPointShape(Vector3f.ZERO));
 ----
 
-You create different effects by changing the emitter parameters: 
+You create different effects by changing the emitter parameters:
 [cols="10,50,15,25", options="header"]
 |===
 
-<a| Parameter           
-a| Method 
-a| Default 
-a| Description 
+<a| Parameter
+a| Method
+a| Default
+a| Description
 
-<a| number              
-a| `setNumParticles()` 
-a| N/A 
-a| The maximum number of particles visible at the same time. Value is specified by user in constructor. This influences the density and length of the “trail. 
+<a| number
+a| `setNumParticles()`
+a| N/A
+a| The maximum number of particles visible at the same time. Value is specified by user in constructor. This influences the density and length of the "`trail`".
 
-<a| velocity            
-<a| `getParticleInfluencer().setInitialVelocity()`  
-a| Vector3f.ZERO 
-a| Specify a vector how fast particles move and in which start direction. 
+<a| velocity
+<a| `getParticleInfluencer().setInitialVelocity()`
+a| Vector3f.ZERO
+a| Specify a vector how fast particles move and in which start direction.
 
-<a| direction           
+<a| direction
 a| `getParticleInfluencer().setVelocityVariation()` +
 `setFacingVelocity()` +
 `setRandomAngle()` +
 `setFaceNormal()` +
-`setRotateSpeed()` 
+`setRotateSpeed()`
 a| 0.2f +
 false +
 false +
 Vector3f.NAN +
-0.0f 
-a| Optional accessors that control in which direction particles face while flying. 
+0.0f
+a| Optional accessors that control in which direction particles face while flying.
 
-<a| lifetime            
+<a| lifetime
 a| `setLowLife()` +
-`setHighLife()` 
+`setHighLife()`
 <a| 3f +
-7f  
-a| Minimum and maximum time period before particles fade. 
+7f
+a| Minimum and maximum time period before particles fade.
 
-<a| emission rate       
-a| `setParticlesPerSec()` 
-a| 20 
-a| How many new particles are emitted per second. 
+<a| emission rate
+a| `setParticlesPerSec()`
+a| 20
+a| How many new particles are emitted per second.
 
-<a| color               
+<a| color
 a| `setStartColor()` +
-`setEndColor()` 
-a| gray 
-a| Set to the same colors, or to two different colors for a gradient effect. 
+`setEndColor()`
+a| gray
+a| Set to the same colors, or to two different colors for a gradient effect.
 
-<a| size                
+<a| size
 a| `setStartSize()` +
-`setEndSize()` 
+`setEndSize()`
 a| 0.2f +
-2f 
-a| Set to two different values for shrink/grow effect, or to same size for constant effect. 
+2f
+a| Set to two different values for shrink/grow effect, or to same size for constant effect.
 
-<a| gravity             
-a| `setGravity()` 
-a| 0,1,0 
-a| Whether particles fall down (positive) or fly up (negative). Set to 0f for a zero-g effect where particles keep flying. 
+<a| gravity
+a| `setGravity()`
+a| 0,1,0
+a| Whether particles fall down (positive) or fly up (negative). Set to 0f for a zero-g effect where particles keep flying.
 
 |===
 
 You can find details about <<jme3/advanced/particle_emitters#configure_parameters,effect parameters>> here.
-Add and modify one parameter at a time, and try different values until you get the effect you want. 
+Add and modify one parameter at a time, and try different values until you get the effect you want.
 
 
 [TIP]
@@ -311,7 +312,7 @@ Use the SceneComposer in the jMonkeyEngine SDK to create effects more easily. Cr
 
 == Exercise
 
-Can you “invert the fire effect into a small waterfall? Here some tips:
+Can you "`invert`" the fire effect into a small waterfall? Here some tips:
 
 *  Change the Red and Yellow color to Cyan and Blue
 *  Invert the velocity vector (direction) by using a negative number
