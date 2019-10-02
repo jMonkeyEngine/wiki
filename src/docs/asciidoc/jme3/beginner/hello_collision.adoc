@@ -107,25 +107,17 @@ public class HelloCollision extends SimpleApplication
     landscape = new RigidBodyControl(sceneShape, 0);
     sceneModel.addControl(landscape);
 
-    // We set up collision detection for the player by creating
-    // a capsule collision shape and a CharacterControl.
-    // The CharacterControl offers extra settings for
-    // size, stepheight, jumping, falling, and gravity.
-    // We also put the player in its starting position.
+    /**
+     * We set up collision detection for the player by creating
+     * a capsule collision shape and a CharacterControl.
+     * The CharacterControl offers extra settings for
+     * size, stepheight, jumping, falling, and gravity.
+     * We also put the player in its starting position.
+     */
     CapsuleCollisionShape capsuleShape = new CapsuleCollisionShape(1.5f, 6f, 1);
     player = new CharacterControl(capsuleShape, 0.05f);
     player.setJumpSpeed(20);
     player.setFallSpeed(30);
-
-    //Some methods used for setting gravity related variables were deprecated in
-    //the 3.2 version of the engine. Choose the method that matches your version
-    //of the engine.
-    // < jME3.2
-    // player.setGravity(30f);
-
-    // >= jME3.2
-    player.setGravity(new Vector3f(0,-30f,0));
-
     player.setPhysicsLocation(new Vector3f(0, 10, 0));
 
     // We attach the scene and the player to the rootnode and the physics space,
@@ -133,6 +125,11 @@ public class HelloCollision extends SimpleApplication
     rootNode.attachChild(sceneModel);
     bulletAppState.getPhysicsSpace().add(landscape);
     bulletAppState.getPhysicsSpace().add(player);
+
+    // You can change the gravity of individual physics objects after they are
+    // added to the PhysicsSpace.
+    player.setGravity(new Vector3f(0,-30f,0));
+
   }
 
   private void setUpLight() {
@@ -275,7 +272,7 @@ As usual, you initialize the game in the `simpleInitApp()` method.
 ----
 
 .  You set the background color to light blue, since this is a scene with a sky.
-.  You repurpose the default camera control “flyCam as first-person camera and set its speed.
+.  You repurpose the default camera control "`flyCam`" as first-person camera and set its speed.
 .  The auxiliary method `setUpLights()` adds your light sources.
 .  The auxiliary method `setUpKeys()` configures input mappings–we will look at it later.
 
@@ -357,7 +354,7 @@ Again, you create a CollisionShape: This time you choose a CapsuleCollisionShape
 
 [TIP]
 ====
-“Does that CollisionShape make me look fat? If you ever get confusing physics behaviour, remember to have a look at the collision shapes. Add the following line after the bulletAppState initialization to make the shapes visible:
+"`Does that CollisionShape make me look fat?`" If you ever get confusing physics behaviour, remember to have a look at the collision shapes. Add the following line after the bulletAppState initialization to make the shapes visible:
 
 [source,java]
 ----
@@ -483,7 +480,7 @@ For all other directions: Every time the user presses one of the WASD keys, you 
 
 === 3. setWalkDirection()
 
-Previously in the `onAction()` method, you have collected the info in which direction the user wants to go in terms of “forward or “left. In the update loop, you repeatedly poll the current rotation of the camera. You calculate the actual vectors to which “forward or “left corresponds in the coordinate system.
+Previously in the `onAction()` method, you have collected the info in which direction the user wants to go in terms of "`forward`" or "`left`". In the update loop, you repeatedly poll the current rotation of the camera. You calculate the actual vectors to which "`forward`" or "`left`" corresponds in the coordinate system.
 
 This last and most important code snippet goes into the `simpleUpdate()` method.
 
@@ -515,7 +512,7 @@ This is how the walking is triggered:
 
 .  Initialize the vector `walkDirection` to zero. This is where you want to store the calculated walk direction.
 ..  Add to `walkDirection` the recent motion vectors that you polled from the camera. This way it is posible for a character to move forward and to the left simultaneously, for example!
-..  This one last line does the “walking magic:
+..  This one last line does the "`walking`" magic:
 +
 [source,java]
 ----
@@ -540,7 +537,7 @@ Again, do not use `setLocalTranslation()` to walk the player around. You will ge
 
 == Conclusion
 
-You have learned how to load a “solid physical scene model and walk around in it with a first-person perspective.
+You have learned how to load a "`solid`" physical scene model and walk around in it with a first-person perspective.
 You learned to speed up the physics calculations by using the CollisionShapeFactory to create efficient CollisionShapes for complex Geometries. You know how to add PhysicsControls to your collidable geometries and you register them to the PhysicsSpace. You also learned to use `player.setWalkDirection(walkDirection)` to move collision-aware characters around, and not `setLocalTranslation()`.
 
 Terrains are another type of scene in which you will want to walk around. Let's proceed with learning <<jme3/beginner/hello_terrain#,how to generate terrains>> now.
