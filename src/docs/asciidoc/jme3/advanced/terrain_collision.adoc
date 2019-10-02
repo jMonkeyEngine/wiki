@@ -140,24 +140,17 @@ public class HelloTerrainCollision extends SimpleApplication
     RigidBodyControl with mass zero.*/
     terrain.addControl(new RigidBodyControl(0));
 
-    // We set up collision detection for the player by creating
-    // a capsule collision shape and a CharacterControl.
-    // The CharacterControl offers extra settings for
-    // size, stepheight, jumping, falling, and gravity.
-    // We also put the player in its starting position.
+    /**
+     * We set up collision detection for the player by creating
+     * a capsule collision shape and a CharacterControl.
+     * The CharacterControl offers extra settings for
+     * size, stepheight, jumping, falling, and gravity.
+     * We also put the player in its starting position.
+     */
     CapsuleCollisionShape capsuleShape = new CapsuleCollisionShape(1.5f, 6f, 1);
     player = new CharacterControl(capsuleShape, 0.05f);
     player.setJumpSpeed(20);
     player.setFallSpeed(30);
-
-    //Some methods used for setting gravity related variables were deprecated in
-    //the 3.2 version of the engine. Choose the method that matches your version
-    //of the engine.
-    // < jME3.2
-    // player.setGravity(30f);
-
-    // >= jME3.2
-    player.setGravity(new Vector3f(0,-30f,0));
 
     player.setPhysicsLocation(new Vector3f(-10, 10, 10));
 
@@ -165,6 +158,10 @@ public class HelloTerrainCollision extends SimpleApplication
     // to make them appear in the game world.
     bulletAppState.getPhysicsSpace().add(terrain);
     bulletAppState.getPhysicsSpace().add(player);
+
+    // You can change the gravity of individual physics objects after they are
+    // added to the PhysicsSpace.
+    player.setGravity(new Vector3f(0,-30f,0));
 
   }
   /** We over-write some navigational key mappings here, so we can
