@@ -18,6 +18,19 @@ Razer HDK and systems supporting OSVR
 
 Google Cardboard / GoogleVR
 
+Two implementations exist for OpenVR. A community maintained JNA based binding and LWJGL's JNI based.
+
+To use the JNA based bindings, put:
+
+    settings.put(VRConstants.SETTING_VRAPI, VRConstants.SETTING_VRAPI_OPENVR_VALUE);
+
+in your settings. To use LWJGL, instead put:
+
+    settings.put(VRConstants.SETTING_VRAPI, VRConstants.SETTING_VRAPI_OPENVR_LWJGL_VALUE);
+    
+Note that the LWJGL bindings require LWJGL3 (jme3-lwjgl3) to be used.
+
+
 == Sample Application
 
 [source,java]
@@ -26,7 +39,7 @@ public class Main extends SimpleApplication {
 
     public static void main(String[] args) {
         AppSettings settings = new AppSettings(true);
-        settings.put(VRConstants.SETTING_VRAPI, VRConstants.SETTING_VRAPI_OPENVR_VALUE);
+        settings.put(VRConstants.SETTING_VRAPI, VRConstants.SETTING_VRAPI_OPENVR_LWJGL_VALUE);
         settings.put(VRConstants.SETTING_ENABLE_MIRROR_WINDOW, true);
        
         VREnvironment env = new VREnvironment(settings);
