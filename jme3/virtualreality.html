@@ -5,12 +5,18 @@
 <div class="paragraph"><p>HTC Vive and systems supporting SteamVR/OpenVR</p></div>
 <div class="paragraph"><p>Native Oculus Rift support (and through SteamVR)</p></div>
 <div class="paragraph"><p>Razer HDK and systems supporting OSVR</p></div>
-<div class="paragraph"><p>Google Cardboard / GoogleVR</p></div></div></div>
+<div class="paragraph"><p>Google Cardboard / GoogleVR</p></div>
+<div class="paragraph"><p>Two implementations exist for OpenVR. A community maintained JNA based binding and LWJGL&#8217;s JNI based.</p></div>
+<div class="paragraph"><p>To use the JNA based bindings, put:</p></div>
+<div class="literalblock"><div class="content"><pre>settings.put(VRConstants.SETTING_VRAPI, VRConstants.SETTING_VRAPI_OPENVR_VALUE);</pre></div></div>
+<div class="paragraph"><p>in your settings. To use LWJGL, instead put:</p></div>
+<div class="literalblock"><div class="content"><pre>settings.put(VRConstants.SETTING_VRAPI, VRConstants.SETTING_VRAPI_OPENVR_LWJGL_VALUE);</pre></div></div>
+<div class="paragraph"><p>Note that the LWJGL bindings require LWJGL3 (jme3-lwjgl3) to be used.</p></div></div></div>
 <div class="sect1"><h2 id="sample-application">Sample Application</h2><div class="sectionbody"><div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Main</span> <span class="directive">extends</span> SimpleApplication {
 
     <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> main(<span class="predefined-type">String</span><span class="type">[]</span> args) {
         AppSettings settings = <span class="keyword">new</span> AppSettings(<span class="predefined-constant">true</span>);
-        settings.put(VRConstants.SETTING_VRAPI, VRConstants.SETTING_VRAPI_OPENVR_VALUE);
+        settings.put(VRConstants.SETTING_VRAPI, VRConstants.SETTING_VRAPI_OPENVR_LWJGL_VALUE);
         settings.put(VRConstants.SETTING_ENABLE_MIRROR_WINDOW, <span class="predefined-constant">true</span>);
 
         VREnvironment env = <span class="keyword">new</span> VREnvironment(settings);
@@ -58,7 +64,7 @@
 <div class="paragraph"><p>Project source: <a class="bare" href="https://github.com/neph1/VRSampleApplication">https://github.com/neph1/VRSampleApplication</a></p></div></div></div>
 <div class="sect1"><h2 id="google-cardboard-vr-sdk-1-0-integration">Google Cardboard VR SDK 1.0 integration</h2><div class="sectionbody"><div class="paragraph"><p>gvr-android-jme (<a class="bare" href="https://github.com/nordfalk/gvr-android-jme">https://github.com/nordfalk/gvr-android-jme</a>)</p></div></div></div>
 <div class="sect1"><h2 id="legacy">Legacy</h2><div class="sectionbody"><div class="paragraph"><p>The following projects are not up to date, but may provide functionality not found in the other packages.
-Google Cardboard up to version 0.6: <a class="bare" href="https://github.com/neph1/jme-cardboard">https://github.com/neph1/jme-cardboard</a></p></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2019-10-08 03:27:21 +00:00</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
+Google Cardboard up to version 0.6: <a class="bare" href="https://github.com/neph1/jme-cardboard">https://github.com/neph1/jme-cardboard</a></p></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2019-11-19 19:06:16 +00:00</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
   apiKey: 'a736b6d93de805e26ec2f49b55013fbd',
   indexName: 'jmonkeyengine',
   inputSelector: '#doc-search',
