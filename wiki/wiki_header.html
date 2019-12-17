@@ -8,19 +8,20 @@
 :relfileprefix: ../../
 :imagesdir: ../..
 :experimental:
+:link-javadoc: <a class="bare" href="https://javadoc.jmonkeyengine.org">https://javadoc.jmonkeyengine.org</a>
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]</code></pre></div></div>
 <div class="paragraph"><p><strong>=</strong> Mandatory. Title of your document.</p></div>
 <div class="paragraph"><p><strong>:author:</strong> Optional. Document author.</p></div>
 <div class="paragraph"><p><strong>:revnumber:</strong> Optional. Revision number.</p></div>
 <div class="paragraph"><p><strong>:revdate:</strong> Optional. Revision Date</p></div>
-<div class="paragraph"><p><strong>:relfileprefix:</strong> Mandatory. Enter a path to the &#8220;asciidoc&#8221; folder.</p></div>
+<div class="paragraph"><p><strong>:relfileprefix:</strong> Optional. Enter a path to the &#8220;asciidoc&#8221; folder if using cross reference links.</p></div>
 <div class="admonitionblock tip"><table><tr><td class="icon"><i class="fa icon-tip" title="Tip"></i></td><td class="content">Use <code>Tree View</code> (<kbd>ctrl</kbd>+<kbd>\</kbd> or <code><span class="menuseq"><span class="menu">View</span>&#160;&#9656; <span class="menuitem">Toggle Tree View</span></span></code>) to locate the &#8220;asciidoc&#8221; folder if using the <a href="https://atom.io/">Atom editor</a>.</td></tr></table></div>
 <div class="paragraph"><p>In the example below, &#8220;asciidoc&#8221; is two folders above the folder this file is located in.</p></div>
-<div class="paragraph"><p><code>:relfileprefix: ../../</code></p></div>
-<div class="paragraph"><p><strong>:imagesdir:</strong> Mandatory. Enter a path to the "images" folder.</p></div>
+<div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code>:relfileprefix: ../../</code></pre></div></div>
+<div class="paragraph"><p><strong>:imagesdir:</strong> Optional. Enter a path to the "images" folder if using image links.</p></div>
 <div class="admonitionblock tip"><table><tr><td class="icon"><i class="fa icon-tip" title="Tip"></i></td><td class="content">Use <code>Tree View</code> (<kbd>ctrl</kbd>+<kbd>\</kbd> or <code><span class="menuseq"><span class="menu">View</span>&#160;&#9656; <span class="menuitem">Toggle Tree View</span></span></code>) to locate the &#8220;images&#8221; folder if using the <a href="https://atom.io/">Atom editor</a>.</td></tr></table></div>
 <div class="paragraph"><p>In the example below, &#8220;images&#8221; is two folders above the folder this file is located in. Note the missing <kbd>/</kbd> forward slash.</p></div>
-<div class="paragraph"><p><code>:imagesdir: ../..</code></p></div>
+<div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code>:imagesdir: ../..</code></pre></div></div>
 <div class="admonitionblock tip"><table><tr><td class="icon"><i class="fa icon-tip" title="Tip"></i></td><td class="content"><div class="paragraph"><p>A simple way to determine the location of the "asciidoc" and "images" folder in the Atom editor is first save the file to its new location, then in <code>Tree View</code> (<kbd>ctrl</kbd>+<kbd>\</kbd> or <code><span class="menuseq"><span class="menu">View</span>&#160;&#9656; <span class="menuitem">Toggle Tree View</span></span></code>), <b class="button">RMB</b> select the saved file and select <b class="button">Copy Project Path</b>.</p></div>
 <div class="paragraph"><p>Temporarily paste this into your document to see where the &#8220;asciidoc&#8221; folder is located.</p></div>
 <div class="paragraph"><p>For example: <code>src\docs\asciidoc\jme3\advanced\3d_models.adoc</code></p></div>
@@ -28,7 +29,10 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]</code></pre></div></div>
 <div class="paragraph"><p>You can find this same folder information using <a href="https://github.com/jMonkeyEngine/wiki/blob/master/src/docs/asciidoc/jme3/advanced/3d_models.adoc">GitHub</a>.</p></div></td></tr></table></div>
 <div class="paragraph"><p>The &#8220;images&#8221; folder resides in the same folder as the &#8220;asciidoc&#8221; folder so it has the same setting minus the <kbd>/</kbd> forward slash.</p></div>
 <div class="paragraph"><p><strong>:experimental:</strong> Leave this blank. This is the experimental attribute that allows the use of <a href="http://asciidoctor.org/docs/user-manual/#user-interface-macros">User Interface Macros</a>. You use these macros for creating keyboard shortcuts, displaying menu selections and UI buttons.</p></div>
-<div class="paragraph"><p><strong>ifdef::env-github,env-browser[:outfilesuffix: .adoc]</strong> See <a href="http://asciidoctor.org/docs/user-manual/#navigating-between-source-files">Navigating Between Source Files</a> in the AsciiDoctor user manual. Leave this as written.</p></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2019-12-17 18:22:59 +00:00</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
+<div class="paragraph"><p><strong>:link-javadoc:</strong> Optional. This is the global attribute for the jME javadocs. You set this if you are <strong>overriding</strong> the default setting from the <a href="https://github.com/jMonkeyEngine/wiki/blob/9d0e4fd07d019c3d41c6b9e64b2a1a5b7e0ed774/build.gradle#L39">build.gradle</a> file. You can use the default <code><a class="bare" href="https://javadoc.jmonkeyengine.org/v3.3.0-beta1">https://javadoc.jmonkeyengine.org/v3.3.0-beta1</a></code> attribute directly in any document you write, as is shown in the following example, without adding anything to the header.</p></div>
+<div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code>link:{link-javadoc}/com/jme3/app/state/BaseAppState.html[BaseAppState]</code></pre></div></div>
+<div class="paragraph"><p>If you override the variable in the header of the document, that value will be used instead.</p></div>
+<div class="paragraph"><p><strong>ifdef::env-github,env-browser[:outfilesuffix: .adoc]</strong> See <a href="http://asciidoctor.org/docs/user-manual/#navigating-between-source-files">Navigating Between Source Files</a> in the AsciiDoctor user manual. Leave this as written.</p></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2019-12-17 18:52:28 +00:00</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
   apiKey: 'a736b6d93de805e26ec2f49b55013fbd',
   indexName: 'jmonkeyengine',
   inputSelector: '#doc-search',
