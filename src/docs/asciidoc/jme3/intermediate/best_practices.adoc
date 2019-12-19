@@ -1,13 +1,13 @@
 = Best Practices For jME3 Developers
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2017/11/26 13:30
 :relfileprefix: ../../
 :imagesdir: ../..
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
-Every milestone of a game development project is made up of phases: Planning, development, testing, and release. Every milestone involves updates to multi-media assets and to code.  
+Every milestone of a game development project is made up of phases: Planning, development, testing, and release. Every milestone involves updates to multi-media assets and to code.
 
 This "best practices" page is a collection of recommendations and expert tips. Feel free to add your own!
 
@@ -29,8 +29,8 @@ Exmple: "Craft by day, fight by night!"
 *  Game type
 **  Point of view (first- or third-person camera)? What characters does the player control? (if applicable)
 **  Time- or turn-based?
-**  Genre (drama, horror, adventure, mystery, comedy, educational, documentary)? 
-**  Setting and background story? (historic, fantasy, anime, futuristic, utopia/dystopia, pirate, zombie, vampire…)? 
+**  Genre (drama, horror, adventure, mystery, comedy, educational, documentary)?
+**  Setting and background story? (historic, fantasy, anime, futuristic, utopia/dystopia, pirate, zombie, vampire…)?
 
 *  Gameplay
 **  What is the start state, what is the end state? (if applicable)
@@ -78,7 +78,7 @@ Exmple: if the game is a "Jump'n'Run", jumping and running must work.
 
 .  Omega = Final Release
 
-How you name or number these stages is fully up to your team. Development teams use numbered milestones (m1, m2, m3), Greek letters (ex. alpha, beta, gamma, delta), link:http://en.wikipedia.org/wiki/Software_versioning[&quot;major.minor.patch-build&quot; version] numbering (ex. "2.7.23-1328"), or combinations thereof. 
+How you name or number these stages is fully up to your team. Development teams use numbered milestones (m1, m2, m3), Greek letters (ex. alpha, beta, gamma, delta), link:http://en.wikipedia.org/wiki/Software_versioning[&quot;major.minor.patch-build&quot; version] numbering (ex. "2.7.23-1328"), or combinations thereof.
 
 
 === Use File Version Control
@@ -98,22 +98,22 @@ If you don't know which to choose, Subversion is a good choice for starters.
 a|DO
 a|DON'T
 
-a| Save original models+textures into `assets/Textures`. 
-a| Don't reference textures or models outside your JME project. 
+a| Save original models+textures into `assets/Textures`.
+a| Don't reference textures or models outside your JME project.
 
 a| Save sounds into `assets/Sounds.`
-a| Don't reference audio files outside your JME project. 
+a| Don't reference audio files outside your JME project.
 
-a| Create simple, low-polygon models. 
-a| Don't create high-polygon models, they render too slow to be useful in games. 
+a| Create simple, low-polygon models.
+a| Don't create high-polygon models, they render too slow to be useful in games.
 
-a| Only use Diffuse Map, Normal Map, Glow Map, Specular Map. 
+a| Only use Diffuse Map, Normal Map, Glow Map, Specular Map.
 a| Don't use unsupported material properties that are not listed in the <<jme3/advanced/materials_overview#,Materials Overview>>.
 
-a| Use UV texture / texture atlases / baking for each texture map. 
+a| Use UV texture / texture atlases / baking for each texture map.
 a| Don't create models based on multiple separate textures, it will break the model into separate meshes.
 
-a| Convert Models to j3o format. Move j3o files into `assets/Models`. 
+a| Convert Models to j3o format. Move j3o files into `assets/Models`.
 a|Don't reference Blender/Ogre/OBJ files in your load() code, because these unoptimized files are not packaged into the JAR.
 
 |===
@@ -134,7 +134,7 @@ Even for large experienced game producers, the creation of such a complex game i
 
 === Extend SimpleApplication
 
-Every jME3 game is centered around one main class that (directly or indirectly) extends com.jme3.app.<<jme3/intermediate/simpleapplication#,SimpleApplication>>. 
+Every jME3 game is centered around one main class that (directly or indirectly) extends com.jme3.app.<<jme3/intermediate/simpleapplication#,SimpleApplication>>.
 
 
 [IMPORTANT]
@@ -143,7 +143,7 @@ Note that although the "SimpleApplication" name might be misleading, all jME3 ap
 ====
 
 
-For your future game releases, you will want to rely on your own framework (based on jME): Your custom framework extends jME's SimpleApplication, and includes your custom methods for loading, saving, and arranging your scenes, your custom navigation methods, your inputs for pausing and switching your custom screens, your custom user interface (options screen, HUD, etc), your custom NPC factory, your custom physics properties, your custom networking synchronization, etc. 
+For your future game releases, you will want to rely on your own framework (based on jME): Your custom framework extends jME's SimpleApplication, and includes your custom methods for loading, saving, and arranging your scenes, your custom navigation methods, your inputs for pausing and switching your custom screens, your custom user interface (options screen, HUD, etc), your custom NPC factory, your custom physics properties, your custom networking synchronization, etc.
 
 
 [TIP]
@@ -158,7 +158,7 @@ Also, your own framework gives all your games a common look and feel.
 
 You have a list of features that you want in game, but which one do you implement first? You will keep adding features to a project that grows more and more complex, how can you minimize the amount of rewriting required?
 
-.  Make sure the game's high-level frame (screen switching, network sync, loading/saving) is sound and solid. 
+.  Make sure the game's high-level frame (screen switching, network sync, loading/saving) is sound and solid.
 .  Start with implementing the most complex game feature first – the one that imposes most constraints on the structure of your project (for example: multi-player networking, or physics.)
 .  Add only one larger feature at a time. If there are complex interactions (such as networking + physics), start with a small test case (one shared cube) and work your way up. Starting with a whole scene introduces too many extra sources of error.
 .  Implement low-complexity decorations (audio and visual effects) last.
@@ -200,9 +200,9 @@ Example: Players have *methods* such as `walk(), addGold(), getHealth(), pickUpI
 ====
 
 
-If your game is even more complex, you may want to learn about "real" Entity Systems, which form a quite different programming paradigm from object oriented coding but are scalable to very large proportions. Note however that this topic is very unintuitive to handle for an OOP programmer and you should really decide on a case basis if you really need this or not and gather some experiences before diving head first into a MMO project emoji:smiley
+If your game is even more complex, you may want to learn about "real" Entity Systems, which form a quite different programming paradigm from object oriented coding but are scalable to very large proportions. Note however that this topic is very unintuitive to handle for an OOP programmer and you should really decide on a case basis if you really need this or not and gather some experiences before diving head first into a MMO project emoji:smiley[]
 
-*  link:http://cowboyprogramming.com/2007/01/05/evolve-your-heirachy/[http://cowboyprogramming.com/2007/01/05/evolve-your-heirachy/] 
+*  link:http://cowboyprogramming.com/2007/01/05/evolve-your-heirachy/[http://cowboyprogramming.com/2007/01/05/evolve-your-heirachy/]
 *  link:http://www.gamasutra.com/blogs/MeganFox/20101208/88590/Game_Engines_101_The_EntityComponent_Model.php[http://www.gamasutra.com/blogs/MeganFox/20101208/88590/Game_Engines_101_The_EntityComponent_Model.php]
 *  link:http://gamedev.stackexchange.com/questions/28695/variants-of-entity-component-systems[http://gamedev.stackexchange.com/questions/28695/variants-of-entity-component-systems]
 *  link:http://t-machine.org/index.php/2012/03/16/entity-systems-what-makes-good-components-good-entities/[http://t-machine.org/index.php/2012/03/16/entity-systems-what-makes-good-components-good-entities/]
@@ -211,7 +211,7 @@ If your game is even more complex, you may want to learn about "real" Entity Sys
 
 === The Smart Way to Access Game Features
 
-<<jme3/intermediate/simpleapplication#,SimpleApplication>> gives you access to game features such as a the rootNode, assetManager, guiNode, inputManager, audioManager, physicsSpace, viewPort, and the camera. But what if you need this access also from another class? Don't extend SimpleApplication a second time, and don't pass around tons of object references in constructors! Needing access to application level objects is a sign that this class should be designed as an <<jme3/advanced/application_states#,AppState>> (read details there). 
+<<jme3/intermediate/simpleapplication#,SimpleApplication>> gives you access to game features such as a the rootNode, assetManager, guiNode, inputManager, audioManager, physicsSpace, viewPort, and the camera. But what if you need this access also from another class? Don't extend SimpleApplication a second time, and don't pass around tons of object references in constructors! Needing access to application level objects is a sign that this class should be designed as an <<jme3/advanced/application_states#,AppState>> (read details there).
 
 An AppState has access to all game features in the SimpleApplication via the `this.app` and `this.stateManager` objects. Examples:
 
@@ -227,19 +227,19 @@ this.app.getRootNode().attachChild( sky );
 
 As your SimpleApplication-based game grows more advanced, you find yourself putting more and more interactions in the `simpleUpdate()` loop, and your `simpleInitApp()` methods grows longer and longer. It's a best practice to move blocks of game mechanics into reusable component classes of their own. In jME3, these resuable classes are called `Controls` and `AppStates`.
 
-*  Use <<jme3/advanced/application_states#,AppStates>> to implement _global game mechanics_. 
-**  Each AppState calls its own `initialize()` and `cleanup()` methods when it is attached to or detached from the game. 
-**  Each AppState runs its own _thread-safe_ `update()` loop that hooks into the main `simpleUpdate()` loop. 
+*  Use <<jme3/advanced/application_states#,AppStates>> to implement _global game mechanics_.
+**  Each AppState calls its own `initialize()` and `cleanup()` methods when it is attached to or detached from the game.
+**  Each AppState runs its own _thread-safe_ `update()` loop that hooks into the main `simpleUpdate()` loop.
 **  You specify what happens if an AppState is paused/unpaused.
 **  You can use an AppState to switch between sets of AppStates.
-**  An AppState has access to everything in the SimpleApplication (rootNode, AssetManager, StateManager, InputListener, ViewPort, etc). 
+**  An AppState has access to everything in the SimpleApplication (rootNode, AssetManager, StateManager, InputListener, ViewPort, etc).
 
 
-*  Use <<jme3/advanced/custom_controls#,Controls>> to implement the _behaviour of game entities_. 
-**  Controls add a type of behaviour (methods and fields) to an individual Spatial (a player, an NPC). 
-**  Each Control runs its own _thread-safe_ `controlUpdate()` loop that hooks into the main `simpleUpdate()` loop. 
+*  Use <<jme3/advanced/custom_controls#,Controls>> to implement the _behaviour of game entities_.
+**  Controls add a type of behaviour (methods and fields) to an individual Spatial (a player, an NPC).
+**  Each Control runs its own _thread-safe_ `controlUpdate()` loop that hooks into the main `simpleUpdate()` loop.
 **  One Spatial can be influenced by several Controls. (!)
-**  Each Spatial needs its own instance of the Control. 
+**  Each Spatial needs its own instance of the Control.
 **  A Control only has control over and access to the spatial that it is attached to (and its sub-spatials).
 
 
@@ -255,7 +255,7 @@ Controls and AppStates often work together: An AppState can reach up to the appl
 
 [TIP]
 ====
-AppStates and Controls are extensions to a SimpleApplication. They are your modular building blocks to build a more complex game. In the ideal case, you move all init/update code into Controls and AppStates, and your simpleInitApp() and simpleUpdate() could end up virtually empty. This powerful and modular approach cleans up your code considerably. 
+AppStates and Controls are extensions to a SimpleApplication. They are your modular building blocks to build a more complex game. In the ideal case, you move all init/update code into Controls and AppStates, and your simpleInitApp() and simpleUpdate() could end up virtually empty. This powerful and modular approach cleans up your code considerably.
 ====
 
 
@@ -282,9 +282,9 @@ Read all about <<jme3/advanced/custom_controls#,Custom Controls>> and <<jme3/adv
 
 It's unlikely you will fully document _every_ class you write, we hear you. However, you should at least write meaningful javadoc to provide context for your most crucial methods/parameters.
 
-*  What is this? How does it solve its task (input, algorithm used, output, side-effects)? 
+*  What is this? How does it solve its task (input, algorithm used, output, side-effects)?
 *  Write down implicit limits (e.g. min/max values) and defaults while you still remember.
-*  In which situation do I want to use this, is this part of a larger process? Is this step required, or what are the alternatives? 
+*  In which situation do I want to use this, is this part of a larger process? Is this step required, or what are the alternatives?
 
 Treat javadoc as messages to your future self. `genNextVal() generates the next value` and `@param float factor A factor influencing the result` do _not_ count as documentation.
 
@@ -308,7 +308,7 @@ Treat javadoc as messages to your future self. `genNextVal() generates the next 
 === Pre-Release To-Do List
 
 *  Prepare a web page, a cool slogan, advertisements, etc
-*  Verify that all assets are up-to-date and converted to .j3o. 
+*  Verify that all assets are up-to-date and converted to .j3o.
 *  Verify that your code loads the optimized .j3o files, and not the original model formats.
 *  Prepare licenses of assets that you use for inclusion. (You _did_ obtain permission to use them, right…?)
 *  Switch off fine <<jme3/advanced/logging#,logging>> output.
@@ -332,18 +332,18 @@ a|Cons
 
 a|Desktop Launcher +
 (.EXE, .app, .jar+.sh)
-a|This is the standard way of distributing desktop applications. The jMonkeyEngine SDK can be configured to automatically create zipped launchers for each operating system. 
+a|This is the standard way of distributing desktop applications. The jMonkeyEngine SDK can be configured to automatically create zipped launchers for each operating system.
 a|You need to offer three separate, platform-dependent downloads.
 
 a|Desktop Application +
 (.JAR)
-a|Platform independent desktop application. 
+a|Platform independent desktop application.
 a|User must have Java configured to run JARs when they are opened; or user must know how to run JARs from command line; or you must provide a custom JAR wrapper.
 
 a|Web Start +
 (.JNLP)
 a|The user accesses a +++<abbr title="Uniform Resource Locator">URL</abbr>+++, saves the game as one executable file. Easy process, no installer required. You can allow the game to be played offline.
-a|Users need network connection to install the game. Downloading bigger games takes a while as opposed to running them from a CD. 
+a|Users need network connection to install the game. Downloading bigger games takes a while as opposed to running them from a CD.
 
 a|Browser Applet +
 (.+++<abbr title="HyperText Markup Language">HTML</abbr>++++.JAR)

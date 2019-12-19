@@ -1,6 +1,6 @@
 = Frequently Asked Questions
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :keywords: documentation, faq
 :relfileprefix: ../
@@ -76,16 +76,16 @@ Make sure to only load() models converted to .j3o binary format, not the origina
 
 === What is java.lang.LinkageError: Version mismatch?
 
-This rare exception shows a message similar to the following: `Exception in thread “LWJGL Renderer Thread java.lang.LinkageError: Version mismatch: jar version is (number), native library version is (another number)`. jME3 needs native libraries (.dll, .jnilib, lib*.so files) to run LWJGL and jBullet. The correct versions of these libraries are included when you install the SDK or download the binaries. However there are circumstances where jME3 cannot determine which copy of the native library it should use: 
+This rare exception shows a message similar to the following: `Exception in thread “LWJGL Renderer Thread java.lang.LinkageError: Version mismatch: jar version is (number), native library version is (another number)`. jME3 needs native libraries (.dll, .jnilib, lib*.so files) to run LWJGL and jBullet. The correct versions of these libraries are included when you install the SDK or download the binaries. However there are circumstances where jME3 cannot determine which copy of the native library it should use:
 
 .Possible Causes
-* If you install another application that needs a different version of a native library, and this app globally installs its version over jME3's. 
-* If an old copy of a native library is in your project directory, your home directory, or Java library path, or in the classpath. 
-* If you permanently linked an old copy in your IDE's settings. 
+* If you install another application that needs a different version of a native library, and this app globally installs its version over jME3's.
+* If an old copy of a native library is in your project directory, your home directory, or Java library path, or in the classpath.
+* If you permanently linked an old copy in your IDE's settings.
 
-Java then assumes you prefer these native libraries over the bundled ones, and your jME3 application ends up running with the wrong version. 
+Java then assumes you prefer these native libraries over the bundled ones, and your jME3 application ends up running with the wrong version.
 
-To fix this, search for .dll (Windows), .jnilib (Mac), and .so (Linux) files for jBullet and LWJGL on your harddrive and in your path and IDE settings, and verify they don't interfere. (If you have other jME  versions installed and linked somehow, the outdated natives may also be in a lwjgl.jar or jbullet.jar file!) 
+To fix this, search for .dll (Windows), .jnilib (Mac), and .so (Linux) files for jBullet and LWJGL on your harddrive and in your path and IDE settings, and verify they don't interfere. (If you have other jME  versions installed and linked somehow, the outdated natives may also be in a lwjgl.jar or jbullet.jar file!)
 
 
 == I want to load my scene
@@ -137,7 +137,7 @@ Note that you should not register every single folder containing a texture as th
 === How do I Create 3-D models, textures, sounds?
 
 Follow our best practices for the <<jme3/intermediate/multi-media_asset_pipeline#,multi-media asset pipeline>>. +
-You create 3-D models in a 3-D mesh editor, for example Blender, and export it in Ogre Mesh XML (animated objects, scenes) or Wavefront OBJ format (static objects, scenes). 
+You create 3-D models in a 3-D mesh editor, for example Blender, and export it in Ogre Mesh XML (animated objects, scenes) or Wavefront OBJ format (static objects, scenes).
 You create textures in a graphic editor, for example Gimp, and export them as PNG or JPG.
 You create sounds in an audio editor, for example, Audacity, and export them as WAVE or OGG.
 
@@ -281,19 +281,19 @@ Assign a texture with an alpha channel to a Material and set the Material's blen
 material.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
 ----
 
-*Learn more:*  <<jme3/beginner/hello_material#,Hello Material>>, <<jme3/intermediate/how_to_use_materials#,How To Use Materials>>, 
+*Learn more:*  <<jme3/beginner/hello_material#,Hello Material>>, <<jme3/intermediate/how_to_use_materials#,How To Use Materials>>,
 
 
 === How do I force or disable culling?
 
-While debugging custom meshes, you can switch the `com.jme3.material.RenderState.FaceCullMode` off to see the inside and outside of the mesh. 
+While debugging custom meshes, you can switch the `com.jme3.material.RenderState.FaceCullMode` off to see the inside and outside of the mesh.
 
 [source,java]
 ----
 someMaterial.getAdditionalRenderState().setFaceCullMode(FaceCullMode.Off);
 ----
 
-You can also deactivate the `com.jme3.scene.Spatial.CullHint` of a whole spatial to force jme to calculate it even if it is behind the camera and outside of view. 
+You can also deactivate the `com.jme3.scene.Spatial.CullHint` of a whole spatial to force jme to calculate it even if it is behind the camera and outside of view.
 
 [source,java]
 ----
@@ -317,7 +317,7 @@ material.getAdditionalRenderState().setWireframe(true);
 
 == I want to control the camera
 
-The default camera `cam` is an instance of the `Camera` class. 
+The default camera `cam` is an instance of the `Camera` class.
 
 *Learn more:* link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/java/com/jme3/renderer/Camera.java[com.jme3.renderer.Camera]
 
@@ -335,7 +335,7 @@ flyCam.setEnabled(false);
 
 === How do I switch between third-person and first-person view ?
 
-You can activate the FlyBy Cam as a first-person camera. 
+You can activate the FlyBy Cam as a first-person camera.
 
 [source,java]
 ----
@@ -343,9 +343,9 @@ flyCam.setEnabled(true);
 ----
 
 *Learn more:* <<jme3/beginner/hello_collision#,Hello Collision>>. +
-*Code sample:*  link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/java/com/jme3/input/FlyByCamera.java[com.jme3.input.FlyByCamera] 
+*Code sample:*  link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/java/com/jme3/input/FlyByCamera.java[com.jme3.input.FlyByCamera]
 
-You can also create a third-person chase cam. 
+You can also create a third-person chase cam.
 
 [source,java]
 ----
@@ -354,7 +354,7 @@ chaseCam = new ChaseCamera(cam, spatial, inputManager);
 ----
 
 *Learn more:* link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/java/com/jme3/input/ChaseCamera.java[com.jme3.input.ChaseCamera] +
-*Code sample:* link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/input/TestChaseCamera.java[jme3test/input/TestChaseCamera.java]. 
+*Code sample:* link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/input/TestChaseCamera.java[jme3test/input/TestChaseCamera.java].
 
 
 
@@ -416,7 +416,7 @@ Add physics controls to Spatials and give them spherical or cylindrical bounding
 
 === How do I debug weird Physics behaviour?
 
-Maybe your collision shapes overlap – or they are not where you think they are. Make the collision shapes visible by adding the following line after the bulletAppState initialization: 
+Maybe your collision shapes overlap – or they are not where you think they are. Make the collision shapes visible by adding the following line after the bulletAppState initialization:
 
 [source,java]
 ----
@@ -460,12 +460,12 @@ At the bottom left of every default SimpleGame, you see the <<jme3/advanced/stat
 
 === How do I get rid of the FPS/Objects statistics?
 
-In the application's simpleInitApp() method, call: 
+In the application's simpleInitApp() method, call:
 
 [source]
 ----
 setDisplayFps(false); // to hide the FPS
-setDisplayStatView(false); // to hide the statistics 
+setDisplayStatView(false); // to hide the statistics
 ----
 
 
@@ -474,8 +474,8 @@ setDisplayStatView(false); // to hide the statistics
 Attach text and pictures to the orthogonal `guiNode` to create a heads-up display (link:http://en.wikipedia.org/wiki/HUD_%28video_gaming%29[HUD]).
 
 *Learn more:* <<jme3/advanced/hud#,HUD>>, link:https://github.com/jMonkeyEngine/jmonkeyengine/tree/master/jme3-core/src/main/java/com/jme3/font[com.jme3.font.], link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/java/com/jme3/ui/Picture.java[com.jme3.ui.Picture.java], guiNode.attachChild() +
-*Code sample:* link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/gui/TestOrtho.java[TestOrtho.java], 
-link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/gui/TestBitmapFont.java[TestBitmapFont.java] 
+*Code sample:* link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/gui/TestOrtho.java[TestOrtho.java],
+link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/gui/TestBitmapFont.java[TestBitmapFont.java]
 
 
 === How do I display buttons and UI controls?
@@ -488,7 +488,7 @@ Sample Code: link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme
 
 === How do i display a loading screen?
 
-Instead of having a frozen frame while your games loads, you can have a loading screen while it loads. 
+Instead of having a frozen frame while your games loads, you can have a loading screen while it loads.
 
 *Learn more:* <<jme3/advanced/loading_screen#,Loading screen>>
 
@@ -532,7 +532,7 @@ Use AudioRenderer, Listener, and AudioNode from com.jme3.audio..
 For swarm like effects you use particle emitters.
 
 *Learn more:* <<jme3/beginner/hello_effects#,Hello Effects>>, <<jme3/advanced/particle_emitters#,Particle Emitters>>, <<jme3/advanced/bloom_and_glow#,Bloom and Glow>>, <<jme3/advanced/effects_overview#,Effects Overview>>, link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/java/com/jme3/effect/shapes/EmitterSphereShape.java[com.jme3.effect.EmitterSphereShape.java], link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/java/com/jme3/effect/ParticleEmitter.java[com.jme3.effect.ParticleEmitter.java] +
-*Code sample:* link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/effect/TestExplosionEffect.java[TestExplosionEffect.java], 
+*Code sample:* link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/effect/TestExplosionEffect.java[TestExplosionEffect.java],
 link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/effect/TestMovingParticle.java[TestMovingParticle.java],
 link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/effect/TestSoftParticles.java[TestSoftParticle.java]
 
@@ -568,7 +568,7 @@ Use com.jme3.terrain.. The JMonkeyEngine also provides you with a Terrain Editor
 ----
 rootNode.attachChild(SkyFactory.createSky( assetManager,
        "Textures/Sky/Bright/BrightSky.dds", false));
-skyGeo.setQueueBucket(Bucket.Sky) 
+skyGeo.setQueueBucket(Bucket.Sky)
 ----
 
 *Learn more:* <<jme3/advanced/sky#,Sky>>
@@ -590,7 +590,7 @@ Logger.getLogger(HelloJME3.class.getName()).log(Level.INFO, "Capabilities: {0}",
 
 === How do I Run jMonkeyEngine 3 with OpenGL1?
 
-In your game, add 
+In your game, add
 
 [source,java]
 ----
@@ -630,7 +630,7 @@ Many maths functions (mult(), add(), subtract(), etc) come as local and a non-lo
 ***  Returns the result as a new <<jme3/rotate.html#,Quaternion>> q1.
 ***  The involved objects q2 and q3 stay as they are and can be reused.
 
-**  Example 2: `v.mult(b).add(b);` emoji:
+**  Example 2: `v.mult(b).add(b);` 
 ***  *Watch out:* This calculates the expected result, but unless you actually use the return value, it is discarded!
 
 
