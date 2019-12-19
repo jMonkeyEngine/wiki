@@ -1,6 +1,6 @@
 = jMonkeyEngine 3 Tutorial (13) - Hello Physics
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :keywords: beginner, intro, physics, documentation, input, model, control
 :relfileprefix: ../../
@@ -11,7 +11,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 Previous: <<jme3/beginner/hello_effects#,Hello Effects>>,
 Next: <<jme3#,JME 3 documentation>>
 
-Do you remember the <<jme3/beginner/hello_collision#,Hello Collision>> tutorial where you made the model of a town solid and walked through it in a first-person perspective? Then you may remember that, for the simulation of physical forces, jME3 integrates the link:http://jbullet.advel.cz/[jBullet] library. 
+Do you remember the <<jme3/beginner/hello_collision#,Hello Collision>> tutorial where you made the model of a town solid and walked through it in a first-person perspective? Then you may remember that, for the simulation of physical forces, jME3 integrates the link:http://jbullet.advel.cz/[jBullet] library.
 
 Apart from making models “solid, the most common use cases for physics in 3D games are:
 
@@ -88,7 +88,7 @@ public class HelloPhysics extends SimpleApplication {
   private static final Sphere sphere;
   private RigidBodyControl    floor_phy;
   private static final Box    floor;
-  
+
   /** dimensions used for bricks and wall */
   private static final float brickLength = 0.48f;
   private static final float brickWidth  = 0.24f;
@@ -112,12 +112,12 @@ public class HelloPhysics extends SimpleApplication {
     bulletAppState = new BulletAppState();
     stateManager.attach(bulletAppState);
     //bulletAppState.getPhysicsSpace().enableDebug(assetManager);
-    
+
     /** Configure cam to look at scene */
     cam.setLocation(new Vector3f(0, 4f, 6f));
     cam.lookAt(new Vector3f(2, 2, 0), Vector3f.UNIT_Y);
     /** Add InputManager action: Left click triggers shooting. */
-    inputManager.addMapping("shoot", 
+    inputManager.addMapping("shoot",
             new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
     inputManager.addListener(actionListener, "shoot");
     /** Initialize the scene, materials, and physics space */
@@ -252,7 +252,7 @@ As always, start with a standard com.jme3.app.SimpleApplication. To activate phy
 
 public class HelloPhysics extends SimpleApplication {
   private BulletAppState bulletAppState;
-  
+
   public void simpleInitApp() {
     bulletAppState = new BulletAppState();
     stateManager.attach(bulletAppState);
@@ -337,8 +337,8 @@ This code sample does the following:
 **  brick_geo has a box shape
 **  brick_geo has a brick-colored material.
 
-.  You attach brick_geo to the rootNode 
-.  You position brick_geo at `loc`. 
+.  You attach brick_geo to the rootNode
+.  You position brick_geo at `loc`.
 .  You create a RigidBodyControl brick_phy for brick_geo.
 **  brick_phy has a mass of 2f.
 **  You add brick_phy to brick_geo.
@@ -369,7 +369,7 @@ You notice that the cannon ball is created in the same way, using the custom `ma
     bulletAppState.getPhysicsSpace().add(ball_phy);
     /** Accelerate the physcial ball to shoot it. */
     ball_phy.setLinearVelocity(cam.getDirection().mult(25));
-    
+
 ----
 
 This code sample does the following:
@@ -378,8 +378,8 @@ This code sample does the following:
 **  ball_geo has a sphere shape
 **  ball_geo has a stone-colored material.
 
-.  You attach ball_geo to the rootNode 
-.  You position ball_geo at the camera location. 
+.  You attach ball_geo to the rootNode
+.  You position ball_geo at the camera location.
 .  You create a RigidBodyControl ball_phy for ball_geo.
 **  ball_phy has a mass of 1f.
 **  You add ball_phy to ball_geo.
@@ -418,10 +418,10 @@ This code sample does the following:
 **  floor_geo has a box shape
 **  floor_geo has a pebble-colored material.
 
-.  You attach floor_geo to the rootNode 
-.  You position floor_geo a bit below y=0 (to prevent overlap with other PhysicControl'ed Spatials). 
+.  You attach floor_geo to the rootNode
+.  You position floor_geo a bit below y=0 (to prevent overlap with other PhysicControl'ed Spatials).
 .  You create a RigidBodyControl floor_phy for floor_geo.
-**  floor_phy has a mass of 0f emoji:
+**  floor_phy has a mass of 0f 
 **  You add floor_phy to floor_geo.
 **  You register floor_phy to the PhysicsSpace.
 
@@ -436,7 +436,7 @@ Let's have a quick look at the custom helper methods:
 *  `initCrossHairs()` – This method simply displays a plus sign that you use as crosshairs for aiming. Note that screen elements such as crosshairs are attached to the `guiNode`, not the `rootNode`!
 *  `initInputs()` – This method sets up the click-to-shoot action.
 
-These methods are each called once from the `simpleInitApp()` method at the start of the game. As you see, you can write any number of custom methods to set up your game's scene. 
+These methods are each called once from the `simpleInitApp()` method at the start of the game. As you see, you can write any number of custom methods to set up your game's scene.
 
 
 == The Cannon Ball Shooting Action
@@ -447,7 +447,7 @@ In the `initInputs()` method, you add an input mapping that triggers a shoot act
 ----
 
   private void initInputs() {
-    inputManager.addMapping("shoot", 
+    inputManager.addMapping("shoot",
             new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
     inputManager.addListener(actionListener, "shoot");
   }
@@ -488,11 +488,11 @@ Learn more about static versus kinematic versus dynamic in the <<jme3/advanced/p
 
 === Exercise 1: Debug Shapes
 
-Add the following line after the bulletAppState initialization. 
+Add the following line after the bulletAppState initialization.
 
 [source,java]
 ----
-// For older versions up to JME sdk 3.0.10 
+// For older versions up to JME sdk 3.0.10
 bulletAppState.getPhysicsSpace().enableDebug(assetManager);
 ----
 
@@ -502,7 +502,7 @@ or
 // For new versions thereafter
 bulletAppState.setDebugEnabled(true);
 ----
-Now you see the collisionShapes of the bricks and spheres, and the floor highlighted. 
+Now you see the collisionShapes of the bricks and spheres, and the floor highlighted.
 
 
 === Exercise 2: No Mo' Static
@@ -528,4 +528,3 @@ You have learned how to activate the jBullet PhysicsSpace in an application by a
 ====
 Congratulations! – You have completed the last beginner tutorial. Now you are ready to start <<jme3#,combining what you have learned>>, to create a cool 3D game of your own. Show us what you can do, and feel free to share your demos, game videos, and screenshots on the link:http://hub.jmonkeyengine.org/c/user-code-projects[User Code &amp; Projects Forum]!
 ====
-

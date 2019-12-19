@@ -1,6 +1,6 @@
 = Label Class
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :relfileprefix: ../../../
 :imagesdir: ../../..
@@ -42,17 +42,17 @@ Below is the code that creates the label(s):
 ----
 
 public class Gui {
-    
+
     private Screen screen;
     //private LabelElement label1, label2;
     private Label label1, label2;
     private Panel background;
-    
+
     public Gui(App app){
         screen = new Screen(app);
         float width  = 300f;
         float height = 100f;
-        
+
         //label1 = new LabelElement(
         label1 = new Label(
                 screen,                           // Screen
@@ -61,7 +61,7 @@ public class Gui {
                 new Vector2f(width, height / 2),  // size
                 new Vector4f(0f, 0f, 0f, 0f),     // resize borders
                 null);                            // image
-        
+
         //label2 = new LabelElement(
         label2 = new Label(
                 screen,                             // Screen
@@ -70,7 +70,7 @@ public class Gui {
                 new Vector2f(width, height / 2),    // size
                 new Vector4f(0f, 0f, 0f, 0f),       // resize borders
                 null);                              // image
-        
+
         background = new Panel(
                 screen,                                       // Screen
                 "background",                                 // ID
@@ -78,36 +78,36 @@ public class Gui {
                 new Vector2f(width, height),                  // size
                 new Vector4f(10f, 10f, 10f, 10f),             // resize borders
                 "tonegod/gui/style/def/Window/panel_x.png");  // image
-                
+
 
 //        AssetManager assetManager = app.getAssetManager();
 //        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-//        mat.setColor("Color", ColorRGBA.Gray); 
+//        mat.setColor("Color", ColorRGBA.Gray);
 //        background.setMaterial(mat);
-        
+
         label1.setText("First Text");
         label1.setFontColor(ColorRGBA.White);
         label1.setTextAlign(BitmapFont.Align.Center);
-        
+
         label2.setText("Second Text");
         label2.setFontColor(ColorRGBA.White);
         label2.setTextAlign(BitmapFont.Align.Center);
-        
+
         background.addChild(label1);
         background.addChild(label2);
         screen.addElement(background);
-    
+
     }
-    
+
     public Screen getScreen(){
         return screen;
     }
-    
+
     public void setText1(String text1){
         label1.setText(text1);
         //label1.show();
     }
-    
+
     public void setText2(String text1){
         label2.setText(text1);
         //label2.show();
@@ -119,6 +119,6 @@ public class Gui {
 
 == Troubleshooting:
 
-*If your labels don't show up*, make sure that the ID string for each of them is different.  For labels that have the same ID String, only the first one will show up.  Consequent ones will not be added to the parent, and … as far as I know … it doesn't throw an exception.  Having the same ID Strings between labels, or any other element, can come from copying and pasting constructors.  
+*If your labels don't show up*, make sure that the ID string for each of them is different.  For labels that have the same ID String, only the first one will show up.  Consequent ones will not be added to the parent, and … as far as I know … it doesn't throw an exception.  Having the same ID Strings between labels, or any other element, can come from copying and pasting constructors.
 
-… been there … done that …  emoji:.  
+… been there … done that … .
