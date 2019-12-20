@@ -181,7 +181,7 @@ Clear existing text in the guiNode by detaching all its children.
 
 === Loading a Model
 
-Export your 3D model in OgreXML format (.mesh.xml, .scene, .material, .skeleton.xml) and place it in a subdirectory of `assets/Models/`. The following code sample goes into the `simpleInitApp()` method.
+Export your 3D model in a <<jme3/features#supported-formats,Supported External File Type>> (.mesh.xml, .scene, .material, .skeleton.xml, .gltf) and place it in a subdirectory of `assets/Models/`. The following code sample goes into the `simpleInitApp()` method.
 
 [source,java]
 ----
@@ -236,8 +236,8 @@ JME3 offers ClasspathLocator, ZipLocator, FileLocator, HttpZipLocator, and UrlLo
 == Creating Models and Scenes
 
 To create 3D models and scenes, you need a 3D Mesh Editor. If you don't have any tools, install Blender and the OgreXML Exporter plugin.
-Then you link:http://en.wikibooks.org/wiki/Blender_3D:_Noob_to_Pro/UV_Map_Basics[create fully textured models (e.g. with Blender)] and export them to your project.
-Then you use the <<sdk#,SDK>> to <<sdk/model_loader_and_viewer#,load models>>, <<jme3/features#supported-formats,convert models>>, and <<sdk/scene_composer#,create 3D scenes>> from them.
+Then you link:http://en.wikibooks.org/wiki/Blender_3D:_Noob_to_Pro/UV_Map_Basics[create fully textured models (e.g. with Blender)] and export them to your project using a <<jme3/features#supported-formats,Supported External File Type>>.
+Then you <<jme3/beginner/hello_asset#loading-models-and-scenes,load models>>, <<jme3/features#supported-formats,convert models>>, and create 3D scenes from them.
 
 See <<jme3/advanced/3d_models#creating-models-and-scenes#,creating models and scenes>> for an example on how to export your models as Ogre XML meshes with materials.
 
@@ -249,7 +249,7 @@ JME3 can convert and load
 *  Ogre XML models + materials.
 *  Ogre DotScenes.
 *  Wavefront OBJ + MTL models.
-*  .Blend files.
+* .gltf
 
 The `loadModel()` method loads these original file formats when you run your code directly from the SDK. If you however build the executables using the default build script, then the original model files (XML, OBJ, etc) _are not included_. This means, when you run the executable outside the SDK, and load any original models directly, you get the following error message:
 
@@ -263,9 +263,9 @@ java.lang.NullPointerException
 
 ----
 
-You see that loading the *XML/OBJ/Blend files* directly is only acceptable during the development phase in the SDK. For example, every time your graphic designer pushes updated files to the asset directory, you can quickly review the latest version in your development environment.
+You see that loading the *XML/OBJ/GLTF* directly is only acceptable during the development phase in the SDK. For example, every time your graphic designer pushes updated files to the asset directory, you can quickly review the latest version in your development environment.
 
-But for QA test builds and for the final release build, you use *.j3o files* exclusively. J3o is an optimized binary format for jME3 applications. When you do QA test builds, or are ready to release, use the <<sdk#,SDK>> to <<sdk/model_loader_and_viewer#,convert>> all .obj/.scene/.xml/.blend files to .j3o files, and update all code to load the .j3o files. The default build script automatically packages .j3o files in the executables.
+But for QA test builds and for the final release build, you use *.j3o files* exclusively. J3o is an optimized binary format for jME3 applications. When you do QA test builds, or are ready to release, use the <<sdk#,SDK>> to <<sdk/model_loader_and_viewer#,convert>> all .obj/.scene/.xml/.gltf files to .j3o files, and update all code to load the .j3o files. The default build script automatically packages .j3o files in the executables.
 
 Open your JME3 Project in the jMonkeyEngine SDK.
 
