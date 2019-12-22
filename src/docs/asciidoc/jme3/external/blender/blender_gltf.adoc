@@ -40,7 +40,9 @@ As always, see <<jme3/intermediate/best_practices#,Best Practices>> for addition
 .. At export time, force the export to create interpolated keyframes using sampling. This can be done in Python using `export_force_sampling=True` or selecting `Always Sample Animations` in the `Animation` tab of the export function. By default a sample is created from each frame of the animation. This can be changed in Python using `export_frame_step=n` where n is number of frames between samples or changing the sampling rate in the `Animation` tab of the export function.
 . Blender has a powerful tool to allow bones to be posed by just specifying the position of the final bone in a chain and allowing Blender to work out where to position attached bones. This tool is a bone constraint called IK (Inverse Kinematics) and it can save a lot of time in building animations. However jME does not support IK constraints so any use of IK needs to be "baked" before the export. To do this, select the appropriate bone, go to the bone contraints tab and apply the IK constraint. A useful workflow is to save the file, bake the constrain, export to glTF then revert to the saved file to restore the IK constraint.
 . All actions in Blender will be added as animations to the `Node` corresponding to the armature. In addition, the action last tweaked within Blender will also be added as an animation to the object's node. This is just an artifact of the organisation of actions within Blender and should be ignored within jME.
-. glTF models loaded using jME 3.3 will create animations that use the new animation system introduced in jME 3.3. see link:https://hub.jmonkeyengine.org/t/monkanim-v2/39877[https://hub.jmonkeyengine.org/t/monkanim-v2/39877]  for more info about the new animation system.
+. glTF models loaded using jME 3.3 will create animations that use the new animation system introduced in jME 3.3.
++
+See link:https://hub.jmonkeyengine.org/t/monkanim-v2/39877[https://hub.jmonkeyengine.org/t/monkanim-v2/39877]  for more info about the new animation system.
 
 == Materials
 
