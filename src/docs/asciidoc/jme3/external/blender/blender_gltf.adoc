@@ -6,11 +6,6 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 This section discusses how to export scenes from Blender (2.8+) in glTF format appropriate for use by `AssetManager.loadModel`.
 
-[TIP]
-====
-<<jme3/external/blender/blender_buffer_clearing#,Blender Buffer Clearing>> should be performed prior to exporting any model from Blender.
-====
-
 
 == Background
 
@@ -31,6 +26,13 @@ Details of how to create models in Blender that are compatible with jME are give
 
 Before exporting a model all transforms need to be applied. This performs the required transforms on the vertices in a mesh to reset the transforms on the object. To apply all transforms in Blender 2.8, select each object (in object mode, not edit mode) then choose from the `Object` menu `Apply/All Transforms`.
 
+As always, see <<jme3/intermediate/best_practices#,Best Practices>> for additional information.
+
+[TIP]
+====
+<<jme3/external/blender/blender_buffer_clearing#,Blender Buffer Clearing>> should be performed prior to exporting any model from Blender.
+====
+
 == Animations
 
 . Blender supports non-linear transitions using F-Curves. However the glTF importer only supports linear transitions. There are 2 ways to ensure all transitions are linear:
@@ -38,7 +40,7 @@ Before exporting a model all transforms need to be applied. This performs the re
 .. At export time, force the export to create interpolated keyframes using sampling. This can be done in Python using `export_force_sampling=True` or selecting `Always Sample Animations` in the `Animation` tab of the export function. By default a sample is created from each frame of the animation. This can be changed in Python using `export_frame_step=n` where n is number of frames between samples or changing the sampling rate in the `Animation` tab of the export function.
 . Blender has a powerful tool to allow bones to be posed by just specifying the position of the final bone in a chain and allowing Blender to work out where to position attached bones. This tool is a bone constraint called IK (Inverse Kinematics) and it can save a lot of time in building animations. However jME does not support IK constraints so any use of IK needs to be "baked" before the export. To do this, select the appropriate bone, go to the bone contraints tab and apply the IK constraint. A useful workflow is to save the file, bake the constrain, export to glTF then revert to the saved file to restore the IK constraint.
 . All actions in Blender will be added as animations to the `Node` corresponding to the armature. In addition, the action last tweaked within Blender will also be added as an animation to the object's node. This is just an artifact of the organisation of actions within Blender and should be ignored within jME.
-. glTF models loaded using jME 3.3 will create animations that use the new animation system introduced in jME 3.3. see https://hub.jmonkeyengine.org/t/monkanim-v2/39877 for more info about the new animation system.
+. glTF models loaded using jME 3.3 will create animations that use the new animation system introduced in jME 3.3. see link:https://hub.jmonkeyengine.org/t/monkanim-v2/39877[https://hub.jmonkeyengine.org/t/monkanim-v2/39877]  for more info about the new animation system.
 
 == Materials
 
@@ -151,13 +153,15 @@ AnimChannel animChannel = animControl.createChannel();
 animChannel.setAnim("Run");
 ----
 
-If you import the model with the SDK, you can explore the scene graph using the Scene Explorer. See <<sdk/scene_explorer>> and <<jme3/advanced/traverse_scenegraph>> for more details.
+If you use the jME3 SDK, you can explore the scene graph using the <<sdk/scene_explorer#,Scene Explorer>>.
 
-See <<jme3/advanced/animation>> for further details on using animations in your code.
+See <<jme3/advanced/traverse_scenegraph#,Traverse the SceneGraph>> for assistance in finding the AnimControl of your models.
+
+See <<jme3/advanced/animation#,Animation in jME3>> for further details on using animations in your code.
 
 == Additional Reading
 
-Thread announcing glTF support: https://hub.jmonkeyengine.org/t/jme-gltf-support/39174
+Thread announcing glTF support: link:https://hub.jmonkeyengine.org/t/jme-gltf-support/39174[https://hub.jmonkeyengine.org/t/jme-gltf-support/39174]
 
 Documentation for the python export functions: link:https://docs.blender.org/api/current/bpy.ops.export_scene.html[https://docs.blender.org/api/current/bpy.ops.export_scene.html]
 
