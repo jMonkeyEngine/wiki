@@ -1,0 +1,93 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="Asciidoctor 1.5.4"><title>Exporting Models as GlTF meshes from Blender</title><link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="./coderay-asciidoctor.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css"><link rel="stylesheet" href="/home/travis/build/jMonkeyEngine/wiki/build/asciidoc/html5/blender/twemoji-awesome.css"></head><body class="article toc2 toc-left"><div id="header"><div id="toolbar"><a href="https://github.com/jMonkeyEngine/wiki/edit/master/src/docs/asciidoc/blender/blender_gltf.adoc"><i class="fa fa-pencil-square" aria-hidden="true"></i></a><a href="https://github.com/jMonkeyEngine/wiki/new/master/src/docs/asciidoc/blender/"><i class="fa fa-plus-square" aria-hidden="true"></i></a><input dir="auto" style="position: relative; vertical-align: top;" spellcheck="false" autocomplete="off" class="searchbox__input aa-input" id="doc-search" name="search" placeholder="Search in the doc" required="required" type="search"></div><h1>Exporting Models as GlTF meshes from Blender</h1><div class="details"><span id="revnumber">version 2.0</span> </div><div id="toc" class="toc2"><div id="toctitle">Table of Contents</div><ul class="sectlevel1"><li><a href="#background">Background</a></li><li><a href="#creating-models">Creating Models</a></li><li><a href="#animations">Animations</a></li><li><a href="#materials">Materials</a></li><li><a href="#shape-keys">Shape Keys</a></li><li><a href="#export-options">Export options</a></li><li><a href="#import-structure">Import structure</a></li><li><a href="#additional-reading">Additional Reading</a></li></ul></div></div><div id="content"><div id="preamble"><div class="sectionbody"><div class="paragraph"><p>This section discusses how to export scenes from Blender (2.8+) in glTF format appropriate for use by <code>AssetManager.loadModel</code>.</p></div>
+<div class="admonitionblock tip"><table><tr><td class="icon"><i class="fa icon-tip" title="Tip"></i></td><td class="content"><div class="paragraph"><p><a href="../../blender/blender_buffer_clearing.html">Blender Buffer Clearing</a> should be performed prior to exporting any model from Blender.</p></div></td></tr></table></div></div></div>
+<div class="sect1"><h2 id="background">Background</h2><div class="sectionbody"><div class="paragraph"><p>glTF (GL Transmission Format) is a specification for transmitting 3D scenes between applications. The specification is owned by Khronos Group but is publicly available and can be used royalty free. It is growing in popularity as a robust and efficient transmission mechanism.</p></div>
+<div class="paragraph"><p>jME3 introduced a loader for glTF in 2017 (written by nehon) and it has since been included as a standard part of the <code>jme3-plugins</code> target. There are some limitations of the importer which can be avoided by following the guidelines below.</p></div>
+<div class="paragraph"><p>Ultimately all jME projects should use the <code>.j3o</code> format for storing assets. However during development, it&#8217;s required to export scenes from Blender in a format suitable for conversion (either through the SDK or directly through code).</p></div>
+<div class="paragraph"><p>Use of glTF (or another standard format) has a significant advantage as new versions of Blender with significant enhancements are released fairly regularly.</p></div>
+<div class="admonitionblock note"><table><tr><td class="icon"><i class="fa icon-note" title="Note"></i></td><td class="content">Blender 2.7 had a number of problems in exporting glTF; these notes refer exclusively to Blender 2.8+</td></tr></table></div></div></div>
+<div class="sect1"><h2 id="creating-models">Creating Models</h2><div class="sectionbody"><div class="paragraph"><p>Details of how to create models in Blender that are compatible with jME are given at <a href="#jme3/external/blender">[jme3/external/blender]</a>. Follow all details on that page for creating models before attempting an export.</p></div>
+<div class="paragraph"><p>Before exporting a model all transforms need to be applied. This performs the required transforms on the vertices in a mesh to reset the transforms on the object. To apply all transforms in Blender 2.8, select each object (in object mode, not edit mode) then choose from the <code>Object</code> menu <code>Apply/All Transforms</code>.</p></div></div></div>
+<div class="sect1"><h2 id="animations">Animations</h2><div class="sectionbody"><div class="olist arabic"><ol class="arabic"><li><p>Blender supports non-linear transitions using F-Curves. However the glTF importer only supports linear transitions. There are 2 ways to ensure all transitions are linear:</p><div class="olist loweralpha"><ol class="loweralpha" type="a"><li><p>In Blender 2.8, go to the graph editor, select all keys (menu select/all) and then change to linear interpolation (menu key/interpolation mode/linear).</p></li><li><p>At export time, force the export to create interpolated keyframes using sampling. This can be done in Python using <code>export_force_sampling=True</code> or selecting <code>Always Sample Animations</code> in the <code>Animation</code> tab of the export function. By default a sample is created from each frame of the animation. This can be changed in Python using <code>export_frame_step=n</code> where n is number of frames between samples or changing the sampling rate in the <code>Animation</code> tab of the export function.</p></li></ol></div></li><li><p>Blender has a powerful tool to allow bones to be posed by just specifying the position of the final bone in a chain and allowing Blender to work out where to position attached bones. This tool is a bone constraint called IK (Inverse Kinematics) and it can save a lot of time in building animations. However jME does not support IK constraints so any use of IK needs to be "baked" before the export. To do this, select the appropriate bone, go to the bone contraints tab and apply the IK constraint. A useful workflow is to save the file, bake the constrain, export to glTF then revert to the saved file to restore the IK constraint.</p></li><li><p>All actions in Blender will be added as animations to the <code>Node</code> corresponding to the armature. In addition, the action last tweaked within Blender will also be added as an animation to the object&#8217;s node. This is just an artifact of the organisation of actions within Blender and should be ignored within jME.</p></li><li><p>glTF models loaded using jME 3.3 will create animations that use the new animation system introduced in jME 3.3. see <a class="bare" href="https://hub.jmonkeyengine.org/t/monkanim-v2/39877">https://hub.jmonkeyengine.org/t/monkanim-v2/39877</a> for more info about the new animation system.</p></li></ol></div></div></div>
+<div class="sect1"><h2 id="materials">Materials</h2><div class="sectionbody"><div class="paragraph"><p>All of the rules associated with defining materials in Blender suitable for use in jME apply when glTF is used as the import/export format.</p></div>
+<div class="olist arabic"><ol class="arabic"><li><p>Blender supports lots of different types of shaders and complex materials with several different renderers. glTF supports a relatively basic set of PBR attributes. If the primary purpose of the materials is to produce glTF exported models use a simple <code>Principled BSDF</code> node in your materials with the following settings:</p><div class="olist loweralpha"><ol class="loweralpha" type="a"><li><p>Metalling and roughness values</p></li><li><p>Base color</p></li><li><p>Diffuse and Normal (bump) textures</p></li></ol></div></li></ol></div></div></div>
+<div class="sect1"><h2 id="shape-keys">Shape Keys</h2><div class="sectionbody"><div class="paragraph"><p>Shape keys in Blender are used to apply a deformation to a mesh without changing the underlying vertices. The glTF exporter ignores shape keys unless they are part of an animation. To include shape keys in the export, select the <code>Shape Keys</code> option in the <code>Animation</code> tab of the glTF export options.</p></div>
+<div class="admonitionblock note"><table><tr><td class="icon"><i class="fa icon-note" title="Note"></i></td><td class="content">Shape keys are only supported in jME 3.3</td></tr></table></div></div></div>
+<div class="sect1"><h2 id="export-options">Export options</h2><div class="sectionbody"><div class="paragraph"><p>Blender 2.8 supports many options when exporting in glTF format. Most of the default options work fine.</p></div>
+<div class="paragraph"><p>You have 3 options of the format to export,
+. <code>GLB</code>: a single file in binary format (the default)
+. <code>GLTF_EMBEDDED</code>: a single file in JSON format
+. <code>GLTF_SEPERATE</code>: multiple files for separate objects, textures etc.</p></div>
+<div class="paragraph"><p>The <code>GLB</code> format is the most efficient so use it unless you need to debug the output or edit it prior to import for any reason.</p></div>
+<div class="paragraph"><p>The export can be performed manually (File/Export/GLTF 2.0) or via a Python script. If using a script to export, the following command will export the entire scene to the current directory in <code>.glb</code> format with recommended options.</p></div>
+<div class="paragraph"><p><code>bpy.ops.export_scene.gltf(filepath=filename, export_materials=False, export_force_sampling=True, check_existing=False)</code></p></div></div></div>
+<div class="sect1"><h2 id="import-structure">Import structure</h2><div class="sectionbody"><div class="paragraph"><p>The structure of the nodes following import will roughly match their structure in Blender. Note the following exceptions:
+. There is no equivalent in glTF to Blender collections. These will not be represented in the imported structure.
+. If an object has no material, a default material will be created for it.
+. If an object has a single material, the corresponding node in the imported structure will have type <code>Geometry</code> with the object&#8217;s mesh and the associated material.
+. If an object has more than one material, the corresponding node will have type <code>Node</code> with 1 child per material. Each of these children will be a <code>Geometry</code> with the associated material and a mesh containing the vertices assigned to the material.</p></div>
+<div class="paragraph"><p>For example, if a blender scene has the following structure</p></div>
+<div class="literalblock"><div class="content"><pre>Scene collection
+    Collection A
+        Tree (Object)
+            Tree_Mesh (Mesh)
+        Car (Object)
+            Car_Mesh (Mesh)
+                Body (Material)
+        House (Object)
+            House_Mesh (Mesh)
+                Walls (Material)
+                Roof (Material)
+    Collection B
+        Person_Armature (Armature)
+            Root (Bone)
+                Head (Bone)
+            Animations
+                Walk (Action)
+                NLA Tracks
+                    NLA Track
+                        Run (Action)
+            Person (Object)
+                Animation
+                    Walk (Action link)
+                Person_Mesh</pre></div></div>
+<div class="paragraph"><p>Then after export to glTF format and import to jME it will look like:</p></div>
+<div class="literalblock"><div class="content"><pre>Scene (Node)
+    Tree (Geometry)
+        Default (Material)
+    Car (Geometry)
+        Body (Material)
+    House (Node)
+        House_1 (Geometry)
+            Walls (Material)
+        House_1 (Geometry)
+            Roof (Material)
+    Person_Armature (Node)
+        Animations (AnimControl)
+            Walk (Animation)
+            Run (Animation)
+        Person (Geometry)
+            Animations (AnimControl)
+                Walk (Animation)</pre></div></div>
+<div class="paragraph"><p>For example, the animated person could be loaded with a custom material assigned as follows:</p></div>
+<div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">ModelKey key = <span class="keyword">new</span> ModelKey(<span class="string"><span class="delimiter">&quot;</span><span class="content">Models/model.glb</span><span class="delimiter">&quot;</span></span>);
+Node scene = (Node)assetManager.loadModel(key);
+Node person = scene.getChild(<span class="string"><span class="delimiter">&quot;</span><span class="content">Person_Armature</span><span class="delimiter">&quot;</span></span>);
+Geometry geometry = (Geometry)person.getChild(<span class="string"><span class="delimiter">&quot;</span><span class="content">Person</span><span class="delimiter">&quot;</span></span>);
+geometry.setMaterial(customMaterial);
+root.attachChild(person);</code></pre></div></div>
+<div class="paragraph"><p>And an animation for the model could be run as follows:</p></div>
+<div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">AnimControl animControl = person.getControl(AnimControl.class);
+AnimChannel animChannel = animControl.createChannel();
+animChannel.setAnim(<span class="string"><span class="delimiter">&quot;</span><span class="content">Run</span><span class="delimiter">&quot;</span></span>);</code></pre></div></div>
+<div class="paragraph"><p>If you import the model with the SDK, you can explore the scene graph using the Scene Explorer. See <a href="#sdk/scene_explorer">[sdk/scene_explorer]</a> and <a href="#jme3/advanced/traverse_scenegraph">[jme3/advanced/traverse_scenegraph]</a> for more details.</p></div>
+<div class="paragraph"><p>See <a href="#jme3/advanced/animation">[jme3/advanced/animation]</a> for further details on using animations in your code.</p></div></div></div>
+<div class="sect1"><h2 id="additional-reading">Additional Reading</h2><div class="sectionbody"><div class="paragraph"><p>Thread announcing glTF support: <a class="bare" href="https://hub.jmonkeyengine.org/t/jme-gltf-support/39174">https://hub.jmonkeyengine.org/t/jme-gltf-support/39174</a></p></div>
+<div class="paragraph"><p>Documentation for the python export functions: <a href="https://docs.blender.org/api/current/bpy.ops.export_scene.html">https://docs.blender.org/api/current/bpy.ops.export_scene.html</a></p></div>
+<div class="paragraph"><p>glTF specification: <a href="https://github.com/KhronosGroup/glTF/tree/master/specification/2.0">https://github.com/KhronosGroup/glTF/tree/master/specification/2.0</a></p></div></div></div></div><div id="footer"><div id="footer-text">Version 2.0<br>Last updated 2019-12-22 21:23:00 +00:00</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
+  apiKey: 'a736b6d93de805e26ec2f49b55013fbd',
+  indexName: 'jmonkeyengine',
+  inputSelector: '#doc-search',
+  debug: false // Set debug to true if you want to inspect the dropdown
+});</script></body></html>
