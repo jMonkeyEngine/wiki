@@ -16,7 +16,6 @@ With very little effort, you can use Adobes Mixamo to fully animate your Blender
 This guide requires:
 
 *  link:https://www.blender.org/download/[Blender version 2.78c+] with its default settings. The exception being `Select With:`, under `menu:File[User Preferences >  Input]` is set to `Left Click`.
-*  Blender Ogre exporter 0.6.0, found <<jme3/advanced/ogrecompatibility#,here>>, enabled.
 *  Blender FBX file Importing and Exporting, enabled.
 *  A Modest amount of Blender knowledge.
 *  A link:https://www.mixamo.com/#/[Mixamo] account.
@@ -24,25 +23,22 @@ This guide requires:
 
 == Prepare to Export
 
-To properly animate your models there are a few rules you must follow.
+To properly animate your models there are a few rules you should follow.
 
 *  Read the link:https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html[Common Questions] guide before you do anything else.
 *  Clean up your Blender file prior to exporting. This means you have a game ready model that will become the base for all your animations. Do this in a copy of your file so you have the original as a backup. The following checklist is provided for your convenience.
 [%interactive]
 - [ ] You have no Animations.
-- [ ] You have applied a triangulate modifier. Some exporters other than Ogre, have an option to apply the modifier on export. This would be the preferred method. Ogre doesn't have this feature.
+- [ ] You have applied a triangulate modifier. Some exporters other than Ogre, have an option to apply the modifier on export. This would be the preferred method.
 - [ ] You have UV Mapped your model. It isn't required by Mixamo, just for loading your models into jme.
 - [ ] Your models origin is at the base of the mesh.
 - [ ] You have your materials and textures done for your model. It isn't required by Mixamo, just for loading your model into jme.
-  - [ ] You have cleared the UV, Material and Texture buffers of unused images, materials and textures. It isn't required by Mixamo, just makes your models cleaner for jme.
-- [ ] There are no `Actions` stored in the `Dope Sheet Editor` buffer.  Open the `Action Editor` context, select the btn:[Browse Action to be linked] button to check there are no stored actions. See the links below.
+  - [ ] You have <<blender/blender_buffer_clearing#,cleared your buffers>>. It isn't required by Mixamo, just makes your models cleaner for jme.
 - [ ] You have applied the Location, Rotation, and Scale to your model.
 - [ ] *MOST IMPORTANT OF ALL*, in the `menu:Properties Panel[Scene Tab > Units Panel]` set the btn:[Unit of Measure] to Meters and the Length to Metric. Adobe uses centimeters for the FBX exporter and if this is not set the models scale will be unusual to say the least. JME3 uses 1 WU = whatever you determine but meters will make things easier for all aspects of your modeling. If you are doing this now, you may have to re-scale your model before proceeding.
 
 [TIP]
 ====
-See <<jme3/advanced/3d_models#blender-buffer-clearing#,Blender Buffer Clearing>> if you don't already know how to clear your buffers.
-
 See <<jme3/external/blender#,Creating assets in Blender3D>> for help on creating jME3 compatible models.
 ====
 
@@ -124,7 +120,6 @@ You can make small adjustments to the animation by using the sliders. The most c
 If you wish to add more animations, after the download, remove the animation by clicking on the btn:[X] button located next to the animations name. Add your new animation and when satisfied, download the new animation. Repeat as often as is neccessary.
 
 
-
 == Mixamo Download
 
 
@@ -192,38 +187,6 @@ Armatures::
 Mixamo sets the rotation mode of bones to `Quaternion` as is appropriate for preventing link:https://en.wikipedia.org/wiki/Gimbal_lock[`Gimbal Lock`]. Keep this in mind if you decide to modify your animation. Blender defaults to `XYZ Euler` so you will need to change this setting prior to inserting new keyframes.
 ====
 
-
-== Action Baking
-
-
-There are many ways to export or import files for jMonkeyEngine. If you plan to use a method other than `Ogre Exporter`, you may need to bake your actions. Baking is a destructive process so it is recommended that *after* completion of <<jme3/advanced/mixamo#creating-blender-animations#, Creating Blender Animations>>, test the animation in-game. If your animations are all messed up, try baking them or use a different exporter.
-
-If you find yourself in need of baking, the process is as follows.
-
-.  Using the animation file you created in the previous section, from the `Info` header, select `menu:File[Save Copy]`.
-.  Save the file somewhere other than the current folder. This will save you the effort of re-creating the animation file if you need it at some other time.
-.  In the `Info` header, change the `Default` screen layout to `Animation`.
-.  In the `Dope Sheet Editor`, change the `Dope Sheet` mode/context to `Action Editor`.
-.  Click the btn:[Action to be linked] button and select your action.
-.  In the `3d Viewport` header, select the armature.
-*  Depending on the mode selected choose:
-.. Object Mode: `menu:Object[Animation > Bake Action]`.
-.. Pose Mode: `menu:Pose[Animation > Bake Action]`.
-.  In the `Bake Action` dialog, deselect and set the settings as follows:
-Bake Action::
-- [ ] Selected Only
-- [x] Visual Keying
-- [x] Clear Constraints
-- [ ] Clear Parents
-- [ ] Overwrite Current
--  Bake Data = Pose
-.  When ready click btn:[OK].
-.  The `Linked Action` in the `Dope Sheet Editor` will change to the newly baked action and is named `Action`. Rename this to the name of the imported animation.
-.  Select the btn:[F] button to save the action.
-.  Save your file.
-.  Clear the old action from the `Linked Action` buffer. See <<jme3/advanced/3d_models#blender-buffer-clearing#,Blender Buffer Clearing>> for more information.
-
-
 == Creating The Rigged Animation File
 
 
@@ -290,24 +253,10 @@ NOTE: If the action is not visible, navigate to the `Dope Sheet Editor` and from
 . Save your file.
 
 
-== Ogre Export
+== Export
 
 
-Your rigged file is now `Ogre` export ready. Before we go any further, we will test our export to verify it's error free.
-
-.  In the `Info` header, change the layout to `Default`.
-.  kbd:[Shift] + btn:[LMB] select your armature and your model.
-.  From the `Info` header, select `menu:File[Export > Ogre3d]`.
-.  Select a destination path in your games `Assets` folder, usually the `Textures` folder.
-.  Make sure `Selected Only` is checked and `Only Deformable Bones` is unchecked.
-.  When you're happy with your export settings click btn:[Export Ogre].
-
-If your file exports clean, proceed with the next steps. If not, fix any errors before continuing.
-
-[TIP]
-====
-More on the `Ogre` settings can be found in <<jme3/advanced/3d_models#creating-models-and-scenes#,creating models and scenes>>.
-====
+Your rigged file is now ready to export. Export your model using one of the <<jme3/features#supported-external-file-types,Supported External File Types>> of your choice.
 
 
 == Appending Blender Animations
@@ -360,6 +309,8 @@ In the `NLA Editor` make sure no `Actions` are waiting to be pushed down into th
 In the `Dope Sheet Editor` make sure no `Actions` are selected in the `Action Editor` context. If one is selected, it will be sitting at the top of the `NLA Editor` stack.
 
 An `Action` that has not been pushed down into the `NLA Stack` will block your `NLA Strip` from playing.
+
+Some export methods bake your actions automatically on export, others don't. Test the animation in-game and if your animations are all messed up, try <<blender/blender_action_baking#,baking them>> or use a different exporter.
 ====
 
 Your NLA strip should look something like this:
