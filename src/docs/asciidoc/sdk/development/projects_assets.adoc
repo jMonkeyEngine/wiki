@@ -1,6 +1,6 @@
 = Projects and Assets
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :relfileprefix: ../../
 :imagesdir: ../..
@@ -39,7 +39,7 @@ assetDataObject.getLookup().lookup(AssetData.class)
 
 == New Asset File Types
 
-When you add a new file type for a model format or other asset file that can be loaded in jME3 you can start by using new file type template (New File→Module Development→File Type). Change the DataObject to extend AssetDataObject (general), SpatialAssetDataObject (some type of model) or BinaryModelDataObject (basically a j3o savable file). And possibly override the loadAsset and saveAsset methods which are used by the AssetData object to return the correct AssetKey type (needed for import properties to work).
+When you add a new file type for a model format or other asset file that can be loaded in jME3 you can start by using new file type template (`menu:New File[Module Development>File Type`]). Change the DataObject to extend AssetDataObject (general), SpatialAssetDataObject (some type of model) or BinaryModelDataObject (basically a j3o savable file). And possibly override the loadAsset and saveAsset methods which are used by the AssetData object to return the correct AssetKey type (needed for import properties to work).
 
 [source,java]
 ----
@@ -50,16 +50,16 @@ public class BlenderDataObject extends SpatialAssetDataObject {
 }
 ----
 
-An AssetManagerConfigurator class can be created to configure the assetManager of the projects and model importer to use the new asset type:
+//An AssetManagerConfigurator class can be created to configure the assetManager of the //projects and model importer to use the new asset type:
 
-[source,java]
-----
+//[source,java]
+//----
 
-@org.openide.util.lookup.ServiceProvider(service = AssetManagerConfigurator.class)
-public class BlenderAssetManagerConfigurator implements AssetManagerConfigurator {
-    public void prepareManager(AssetManager manager) {
-        manager.registerLoader(com.jme3.scene.plugins.blender.BlenderModelLoader.class, "blend");
-    }
-}
+//@org.openide.util.lookup.ServiceProvider(service = AssetManagerConfigurator.class)
+//public class BlenderAssetManagerConfigurator implements AssetManagerConfigurator {
+//    public void prepareManager(AssetManager manager) {
+//        manager.registerLoader(com.jme3.scene.plugins.blender.BlenderModelLoader.class, ///"blend");
+//    }
+//}
 
-----
+//----
