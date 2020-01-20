@@ -1,6 +1,6 @@
 = SpiderMonkey: Multi-Player Networking
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :keywords: documentation, network, spidermonkey
 :relfileprefix: ../../
@@ -21,16 +21,17 @@ Each Client keeps the Server informed about its player's moves and actions. The 
 The SpiderMonkey +++<abbr title="Application Programming Interface">API</abbr>+++ is a set of interfaces and helper classes in the 'com.jme3.network' package.  For most users, this package and the 'message' package is all they need to worry about.  (The 'base' and 'kernel' packages only come into play when implementing custom network transports or alternate client/server protocols, which is now possible).
 
 The SpiderMonkey +++<abbr title="Application Programming Interface">API</abbr>+++ assists you in creating a Server, Clients, and Messages. Once a Server instance is created and started, the Server accepts remote connections from Clients, and you can send and receive Messages. Client objects represent the client-side of the client-server connection.  Within the Server, these Client objects are referred to as HostedConnections. HostedConnections can hold application-defined client-specific session attributes that the server-side listeners and services can use to track player information, etc.
+
 [cols="3", options="header"]
 |===
 
-a| Seen from the Client 
-a| 
-a| Seen from the Server 
+a| Seen from the Client
+a|
+a| Seen from the Server
 
-a| com.jme3.network.Client 
-a| == 
-a| com.jme3.network.HostedConnection 
+a| com.jme3.network.Client
+a| ==
+a| com.jme3.network.HostedConnection
 
 |===
 
@@ -47,7 +48,7 @@ You can register several types of listeners to be notified of changes.
 
 === Creating a Server
 
-The game server is a “headless com.jme3.app.SimpleApplication:
+The game server is a "`headless`" com.jme3.app.SimpleApplication:
 
 [source,java]
 ----
@@ -118,10 +119,10 @@ public void simpleInitApp() {
    Client myClient = Network.connectToServer("localhost", 6143);
    myClient.start();
    ...
-
+}
 ----
 
-The server address can be in the format “localhost or “127.0.0.1 (for local testing), or an IP address of a remote host in the format “123.456.78.9”. In this example, we assume the server is running on the localhost.
+The server address can be in the format "`localhost`" or "`127.0.0.1`" (for local testing), or an IP address of a remote host in the format "`123.456.78.9`". In this example, we assume the server is running on the localhost.
 
 When you run this client, it connects to the server.
 
@@ -129,6 +130,7 @@ When you run this client, it connects to the server.
 === Getting Info About a Client
 
 The server refers to a connected client as com.jme3.network.HostedConnection objects. The server can get info about clients as follows:
+
 [cols="2", options="header"]
 |===
 
@@ -147,17 +149,18 @@ a|Server gets the first (0), second (1), etc, connected HostedConnection object 
 |===
 
 Your game can define its own game data based on whatever criteria you want, typically these include player ID and state. If the server needs to look up player/client-specific information, you can store this information directly on the HostedConnection object. The following examples read and write a custom Java object `MyState` in the HostedConnection object `conn`:
+
 [cols="2", options="header"]
 |===
 
 a|Accessor
 a|Purpose
 
-a| conn.setAttribute(“MyState, new MyState()); 
-a| Server can change an attribute of the HostedConnection. 
+a| conn.setAttribute( "MyState", new MyState());
+a| Server can change an attribute of the HostedConnection.
 
-a| MyState state = conn.getAttribute(“MyState)
-a| Server can read an attribute of the HostedConnection. 
+a| MyState state = conn.getAttribute("MyState");
+a| Server can read an attribute of the HostedConnection.
 
 |===
 
@@ -181,7 +184,12 @@ public class HelloMessage extends AbstractMessage {
 
 ----
 
-You must register each message type to the com.jme3.network.serializing.Serializer, in both server and client!
+You register message types to the com.jme3.network.serializing.Serializer only on the server! SpiderMonkey has an automatic registering mechanism that will register the messages on the client the first time it connects to the server.
+
+[WARNING]
+====
+Messages must be registered after server creation, and before it is started. NOT before the server is created.
+====
 
 [source,java]
 ----
@@ -208,6 +216,7 @@ public class ClientListener implements MessageListener<Client> {
       System.out.println("Client #"+source.getId()+" received: '"+helloMessage.getSomething()+"'");
     } // else...
   }
+}
 ----
 
 For each message type, register a client listener to the client.
@@ -229,9 +238,10 @@ public class ServerListener implements MessageListener<HostedConnection> {
     if (message instanceof HelloMessage) {
       // do something with the message
       HelloMessage helloMessage = (HelloMessage) message;
-      System.out.println("Server received '" +helloMessage.getSomething() +"' from client #"+source.getId() );
+      System.out.println("Server received '" +helloMessage.getSomething() +"' from client #"+source.getId());
     } // else....
   }
+}
 ----
 
 For each message type, register a server listener to the server:
@@ -266,7 +276,7 @@ Message message = new HelloMessage("Welcome!");
 myServer.broadcast(message);
 ----
 
-Or the server can send the message to a specific subset of clients (e.g. to HostedConnection conn1, conn2, and conn3): 
+Or the server can send the message to a specific subset of clients (e.g. to HostedConnection conn1, conn2, and conn3):
 
 [source,java]
 ----
@@ -339,7 +349,7 @@ You must override the server's destroy() method to close the connection when the
 
 === Kicking a Client
 
-The server can kick a HostedConnection to make it disconnect. You should provide a String with further info (an explanation to the user what happened, e.g. “Shutting down for maintenance) for the server to send along. This info message can be used (displayed to the user) by a ClientStateListener. (See below)
+The server can kick a HostedConnection to make it disconnect. You should provide a String with further info (an explanation to the user what happened, e.g. "`Shutting`" down for maintenance) for the server to send along. This info message can be used (displayed to the user) by a ClientStateListener. (See below)
 
 [source,java]
 ----
@@ -365,14 +375,14 @@ The ClientStateListener when it receives a network exception applies the default
 [cols="2", options="header"]
 |===
 
-a| ClientStateListener interface method 
-a| Purpose 
+a| ClientStateListener interface method
+a| Purpose
 
-a| public void clientConnected(Client c){} 
-a| Implement here what happens as soon as this client has fully connected to the server. 
+a| public void clientConnected(Client c){}
+a| Implement here what happens as soon as this client has fully connected to the server.
 
-a| public void clientDisconnected(Client c, DisconnectInfo info){} 
-a| Implement here what happens after the server kicks this client. For example, display the DisconnectInfo to the user. 
+a| public void clientDisconnected(Client c, DisconnectInfo info){}
+a| Implement here what happens after the server kicks this client. For example, display the DisconnectInfo to the user.
 
 |===
 
@@ -390,18 +400,18 @@ The com.jme3.network.ConnectionListener notifies the Server whenever new HostedC
 [cols="2", options="header"]
 |===
 
-a| ConnectionListener interface method 
-a| Purpose 
+a| ConnectionListener interface method
+a| Purpose
 
-a| public void connectionAdded(Server s, HostedConnection c){} 
-a| Implemenent here what happens after a new HostedConnection has joined the Server. 
+a| public void connectionAdded(Server s, HostedConnection c){}
+a| Implemenent here what happens after a new HostedConnection has joined the Server.
 
-a| public void connectionRemoved(Server s, HostedConnection c){} 
-a| Implement here what happens after a HostedConnection has left. E.g. a player has quit the game and the server removes his character. 
+a| public void connectionRemoved(Server s, HostedConnection c){}
+a| Implement here what happens after a HostedConnection has left. E.g. a player has quit the game and the server removes his character.
 
 |===
 
-First implement the ConnectionListener interface in the Server class. Then register it to myServer in MyGameServer's simpleInitApp() method. 
+First implement the ConnectionListener interface in the Server class. Then register it to myServer in MyGameServer's simpleInitApp() method.
 
 [source,java]
 ----
@@ -423,11 +433,11 @@ If you do override this, make sure you add a mechanic that can close the client 
 [cols="2", options="header"]
 |===
 
-a| ErrorListener interface method 
-a| Purpose 
+a| ErrorListener interface method
+a| Purpose
 
-a| public void handleError(Client c, Throwable t){} 
-a| Implemenent here what happens after a exception affects the network . 
+a| public void handleError(Client c, Throwable t){}
+a| Implemenent here what happens after a exception affects the network .
 
 |===
 
@@ -467,7 +477,7 @@ message1.setReliable(true); // TCP
 message2.setReliable(false); // UDP
 ----
 
-*  Choose reliable and slow transport for messages, if you want to make certain the message is delivered (resent) when lost, and if the order of a series of messages is relevant. E.g. game actions such as “1. wield weapon, 2. attack, 3. dodge.
+*  Choose reliable and slow transport for messages, if you want to make certain the message is delivered (resent) when lost, and if the order of a series of messages is relevant. E.g. game actions such as "`1`". wield weapon, 2. attack, 3. dodge.
 *  Choose unreliable and fast transport for messages if the next message makes any previously delayed or lost message obsolete and synchronizes the state again. E.g. a series of new locations while walking.
 
 
