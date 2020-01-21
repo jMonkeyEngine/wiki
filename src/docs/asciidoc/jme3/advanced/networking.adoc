@@ -73,13 +73,13 @@ Create a com.jme3.network.Server in the `simpleInitApp()` method and specify a c
 
 [source,java]
 ----
-
-  public void simpleInitApp() {
-    ...
-    Server myServer = Network.createServer(6143);
-    myServer.start();
-    ...
-  }
+@Override
+public void simpleInitApp() {
+  ...
+  Server myServer = Network.createServer(6143);
+  myServer.start();
+  ...
+}
 
 ----
 
@@ -184,18 +184,55 @@ public class HelloMessage extends AbstractMessage {
 
 ----
 
-You register message types to the com.jme3.network.serializing.Serializer only on the server! SpiderMonkey has an automatic registering mechanism that will register the messages on the client the first time it connects to the server.
-
-[WARNING]
-====
-Messages must be registered after server creation, and before it is started. NOT before the server is created.
-====
+You then register message types to the com.jme3.network.serializing.Serializer only on the server. SpiderMonkey has an automatic registering mechanism that will register the messages on the client the first time it connects to the server.
 
 [source,java]
 ----
 Serializer.registerClass(HelloMessage.class);
 ----
 
+[WARNING]
+====
+Messages must be registered after server creation, and before it's started. NOT before the server is created.
+====
+
+For this example, we have a simple message initialization method.
+
+[source, java]
+----
+public static void initializeSerializables() {
+    Serializer.registerClass(NetworkMessage.class);
+    Serializer.registerClass(PosAndDirMessage.class);
+    Serializer.registerClass(PosMessage.class);
+}
+----
+
+The method is located in a class we created for messaging, that is common to both the client and server and is named `NetCommon`. We then call this method from `simpleInitApp` after creating but BEFORE starting the server as shown.
+
+[source, java]
+----
+@Override
+public void simpleInitApp() {
+
+    ...
+        Server myServer = Network.createServer(6143);
+        NetCommon.initializeSerializables();
+        server.start();
+    ...
+}
+----
+
+Note that the automatic serialization setup is optional… but on by default. If your game does not follow these setup guidelines and is otherwise too complicated to fix, it’s simply a matter of removing (unregistering) the serialization service link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/1c37d5a92dad24b586cc2e0200c0baecd0e907df/jme3-networking/src/main/java/com/jme3/network/service/serializer/ServerSerializerRegistrationsService.java#L48[ServerSerializerRegistrationsService].
+
+[source, java]
+----
+ServerSerializerRegistrationsService ssr = server.getServices().getService( ServerSerializerRegistrationsService.class );
+server.getServices().removeService( ssr );
+----
+
+Then you can do every little thing yourself in exactly the same order by registering messages on both the client and server.
+
+It's highly recommend you use automatic serialization though.
 
 === Responding to Messages
 
