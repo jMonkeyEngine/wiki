@@ -200,14 +200,14 @@ For this example, we have a simple message initialization method.
 
 [source, java]
 ----
-public static void initializeSerializables() {
+public void initializeSerializables() {
     Serializer.registerClass(NetworkMessage.class);
     Serializer.registerClass(PosAndDirMessage.class);
     Serializer.registerClass(PosMessage.class);
 }
 ----
 
-The method is located in a class we created for messaging, that is common to both the client and server and is named `NetMessaging`. We then call this method from `simpleInitApp` after creating but BEFORE starting the server as shown.
+The method is is referencing message classes that reside in a jar available to both the client and server. We then call this method from `simpleInitApp` after creating but BEFORE starting the server as shown.
 
 [source, java]
 ----
@@ -216,7 +216,7 @@ public void simpleInitApp() {
 
     ...
         Server myServer = Network.createServer(6143);
-        NetMessaging.initializeSerializables();
+        initializeSerializables();
         server.start();
     ...
 }
