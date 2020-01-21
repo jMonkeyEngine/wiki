@@ -17,12 +17,13 @@
 }</code></pre></div></div>
 <div class="admonitionblock tip"><table><tr><td class="icon"><i class="fa icon-tip" title="Tip"></i></td><td class="content"><div class="paragraph"><p>A <code>Headless</code> SimpleApplication executes the simpleInitApp() method and runs the update loop normally. But the application does not open a window, and it does not listen to user input. This is the typical behavior for a server application.</p></div></td></tr></table></div>
 <div class="paragraph"><p>Create a com.jme3.network.Server in the <code>simpleInitApp()</code> method and specify a communication port, for example 6143.</p></div>
-<div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">  <span class="directive">public</span> <span class="type">void</span> simpleInitApp() {
-    ...
-    Server myServer = Network.createServer(<span class="integer">6143</span>);
-    myServer.start();
-    ...
-  }</code></pre></div></div>
+<div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Override</span>
+<span class="directive">public</span> <span class="type">void</span> simpleInitApp() {
+  ...
+  Server myServer = Network.createServer(<span class="integer">6143</span>);
+  myServer.start();
+  ...
+}</code></pre></div></div>
 <div class="paragraph"><p>When you run this app on a host, the server is ready to accept clients. Let&#8217;s create a client next.</p></div></div>
 <div class="sect2"><h3 id="creating-a-client">Creating a Client</h3><div class="paragraph"><p>A game client is a standard com.jme3.app.SimpleApplication.</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">ClientMain</span> <span class="directive">extends</span> SimpleApplication {
@@ -52,9 +53,30 @@
   <span class="directive">public</span> HelloMessage() {}    <span class="comment">// empty constructor</span>
   <span class="directive">public</span> HelloMessage(<span class="predefined-type">String</span> s) { hello = s; } <span class="comment">// custom constructor</span>
 }</code></pre></div></div>
-<div class="paragraph"><p>You register message types to the com.jme3.network.serializing.Serializer only on the server! SpiderMonkey has an automatic registering mechanism that will register the messages on the client the first time it connects to the server.</p></div>
-<div class="admonitionblock warning"><table><tr><td class="icon"><i class="fa icon-warning" title="Warning"></i></td><td class="content"><div class="paragraph"><p>Messages must be registered after server creation, and before it is started. NOT before the server is created.</p></div></td></tr></table></div>
-<div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">Serializer.registerClass(HelloMessage.class);</code></pre></div></div></div>
+<div class="paragraph"><p>You then register message types to the com.jme3.network.serializing.Serializer only on the server. SpiderMonkey has an automatic registering mechanism that will register the messages on the client the first time it connects to the server.</p></div>
+<div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">Serializer.registerClass(HelloMessage.class);</code></pre></div></div>
+<div class="admonitionblock warning"><table><tr><td class="icon"><i class="fa icon-warning" title="Warning"></i></td><td class="content"><div class="paragraph"><p>Messages must be registered after server creation, and before it&#8217;s started. NOT before the server is created.</p></div></td></tr></table></div>
+<div class="paragraph"><p>For this example, we have a simple message initialization method.</p></div>
+<div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> initializeSerializables() {
+    Serializer.registerClass(NetworkMessage.class);
+    Serializer.registerClass(PosAndDirMessage.class);
+    Serializer.registerClass(PosMessage.class);
+}</code></pre></div></div>
+<div class="paragraph"><p>The method is located in a class we created for messaging, that is common to both the client and server and is named <code>NetCommon</code>. We then call this method from <code>simpleInitApp</code> after creating but BEFORE starting the server as shown.</p></div>
+<div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Override</span>
+<span class="directive">public</span> <span class="type">void</span> simpleInitApp() {
+
+    ...
+        Server myServer = Network.createServer(<span class="integer">6143</span>);
+        NetCommon.initializeSerializables();
+        server.start();
+    ...
+}</code></pre></div></div>
+<div class="paragraph"><p>Note that the automatic serialization setup is optional… but on by default. If your game does not follow these setup guidelines and is otherwise too complicated to fix, it’s simply a matter of removing (unregistering) the serialization service <a href="https://github.com/jMonkeyEngine/jmonkeyengine/blob/1c37d5a92dad24b586cc2e0200c0baecd0e907df/jme3-networking/src/main/java/com/jme3/network/service/serializer/ServerSerializerRegistrationsService.java#L48">ServerSerializerRegistrationsService</a>.</p></div>
+<div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">ServerSerializerRegistrationsService ssr = server.getServices().getService( ServerSerializerRegistrationsService.class );
+server.getServices().removeService( ssr );</code></pre></div></div>
+<div class="paragraph"><p>Then you can do every little thing yourself in exactly the same order by registering messages on both the client and server.</p></div>
+<div class="paragraph"><p>It&#8217;s highly recommend you use automatic serialization though.</p></div></div>
 <div class="sect2"><h3 id="responding-to-messages">Responding to Messages</h3><div class="paragraph"><p>After a Message was received, a Listener responds to it. The listener can access fields of the message, and send messages back, start new threads, etc. There are two listeners, one on the server, one on the client. For each message type, you implement the responses in either Listeners’ <code>messageReceived()</code> method.</p></div>
 <div class="sect3"><h4 id="clientlistener-java">ClientListener.java</h4><div class="paragraph"><p>Create one ClientListener.java and make it extend <code>com.jme3.network.MessageListener</code>.</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">ClientListener</span> <span class="directive">implements</span> MessageListener&lt;Client&gt; {
@@ -143,7 +165,7 @@ message2.setReliable(<span class="predefined-constant">false</span>); <span clas
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">app.enqueue(callable);</code></pre></div></div>
 <div class="paragraph"><p>Learn more about using <a href="../../jme3/advanced/multithreading.html">multithreading</a> in jME3 here.</p></div>
 <div class="paragraph"><p>For general advice, see the articles <a href="https://developer.valvesoftware.com/wiki/Source_Multiplayer_Networking">MultiPlayer Networking</a> and <a href="https://developer.valvesoftware.com/wiki/Latency_Compensating_Methods_in_Client/Server_In-game_Protocol_Design_and_Optimization">Latency Compensating Methods in Client/Server In-game Protocol Design and Optimization</a> by the Valve Developer Community.</p></div></div></div>
-<div class="sect1"><h2 id="troubleshooting">Troubleshooting</h2><div class="sectionbody"><div class="paragraph"><p>If you have set up a server in your home network, and the game clients cannot reach the server from the outside, it&#8217;s time to learn about <a href="http://portforward.com/">port forwarding</a>.</p></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2020-01-20 22:16:07 +00:00</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
+<div class="sect1"><h2 id="troubleshooting">Troubleshooting</h2><div class="sectionbody"><div class="paragraph"><p>If you have set up a server in your home network, and the game clients cannot reach the server from the outside, it&#8217;s time to learn about <a href="http://portforward.com/">port forwarding</a>.</p></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2020-01-21 16:49:14 +00:00</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
   apiKey: 'a736b6d93de805e26ec2f49b55013fbd',
   indexName: 'jmonkeyengine',
   inputSelector: '#doc-search',
