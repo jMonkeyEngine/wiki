@@ -93,7 +93,6 @@ src/</code></pre></div></div>
     player = <span class="keyword">new</span> CharacterControl(capsuleShape, <span class="float">0.05f</span>);
     player.setJumpSpeed(<span class="integer">20</span>);
     player.setFallSpeed(<span class="integer">30</span>);
-    player.setPhysicsLocation(<span class="keyword">new</span> Vector3f(<span class="integer">0</span>, <span class="integer">10</span>, <span class="integer">0</span>));
 
     <span class="comment">// We attach the scene and the player to the rootnode and the physics space,</span>
     <span class="comment">// to make them appear in the game world.</span>
@@ -101,10 +100,11 @@ src/</code></pre></div></div>
     bulletAppState.getPhysicsSpace().add(landscape);
     bulletAppState.getPhysicsSpace().add(player);
 
-    <span class="comment">// You can change the gravity of individual physics objects after they are</span>
-    <span class="comment">// added to the PhysicsSpace.</span>
+    <span class="comment">// You can change the gravity of individual physics objects before or after</span>
+    <span class="comment">//they are added to the PhysicsSpace but it must be set before MOVING the</span>
+    <span class="comment">//PhysicsLocation.</span>
     player.setGravity(<span class="keyword">new</span> Vector3f(<span class="integer">0</span>,-<span class="float">30f</span>,<span class="integer">0</span>));
-
+    player.setPhysicsLocation(<span class="keyword">new</span> Vector3f(<span class="integer">0</span>, <span class="integer">10</span>, <span class="integer">0</span>));
   }
 
   <span class="directive">private</span> <span class="type">void</span> setUpLight() {
@@ -223,7 +223,7 @@ src/</code></pre></div></div>
 <div class="paragraph"><p>So let&#8217;s set up collision detection for the first-person player.</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">    CapsuleCollisionShape capsuleShape = <span class="keyword">new</span> CapsuleCollisionShape(<span class="float">1.5f</span>, <span class="float">6f</span>, <span class="integer">1</span>);</code></pre></div></div>
 <div class="paragraph"><p>Again, you create a CollisionShape: This time you choose a CapsuleCollisionShape, a cylinder with a rounded top and bottom. This shape is optimal for a person: It&#8217;s tall and the roundness helps to get stuck less often on obstacles.</p></div>
-<div class="ulist"><ul><li><p>Supply the CapsuleCollisionShape constructor with the desired radius and height of the bounding capsule to fit the shape of your character. In this example the character is 2*1.5f units wide, and 6f units tall.</p></li><li><p>The final integer argument specifies the orientation of the cylinder: 1 is the Y-axis, which fits an upright person. For animals which are longer than high you would use 0 or 2 (depending on how it is rotated).</p></li></ul></div>
+<div class="ulist"><ul><li><p>Supply the CapsuleCollisionShape constructor with the desired radius and height of the bounding capsule to fit the shape of your character. In this example the character is 1.5f units wide, and 6f units tall.</p></li><li><p>The final integer argument specifies the orientation of the cylinder: 1 is the Y-axis, which fits an upright person. For animals which are longer than high you would use 0 or 2 (depending on how it is rotated).</p></li></ul></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">    player = <span class="keyword">new</span> CharacterControl(capsuleShape, <span class="float">0.05f</span>);</code></pre></div></div>
 <div class="admonitionblock tip"><table><tr><td class="icon"><i class="fa icon-tip" title="Tip"></i></td><td class="content"><div class="paragraph"><p>&#8220;Does that CollisionShape make me look fat?&#8221; If you ever get confusing physics behaviour, remember to have a look at the collision shapes. Add the following line after the bulletAppState initialization to make the shapes visible:</p></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay highlight"><code data-lang="java">bulletAppState.setDebugEnabled(<span class="predefined-constant">true</span>);</code></pre></div></div></td></tr></table></div>
@@ -309,7 +309,7 @@ You learned to speed up the physics calculations by using the CollisionShapeFact
 <div class="paragraph"><p>Terrains are another type of scene in which you will want to walk around. Let&#8217;s proceed with learning <a href="../../jme3/beginner/hello_terrain.html">how to generate terrains</a> now.</p></div>
 <hr>
 <div class="paragraph"><p>Related info:</p></div>
-<div class="ulist"><ul><li><p>How to load models and scenes: <a href="../../jme3/beginner/hello_asset.html">Hello Asset</a>, <a href="../../sdk/scene_explorer.html">Scene Explorer</a>, <a href="../../sdk/scene_composer.html">Scene Composer</a></p></li><li><p><a href="../../jme3/advanced/terrain_collision.html">Terrain Collision</a></p></li><li><p>To learn more about complex physics scenes, where several mobile physical objects bump into each other, read <a href="../../jme3/beginner/hello_physics.html">Hello Physics</a>.</p></li><li><p>FYI, there are simpler collision detection solutions without physics, too. Have a look at <a href="https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/collision/TestTriangleCollision.java">jme3test.collision.TestTriangleCollision.java</a>.</p></li></ul></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2020-01-21 17:58:37 +00:00</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
+<div class="ulist"><ul><li><p>How to load models and scenes: <a href="../../jme3/beginner/hello_asset.html">Hello Asset</a>, <a href="../../sdk/scene_explorer.html">Scene Explorer</a>, <a href="../../sdk/scene_composer.html">Scene Composer</a></p></li><li><p><a href="../../jme3/advanced/terrain_collision.html">Terrain Collision</a></p></li><li><p>To learn more about complex physics scenes, where several mobile physical objects bump into each other, read <a href="../../jme3/beginner/hello_physics.html">Hello Physics</a>.</p></li><li><p>FYI, there are simpler collision detection solutions without physics, too. Have a look at <a href="https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/collision/TestTriangleCollision.java">jme3test.collision.TestTriangleCollision.java</a>.</p></li></ul></div></div></div></div><div id="footer"><div id="footer-text">Version <br>Last updated 2020-02-01 18:59:07 +00:00</div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script><script>docsearch({
   apiKey: 'a736b6d93de805e26ec2f49b55013fbd',
   indexName: 'jmonkeyengine',
   inputSelector: '#doc-search',
