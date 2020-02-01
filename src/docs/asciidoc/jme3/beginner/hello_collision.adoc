@@ -126,8 +126,8 @@ public class HelloCollision extends SimpleApplication
     bulletAppState.getPhysicsSpace().add(landscape);
     bulletAppState.getPhysicsSpace().add(player);
 
-    // You can change the gravity of individual physics objects before or after 
-    //they are added to the PhysicsSpace but it must be set before MOVING the
+    // You can change the gravity of individual physics objects before or after
+    //they are added to the PhysicsSpace, but it must be set before MOVING the
     //PhysicsLocation.
     player.setGravity(new Vector3f(0,-30f,0));
     player.setPhysicsLocation(new Vector3f(0, 10, 0));
@@ -366,14 +366,6 @@ Now you use the CollisionShape to create a `CharacterControl` that represents th
 
     player.setJumpSpeed(20);
     player.setFallSpeed(30);
-
-    //Some methods used for setting gravity related variables were deprecated in
-    //the 3.2 version of the engine. Choose the method that matches your version
-    //of the engine.
-    // < jME3.2
-    // player.setGravity(30f);
-
-    // >= jME3.2
     player.setGravity(new Vector3f(0,-30f,0));
 
 ----
@@ -388,6 +380,20 @@ Apart from step height and character size, the `CharacterControl` lets you confi
 ----
 
 Finally we put the player in its starting position and update its state – remember to use `setPhysicsLocation()` instead of `setLocalTranslation()` now, since you are dealing with a physical object.
+
+[IMPORTANT]
+====
+You can set the gravity before or after adding the object to the physics space,
+but gravity must be set BEFORE moving the physics space itself.
+
+[source, java]
+----
+player.setGravity(new Vector3f(0,-30f,0));
+player.setPhysicsLocation(new Vector3f(0, 10, 0));
+----
+
+====
+
 
 
 === PhysicsSpace
