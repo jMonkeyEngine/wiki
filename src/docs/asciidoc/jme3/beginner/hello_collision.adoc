@@ -119,7 +119,6 @@ public class HelloCollision extends SimpleApplication
     player = new CharacterControl(capsuleShape, 0.05f);
     player.setJumpSpeed(20);
     player.setFallSpeed(30);
-    player.setPhysicsLocation(new Vector3f(0, 10, 0));
 
     // We attach the scene and the player to the rootnode and the physics space,
     // to make them appear in the game world.
@@ -127,10 +126,11 @@ public class HelloCollision extends SimpleApplication
     bulletAppState.getPhysicsSpace().add(landscape);
     bulletAppState.getPhysicsSpace().add(player);
 
-    // You can change the gravity of individual physics objects after they are
-    // added to the PhysicsSpace.
+    // You can change the gravity of individual physics objects before or after 
+    //they are added to the PhysicsSpace but it must be set before MOVING the
+    //PhysicsLocation.
     player.setGravity(new Vector3f(0,-30f,0));
-
+    player.setPhysicsLocation(new Vector3f(0, 10, 0));
   }
 
   private void setUpLight() {
@@ -335,7 +335,7 @@ So let's set up collision detection for the first-person player.
 
 Again, you create a CollisionShape: This time you choose a CapsuleCollisionShape, a cylinder with a rounded top and bottom. This shape is optimal for a person: It's tall and the roundness helps to get stuck less often on obstacles.
 
-*  Supply the CapsuleCollisionShape constructor with the desired radius and height of the bounding capsule to fit the shape of your character. In this example the character is 2*1.5f units wide, and 6f units tall.
+*  Supply the CapsuleCollisionShape constructor with the desired radius and height of the bounding capsule to fit the shape of your character. In this example the character is 1.5f units wide, and 6f units tall.
 *  The final integer argument specifies the orientation of the cylinder: 1 is the Y-axis, which fits an upright person. For animals which are longer than high you would use 0 or 2 (depending on how it is rotated).
 
 [source,java]
