@@ -161,10 +161,39 @@ Also check out these videos and resources:
 *  link:https://docs.google.com/fileview?id=0B9hhZie2D-fENDBlZDU5MzgtNzlkYi00YmQzLTliNTQtNzZhYTJhYjEzNWNk&hl=en[Exporting OgreXML scenes from Blender 2.49 to jME]
 
 
+=== Action Baking
+
+There are many 3D model <<jme3/features.html#supported-external-file-types#,Supported External File Types>> for jMonkeyEngine. Some of them bake your actions automatically on export, others don't. Baking is a destructive process so it is recommended that you test the animation in-game first. If your animations are all messed up, try baking them or use a different exporter.
+
+If you find yourself in need of baking, the process is as follows.
+
+.  From the Blender `Info` header, select `menu:File[Save Copy]`.
+.  Save the file somewhere other than the current folder. This will save you the effort of re-creating the animation file if you need it at some other time.
+.  In the `Info` header, change the `Default` screen layout to `Animation`.
+.  In the `Dope Sheet Editor`, change the `Dope Sheet` mode/context to `Action Editor`.
+.  Click the btn:[Action to be linked] button and select your action.
+.  In the `3d Viewport` header, select the armature.
+*  Depending on the mode selected choose:
+.. Object Mode: `menu:Object[Animation > Bake Action]`.
+.. Pose Mode: `menu:Pose[Animation > Bake Action]`.
+.  In the `Bake Action` dialog, deselect and set the settings as follows:
+Bake Action::
+- [ ] Selected Only
+- [x] Visual Keying
+- [x] Clear Constraints
+- [ ] Clear Parents
+- [ ] Overwrite Current
+-  Bake Data = Pose
+.  When ready click btn:[OK].
+.  The `Linked Action` in the `Dope Sheet Editor` will change to the newly baked action and is named `Action`. Rename this to the name of the imported animation.
+.  Select the btn:[F] button to save the action.
+.  Save your file.
+.  Clear the old action from the `Linked Action` buffer. See <<jme3/external/blender/blender_buffer_clearing#,Blender Buffer Clearing>> for more information.
+   
+
 == Normal Map baking
 
 Models for live rendering should have a low polygon count. To increase the perceived detail of a model, Normal maps are commonly used in games. This tutorial will show how to create a Normal map from a "`HighPoly`" version of your model that you can apply to a "`LowPoly`" version of the model in your game.
-
 
 === Blender Modeling LowPoly & HighPoly
 
