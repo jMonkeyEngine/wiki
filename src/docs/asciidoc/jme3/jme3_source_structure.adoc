@@ -36,13 +36,13 @@ a| src/core-plugins
 a| Important asset plugins, such as .j3o model loader, .obj loader, font loader, basic image loaders.
 
 <a| src/desktop
-<a| Must be included if deploying on desktop, applet or web start. +++<strike>Android</strike>+++
+<a| Must be included if deploying on desktop, applet or web start. *Exclude Android*
 
 <a| src/android
-a| Must be included if deploying on the Android platform. +++<strike>Desktop</strike>+++
+a| Must be included if deploying on the Android platform. *Exclude Desktop*
 
 <a| src/lwjgl
-a| LWJGL OpenGL display implementation. +++<strike>Android</strike>+++
+a| LWJGL OpenGL display implementation. *Exclude Android*
 
 |===
 
@@ -54,14 +54,14 @@ a| LWJGL OpenGL display implementation. +++<strike>Android</strike>+++
 a| Source Package
 a| Description
 
-<a| pass:[*] src/jbullet
-a| Game Physics Engine, based on the jBullet framework. Desktop only. +++<strike>Bullet</strike>+++
+<a| +*+ src/jbullet
+a| Game Physics Engine, based on the jBullet framework. Desktop only. *Exclude Bullet*
 
-<a| pass:[*] src/bullet
-a| Game Physics Engine, based on the native Bullet framework. Needs jme3-bullet-native or jme3-bullet-native-android (beta) +++<strike>jBullet</strike>+++
+<a| +*+ src/bullet
+a| Game Physics Engine, based on the native Bullet framework. Needs jme3-bullet-native or jme3-bullet-native-android (beta) *Exclude jBullet*
 
 a| src/bullet-native
-a| Native Bullet implementation pass:[C++] classes. +++<strike>jBullet</strike>+++
+a| Native Bullet implementation pass:[C++] classes. *Exclude jBullet*
 
 a| src/jme3-bullet-native-android
 a| Native libraries needed for bullet (not jbullet) on android.
@@ -70,7 +70,17 @@ a| Native libraries needed for bullet (not jbullet) on android.
 
 [NOTE]
 ====
-pass:[*] Only one of the physics libraries can be used at a time as they replace each other.
++*+ Only one of the physics libraries can be used at a time as they replace each other.
+
+* jbullet
+
+or
+
+* bullet 
+** with a single “natives” library
+*** bullet-native
+*** jme3-bullet-native-android
+
 ====
 
 
