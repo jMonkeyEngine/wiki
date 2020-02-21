@@ -241,7 +241,7 @@ You already know that SimpleApplication is the base class for all jME3 games. Yo
 
 You initialize a few private fields:
 
-*  The BulletAppState gives this SimpleApplication access to physics features (such as collision detection) supplied by jME3's jBullet integration
+*  The BulletAppState gives this SimpleApplication access to physics features (such as collision detection) supplied by jME3's Bullet integration
 *  The Spatial sceneModel is for loading an OgreXML model of a town.
 *  You need a RigidBodyControl to make the town model solid.
 *  The (invisible) first-person player is represented by a CharacterControl object.
@@ -273,7 +273,11 @@ As usual, you initialize the game in the `simpleInitApp()` method.
 
 === The Physics-Controlled Scene
 
-The first thing you do in every physics game is create a BulletAppState object. It gives you access to jME3's jBullet integration which handles physical forces and collisions.
+Currently, jMonkeyEngine has two versions of link:https://pybullet.org/wordpress/[Bullet Physics]. A java port, link:http://jbullet.advel.cz/[jBullet], and link:https://en.wikipedia.org/wiki/Java_Native_Interface[JNI] (native) implementation. Although both accomplish the same goal of adding physics to your game, how you interact with each is quite different. This tutorial and it's examples use the JNI (native) implementation of physics. Which you choose is up to you.
+
+See the <<jme3/jme3_source_structure#physics, source structure>> page for details on how to add each library to your game.
+
+How you initialize each is the same, only the methods used for manipulating objects is different. The first thing you do in every physics game is create a BulletAppState object. It gives you access to the jME3 Bullet integration which handles physical forces and collisions.
 
 [source,java]
 ----
@@ -370,7 +374,7 @@ Now you use the CollisionShape to create a `CharacterControl` that represents th
 
 ----
 
-Apart from step height and character size, the `CharacterControl` lets you configure jumping, falling, and gravity speeds. Adjust the values to fit your game situation.
+Apart from step height and character size, the `CharacterControl` lets you configure jumping, falling, and gravity speeds. Adjust the values to fit your game situation. There are some important nuances when setting these variable that are explained in greater detail in the <<jme3/beginner/hello_collision#2-onaction,onAction()>> topic later.
 
 [source,java]
 ----
@@ -468,7 +472,28 @@ Remember that this class implements the `ActionListener` interface, so you can c
 
 The only movement that you do not have to implement yourself is the jumping action. The call `player.jump(new Vector3f(0,20f,0))` is a special method that handles a correct jumping motion for your `PhysicsCharacterNode`.
 
-For all other directions: Every time the user presses one of the WASD keys, you _keep track_ of the direction the user wants to go, by storing this info in four directional Booleans. No actual walking happens here yet. The update loop is what acts out the directional info stored in the booleans, and makes the player move, as shown in the next code snippet:
+Remember when we set this variable earlier?
+
+[source, java]
+----
+player.setJumpSpeed(20);
+----
+
+Here, `player.setJumpSpeed(20)` has no visible effect because its value is overridden when `jump(new Vector3f(0,20f,0)` is invoked in the onAction(). If you were to replace `jump(new Vector3f(0,20f,0)` with `jump(new Vector3f(0f,60f,0f))`, then the player jumps faster and higher, using the jump speed, as would be expected.
+
+If you were using the "`jBullet`" library for physics, you would manipulate the jump speed and calling jump would have the same effect.
+
+[source, java]
+----
+player.setJumpSpeed(60);
+player.jump();
+----
+
+This is just one of the differences you see when using "`jBullet`" vs the "`Native`" bullet implementations.
+
+Another is when using the `setFallSpeed()` method. This sets the maximum fall speed, what’s sometimes called the terminal velocity. In the town setting, the easiest way to fall faster is to supply larger values to both setFallSpeed() and jump(). For instance, `with setFallSpeed(300f)` and `jump(new Vector3f(0,200f,0))`, the player reaches a speed of 200 wu/second just before landing. Using jBullet, just setting the fall speed accomplishes the same effect.
+
+For all other directions: Every time the user presses one of the WASD keys, you _keep track_ of the direction the user wants to go, by storing this info in four directional Booleans. No actual walking happens here yet. The update loop is what acts out the directional info stored in the booleans, and makes the player move, as shown in the next topic, "`setWalkDirection()`".
 
 
 === 3. setWalkDirection()
