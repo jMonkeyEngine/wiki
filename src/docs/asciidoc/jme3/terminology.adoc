@@ -1,7 +1,7 @@
 = 3D Game Development Terminology
 :author:
-:revnumber:
-:revdate: 2016/03/17 20:48
+:revnumber: 2.0
+:revdate: 2-28-2020
 :relfileprefix: ../
 :imagesdir: ..
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
@@ -225,6 +225,25 @@ image::wp-uploads/neotexture-2.jpg[neotexture-2.jpg,width="380",height="189",ali
 
 See also: link:http://en.wikibooks.org/wiki/Blender_3D:_Noob_to_Pro/Every_Material_Known_to_Man[Blender: Every Material Known to Man]
 
+
+=== Physically Based Rendering Textures (PBR)
+
+[quote, Wikipedia]
+Physically based rendering is an approach in computer graphics that seeks to render graphics in a way that more accurately models the flow of light in the real world.
+
+To simplify, PBR attempts to deliver photo realistic images based off the texture of a material and how light becomes more reflective the more you view it at an angle. In other words, it's based on real physics. Everything has a reflection but accurately representing that reflection in video graphics has been mostly done with tricks prior to the introduction of PBR. Tricks as in using different lighting images (specular maps) overlaying color images (diffuse maps) to simulate depth, i.e how light and shadow react with each other.
+
+With PBR, a materials "`Metalness`" (conductive) or "Dielectric" (insulator) and "Roughness" or lack thereof will determine how light gets reflected. For example, metal (Metalness) is smoother than dirt (dielectric) so has a higher reflection whereas the dirt would tend to absorb the light, just as in real world conditions.
+
+The technique described above is known as the "`Metalness Workflow`". Where you are deciding whether the texture is metallic or dielectric and defining the amount of roughness for the texture.
+
+There is another workflow known as the "`Specular Workflow`". In the metalness workflow the albedo map is used for both diffuse color and specular color. "`Specular Workflow`" uses a specular color map instead. In this workflow, the albedo map is the diffuse color, the specular map is the specular color, and you have a gray scale gloss map that is the same as the roughness map. The workflow is very similar to the old techniques used for making materials.
+
+This has been a brief introduction to PBR. In reality, it requires a significant amount of learning to implement correctly. Read the three part series of articles called, Physically Based Rendering, that can be found under the <<jme3#materials-light-shadow,Materials, light, Shadow>> topic for a more in depth explanation of PBR Textures. This is a must read for any serious jME developer.
+
+See also: link:https://www.chaosgroup.com/blog/understanding-metalness[Understanding Metalness].
+
+You should also conduct many searches on the subject, especially ones related to your modeling tool of choice.
 
 == Animation
 
