@@ -118,72 +118,62 @@ Got no textures? link:http://opengameart.org[Download free textures from opengam
 
 === Texture Mapping
 
-
-==== Color Map / Diffuse Map
-
-
 [.right]
 image::https://raw.githubusercontent.com/jMonkeyEngine/jmonkeyengine/master/jme3-testdata/src/main/resources/Models/HoverTank/tank_diffuse.jpg[tank_diffuse.jpg,128,128]
 
+* *Color Map / Diffuse Map*
+**  A plain image file or a procedural texture that describes an object's visible surface.
+**  The image can have alpha channels for transparency.
+**  *A Color Map is the minimum texture.* You can map more textures as optional improvements.
+**  Color Maps are unshaded. The same is called Diffuse Map in a Phong-illuminated material, because this texture defines the basic colors of light that are _diffused_ by this object.
 
-*  A plain image file or a procedural texture that describes an object's visible surface.
-*  The image can have alpha channels for transparency.
-*  *A Color Map is the minimum texture.* You can map more textures as optional improvements.
-*  Color Maps are unshaded. The same is called Diffuse Map in a Phong-illuminated material, because this texture defines the basic colors of light that are _diffused_ by this object.
 
+* *Bump Map*
++
+--
+Bump maps are used to describe detailed shapes that would be too hard or simply too inefficient to sculpt in a mesh editor.
 
-==== Bump Map
+There are two types:
 
-Bump maps are used to describe detailed shapes that would be too hard or simply too inefficient to sculpt in a mesh editor. There are two types:
-
-*  You use Normal Maps to model tiny details such as cracks in walls, rust, skin texture, or a canvas weave ( (link:http://en.wikipedia.org/wiki/Bump_mapping[More on BumpMaps]).
-*  You use Height Maps to model large terrains with valleys and mountains.
-
+**  You use Normal Maps to model tiny details such as cracks in walls, rust, skin texture, or a canvas weave ( (link:http://en.wikipedia.org/wiki/Bump_mapping[More on BumpMaps]).
+**  You use Height Maps to model large terrains with valleys and mountains.
+--
 [.right]
 image::jme3/beginner/mountains512.png[mountains512.png,128,128]
 
-
-
-==== Height Map
-
-*  A height map is a grayscale image looking similar to a terrain map used in topography. Brighter grays represent higher areas and darker grays lower areas.
-*  A heightmap can represent 256 height levels and is mostly used to roughly outline terrains.
-*  You can draw a heightmap by hand in any image editor.
-
-
-==== Normal Map
+* *Height Map*
+**  A height map is a grayscale image looking similar to a terrain map used in topography. Brighter grays represent higher areas and darker grays lower areas.
+**  A heightmap can represent 256 height levels and is mostly used to roughly outline terrains.
+**  You can draw a heightmap by hand in any image editor.
 
 [.right]
 image::https://raw.githubusercontent.com/jMonkeyEngine/jmonkeyengine/master/jme3-testdata/src/main/resources/Models/HoverTank/tank_normals.png[tank_normals.png,128,128]
 
-
-*  A well-done Normal Map makes a shape more detailed – without the need to add costly polygons to the mesh. It contains shading information that makes the object appear smoother and more fine-grained.
-*  When you open a Normal Map in an image editor, it looks like a false-color version of the Color Map. Normal maps however are never used for coloring, instead, each the color values encode displacement data of bumps and cracks on the surface. Displacement data is represented by the Surface Normals of the slopes, hence the name.
-*  You cannot draw or edit normal maps by hand, professional designers use software to calculate them off high-quality 3D models. You can either buy a professional texture set, or find free collections that include Normal Maps.
-
-
-==== Specular Map
+* *Normal Map*
+**  A well-done Normal Map makes a shape more detailed – without the need to add costly polygons to the mesh. It contains shading information that makes the object appear smoother and more fine-grained.
+**  When you open a Normal Map in an image editor, it looks like a false-color version of the Color Map. Normal maps however are never used for coloring, instead, each the color values encode displacement data of bumps and cracks on the surface. Displacement data is represented by the Surface Normals of the slopes, hence the name.
+**  You cannot draw or edit normal maps by hand, professional designers use software to calculate them off high-quality 3D models. You can either buy a professional texture set, or find free collections that include Normal Maps.
 
 [.right]
 image::https://raw.githubusercontent.com/jMonkeyEngine/jmonkeyengine/master/jme3-testdata/src/main/resources/Models/HoverTank/tank_specular.jpg[tank_specular.jpg,128,128]
 
-
-*  A Specular Map further improves the realism of an object's surface: It contains extra information about shininess and makes the shape appear more realistically illumated.
-*  Start out with a copy of the Diffuse Map in a medium gray that corresponds to the average shininess/dullness of this material. Then add ligher grays for smoother, shinier, more reflective areas; and darker grays for duller, rougher, worn-out areas. The resulting image file looks similar to a grayscale version of the Diffuse Map.
-*  You can use colors in a Specular map to create certain reflective effects (fake iridiscence, metallic effect).
-
-
-==== Seamless Tiled Textures
+* Specular Map
+**  A Specular Map further improves the realism of an object's surface: It contains extra information about shininess and makes the shape appear more realistically illumated.
+**  Start out with a copy of the Diffuse Map in a medium gray that corresponds to the average shininess/dullness of this material. Then add ligher grays for smoother, shinier, more reflective areas; and darker grays for duller, rougher, worn-out areas. The resulting image file looks similar to a grayscale version of the Diffuse Map.
+**  You can use colors in a Specular map to create certain reflective effects (fake iridiscence, metallic effect).
 
 [.right]
 image::https://raw.githubusercontent.com/jMonkeyEngine/jmonkeyengine/master/jme3-testdata/src/main/resources/Textures/Terrain/BrickWall/BrickWall.jpg[BrickWall.jpg,128,128]
 
+* *Seamless Tiled Textures*
++
+--
 Tiles are a very simple, commonly used type of texture. When texturing a wide area (e.g. walls, floors), you don't create one huge texture – instead you tile a small texture repeatedly to fill the area.
 
 A seamless texture is an image file that has been designed or modified so that it can be used as tiles: The right edge matches the left edge, and the top edge matches the bottom edge. The onlooker cannot easily tell where one starts and the next one ends, thus creating an illusion of a huge texture. The downside is that the tiling becomes painfully obvious when the area is viewed from a distance. Also you cannot use it on more complex models such as characters.
 
 See also this tutorial on link:http://www.photoshoptextures.com/texture-tutorials/seamless-textures.htm[How to make seamless textures in Photoshop].
-
+--
 
 === UV Maps / Texture Atlas
 
