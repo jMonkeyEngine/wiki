@@ -1,0 +1,122 @@
+# This file can be used to configure the Node.js build for Antora ci without
+# having Node installed locally. See 'setup-docs/antora_setup.adoc' in the root
+# of this repo for details of how to use this file.
+#
+# The action add-and-commit will always commit the package-lock.json,
+# package.json and Antora cache only if changes are made to the files.
+#
+# If the package-lock.json or package.json files are updated or new depends are
+# installed, the 'npm ci' should always be ran thereafter to speed up build
+# times. When ci is active, the package-lock.json and package.json files in root
+# will not be updated.
+#
+# Uses the action actions-gh-page to publish pages to the gh-pages branch,
+# including a required .nojekyll file that Antora requires for configuration.
+#
+# The 'actions/cache@v2' creates a new cache when the packages in
+# package-lock.json file change, or when the workflow runner's operating system
+# changes.
+
+name: Build Docs
+
+on:
+  push:
+    branches: [ antora-setup ]
+  # Initiate a build to pull in the wiki-ui repository changes.
+  repository_dispatch:
+    types: [wiki-ui-build]
+  pull_request:
+
+jobs:
+  build:
+
+    #Static version is used to maintain stability
+    runs-on: ubuntu-18.04
+
+    strategy:
+      matrix:
+        #Static version is used to maintain stability
+        node-version: [12.17.0]
+
+    steps:
+    - name: Clone the repo
+      uses: actions/checkout@v2
+      with:
+        ref: antora-setup
+        # Number of commits to fetch. 0 indicates all history.
+        fetch-depth: 1
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    # Display the sha of the build triggering the repository_dispatch event.
+    - name: wiki-ui-build
+      if: github.event.action == 'wiki-ui-build'
+      run: echo wiki-ui-build sha ${{ github.event.client_payload.sha }}
+
+    # Uncomment to write the default package.json file to the repo root.
+    # When used in conjunction with the action add-and-commit 'add' command, the
+    # file will be written to the repo for editing.
+    - name: Install default package.json
+      run: npm init --yes
+
+    # Uncomment when adding or updating dependencies in the package-lock.json
+    # and package.json files for ci.
+    - name: Install Node
+      run: npm i
+
+    # Uncomment during initial setup or when updating Antora to a new version.
+    # The action add-and-commit 'add' command will detect the changes and commit
+    # the package-lock.json and package.json files.
+    # Emoji support. Seems to be a direct implementation of AsciiDoctor ruby
+    # extension.
+    # see: https://github.com/mogztter/asciidoctor-emoji
+    - name: Install Antora
+      run: |
+       npm i @antora/cli@2.3
+       npm i @antora/site-generator-default@2.3
+       npm i asciidoctor-emoji
+
+    # Uncomment after package-lock.json and package.json files are updated.
+#    - name: Run with CI
+#      run: npm ci
+
+    - name: Audit Depends
+      run: npm audit
+
+#    - name: Build Docs
+#      run: npm run buildDocs
+
+    # Detects any updates to package-lock.json and package.json and commits the
+    # files to root.
+    # see:
+    # https://github.com/marketplace/actions/add-commit?version=v4.1.0
+    # for use options.
+    - name: Commit Packages
+      uses: EndBug/add-and-commit@v4
+      with:
+        author_name: mitm001
+        author_email: mitm001@users.noreply.github.com
+        message: "Commit files for CI workflow"
+        # Commits these files to root if and only if there are changes.
+        add: "package-lock.json package.json"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    # Commit changes to the gh-pages branch. Antora requires an empty
+    # '.nojekyll' be present in the branch due to certain directories starting
+    # with an underscore. This action has an option, set by default, to add that
+    # file for us on commit.
+    # see:
+    # https://github.com/marketplace/actions/github-pages-action?version=v3.6.1
+    # for use options.
+#    - name: Deploy Docs
+#      uses: peaceiris/actions-gh-pages@v3
+#      with:
+#        github_token: ${{ secrets.GITHUB_TOKEN }}
+        # Commits these files to gh-pages if and only if there are changes.
+#        publish_dir: ./build/site
+        # Insert CNAME for repository.
+#        cname: wiki.jmonkeyengine.org
