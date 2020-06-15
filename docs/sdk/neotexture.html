@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>jMonkeyEngine SDK: Procedural Textures with NeoTexture :: jMonkeyEngine Docs</title>
+    <link rel="canonical" href="https://wiki.jmonkeyengine.org/docs/sdk/neotexture.html">
+    <meta name="keywords" content="documentation, sdk, tool, texture, material">
+    <meta name="generator" content="Antora 2.3.3">
+    <link rel="stylesheet" href="../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://wiki.jmonkeyengine.org">jMonkeyEngine Docs</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Resources</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Resource A</a>
+            <a class="navbar-item" href="#">Resource B</a>
+            <a class="navbar-item" href="#">Resource C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="docs" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../jme3.html">Docs</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../documentation.html">Getting Started</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="https://javadoc.jmonkeyengine.org/v3.3.2-stable">JavaDoc</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../jme3.html">jMonkeyEngine 3</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Beginner Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../jme3/beginner/hello_simpleapplication.html">Hello SimpleApplication</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../jme3/beginner/hello_node.html">Hello Node</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../jme3/beginner/hello_asset.html">Hello Asset</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../jme3/beginner/hello_main_event_loop.html">Hello Main Event Loop</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../jme3/beginner/hello_input_system.html">Hello Input System</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../jme3/beginner/hello_material.html">Hello Material</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../jme3/beginner/hello_animation.html">Hello Animation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../jme3/beginner/hello_picking.html">Hello Picking</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../jme3/beginner/hello_collision.html">Hello Collision</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../jme3/beginner/hello_terrain.html">Hello Terrain</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../jme3/beginner/hello_audio.html">Hello Audio</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../jme3/beginner/hello_effects.html">Hello Effects</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../jme3/beginner/hello_physics.html">Hello Physics</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Intermediate Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../jme3/intermediate/best_practices.html">Best Practices</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../jme3/intermediate/simpleapplication.html">Simple Application</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../jme3/features.html">Features</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../jme3/intermediate/optimization.html">Optimization</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../jme3/faq.html">FAQ</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Math Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../jme3/math_for_dummies.html">Math For Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../jme3/intermediate/math.html">Math</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../jme3/math.html">More Math</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../jme3/rotate.html">Rotate</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../jme3/math_video_tutorials.html">Math Video Tutorials</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">3D Graphics Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../jme3/intermediate/multi-media_asset_pipeline.html">Multi-Media Asset Pipeline</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../jme3/scenegraph_for_dummies.html">Scenegraph for Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../jme3/beginner/hellovector.html">Hello Vector</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../jme3/terminology.html">Terminology</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../jme3/intermediate/how_to_use_materials.html">How to Use Materials</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../jme3/intermediate/transparency_sorting.html">Transparency and Sorting</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../jme3/external/blender.html">Importing from Blender</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../jme3/external/3dsmax.html">Importing from 3DS Max</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../logo.html">Logo Usage</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../bsd_license.html">License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../github_tips.html">Github Tips</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">SDK</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../sdk.html">jMonkeyEngine SDK</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Docs</span>
+    <span class="version">master</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <span class="title">Antora Default UI</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../antora-ui-default/index.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <span class="title">Docs</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../jme3.html">master</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../documentation.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../jme3.html">Docs</a></li>
+    <li><a href="neotexture.html">jMonkeyEngine SDK: Procedural Textures with NeoTexture</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/jMonkeyEngine/wiki/edit/antora-setup/docs/modules/ROOT/pages/sdk/neotexture.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">jMonkeyEngine SDK: Procedural Textures with NeoTexture</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>The NeoTextureEditor allows creating tiled textures procedurally using a simple node interface for generating images, blending them, creating normal maps and much more. You can directly load the .tgr files as a material or export the generated images as .png files and use them in a jMonkeyEngine-based game.</p>
+</div>
+<div class="paragraph">
+<p>Textures usually make up most of the size of a game distribution. This is why NeoTexture is not only an editor, but also a library that generates textures from .tgr files. Use the library to load .tgr files directly in jME3 as a material, without having to export the textures before. This means high-quality textures for your models, but just tiny description files in your distribution.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="creating-and-editing-a-neotexture-file"><a class="anchor" href="#creating-and-editing-a-neotexture-file"></a>Creating and Editing a NeoTexture file</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Right-click the <code>assets/Textures</code> directory and choose New… &gt; Other.</p>
+</li>
+<li>
+<p>In the New File Wizard, choose NeoTexture &gt; Empty NeoTextureFile and click Next.</p>
+</li>
+<li>
+<p>Give the file a name, for exmaple <code>neoMaterial</code>.</p>
+</li>
+<li>
+<p>A new file <code>neoMaterial.tgr</code> is created in the Textures directory and opens in the NeoTexture Editor.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Edit the .tgr file and create your procedural texture: (<a href="http://neotextureedit.sourceforge.net/">Learn more about creating Procedural Textures here</a>)</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Drag any pattern from the left bar to the editor area.</p>
+</li>
+<li>
+<p>Right-click the editor area and paste a NormalMap filter node.</p>
+</li>
+<li>
+<p>Connect the green output mark of the pattern with the red input mark of the filter. +This generates a Normal Map that can be used as bump map.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="adding-the-neotexture-libraries-to-your-project"><a class="anchor" href="#adding-the-neotexture-libraries-to-your-project"></a>Adding the NeoTexture libraries to your project</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To use NeoTexture tgr files directly in your application, you have to add the NeoTexture libraries to your project:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Right-click your project and select “Properties</p>
+</li>
+<li>
+<p>Go to the “Libraries section of the properties window</p>
+</li>
+<li>
+<p>Press “Add Library..</p>
+</li>
+<li>
+<p>Select “NeoTexture-Libraries and press “add</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="loading-tgr-files-as-material"><a class="anchor" href="#loading-tgr-files-as-material"></a>Loading tgr files as material</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>We want to use the procedural texture as a material based on <code>Lighting.j3md</code> (the default). We know that Lighting.j3md supports DiffuseMap, NormalMap, SpecularMap, and ParallaxMap.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Click the Normal Map filter to select it. We want to use it as the Normal Map of the texture.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>In the NeoTextures Properties window under <code>Export name</code>, enter the name of the texture layer as it would appear in a .j3m file, e.g. “NormalMap”.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Click the pattern to select it. We want to (re)use it as Diffuse Map of the texture.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>In the NeoTextures Properties window under <code>Export name</code>, enter the name of the texture layer as it would appear in a .j3m file, e.g. “DiffuseMap”.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Click the Save button in the NeoTextures Editor. The .tgr file is saved with two layers. (We could add SpecularMap and ParallaxMap the same way, if we wanted.)</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s assign the newly created texture to a mesh to see what it looks like.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Open your Main.java file.</p>
+</li>
+<li>
+<p>Choose Window→Palette to open the Palette. You will find two NeoTexture code snippets, one for adding the NeoTexture loader to the assetManager, and one for loading a NeoTexture material.</p>
+</li>
+<li>
+<p>Drag&amp;Drop one of each into the simpleInitApp() method of your application.</p>
+</li>
+<li>
+<p>Adjust the .tgr file path names to match the file that we just created: “Materials/neoMaterial.tgr.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Clean, build and run. You’re ready to load your procedural material!</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">assetManager.registerLoader(com.jme3.material.plugins.NeoTextureMaterialLoader.class,"tgr");
+NeoTextureMaterialKey key = new NeoTextureMaterialKey("Materials/neoMaterial.tgr");
+
+Material mat = assetManager.loadAsset(key);
+mat.setFloat("Shininess",12); /* Lighting.j3md has non-map parameters too that we can set. */
+thing.setMaterial(mat);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The default Material Definition for NeoTextures is <code>Lighting.j3md</code>, and it&#8217;s probably the one you will use most often. In case that you want to use additional texture parameters, other than DiffuseMap, SpecularMap, ParallaxMap, and NormalMap, you can switch to another Material Definition using setMaterialDef(), for instance:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">key.setMaterialDef("Commons/MatDefs/Misc/ColoredTextured.j3md");</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Remember that the layer names in the .tgr file must match the ones declared in the .j3md file. In our example of <code>ColoredTextured.j3md</code>, the .tgr file must contain a <code>ColorMap</code> and you need to set a RGBAColor.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="using-tgr-files-like-normal-textures-in-j3m-files"><a class="anchor" href="#using-tgr-files-like-normal-textures-in-j3m-files"></a>Using tgr files like normal textures in j3m files</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You can use the .tgr files like normal textures in j3m files, with a syntax like this:
+<code>Materials/neoMaterial?DiffuseMap.tgr</code>
+The part between the <code>?</code> and the suffix is the name of the node you want to load as a texture. If you dont supply a name, <code>texture</code> is used.</p>
+</div>
+<div class="paragraph">
+<p>To be able to load these textures, you have to register a Locator and a Loader in the AssetManager, note that you can only register one loader per extension so you cannot load .tgr files as materials and as textures with the same assetManager.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">assetManager.registerLocator("/", com.jme3.texture.plugins.NeoTextureLocator.class );
+assetManager.registerLoader(com.jme3.texture.plugins.NeoTextureLoader.class,"tgr");</code></pre>
+</div>
+</div>
+</div>
+</div>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

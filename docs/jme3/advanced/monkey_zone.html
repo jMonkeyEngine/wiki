@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Monkey Zone: Multi-player Sample Project :: jMonkeyEngine Docs</title>
+    <link rel="canonical" href="https://wiki.jmonkeyengine.org/docs/jme3/advanced/monkey_zone.html">
+    <meta name="keywords" content="network, basegame, physics, inputs, spidermonkey">
+    <meta name="generator" content="Antora 2.3.3">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://wiki.jmonkeyengine.org">jMonkeyEngine Docs</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Resources</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Resource A</a>
+            <a class="navbar-item" href="#">Resource B</a>
+            <a class="navbar-item" href="#">Resource C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="docs" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../../jme3.html">Docs</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../documentation.html">Getting Started</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="https://javadoc.jmonkeyengine.org/v3.3.2-stable">JavaDoc</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../jme3.html">jMonkeyEngine 3</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Beginner Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_simpleapplication.html">Hello SimpleApplication</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_node.html">Hello Node</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_asset.html">Hello Asset</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_main_event_loop.html">Hello Main Event Loop</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_input_system.html">Hello Input System</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_material.html">Hello Material</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_animation.html">Hello Animation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_picking.html">Hello Picking</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_collision.html">Hello Collision</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_terrain.html">Hello Terrain</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_audio.html">Hello Audio</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_effects.html">Hello Effects</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_physics.html">Hello Physics</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Intermediate Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/best_practices.html">Best Practices</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/simpleapplication.html">Simple Application</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../features.html">Features</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/optimization.html">Optimization</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../faq.html">FAQ</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Math Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../math_for_dummies.html">Math For Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/math.html">Math</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../math.html">More Math</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../rotate.html">Rotate</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../math_video_tutorials.html">Math Video Tutorials</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">3D Graphics Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/multi-media_asset_pipeline.html">Multi-Media Asset Pipeline</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../scenegraph_for_dummies.html">Scenegraph for Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../beginner/hellovector.html">Hello Vector</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../terminology.html">Terminology</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/how_to_use_materials.html">How to Use Materials</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/transparency_sorting.html">Transparency and Sorting</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../external/blender.html">Importing from Blender</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../external/3dsmax.html">Importing from 3DS Max</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../logo.html">Logo Usage</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../bsd_license.html">License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../github_tips.html">Github Tips</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">SDK</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../sdk.html">jMonkeyEngine SDK</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Docs</span>
+    <span class="version">master</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <span class="title">Antora Default UI</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../antora-ui-default/index.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <span class="title">Docs</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../../jme3.html">master</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../documentation.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../jme3.html">Docs</a></li>
+    <li><a href="monkey_zone.html">Monkey Zone: Multi-player Sample Project</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/jMonkeyEngine/wiki/edit/antora-setup/docs/modules/ROOT/pages/jme3/advanced/monkey_zone.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Monkey Zone: Multi-player Sample Project</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>MonkeyZone is an multi-player demo game provided by the jME core developer team.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/jMonkeyEngine/monkeyzone">Download source code</a> (Github Repository)</p>
+</li>
+<li>
+<p><a href="http://www.youtube.com/watch?v=98yITEoJvqE">Watch pre-alpha video footage</a> (YouTube Video)</p>
+</li>
+<li>
+<p><a href="http://web.archive.org/web/20121021075434/http://jmonkeyengine.org/2011/02/13/monkeyzone-a-jme3-game-from-the-core/">Read &quot;MonkeyZone – a jME3 game from the core&quot;</a> (news article)</p>
+</li>
+<li>
+<p><a href="https://hub.jmonkeyengine.org/t/open-game-finder/13399/11">Related forum thread: Open Game Finder</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This open-source demo:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>showcases one possible way to implement a game with jME3, and</p>
+</li>
+<li>
+<p>helps the jME team verify the jME3 <abbr title="Application Programming Interface">API</abbr> in terms of usability.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The game idea is based on “BattleZone” arcade game from the 1980s, a first-person shooter the with real-time strategy elements.
+The game was written using the jMonkeyEngine SDK, and it&#8217;s based off the BasicGame project template. It took us one week to create a playable pre-alpha, including networking.
+The project design follows best practices that make it possible to edit maps, vehicles, etc, in jMonkeyEngine SDK without having to change the code – This allows 3D graphic designers to contribute models more easily. (If you feel like contributing assets or working on parts of the game code, drop us a note!)</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="implementation"><a class="anchor" href="#implementation"></a>Implementation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>MonkeyZone is a multi-player game with a physics simulation. Both, clients and server, run the physics simulation. The clients send input data from the player group to the server, where they control the entities, and also broadcast to the clients. Additionally, the server sends regular syncronization data for all objects in the game to prevent drifting.
+When a human user or an AI performs an action (presses a button), the actual logic is done on the server. The results are broadcast as data messages to the entities. When the entity is controlled by an AI, the actual AI code (that determines where the entity should move, and when it should perform an action) is executed on the client.
+
+_The way MonkeyZone is implemented is just one of the many possible ways to do a game like this in jME. Some things might be done more efficiently, some might be done in another way completely. MonkeyZone tries to do things the way that are most appropriate to implement the game at hand and it shows nicely how jME3 and the standard Java &lt;abbr title="Application Programming Interface"&gt;API&lt;/abbr&gt;++ can make game development easier and faster. Also note that the way MonkeyZone is designed is not scalable to a MMO style game, it will only work in a FPS style environment where the whole game world can be loaded at once._</p>
+</div>
+<div class="sect2">
+<h3 id="terminology"><a class="anchor" href="#terminology"></a>Terminology</h3>
+<div class="paragraph">
+<p>The game uses certain terms that might be familiar to you but maybe used in another way, so heres a quick rundown on the terms being used.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Player –	Logical human or AI player that can enter entities and generally act, only exists as PlayerData “database” with an id.</p>
+</li>
+<li>
+<p>Entity –	Spatial with UserData, a world object like character, vehicle, box or factory. The base form is defined only by a String pointing to the j3o which already has all userdata like hitpoints, speed etc.</p>
+</li>
+<li>
+<p>User –	Human player using a client</p>
+</li>
+<li>
+<p>Player Group – Group of players that play together (e.g. one human player and one AI companion per client). For now that&#8217;s the same as client_id of human player for all AIControl’ed players originating from that client.</p>
+</li>
+<li>
+<p>Client –	Computer connected to server</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="manager-classes"><a class="anchor" href="#manager-classes"></a>Manager Classes</h3>
+<div class="paragraph">
+<p>The WorldManager does the main work of organizing players, entities and the world and synchronizing them between the server and client. Both client and server use this class. Some other managers like ClientEffectsManager only exist on the client or server and manage e.g. effects display.
+The gameplay is largely controlled by the ServerGameManager which does gameplay logic on the server, combined with the actions issued by the AI and user on the client (see below) it implements the gameplay. It extensively uses the functions exposed by the WorldManager to perform actions and gather data. This is also the class where the actions of the players are actually executed on the server to determine the outcome (ray testing for shooting etc.).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="use-of-controls"><a class="anchor" href="#use-of-controls"></a>Use of Controls</h3>
+<div class="paragraph">
+<p><a href="custom_controls.html" class="page">Controls</a> are used extensively in MonkeyZone for many aspects of the game. When a player enters an entity, the Spatials Controls are configured based on the player that enters. For example when the human user enters an entity, Controls that update the user interface (DefaultHUDControl) or user input (UserInputControl) are added to the current entity Spatial.</p>
+</div>
+<div class="sect3">
+<h4 id="as-entity-capabilities"><a class="anchor" href="#as-entity-capabilities"></a>&#8230;&#8203;As entity capabilities</h4>
+<div class="paragraph">
+<p>Controls attached to Spatials are generally used like an “array of capabilities” that the entity posesses. So when an entity has a VehicleControl its expected to be a vehicle, when its got a CharacterControl its expected to be a character.
+Other Controls work completely on their own, like CharacterAnimControl which just uses the CharacterControl of the entity to check if the character is running, jumping etc. and then animates the entity if it has an AnimControl.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="to-abstract"><a class="anchor" href="#to-abstract"></a>&#8230;&#8203; to abstract</h4>
+<div class="paragraph">
+<p>Furthermore theres special interfaces for Controls that allow abstraction of different Controls into one base interface. For example ManualControl and AutonomousControl are interfaces for controls that manage the movement of a spatial in a generalized way. This way AI code and e.g. the UserInputControl only have to check for a valid AutonomousControl or ManualControl on the spatial to control and move it. The details of the movement are handled by classes like ManualVehicleControl and AutonomousCharacterControl.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="for-ai-functions"><a class="anchor" href="#for-ai-functions"></a>&#8230;&#8203; for AI functions</h4>
+<div class="paragraph">
+<p>A special Control called CommandControl handles the Commands that can be executed by user controlled players, see below.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="artificial-intelligence"><a class="anchor" href="#artificial-intelligence"></a>Artificial Intelligence</h3>
+<div class="paragraph">
+<p>MonkeyZone includes simple AI functions based on a command queue.</p>
+</div>
+<div class="sect3">
+<h4 id="commands"><a class="anchor" href="#commands"></a>Commands</h4>
+<div class="paragraph">
+<p>To implement autonomous AI players MonkeyZone uses a system of Commands that are managed by a CommandControl that is attached to each AI player entity controlled by the user. This CommandControl manages a list of Commands that are executed based on priority. For example theres a MoveCommand, a FollowCommand and an AttackCommand, Commands can however implement more complete behavior than that, e.g. the complete logic for a scavenging entity.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Press the WASD keys and use the mouse to move</p>
+</li>
+<li>
+<p>press space to jump</p>
+</li>
+<li>
+<p>Aim and click to shoot</p>
+</li>
+<li>
+<p>Type 1 to select the first Ogre</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Aim at the floor and press F1 to tell it where to go.</p>
+</li>
+<li>
+<p>Aim at a target and press F2 to tell it who to follow.</p>
+</li>
+<li>
+<p>Aim at the car and press F3 to make it drive the car.</p>
+</li>
+<li>
+<p>Aim at a target and press F4 to tell it who to attack.</p>
+</li>
+<li>
+<p>Walk close to the car and press enter to drive the car.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="triggers"><a class="anchor" href="#triggers"></a>Triggers</h4>
+<div class="paragraph">
+<p>The SphereTrigger is a TriggerControl that is also attached to each AI players current entity. It consists of a GhostControl that checks the overlapping entities around the entity its attached to. It can be assigned a command that is checked with every entity entering the SphereTrigger and executed if applicable (e.g. normal “attack enemy” mode).</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="navmesh"><a class="anchor" href="#navmesh"></a>NavMesh</h4>
+<div class="paragraph">
+<p>For each map a navigation mesh is generated that allows the entities to navigate the terrain. Autonomous entities automatically get a NavigationControl based on the current map. The AutonomousControl implementations automatically recognize the NavigationControl attached to the Spatial and use it for navigation. The NavMeshNavigationControl implementation contains a reference to the levels NavMesh and implements a navigation algorithm similar to the A* algorithm.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="networking"><a class="anchor" href="#networking"></a>Networking</h3>
+<div class="paragraph">
+<p>Networking is realized in the PhysicsSyncManager which we hope to extend to a state where it can serve as a general sync system for physics based network games.
+The sync manager basically puts a timestamp on every message sent from the server and then buffers all arriving messages on the client within a certain time window. This allows to compensate for messages arriving too soon or too late within the constraints of the buffer, a future version might step the clients physics space different to compensate for network delays without “snapping”.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="use-of-jmonkeyengine-sdk-tools"><a class="anchor" href="#use-of-jmonkeyengine-sdk-tools"></a>Use of jMonkeyEngine SDK tools</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>All assets used in the game, like entity models and loaded maps can be preconfigured and edited using the jMonkeyEngine SDK. For example, to add a new vehicle type, a vehicle is created in the jMonkeyEngine SDK vehicle editor and UserData like Speed, HitPoints etc. is applied directly in the editor. When the model is loaded in the game it is automatically configured based on these settings, the same accounts for maps that are loaded, special Nodes that mark e.g. player start locations are recognized automatically etc.</p>
+</div>
+<div class="sect2">
+<h3 id="userdata"><a class="anchor" href="#userdata"></a>UserData</h3>
+<div class="paragraph">
+<p>Entities (Nodes and Geometries) that are loaded from disk have certain UserData like HitPoints, Speed etc. that is used to configure the entity at runtime. The jMonkeyEngine SDK allows adding and editing this UserData, so entity properties are editable visually.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="physics"><a class="anchor" href="#physics"></a>Physics</h3>
+<div class="paragraph">
+<p>VehicleControls, CharacterControls and RigidBodyControls with mesh collision shape for terrain and objects are generated in the jMonkeyEngine SDK and saved in the entity j3o file. When an entity is loaded, the type of entity is identified based on the available controls and UserData and it is configured accordingly.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="api-info"><a class="anchor" href="#api-info"></a>API Info</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="designer-infos"><a class="anchor" href="#designer-infos"></a>Designer Infos</h3>
+<div class="paragraph">
+<p>Editable UserData of entity Spatials:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>(float) HitPoints</p>
+</li>
+<li>
+<p>(float) MaxHitPoints</p>
+</li>
+<li>
+<p>(float) Speed</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Entity Spatial marking Node names:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>AimNode</p>
+</li>
+<li>
+<p>CameraAttachment</p>
+</li>
+<li>
+<p>ShootAttachment</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Level Spatial marking Node names:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>StartPoint</p>
+</li>
+<li>
+<p>PowerSource</p>
+</li>
+<li>
+<p>MetalField</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="developer-infos"><a class="anchor" href="#developer-infos"></a>Developer Infos</h4>
+<div class="paragraph">
+<p>Programmatic UserData of entities:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>(long) entity_id</p>
+</li>
+<li>
+<p>(int) group_id</p>
+</li>
+<li>
+<p>(long) player_id</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Programmatic PlayerData:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>(long) id</p>
+</li>
+<li>
+<p>(int) group_id</p>
+</li>
+<li>
+<p>(long) entity_id</p>
+</li>
+<li>
+<p>(long) character_entity_id</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="the-future"><a class="anchor" href="#the-future"></a>The Future</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Have a look at the code and feel free to ask about it, if you want any new features, you are free to implement them. ;)
+MonkeyZone is hosted at GoogleCode, where you can check out the jMonkeyEngine SDK-ready project via svn:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>jMonkeyEngine SDK→Team→Subversion→Checkout,</p>
+</li>
+<li>
+<p>Enter the SVN <abbr title="Uniform Resource Locator">URL</abbr> <code><a href="http://monkeyzone.googlecode.com/svn/trunk/">http://monkeyzone.googlecode.com/svn/trunk/</a></code></p>
+</li>
+<li>
+<p>Download, open, and build the project</p>
+</li>
+<li>
+<p>Run the server first (com.jme3.monkeyzone.ServerMain), and then a client (com.jme3.monkeyzone.ClientMain).</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="troubleshooting"><a class="anchor" href="#troubleshooting"></a>Troubleshooting</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>After download, errors could appear because jme3tools.navmesh.util\NavMeshGenerator.java import com.jme3.terrain.Terrain is not known, you should correct this by setting Project Properties &gt; Libraries &gt; Add Library &gt; jme3-libraries-terrain</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

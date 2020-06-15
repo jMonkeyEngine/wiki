@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>jMonkeyEngine 3 Tutorial (7) - Hello Animation :: jMonkeyEngine Docs</title>
+    <link rel="canonical" href="https://wiki.jmonkeyengine.org/docs/jme3/beginner/hello_animation.html">
+    <link rel="prev" href="hello_material.html">
+    <link rel="next" href="hello_picking.html">
+    <meta name="keywords" content="beginner, intro, animation, documentation, keyinput, input, node, model">
+    <meta name="generator" content="Antora 2.3.3">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://wiki.jmonkeyengine.org">jMonkeyEngine Docs</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Resources</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Resource A</a>
+            <a class="navbar-item" href="#">Resource B</a>
+            <a class="navbar-item" href="#">Resource C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="docs" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../../jme3.html">Docs</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../documentation.html">Getting Started</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="https://javadoc.jmonkeyengine.org/v3.3.2-stable">JavaDoc</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../jme3.html">jMonkeyEngine 3</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Beginner Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_simpleapplication.html">Hello SimpleApplication</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_node.html">Hello Node</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_asset.html">Hello Asset</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_main_event_loop.html">Hello Main Event Loop</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_input_system.html">Hello Input System</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_material.html">Hello Material</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="3">
+    <a class="nav-link" href="hello_animation.html">Hello Animation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_picking.html">Hello Picking</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_collision.html">Hello Collision</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_terrain.html">Hello Terrain</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_audio.html">Hello Audio</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_effects.html">Hello Effects</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_physics.html">Hello Physics</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Intermediate Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/best_practices.html">Best Practices</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/simpleapplication.html">Simple Application</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../features.html">Features</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/optimization.html">Optimization</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../faq.html">FAQ</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Math Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../math_for_dummies.html">Math For Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/math.html">Math</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../math.html">More Math</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../rotate.html">Rotate</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../math_video_tutorials.html">Math Video Tutorials</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">3D Graphics Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/multi-media_asset_pipeline.html">Multi-Media Asset Pipeline</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../scenegraph_for_dummies.html">Scenegraph for Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="hellovector.html">Hello Vector</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../terminology.html">Terminology</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/how_to_use_materials.html">How to Use Materials</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/transparency_sorting.html">Transparency and Sorting</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../external/blender.html">Importing from Blender</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../external/3dsmax.html">Importing from 3DS Max</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../logo.html">Logo Usage</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../bsd_license.html">License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../github_tips.html">Github Tips</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">SDK</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../sdk.html">jMonkeyEngine SDK</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Docs</span>
+    <span class="version">master</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <span class="title">Antora Default UI</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../antora-ui-default/index.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <span class="title">Docs</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../../jme3.html">master</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../documentation.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../jme3.html">Docs</a></li>
+    <li><a href="../../jme3.html">jMonkeyEngine 3</a></li>
+    <li>Beginner Tutorials</li>
+    <li><a href="hello_animation.html">Hello Animation</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/jMonkeyEngine/wiki/edit/antora-setup/docs/modules/ROOT/pages/jme3/beginner/hello_animation.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">jMonkeyEngine 3 Tutorial (7) - Hello Animation</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Previous: <a href="hello_material.html" class="page">Hello Material</a>,
+Next: <a href="hello_picking.html" class="page">Hello Picking</a></p>
+</div>
+<div class="paragraph">
+<p>This tutorial shows how to add an animation controller and channels, and how to respond to user input by triggering an animation in a loaded model.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="../../_images/jme3/beginner/beginner-animation.png" alt="beginner-animation.png" width="" height="">
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>To use the example assets in a new jMonkeyEngine SDK project, <b class="button">RMB</b> select your project, select <span class="menuseq"><b class="menu">Properties</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">Libraries</b></span> and in the <code>Compile</code> tab press <code>Add Library</code> and add the <code>jme3-test-data</code> library.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="sample-code"><a class="anchor" href="#sample-code"></a>Sample Code</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package jme3test.helloworld;
+
+import com.jme3.animation.AnimChannel;
+import com.jme3.animation.AnimControl;
+import com.jme3.animation.AnimEventListener;
+import com.jme3.animation.LoopMode;
+import com.jme3.app.SimpleApplication;
+import com.jme3.input.KeyInput;
+import com.jme3.input.controls.ActionListener;
+import com.jme3.input.controls.KeyTrigger;
+import com.jme3.light.DirectionalLight;
+import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector3f;
+import com.jme3.scene.Node;
+
+/** Sample 7 - how to load an OgreXML model and play an animation,
+ * using channels, a controller, and an AnimEventListener. */
+public class HelloAnimation extends SimpleApplication
+  implements AnimEventListener {
+  private AnimChannel channel;
+  private AnimControl control;
+  Node player;
+  public static void main(String[] args) {
+    HelloAnimation app = new HelloAnimation();
+    app.start();
+  }
+
+  @Override
+  public void simpleInitApp() {
+    viewPort.setBackgroundColor(ColorRGBA.LightGray);
+    initKeys();
+    DirectionalLight dl = new DirectionalLight();
+    dl.setDirection(new Vector3f(-0.1f, -1f, -1).normalizeLocal());
+    rootNode.addLight(dl);
+    player = (Node) assetManager.loadModel("Models/Oto/Oto.mesh.xml");
+    player.setLocalScale(0.5f);
+    rootNode.attachChild(player);
+    control = player.getControl(AnimControl.class);
+    control.addListener(this);
+    channel = control.createChannel();
+    channel.setAnim("stand");
+  }
+
+  public void onAnimCycleDone(AnimControl control, AnimChannel channel, String animName) {
+    if (animName.equals("Walk")) {
+      channel.setAnim("stand", 0.50f);
+      channel.setLoopMode(LoopMode.DontLoop);
+      channel.setSpeed(1f);
+    }
+  }
+
+  public void onAnimChange(AnimControl control, AnimChannel channel, String animName) {
+    // unused
+  }
+
+  /** Custom Keybinding: Map named actions to inputs. */
+  private void initKeys() {
+    inputManager.addMapping("Walk", new KeyTrigger(KeyInput.KEY_SPACE));
+    inputManager.addListener(actionListener, "Walk");
+  }
+  private ActionListener actionListener = new ActionListener() {
+    public void onAction(String name, boolean keyPressed, float tpf) {
+      if (name.equals("Walk") &amp;&amp; !keyPressed) {
+        if (!channel.getAnimationName().equals("Walk")) {
+          channel.setAnim("Walk", 0.50f);
+          channel.setLoopMode(LoopMode.Loop);
+        }
+      }
+    }
+  };
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="creating-and-loading-animated-models"><a class="anchor" href="#creating-and-loading-animated-models"></a>Creating and Loading Animated Models</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You create animated models with a tool such as Blender. Take some time and learn how to create your own models in these <a href="http://www.blender.org/education-help/tutorials/animation/">Blender Animation Tutorials</a>. For now, download and use a free model, such as the one included here as an example (<a href="https://github.com/jMonkeyEngine/jmonkeyengine/tree/master/jme3-testdata/src/main/resources/Models/Oto/">Oto Golem</a>, and <a href="https://github.com/jMonkeyEngine/jmonkeyengine/tree/master/jme3-testdata/src/main/resources/Models/Ninja/">Ninja</a>).</p>
+</div>
+<div class="paragraph">
+<p>Loading an animated model is pretty straight-forward, just as you have learned in the previous chapters. Animated Ogre models come as a set of files: The model is in <code>Oto.mesh.xml</code>, and the animation details are in <code>Oto.skeleton.xml</code>, plus the usual files for materials and textures. Check that all files of the model are together in the same <code>Model</code> subdirectory.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">  public void simpleInitApp() {
+    /* Displaying the model requires a light source */
+    DirectionalLight dl = new DirectionalLight();
+    dl.setDirection(new Vector3f(-0.1f, -1f, -1).normalizeLocal());
+    rootNode.addLight(dl);
+    /* load and attach the model as usual */
+    player = assetManager.loadModel("Models/Oto/Oto.mesh.xml");
+    player.setLocalScale(0.5f); // resize
+    rootNode.attachChild(player);
+    ...
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Don&#8217;t forget to add a light source to make the material visible.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="animation-controller-and-channel"><a class="anchor" href="#animation-controller-and-channel"></a>Animation Controller and Channel</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>After you load the animated model, you register it to the Animation Controller.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The controller object gives you access to the available animation sequences.</p>
+</li>
+<li>
+<p>The controller can have several channels, each channel can run one animation sequence at a time.</p>
+</li>
+<li>
+<p>To run several sequences, you create several channels, and set them each to their animation.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">  private AnimChannel channel;
+  private AnimControl control;
+
+  public void simpleInitApp() {
+    ...
+    /* Load the animation controls, listen to animation events,
+     * create an animation channel, and bring the model in its default position.  */
+    control = player.getControl(AnimControl.class);
+    control.addListener(this);
+    channel = control.createChannel();
+    channel.setAnim("stand");
+    ...</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This line of code will return NULL if the AnimControl is not in the main node of your model.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">control = player.getControl(AnimControl.class);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To check this, <b class="button">RMB</b> select your model and click &#8220;Edit in SceneComposer&#8221; if the models file extension is .j3o, or &#8220;View&#8221; if not. You can then see the tree for the model so you can locate the node the control resides in. You can access the subnode with the following code.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">player.getChild("Subnode").getControl(AnimControl.class);</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In response to a question about animations on different channels interefering with each other, <strong>Nehon on the jME forum <a href="http://jmonkeyengine.org/groups/general-2/forum/topic/helloanimation-animations-seem-to-be-clashing/#post-180994">wrote</a>,</strong></p>
+</div>
+<div class="paragraph">
+<p>“You have to consider channels as part of the skeleton that are animated. The default behavior is to use the whole skeleton for a channel.
+In your example the first channel plays the walk anim, then the second channel plays the dodge animation.
+Arms and feet are probably not affected by the doge animation so you can see the walk anim for them, but the rest of the body plays the dodge animation.</p>
+</div>
+<div class="paragraph">
+<p>Usually multiple channels are used to animate different part of the body. For example you create one channel for the lower part of the body and one for the upper part. This allow you to play a walk animation with the lower part and for example a shoot animation with the upper part. This way your character can walk while shooting.</p>
+</div>
+<div class="paragraph">
+<p>In your case, where you want animations to chain for the whole skeleton, you just have to use one channel.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="responding-to-animation-events"><a class="anchor" href="#responding-to-animation-events"></a>Responding to Animation Events</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Add <code>implements AnimEventListener</code> to the class declaration. This interface gives you access to events that notify you when a sequence is done, or when you change from one sequence to another, so you can respond to it. In this example, you reset the character to a standing position after a <code>Walk</code> cycle is done.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class HelloAnimation extends SimpleApplication
+                         implements AnimEventListener {
+  ...
+
+  public void onAnimCycleDone(AnimControl control,
+                              AnimChannel channel, String animName) {
+    if (animName.equals("Walk")) {
+      channel.setAnim("stand", 0.50f);
+      channel.setLoopMode(LoopMode.DontLoop);
+      channel.setSpeed(1f);
+    }
+  }
+  public void onAnimChange(AnimControl control, AnimChannel channel, String animName) {
+    // unused
+  }</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="trigger-animations-after-user-input"><a class="anchor" href="#trigger-animations-after-user-input"></a>Trigger Animations After User Input</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>There are ambient animations like animals or trees that you may want to trigger in the main event loop. In other cases, animations are triggered by user interaction, such as key input. You want to play the Walk animation when the player presses a certain key (here the spacebar), at the same time as the avatar performs the walk action and changes its location.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Initialize a new input controller (in <code>simpleInitApp()</code>).</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Write the <code>initKey()</code> convenience method and call it from <code>simpleInitApp()</code>.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Add a key mapping with the name as the action you want to trigger.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Here for example, you map <code>Walk</code> to the Spacebar key.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Add an input listener for the <code>Walk</code> action.</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">  private void initKeys() {
+    inputManager.addMapping("Walk", new KeyTrigger(KeyInput.KEY_SPACE));
+    inputManager.addListener(actionListener, "Walk");
+  }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To use the input controller, you need to implement the actionListener by testing for each action by name, then set the channel to the corresponding animation to run.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The second parameter of setAnim() is the blendTime (how long the current animation should overlap with the last one).</p>
+</li>
+<li>
+<p>LoopMode can be Loop (repeat), Cycle (forward then backward), and DontLoop (only once).</p>
+</li>
+<li>
+<p>If needed, use channel.setSpeed() to set the speed of this animation.</p>
+</li>
+<li>
+<p>Optionally, use channel.setTime() to Fast-forward or rewind to a certain moment in time of this animation.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">  private ActionListener actionListener = new ActionListener() {
+    public void onAction(String name, boolean keyPressed, float tpf) {
+        if (name.equals("Walk") &amp;&amp; !keyPressed) {
+            if (!channel.getAnimationName().equals("Walk")){
+                channel.setAnim("Walk", 0.50f);
+                channel.setLoopMode(LoopMode.Cycle);
+            }
+        }
+    }
+  };</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="exercises"><a class="anchor" href="#exercises"></a>Exercises</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="exercise-1-two-animations"><a class="anchor" href="#exercise-1-two-animations"></a>Exercise 1: Two Animations</h3>
+<div class="paragraph">
+<p>Make a mouse click trigger another animation sequence!</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create a second channel in the controller.</p>
+</li>
+<li>
+<p>Create a new key trigger mapping and action. (see: <a href="hello_input_system.html" class="page">Hello Input</a>)</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Do you want to find out what animation sequences are available in the model? Use:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">for (String anim : control.getAnimationNames()) {
+    System.out.println(anim);
+}</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="exercise-2-revealing-the-skeleton-1"><a class="anchor" href="#exercise-2-revealing-the-skeleton-1"></a>Exercise 2: Revealing the Skeleton (1)</h3>
+<div class="paragraph">
+<p>Open the <code>skeleton.xml</code> file in a text editor of your choice. You don&#8217;t have to be able to read or write these xml files (Blender does that for you) – but it is good to know how skeletons work. “There&#8217;s no magic to it!</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Note how the bones are numbered and named. All names of animated models follow a naming scheme.</p>
+</li>
+<li>
+<p>Note the bone hierarchy that specifies how the bones are connected.</p>
+</li>
+<li>
+<p>Note the list of animations: Each animation has a name, and several tracks. Each track tells individual bones how and when to transform. These animation steps are called keyframes.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="exercise-3-revealing-the-skeleton-2"><a class="anchor" href="#exercise-3-revealing-the-skeleton-2"></a>Exercise 3: Revealing the Skeleton (2)</h3>
+<div class="paragraph">
+<p>Add the following import statements for the SkeletonDebugger and Material classes:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">     import com.jme3.scene.debug.SkeletonDebugger;
+     import com.jme3.material.Material;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Add the following code snippet to <code>simpleInitApp()</code> to make the bones (that you just read about) visible!</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">     SkeletonDebugger skeletonDebug =
+         new SkeletonDebugger("skeleton", control.getSkeleton());
+     Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+     mat.setColor("Color", ColorRGBA.Green);
+     mat.getAdditionalRenderState().setDepthTest(false);
+     skeletonDebug.setMaterial(mat);
+     player.attachChild(skeletonDebug);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Can you identify individual bones in the skeleton?</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="conclusion"><a class="anchor" href="#conclusion"></a>Conclusion</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Now you can load animated models, identify stored animations, and trigger animations by using onAnimCycleDone() and onAnimChange(). You also learned that you can play several animations simultaneously, by starting each in a channel of its own. This could be useful if you ever want to animate the lower and upper part of the characters body independently, for example the legs run, while the arms use a weapon.</p>
+</div>
+<div class="paragraph">
+<p>Now that your character can walk, wouldn&#8217;t it be cool if it could also pick up things, or aim a weapon at things, or open doors? Time to reveal the secrets of <a href="hello_picking.html" class="page">mouse picking</a>!</p>
+</div>
+<hr>
+<div class="paragraph">
+<p>See also: <a href="https://docs.google.com/leaf?id=0B9hhZie2D-fEYmRkMTYwN2YtMzQ0My00NTM4LThhOTYtZTk1MTRlYTNjYTc3&amp;hl=en">Creating Animated OgreXML Models in Blender</a></p>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="hello_material.html">Hello Material</a></span>
+  <span class="next"><a href="hello_picking.html">Hello Picking</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

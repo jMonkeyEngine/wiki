@@ -1,0 +1,1722 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Physics: Gravity, Collisions, Forces :: jMonkeyEngine Docs</title>
+    <link rel="canonical" href="https://wiki.jmonkeyengine.org/docs/jme3/advanced/physics.html">
+    <meta name="keywords" content="physics, documentation, control">
+    <meta name="generator" content="Antora 2.3.3">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://wiki.jmonkeyengine.org">jMonkeyEngine Docs</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Resources</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Resource A</a>
+            <a class="navbar-item" href="#">Resource B</a>
+            <a class="navbar-item" href="#">Resource C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="docs" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../../jme3.html">Docs</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../documentation.html">Getting Started</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="https://javadoc.jmonkeyengine.org/v3.3.2-stable">JavaDoc</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../jme3.html">jMonkeyEngine 3</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Beginner Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_simpleapplication.html">Hello SimpleApplication</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_node.html">Hello Node</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_asset.html">Hello Asset</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_main_event_loop.html">Hello Main Event Loop</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_input_system.html">Hello Input System</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_material.html">Hello Material</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_animation.html">Hello Animation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_picking.html">Hello Picking</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_collision.html">Hello Collision</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_terrain.html">Hello Terrain</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_audio.html">Hello Audio</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_effects.html">Hello Effects</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_physics.html">Hello Physics</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Intermediate Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/best_practices.html">Best Practices</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/simpleapplication.html">Simple Application</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../features.html">Features</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/optimization.html">Optimization</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../faq.html">FAQ</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Math Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../math_for_dummies.html">Math For Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/math.html">Math</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../math.html">More Math</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../rotate.html">Rotate</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../math_video_tutorials.html">Math Video Tutorials</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">3D Graphics Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/multi-media_asset_pipeline.html">Multi-Media Asset Pipeline</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../scenegraph_for_dummies.html">Scenegraph for Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../beginner/hellovector.html">Hello Vector</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../terminology.html">Terminology</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/how_to_use_materials.html">How to Use Materials</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/transparency_sorting.html">Transparency and Sorting</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../external/blender.html">Importing from Blender</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../external/3dsmax.html">Importing from 3DS Max</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../logo.html">Logo Usage</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../bsd_license.html">License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../github_tips.html">Github Tips</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">SDK</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../sdk.html">jMonkeyEngine SDK</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Docs</span>
+    <span class="version">master</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <span class="title">Antora Default UI</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../antora-ui-default/index.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <span class="title">Docs</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../../jme3.html">master</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../documentation.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../jme3.html">Docs</a></li>
+    <li><a href="physics.html">Physics: Gravity, Collisions, Forces</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/jMonkeyEngine/wiki/edit/antora-setup/docs/modules/ROOT/pages/jme3/advanced/physics.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Physics: Gravity, Collisions, Forces</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>A physics simulation is used in games and applications where objects are exposed to physical forces: Think of games like pool billiard and car racing simulators. Massive objects are pulled by gravity, forces cause objects to gain momentum, friction slows them down, solid objects collide and bounce off one another, etc. Action and Adventure games also make use of physics to implement solid obstacles, falling, and jumping.</p>
+</div>
+<div class="paragraph">
+<p>The jMonkeyEngine3 has built-in support for <a href="http://jbullet.advel.cz">jBullet Physics</a> (based on <a href="http://bulletphysics.org">Bullet Physics</a>) via the <code>com.jme3.bullet</code> package. This article focuses mostly on the RigidBodyControl, but also introduces you to others.</p>
+</div>
+<div class="paragraph">
+<p>If you are looking for info on how to respond to physics events such as collisions, read about <a href="physics_listeners.html" class="page">Physics Listeners</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="technical-overview"><a class="anchor" href="#technical-overview"></a>Technical Overview</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>jME3 has a complete, slightly adapted but fully wrapped Bullet <abbr title="Application Programming Interface">API</abbr> that uses normal jME math objects (Vector3f, Quaternion etc) as input/output data. All normal bullet objects like RigidBodies, Constraints (called “Joints in jME3) and the various collision shapes are available, all mesh formats can be converted from jME to bullet.</p>
+</div>
+<div class="paragraph">
+<p>The PhysicsSpace object is the central object in bullet and all objects have to be added to it so they are physics-enabled. You can create multiple physics spaces as well to have multiple independent physics simulations or to run simulations in the background that you step at a different pace. You can also create a Bullet PhysicsSpace in jME3 with a <code>com.jme3.bullet.BulletAppState</code> which runs a PhysicsSpace along the update loop, which is the easiest way to instantiate a physics space. It can be run in a mode where it runs in parallel to rendering, yet syncs to the update loop so you can apply physics changes safely during the update() calls of Controls and SimpleApplication.</p>
+</div>
+<div class="paragraph">
+<p>The base bullet objects are also available as simple to use controls that can be attached to spatials to directly control these by physics forces and influences. The RigidBodyControl for example includes a simple constructor that automatically creates a hull collision shape or a mesh collision shape based on the given input mass and the mesh of the spatial it is attached to. This makes enabling physics on a Geometry as simple as “spatial.addControl(new RigidBodyControl(1));</p>
+</div>
+<div class="paragraph">
+<p>Due to some differences in how bullet and jME handle the scene and other objects relations there is some things to remember about the controls implementation:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The collision shape is not automatically updated when the spatial mesh changes</p>
+<div class="ulist">
+<ul>
+<li>
+<p>You can update it by reattaching the control or by using the CollisionShapeFactory yourself.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>In bullet the scale parameter is on the collision shape (which equals the mesh in jME3) and not on the RigidBody so you cannot scale a collision shape without scaling any other RigidBody with reference of it</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Note that you should share collision shapes in general and that j3o files loaded from file do that as well when instantiated twice so this is something to consider.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Physics objects remain in the physics space when their spatials are detached from the scene graph!</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Use PhysicsSpace.remove(physicsObject) or simply physicsControl.setEnabled(false); to remove them from the PhysicsSpace</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>If you apply forces to the physics object in an update() call they might not get applied because internally bullet still runs at 60fps while your app might run at 120.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>You can use the PhysicsTickListener interface and register with the physics space and use the preTick() method to be sure that you actually apply the force in the right moment.</p>
+</li>
+<li>
+<p>Reading values from the physics objects in the update loop should always yield correct values but they might not change over several fames due to the same reason.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Reading or writing from the physics objects during the render phase is not recommended as this is when the physics space is stepped and would cause data corruption. This is why the debug display does not work properly in a threaded BulletAppState</p>
+</li>
+<li>
+<p>Bullet always uses world coordinates, there is no such concept as nodes so the object will be moved into a world location with no regard to its parent spatial.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>You can configure this behavior using the setApplyPhysicsLocal() method on physics controls but remember the physics space still runs in world coordinates so you can visually detach things that will actually still collide in the physics space.</p>
+</li>
+<li>
+<p>To use the local applying to simulate e.g. the internal physics system of a train passing by, simply create another BulletAppState and add all models with physics controls in local mode to a node. When you move the node the physics will happen all the same but the objects will move along with the node.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>When you use this physics simulation, values correspond to the following units:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>1 length unit (1.0f) equals 1 meter,</p>
+</li>
+<li>
+<p>1 weight unit (1.0f) equals 1 kilogram,</p>
+</li>
+<li>
+<p>most torque and rotation values are expressed in radians.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Bullet physics runs internally at 60fps by default. This rate is not dependent on the actual framerate and it does not lock the framerate at 60fps. Instead, when the actual fps is higher than the physics framerate the system will display interpolated positions for the physics objects. When the framerate is lower than the physics framerate, the physics space will be stepped multiple times per frame to make up for the missing calculations.</p>
+</div>
+<div class="paragraph">
+<p>Internally, the updating and syncing of the actual physics objects in the BulletAppState happens in the following way:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>collision callbacks (<code>BulletAppState.update()</code>)</p>
+</li>
+<li>
+<p>user update (<code>simpleUpdate</code> in main loop, <code>update()</code> in Controls and AppStates)</p>
+</li>
+<li>
+<p>physics to scenegraph syncing and applying (<code>updateLogicalState()</code>)</p>
+</li>
+<li>
+<p>stepping physics (before or in parallel to <code>Application.render()</code>)</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="sample-code"><a class="anchor" href="#sample-code"></a>Sample Code</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Full code samples are here:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/bullet/TestBrickWall.java">TestBrickWall.java</a></p>
+</li>
+<li>
+<p><a href="https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/bullet/TestQ3.java">TestQ3.java</a></p>
+</li>
+<li>
+<p><a href="https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/bullet/TestSimplePhysics.java">TestSimplePhysics.java</a></p>
+</li>
+<li>
+<p><a href="https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/bullet/TestWalkingChar.java">TestWalkingChar.java</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="physics-application"><a class="anchor" href="#physics-application"></a>Physics Application</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A short overview of how to write a jME application with Physics capabilities:</p>
+</div>
+<div class="paragraph">
+<p>Do the following once per application to gain access to the <code>physicsSpace</code> object:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Make your application extend <code>com.jme3.app.SimpleApplication</code>.</p>
+</li>
+<li>
+<p>Create a BulletAppState field:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">private BulletAppState bulletAppState;</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Initialize your bulletAppState and attach it to the state manager:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public void simpleInitApp() {
+    bulletAppState = new BulletAppState();
+    stateManager.attach(bulletAppState);</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In your application, you can always access the <code>BulletAppState</code> via the ApplicationStateManager:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">BulletAppState bas = app.getStateManager().getState(BulletAppState.class);</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>For each Spatial that you want to be physical:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create a CollisionShape.</p>
+</li>
+<li>
+<p>Create the PhysicsControl from the CollisionShape and a mass value.</p>
+</li>
+<li>
+<p>Add the PhysicsControl to its Spatial.</p>
+</li>
+<li>
+<p>Add the PhysicsControl to the PhysicsSpace.</p>
+</li>
+<li>
+<p>Attach the Spatial to the rootNode (as usual).</p>
+</li>
+<li>
+<p>(Optional) Implement the <code>PhysicsCollisionListener</code> interface to respond to <code>PhysicsCollisionEvent</code>s.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s look at the details:</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="create-a-collisionshape"><a class="anchor" href="#create-a-collisionshape"></a>Create a CollisionShape</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A CollisionShape is a simplified shape for which physics are easier to calculate than for the true shape of the model. This simplication approach speeds up the simulation greatly.</p>
+</div>
+<div class="paragraph">
+<p>Before you can create a Physics Control, you must create a CollisionShape from the <code>com.jme3.bullet.collision.shapes</code> package. (Read the tip under &#8220;Physics Controls Code Samples&#8221; on how to use default CollisionShapes for Boxes and Spheres.)</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 40%;">
+<col style="width: 35%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Non-Mesh CollisionShape</th>
+<th class="tableblock halign-left valign-top">Usage</th>
+<th class="tableblock halign-left valign-top">Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>BoxCollisionShape()</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Box-shaped behaviour, does not roll.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Oblong or cubic objects like bricks, crates, furniture.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>SphereCollisionShape()</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Spherical behaviour, can roll.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Compact objects like apples, soccer balls, cannon balls, compact spaceships.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>CylinderCollisionShape()</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Tube-shaped and disc-shaped behaviour, can roll on one side.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Oblong objects like pillars.<br>
+Disc-shaped objects like wheels, plates.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>CompoundCollisionShape()</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>A CompoundCollisionShape allows custom combinations of shapes. Use the <code>addChildShape()</code> method on the compound object to add other shapes to it and position them relative to one another.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>A car with wheels (1 box + 4 cylinders), etc.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>CapsuleCollisionShape()</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>A built-in compound shape of a vertical cylinder with one sphere at the top and one sphere at the bottom. Typically used with <a href="walking_character.html" class="page">CharacterControls</a>: A cylinder-shaped body does not get stuck at corners and vertical obstacles; the rounded top and bottom do not get stuck on stair steps and ground obstacles.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Persons, animals.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>SimplexCollisionShape()</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>A physical point, line, triangle, or rectangle Shape, defined by one to four points.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Guardrails</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>PlaneCollisionShape()</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>A 2D plane. Very fast.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Flat solid floor or wall.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>All non-mesh CollisionShapes can be used for dynamic, kinematic, as well as static Spatials. (Code samples see below)</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 40%;">
+<col style="width: 35%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Mesh CollisionShapes</th>
+<th class="tableblock halign-left valign-top">Usage</th>
+<th class="tableblock halign-left valign-top">Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>MeshCollisionShape</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>A mesh-accurate shape for static or kinematic Spatials. Can have complex shapes with openings and appendages.<br>
+<strong>Limitations:</strong> Collisions between two mesh-accurate shapes cannot be detected, only non-mesh shapes can collide with this shape. This Shape does not work with dynamic Spatials.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>A whole static game level model.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>HullCollisionShape</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>A less accurate shape for dynamic Spatials that cannot easily be represented by a CompoundShape.<br>
+<strong>Limitations:</strong> The shape is convex (behaves as if you gift-wrapped the object), i.e. openings, appendages, etc, are not individually represented.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>A dynamic 3D model.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>GImpactCollisionShape</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>A mesh-accurate shape for dynamic Spatials. It uses <a href="http://gimpact.sourceforge.net/">http://gimpact.sourceforge.net/</a>.<br>
+<strong>Limitations:</strong> CPU intensive, use sparingly! We recommend using HullCollisionShape (or CompoundShape) instead to improve performance. Collisions between two mesh-accurate shapes cannot be detected, only non-mesh shapes can collide with this shape.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Complex dynamic objects (like spiders) in Virtual Reality or scientific simulations.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>HeightfieldCollisionShape</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>A mesh-accurate shape optimized for static terrains. This shape is much faster than other mesh-accurate shapes.<br>
+<strong>Limitations:</strong> Requires heightmap data. Collisions between two mesh-accurate shapes cannot be detected, only non-mesh shapes can collide with this shape.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Static terrains.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>On a CollisionShape, you can apply a few properties</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 30%;">
+<col style="width: 45%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">CollisionShape Method</th>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>setScale(new Vector3f(2f,2f,2f))</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>You can change the scale of collisionshapes (whether it be, Simple or Mesh). You cannot change the scale of a CompoundCollisionShape however. A sphere collision shape, will change its radius based on the X component of the vector passed in. You must scale a collision shape before attaching it to the physicsSpace, or you must readd it to the physicsSpace each time the scale changes.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Scale a player in the Y axis by 2:<br>
+<code>new Vector3f(1f,2f,1f)</code></p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The mesh-accurate shapes can use a CollisionShapeFactory as constructor (code samples see below).</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Pick the simplest and most applicable shape for the mesh for what you want to do: If you give a box a sphere collision shape, it will roll; if you give a ball a box collision shape, it will sit on a slope. If the shape is too big, the object will seem to float; if the shape is too small it will seem to sink into the ground. During development and debugging, you can make collision shapes visible by adding the following line after the bulletAppState initialization:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// JME sdk 3.0.10  and earlier
+bulletAppState.getPhysicsSpace().enableDebug(assetManager);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>or</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// newer versions
+bulletAppState.setDebugEnabled(true);</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="collisionshape-code-samples"><a class="anchor" href="#collisionshape-code-samples"></a>CollisionShape Code Samples</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>One way of using a constructor and a Geometry&#8217;s mesh for static Spatials:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>MeshCollisionShape level_shape =
+    new MeshCollisionShape(level_geo.getMesh());</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>One way of using a constructor and a Geometry&#8217;s mesh for dynamic Spatials:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>HullCollisionShape shape =
+    new HullCollisionShape(katamari_geo.getMesh());</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Creating a dynamic compound shape for a whole Node and subnodes:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>CompoundCollisionShape myComplexShape =
+    CollisionShapeFactory.createMeshShape((Node) myComplexGeometry );</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Creating a dynamic HullCollisionShape shape (or CompoundCollisionShape with HullCollisionShapes as children) for a Geometry:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>CollisionShape shape =
+    CollisionShapeFactory.createDynamicMeshShape(spaceCraft);</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>An angular, non-mesh-accurate compound shape:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>CompoundCollisionShape boxShape =
+    CollisionShapeFactory.createBoxShape((Node) crate_geo);</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A round, non-mesh-accurate compound shape:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>SphereCollisionShape sphereShape =
+    new SphereCollisionShape(1.0f);</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="create-physicscontrol"><a class="anchor" href="#create-physicscontrol"></a>Create PhysicsControl</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>BulletPhysics are available in jME3 through PhysicsControls classes from the com.jme3.bullet.control package. jME3&#8217;s PhysicsControl classes directly extend BulletPhysics objects and are the recommended way to use physics in a jME3 application. PhysicsControls are flexible and can be added to any Spatial to make it act according to physical properties.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 40%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Standard PhysicsControls</th>
+<th class="tableblock halign-left valign-top">Usage</th>
+<th class="tableblock halign-left valign-top">Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>RigidBodyControl</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The most commonly used PhysicsControl. You can use it for dynamic objects (solid objects that freely affected by collisions, forces, or gravity), for static objects (solid but not affected by any forces), or kinematic objects (remote-controlled solid objects).</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Impacting projectiles, moving obstacles like crates, rolling and bouncing balls, elevators, flying aircaft or space ships.<br>
+Solid immobile floors, walls, static obstacles.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>GhostControl</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Use for collision and intersection detection between physical objects. A GhostControl itself is <em>non-solid</em> and invisible. GhostControl moves with the Spatial it is attached to. Use GhostControls to <a href="physics_listeners.html" class="page">implement custom game interactions</a> by adding it to a visible Geometry.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>A monster&#8217;s “aggro radius, CharacterControl collisions, motion detectors, photo-electric alarm sensors, poisonous or radioactive perimeters, life-draining ghosts, etc.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 40%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Special PhysicsControls</th>
+<th class="tableblock halign-left valign-top">Usage</th>
+<th class="tableblock halign-left valign-top">Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>VehicleControl<br>
+PhysicsVehicleWheel</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Special Control used for <a href="vehicles.html" class="page">&quot;terrestrial&quot;  vehicles with suspension and wheels</a>.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Cars, tanks, hover crafts, ships, motorcycles…</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>CharacterControl</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Special Control used for <a href="walking_character.html" class="page">Walking Character</a>s.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Upright walking persons, animals, robots…</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>BetterCharacterControl</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Special Control used for <a href="walking_character.html" class="page">Walking Character</a>s.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Upright walking persons, animals, robots. Replaces CharacterControl.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>RagDollControl</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Special Control used for <a href="ragdoll.html" class="page">collapsing, flailing, or falling characters</a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Falling persons, animals, robots, “Rag dolls</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Click the links for details on the special PhysicsControls. This article is about RigidBodyControl.</p>
+</div>
+<div class="sect2">
+<h3 id="physics-control-code-samples"><a class="anchor" href="#physics-control-code-samples"></a>Physics Control Code Samples</h3>
+<div class="paragraph">
+<p>The most commonly used physics control is RigidBodyControl.  The RigidBodyControl constructor takes up to two parameters:  a collision shape and a mass (a float in kilograms).  The mass parameter also determines whether the object is dynamic (movable) or static (fixed). For a static object such as a floor or wall, specify zero mass.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">RigidBodyControl myThing_phys =
+    new RigidBodyControl( myThing_shape , 123.0f ); // dynamic</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">RigidBodyControl myDungeon_phys =
+    new RigidBodyControl( myDungeon_shape , 0.0f ); // static</code></pre>
+</div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If you give your floor a non-zero mass, it will fall out of the scene!</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The following creates a box Geometry with the correct default BoxCollisionShape:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Box b = new Box(1,1,1);
+Geometry box_geo = new Geometry("Box", b);
+box_geo.addControl(new RigidBodyControl( 1.0f )); // explicit non-zero mass, implicit BoxCollisionShape</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following creates a MeshCollisionShape for a whole loaded (static) scene:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">...
+gameLevel.addControl(new RigidBodyControl(0.0f)); // explicit zero mass, implicit MeshCollisionShape</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Spheres and Boxes automatically fall back on the correct default CollisionShape if you do not specify a CollisionShape in the RigidBodyControl constructor. Complex static objects can fall back on MeshCollisionShapes, unless it is a Node, in which case it will become a CompoundCollisionShape containing a MeshCollisionShape.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="add-physicscontrol-to-spatial"><a class="anchor" href="#add-physicscontrol-to-spatial"></a>Add PhysicsControl to Spatial</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>For each physical Spatial in the scene:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Add a PhysicsControl to a Spatial.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">myThing_geo.addControl(myThing_phys);</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Remember to also attach the Spatial to the rootNode, as always!</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="add-physicscontrol-to-physicsspace"><a class="anchor" href="#add-physicscontrol-to-physicsspace"></a>Add PhysicsControl to PhysicsSpace</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The PhysicsSpace is an object in BulletAppState that is like a rootNode for Physics Controls.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Just like you add the Geometry to the rootNode, you add its PhysicsControl to the PhysicsSpace.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>bulletAppState.getPhysicsSpace().add(myThing_phys);
+rootNode.attachChild(myThing_geo);</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>When you remove a Geometry from the scene and detach it from the rootNode, also remove the PhysicsControl from the PhysicsSpace:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>bulletAppState.getPhysicsSpace().remove(myThing_phys);
+myThing_geo.removeFromParent();</pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>You can either add the <em>PhysicsControl</em> to the PhysicsSpace, or add the PhysicsControl to the Geometry and then add the <em>Geometry</em> to the PhysicsSpace. jME3 understands both and the outcome is the same.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="changing-the-scale-of-a-physicscontrol"><a class="anchor" href="#changing-the-scale-of-a-physicscontrol"></a>Changing the Scale of a PhysicsControl</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To change the scale of a PhysicsControl you must change the scale of the collisionshape which belongs to it.</p>
+</div>
+<div class="paragraph">
+<p>MeshCollisionShapes can have a scale correctly set, but it only works when being constructed on a geometry (not a node). CompoundCollisionShapes cannot be scaled at this time(the type obtained when creating a CollisionShape from a Node i.e using imported models).</p>
+</div>
+<div class="paragraph">
+<p>When you import a model from blender, it often comes as a Node (even if it only contains 1 mesh), which is by de-facto automatically converted to a CompoundCollisionShape. So when you try to scale this it won&#8217;t work! Below illustrates an example, of how to scale an imported model:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Doesn't scale
+// This modified version contains Node -&gt; Geometry (name = "MonkeyHeadGeom")
+Spatial model = assetManager.loadModel("Models/MonkeyHead.j3o");
+model.addControl(new RigidBodyControl(0));
+// Won't work as this is now a CompoundCollisionShape containing a MeshCollisionShape
+model.getControl(RigidBodyControl.class).getCollisionShape().setScale(new Vector3f(2, 2, 2));
+bulletAppState.getPhysicsSpace().add(model);
+
+// Works fine
+Spatial model = assetManager.loadModel("Models/MonkeyHead.j3o"); // Same Model
+ // IMPORTANT : You must navigate to the Geometry for this to work
+Geometry geom = ((Geometry) ((Node) model).getChild("MonkeyHeadGeom"));
+geom.addControl(new RigidBodyControl(0));
+// Works great (scaling of a MeshCollisionShape)
+geom.getControl(RigidBodyControl.class).getCollisionShape().setScale(new Vector3f(2, 2, 2));
+bulletAppState.getPhysicsSpace().add(geom);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With the corresponding output below:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="http://i.imgur.com/Josua.png" alt="http://i.imgur.com/fAXlF.png" width="45%"></span>
+<span class="image"><img src="http://i.imgur.com/fAXlF.png" alt="http://i.imgur.com/fAXlF.png" width="45%"></span></p>
+</div>
+<div class="sect2">
+<h3 id="physicsspace-code-samples"><a class="anchor" href="#physicsspace-code-samples"></a>PhysicsSpace Code Samples</h3>
+<div class="paragraph">
+<p>The PhysicsSpace also manages global physics settings. Typically, you can leave the defaults, and you don&#8217;t need to change the following settings, but it&#8217;s good to know what they are for:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">bulletAppState.getPhysicsSpace() Method</th>
+<th class="tableblock halign-left valign-top">Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>setGravity(new Vector3f(0, -9.81f, 0));</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the global gravity.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>setAccuracy(1f/60f);</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies physics accuracy. The higher the accuracy, the slower the game. Decrease value if objects are passing through one another, or bounce oddly. (e.g. Change value from 1f/60f to something like 1f/80f.)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>setMaxSubSteps(4);</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Compensates low FPS: Specifies the maximum amount of extra steps that will be used to step the physics when the game fps is below the physics fps. This maintains determinism in physics in slow (low-fps) games. For example a maximum number of 2 can compensate for framerates as low as 30 fps (physics has a default accuracy of 60 fps). Note that setting this value too high can make the physics drive down its own fps in case its overloaded.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>setWorldMax(new Vector3f(10000f, 10000f, 10000f));<br>
+setWorldMin(new Vector3f(-10000f, -10000f, -10000f));</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the size of the physics space as two opposite corners (only applies to AXIS_SWEEP broadphase).</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="specify-physical-properties"><a class="anchor" href="#specify-physical-properties"></a>Specify Physical Properties</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>After you have registered, attached, and added everything, you can adjust physical properties or apply forces.</p>
+</div>
+<div class="paragraph">
+<p>On a RigidBodyControl, you can set the following physical properties.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">RigidBodyControl Method</th>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>setGravity(new Vector3f(0f,-9.81f,0f))</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>You can change the gravity of individual physics objects after they were added to the PhysicsSpace. Gravity is a vector pointing from this Spatial towards the source of gravity. The longer the vector, the stronger is gravity.<br>
+If gravity is the same absolute direction for all objects (e.g. on a planet surface), set this vector globally on the PhysicsSpace object and not individually.<br>
+If the center of gravity is relative (e.g. towards a black hole) then setGravity() on each Spatial to constantly adjust the gravity vectors at each tick of their update() loops.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>For planet earth:<br>
+<code>new Vector3f(0f,-9.81f,0f)</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>setMass(1f)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Sets the mass in kilogram. Dynamic objects have masses &gt; 0.0f. Heavy dynamic objects need more force to be moved and light ones move with small amounts of force.<br>
+Static immobile objects (walls, floors, including buildings and terrains) must have a mass of zero!</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Person: 60f, ball: 1.0f<br>
+Floor: 0.0f (!)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>setFriction(1f)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Friction.<br>
+Slippery objects have low friction. The ground has high friction.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Ice, slides: 0.0f<br>
+Soil, concrete, rock: 1.0f</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>setRestitution(0.0f)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Bounciness. By default objects are not bouncy (0.0f). For a bouncy rubber object set this &gt; 0.0f.<br>
+Both the object and the surface must have non-zero restitution for bouncing to occur.<br>
+This setting has an impact on performance, so use it sparingly.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Brick: 0.0f<br>
+Rubber ball: 1.0f</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>setCcdMotionThreshold()</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The amount of motion in 1 physics tick to trigger the continuous motion detection in moving objects that push one another. Rarely used, but necessary if your moving objects get stuck or roll through one another.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>around 0.5 to 1 * object diameter</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>On a RigidBodyControl, you can apply the following physical forces:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">RigidBodyControl Method</th>
+<th class="tableblock halign-left valign-top">Motion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>setPhysicsLocation()</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Positions the objects. Do not use setLocalTranslation() for physical objects. Important: Make certain not to make CollisionShapes overlap when positioning them.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>setPhysicsRotation()</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Rotates the object. Do not use setLocalRotate() for physical objects.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>setKinematic(true)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>By default, RigidBodyControls are dynamic (kinematic=false) and are affected by forces. If you set kinematic=true, the object is no longer affected by forces, but it still affects others. A kinematic is solid, and must have a mass.<br>
+(See detailed explanation below.)</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="sect2">
+<h3 id="kinematic-vs-dynamic-vs-static"><a class="anchor" href="#kinematic-vs-dynamic-vs-static"></a>Kinematic vs Dynamic vs Static</h3>
+<div class="paragraph">
+<p>All physical objects…</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>must not overlap.</p>
+</li>
+<li>
+<p>can detect collisions and report several values about the impact.</p>
+</li>
+<li>
+<p>can respond to collisions dynamically, or statically, or kinematically.</p>
+</li>
+</ul>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Static</th>
+<th class="tableblock halign-left valign-top">Kinematic</th>
+<th class="tableblock halign-left valign-top">Dynamic</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Examples</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Immobile obstacles: Floors, walls, buildings, …</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Remote-controlled solid objects: Airships, meteorites, elevators, doors; networked or remote-controlled NPCs; invisible “airhooks for hinges and joints.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Interactive objects: Rolling balls, movable crates, falling pillars, zero-g space ship…</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Does it have a mass?</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>no, 0.0f</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>yes<sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnotedef_1" title="View footnote.">1</a>]</sup>, &gt;0.0f</p>
+</div>
+<div id="footnotes">
+<hr>
+<div class="footnote" id="_footnotedef_1">
+<a href="#_footnoteref_1">1</a>. Inertia is calculated for kinematic objects, and you need mass to do that.
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>yes, &gt;0.0f</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>How does it move?</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>never</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>setLocalTranslation();</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>setLinearVelocity(); applyForce();<br>
+setWalkDirection(); for CharacterControl</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>How to place in scene?</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>setPhysicsLocation();<br>
+setPhysicsRotation();</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>setLocalTranslation();<br>
+setLocalRotation();</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>setPhysicsLocation();<br>
+setPhysicsRotation();</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Can it move and push others?</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>no</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>yes</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>yes</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Is is affected by forces?<br>
+(Falls when it mid-air? Can be pushed by others?)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>no</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>no</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>yes</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>How to activate this behaviour?</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>setMass(0f);<br>
+setKinematic(false);</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>setMass(1f);<br>
+setKinematic(true);</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>setMass(1f);<br>
+setKinematic(false);</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="sect3">
+<h4 id="when-do-i-use-kinematic-objects"><a class="anchor" href="#when-do-i-use-kinematic-objects"></a>When Do I Use Kinematic Objects?</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Kinematics are solid and characters can “stand on them.</p>
+</li>
+<li>
+<p>When they collide, Kinematics push dynamic objects, but a dynamic object never pushes a Kinematic.</p>
+</li>
+<li>
+<p>You can hang kinematics up “in mid-air and attach other PhysicsControls to them using <a href="hinges_and_joints.html" class="page">hinges and joints</a>. Picture them as “air hooks for flying aircraft carriers, floating islands in the clouds, suspension bridges, swings, chains…</p>
+</li>
+<li>
+<p>You can use Kinematics to create mobile remote-controlled physical objects, such as moving elevator platforms, flying blimps/airships. You have full control how Kinematics move, they never “fall or “topple over.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The position of a kinematic RigidBodyControl is updated automatically depending on its spatial&#8217;s translation. You move Spatials with a kinematic RigidBodyControl programmatically, that means you write translation and rotation code in the update loop. You describe the motion of kinematic objects either by using methods such as <code>setLocalTranslation()</code> or <code>move()</code>, or by using a <a href="motionpath.html" class="page">MotionPath</a>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="forces-moving-dynamic-objects"><a class="anchor" href="#forces-moving-dynamic-objects"></a>Forces: Moving Dynamic Objects</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Use the following methods to move dynamic physical objects.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">PhysicsControl Method</th>
+<th class="tableblock halign-left valign-top">Motion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>setLinearVelocity(new Vector3f(0f,0f,1f))</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Set the linear speed of this object.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>setAngularVelocity(new Vector3f(0f,0f,1f))</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Set the rotational speed of the object; the x, y and z component are the speed of rotation around that axis.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>applyCentralForce(…)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Move (push) the object once with a certain moment, expressed as a Vector3f.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>applyForce(…)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Move (push) the object once with a certain moment, expressed as a Vector3f. Optionally, you can specify where on the object the pushing force hits.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>applyTorque(…)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Rotate (twist) the object once around its axes, expressed as a Vector3f.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>applyImpulse(…)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>An idealised change of momentum. This is the kind of push that you would use on a pool billiard ball.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>applyTorqueImpulse(…)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>An idealised change of momentum. This is the kind of push that you would use on a pool billiard ball.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>clearForces()</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Cancels out all forces (force, torque) etc and stops the motion.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>It is technically possible to position PhysicsControls using setLocalTranslation(), e.g. to place them in their start position in the scene. However you must be very careful not to cause an “impossible state where one physical object overlaps with another! Within the game, you typically use the setters shown here exclusively.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>PhysicsControls also support the following advanced features:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">PhysicsControl Method</th>
+<th class="tableblock halign-left valign-top">Property</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>setCollisionShape(collisionShape)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Changes the collision shape after creation.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>setCollideWithGroups()<br>
+setCollisionGroup()<br>
+addCollideWithGroup(COLLISION_GROUP_01)<br>
+removeCollideWithGroup(COLLISION_GROUP_01)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Collision Groups are integer bit masks – enums are available in the CollisionObject. All physics objects are by default in COLLISION_GROUP_01. Two objects collide when the collideWithGroups set of one contains the Collision Group of the other. Use this to improve performance by grouping objects that will never collide in different groups (the the engine saves times because it does not need to check on them).</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>setDamping(float, float)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The first value is the linear threshold and the second the angular. This simulates dampening of forces, for example for underwater scenes.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>setAngularFactor(1f)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Set the amount of rotation that will be applied. A value of zero will cancel all rotational force outcome. (?)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>setSleepingThreshold(float,float)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Sets the sleeping thresholds which define when the object gets deactivated to save resources. The first value is the linear threshold and the second the angular. Low values keep the object active when it barely moves (slow precise performance), high values put the object to sleep immediately (imprecise fast performance). (?)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>setCcdMotionThreshold(0f)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Sets the amount of motion that has to happen in one physics tick to trigger the continuous motion detection in moving objects that push one another. This avoids the problem of fast objects moving through other objects. Set to zero to disable (default).</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>setCcdSweptSphereRadius(.5f)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Bullet does not use the full collision shape for continuous collision detection, instead it uses a “swept sphere shape to approximate a motion, which can be imprecise and cause strange behaviors such as objects passing through one another or getting stuck. Only relevant for fast moving dynamic bodies.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>You can <code>setApplyPhysicsLocal(true)</code> for an object to make it move relatively to its local physics space. You would do that if you need a physics space that moves with a node (e.g. a spaceship with artificial gravity surrounded by zero-g space). By default, it&#8217;s set to false, and all movement is relative to the world.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="best-practices"><a class="anchor" href="#best-practices"></a>Best Practices</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Multiple Objects Too Slow?</strong> Do not overuse PhysicsControls. Although PhysicsControls are put to “sleep” when they are not moving, creating a world solely out of dynamic physics objects will quickly bring you to the limits of your computer&#8217;s capabilities.<br>
+<strong>Solution:</strong> Improve performance by replacing some physical Spatials with non-physical Spatials. Use the non-physical ones for non-solid things for which you do not need to detect collisions – foliage, plants, effects, ghosts, all remote or unreachable objects.</p>
+</li>
+<li>
+<p><strong>Complex Shape Too Slow?</strong> Breaking the level into manageable pieces helps the engine improve performance: The less CPU-intensive <a href="http://en.wikipedia.org/wiki/Sweep_and_prune">broadphase</a> filters out parts of the scene that are out of reach. It only calculates the collisions for objects that are actually close to the action.<br>
+<strong>Solution:</strong> A huge static city or terrain model should never be loaded as one huge mesh. Divide the scene into multiple physics objects, with each its own CollisionShape. Choose the most simple CollisionShape possible; use mesh-accurate shapes only for the few cases where precision is more important than speed. For example, you can use the very fast <code>PlaneCollisionShape</code> for flat streets, floors and the outside edge of the scene, if you keep these pieces separate.</p>
+</li>
+<li>
+<p><strong>Eject?</strong> If you have physical nodes jittering wildy and being ejected “for no apparent reason, it means you have created an impossible state – solid objects overlapping. This can happen when you position solid spatials too close to other solid spatials, e.g. when moving them with setLocalTranslation().<br>
+<strong>Solution:</strong> Use the debug mode to make CollisionShapes visible and verify that CollisionShapes do not overlap.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>bulletAppState.getPhysicsSpace().enableDebug(assetManager);</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Buggy?</strong> If you get weird behaviour, such as physical nodes passing through one another, or getting stuck for no reason.<br>
+<strong>Solution:</strong> Look at the physics space accessors and change the acuracy and other parameters.</p>
+</li>
+<li>
+<p><strong>Need more interactivity?</strong> You can actively <em>control</em> a physical game by triggering forces. You may also want to be able <em>respond</em> to collisions, e.g. by substracting health, awarding points, or by playing a sound.<br>
+<strong>Solution:</strong> To specify how the game responds to collisions, you use <a href="physics_listeners.html" class="page">Physics Listeners</a>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

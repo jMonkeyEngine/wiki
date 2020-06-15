@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Saving and Loading Materials with .j3m Files :: jMonkeyEngine Docs</title>
+    <link rel="canonical" href="https://wiki.jmonkeyengine.org/docs/jme3/advanced/j3m_material_files.html">
+    <meta name="keywords" content="material, texture, file, sdk, wireframe, documentation">
+    <meta name="generator" content="Antora 2.3.3">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://wiki.jmonkeyengine.org">jMonkeyEngine Docs</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Resources</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Resource A</a>
+            <a class="navbar-item" href="#">Resource B</a>
+            <a class="navbar-item" href="#">Resource C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="docs" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../../jme3.html">Docs</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../documentation.html">Getting Started</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="https://javadoc.jmonkeyengine.org/v3.3.2-stable">JavaDoc</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../jme3.html">jMonkeyEngine 3</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Beginner Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_simpleapplication.html">Hello SimpleApplication</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_node.html">Hello Node</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_asset.html">Hello Asset</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_main_event_loop.html">Hello Main Event Loop</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_input_system.html">Hello Input System</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_material.html">Hello Material</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_animation.html">Hello Animation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_picking.html">Hello Picking</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_collision.html">Hello Collision</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_terrain.html">Hello Terrain</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_audio.html">Hello Audio</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_effects.html">Hello Effects</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_physics.html">Hello Physics</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Intermediate Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/best_practices.html">Best Practices</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/simpleapplication.html">Simple Application</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../features.html">Features</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/optimization.html">Optimization</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../faq.html">FAQ</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Math Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../math_for_dummies.html">Math For Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/math.html">Math</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../math.html">More Math</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../rotate.html">Rotate</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../math_video_tutorials.html">Math Video Tutorials</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">3D Graphics Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/multi-media_asset_pipeline.html">Multi-Media Asset Pipeline</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../scenegraph_for_dummies.html">Scenegraph for Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../beginner/hellovector.html">Hello Vector</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../terminology.html">Terminology</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/how_to_use_materials.html">How to Use Materials</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/transparency_sorting.html">Transparency and Sorting</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../external/blender.html">Importing from Blender</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../external/3dsmax.html">Importing from 3DS Max</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../logo.html">Logo Usage</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../bsd_license.html">License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../github_tips.html">Github Tips</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">SDK</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../sdk.html">jMonkeyEngine SDK</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Docs</span>
+    <span class="version">master</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <span class="title">Antora Default UI</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../antora-ui-default/index.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <span class="title">Docs</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../../jme3.html">master</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../documentation.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../jme3.html">Docs</a></li>
+    <li><a href="j3m_material_files.html">Saving and Loading Materials with .j3m Files</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/jMonkeyEngine/wiki/edit/antora-setup/docs/modules/ROOT/pages/jme3/advanced/j3m_material_files.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Saving and Loading Materials with .j3m Files</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>In the <a href="material_definitions.html" class="page">Material Definitions</a> article you learned how to configure <a href="materials_overview.html" class="page">Materials</a>  programmatically in Java code. If you have certain commonly used Materials that never change, you can clean up the amount of Java code that clutters your init method, by moving material settings into .j3m files. Then later in your code, you only need to call one setter instead of several to apply the material.</p>
+</div>
+<div class="paragraph">
+<p>If you want to colorize simple shapes (one texture all around), then .j3m are the most easily customizable solution. J3m files can contain texture mapped materials, but as usual you have to create the textures in an external editor, especially if you use UV-mapped textures.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="writing-the-j3m-file"><a class="anchor" href="#writing-the-j3m-file"></a>Writing the .j3m File</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>For every Material, create a file and give it a name that describes it: e.g. <code>SimpleBump.j3m</code></p>
+</li>
+<li>
+<p>Place the file in your project&#8217;s <code>assets/Materials/</code> directory, e.g. <code>MyGame/src/assets/Materials/SimpleBump.j3m</code></p>
+</li>
+<li>
+<p>Edit the file and add content using the following Syntax, e.g.:</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Material shiny bumpy rock : Common/MatDefs/Light/Lighting.j3md {
+     MaterialParameters {
+         Shininess: 8.0
+         NormalMap: Textures/bump_rock_normal.png
+         UseMaterialColors : true
+         Ambient  : 0.0 0.0 0.0 1.0
+         Diffuse  : 1.0 1.0 1.0 1.0
+         Specular : 0.0 0.0 0.0 1.0
+     }
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>How this file is structured:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Header</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><code>Material</code> is a fixed keyword, keep it.</p>
+</li>
+<li>
+<p><code>shiny bumpy rock</code> is a descriptive string that you can make up. Choose a name to help you remember for what you intend to use this material.</p>
+</li>
+<li>
+<p>After the colon, specify on which <a href="materials_overview.html" class="page">Material</a> definition you base this Material.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Now look up the choosen Material Definition&#8217;s parameters and their parameter types from the <a href="materials_overview.html" class="page">Material</a> table. Add one line for each parameter.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>For example: The series of four numbers in the example above represent RGBA color values.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Check the detailed syntax reference below if you are unsure.</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In the jMonkeyEngine SDK, use <span class="menuseq"><b class="menu">File</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="submenu">New File</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="submenu">Material</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">Empty Material File</b></span> to create .j3m files. You can edit .j3m files directly in the SDK. On the other hand, they are plain text files, so you can also create them in any plain text editor.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="how-to-use-j3m-materials"><a class="anchor" href="#how-to-use-j3m-materials"></a>How to Use .j3m Materials</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This is how you use the prepared .j3m Material on a Spatial. Since you have saved the .j3m file to your project&#8217;s Assets directory, the .j3m path is relative to <code>MyGame/src/assets/…</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">myGeometry.setMaterial(assetManager.loadMaterial("Materials/SimpleBump.j3m"));</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In the jMonkeyEngine SDK, open <span class="menuseq"><b class="menu">Windows</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">Palette</b></span> and drag the <code>JME Material: Set J3M</code> snippet into your code.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="syntax-reference-for-j3m-files"><a class="anchor" href="#syntax-reference-for-j3m-files"></a>Syntax Reference for .j3m Files</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="paths"><a class="anchor" href="#paths"></a>Paths</h3>
+<div class="paragraph">
+<p>Make sure to get the paths to the textures (.png, .jpg) and material definitions (.j3md) right.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The paths to the built-in .j3md files are relative to jME3&#8217;s Core Data directory. Just copy the path stated in the <a href="materials_overview.html" class="page">Material</a> table.<br>
+<code>Common/MatDefs/Misc/Unshaded.j3md</code> is resolved to <code>jme3/src/src/core-data/Common/MatDefs/Misc/Unshaded.j3md</code>.</p>
+</li>
+<li>
+<p>The paths to your textures are relative to your project&#8217;s assets directory.<br>
+<code>Textures/bump_rock_normal.png</code> is resolved to <code>MyGame/src/assets/Textures/bump_rock_normal.png</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="data-types"><a class="anchor" href="#data-types"></a>Data Types</h3>
+<div class="paragraph">
+<p>All data types (except Color) are specified in com.jme3.shader.VarType.
+&#8220;Color&#8221; is specified as Vector4 in J3MLoader.java.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">jME Java class</th>
+<th class="tableblock halign-left valign-top">.j3m file syntax</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Float</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>(basic Java type)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>a float (e.g. 0.72) , no comma or parentheses</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Vector2</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>com.jme3.math.Vector2f</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Two floats, no comma or parentheses</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Vector3</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>com.jme3.math.Vector3f</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Three floats, no comma or parentheses</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Vector4</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>com.jme3.math.Vector4f</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Four floats, no comma or parentheses</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Texture2D</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>com.jme3.texture.Texture2D</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Path to texture in <code>assets</code> directory, no quotation marks</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Texture3D</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>com.jme3.texture.Texture3D</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Same as texture 2D except it is interpreted as a 3D texture</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>TextureCubeMap</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>com.jme3.texture.TextureCubeMap</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Same as texture 2D except it is interpreted as a cubemap texture</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Boolean</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>(basic Java type)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>true</code> or <code>false</code></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Int</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>(basic Java type)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Integer number, no comma or parentheses</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Color</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>com.jme3.math.ColorRGBA</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Four floats, no comma or parentheses</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>FloatArray</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>(Currently not supported in J3M)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Vector2Array</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>(Currently not supported in J3M)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Vector3Array</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>(Currently not supported in J3M)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Vector4Array</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>(Currently not supported in J3M)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Matrix3</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>(Currently not supported in J3M)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Matrix4</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>(Currently not supported in J3M)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Matrix3Array</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>(Currently not supported in J3M)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Matrix4Array</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>(Currently not supported in J3M)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>TextureBuffer</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>(Currently not supported in J3M)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>TextureArray</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>(Currently not supported in J3M)</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="flip-and-repeat-syntax"><a class="anchor" href="#flip-and-repeat-syntax"></a>Flip and Repeat Syntax</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>A texture can be flipped using the following syntax <code>NormalMap: Flip Textures/bump_rock_normal.png</code></p>
+</li>
+<li>
+<p>A texture can be set to repeat using the following syntax <code>NormalMap: Repeat Textures/bump_rock_normal.png</code></p>
+</li>
+<li>
+<p>If a texture is set to both being flipped and repeated, Flip must come before Repeat</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="syntax-for-additional-render-states"><a class="anchor" href="#syntax-for-additional-render-states"></a>Syntax for Additional Render States</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>A Boolean can be &#8220;On&#8221; or &#8220;Off&#8221;</p>
+</li>
+<li>
+<p>Float is &#8220;123.0&#8221; etc</p>
+</li>
+<li>
+<p>Enum - values depend on the enum</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>See the <a href="https://javadoc.jmonkeyengine.org/v3.3.2-stable/com/jme3/material/RenderState.html">RenderState</a> javadoc for a detailed explanation of render states.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a href="https://javadoc.jmonkeyengine.org/v3.3.2-stable/com/jme3/material/RenderState.html#setWireframe-boolean-">Wireframe</a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>(Boolean)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Enable wireframe rendering mode</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a href="https://javadoc.jmonkeyengine.org/v3.3.2-stable/com/jme3/material/RenderState.html#setFaceCullMode-com.jme3.material.RenderState.FaceCullMode-">FaceCull</a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>(Enum: FaceCullMode)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Set face culling mode (Off, Front, Back, FrontAndBack)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a href="https://javadoc.jmonkeyengine.org/v3.3.2-stable/com/jme3/material/RenderState.html#setDepthWrite-boolean-">DepthWrite</a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>(Boolean)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Enable writing depth to the depth buffer</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a href="https://javadoc.jmonkeyengine.org/v3.3.2-stable/com/jme3/material/RenderState.html#setDepthTest-boolean-">DepthTest</a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>(Boolean)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Enable depth testing</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a href="https://javadoc.jmonkeyengine.org/v3.3.2-stable/com/jme3/material/RenderState.html#setBlendMode-com.jme3.material.RenderState.BlendMode-">Blend</a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>(Enum: BlendMode)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Set the blending mode</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a href="https://javadoc.jmonkeyengine.org/v3.3.2-stable/com/jme3/material/Material.html#setFloat-java.lang.String-float-">AlphaDiscardThreshold</a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>(Float)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Set the alpha testing alpha falloff value (if set, it will enable alpha testing)<br>
+ mat.setFloat("AlphaDiscardThreshold", 2f);</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a href="https://javadoc.jmonkeyengine.org/v3.3.2-stable/com/jme3/material/RenderState.html#setPolyOffset-float-float-">PolyOffset</a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>(Float, Float)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Set the polygon offset factor and units</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a href="https://javadoc.jmonkeyengine.org/v3.3.2-stable/com/jme3/material/RenderState.html#setColorWrite-boolean-">ColorWrite</a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>(Boolean)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Enable color writing</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="example-1-shiny"><a class="anchor" href="#example-1-shiny"></a>Example 1: Shiny</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Spatial signpost = (Spatial) assetManager.loadAsset(
+    new OgreMeshKey("Models/Sign Post/Sign Post.mesh.xml", null));
+signpost.setMaterial( assetManager.loadMaterial(
+    new AssetKey("Models/Sign Post/Sign Post.j3m")));
+TangentBinormalGenerator.generate(signpost);
+rootNode.attachChild(signpost);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The file <code>assets/Models/Sign Post/Sign Post.j3m</code> contains:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>Material Signpost : Common/MatDefs/Light/Lighting.j3md {
+    MaterialParameters {
+         Shininess: 4.0
+         DiffuseMap:  Models/Sign Post/Sign Post.jpg
+         NormalMap:   Models/Sign Post/Sign Post_normal.jpg
+         SpecularMap: Models/Sign Post/Sign Post_specular.jpg
+         UseMaterialColors : true
+         Ambient  : 0.5 0.5 0.5 1.0
+         Diffuse  : 1.0 1.0 1.0 1.0
+         Specular : 1.0 1.0 1.0 1.0
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The JPG files are in the same directory, <code>assets/Models/Sign Post/…</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="example-2-repeating-texture"><a class="anchor" href="#example-2-repeating-texture"></a>Example 2: Repeating Texture</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Material mat = assetManager.loadMaterial(
+    "Textures/Terrain/Pond/Pond.j3m");
+mat.setColor("Ambient", ColorRGBA.DarkGray);
+mat.setColor("Diffuse", ColorRGBA.White);
+mat.setBoolean("UseMaterialColors", true);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The file <code>assets/Textures/Terrain/Pond/Pond.j3m</code> contains:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>Material Pong Rock : Common/MatDefs/Light/Lighting.j3md {
+     MaterialParameters {
+         Shininess: 8.0
+         DiffuseMap: Repeat Textures/Terrain/Pond/Pond.png
+         NormalMap:  Repeat Textures/Terrain/Pond/Pond_normal.png
+     }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The PNG files are in the same directory, <code>assets/Textures/Terrain/Pond/</code></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="example-3-transparent"><a class="anchor" href="#example-3-transparent"></a>Example 3: Transparent</h3>
+<div class="paragraph">
+<p>The file <code>assets/Models/Tree/Leaves.j3m</code> contains:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>Material Leaves : Common/MatDefs/Light/Lighting.j3md {
+
+    Transparent On
+
+    MaterialParameters {
+        DiffuseMap : Models/Tree/Leaves.png
+        UseAlpha : true
+        AlphaDiscardThreshold : 0.5
+        UseMaterialColors : true
+        Ambient : .5 .5 .5 .5
+        Diffuse : 0.7 0.7 0.7 1
+        Specular : 0 0 0 1
+        Shininess : 16
+    }
+    AdditionalRenderState {
+        Blend Alpha
+        AlphaTestFalloff 0.50
+        FaceCull Off
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The PNG file is in the same directory, <code>assets/Models/Tree/…</code></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="related-links"><a class="anchor" href="#related-links"></a>Related Links</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="material_specification.html" class="page">Developer specification of the jME3 material system (.j3md,.j3m)</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

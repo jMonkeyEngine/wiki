@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Physical Hinges and Joints :: jMonkeyEngine Docs</title>
+    <link rel="canonical" href="https://wiki.jmonkeyengine.org/docs/jme3/advanced/hinges_and_joints.html">
+    <meta name="keywords" content="documentation, physics, joint">
+    <meta name="generator" content="Antora 2.3.3">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://wiki.jmonkeyengine.org">jMonkeyEngine Docs</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Resources</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Resource A</a>
+            <a class="navbar-item" href="#">Resource B</a>
+            <a class="navbar-item" href="#">Resource C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="docs" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../../jme3.html">Docs</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../documentation.html">Getting Started</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="https://javadoc.jmonkeyengine.org/v3.3.2-stable">JavaDoc</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../jme3.html">jMonkeyEngine 3</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Beginner Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_simpleapplication.html">Hello SimpleApplication</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_node.html">Hello Node</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_asset.html">Hello Asset</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_main_event_loop.html">Hello Main Event Loop</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_input_system.html">Hello Input System</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_material.html">Hello Material</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_animation.html">Hello Animation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_picking.html">Hello Picking</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_collision.html">Hello Collision</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_terrain.html">Hello Terrain</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_audio.html">Hello Audio</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_effects.html">Hello Effects</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_physics.html">Hello Physics</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Intermediate Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/best_practices.html">Best Practices</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/simpleapplication.html">Simple Application</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../features.html">Features</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/optimization.html">Optimization</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../faq.html">FAQ</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Math Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../math_for_dummies.html">Math For Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/math.html">Math</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../math.html">More Math</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../rotate.html">Rotate</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../math_video_tutorials.html">Math Video Tutorials</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">3D Graphics Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/multi-media_asset_pipeline.html">Multi-Media Asset Pipeline</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../scenegraph_for_dummies.html">Scenegraph for Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../beginner/hellovector.html">Hello Vector</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../terminology.html">Terminology</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/how_to_use_materials.html">How to Use Materials</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/transparency_sorting.html">Transparency and Sorting</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../external/blender.html">Importing from Blender</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../external/3dsmax.html">Importing from 3DS Max</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../logo.html">Logo Usage</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../bsd_license.html">License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../github_tips.html">Github Tips</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">SDK</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../sdk.html">jMonkeyEngine SDK</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Docs</span>
+    <span class="version">master</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <span class="title">Antora Default UI</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../antora-ui-default/index.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <span class="title">Docs</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../../jme3.html">master</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../documentation.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../jme3.html">Docs</a></li>
+    <li><a href="hinges_and_joints.html">Physical Hinges and Joints</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/jMonkeyEngine/wiki/edit/antora-setup/docs/modules/ROOT/pages/jme3/advanced/hinges_and_joints.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Physical Hinges and Joints</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>The jMonkeyEngine3 has built-in support for <a href="http://jbullet.advel.cz">jBullet physics</a> via the <code>com.jme3.bullet</code> package.</p>
+</div>
+<div class="paragraph">
+<p>Game Physics are not only employed to calculate collisions, but they can also simulate hinges and joints. Think of pulley chains, shaky rope bridges, swinging pendulums, or (trap)door and chest hinges. Physics are a great addition to e.g. an action or puzzle game.</p>
+</div>
+<div class="paragraph">
+<p>In this example, we will create a pendulum. The joint is the (invisible) connection between the pendulum body and the hook. You will see that you can use what you learn from the simple pendulum and apply it to other joint/hinge objects (rope bridges, etc).</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="sample-code"><a class="anchor" href="#sample-code"></a>Sample Code</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/bullet/TestPhysicsHingeJoint.java">TestPhysicsHingeJoint.java</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="overview-of-this-physics-application"><a class="anchor" href="#overview-of-this-physics-application"></a>Overview of this Physics Application</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create a SimpleApplication with a <a href="physics.html" class="page">BulletAppState</a></p>
+<div class="ulist">
+<ul>
+<li>
+<p>This gives us a PhysicsSpace for PhysicsControls</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>For the pendulum, we use a Spatial with a PhysicsControl, and we apply physical forces to them.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>The parts of the “pendulum are Physics Control&#8217;ed Spatials with Collision Shapes.</p>
+</li>
+<li>
+<p>We create a fixed <code>hookNode</code> and a dynamic <code>pendulumNode</code>.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>We can “crank the handle and rotate the joint like a hinge, or we can let loose and expose the joints freely to gravity.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>For physical forces we will use the method <code>joint.enableMotor();</code></p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="creating-a-fixed-node"><a class="anchor" href="#creating-a-fixed-node"></a>Creating a Fixed Node</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The hookNode is the fixed point from which the pendulum hangs. It has no mass.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Node hookNode=PhysicsTestHelper.createPhysicsTestNode(
+    assetManager, new BoxCollisionShape(new Vector3f( .1f, .1f, .1f)),0);
+hookNode.getControl(RigidBodyControl.class).setPhysicsLocation(new Vector3f(0f,0,0f));
+
+rootNode.attachChild(hookNode);
+getPhysicsSpace().add(hookNode);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For a rope bridge, there would be two fixed nodes where the bridge is attached to the mountainside.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="creating-a-dynamic-node"><a class="anchor" href="#creating-a-dynamic-node"></a>Creating a Dynamic Node</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The pendulumNode is the dynamic part of the construction. It has a mass.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Node pendulumNode=PhysicsTestHelper.createPhysicsTestNode(
+    assetManager, new BoxCollisionShape(new Vector3f( .3f, .3f, .3f)),1);
+pendulumNode.getControl(RigidBodyControl.class).setPhysicsLocation(new Vector3f(0f,-1,0f));
+rootNode.attachChild(pendulumNode);
+getPhysicsSpace().add(pendulumNode);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For a rope bridge, each set of planks would be one dynamic node.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="understanding-dof-joints-and-hinges"><a class="anchor" href="#understanding-dof-joints-and-hinges"></a>Understanding DOF, Joints, and Hinges</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A PhysicsHingeJoint is an invisible connection between two nodes – here between the pendulum body and the hook. Why are hinges and joints represented by the same class? Hinges and joints have something in common: They constrain the <em>mechanical degree of freedom</em> (DOF) of another object.</p>
+</div>
+<div class="paragraph">
+<p>Consider a free falling, “unchained object in physical 3D space: It has 6 DOFs:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>It translates along 3 axes</p>
+</li>
+<li>
+<p>It rotates around 3 axes</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Now consider some examples of objects with joints:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>An individual chain link is free to spin and move around, but joined into a chain, the link&#8217;s movement is restricted to stay with the surrounding links.</p>
+</li>
+<li>
+<p>A person&#8217;s arm can rotate around some axes, but not around others. The shoulder joint allows one and restricts the other.</p>
+</li>
+<li>
+<p>A door hinge is one of the most restricted types of joint: It can only rotate around one axis.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You&#8217;ll understand that, when creating any type of joint, it is important to correctly specify the DOFs that the joint restricts, and the DOFs that the joint allows. For the typical DOF of a <a href="ragdoll.html" class="page">ragDoll</a> character&#8217;s limbs, jME even offers a special joint, <code>ConeJoint</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="creating-the-joint"><a class="anchor" href="#creating-the-joint"></a>Creating the Joint</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You create the HingeJoint after you have created the nodes that are to be chained together. In the code snippet you see that the HingeJoint constructor requires the two node objects. You also have to specify axes and pivots – they are the degrees of freedom that you just heard about.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">private HingeJoint joint;
+...
+  public void simpleInitApp() {
+    ...
+    // hookNode and pendulumNode are created here...
+    ...
+
+    joint=new HingeJoint(hookNode.getControl(RigidBodyControl.class), // A
+                     pendulumNode.getControl(RigidBodyControl.class), // B
+                     new Vector3f(0f, 0f, 0f),  // pivot point local to A
+                     new Vector3f(0f, 1f, 0f),  // pivot point local to B
+                     Vector3f.UNIT_Z,           // DoF Axis of A (Z axis)
+                     Vector3f.UNIT_Z  );        // DoF Axis of B (Z axis)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The pivot point&#8217;s position will be at <code>(0,0,0)</code> in the global 3D space. In A&#8217;s local space that is at <code>(0,0,0)</code> and in B&#8217;s local space (remember B&#8217;s position was set to <code>(0,-1,0)</code>) that is at <code>(0,1,0)</code>.</p>
+</div>
+<div class="paragraph">
+<p>Specify the following parameters for each joint:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>PhysicsControl A and B – the two nodes that are to be joined</p>
+</li>
+<li>
+<p>Vector3f pivot A and pivot B – coordinates of the attachment point relative to A and B</p>
+<div class="ulist">
+<ul>
+<li>
+<p>The points typically lie on the surface of the PhysicsControl&#8217;s Spatials, rarely in the middle.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Vector3f axisA and axisB – around which axes each node is allowed to spin.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>In our example, we constrain the pendulum to swing only along the Z axis.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Remember to add all joint objects to the physicsSpace, just like you would do with any physical objects.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">bulletAppState.getPhysicsSpace().add(joint);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Tip:</strong> If you want the joint to be visible, attach a geometry to the dynamic node, and translate it to its start position.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="apply-physical-forces"><a class="anchor" href="#apply-physical-forces"></a>Apply Physical Forces</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You can apply forces to dynamic nodes (the ones that have a mass), and see how other joined (“chained) objects are dragged along.</p>
+</div>
+<div class="paragraph">
+<p>Alternatively, you can also apply forces to the joint itself. In a game, you may want to spin an automatic revolving door, or slam a door closed in a spooky way, or dramatically open the lid of a treasure chest.</p>
+</div>
+<div class="paragraph">
+<p>The method to call on the joint is <code>enableMotor()</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">joint.enableMotor(true, 1, .1f);
+joint.enableMotor(true, -1, .1f);</code></pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Switch the motor on by supplying <code>true</code></p>
+</li>
+<li>
+<p>Specify the velocity with which the joint should rotate around the specified axis.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Use positive and negative numbers to change direction.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Specify the impulse for this motor. Heavier masses need a bigger impulse to be moved.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>When you disable the motor, the chained nodes are exposed to gravity again:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">joint.enableMotor(false, 0, 0);</code></pre>
+</div>
+</div>
+</div>
+</div>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>How to Use Material Definitions (.j3md) :: jMonkeyEngine Docs</title>
+    <link rel="canonical" href="https://wiki.jmonkeyengine.org/docs/jme3/advanced/material_definitions.html">
+    <meta name="keywords" content="Material, SDK, MatDef, file, documentation">
+    <meta name="generator" content="Antora 2.3.3">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://wiki.jmonkeyengine.org">jMonkeyEngine Docs</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Resources</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Resource A</a>
+            <a class="navbar-item" href="#">Resource B</a>
+            <a class="navbar-item" href="#">Resource C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="docs" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../../jme3.html">Docs</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../documentation.html">Getting Started</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="https://javadoc.jmonkeyengine.org/v3.3.2-stable">JavaDoc</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../jme3.html">jMonkeyEngine 3</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Beginner Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_simpleapplication.html">Hello SimpleApplication</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_node.html">Hello Node</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_asset.html">Hello Asset</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_main_event_loop.html">Hello Main Event Loop</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_input_system.html">Hello Input System</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_material.html">Hello Material</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_animation.html">Hello Animation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_picking.html">Hello Picking</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_collision.html">Hello Collision</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_terrain.html">Hello Terrain</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_audio.html">Hello Audio</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_effects.html">Hello Effects</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_physics.html">Hello Physics</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Intermediate Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/best_practices.html">Best Practices</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/simpleapplication.html">Simple Application</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../features.html">Features</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/optimization.html">Optimization</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../faq.html">FAQ</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Math Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../math_for_dummies.html">Math For Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/math.html">Math</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../math.html">More Math</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../rotate.html">Rotate</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../math_video_tutorials.html">Math Video Tutorials</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">3D Graphics Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/multi-media_asset_pipeline.html">Multi-Media Asset Pipeline</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../scenegraph_for_dummies.html">Scenegraph for Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../beginner/hellovector.html">Hello Vector</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../terminology.html">Terminology</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/how_to_use_materials.html">How to Use Materials</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/transparency_sorting.html">Transparency and Sorting</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../external/blender.html">Importing from Blender</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../external/3dsmax.html">Importing from 3DS Max</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../logo.html">Logo Usage</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../bsd_license.html">License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../github_tips.html">Github Tips</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">SDK</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../sdk.html">jMonkeyEngine SDK</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Docs</span>
+    <span class="version">master</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <span class="title">Antora Default UI</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../antora-ui-default/index.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <span class="title">Docs</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../../jme3.html">master</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../documentation.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../jme3.html">Docs</a></li>
+    <li><a href="material_definitions.html">How to Use Material Definitions (.j3md)</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/jMonkeyEngine/wiki/edit/antora-setup/docs/modules/ROOT/pages/jme3/advanced/material_definitions.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">How to Use Material Definitions (.j3md)</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>All Geometries need a Material to be visible. Every Material is based on a Material Definition. Material definitions provide the “logic for the material, and a shader draws the material according to the parameters specified in the definition. The J3MD file abstracts the shader and its configuration away from the user, allowing a simple interface where the user can simply set a few parameters on the material to change its appearance and the way its handled by the shaders.</p>
+</div>
+<div class="paragraph">
+<p>The most common Material Definitions are included in the engine, advanced users can create custom ones. In this case you will also be interested in the <a href="material_specification.html" class="page">in-depth developer specification of the jME3 material system</a>.</p>
+</div>
+<div class="paragraph">
+<p><strong>Example:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Spatial myGeometry = assetManager.loadModel("Models/Teapot/Teapot.j3o");
+Material mat = new Material(assetManager,  // Create new material and...
+    "Common/MatDefs/Misc/Unshaded.j3md");  // ... specify a Material Definition file, here "Unshaded.j3md"!
+mat.setColor("Color", ColorRGBA.Blue);     // Set one or more material parameters.
+myGeometry.setMaterial(mat);               // Use material on this Geometry.</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If you use one custom material with certain settings very often, learn about storing material settings in <a href="j3m_material_files.html" class="page">j3m Material Files</a>. You either <a href="../../sdk/material_editing.html" class="page">use the jMonkeyEngine SDK to create .j3m files</a> (user-friendly), or you <a href="j3m_material_files.html" class="page">write .j3m files in a text editor</a> (IDE-independent).</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="preparing-a-material"><a class="anchor" href="#preparing-a-material"></a>Preparing a Material</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In the <a href="materials_overview.html" class="page">Materials Overview</a> list:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Choose a Material Definition that has the features that you need.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Tip: If you don&#8217;t know, start with <code>Unshaded.j3md</code> or <code>Lighting.j3md</code>.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Look at the applicable parameters of the Material Definition and determine which parameters you need to achieve the desired effect (e.g. “glow or “color). Most parameters are optional!</p>
+</li>
+<li>
+<p>Create and save the necessary Texture files to your <code>assets/Textures</code> directory.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>E.g. mytex_diffuse.png as ColorMap / DiffuseMap, mytex_normal.png as NormalMap, mytex_alpha.png as AlphaMap, etc…</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Determine the required values to achieve the effect that you want.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>E.g. set colors, floats, booleans, etc…</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="using-a-material"><a class="anchor" href="#using-a-material"></a>Using a Material</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In your Java code,</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create a Material object based on the chosen Material Definition (.j3md file):</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Configure your Material by setting the appropriate values listed in the <a href="materials_overview.html" class="page">Materials Overview</a> table.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">mat.setColor("Color", ColorRGBA.Yellow ); // and more</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Apply your prepared Material to a Geometry:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">myGeometry.setMaterial(mat);</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>(Optional) Adjust the texture scale of the mesh:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">myGeometryMesh.scaleTextureCoordinates(new Vector2f(2f, 2f));</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>For details see also: <a href="../intermediate/how_to_use_materials.html" class="page">How to Use Materials</a></p>
+</div>
+<div class="sect2">
+<h3 id="examples"><a class="anchor" href="#examples"></a>Examples</h3>
+<div class="paragraph">
+<p>Here are examples of the methods that set the different data types:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>mat.setColor(   “Color,       ColorRGBA.White );</code></p>
+</li>
+<li>
+<p><code>mat.setTexture( “ColorMap,    assetManager.loadTexture(“Interface/Logo/Monkey.png ));</code></p>
+</li>
+<li>
+<p><code>mat.setFloat(   “Shininess,   5f);</code></p>
+</li>
+<li>
+<p><code>mat.setBoolean( “SphereMap,   true);</code></p>
+</li>
+<li>
+<p><code>mat.setVector3( “NormalScale, new Vector3f(1f,1f,1f));</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>A simpled textured material.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Material mat = new Material(assetManager,
+    "Common/MatDefs/Misc/Unshaded.j3md");
+mat.setTexture("ColorMap", assetManager.loadTexture(
+    "Interface/Logo/Monkey.jpg"));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A textured material with a color bleeding through transparent areas.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Material mat = new Material(assetManager,
+    "Common/MatDefs/Misc/Unshaded.j3md");
+mat.setTexture("ColorMap", assetManager.loadTexture(
+    "Textures/ColoredTex/Monkey.png"));
+mat.setColor("Color", ColorRGBA.Blue);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can test these examples within the following code snippet. It creates a box and applies the material:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java"> Box b = new Box(Vector3f.ZERO, 1, 1, 1);
+Geometry geom = new Geometry("Box", b);
+// ... insert Material definition...
+geom.setMaterial(mat);
+rootNode.attachChild(geom);</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>You can find these and other common code snippets in the jMonkeyEngine SDK Code Palette. Drag and drop them into your source code.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="creating-a-custom-material-definition"><a class="anchor" href="#creating-a-custom-material-definition"></a>Creating a Custom Material Definition</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>First read the <a href="material_specification.html" class="page">developer specification of the jME3 material system (.j3md,.j3m)</a>. Also check out the <a href="../build_from_sources.html" class="page">engine source code</a> and have a look at how some Material Definitions are implemented.</p>
+</div>
+<div class="paragraph">
+<p>You can create your own Material Definitions and place them in your project&#8217;s <code>assets/MatDefs</code> directory.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Find the existing MatDefs in <code>engine/src/core-data/Common/MatDefs/</code>.</p>
+</li>
+<li>
+<p>Open a Something.j3md file in a text editor. You see that this .j3md file defines Material Parameters and Techniques.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Material Parameters are the ones that you set in Materials, as shown in the examples above.</p>
+</li>
+<li>
+<p>The Techniques rely on VertexShaders and FragmentShaders: You find those in the files Something.vert and Something.frag in the same directory.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Learn about GLSL (OpenGL Shading Language) to understand the .vert and .frag syntax, then write your own.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="related-links"><a class="anchor" href="#related-links"></a>Related Links</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="material_specification.html" class="page">Developer specification of the jME3 material system (.j3md,.j3m)</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

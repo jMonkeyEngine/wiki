@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>jMonkeyEngine 3 Tutorial (3) - Hello Assets :: jMonkeyEngine Docs</title>
+    <link rel="canonical" href="https://wiki.jmonkeyengine.org/docs/jme3/beginner/hello_asset.html">
+    <link rel="prev" href="hello_node.html">
+    <link rel="next" href="hello_main_event_loop.html">
+    <meta name="keywords" content="beginner, intro, documentation, lightnode, material, model, node, gui, hud, texture">
+    <meta name="generator" content="Antora 2.3.3">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://wiki.jmonkeyengine.org">jMonkeyEngine Docs</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Resources</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Resource A</a>
+            <a class="navbar-item" href="#">Resource B</a>
+            <a class="navbar-item" href="#">Resource C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="docs" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../../jme3.html">Docs</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../documentation.html">Getting Started</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="https://javadoc.jmonkeyengine.org/v3.3.2-stable">JavaDoc</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../jme3.html">jMonkeyEngine 3</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Beginner Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_simpleapplication.html">Hello SimpleApplication</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_node.html">Hello Node</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="3">
+    <a class="nav-link" href="hello_asset.html">Hello Asset</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_main_event_loop.html">Hello Main Event Loop</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_input_system.html">Hello Input System</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_material.html">Hello Material</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_animation.html">Hello Animation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_picking.html">Hello Picking</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_collision.html">Hello Collision</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_terrain.html">Hello Terrain</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_audio.html">Hello Audio</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_effects.html">Hello Effects</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_physics.html">Hello Physics</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Intermediate Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/best_practices.html">Best Practices</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/simpleapplication.html">Simple Application</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../features.html">Features</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/optimization.html">Optimization</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../faq.html">FAQ</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Math Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../math_for_dummies.html">Math For Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/math.html">Math</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../math.html">More Math</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../rotate.html">Rotate</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../math_video_tutorials.html">Math Video Tutorials</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">3D Graphics Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/multi-media_asset_pipeline.html">Multi-Media Asset Pipeline</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../scenegraph_for_dummies.html">Scenegraph for Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="hellovector.html">Hello Vector</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../terminology.html">Terminology</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/how_to_use_materials.html">How to Use Materials</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/transparency_sorting.html">Transparency and Sorting</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../external/blender.html">Importing from Blender</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../external/3dsmax.html">Importing from 3DS Max</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../logo.html">Logo Usage</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../bsd_license.html">License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../github_tips.html">Github Tips</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">SDK</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../sdk.html">jMonkeyEngine SDK</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Docs</span>
+    <span class="version">master</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <span class="title">Antora Default UI</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../antora-ui-default/index.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <span class="title">Docs</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../../jme3.html">master</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../documentation.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../jme3.html">Docs</a></li>
+    <li><a href="../../jme3.html">jMonkeyEngine 3</a></li>
+    <li>Beginner Tutorials</li>
+    <li><a href="hello_asset.html">Hello Asset</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/jMonkeyEngine/wiki/edit/antora-setup/docs/modules/ROOT/pages/jme3/beginner/hello_asset.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">jMonkeyEngine 3 Tutorial (3) - Hello Assets</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Previous: <a href="hello_node.html" class="page">Hello Node</a>,
+Next: <a href="hello_main_event_loop.html" class="page">Hello Update Loop</a></p>
+</div>
+<div class="paragraph">
+<p>In this tutorial we will learn to load 3D models and text into the scene graph, using the jME <a href="../advanced/asset_manager.html" class="page">Asset Manager</a>. You will also learn how to determine the correct paths, and which file formats to use.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="../../_images/jme3/beginner/beginner-assets-models.png" alt="beginner-assets-models.png" width="320" height="250">
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><a href="../../sdk/sample_code.html" class="page">Trouble finding the files to run this sample?</a> To get the assets (3D models) used in this example, add the included <code>jME3-testdata.jar</code> to your classpath. In project created with the jMonkeyEngine SDK (recommended), simply right-click your project, choose &#8220;Properties&#8221;, go to &#8220;Libraries&#8221;, press &#8220;Add Library&#8221; and add the preconfigured &#8220;jme3-test-data&#8221; library.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="code-sample"><a class="anchor" href="#code-sample"></a>Code Sample</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package jme3test.helloworld;
+
+import com.jme3.app.SimpleApplication;
+import com.jme3.font.BitmapText;
+import com.jme3.light.DirectionalLight;
+import com.jme3.material.Material;
+import com.jme3.math.Vector3f;
+import com.jme3.scene.Geometry;
+import com.jme3.scene.Spatial;
+import com.jme3.scene.shape.Box;
+
+/** Sample 3 - how to load an OBJ model, and OgreXML model,
+ * a material/texture, or text. */
+public class HelloAssets extends SimpleApplication {
+
+    public static void main(String[] args) {
+        HelloAssets app = new HelloAssets();
+        app.start();
+    }
+
+    @Override
+    public void simpleInitApp() {
+
+        Spatial teapot = assetManager.loadModel("Models/Teapot/Teapot.obj");
+        Material mat_default = new Material(
+            assetManager, "Common/MatDefs/Misc/ShowNormals.j3md");
+        teapot.setMaterial(mat_default);
+        rootNode.attachChild(teapot);
+
+        // Create a wall with a simple texture from test_data
+        Box box = new Box(2.5f,2.5f,1.0f);
+        Spatial wall = new Geometry("Box", box );
+        Material mat_brick = new Material(
+            assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+        mat_brick.setTexture("ColorMap",
+            assetManager.loadTexture("Textures/Terrain/BrickWall/BrickWall.jpg"));
+        wall.setMaterial(mat_brick);
+        wall.setLocalTranslation(2.0f,-2.5f,0.0f);
+        rootNode.attachChild(wall);
+
+        // Display a line of text with a default font
+        guiNode.detachAllChildren();
+        guiFont = assetManager.loadFont("Interface/Fonts/Default.fnt");
+        BitmapText helloText = new BitmapText(guiFont, false);
+        helloText.setSize(guiFont.getCharSet().getRenderedSize());
+        helloText.setText("Hello World");
+        helloText.setLocalTranslation(300, helloText.getLineHeight(), 0);
+        guiNode.attachChild(helloText);
+
+        // Load a model from test_data (OgreXML + material + texture)
+        Spatial ninja = assetManager.loadModel("Models/Ninja/Ninja.mesh.xml");
+        ninja.scale(0.05f, 0.05f, 0.05f);
+        ninja.rotate(0.0f, -3.0f, 0.0f);
+        ninja.setLocalTranslation(0.0f, -5.0f, -2.0f);
+        rootNode.attachChild(ninja);
+        // You must add a light to make the model visible
+        DirectionalLight sun = new DirectionalLight();
+        sun.setDirection(new Vector3f(-0.1f, -0.7f, -1.0f));
+        rootNode.addLight(sun);
+
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Build and run the code sample. You should see a green Ninja with a colorful teapot standing behind a wall. The text on the screen should say &#8220;Hello World&#8221;.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="the-asset-manager"><a class="anchor" href="#the-asset-manager"></a>The Asset Manager</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>By game assets we mean all multi-media files, such as models, materials, textures, whole scenes, custom shaders, music and sound files, and custom fonts.</strong> JME3 comes with a handy AssetManager object that helps you access your assets.
+The AssetManager can load files from:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The current classpath (the top level of your project directory).</p>
+</li>
+<li>
+<p>The sub-folders of the <code>assets</code> directory of your project.</p>
+</li>
+<li>
+<p>Optionally, custom paths that you register.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The following is the recommended directory structure for storing assets in your project directoy:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>MyGame/assets/
+MyGame/assets/Interface/
+MyGame/assets/MatDefs/
+MyGame/assets/Materials/
+MyGame/assets/Models/       &lt;-- your .j3o models go here
+MyGame/assets/Scenes/
+MyGame/assets/Shaders/
+MyGame/assets/Sounds/       &lt;-- your audio files go here
+MyGame/assets/Textures/     &lt;-- your textures go here
+MyGame/build.xml            &lt;-- Default Ant build script
+MyGame/src/...              &lt;-- your Java sources go here
+MyGame/...</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This is just a suggested best practice, and it&#8217;s what you get by default when creating a new Java project in the jMokeyEngine <a href="../../sdk.html" class="page">SDK</a>. You can create an <code>assets</code> directory and technically name the subdirectories whatever you like.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+When you build your project for distribution, there will be no <code>assets</code> directory. Instead, you will generate an <code>assets.jar</code> file, located in the <code>dist/lib</code> folder of your project that will contain the sub-folders of the <code>assets</code> directory and all the assets in those folders.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="loading-textures"><a class="anchor" href="#loading-textures"></a>Loading Textures</h3>
+<div class="paragraph">
+<p>Place your textures in a subdirectory of <code>assets/Textures/</code>. Load the texture into the material before you set the Material. The following code sample is from the <code>simpleInitApp()</code> method and loads a simple wall model:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Create a wall with a simple texture from test_data
+Box box = new Box(2.5f,2.5f,1.0f);
+Spatial wall = new Geometry("Box", box );
+Material mat_brick = new Material(
+    assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+mat_brick.setTexture("ColorMap",
+    assetManager.loadTexture("Textures/Terrain/BrickWall/BrickWall.jpg"));
+wall.setMaterial(mat_brick);
+wall.setLocalTranslation(2.0f,-2.5f,0.0f);
+rootNode.attachChild(wall);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this case, you <a href="hello_material.html" class="page">create your own Material</a> and apply it to a Geometry. You base Materials on default material descriptions (such as &#8220;Unshaded.j3md&#8221;), as shown in this example.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="loading-text-and-fonts"><a class="anchor" href="#loading-text-and-fonts"></a>Loading Text and Fonts</h3>
+<div class="paragraph">
+<p>This example displays the text &#8220;Hello World&#8221; in the default font at the bottom edge of the window. You attach text to the <code>guiNode</code> – this is a special node for flat (orthogonal) display elements. You display text to show the game score, player health, etc.
+The following code sample goes into the <code>simpleInitApp()</code> method.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Display a line of text with a default font
+guiNode.detachAllChildren();
+guiFont = assetManager.loadFont("Interface/Fonts/Default.fnt");
+BitmapText helloText = new BitmapText(guiFont, false);
+helloText.setSize(guiFont.getCharSet().getRenderedSize());
+helloText.setText("Hello World");
+helloText.setLocalTranslation(300, helloText.getLineHeight(), 0);
+guiNode.attachChild(helloText);</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Clear existing text in the guiNode by detaching all its children.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="loading-a-model"><a class="anchor" href="#loading-a-model"></a>Loading a Model</h3>
+<div class="paragraph">
+<p>Export your 3D model in a <a href="../features.html#supported-external-file-types" class="page">Supported External File Type</a> (.mesh.xml, .scene, .material, .skeleton.xml, .gltf) and place it in a subdirectory of <code>assets/Models/</code>. The following code sample goes into the <code>simpleInitApp()</code> method.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Load a model from test_data (OgreXML + material + texture)
+Spatial ninja = assetManager.loadModel("Models/Ninja/Ninja.mesh.xml");
+ninja.scale(0.05f, 0.05f, 0.05f);
+ninja.rotate(0.0f, -3.0f, 0.0f);
+ninja.setLocalTranslation(0.0f, -5.0f, -2.0f);
+rootNode.attachChild(ninja);
+// You must add a directional light to make the model visible!
+DirectionalLight sun = new DirectionalLight();
+sun.setDirection(new Vector3f(-0.1f, -0.7f, -1.0f).normalizeLocal());
+rootNode.addLight(sun);</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+You do not need to create a Material if you exported the model with a material. Remember to add a light source, as shown, otherwise the material (and the whole model) is not visible!
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="loading-assets-from-custom-paths"><a class="anchor" href="#loading-assets-from-custom-paths"></a>Loading Assets From Custom Paths</h3>
+<div class="paragraph">
+<p>What if your game relies on user supplied model files, that are not included in the distribution? If a file is not located in the default location (e.g. assets directory), you can register a custom Locator and load it from any path.</p>
+</div>
+<div class="paragraph">
+<p>Here is a usage example of a ZipLocator that is registered to a file <code>town.zip</code> in the top level of your project directory:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    assetManager.registerLocator("town.zip", ZipLocator.class);
+    Spatial scene = assetManager.loadModel("main.scene");
+    rootNode.attachChild(scene);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here is a HttpZipLocator that can download zipped models and load them:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    assetManager.registerLocator("https://storage.googleapis.com/"
+            + "google-code-archive-downloads/v2/code.google.com/"
+            + "jmonkeyengine/wildhouse.zip", HttpZipLocator.class);
+    Spatial scene = assetManager.loadModel("main.scene");
+    rootNode.attachChild(scene);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>JME3 offers ClasspathLocator, ZipLocator, FileLocator, HttpZipLocator, and UrlLocator (see <code>com.jme3.asset.plugins</code>).</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="creating-models-and-scenes"><a class="anchor" href="#creating-models-and-scenes"></a>Creating Models and Scenes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To create 3D models and scenes, you need a 3D Mesh Editor. If you don&#8217;t have any tools, install Blender.
+Then you <a href="http://en.wikibooks.org/wiki/Blender_3D:_Noob_to_Pro/UV_Map_Basics">create fully textured models (e.g. with Blender)</a>, export them to your project using a <a href="../features.html#supported-formats" class="page">Supported External File Type</a>, <a href="../features.html#supported-external-file-types" class="page">convert models</a> to <code>.j3o</code> using the recommended method for your chosen file type, <a href="#loading-models-and-scenes">load models</a>, and create 3D scenes from them.</p>
+</div>
+<div class="sect2">
+<h3 id="model-file-formats"><a class="anchor" href="#model-file-formats"></a>Model File Formats</h3>
+<div class="paragraph">
+<p>JME3 can convert and load</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Ogre XML models + materials.</p>
+</li>
+<li>
+<p>Ogre DotScenes.</p>
+</li>
+<li>
+<p>Wavefront OBJ + MTL models.</p>
+</li>
+<li>
+<p>.gltf</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The <code>loadModel()</code> method loads these original file formats when you run your code directly from the SDK. If you however build the executables using the default build script, then the original model files (XML, OBJ, etc) <em>are not included</em>. This means, when you run the executable outside the SDK, and load any original models directly, you get the following error message:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>com.jme3.asset.DesktopAssetManager loadAsset
+WARNING: Cannot locate resource: Models/Ninja/Ninja.mesh.xml
+com.jme3.app.Application handleError
+SEVERE: Uncaught exception thrown in Thread[LWJGL Renderer Thread,5,main]
+java.lang.NullPointerException</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You see that loading the <strong>XML/OBJ/GLTF</strong> directly is only acceptable during the development phase in the SDK. For example, every time your graphic designer pushes updated files to the asset directory, you can quickly review the latest version in your development environment.</p>
+</div>
+<div class="paragraph">
+<p>But for QA test builds and for the final release build, you use <strong>.j3o files</strong> exclusively. J3o is an optimized binary format for jME3 applications. When you do QA test builds, or are ready to release, use the <a href="../../sdk.html" class="page">SDK</a> to <a href="../../sdk/model_loader_and_viewer.html" class="page">convert</a> all .obj/.scene/.xml/.gltf files to .j3o files, and update all code to load the .j3o files. The default build script automatically packages .j3o files in the executables.</p>
+</div>
+<div class="paragraph">
+<p>Open your JME3 Project in the jMonkeyEngine SDK.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Right-click a .OBJ, GLTF, or .mesh.xml file in the Projects window, and choose &#8220;Convert to j3o Binary&#8221;.</p>
+</li>
+<li>
+<p>The .j3o file appears next to the .mesh.xml file and has the same name.</p>
+</li>
+<li>
+<p>Update all your <code>loadModel()</code> lines accordingly. For example:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Spatial ninja = assetManager.loadModel("Models/Ninja/Ninja.j3o");</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If your executable throws a &#8220;Cannot locate resource&#8221; runtime exception, check all load paths and make sure you have converted all models to .j3o files!</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="loading-models-and-scenes"><a class="anchor" href="#loading-models-and-scenes"></a>Loading Models and Scenes</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 15%;">
+<col style="width: 85%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Task?</th>
+<th class="tableblock halign-left valign-top">Solution!</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Load model W/ materials.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Use the asset manager&#8217;s <code>loadModel()</code> method and attach the Spatial to the rootNode.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Spatial elephant = assetManager.loadModel("Models/Elephant/Elephant.mesh.xml");
+rootNode.attachChild(elephant);</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Spatial elephant = assetManager.loadModel("Models/Elephant/Elephant.j3o");
+rootNode.attachChild(elephant);</code></pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Load model W/O materials.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>If you have a model without materials, you have to give it a material to make it visible.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Spatial teapot = assetManager.loadModel("Models/Teapot/Teapot.j3o");
+Material mat = new Material(assetManager, "Common/MatDefs/Misc/ShowNormals.j3md"); // default material
+teapot.setMaterial(mat);
+rootNode.attachChild(teapot);</code></pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Load a scene.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>You load scenes just like you load models:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Spatial scene = assetManager.loadModel("Scenes/town/main.scene");
+rootNode.attachChild(scene);</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Spatial scene = assetManager.loadModel("Scenes/town/main.j3o");
+rootNode.attachChild(scene);</code></pre>
+</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="excercise-how-to-load-assets"><a class="anchor" href="#excercise-how-to-load-assets"></a>Excercise - How to Load Assets</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>As an exercise, let&#8217;s try different ways of loading a scene. You will learn how to load the scene directly, or from a zip file.</p>
+</div>
+<div class="paragraph">
+<p>Remember that there will be no <code>assets</code> folder in a final deployment. If you are going to use a zip, do not put it in the <code>assets</code> folder. Otherwise, you will likely get errors about a missing file. For final distribution, add it to your dist folder.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="https://github.com/jMonkeyEngine/wiki/raw/master/src/docs/resources/Scenes/Town/town.zip">Download the town.zip</a> sample scene.</p>
+</li>
+<li>
+<p>Place the town.zip file in the top level directory of your JME3 project, like so:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>jMonkeyProjects/MyGameProject/assets/
+jMonkeyProjects/MyGameProject/build.xml
+jMonkeyProjects/MyGameProject/src/
+jMonkeyProjects/MyGameProject/town.zip
+...</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Use the following method to load models from a zip file:</p>
+</div>
+</li>
+<li>
+<p>Verify <code>town.zip</code> is in the project directory.</p>
+</li>
+<li>
+<p>Register a zip file locator to the project directory: Add the following code under <code>simpleInitApp()</code>.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    assetManager.registerLocator("town.zip", ZipLocator.class);
+    Spatial gameLevel = assetManager.loadModel("main.scene");
+    gameLevel.setLocalTranslation(0, -5.2f, 0);
+    gameLevel.setLocalScale(2);
+    rootNode.attachChild(gameLevel);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The loadModel() method now searches this zip directly for the files to load.<br>
+(This means, do not write <code>loadModel(town.zip/main.scene)</code> or similar!)</p>
+</div>
+</li>
+<li>
+<p>Clean, build and run the project.<br>
+You should now see the Ninja+wall+teapot standing in a town.</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If you register new locators, make sure you do not get any file name conflicts: Don&#8217;t name all scenes <code>main.scene</code> but give each scene a unique name.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Earlier in this tutorial, you loaded scenes and models from the asset directory. This is the most common way you will be loading scenes and models. Here is the typical procedure:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Remove the code that you added for the previous exercise.</p>
+</li>
+<li>
+<p>Unzip the town.zip to see the structure of the contained Ogre dotScene: You will get a directory named <code>town</code>. It contains XML, texture files, and a file called main.scene.</p>
+</li>
+<li>
+<p>Move the unzipped <code>town/</code> directory into the <code>assets/Scenes/</code> directory of your project.</p>
+</li>
+<li>
+<p>Add the following code under <code>simpleInitApp()</code>.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    Spatial gameLevel = assetManager.loadModel("Scenes/town/main.scene");
+    gameLevel.setLocalTranslation(0, -5.2f, 0);
+    gameLevel.setLocalScale(2);
+    rootNode.attachChild(gameLevel);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that the path is relative to the <code>assets/…</code> directory.</p>
+</div>
+</li>
+<li>
+<p>Clean, build and run the project.<br>
+Again, you should see the Ninja+wall+teapot standing in a town.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Here is a third method you must know, loading a scene/model from a .j3o file:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Remove the code from the previous exercise.</p>
+</li>
+<li>
+<p>If you haven&#8217;t already, open the <a href="../../sdk.html" class="page">SDK</a> and open the project that contains the HelloAsset class.</p>
+</li>
+<li>
+<p>In the projects window, browse to the <code>assets/Scenes/town</code> directory.</p>
+</li>
+<li>
+<p>Right-click the <code>main.scene</code> and convert the scene to binary: The jMonkeyPlatform generates a main.j3o file.</p>
+</li>
+<li>
+<p>Add the following code under <code>simpleInitApp() {</code></p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    Spatial gameLevel = assetManager.loadModel("Scenes/town/main.j3o");
+    gameLevel.setLocalTranslation(0, -5.2f, 0);
+    gameLevel.setLocalScale(2);
+    rootNode.attachChild(gameLevel);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Again, note that the path is relative to the <code>assets/…</code> directory.</p>
+</div>
+</li>
+<li>
+<p>Clean, Build and run the project.<br>
+Again, you should see the Ninja+wall+teapot standing in a town.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="conclusion"><a class="anchor" href="#conclusion"></a>Conclusion</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Now you know how to populate the scenegraph with static shapes and models, and how to build scenes. You have learned how to load assets using the <code>assetManager</code> and you have seen that the paths start relative to your project directory. Another important thing you have learned is to convert models to .j3o format for the executable JARs etc.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s add some action to the scene and continue with the <a href="hello_main_event_loop.html" class="page">Update Loop</a>!</p>
+</div>
+<hr>
+<div class="paragraph">
+<p><strong>See also:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="../external/blender.html" class="page">The definitive Blender import tutorial</a></p>
+</li>
+<li>
+<p><a href="../intermediate/multi-media_asset_pipeline.html" class="page">Asset pipeline introduction</a></p>
+</li>
+<li>
+<p>If you want to learn how to load sounds, see <a href="hello_audio.html" class="page">Hello Audio</a></p>
+</li>
+<li>
+<p>If you want to learn more about loading textures and materials, see <a href="hello_material.html" class="page">Hello Material</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="hello_node.html">Hello Node</a></span>
+  <span class="next"><a href="hello_main_event_loop.html">Hello Main Event Loop</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

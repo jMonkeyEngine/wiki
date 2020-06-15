@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>jMonkeyEngine 3 Tutorial (13) - Hello Physics :: jMonkeyEngine Docs</title>
+    <link rel="canonical" href="https://wiki.jmonkeyengine.org/docs/jme3/beginner/hello_physics.html">
+    <link rel="prev" href="hello_effects.html">
+    <link rel="next" href="../intermediate/best_practices.html">
+    <meta name="keywords" content="beginner, intro, physics, documentation, input, model, control">
+    <meta name="generator" content="Antora 2.3.3">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://wiki.jmonkeyengine.org">jMonkeyEngine Docs</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Resources</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Resource A</a>
+            <a class="navbar-item" href="#">Resource B</a>
+            <a class="navbar-item" href="#">Resource C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="docs" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../../jme3.html">Docs</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../documentation.html">Getting Started</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="https://javadoc.jmonkeyengine.org/v3.3.2-stable">JavaDoc</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../jme3.html">jMonkeyEngine 3</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Beginner Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_simpleapplication.html">Hello SimpleApplication</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_node.html">Hello Node</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_asset.html">Hello Asset</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_main_event_loop.html">Hello Main Event Loop</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_input_system.html">Hello Input System</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_material.html">Hello Material</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_animation.html">Hello Animation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_picking.html">Hello Picking</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_collision.html">Hello Collision</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_terrain.html">Hello Terrain</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_audio.html">Hello Audio</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_effects.html">Hello Effects</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="3">
+    <a class="nav-link" href="hello_physics.html">Hello Physics</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Intermediate Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/best_practices.html">Best Practices</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/simpleapplication.html">Simple Application</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../features.html">Features</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/optimization.html">Optimization</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../faq.html">FAQ</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Math Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../math_for_dummies.html">Math For Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/math.html">Math</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../math.html">More Math</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../rotate.html">Rotate</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../math_video_tutorials.html">Math Video Tutorials</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">3D Graphics Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/multi-media_asset_pipeline.html">Multi-Media Asset Pipeline</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../scenegraph_for_dummies.html">Scenegraph for Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="hellovector.html">Hello Vector</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../terminology.html">Terminology</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/how_to_use_materials.html">How to Use Materials</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/transparency_sorting.html">Transparency and Sorting</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../external/blender.html">Importing from Blender</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../external/3dsmax.html">Importing from 3DS Max</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../logo.html">Logo Usage</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../bsd_license.html">License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../github_tips.html">Github Tips</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">SDK</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../sdk.html">jMonkeyEngine SDK</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Docs</span>
+    <span class="version">master</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <span class="title">Antora Default UI</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../antora-ui-default/index.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <span class="title">Docs</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../../jme3.html">master</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../documentation.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../jme3.html">Docs</a></li>
+    <li><a href="../../jme3.html">jMonkeyEngine 3</a></li>
+    <li>Beginner Tutorials</li>
+    <li><a href="hello_physics.html">Hello Physics</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/jMonkeyEngine/wiki/edit/antora-setup/docs/modules/ROOT/pages/jme3/beginner/hello_physics.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">jMonkeyEngine 3 Tutorial (13) - Hello Physics</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Previous: <a href="hello_effects.html" class="page">Hello Effects</a>,
+Next: <a href="../../jme3.html" class="page">JME 3 documentation</a></p>
+</div>
+<div class="paragraph">
+<p>Do you remember the <a href="hello_collision.html" class="page">Hello Collision</a> tutorial where you made the model of a town solid and walked through it in a first-person perspective? Then you may remember that, for the simulation of physical forces, jME3 integrates the <a href="http://jbullet.advel.cz/">jBullet</a> library.</p>
+</div>
+<div class="paragraph">
+<p>Apart from making models “solid, the most common use cases for physics in 3D games are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Driving vehicles with suspensions, tyre friction, ramp jumping, drifting – Example: car racers</p>
+</li>
+<li>
+<p>Rolling and bouncing balls – Example: pong, pool billiard, bowling</p>
+</li>
+<li>
+<p>Sliding and falling boxes – Example: Breakout, Arkanoid</p>
+</li>
+<li>
+<p>Exposing objects to forces and gravity – Example: spaceships or zero-g flight</p>
+</li>
+<li>
+<p>Animating ragdolls – Example: “realistic character simulations</p>
+</li>
+<li>
+<p>Swinging pendulums, rope bridges, flexible chains, and much more…</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>All these physical properties can be simulated in JME3. Let&#8217;s have a look at a simulation of physical forces in this example where you shoot cannon balls at a brick wall.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="../../_images/jme3/beginner/beginner-physics.png" alt="beginner-physics.png" width="360" height="291">
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>To use the example assets in a new jMonkeyEngine SDK project, right-click your project, select “Properties, go to “Libraries, press “Add Library and add the “jme3-test-data library.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="sample-code"><a class="anchor" href="#sample-code"></a>Sample Code</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Thanks to double1984 for contributing this fun sample!</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package jme3test.helloworld;
+
+import com.jme3.app.SimpleApplication;
+import com.jme3.asset.TextureKey;
+import com.jme3.bullet.BulletAppState;
+import com.jme3.bullet.control.RigidBodyControl;
+import com.jme3.font.BitmapText;
+import com.jme3.input.MouseInput;
+import com.jme3.input.controls.ActionListener;
+import com.jme3.input.controls.MouseButtonTrigger;
+import com.jme3.material.Material;
+import com.jme3.math.Vector2f;
+import com.jme3.math.Vector3f;
+import com.jme3.scene.Geometry;
+import com.jme3.scene.shape.Box;
+import com.jme3.scene.shape.Sphere;
+import com.jme3.scene.shape.Sphere.TextureMode;
+import com.jme3.texture.Texture;
+import com.jme3.texture.Texture.WrapMode;
+
+/**
+ * Example 12 - how to give objects physical properties so they bounce and fall.
+ * @author base code by double1984, updated by zathras
+ */
+public class HelloPhysics extends SimpleApplication {
+
+  public static void main(String args[]) {
+    HelloPhysics app = new HelloPhysics();
+    app.start();
+  }
+
+  /** Prepare the Physics Application State (jBullet) */
+  private BulletAppState bulletAppState;
+
+  /** Prepare Materials */
+  Material wall_mat;
+  Material stone_mat;
+  Material floor_mat;
+
+  /** Prepare geometries and physical nodes for bricks and cannon balls. */
+  private RigidBodyControl    brick_phy;
+  private static final Box    box;
+  private RigidBodyControl    ball_phy;
+  private static final Sphere sphere;
+  private RigidBodyControl    floor_phy;
+  private static final Box    floor;
+
+  /** dimensions used for bricks and wall */
+  private static final float brickLength = 0.48f;
+  private static final float brickWidth  = 0.24f;
+  private static final float brickHeight = 0.12f;
+
+  static {
+    /** Initialize the cannon ball geometry */
+    sphere = new Sphere(32, 32, 0.4f, true, false);
+    sphere.setTextureMode(TextureMode.Projected);
+    /** Initialize the brick geometry */
+    box = new Box(brickLength, brickHeight, brickWidth);
+    box.scaleTextureCoordinates(new Vector2f(1f, .5f));
+    /** Initialize the floor geometry */
+    floor = new Box(10f, 0.1f, 5f);
+    floor.scaleTextureCoordinates(new Vector2f(3, 6));
+  }
+
+  @Override
+  public void simpleInitApp() {
+    /** Set up Physics Game */
+    bulletAppState = new BulletAppState();
+    stateManager.attach(bulletAppState);
+    //bulletAppState.getPhysicsSpace().enableDebug(assetManager);
+
+    /** Configure cam to look at scene */
+    cam.setLocation(new Vector3f(0, 4f, 6f));
+    cam.lookAt(new Vector3f(2, 2, 0), Vector3f.UNIT_Y);
+    /** Add InputManager action: Left click triggers shooting. */
+    inputManager.addMapping("shoot",
+            new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
+    inputManager.addListener(actionListener, "shoot");
+    /** Initialize the scene, materials, and physics space */
+    initMaterials();
+    initWall();
+    initFloor();
+    initCrossHairs();
+  }
+
+  /**
+   * Every time the shoot action is triggered, a new cannon ball is produced.
+   * The ball is set up to fly from the camera position in the camera direction.
+   */
+  private ActionListener actionListener = new ActionListener() {
+    public void onAction(String name, boolean keyPressed, float tpf) {
+      if (name.equals("shoot") &amp;&amp; !keyPressed) {
+        makeCannonBall();
+      }
+    }
+  };
+
+  /** Initialize the materials used in this scene. */
+  public void initMaterials() {
+    wall_mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+    TextureKey key = new TextureKey("Textures/Terrain/BrickWall/BrickWall.jpg");
+    key.setGenerateMips(true);
+    Texture tex = assetManager.loadTexture(key);
+    wall_mat.setTexture("ColorMap", tex);
+
+    stone_mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+    TextureKey key2 = new TextureKey("Textures/Terrain/Rock/Rock.PNG");
+    key2.setGenerateMips(true);
+    Texture tex2 = assetManager.loadTexture(key2);
+    stone_mat.setTexture("ColorMap", tex2);
+
+    floor_mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+    TextureKey key3 = new TextureKey("Textures/Terrain/Pond/Pond.jpg");
+    key3.setGenerateMips(true);
+    Texture tex3 = assetManager.loadTexture(key3);
+    tex3.setWrap(WrapMode.Repeat);
+    floor_mat.setTexture("ColorMap", tex3);
+  }
+
+  /** Make a solid floor and add it to the scene. */
+  public void initFloor() {
+    Geometry floor_geo = new Geometry("Floor", floor);
+    floor_geo.setMaterial(floor_mat);
+    floor_geo.setLocalTranslation(0, -0.1f, 0);
+    this.rootNode.attachChild(floor_geo);
+    /* Make the floor physical with mass 0.0f! */
+    floor_phy = new RigidBodyControl(0.0f);
+    floor_geo.addControl(floor_phy);
+    bulletAppState.getPhysicsSpace().add(floor_phy);
+  }
+
+  /** This loop builds a wall out of individual bricks. */
+  public void initWall() {
+    float startpt = brickLength / 4;
+    float height = 0;
+    for (int j = 0; j &lt; 15; j++) {
+      for (int i = 0; i &lt; 6; i++) {
+        Vector3f vt =
+         new Vector3f(i * brickLength * 2 + startpt, brickHeight + height, 0);
+        makeBrick(vt);
+      }
+      startpt = -startpt;
+      height += 2 * brickHeight;
+    }
+  }
+
+  /** This method creates one individual physical brick. */
+  public void makeBrick(Vector3f loc) {
+    /** Create a brick geometry and attach to scene graph. */
+    Geometry brick_geo = new Geometry("brick", box);
+    brick_geo.setMaterial(wall_mat);
+    rootNode.attachChild(brick_geo);
+    /** Position the brick geometry  */
+    brick_geo.setLocalTranslation(loc);
+    /** Make brick physical with a mass &gt; 0.0f. */
+    brick_phy = new RigidBodyControl(2f);
+    /** Add physical brick to physics space. */
+    brick_geo.addControl(brick_phy);
+    bulletAppState.getPhysicsSpace().add(brick_phy);
+  }
+
+  /** This method creates one individual physical cannon ball.
+   * By defaul, the ball is accelerated and flies
+   * from the camera position in the camera direction.*/
+   public void makeCannonBall() {
+    /** Create a cannon ball geometry and attach to scene graph. */
+    Geometry ball_geo = new Geometry("cannon ball", sphere);
+    ball_geo.setMaterial(stone_mat);
+    rootNode.attachChild(ball_geo);
+    /** Position the cannon ball  */
+    ball_geo.setLocalTranslation(cam.getLocation());
+    /** Make the ball physcial with a mass &gt; 0.0f */
+    ball_phy = new RigidBodyControl(1f);
+    /** Add physical ball to physics space. */
+    ball_geo.addControl(ball_phy);
+    bulletAppState.getPhysicsSpace().add(ball_phy);
+    /** Accelerate the physcial ball to shoot it. */
+    ball_phy.setLinearVelocity(cam.getDirection().mult(25));
+  }
+
+  /** A plus sign used as crosshairs to help the player with aiming.*/
+  protected void initCrossHairs() {
+    guiNode.detachAllChildren();
+    guiFont = assetManager.loadFont("Interface/Fonts/Default.fnt");
+    BitmapText ch = new BitmapText(guiFont, false);
+    ch.setSize(guiFont.getCharSet().getRenderedSize() * 2);
+    ch.setText("+");        // fake crosshairs :)
+    ch.setLocalTranslation( // center
+      settings.getWidth() / 2 - guiFont.getCharSet().getRenderedSize() / 3 * 2,
+      settings.getHeight() / 2 + ch.getLineHeight() / 2, 0);
+    guiNode.attachChild(ch);
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should see a brick wall. Click to shoot cannon balls. Watch the bricks fall and bounce off one another!</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="a-basic-physics-application"><a class="anchor" href="#a-basic-physics-application"></a>A Basic Physics Application</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In the previous tutorials, you used static Geometries (boxes, spheres, and models) that you placed in the scene. Depending on their translation, Geometries can “float in mid-air and even overlap – they are not affected by “gravity and have no physical mass. This tutorial shows how to add physical properties to Geometries.</p>
+</div>
+<div class="paragraph">
+<p>As always, start with a standard com.jme3.app.SimpleApplication. To activate physics, create a com.jme3.bullet.BulletAppState, and and attach it to the SimpleApplication&#8217;s AppState manager.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class HelloPhysics extends SimpleApplication {
+  private BulletAppState bulletAppState;
+
+  public void simpleInitApp() {
+    bulletAppState = new BulletAppState();
+    stateManager.attach(bulletAppState);
+    ...
+  }
+  ...
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The BulletAppState gives the game access to a PhysicsSpace. The PhysicsSpace lets you use com.jme3.bullet.control.PhysicsControls that add physical properties to Nodes.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="creating-bricks-and-cannon-balls"><a class="anchor" href="#creating-bricks-and-cannon-balls"></a>Creating Bricks and Cannon Balls</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="geometries"><a class="anchor" href="#geometries"></a>Geometries</h3>
+<div class="paragraph">
+<p>In this “shoot at the wall example, you use Geometries such as cannon balls and bricks. Geometries contain meshes, such as Shapes. Let&#8217;s create and initialize some Shapes: Boxes and Spheres.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">  /** Prepare geometries and physical nodes for bricks and cannon balls. */
+  private static final Box    box;
+  private static final Sphere sphere;
+  private static final Box    floor;
+  /** dimensions used for bricks and wall */
+  private static final float brickLength = 0.48f;
+  private static final float brickWidth  = 0.24f;
+  private static final float brickHeight = 0.12f;
+  static {
+    /** Initialize the cannon ball geometry */
+    sphere = new Sphere(32, 32, 0.4f, true, false);
+    sphere.setTextureMode(TextureMode.Projected);
+    /** Initialize the brick geometry */
+    box = new Box(brickLength, brickHeight, brickWidth);
+    box.scaleTextureCoordinates(new Vector2f(1f, .5f));
+    /** Initialize the floor geometry */
+    floor = new Box(10f, 0.1f, 5f);
+    floor.scaleTextureCoordinates(new Vector2f(3, 6));
+  }</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="rigidbodycontrol-brick"><a class="anchor" href="#rigidbodycontrol-brick"></a>RigidBodyControl: Brick</h3>
+<div class="paragraph">
+<p>We want to create brick Geometries from those boxes. For each Geometry with physical properties, you create a RigidBodyControl.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">  private RigidBodyControl brick_phy;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The custom <code>makeBrick(loc)</code> methods creates individual bricks at the location <code>loc</code>. A brick has the following properties:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>It has a visible Geometry <code>brick_geo</code> (Box Shape Geometry).</p>
+</li>
+<li>
+<p>It has physical properties <code>brick_phy</code> (RigidBodyControl)</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">  public void makeBrick(Vector3f loc) {
+    /** Create a brick geometry and attach to scene graph. */
+    Geometry brick_geo = new Geometry("brick", box);
+    brick_geo.setMaterial(wall_mat);
+    rootNode.attachChild(brick_geo);
+    /** Position the brick geometry  */
+    brick_geo.setLocalTranslation(loc);
+    /** Make brick physical with a mass &gt; 0.0f. */
+    brick_phy = new RigidBodyControl(2f);
+    /** Add physical brick to physics space. */
+    brick_geo.addControl(brick_phy);
+    bulletAppState.getPhysicsSpace().add(brick_phy);
+  }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This code sample does the following:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>You create a brick Geometry brick_geo. A Geometry describes the shape and look of an object.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>brick_geo has a box shape</p>
+</li>
+<li>
+<p>brick_geo has a brick-colored material.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>You attach brick_geo to the rootNode</p>
+</li>
+<li>
+<p>You position brick_geo at <code>loc</code>.</p>
+</li>
+<li>
+<p>You create a RigidBodyControl brick_phy for brick_geo.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>brick_phy has a mass of 2f.</p>
+</li>
+<li>
+<p>You add brick_phy to brick_geo.</p>
+</li>
+<li>
+<p>You register brick_phy to the PhysicsSpace.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="rigidbodycontrol-cannonball"><a class="anchor" href="#rigidbodycontrol-cannonball"></a>RigidBodyControl: Cannonball</h3>
+<div class="paragraph">
+<p>You notice that the cannon ball is created in the same way, using the custom <code>makeCannonBall()</code> method. The cannon ball has the following properties:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>It has a visible Geometry <code>ball_geo</code> (Sphere Shape Geometry)</p>
+</li>
+<li>
+<p>It has physical properties <code>ball_phy</code> (RigidBodyControl)</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    /** Create a cannon ball geometry and attach to scene graph. */
+    Geometry ball_geo = new Geometry("cannon ball", sphere);
+    ball_geo.setMaterial(stone_mat);
+    rootNode.attachChild(ball_geo);
+    /** Position the cannon ball  */
+    ball_geo.setLocalTranslation(cam.getLocation());
+    /** Make the ball physcial with a mass &gt; 0.0f */
+    ball_phy = new RigidBodyControl(1f);
+    /** Add physical ball to physics space. */
+    ball_geo.addControl(ball_phy);
+    bulletAppState.getPhysicsSpace().add(ball_phy);
+    /** Accelerate the physcial ball to shoot it. */
+    ball_phy.setLinearVelocity(cam.getDirection().mult(25));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This code sample does the following:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>You create a ball Geometry ball_geo. A Geometry describes the shape and look of an object.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>ball_geo has a sphere shape</p>
+</li>
+<li>
+<p>ball_geo has a stone-colored material.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>You attach ball_geo to the rootNode</p>
+</li>
+<li>
+<p>You position ball_geo at the camera location.</p>
+</li>
+<li>
+<p>You create a RigidBodyControl ball_phy for ball_geo.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>ball_phy has a mass of 1f.</p>
+</li>
+<li>
+<p>You add ball_phy to ball_geo.</p>
+</li>
+<li>
+<p>You register ball_phy to the PhysicsSpace.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Since you are shooting cannon balls, the last line accelerates the ball in the direction the camera is looking, with a speed of 25f.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="rigidbodycontrol-floor"><a class="anchor" href="#rigidbodycontrol-floor"></a>RigidBodyControl: Floor</h3>
+<div class="paragraph">
+<p>The (static) floor has one important difference compared to the (dynamic) bricks and cannonballs: <strong>Static objects have a mass of zero.</strong>
+As before, you write a custom <code>initFloor()</code> method that creates a flat box with a rock texture that you use as floor. The floor has the following properties:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>It has a visible Geometry <code>floor_geo</code> (Box Shape Geometry)</p>
+</li>
+<li>
+<p>It has physical properties <code>floor_phy</code> (RigidBodyControl)</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">  public void initFloor() {
+    Geometry floor_geo = new Geometry("Floor", floor);
+    floor_geo.setMaterial(floor_mat);
+    floor_geo.setLocalTranslation(0, -0.1f, 0);
+    this.rootNode.attachChild(floor_geo);
+    /* Make the floor physical with mass 0.0f! */
+    floor_phy = new RigidBodyControl(0.0f);
+    floor_geo.addControl(floor_phy);
+    bulletAppState.getPhysicsSpace().add(floor_phy);
+  }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This code sample does the following:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>You create a floor Geometry floor_geo. A Geometry describes the shape and look of an object.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>floor_geo has a box shape</p>
+</li>
+<li>
+<p>floor_geo has a pebble-colored material.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>You attach floor_geo to the rootNode</p>
+</li>
+<li>
+<p>You position floor_geo a bit below y=0 (to prevent overlap with other PhysicControl&#8217;ed Spatials).</p>
+</li>
+<li>
+<p>You create a RigidBodyControl floor_phy for floor_geo.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>floor_phy has a mass of 0f</p>
+</li>
+<li>
+<p>You add floor_phy to floor_geo.</p>
+</li>
+<li>
+<p>You register floor_phy to the PhysicsSpace.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="creating-the-scene"><a class="anchor" href="#creating-the-scene"></a>Creating the Scene</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Let&#8217;s have a quick look at the custom helper methods:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>initMaterial()</code> – This method initializes all the materials we use in this demo.</p>
+</li>
+<li>
+<p><code>initWall()</code> – A double loop that generates a wall by positioning brick objects: 15 rows high with 6 bricks per row. It&#8217;s important to space the physical bricks so they do not overlap.</p>
+</li>
+<li>
+<p><code>initCrossHairs()</code> – This method simply displays a plus sign that you use as crosshairs for aiming. Note that screen elements such as crosshairs are attached to the <code>guiNode</code>, not the <code>rootNode</code>!</p>
+</li>
+<li>
+<p><code>initInputs()</code> – This method sets up the click-to-shoot action.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>These methods are each called once from the <code>simpleInitApp()</code> method at the start of the game. As you see, you can write any number of custom methods to set up your game&#8217;s scene.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="the-cannon-ball-shooting-action"><a class="anchor" href="#the-cannon-ball-shooting-action"></a>The Cannon Ball Shooting Action</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In the <code>initInputs()</code> method, you add an input mapping that triggers a shoot action when the left mouse button is pressed.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">  private void initInputs() {
+    inputManager.addMapping("shoot",
+            new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
+    inputManager.addListener(actionListener, "shoot");
+  }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You define the actual action of shooting a new cannon ball as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    private ActionListener actionListener = new ActionListener() {
+        public void onAction(String name, boolean keyPressed, float tpf) {
+            if (name.equals("shoot") &amp;&amp; !keyPressed) {
+                makeCannonBall();
+            }
+        }
+    };</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the moment the cannonball appears in the scene, it flies off with the velocity (and in the direction) that you specified using <code>setLinearVelocity()</code> inside <code>makeCannonBall()</code>. The newly created cannon ball flies off, hits the wall, and exerts a <em>physical force</em> that impacts individual bricks.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="moving-a-physical-spatial"><a class="anchor" href="#moving-a-physical-spatial"></a>Moving a Physical Spatial</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The location of the dynamic Spatial is controlled by its RigidBodyControl. Move the RigidBodyControl to move the Spatial. If it&#8217;s a dynamic PhysicsControl, you can use setLinearVelocity() and apply forces and torques to it. Other RigidBodyControl&#8217;led objects can push the dynamic Spatial around (like pool/billiard balls).</p>
+</div>
+<div class="paragraph">
+<p>You can make Spatials that are not dynamic: Switch the RigidBodyControl to setKinematic(true) to have it move along with its Spatial.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A kinematic is unaffected by forces or gravity, which means it can float in mid-air and cannot be pushed away by dynamic “cannon balls etc.</p>
+</li>
+<li>
+<p>A kinematic RigidBody has a mass.</p>
+</li>
+<li>
+<p>A kinematic can be moved and can exert forces on dynamic RigidBodys. This means you can use a kinematic node as a billiard cue or a remote-controlled battering ram.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Learn more about static versus kinematic versus dynamic in the <a href="../advanced/physics.html" class="page">advanced physics doc</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="excercises"><a class="anchor" href="#excercises"></a>Excercises</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="exercise-1-debug-shapes"><a class="anchor" href="#exercise-1-debug-shapes"></a>Exercise 1: Debug Shapes</h3>
+<div class="paragraph">
+<p>Add the following line after the bulletAppState initialization.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// For older versions up to JME sdk 3.0.10
+bulletAppState.getPhysicsSpace().enableDebug(assetManager);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>or</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// For new versions thereafter
+bulletAppState.setDebugEnabled(true);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now you see the collisionShapes of the bricks and spheres, and the floor highlighted.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="exercise-2-no-mo-static"><a class="anchor" href="#exercise-2-no-mo-static"></a>Exercise 2: No Mo' Static</h3>
+<div class="paragraph">
+<p>What happens if you give a static node, such as the floor, a mass of more than 0.0f?</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="exercise-3-behind-the-curtain"><a class="anchor" href="#exercise-3-behind-the-curtain"></a>Exercise 3: Behind the Curtain</h3>
+<div class="paragraph">
+<p>Fill your scene with walls, bricks, and cannon balls. When do you begin to see a performance impact?</p>
+</div>
+<div class="paragraph">
+<p>Popular AAA games use a clever mix of physics, animation and prerendered graphics to give you the illusion of a real, “physical world. Think of your favorite video games and try to spot where and how the game designers trick you into believing that the whole scene is physical. For example, think of a building “breaking into 4-8 parts after an explosion. The pieces most likely fly on predefined (so called kinematic) paths and are only replaced by dynamic Spatials after they touch the ground… Now that you start to implement game physics yourself, look behind the curtain!</p>
+</div>
+<div class="paragraph">
+<p>Using physics everywhere in a game sounds like a cool idea, but it is easily overused. Although the physics nodes are put to “sleep when they are not moving, creating a world solely out of dynamic physics nodes will quickly bring you to the limits of your computer&#8217;s capabilities.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="conclusion"><a class="anchor" href="#conclusion"></a>Conclusion</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You have learned how to activate the jBullet PhysicsSpace in an application by adding a <code>BulletAppState</code>. You have created PhysicsControls for simple Shape-based Geometries (for more complex shapes, read up on <a href="../advanced/physics.html" class="page">CollisionShapes</a>). You have learned that physical objects are not only attached to the rootNode, but also registered to the PhysicsSpace. You know that it makes a difference whether a physical object has a mass (dynamic) or not (static). You are aware that overusing physics has a huge performance impact.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Congratulations! – You have completed the last beginner tutorial. Now you are ready to start <a href="../../jme3.html" class="page">combining what you have learned</a>, to create a cool 3D game of your own. Show us what you can do, and feel free to share your demos, game videos, and screenshots on the <a href="http://hub.jmonkeyengine.org/c/user-code-projects">User Code &amp; Projects Forum</a>!</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="hello_effects.html">Hello Effects</a></span>
+  <span class="next"><a href="../intermediate/best_practices.html">Best Practices</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

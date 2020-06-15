@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Bloom and Glow :: jMonkeyEngine Docs</title>
+    <link rel="canonical" href="https://wiki.jmonkeyengine.org/docs/jme3/advanced/bloom_and_glow.html">
+    <meta name="keywords" content="documentation, effect, light">
+    <meta name="generator" content="Antora 2.3.3">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://wiki.jmonkeyengine.org">jMonkeyEngine Docs</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Resources</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Resource A</a>
+            <a class="navbar-item" href="#">Resource B</a>
+            <a class="navbar-item" href="#">Resource C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="docs" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../../jme3.html">Docs</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../documentation.html">Getting Started</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="https://javadoc.jmonkeyengine.org/v3.3.2-stable">JavaDoc</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../jme3.html">jMonkeyEngine 3</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Beginner Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_simpleapplication.html">Hello SimpleApplication</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_node.html">Hello Node</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_asset.html">Hello Asset</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_main_event_loop.html">Hello Main Event Loop</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_input_system.html">Hello Input System</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_material.html">Hello Material</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_animation.html">Hello Animation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_picking.html">Hello Picking</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_collision.html">Hello Collision</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_terrain.html">Hello Terrain</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_audio.html">Hello Audio</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_effects.html">Hello Effects</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_physics.html">Hello Physics</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Intermediate Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/best_practices.html">Best Practices</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/simpleapplication.html">Simple Application</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../features.html">Features</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/optimization.html">Optimization</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../faq.html">FAQ</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Math Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../math_for_dummies.html">Math For Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/math.html">Math</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../math.html">More Math</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../rotate.html">Rotate</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../math_video_tutorials.html">Math Video Tutorials</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">3D Graphics Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/multi-media_asset_pipeline.html">Multi-Media Asset Pipeline</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../scenegraph_for_dummies.html">Scenegraph for Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../beginner/hellovector.html">Hello Vector</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../terminology.html">Terminology</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/how_to_use_materials.html">How to Use Materials</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/transparency_sorting.html">Transparency and Sorting</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../external/blender.html">Importing from Blender</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../external/3dsmax.html">Importing from 3DS Max</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../logo.html">Logo Usage</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../bsd_license.html">License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../github_tips.html">Github Tips</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">SDK</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../sdk.html">jMonkeyEngine SDK</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Docs</span>
+    <span class="version">master</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <span class="title">Antora Default UI</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../antora-ui-default/index.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <span class="title">Docs</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../../jme3.html">master</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../documentation.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../jme3.html">Docs</a></li>
+    <li><a href="bloom_and_glow.html">Bloom and Glow</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/jMonkeyEngine/wiki/edit/antora-setup/docs/modules/ROOT/pages/jme3/advanced/bloom_and_glow.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Bloom and Glow</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Bloom is a popular shader effect in 3D games industry. It usually consist in displaying a glowing halo around light sources or bright areas of a scene.
+In practice, the bright areas are extracted from the rendered scene, blurred and finally added up to the render.</p>
+</div>
+<div class="paragraph">
+<p>Those images gives an idea of what bloom does. The left image has no bloom effect, the right image does.<br>
+<span class="image"><img src="../../_images/jme3/advanced/nobloomsky.png" alt="No bloom" width="" height=""></span><span class="image"><img src="../../_images/jme3/advanced/blomsky.png" alt="Bloom" width="" height=""></span></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="bloom-usage"><a class="anchor" href="#bloom-usage"></a>Bloom Usage</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create a FilterPostProcessor</p>
+</li>
+<li>
+<p>Create a BloomFilter</p>
+</li>
+<li>
+<p>Add the filter to the processor</p>
+</li>
+<li>
+<p>Add the processor to the viewPort</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java"> FilterPostProcessor fpp=new FilterPostProcessor(assetManager);
+ BloomFilter bloom=new BloomFilter();
+ fpp.addFilter(bloom);
+ viewPort.addProcessor(fpp);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here are the parameters that you can tweak :</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Method</th>
+<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>blur scale</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>setBlurScale(float)</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>1.5f</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>the scale of the bloom effect, but be careful, high values does artifacts</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>exposure Power</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>setExposurePower(float)</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>5.0f</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>the glowing channel color is raised to the value power</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>exposure cut-off</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>setExposureCutOff(float)</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>0.0f</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>the threshold of color to bloom during extraction</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>bloom intensity</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>setBloomIntensity(float)</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>2.0f</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>the resulting bloom value is multiplied by this intensity</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>You&#8217;ll probably need to adjust those parameters depending on your scene.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="bloom-with-a-glow-map"><a class="anchor" href="#bloom-with-a-glow-map"></a>Bloom with a glow map</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Sometimes, you want to have more control over what glows and does not glow.
+The bloom filter supports a glow map or a glow color.</p>
+</div>
+<div class="sect2">
+<h3 id="creating-a-glow-map"><a class="anchor" href="#creating-a-glow-map"></a>Creating a glow-map</h3>
+<div class="paragraph">
+<p>Let&#8217;s take the hover tank example bundled with JME3 test data.<br>
+Here you can see the diffuse map of the tank, and the associated glow map that only contains the parts of the texture that will glow and their glowing color:<br>
+<span class="image"><img src="../../_images/jme3/advanced/tank_diffuse_ss.png" alt="Tank diffuse map" width="" height=""></span>
+<span class="image"><img src="../../_images/jme3/advanced/tank_glow_map_ss.png" alt="Tank glow map" width="" height=""></span></p>
+</div>
+<div class="paragraph">
+<p>Glow maps work with Lighting.j3md, Particles.j3md and Unshaded.j3md material definitions.
+The tank material looks like this :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>Material My Material : Common/MatDefs/Light/Lighting.j3md {
+     MaterialParameters {
+        SpecularMap : Models/HoverTank/tank_specular.png
+        Shininess : 8
+        NormalMap : Models/HoverTank/tank_normals.png
+        DiffuseMap : Models/HoverTank/tank_diffuse.png
+        GlowMap : Models/HoverTank/tank_glow_map_highres.png
+        UseMaterialColors : true
+        Ambient  : 0.0 0.0 0.0 1.0
+        Diffuse  : 1.0 1.0 1.0 1.0
+        Specular : 1.0 1.0 1.0 1.0
+     }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The glow map is defined here : <strong>GlowMap : Models/HoverTank/tank_glow_map_highres.png</strong></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="usage"><a class="anchor" href="#usage"></a>Usage</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create a FilterPostProcessor</p>
+</li>
+<li>
+<p>Create a BloomFilter with the GlowMode.Objects parameter</p>
+</li>
+<li>
+<p>Add the filter to the processor</p>
+</li>
+<li>
+<p>Add the processor to the viewPort</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>  FilterPostProcessor fpp=new FilterPostProcessor(assetManager);
+  BloomFilter bf=new BloomFilter(BloomFilter.GlowMode.Objects);
+  fpp.addFilter(bf);
+  viewPort.addProcessor(fpp);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here is the result :<br>
+<span class="image"><img src="../../_images/jme3/advanced/tanlglow1.png" alt="Glowing hover tank" width="" height=""></span></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="bloom-with-a-glow-color"><a class="anchor" href="#bloom-with-a-glow-color"></a>Bloom with a glow color</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Sometimes you need an entire object to glow, not just parts of it.
+In this case you&#8217;ll need to use the glow color parameter.</p>
+</div>
+<div class="sect2">
+<h3 id="usage-2"><a class="anchor" href="#usage-2"></a>Usage</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create a material for your object and set the GlowColor parameter</p>
+</li>
+<li>
+<p>Create a FilterPostProcessor</p>
+</li>
+<li>
+<p>Create a BloomFilter with the GlowMode.Objects parameter</p>
+</li>
+<li>
+<p>Add the filter to the processor</p>
+</li>
+<li>
+<p>Add the processor to the viewPort</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>    Material mat = new Material(getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
+    mat.setColor("Color", ColorRGBA.Green);
+    mat.setColor("GlowColor", ColorRGBA.Green);
+    fpp=new FilterPostProcessor(assetManager);
+    bloom= new BloomFilter(BloomFilter.GlowMode.Objects);
+    fpp.addFilter(bloom);
+    viewPort.addProcessor(fpp);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here is the result on Oto&#8217;s plasma ball (before and after) :<br></p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="../../_images/jme3/advanced/otonobloom.png" alt="Oto&#8217;s plasma ball is just a big pea" width="400" height=""></span><span class="image"><img src="../../_images/jme3/advanced/otoglow.png" alt="Oto&#8217;s plasma ball radiates incredible power!!!" width="400" height=""></span></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="hints-and-tricks"><a class="anchor" href="#hints-and-tricks"></a>Hints and tricks</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="increasing-the-blur-range-and-reducing-fps-cost"><a class="anchor" href="#increasing-the-blur-range-and-reducing-fps-cost"></a>Increasing the blur range and reducing fps cost</h3>
+<div class="paragraph">
+<p>The glow render is sampled on a texture that has the same dimensions as the viewport.
+You can reduce the size of the bloom sampling just by using the setDownSamplingFactor method like this :<br></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java"> BloomFilter bloom=new BloomFilter();
+ bloom.setDownSamplingFactor(2.0f);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this example the sampling size is divided by 4 (width/2,height/2), resulting in less work to blur the scene.
+The resulting texture is then up sampled to the screen size using hardware bilinear filtering. this results in a wider blur range.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="using-classic-bloom-combined-with-a-glow-map"><a class="anchor" href="#using-classic-bloom-combined-with-a-glow-map"></a>Using classic bloom combined with a glow map</h3>
+<div class="paragraph">
+<p>let&#8217;s say you want a global bloom on your scene, but you have also a glowing object on it.
+You can use only one bloom filter for both effects like that</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">BloomFilter bloom=new BloomFilter(BloomFilter.GlowMode.SceneAndObjects);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>However, note that both effects will share the same values of attribute, and sometimes, it won&#8217;t be what you need.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="making-your-home-brewed-material-definition-support-glow"><a class="anchor" href="#making-your-home-brewed-material-definition-support-glow"></a>Making your home brewed material definition support Glow</h3>
+<div class="paragraph">
+<p>Let&#8217;s say you have made a custom material on your own, and that you want it to support glow maps and glow color.
+In your material definition you need to add those lines in the MaterialParameters section :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code> MaterialParameters {
+
+        ....
+
+        // Texture of the glowing parts of the material
+        Texture2D GlowMap
+        // The glow color of the object
+        Color GlowColor
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then add the following technique :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>    Technique Glow {
+
+        LightMode SinglePass
+
+        VertexShader GLSL100:   Common/MatDefs/Misc/SimpleTextured.vert
+        FragmentShader GLSL100: Common/MatDefs/Light/Glow.frag
+
+        WorldParameters {
+            WorldViewProjectionMatrix
+        }
+
+        Defines {
+            HAS_GLOWMAP : GlowMap
+            HAS_GLOWCOLOR : GlowColor
+        }
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then you can use this material with the BloomFilter</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="make-a-glowing-object-stop-to-glow"><a class="anchor" href="#make-a-glowing-object-stop-to-glow"></a>Make a glowing object stop to glow</h3>
+<div class="paragraph">
+<p>If you are using a glow map, remove the texture from the material.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>material.clearTextureParam("GlowMap");</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you are using a glow color, set it to black</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>material.setColor("GlowColor",ColorRGBA.Black);</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

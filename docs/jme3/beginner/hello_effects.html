@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>jMonkeyEngine 3 Tutorial (12) - Hello Effects :: jMonkeyEngine Docs</title>
+    <link rel="canonical" href="https://wiki.jmonkeyengine.org/docs/jme3/beginner/hello_effects.html">
+    <link rel="prev" href="hello_audio.html">
+    <link rel="next" href="hello_physics.html">
+    <meta name="keywords" content="beginner, documentation, intro, transparency, effect">
+    <meta name="generator" content="Antora 2.3.3">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://wiki.jmonkeyengine.org">jMonkeyEngine Docs</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Resources</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Resource A</a>
+            <a class="navbar-item" href="#">Resource B</a>
+            <a class="navbar-item" href="#">Resource C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="docs" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../../jme3.html">Docs</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../documentation.html">Getting Started</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="https://javadoc.jmonkeyengine.org/v3.3.2-stable">JavaDoc</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../jme3.html">jMonkeyEngine 3</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Beginner Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_simpleapplication.html">Hello SimpleApplication</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_node.html">Hello Node</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_asset.html">Hello Asset</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_main_event_loop.html">Hello Main Event Loop</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_input_system.html">Hello Input System</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_material.html">Hello Material</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_animation.html">Hello Animation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_picking.html">Hello Picking</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_collision.html">Hello Collision</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_terrain.html">Hello Terrain</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_audio.html">Hello Audio</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="3">
+    <a class="nav-link" href="hello_effects.html">Hello Effects</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_physics.html">Hello Physics</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Intermediate Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/best_practices.html">Best Practices</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/simpleapplication.html">Simple Application</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../features.html">Features</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/optimization.html">Optimization</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../faq.html">FAQ</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Math Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../math_for_dummies.html">Math For Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/math.html">Math</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../math.html">More Math</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../rotate.html">Rotate</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../math_video_tutorials.html">Math Video Tutorials</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">3D Graphics Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/multi-media_asset_pipeline.html">Multi-Media Asset Pipeline</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../scenegraph_for_dummies.html">Scenegraph for Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="hellovector.html">Hello Vector</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../terminology.html">Terminology</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/how_to_use_materials.html">How to Use Materials</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/transparency_sorting.html">Transparency and Sorting</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../external/blender.html">Importing from Blender</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../external/3dsmax.html">Importing from 3DS Max</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../logo.html">Logo Usage</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../bsd_license.html">License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../github_tips.html">Github Tips</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">SDK</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../sdk.html">jMonkeyEngine SDK</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Docs</span>
+    <span class="version">master</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <span class="title">Antora Default UI</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../antora-ui-default/index.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <span class="title">Docs</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../../jme3.html">master</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../documentation.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../jme3.html">Docs</a></li>
+    <li><a href="../../jme3.html">jMonkeyEngine 3</a></li>
+    <li>Beginner Tutorials</li>
+    <li><a href="hello_effects.html">Hello Effects</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/jMonkeyEngine/wiki/edit/antora-setup/docs/modules/ROOT/pages/jme3/beginner/hello_effects.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">jMonkeyEngine 3 Tutorial (12) - Hello Effects</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Previous: <a href="hello_audio.html" class="page">Hello Audio</a>,
+Next: <a href="hello_physics.html" class="page">Hello Physics</a></p>
+</div>
+<div class="imageblock right">
+<div class="content">
+<img src="../../_images/jme3/beginner/beginner-effect-fire.png" alt="beginner-effect-fire.png" width="150" height="165">
+</div>
+</div>
+<div class="paragraph">
+<p>When you see one of the following in a game, then a particle system is likely behind it:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Fire, flames, sparks;</p>
+</li>
+<li>
+<p>Rain, snow, waterfalls, leaves;</p>
+</li>
+<li>
+<p>Explosions, debris, shockwaves;</p>
+</li>
+<li>
+<p>Dust, fog, clouds, smoke;</p>
+</li>
+<li>
+<p>Insects swarms, meteor showers;</p>
+</li>
+<li>
+<p>Magic spells.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>These scene elements cannot be modeled by meshes. In very simple terms:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The difference between an explosion and a dust cloud is the speed of the particle effect.</p>
+</li>
+<li>
+<p>The difference between flames and a waterfall is the direction and the color of the particle effect.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Particle effects can be animated (e.g. sparks, drops) and static (strands of grass, hair). Non-particle effects include bloom/glow, and motion blur/afterimage. In this tutorial you learn how to make animated particles (com.jme3.effect).</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>To use the example assets in a new jMonkeyEngine SDK project, <b class="button">RMB</b> click your project, select <span class="menuseq"><b class="menu">Properties</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="submenu">Libraries</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">Add Library</b></span> and add the &#8220;jme3-test-data&#8221; library.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="sample-code"><a class="anchor" href="#sample-code"></a>Sample Code</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package jme3test.helloworld;
+
+import com.jme3.app.SimpleApplication;
+import com.jme3.effect.ParticleEmitter;
+import com.jme3.effect.ParticleMesh;
+import com.jme3.material.Material;
+import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector3f;
+
+/** Sample 11 - how to create fire, water, and explosion effects. */
+public class HelloEffects extends SimpleApplication {
+
+  public static void main(String[] args) {
+    HelloEffects app = new HelloEffects();
+    app.start();
+  }
+
+  @Override
+  public void simpleInitApp() {
+
+    ParticleEmitter fire =
+            new ParticleEmitter("Emitter", ParticleMesh.Type.Triangle, 30);
+    Material mat_red = new Material(assetManager,
+            "Common/MatDefs/Misc/Particle.j3md");
+    mat_red.setTexture("Texture", assetManager.loadTexture(
+            "Effects/Explosion/flame.png"));
+    fire.setMaterial(mat_red);
+    fire.setImagesX(2);
+    fire.setImagesY(2); // 2x2 texture animation
+    fire.setEndColor(  new ColorRGBA(1f, 0f, 0f, 1f));   // red
+    fire.setStartColor(new ColorRGBA(1f, 1f, 0f, 0.5f)); // yellow
+    fire.getParticleInfluencer().setInitialVelocity(new Vector3f(0, 2, 0));
+    fire.setStartSize(1.5f);
+    fire.setEndSize(0.1f);
+    fire.setGravity(0, 0, 0);
+    fire.setLowLife(1f);
+    fire.setHighLife(3f);
+    fire.getParticleInfluencer().setVelocityVariation(0.3f);
+    rootNode.attachChild(fire);
+
+    ParticleEmitter debris =
+            new ParticleEmitter("Debris", ParticleMesh.Type.Triangle, 10);
+    Material debris_mat = new Material(assetManager,
+            "Common/MatDefs/Misc/Particle.j3md");
+    debris_mat.setTexture("Texture", assetManager.loadTexture(
+            "Effects/Explosion/Debris.png"));
+    debris.setMaterial(debris_mat);
+    debris.setImagesX(3);
+    debris.setImagesY(3); // 3x3 texture animation
+    debris.setRotateSpeed(4);
+    debris.setSelectRandomImage(true);
+    debris.getParticleInfluencer().setInitialVelocity(new Vector3f(0, 4, 0));
+    debris.setStartColor(ColorRGBA.White);
+    debris.setGravity(0, 6, 0);
+    debris.getParticleInfluencer().setVelocityVariation(.60f);
+    rootNode.attachChild(debris);
+    debris.emitAllParticles();
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should see an explosion that sends debris flying, and a fire.
+<a href="https://github.com/jMonkeyEngine/jmonkeyengine/tree/master/jme3-examples/src/main/java/jme3test/effect">More example code is here.</a></p>
+</div>
+<div class="sect2">
+<h3 id="texture-animation-and-variation"><a class="anchor" href="#texture-animation-and-variation"></a>Texture Animation and Variation</h3>
+<div class="imageblock right">
+<div class="content">
+<img src="../../_images/jme3/beginner/Debris.png" alt="Debris.png" width="96" height="96">
+</div>
+</div>
+<div class="paragraph">
+<p>Start by choosing a material texture for your effect. If you provide the emitter with a set of textures (see image), it can use them either for variation (random order), or as animation steps (fixed order).</p>
+</div>
+<div class="paragraph">
+<p>Setting emitter textures works just as you have already learned in previous chapters. This time you base the material on the <code>Particle.j3md</code> material definition. Let&#8217;s have a closer look at the material for the Debris effect.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    ParticleEmitter debris =
+            new ParticleEmitter("Debris", ParticleMesh.Type.Triangle, 10);
+    Material debris_mat = new Material(assetManager,
+            "Common/MatDefs/Misc/Particle.j3md");
+    debris_mat.setTexture("Texture", assetManager.loadTexture(
+            "Effects/Explosion/Debris.png"));
+    debris.setMaterial(debris_mat);
+    debris.setImagesX(3);
+    debris.setImagesY(3); // 3x3 texture animation
+    debris.setSelectRandomImage(true);
+        ...</code></pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create a material and load the texture.</p>
+</li>
+<li>
+<p>Tell the Emitter into how many animation steps (x*y) the texture is divided.<br>
+The debris texture has 3x3 frames.</p>
+</li>
+<li>
+<p>Optionally, tell the Emitter whether the animation steps are to be at random, or in order.<br>
+For the debris, the frames play at random.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>As you see in the debris example, texture animations improve effects because each &#8220;flame&#8221; or &#8220;piece&#8221; of debris now looks different. Also think of electric or magic effects, where you can create very interesting animations by using an ordered morphing series of lightning bolts; or flying leaves or snow flakes, for instance.</p>
+</div>
+<div class="paragraph">
+<p>The fire material is created the same way, just using &#8220;Effects/Explosion/flame.png&#8221; texture, which has with 2x2 ordered animation steps.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="default-particle-textures"><a class="anchor" href="#default-particle-textures"></a>Default Particle Textures</h3>
+<div class="paragraph">
+<p>The following particle textures included in <code>test-data.jar</code>. You can copy and use them in your own effects.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Texture Path</th>
+<th class="tableblock halign-left valign-top">Dimension</th>
+<th class="tableblock halign-left valign-top">Preview</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Effects/Explosion/Debris.png</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>3*3</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><span class="image"><img src="../../_images/jme3/beginner/Debris.png" alt="Debris.png" width="32" height="32"></span></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Effects/Explosion/flame.png</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>2*2</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><span class="image"><img src="../../_images/jme3/beginner/flame.png" alt="flame.png" width="32" height="32"></span></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Effects/Explosion/shockwave.png</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>1*1</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><span class="image"><img src="../../_images/jme3/beginner/shockwave.png" alt="shockwave.png" width="32" height="32"></span></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Effects/Explosion/smoketrail.png</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>1*3</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><span class="image"><img src="../../_images/jme3/beginner/smoketrail.png" alt="smoketrail.png" width="32" height="32"></span></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Effects/Smoke/Smoke.png</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>1*15</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><span class="image"><img src="../../_images/jme3/beginner/Smoke.png" alt="Smoke.png" width="96" height="32"></span></p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Copy them into your <code>assets/Effects</code> directory to use them.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="creating-custom-textures"><a class="anchor" href="#creating-custom-textures"></a>Creating Custom Textures</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>For your game, you will likely create custom particle textures. Look at the fire example again.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    ParticleEmitter fire =
+            new ParticleEmitter("Emitter", ParticleMesh.Type.Triangle, 30);
+    Material mat_red = new Material(assetManager,
+            "Common/MatDefs/Misc/Particle.j3md");
+    mat_red.setTexture("Texture", assetManager.loadTexture(
+            "Effects/Explosion/flame.png"));
+    fire.setMaterial(mat_red);
+    fire.setImagesX(2);
+    fire.setImagesY(2); // 2x2 texture animation
+    fire.setEndColor(  new ColorRGBA(1f, 0f, 0f, 1f));   // red
+    fire.setStartColor(new ColorRGBA(1f, 1f, 0f, 0.5f)); // yellow</code></pre>
+</div>
+</div>
+<div class="imageblock right">
+<div class="content">
+<img src="../../_images/jme3/beginner/flame.png" alt="flame.png" width="96" height="96">
+</div>
+</div>
+<div class="paragraph">
+<p>Compare the texture with the resulting effect.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Black parts of the image become fully transparent.</p>
+</li>
+<li>
+<p>White/gray parts of the image are translucent and get colorized.</p>
+</li>
+<li>
+<p>You set the color using <code>setStartColor()</code> and <code>setEndColor()</code>.<br>
+For fire, is&#8217;s a gradient from yellow to red.</p>
+</li>
+<li>
+<p>By default, the animation is played in order and loops.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Create a grayscale texture in a graphic editor, and save it to your <code>assets/Effects</code> directory. If you split up one image file into x*y animation steps, make sure each square is of equal size–just as you see in the examples here.</p>
+</div>
+<div class="sect2">
+<h3 id="emitter-parameters"><a class="anchor" href="#emitter-parameters"></a>Emitter Parameters</h3>
+<div class="paragraph">
+<p>A particle system is always centered around an emitter.</p>
+</div>
+<div class="paragraph">
+<p>Use the <code>setShape()</code> method to change the EmitterShape:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>EmitterPointShape(Vector3f.ZERO) –  particles emit from a point (default)</p>
+</li>
+<li>
+<p>EmitterSphereShape(Vector3f.ZERO,2f) – particles emit from a sphere-sized area</p>
+</li>
+<li>
+<p>EmitterBoxShape(new Vector3f(-1f,-1f,-1f),new Vector3f(1f,1f,1f)) – particles emit from a box-sized area</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">emitter.setShape(new EmitterPointShape(Vector3f.ZERO));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You create different effects by changing the emitter parameters:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 50%;">
+<col style="width: 15%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Method</th>
+<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>number</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>setNumParticles()</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>N/A</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The maximum number of particles visible at the same time. Value is specified by user in constructor. This influences the density and length of the &#8220;trail&#8221;.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>velocity</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>getParticleInfluencer().setInitialVelocity()</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Vector3f.ZERO</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specify a vector how fast particles move and in which start direction.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>direction</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>getParticleInfluencer().setVelocityVariation()</code><br>
+<code>setFacingVelocity()</code><br>
+<code>setRandomAngle()</code><br>
+<code>setFaceNormal()</code><br>
+<code>setRotateSpeed()</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>0.2f<br>
+false<br>
+false<br>
+Vector3f.NAN<br>
+0.0f</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Optional accessors that control in which direction particles face while flying.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>lifetime</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>setLowLife()</code><br>
+<code>setHighLife()</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>3f<br>
+7f</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Minimum and maximum time period before particles fade.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>emission rate</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>setParticlesPerSec()</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>20</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>How many new particles are emitted per second.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>color</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>setStartColor()</code><br>
+<code>setEndColor()</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>gray</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Set to the same colors, or to two different colors for a gradient effect.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>size</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>setStartSize()</code><br>
+<code>setEndSize()</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>0.2f<br>
+2f</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Set to two different values for shrink/grow effect, or to same size for constant effect.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>gravity</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>setGravity()</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>0,1,0</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Whether particles fall down (positive) or fly up (negative). Set to 0f for a zero-g effect where particles keep flying.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>You can find details about <a href="../advanced/particle_emitters.html#configure_parameters" class="page">effect parameters</a> here.
+Add and modify one parameter at a time, and try different values until you get the effect you want.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Use the SceneComposer in the jMonkeyEngine SDK to create effects more easily. Create an empty scene and add an emitter object to it. Change the emitter properties and watch the outcome live. You can save created effects as .j3o file and load them like scenes or models.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="exercise"><a class="anchor" href="#exercise"></a>Exercise</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Can you &#8220;invert&#8221; the fire effect into a small waterfall? Here some tips:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Change the Red and Yellow color to Cyan and Blue</p>
+</li>
+<li>
+<p>Invert the velocity vector (direction) by using a negative number</p>
+</li>
+<li>
+<p>Swap start and end size</p>
+</li>
+<li>
+<p>Activate gravity by setting it to 0,1,0</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="conclusion"><a class="anchor" href="#conclusion"></a>Conclusion</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You have learned that many different effects can be created by changing the parameters and textures of one general emitter object.</p>
+</div>
+<div class="paragraph">
+<p>Now you move on to another exciting chapter – the simulation of <a href="hello_physics.html" class="page">physical objects</a>. Let&#8217;s shoot some cannon balls at a brick wall!</p>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="hello_audio.html">Hello Audio</a></span>
+  <span class="next"><a href="hello_physics.html">Hello Physics</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

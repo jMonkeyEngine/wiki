@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>TerraMonkey - The jMonkeyEngine Terrain System :: jMonkeyEngine Docs</title>
+    <link rel="canonical" href="https://wiki.jmonkeyengine.org/docs/jme3/advanced/terrain.html">
+    <meta name="generator" content="Antora 2.3.3">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://wiki.jmonkeyengine.org">jMonkeyEngine Docs</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Resources</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Resource A</a>
+            <a class="navbar-item" href="#">Resource B</a>
+            <a class="navbar-item" href="#">Resource C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="docs" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../../jme3.html">Docs</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../documentation.html">Getting Started</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="https://javadoc.jmonkeyengine.org/v3.3.2-stable">JavaDoc</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../jme3.html">jMonkeyEngine 3</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Beginner Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_simpleapplication.html">Hello SimpleApplication</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_node.html">Hello Node</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_asset.html">Hello Asset</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_main_event_loop.html">Hello Main Event Loop</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_input_system.html">Hello Input System</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_material.html">Hello Material</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_animation.html">Hello Animation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_picking.html">Hello Picking</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_collision.html">Hello Collision</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_terrain.html">Hello Terrain</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_audio.html">Hello Audio</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_effects.html">Hello Effects</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_physics.html">Hello Physics</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Intermediate Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/best_practices.html">Best Practices</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/simpleapplication.html">Simple Application</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../features.html">Features</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/optimization.html">Optimization</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../faq.html">FAQ</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Math Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../math_for_dummies.html">Math For Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/math.html">Math</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../math.html">More Math</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../rotate.html">Rotate</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../math_video_tutorials.html">Math Video Tutorials</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">3D Graphics Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/multi-media_asset_pipeline.html">Multi-Media Asset Pipeline</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../scenegraph_for_dummies.html">Scenegraph for Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../beginner/hellovector.html">Hello Vector</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../terminology.html">Terminology</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/how_to_use_materials.html">How to Use Materials</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/transparency_sorting.html">Transparency and Sorting</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../external/blender.html">Importing from Blender</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../external/3dsmax.html">Importing from 3DS Max</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../logo.html">Logo Usage</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../bsd_license.html">License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../github_tips.html">Github Tips</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">SDK</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../sdk.html">jMonkeyEngine SDK</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Docs</span>
+    <span class="version">master</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <span class="title">Antora Default UI</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../antora-ui-default/index.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <span class="title">Docs</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../../jme3.html">master</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../documentation.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../jme3.html">Docs</a></li>
+    <li><a href="terrain.html">TerraMonkey - The jMonkeyEngine Terrain System</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/jMonkeyEngine/wiki/edit/antora-setup/docs/modules/ROOT/pages/jme3/advanced/terrain.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">TerraMonkey - The jMonkeyEngine Terrain System</h1>
+<div class="sect1">
+<h2 id="overview"><a class="anchor" href="#overview"></a>Overview</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>TerraMonkey is a GeoMipMapping quad tree of terrain tiles that supports real time editing and texture splatting. That&#8217;s a mouth full! Lets look at each part:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>GeoMipMapping:</strong> a method of changing the level of detail (LOD) of geometry tiles based on how far away they are from the camera. Between the edges of two tiles, it will seam those edges together so you don&#8217;t get gaps or holes. For an in-depth read on how it works, read <a href="http://www.flipcode.com/archives/article_geomipmaps.pdf">Fast Terrain Rendering Using Geometrical MipMapping
+</a>.</p>
+</li>
+<li>
+<p><strong>Quad Tree:</strong> The entire terrain structure is made up of TerrainPatches (these hold the actual meshes) as leaves in a quad tree (TerrainQuad). TerrainQuads are subdivided by 4 until they reach minimum size, then a TerrainPatch is created, and that is where the actual geometry mesh lives. This allows for fast culling of the terrain that you can&#8217;t see.</p>
+</li>
+<li>
+<p><strong>Splatting:</strong> The ability to paint multiple textures onto your terrain. What differs here from JME2 is that this is all done in a shader, no more render passes. So it performs much faster.</p>
+</li>
+<li>
+<p><strong>Real-time editing:</strong> <a href="../../sdk/terrain_editor.html" class="page">TerraMonkey terrains are editable in jMonkeyEngine SDK</a>, and you are able to modify them in real time, for example by raising and lowering the terrain.</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="current-features"><a class="anchor" href="#current-features"></a>Current Features:</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Support for 16 splat textures. You use a custom combination of Diffuse, Normal, Specular, and Glow Maps.</p>
+</li>
+<li>
+<p>GeoMipMapping: LodControl optimizes the level of detail</p>
+</li>
+<li>
+<p>Terrain can be randomized or generated from a heightmap</p>
+</li>
+<li>
+<p>jMonkeyEngine SDK terrain editor</p>
+</li>
+<li>
+<p>Streaming <a href="endless_terraingrid.html" class="page">terrain grid</a> (i.e. infinite terrain)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="planned-features"><a class="anchor" href="#planned-features"></a>Planned Features:</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Hydraulic erosion and procedural texture generation</p>
+</li>
+<li>
+<p>Holes: caves, cliffs</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="sample-code"><a class="anchor" href="#sample-code"></a>Sample Code</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/terrain/TerrainTest.java">TerrainTest.java</a></p>
+</li>
+<li>
+<p><a href="https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/terrain/TerrainTestAdvanced.java">TerrainTestAdvanced.java</a></p>
+</li>
+<li>
+<p><a href="https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/terrain/TerrainTestCollision.java">TerrainTestCollision.java</a></p>
+</li>
+<li>
+<p><a href="https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/terrain/TerrainTestModifyHeight.java">TerrainTestModifyHeight.java</a></p>
+</li>
+<li>
+<p><a href="https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/terrain/TerrainTestReadWrite.java">TerrainTestReadWrite.java</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="geo-mip-mapping"><a class="anchor" href="#geo-mip-mapping"></a>Geo Mip Mapping</h2>
+<div class="sectionbody">
+<div class="imageblock text-left">
+<div class="content">
+<img src="../../_images/jme3/advanced/terrain-lod-high-medium-low.png" alt="The wiremesh of a terrain with visible differences in levels of detail (LOD)" width="" height="">
+</div>
+</div>
+<div class="paragraph">
+<p>You have seen GeoMipMapping implemented in games before. This is where the farther away terrain has fewer polygons, and as you move closer, more polygons fill in. The whole terrain is divided into a grid of patches, and each one has its own level of detail (LOD). The GeoMipMapping algorithm looks at each patch, and its neighbours, to determine how to render the geometry. It will seam the edges between two patches with different LOD.</p>
+</div>
+<div class="paragraph">
+<p>GeoMipMapping often leads to “popping where you see the terrain switch from one LOD to another. TerraMonkey has been designed so you can swap out different LOD calculation algorithms based on what will look best for your game. You can do this with the LodCalculator interface.</p>
+</div>
+<div class="paragraph">
+<p>GeoMipMapping in TerraMonkey has been split into several parts: the terrain quad tree, and the LODGeomap. The geomap deals with the actual LOD and seaming algorithm. So if you want a different data structure for your terrain system, you can re-use this piece of code. The quad tree (TerrainQuad and TerrainPatch) provide a means to organize the LODGeomaps, notify them of their neighbour&#8217;s LOD change, and to update the geometry when the LOD does change. To change the LOD it does this by changing the index buffer of the triangle strip, so the whole geometry doesn&#8217;t have to be re-loaded onto the video card. If you are eager for more detail on how GeoMipMapping works read: <a href="http://www.flipcode.com/archives/article_geomipmaps.pdf">Fast Terrain Rendering Using Geometrical MipMapping
+</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="terrain-quad-tree"><a class="anchor" href="#terrain-quad-tree"></a>Terrain Quad Tree</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>TerraMonkey is a quad tree. Each node is a TerrainQuad, and each leaf is a TerrainPatch. A TerrainQuad has either 4 child TerrainQuads, or 4 child TerrainPatches. The TerrainPatch holds the actual mesh geometry. This structure is almost exactly the same as JME2&#8217;s TerrainPage system. Except now each leaf has a reference to its neighbours, so it doesn&#8217;t ever have to traverse the tree to get them.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="texture-splatting"><a class="anchor" href="#texture-splatting"></a>Texture Splatting</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>When you &#8216;slap&#8217; a texture on a mesh, the whole mesh looks the same. For big meshes (such as terrains) that is undesirable because it looks very boring (your whole landscape would be all rock, or all grass, or all sand). Texture Splatting is a technique that lets you “paint several textures into one combined texure. Each of the splat textures has an opacity value so you can define where it is visible in the final overall texture.</p>
+</div>
+<div class="paragraph">
+<p>The default material for TerraMonkey is TerrainLighting.j3md. This material combines several texture maps to produce the final custom texture. Remember, Diffuse Maps are the main textures that define the look; optionally, each Diffuse Map can be enhanced with a Normal Map; Alpha Maps describe the opacity of each Diffuse Map used (one color –red, green, blue, or alpha– stands for one Diffuse Map&#8217;s opacity); Glow and Specular Maps define optional effects.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>We recommend to <a href="../../sdk/terrain_editor.html" class="page">create and edit Splat Textures for terrains visually in the jMonkeyEngine SDK</a>, and not do it manually. If you are simply curious about how the SDK&#8217;s terrain texture plugin works, or if you indeed want to generate materials manually, then read on for the implementation details.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Here are the names of TerrainLighting.j3md&#8217;s material properties:</p>
+</div>
+<div class="imageblock right text-left">
+<div class="content">
+<img src="../../_images/jme3/beginner/mountains512.png" alt="A heightmap encodes the topological highs and lows of the terrain" width="128" height="128">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>1-3 Alpha Maps</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>AlphaMap</code></p>
+</li>
+<li>
+<p><code>AlphaMap_1</code></p>
+</li>
+<li>
+<p><code>AlphaMap_2</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>12 Diffuse and/or Normal Maps (either in 6 pairs, or 12 stand-alone Diffuse Maps)</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>DiffuseMap</code>, <code>DiffuseMap_0_scale</code>, <code>NormalMap</code></p>
+</li>
+<li>
+<p><code>DiffuseMap_1</code>, <code>DiffuseMap_1_scale</code>, <code>NormalMap_1</code></p>
+</li>
+<li>
+<p><code>DiffuseMap_2</code>, <code>DiffuseMap_2_scale</code>, <code>NormalMap_2</code></p>
+</li>
+<li>
+<p><code>DiffuseMap_3</code>, <code>DiffuseMap_3_scale</code>, <code>NormalMap_3</code></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph right text-left">
+<p><span class="image"><img src="../../_images/jme3/beginner/alphamap.png" alt="An alpha map can describe where 4 textures are painted onto the terrain." width="128" height="128"></span></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>DiffuseMap_4</code>, <code>DiffuseMap_4_scale</code>, <code>NormalMap_4</code></p>
+</li>
+<li>
+<p>…</p>
+</li>
+<li>
+<p><code>DiffuseMap_11</code>, <code>DiffuseMap_11_scale</code>, <code>NormalMap_11</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Light maps</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>GlowMap</code></p>
+</li>
+<li>
+<p><code>SpecularMap</code></p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><code>DiffuseMap_0_scale</code> is a float value (e.g. 1.0f); you must specify one scale per Diffuse Map.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>OpenGL supports a maximum of 16 <em>samplers</em> in any given shader. This means you can only use a subset of material properties at the same time if you use the terrain&#8217;s default lighting shader (TerrainLighting.j3md)!</p>
+</div>
+<div class="paragraph">
+<p>Adhere to the following constraints:</p>
+</div>
+<div class="imageblock right text-left">
+<div class="content">
+<img src="../../_images/jme3/beginner/road.jpg" alt="The Diffuse Map of one of the terrain textures depicts the colors of a paved surface" width="" height="">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>1-12 Diffuse Maps. One Diffuse Map is the minimum!</p>
+</li>
+<li>
+<p>1-3 Alpha Maps. For each 4 Diffuse Maps, you need 1 more Alpha Map!</p>
+</li>
+<li>
+<p>0-6 Normal Maps. Diffuse Maps &amp; Normal Maps always come in pairs!</p>
+</li>
+<li>
+<p>0 or 1 Glow Map</p>
+</li>
+<li>
+<p>0 or 1 Specular Map.</p>
+</li>
+<li>
+<p><strong>The sum of all textures used must be 16, or less.</strong></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Here are some common examples what this means:</p>
+</div>
+<div class="imageblock right text-left">
+<div class="content">
+<img src="../../_images/jme3/beginner/road_normal.png" alt="The Normal Map of one of the terrain textures depicts the bumpiness of a paved surface" width="" height="">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>3 Alpha + 11 Diffuse + 1 Normal.</p>
+</li>
+<li>
+<p>3 Alpha + 11 Diffuse + 1 Glow.</p>
+</li>
+<li>
+<p>3 Alpha + 11 Diffuse + 1 Specular.</p>
+</li>
+<li>
+<p>3 Alpha + 10 Diffuse + 3 Normal.</p>
+</li>
+<li>
+<p>3 Alpha + 10 Diffuse + 1 Normal + 1 Glow + 1 Specular.</p>
+</li>
+<li>
+<p>2 Alpha + 8 Diffuse + 6 Normal.</p>
+</li>
+<li>
+<p>2 Alpha + 6 Diffuse + 6 Normal + 1 Glow + 1 Specular.</p>
+</li>
+<li>
+<p>1 Alpha + 3 Diffuse + 3 Normal + 1 Glow + 1 Specular (rest unused)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You can hand-paint Alpha, Diffuse, Glow, and Specular maps in a drawing program, like Photoshop. Define each splat texture in the Alpha Map in either Red, Green, Blue, or Alpha (=RGBA). The JmeTests project bundled in the <a href="../../sdk.html" class="page">SDK</a> includes some image files that show you how this works. The example images show a terrain heightmap next to its Alpha Map (which has been prepare for 3 Diffuse Maps), and one examplary Diffuse/Normal Map pair.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="code-sample-terrain-j3md"><a class="anchor" href="#code-sample-terrain-j3md"></a>Code Sample: Terrain.j3md</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This example shows the simpler material definition <code>Terrain.j3md</code>, which only supports 1 Alpha Map, 3 Diffuse Maps, 3 Normal Maps, and does not support Phong illumination. It makes the exmaple shorter – TerrainLighting.j3md works accordingly (The list of material properties see above. Links to extended sample code see above.)</p>
+</div>
+<div class="paragraph">
+<p>First, we load our textures and the heightmap texture for the terrain</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Create material from Terrain Material Definition
+matRock = new Material(assetManager, "Common/MatDefs/Terrain/Terrain.j3md");
+// Load alpha map (for splat textures)
+matRock.setTexture("Alpha", assetManager.loadTexture("Textures/Terrain/splat/alphamap.png"));
+// load heightmap image (for the terrain heightmap)
+Texture heightMapImage = assetManager.loadTexture("Textures/Terrain/splat/mountains512.png");
+// load grass texture
+Texture grass = assetManager.loadTexture("Textures/Terrain/splat/grass.jpg");
+grass.setWrap(WrapMode.Repeat);
+matRock.setTexture("Tex1", grass);
+matRock.setFloat("Tex1Scale", 64f);
+// load dirt texture
+Texture dirt = assetManager.loadTexture("Textures/Terrain/splat/dirt.jpg");
+dirt.setWrap(WrapMode.Repeat);
+matRock.setTexture("Tex2", dirt);
+matRock.setFloat("Tex2Scale", 32f);
+// load rock texture
+Texture rock = assetManager.loadTexture("Textures/Terrain/splat/road.jpg");
+rock.setWrap(WrapMode.Repeat);
+matRock.setTexture("Tex3", rock);
+matRock.setFloat("Tex3Scale", 128f);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We create the heightmap from the <code>heightMapImage</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">AbstractHeightMap heightmap = null;
+heightmap = new ImageBasedHeightMap(heightMapImage.getImage(), 1f);
+heightmap.load();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Next we create the actual terrain.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The terrain tiles are 65x65.</p>
+</li>
+<li>
+<p>The total size of the terrain is 513x513, but it can easily be up to 1025x1025.</p>
+</li>
+<li>
+<p>It uses the heightmap to generate the height values.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">terrain = new TerrainQuad("terrain", 65, 513, heightmap.getHeightMap());
+terrain.setMaterial(matRock);
+terrain.setLocalScale(2f, 1f, 2f); // scale to make it less steep
+List&lt;Camera&gt; cameras = new ArrayList&lt;&gt;();
+cameras.add(getCamera());
+TerrainLodControl control = new TerrainLodControl(terrain, cameras);
+terrain.addControl(control);
+rootNode.attachChild(terrain);</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>As an alternative to an image-based height map, you can also generate a Hill hightmap:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">heightmap = new HillHeightMap(1025, 1000, 50, 100, (byte) 3);</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

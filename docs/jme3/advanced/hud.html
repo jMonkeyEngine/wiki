@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Head-Up Display (HUD) :: jMonkeyEngine Docs</title>
+    <link rel="canonical" href="https://wiki.jmonkeyengine.org/docs/jme3/advanced/hud.html">
+    <meta name="keywords" content="gui, display, documentation, hud">
+    <meta name="generator" content="Antora 2.3.3">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://wiki.jmonkeyengine.org">jMonkeyEngine Docs</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Resources</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Resource A</a>
+            <a class="navbar-item" href="#">Resource B</a>
+            <a class="navbar-item" href="#">Resource C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="docs" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../../jme3.html">Docs</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../documentation.html">Getting Started</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="https://javadoc.jmonkeyengine.org/v3.3.2-stable">JavaDoc</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../jme3.html">jMonkeyEngine 3</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Beginner Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_simpleapplication.html">Hello SimpleApplication</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_node.html">Hello Node</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_asset.html">Hello Asset</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_main_event_loop.html">Hello Main Event Loop</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_input_system.html">Hello Input System</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_material.html">Hello Material</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_animation.html">Hello Animation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_picking.html">Hello Picking</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_collision.html">Hello Collision</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_terrain.html">Hello Terrain</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_audio.html">Hello Audio</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_effects.html">Hello Effects</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_physics.html">Hello Physics</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Intermediate Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/best_practices.html">Best Practices</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/simpleapplication.html">Simple Application</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../features.html">Features</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/optimization.html">Optimization</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../faq.html">FAQ</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Math Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../math_for_dummies.html">Math For Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/math.html">Math</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../math.html">More Math</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../rotate.html">Rotate</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../math_video_tutorials.html">Math Video Tutorials</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">3D Graphics Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/multi-media_asset_pipeline.html">Multi-Media Asset Pipeline</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../scenegraph_for_dummies.html">Scenegraph for Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../beginner/hellovector.html">Hello Vector</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../terminology.html">Terminology</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/how_to_use_materials.html">How to Use Materials</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/transparency_sorting.html">Transparency and Sorting</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../external/blender.html">Importing from Blender</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../external/3dsmax.html">Importing from 3DS Max</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../logo.html">Logo Usage</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../bsd_license.html">License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../github_tips.html">Github Tips</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">SDK</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../sdk.html">jMonkeyEngine SDK</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Docs</span>
+    <span class="version">master</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <span class="title">Antora Default UI</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../antora-ui-default/index.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <span class="title">Docs</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../../jme3.html">master</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../documentation.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../jme3.html">Docs</a></li>
+    <li><a href="hud.html">Head-Up Display (HUD)</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/jMonkeyEngine/wiki/edit/antora-setup/docs/modules/ROOT/pages/jme3/advanced/hud.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Head-Up Display (HUD)</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>A HUD (Head-Up Display) is part of a game&#8217;s visual user interface. It&#8217;s an overlay that displays additional information as (typically) 2-dimensional text or icons on the screen, on top of the 3D scene. Not all games have, or need a HUD. To avoid breaking the immersion and cluttering the screen, only use a HUD if it is the only way to convey certain information.</p>
+</div>
+<div class="paragraph">
+<p>HUDs are used to supply players with essential information about the game state.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Status: Score, minimap, points, stealth mode, …</p>
+</li>
+<li>
+<p>Resources: Ammunition, lives/health, time, …</p>
+</li>
+<li>
+<p>Vehicle instruments: Cockpit, speedometer, …</p>
+</li>
+<li>
+<p>Navigational aides: Crosshairs, mouse pointer or hand, …</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You have multiple options how to create HUDs.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Option</th>
+<th class="tableblock halign-left valign-top">Pros</th>
+<th class="tableblock halign-left valign-top">Cons</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Attach elements to default guiNode:</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Easy to learn. jMonkeyEngine built-in <abbr title="Application Programming Interface">API</abbr> for attaching plain images and bitmap text.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Only basic features.<br>
+You will have to write custom controls / buttons / effects if you need them.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Use advanced <a href="nifty_gui.html" class="page">Nifty GUI</a> integration:</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Full-featured interactive user interface.<br>
+Includes buttons, effects, controls.<br>
+Supports XML and Java layouts.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Steeper learning curve.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Use user contributed <abbr title="Graphical User Interface">GUI</abbr> libraries such as <a href="../contributions/tonegodgui.html" class="page">tonegodgui</a> or <a href="http://hub.jmonkeyengine.org/t/lemur-api-documentation/27209">Lemur</a>:</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Both have many features that would be difficult to do with Nifty<br>
+Includes buttons, effects, controls.<br>
+New features are still being released</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Are not necessarily guaranteed future updates, not as well documented</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Using the <abbr title="Graphical User Interface">GUI</abbr> Node is the default approach in jme3 to create simple HUDs. If you just quickly want to display a line of text, or a simple icon on the screen, use the no-frills <abbr title="Graphical User Interface">GUI</abbr> Node, it&#8217;s easier.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="simple-hud-gui-node"><a class="anchor" href="#simple-hud-gui-node"></a>Simple HUD: GUI Node</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You already know the <code>rootNode</code> that holds the 3-dimensional scene graph. jME3 also offers a 2-dimension (orthogonal) node, the <code>guiNode</code>.</p>
+</div>
+<div class="paragraph">
+<p>This is how you use the guiNode for HUDs:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Create a <abbr title="Graphical User Interface">GUI</abbr> element: a BitmapText or Picture object.</p>
+</li>
+<li>
+<p>Attach the element to the guiNode.</p>
+</li>
+<li>
+<p>Place the element in the orthogonal render queue using <code>setQueueBucket(Bucket.Gui)</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The BitmapTexts and Pictures appear as 2 dimensional element on the screen.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>By default, the guiNode has some scene graph statistics attached. To clear the guiNode before you attach your own <abbr title="Graphical User Interface">GUI</abbr> elements, use the following methods:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">setDisplayStatView(false); setDisplayFps(false);</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="displaying-pictures-in-the-hud"><a class="anchor" href="#displaying-pictures-in-the-hud"></a>Displaying Pictures in the HUD</h3>
+<div class="paragraph">
+<p>A simple image can be displayed using <code>com.jme3.ui.Picture</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Picture pic = new Picture("HUD Picture");
+pic.setImage(assetManager, "Textures/ColoredTex/Monkey.png", true);
+pic.setWidth(settings.getWidth()/2);
+pic.setHeight(settings.getHeight()/2);
+pic.setPosition(settings.getWidth()/4, settings.getHeight()/4);
+guiNode.attachChild(pic);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When you set the last boolean in setImage() to true, the alpha channel of your image is rendered transparent/translucent.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="displaying-text-in-the-hud"><a class="anchor" href="#displaying-text-in-the-hud"></a>Displaying Text in the HUD</h3>
+<div class="paragraph">
+<p>You use <code>com.jme3.font.BitmapText</code> to display text on the screen.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">BitmapText hudText = new BitmapText(guiFont, false);
+hudText.setSize(guiFont.getCharSet().getRenderedSize());      // font size
+hudText.setColor(ColorRGBA.Blue);                             // font color
+hudText.setText("You can write any string here");             // the text
+hudText.setLocalTranslation(300, hudText.getLineHeight(), 0); // position
+guiNode.attachChild(hudText);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The BitmapFont object <code>guiFont</code> is a default font provided by SimpleApplication. Copy you own fonts as .fnt plus .png files into the <code>assets/Interface/Fonts</code> directory and load them like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>BitmapFont myFont = assetManager.loadFont("Interface/Fonts/Console.fnt");
+hudText = new BitmapText(myFont, false);</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="positioning-hud-elements"><a class="anchor" href="#positioning-hud-elements"></a>Positioning HUD Elements</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>When positioning <abbr title="Graphical User Interface">GUI</abbr> text and images in 2D, the <strong>bottom left corner</strong> of the screen is <code>(0f,0f)</code>, and the <strong>top right corner</strong> is at <code>(settings.getWidth(),settings.getHeight())</code>.</p>
+</li>
+<li>
+<p>If you have several 2D elements in the <abbr title="Graphical User Interface">GUI</abbr> bucket that overlap, define their depth order by specifing a Z value. For example use <code>pic.move(x, y, -1)</code> to move the picture to the background, or <code>hudText.setLocalTranslation(x,y,1)</code> to move text to the foreground.</p>
+</li>
+<li>
+<p>Size and length values in the orthogonal render queue are treated like pixels. A 20*20-wu big quad is rendered 20 pixels wide.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="displaying-geometries-in-the-hud"><a class="anchor" href="#displaying-geometries-in-the-hud"></a>Displaying Geometries in the HUD</h3>
+<div class="paragraph">
+<p>It is technically possible to attach Quads and 3D Geometries to the HUD. They show up as flat, static <abbr title="Graphical User Interface">GUI</abbr> elements. The size unit for the guiNode is pixels, not world units. If you attach a Geometry that uses a lit Material, you must add a light to the guiNode.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If you don&#8217;t see an attached object in the <abbr title="Graphical User Interface">GUI</abbr>, check it&#8217;s position and material (add a light to guiNode). Also verify whether it is not too tiny to be seen. For comparison: A 1 world-unit wide cube is only 1 pixel wide when attached to the guiNode! You may need to scale it bigger.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="keeping-the-hud-up-to-date"><a class="anchor" href="#keeping-the-hud-up-to-date"></a>Keeping the HUD Up-To-Date</h3>
+<div class="paragraph">
+<p>Use the update loop to keep the content up-to-date.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public void simpleUpdate(float tpf) {
+  ...
+  hudText.setText("Score: " + score);
+  ...
+  picture.setImage(assetManager, "Interface/statechange.png", true);
+  ...
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="advanced-hud-nifty-gui"><a class="anchor" href="#advanced-hud-nifty-gui"></a>Advanced HUD: Nifty GUI</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The recommended approach to create HUDs is using <a href="nifty_gui.html" class="page">Nifty GUI</a>.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Lay out the <abbr title="Graphical User Interface">GUI</abbr> in one or several Nifty XML or Java files.</p>
+</li>
+<li>
+<p>Write the controller classes in Java.</p>
+</li>
+<li>
+<p>Load the XML file with the controller object in your game&#8217;s simpleInit() method.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The advantage of Nifty <abbr title="Graphical User Interface">GUI</abbr> is that it is well integrated into jME and the jMonkeyEngine SDK, and that it offers all the features that you expect from a professional modern user interface.</p>
+</div>
+<div class="paragraph">
+<p>For HUDs, you basically follow the same instructions as for creating a normal <a href="nifty_gui.html" class="page">Nifty GUI</a>, you just don&#8217;t pause the game while the HUD is up.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="../external/fonts.html" class="page">Fonts</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

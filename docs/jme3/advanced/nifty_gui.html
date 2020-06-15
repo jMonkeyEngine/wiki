@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Creating JME3 User Interfaces with Nifty GUI :: jMonkeyEngine Docs</title>
+    <link rel="canonical" href="https://wiki.jmonkeyengine.org/docs/jme3/advanced/nifty_gui.html">
+    <meta name="keywords" content="gui, documentation, nifty, hud">
+    <meta name="generator" content="Antora 2.3.3">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://wiki.jmonkeyengine.org">jMonkeyEngine Docs</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Resources</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Resource A</a>
+            <a class="navbar-item" href="#">Resource B</a>
+            <a class="navbar-item" href="#">Resource C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="docs" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../../jme3.html">Docs</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../documentation.html">Getting Started</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="https://javadoc.jmonkeyengine.org/v3.3.2-stable">JavaDoc</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../jme3.html">jMonkeyEngine 3</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Beginner Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_simpleapplication.html">Hello SimpleApplication</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_node.html">Hello Node</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_asset.html">Hello Asset</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_main_event_loop.html">Hello Main Event Loop</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_input_system.html">Hello Input System</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_material.html">Hello Material</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_animation.html">Hello Animation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_picking.html">Hello Picking</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_collision.html">Hello Collision</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_terrain.html">Hello Terrain</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_audio.html">Hello Audio</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_effects.html">Hello Effects</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../beginner/hello_physics.html">Hello Physics</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Intermediate Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/best_practices.html">Best Practices</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/simpleapplication.html">Simple Application</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../features.html">Features</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/optimization.html">Optimization</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../faq.html">FAQ</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Math Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../math_for_dummies.html">Math For Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/math.html">Math</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../math.html">More Math</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../rotate.html">Rotate</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../math_video_tutorials.html">Math Video Tutorials</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">3D Graphics Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/multi-media_asset_pipeline.html">Multi-Media Asset Pipeline</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../scenegraph_for_dummies.html">Scenegraph for Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../beginner/hellovector.html">Hello Vector</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../terminology.html">Terminology</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/how_to_use_materials.html">How to Use Materials</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/transparency_sorting.html">Transparency and Sorting</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../external/blender.html">Importing from Blender</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../external/3dsmax.html">Importing from 3DS Max</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../logo.html">Logo Usage</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../bsd_license.html">License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../github_tips.html">Github Tips</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">SDK</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../sdk.html">jMonkeyEngine SDK</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Docs</span>
+    <span class="version">master</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <span class="title">Antora Default UI</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../antora-ui-default/index.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <span class="title">Docs</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../../jme3.html">master</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../documentation.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../jme3.html">Docs</a></li>
+    <li><a href="nifty_gui.html">Creating JME3 User Interfaces with Nifty GUI</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/jMonkeyEngine/wiki/edit/antora-setup/docs/modules/ROOT/pages/jme3/advanced/nifty_gui.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Creating JME3 User Interfaces with Nifty GUI</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="imageblock text-left">
+<div class="content">
+<img src="../../_images/jme3/advanced/nifty-gui-13.png" alt="nifty-gui-13.png" width="276" height="217">
+</div>
+</div>
+<div class="paragraph">
+<p>You may want your players to press a button to save a game, you want a scrolling text field for highscores, a text label to display the score, drop-downs to select keymap preferences, or checkboxes to specify multi-media options. Usually you solve these tasks by using Swing controls. Although it is possible to embed a <a href="swing_canvas.html" class="page">jME3 canvas</a> in a Swing <abbr title="Graphical User Interface">GUI</abbr>, a 3D game typically runs full-screen, or in a window of its own.</p>
+</div>
+<div class="paragraph">
+<p>This document introduces you to <a href="https://github.com/nifty-gui/nifty-gui/">Nifty GUI</a>, a Java library for building interactive graphical user interfaces (GUIs) for games or similar applications. Nifty <abbr title="Graphical User Interface">GUI</abbr> (the <code>de.lessvoid.nifty</code> package) is well integrated with jME3 through the <code>com.jme3.niftygui</code> package. You define the base <abbr title="Graphical User Interface">GUI</abbr> layout in XML, and control it dynamically from your Java code. The necessary JAR libraries are included in your jME3 download, you do not need to install anything extra. (Just make sure they are on the classpath.)</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http://vimeo.com/25637085">Video demo of Nifty GUI 1.3</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="tutorial-overview"><a class="anchor" href="#tutorial-overview"></a>Tutorial Overview</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Learn to add a Nifty <abbr title="Graphical User Interface">GUI</abbr> to your jME3 game by going through this multi-part tutorial:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Understand the Nifty GUI Concepts described on this page.</p>
+</li>
+<li>
+<p><a href="nifty_gui_best_practices.html" class="page">Browse this short list of Best Practices</a></p>
+</li>
+<li>
+<p>Lay out your graphical user interface:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="nifty_gui_xml_layout.html" class="page">Lay out the GUI in XML</a> – or –</p>
+</li>
+<li>
+<p><a href="nifty_gui_java_layout.html" class="page">Lay out the GUI in Java</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Integrate the <abbr title="Graphical User Interface">GUI</abbr> into the game:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="nifty_gui_overlay.html" class="page">Overlay the User Interface Over the Screen</a>  – or –</p>
+</li>
+<li>
+<p><a href="nifty_gui_projection.html" class="page">Project the User Interface Onto a Texture</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><a href="nifty_gui_java_interaction.html" class="page">Interact with the GUI from Java</a></p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="must-know-nifty-gui-concepts"><a class="anchor" href="#must-know-nifty-gui-concepts"></a>Must Know: Nifty GUI Concepts</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><span class="image"><img src="../../_images/jme3/advanced/nifty-screen-layer-panel.png" alt="nifty-screen-layer-panel.png" width="" height=""></span></p>
+</div>
+<div class="paragraph">
+<p>Nifty GUIs are made up of the following <strong>elements</strong>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A Nifty <abbr title="Graphical User Interface">GUI</abbr> contains one or more <strong>screens</strong>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Only one screen is visible at a time.</p>
+</li>
+<li>
+<p>Name the first screen <code>start</code>. Name any others whatever you like.</p>
+</li>
+<li>
+<p>Screen are <a href="nifty_gui_java_interaction.html" class="page">controlled by a Java Controller class</a>.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>A screen contains one or more <strong>layers</strong>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Layers are containers that impose alignment on their contents (vertical, horizontal, or centered)</p>
+</li>
+<li>
+<p>Layers can overlap (z-order), and cannot be nested.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>A layer contains <strong>panels</strong>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Panels are containers that impose alignment on their contents (vertical, horizontal, or centered)</p>
+</li>
+<li>
+<p>Panels can be nested, and cannot overlap.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>A panel contains <strong>images, text, or controls (buttons, etc)</strong>.</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="jme-nifty-sample-code"><a class="anchor" href="#jme-nifty-sample-code"></a>JME-Nifty Sample Code</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>XML examples</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-testdata/src/main/resources/Interface/Nifty/HelloJme.xml">HelloJme.xml</a> - Can be found in <a href="../../sdk/sample_code.html#jme3testdata-assets#" class="page">jme-testdata/Interface/Nifty</a> also.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Java examples</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/niftygui/TestNiftyGui.java">TestNiftyGui.java</a> - Can be found in <a href="../../sdk/sample_code.html#the-jme3tests-project-template#" class="page">jme3 tests</a> also.</p>
+</li>
+<li>
+<p><a href="https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/niftygui/TestNiftyToMesh.java">TestNiftyToMesh.java</a> - Can be found in <a href="../../sdk/sample_code.html#the-jme3tests-project-template#" class="page">jme3 tests</a> also.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>jME3-ready version of the Nifty <abbr title="Graphical User Interface">GUI</abbr> 1.3 demo (sample code, Java)</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http://files.seapegasus.org/NiftyGuiDemo.zip">NiftyGuiDemo.zip</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Find more sample code in the <a href="https://github.com/nifty-gui/nifty-gui/tree/1.4/nifty-examples/src/main/java/de/lessvoid/nifty/examples">nifty-examples</a> repositories.</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/nifty-gui/nifty-gui/wiki/Examples">Running The Nifty Examples</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="external-documentation"><a class="anchor" href="#external-documentation"></a>External Documentation</h3>
+<div class="paragraph">
+<p>Learn more from the NiftyGUI page:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/nifty-gui/nifty-gui/raw/1.4/nifty-core/manual/nifty-gui-the-manual-1.3.2.pdf">Nifty GUI - the Manual</a></p>
+</li>
+<li>
+<p><a href="https://github.com/nifty-gui/nifty-gui/wiki">Nifty GUI - Wiki</a></p>
+</li>
+<li>
+<p><a href="http://nifty-gui.sourceforge.net/projects/1.4.2/nifty/nifty/apidocs/index.html">Nifty 1.4.2 JavaDoc</a></p>
+</li>
+<li>
+<p><a href="http://nifty-gui.sourceforge.net/projects/1.4.2/nifty/nifty-default-controls/apidocs/index.html">Nifty 1.4.2 Controls JavaDoc</a></p>
+</li>
+<li>
+<p><a href="https://hub.jmonkeyengine.org/t/anyone-succeeded-in-changing-text-in-nifty-programatically/14424">Forum post: Changing Text in Nifty GUIs programmatically</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="nifty-logging-nifty-1-4-2"><a class="anchor" href="#nifty-logging-nifty-1-4-2"></a>Nifty Logging (Nifty 1.4.2)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If you want to disable the nifty log lines, add this code after you created nifty:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>Logger.getLogger("de.lessvoid.nifty").setLevel(Level.SEVERE);
+Logger.getLogger("NiftyInputEventHandlingLog").setLevel(Level.SEVERE);</code></pre>
+</div>
+</div>
+</div>
+</div>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

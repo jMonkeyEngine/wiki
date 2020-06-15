@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>jMonkeyEngine SDK: Debugging, Profiling, Testing :: jMonkeyEngine Docs</title>
+    <link rel="canonical" href="https://wiki.jmonkeyengine.org/docs/sdk/debugging_profiling_testing.html">
+    <meta name="keywords" content="documentation, sdk, tool">
+    <meta name="generator" content="Antora 2.3.3">
+    <link rel="stylesheet" href="../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://wiki.jmonkeyengine.org">jMonkeyEngine Docs</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Resources</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Resource A</a>
+            <a class="navbar-item" href="#">Resource B</a>
+            <a class="navbar-item" href="#">Resource C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="docs" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../jme3.html">Docs</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../documentation.html">Getting Started</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="https://javadoc.jmonkeyengine.org/v3.3.2-stable">JavaDoc</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../jme3.html">jMonkeyEngine 3</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Beginner Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../jme3/beginner/hello_simpleapplication.html">Hello SimpleApplication</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../jme3/beginner/hello_node.html">Hello Node</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../jme3/beginner/hello_asset.html">Hello Asset</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../jme3/beginner/hello_main_event_loop.html">Hello Main Event Loop</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../jme3/beginner/hello_input_system.html">Hello Input System</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../jme3/beginner/hello_material.html">Hello Material</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../jme3/beginner/hello_animation.html">Hello Animation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../jme3/beginner/hello_picking.html">Hello Picking</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../jme3/beginner/hello_collision.html">Hello Collision</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../jme3/beginner/hello_terrain.html">Hello Terrain</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../jme3/beginner/hello_audio.html">Hello Audio</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../jme3/beginner/hello_effects.html">Hello Effects</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../jme3/beginner/hello_physics.html">Hello Physics</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Intermediate Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../jme3/intermediate/best_practices.html">Best Practices</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../jme3/intermediate/simpleapplication.html">Simple Application</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../jme3/features.html">Features</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../jme3/intermediate/optimization.html">Optimization</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../jme3/faq.html">FAQ</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Math Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../jme3/math_for_dummies.html">Math For Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../jme3/intermediate/math.html">Math</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../jme3/math.html">More Math</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../jme3/rotate.html">Rotate</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../jme3/math_video_tutorials.html">Math Video Tutorials</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">3D Graphics Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../jme3/intermediate/multi-media_asset_pipeline.html">Multi-Media Asset Pipeline</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../jme3/scenegraph_for_dummies.html">Scenegraph for Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../jme3/beginner/hellovector.html">Hello Vector</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../jme3/terminology.html">Terminology</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../jme3/intermediate/how_to_use_materials.html">How to Use Materials</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../jme3/intermediate/transparency_sorting.html">Transparency and Sorting</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../jme3/external/blender.html">Importing from Blender</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../jme3/external/3dsmax.html">Importing from 3DS Max</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../logo.html">Logo Usage</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../bsd_license.html">License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../github_tips.html">Github Tips</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">SDK</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../sdk.html">jMonkeyEngine SDK</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Docs</span>
+    <span class="version">master</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <span class="title">Antora Default UI</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../antora-ui-default/index.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <span class="title">Docs</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../jme3.html">master</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../documentation.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../jme3.html">Docs</a></li>
+    <li><a href="debugging_profiling_testing.html">jMonkeyEngine SDK: Debugging, Profiling, Testing</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/jMonkeyEngine/wiki/edit/antora-setup/docs/modules/ROOT/pages/sdk/debugging_profiling_testing.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">jMonkeyEngine SDK: Debugging, Profiling, Testing</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Debugging, testing and profiling are important parts of the development cycle. This documentation shows you how to make the most of the jMonkeyEngine SDK&#8217;s assistive features.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Since the jMonkeyEngine SDK is based on the NetBeans IDE and the NetBeans Platform, you can learn about certain jMonkeyEngine SDK features by reading the corresponding NetBeans IDE tutorials (in the “see also links).</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="testing"><a class="anchor" href="#testing"></a>Testing</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The jMonkeyEngine SDK supports the JUnit testing framework. It is a good practice to write tests (assertions) for each of your classes. Each test makes certain this “unit (e.g. method) meets its design and behaves as intended. Run your tests after each major change and you immediately see if you broke something.</p>
+</div>
+<div class="sect2">
+<h3 id="creating-tests"><a class="anchor" href="#creating-tests"></a>Creating Tests</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Right-click a Java file in the Projects window and choose Tools &gt; Create JUnit Tests.</p>
+</li>
+<li>
+<p>Click OK. The jMonkeyEngine SDK creates a JUnit test skeleton in the Test Package directory.</p>
+</li>
+<li>
+<p>The body of each generated test method is provided solely as a guide. In their place, you need to write your actual test cases!</p>
+</li>
+<li>
+<p>You can use tests such as <code>assertTrue(), assertFalse(), assertEquals()</code>, or <code>assert()</code>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>The following example assertions test an addition method: <code>assert( add(1, 1) == 2); assertTrue( add(7,-5) == add(-5,7) )…</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>“Ideally, you write a test case for every method (100% coverage).</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Use the Navigate menu to jump from a test to its tested class, and back!</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="running-tests"><a class="anchor" href="#running-tests"></a>Running Tests</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Run one or all tests:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Right-click the class in the Projects window and Choose Test File, or</p>
+</li>
+<li>
+<p>Right-click the project and select Test to run all tests.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Check the Test window to see successful tests (green) and failures (red).</p>
+</li>
+<li>
+<p>If a test fails that has succeeded before, you know that your latest changes broke something!</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Using unit tests regularly allows you to detect side-effects on classes that you thought were unaffected by a code change.</p>
+</div>
+<div class="paragraph">
+<p>See also:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http://netbeans.org/kb/docs/java/junit-intro.html">Writing JUnit Tests</a></p>
+</li>
+<li>
+<p><a href="http://www.junit.org">http://www.junit.org</a></p>
+</li>
+<li>
+<p><a href="https://docs.oracle.com/javase/7/docs/technotes/guides/language/assert.html">Java Assertions</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="debugging"><a class="anchor" href="#debugging"></a>Debugging</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In the jMonkeyEngine SDK, you have access to a debugger to examine your application for errors such as deadlocks and NullPointerExeptions. You can set breakpoints, watch variables, and execute your code line-by-line to identify the source of a problem.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>First, you set breakpoints and/or watches before the problematic lines of code where you suspect the bug.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>If you want to watch a variable&#8217;s value: Right-click on a variable and select New Watch from the context menu.</p>
+</li>
+<li>
+<p>If you want to step through the execution line by line: Right-click on a line and choose Toggle Line Breakpoint; a pink box appears as a mark.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Choose “Debug &gt; Debug Main Project to start a debugger session for the whole project. Or, right-click a file and select Debug File to debug only one file.</p>
+</li>
+<li>
+<p>The application starts running normally. If you have set a breakpoint, the execution stops in this line. Debugger windows open and print debugger output.</p>
+</li>
+<li>
+<p>You can do many things now to track down a bug:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Inspect the values of local variables.</p>
+</li>
+<li>
+<p>Use the Step buttons in the top to step into, out of, and over expressions while you watch the execution.</p>
+</li>
+<li>
+<p>Navigate through your application&#8217;s call stack. Right-click on threads to suspend or resume them.</p>
+</li>
+<li>
+<p>Choose Debug &gt; Evaluate Expression from the menu to evaluate an expression.</p>
+</li>
+<li>
+<p>Move the mouse pointer over a variable to inspect its value in a tooltip.</p>
+</li>
+<li>
+<p>Inspect the classes loaded on the heap and the percentage and number of object instances. Right-click a class in the Loaded Classes window and choose Show in Instances view (JDK 6 only).</p>
+</li>
+<li>
+<p>And more…</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>To stop debugging, choose Debug &gt; End Debugger Session from the menu.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="profiling"><a class="anchor" href="#profiling"></a>Profiling</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The profiler tool is used to monitor thread states, CPU performance, and memory usage of your jme3 application. It helps you detect memory leaks and bottlenecks in your game while it&#8217;s running.</p>
+</div>
+<div class="sect2">
+<h3 id="installing-the-profiler"><a class="anchor" href="#installing-the-profiler"></a>Installing the Profiler</h3>
+<div class="paragraph">
+<p>If you do not see a Profiler menu in the jMonkeyEngine SDK, you need to download the Profiler plugin first.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Open the Tools &gt; Plugins menu, and got to the “Available plugins tab</p>
+</li>
+<li>
+<p>Find the “Java Profiler plugin (“Java SE category) and check the Install box.</p>
+</li>
+<li>
+<p>Click the install button and follow the instructions.</p>
+</li>
+<li>
+<p>When you start the profiler for the first time, you are prompted to run a calibration once. Click OK in the “Profiler integration dialog to complete the installation process.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="monitoring-and-analyzing"><a class="anchor" href="#monitoring-and-analyzing"></a>Monitoring and Analyzing</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Choose Profile Project from the Profile menu.</p>
+</li>
+<li>
+<p>Select one of three tasks:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Monitor Application</strong> – Collect high-level information about properties of the target JVM, including thread activity and memory allocations.</p>
+</li>
+<li>
+<p><strong>Analyze CPU Performance</strong> – Collect detailed data on application performance, including the time to execute methods and the number of times the method is invoked.</p>
+</li>
+<li>
+<p><strong>Analyze Memory Usage</strong> – Collect detailed data on object allocation and garbage collection.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Click Run. Your application starts and runs normally.</p>
+</li>
+<li>
+<p>Use the Profiling window to track and collect live profiling results while you application is running.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="comparing-snapshots"><a class="anchor" href="#comparing-snapshots"></a>Comparing Snapshots</h3>
+<div class="paragraph">
+<p>Click the Take Snapshot button to capture the profiling data for later!</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>You can store and view snapshots in the Profiling window.</p>
+</li>
+<li>
+<p>Choose Compare Snapshots from the profiler window to compare two selected snapshots</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="using-profiling-points"><a class="anchor" href="#using-profiling-points"></a>Using Profiling Points</h3>
+<div class="paragraph">
+<p>Profiling points are similar to debugger breakpoints: You place them directly in the source code and they can trigger profiling behaviour when hit.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Open a class in the browser, right-click in a line, and select Profiling &gt; Insert Profiling Point to add a profiling point here.</p>
+</li>
+<li>
+<p>Use Profiling points if you need a trigger to reset profiling results, take a snapshot or heap dump, record the timestamp or execution time of a code fragment, stop and start a load generator script (requires the load generator plugin).</p>
+</li>
+<li>
+<p>Open the Profiling Points window to view, modify and delete the Profiling Points in your projects.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>See also:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http://netbeans.org/kb/docs/java/profiler-intro.html">Introduction to Profiling Java Applications (netbeans.org)</a></p>
+</li>
+<li>
+<p><a href="http://netbeans.org/kb/docs/java/profiler-profilingpoints.html">Using Profiling Points (netbeans.org)</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

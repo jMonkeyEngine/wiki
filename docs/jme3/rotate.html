@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>3-D Rotation :: jMonkeyEngine Docs</title>
+    <link rel="canonical" href="https://wiki.jmonkeyengine.org/docs/jme3/rotate.html">
+    <link rel="prev" href="math.html">
+    <link rel="next" href="math_video_tutorials.html">
+    <meta name="generator" content="Antora 2.3.3">
+    <link rel="stylesheet" href="../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://wiki.jmonkeyengine.org">jMonkeyEngine Docs</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Resources</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Resource A</a>
+            <a class="navbar-item" href="#">Resource B</a>
+            <a class="navbar-item" href="#">Resource C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="docs" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../jme3.html">Docs</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../documentation.html">Getting Started</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="https://javadoc.jmonkeyengine.org/v3.3.2-stable">JavaDoc</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../jme3.html">jMonkeyEngine 3</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Beginner Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="beginner/hello_simpleapplication.html">Hello SimpleApplication</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="beginner/hello_node.html">Hello Node</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="beginner/hello_asset.html">Hello Asset</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="beginner/hello_main_event_loop.html">Hello Main Event Loop</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="beginner/hello_input_system.html">Hello Input System</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="beginner/hello_material.html">Hello Material</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="beginner/hello_animation.html">Hello Animation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="beginner/hello_picking.html">Hello Picking</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="beginner/hello_collision.html">Hello Collision</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="beginner/hello_terrain.html">Hello Terrain</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="beginner/hello_audio.html">Hello Audio</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="beginner/hello_effects.html">Hello Effects</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="beginner/hello_physics.html">Hello Physics</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Intermediate Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="intermediate/best_practices.html">Best Practices</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="intermediate/simpleapplication.html">Simple Application</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="features.html">Features</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="intermediate/optimization.html">Optimization</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="faq.html">FAQ</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Math Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="math_for_dummies.html">Math For Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="intermediate/math.html">Math</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="math.html">More Math</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="4">
+    <a class="nav-link" href="rotate.html">Rotate</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="math_video_tutorials.html">Math Video Tutorials</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">3D Graphics Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="intermediate/multi-media_asset_pipeline.html">Multi-Media Asset Pipeline</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="scenegraph_for_dummies.html">Scenegraph for Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="beginner/hellovector.html">Hello Vector</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="terminology.html">Terminology</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="intermediate/how_to_use_materials.html">How to Use Materials</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="intermediate/transparency_sorting.html">Transparency and Sorting</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="external/blender.html">Importing from Blender</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="external/3dsmax.html">Importing from 3DS Max</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../logo.html">Logo Usage</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../bsd_license.html">License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../github_tips.html">Github Tips</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">SDK</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../sdk.html">jMonkeyEngine SDK</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Docs</span>
+    <span class="version">master</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <span class="title">Antora Default UI</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../antora-ui-default/index.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <span class="title">Docs</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../jme3.html">master</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../documentation.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../jme3.html">Docs</a></li>
+    <li><a href="../jme3.html">jMonkeyEngine 3</a></li>
+    <li>Intermediate Tutorials</li>
+    <li>Math Concepts</li>
+    <li><a href="rotate.html">Rotate</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/jMonkeyEngine/wiki/edit/antora-setup/docs/modules/ROOT/pages/jme3/rotate.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">3-D Rotation</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p><em>Bad news: 3D rotation is done using matrix calculus.<br>
+Good news: If you do not understand calculus, there are two simple rules how you get it right.</em></p>
+</div>
+<div class="paragraph">
+<p><strong>3D rotation</strong> is a crazy mathematical operation where you need to multiply all vertices in your object by four floating point numbers; the multiplication is referred to as concatenation, the array of four numbers {x,y,z,w} is referred to as <a href="quaternion.html" class="page">quaternion</a>. Don&#8217;t worry, the 3D engine does the tough work for you. All you need to know is:</p>
+</div>
+<div class="paragraph">
+<p><strong>The Quaternion</strong> is an object capable of deep-freezing and storing a rotation that you can apply to a 3D object.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="using-quaternions-for-rotation"><a class="anchor" href="#using-quaternions-for-rotation"></a>Using Quaternions for Rotation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To store a rotation in a Quaternion, you must specify two things: The angle and the axis of the rotation.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The rotation angle is defined as a multiple of the number PI.</p>
+</li>
+<li>
+<p>The rotation axis is defined by a vector: Think of them in terms of &#8220;pitch&#8221;, &#8220;yaw&#8221;, and &#8220;roll&#8221;.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">/* This quaternion stores a 180 degree rolling rotation */
+Quaternion roll180 = new Quaternion();
+roll180.fromAngleAxis( FastMath.PI , new Vector3f(0,0,1) );
+/* The rotation is applied: The object rolls by 180 degrees. */
+thingamajig.setLocalRotation( roll180 );</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>So how to choose the right numbers for the Quaternion parameters? I&#8217;ll give you my cheat-sheet:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Rotation around Axis?</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Use this Axis Vector!</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Examples for this kind of rotation</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>X axis</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>(1,0,0)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>A plane pitches. Nodding your head.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Y axis</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>(0,1,0)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>A plane yaws. A vehicle turns. Shaking your head.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Z axis</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>(0,0,1)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>A plane rolls or banks. Cocking your head.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>These are the three most common examples – technically you can rotate around any axis expressed by a vector.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Angle?</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Use Radians!</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Examples</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>45 degrees</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>FastMath.PI / 4</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>eighth of a circle</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>90 degrees</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>FastMath.PI / 2</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>quarter circle, 3 o&#8217;clock</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>180 degrees</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>FastMath.PI</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>half circle, 6 o&#8217;clock</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>270 degrees</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>FastMath.PI * 3 / 2</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>three quarter circle, 9 o&#8217;clock</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>360 degrees</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>FastMath.PI * 2</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>full circle, 12  o&#8217;clock <img class="emoji" draggable="false" height="24px" width="24px" src="https://twemoji.maxcdn.com/2/svg/1f609.svg" /></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>g</code> degrees</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>FastMath.PI * g / 180</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>any angle <code>g</code></p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>You must specify angles in <a href="http://en.wikipedia.org/wiki/Radian">Radian</a>s (multiples or fractions of PI). If you use degrees, you will just get useless results.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>How to use these tables to speficy a certain rotation:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Pick the appropriate vector from the axis table.</p>
+</li>
+<li>
+<p>Pick the appropriate radians value from the angle table.</p>
+</li>
+<li>
+<p>Create a Quaternion to store this rotation. <code>… fromAngleAxis( radians , vector )</code></p>
+</li>
+<li>
+<p>Apply the Quaternion to a node to rotate it. <code>… setLocalRotation(…)</code></p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Quaternion objects can be used as often as you want, so give them meaningfull names, like <code>roll90, pitch45, yaw180</code>.</p>
+</div>
+<div class="paragraph">
+<p><a href="http://moddb.wikia.com/wiki/OpenGL:Tutorials:Using_Quaternions_to_represent_rotation">More about Quaternions</a>…</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="code-sample"><a class="anchor" href="#code-sample"></a>Code Sample</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">/* We start out with a horizontal object */
+Cylinder cylinder = new Cylinder("post", 10, 10, 1, 10);
+cylinder.setModelBound(new BoundingBox());
+/* Create a 90-degree-pitch Quaternion. */
+Quaternion pitch90 = new Quaternion();
+pitch90.fromAngleAxis(FastMath.PI/2, new Vector3f(1,0,0));
+/* Apply the rotation to the object */
+cylinder.setLocalRotation(pitch90);
+/* Update the model. Now it's vertical. */
+cylinder.updateModelBound();
+cylinder.updateGeometry();</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="interpolating-rotations"><a class="anchor" href="#interpolating-rotations"></a>Interpolating Rotations</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You can specify two rotations, and then have jme calculate (interpolate) the steps between two rotations:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>com.jme3.math.Quaternion, slerp() – store an interpolated step between two rotations</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://javadoc.jmonkeyengine.org/v3.3.2-stable/com/jme3/math/Quaternion.html">com.jme3.math.Quaternion</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="adding-rotations"><a class="anchor" href="#adding-rotations"></a>Adding Rotations</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You can concatenate (add) rotations: This means you turn the object first around one axis, then around the other, in one step.<br>
+<code>Quaternion myRotation =  pitch90.mult(roll45); /* pitch and roll */</code></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="troubleshooting-rotations"><a class="anchor" href="#troubleshooting-rotations"></a>Troubleshooting Rotations</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Does the object end up in an unexpected location, or at an unexpected angle? If you are getting weird results, check the following:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>3-D transformations are non-commutative! This means it often makes a huge difference whether you first move a node and then rotate it around an axis, or first rotate the node around an axis and then move it. Make sure you code does what you mean to do.</p>
+</li>
+<li>
+<p>Are you intending to rotate around the object&#8217;s origin along an axis, or around another pivot point outside the object? If you are trying to <em>rotate an object around a pivot point</em>, you have to create an (invisible) pivot node first, and attach the object to it. Then apply the rotation to the <em>parental pivot node</em>, not to the child object itself!</p>
+</li>
+<li>
+<p>Did you enter the angle in degrees (0 - 360°) or radians (0 - 2*PI)? A 3D engine expects radians, so make sure to convert your values! Formula: <code>g° = FastMath.PI * g / 180</code></p>
+</li>
+<li>
+<p>Did you modify one of the pre-made constants like this?</p>
+<div class="openblock">
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">//Never do things like this!!!
+Quaternion.IDENTITY.fromAngleAxis(-FastMath.HALF_PI, Vector3f.UNIT_X);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This looks normal enough, after-all, this is a constant right? Sorta, what you are really doing is setting a value to the static final constant <code>Quaternion.IDENTITY</code>.</p>
+</div>
+<div class="paragraph">
+<p>To quote one of the core team members.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="quoteblock">
+<div class="title">Do not modify the &#8220;constants&#8221;. You will have a shit-ton of really messed up errors.</div>
+<blockquote>
+You gain NOTHING by doing this, either. Just use new Quaternion().fromAngles() like a sane person.
+</blockquote>
+<div class="attribution">
+&#8212; pspeed<br>
+<cite>Core Team Member</cite>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>For a deeper explaination, see this forum thread: <a href="https://hub.jmonkeyengine.org/t/quaternion-bug/39060">Quaternion bug?</a></p>
+</div>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="tip-matrix"><a class="anchor" href="#tip-matrix"></a>Tip: Matrix</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This here is just about rotation, but there are three types of 3-D transformation: rotate, scale, and translate.</p>
+</div>
+<div class="paragraph">
+<p>You can do all transformations in individual steps (and then update the objects geometry and bounds), or you can combine them and transform the object in one step. If you have a lot of repetitive movement going on in your game it&#8217;s worth learning more about <a href="matrix.html" class="page">Matrix4f</a> for optimization. JME can also help you interpolate the steps between two fixed transformations.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>com.jme3.math.Transform, interpolateTransforms() – interpolate a step between two transformations</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://javadoc.jmonkeyengine.org/v3.3.2-stable/com/jme3/math/Transform.html">com.jme.math.Transform</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>In case you missed it, see also <a href="quaternion.html" class="page">Quaternion</a>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="math.html">More Math</a></span>
+  <span class="next"><a href="math_video_tutorials.html">Math Video Tutorials</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

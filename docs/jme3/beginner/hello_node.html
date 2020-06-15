@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>jMonkeyEngine 3 Tutorial (2) - Hello Node :: jMonkeyEngine Docs</title>
+    <link rel="canonical" href="https://wiki.jmonkeyengine.org/docs/jme3/beginner/hello_node.html">
+    <link rel="prev" href="hello_simpleapplication.html">
+    <link rel="next" href="hello_asset.html">
+    <meta name="keywords" content="beginner, rootNode, node, intro, documentation, color, spatial, geometry, scenegraph, mesh">
+    <meta name="generator" content="Antora 2.3.3">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://wiki.jmonkeyengine.org">jMonkeyEngine Docs</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Resources</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Resource A</a>
+            <a class="navbar-item" href="#">Resource B</a>
+            <a class="navbar-item" href="#">Resource C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="docs" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../../jme3.html">Docs</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../documentation.html">Getting Started</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="https://javadoc.jmonkeyengine.org/v3.3.2-stable">JavaDoc</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../jme3.html">jMonkeyEngine 3</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Beginner Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_simpleapplication.html">Hello SimpleApplication</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="3">
+    <a class="nav-link" href="hello_node.html">Hello Node</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_asset.html">Hello Asset</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_main_event_loop.html">Hello Main Event Loop</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_input_system.html">Hello Input System</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_material.html">Hello Material</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_animation.html">Hello Animation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_picking.html">Hello Picking</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_collision.html">Hello Collision</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_terrain.html">Hello Terrain</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_audio.html">Hello Audio</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_effects.html">Hello Effects</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hello_physics.html">Hello Physics</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Intermediate Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/best_practices.html">Best Practices</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/simpleapplication.html">Simple Application</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../features.html">Features</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/optimization.html">Optimization</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../faq.html">FAQ</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Math Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../math_for_dummies.html">Math For Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/math.html">Math</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../math.html">More Math</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../rotate.html">Rotate</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../math_video_tutorials.html">Math Video Tutorials</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">3D Graphics Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/multi-media_asset_pipeline.html">Multi-Media Asset Pipeline</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../scenegraph_for_dummies.html">Scenegraph for Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="hellovector.html">Hello Vector</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../terminology.html">Terminology</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/how_to_use_materials.html">How to Use Materials</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intermediate/transparency_sorting.html">Transparency and Sorting</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../external/blender.html">Importing from Blender</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../external/3dsmax.html">Importing from 3DS Max</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../logo.html">Logo Usage</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../bsd_license.html">License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../github_tips.html">Github Tips</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">SDK</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../sdk.html">jMonkeyEngine SDK</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Docs</span>
+    <span class="version">master</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <span class="title">Antora Default UI</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../antora-ui-default/index.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <span class="title">Docs</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../../jme3.html">master</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../documentation.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../jme3.html">Docs</a></li>
+    <li><a href="../../jme3.html">jMonkeyEngine 3</a></li>
+    <li>Beginner Tutorials</li>
+    <li><a href="hello_node.html">Hello Node</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/jMonkeyEngine/wiki/edit/antora-setup/docs/modules/ROOT/pages/jme3/beginner/hello_node.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">jMonkeyEngine 3 Tutorial (2) - Hello Node</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Previous: <a href="hello_simpleapplication.html" class="page">Hello SimpleApplication</a>,
+Next: <a href="hello_asset.html" class="page">Hello Assets</a>.</p>
+</div>
+<div class="paragraph">
+<p>In this tutorial we will have a look at the creation of a 3D scene.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>This tutorial assumes that you know what <a href="../the_scene_graph.html" class="page">the Scene Graph</a> is.</p>
+</li>
+<li>
+<p>For a visual introduction, check out <a href="../scenegraph_for_dummies.html" class="page">Scene Graph for Dummies</a>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>When creating a 3D game</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>You create some scene objects like players, buildings, etc.</p>
+</li>
+<li>
+<p>You add the objects to the scene.</p>
+</li>
+<li>
+<p>You move, resize, rotate, color, and animate them.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>You will learn that the scene graph represents the 3D world, and why the rootNode is important. You will learn how to create simple objects, how to let them carry custom data (such as health points), and how to &#8220;transform&#8221; them by moving, scaling, and rotating. You will understand the difference between the two types of &#8220;Spatials&#8221; in the scene graph: Nodes and Geometries.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="code-sample"><a class="anchor" href="#code-sample"></a>Code Sample</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package jme3test.helloworld;
+
+import com.jme3.app.SimpleApplication;
+import com.jme3.material.Material;
+import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector3f;
+import com.jme3.scene.Geometry;
+import com.jme3.scene.Node;
+import com.jme3.scene.shape.Box;
+
+/** Sample 2 - How to use nodes as handles to manipulate objects in the scene.
+ * You can rotate, translate, and scale objects by manipulating their parent nodes.
+ * The Root Node is special: Only what is attached to the Root Node appears in the scene. */
+public class HelloNode extends SimpleApplication {
+
+    public static void main(String[] args){
+        HelloNode app = new HelloNode();
+        app.start();
+    }
+
+    @Override
+    public void simpleInitApp() {
+
+        /** create a blue box at coordinates (1,-1,1) */
+        Box box1 = new Box(1,1,1);
+        Geometry blue = new Geometry("Box", box1);
+        blue.setLocalTranslation(new Vector3f(1,-1,1));
+        Material mat1 = new Material(assetManager,
+                "Common/MatDefs/Misc/Unshaded.j3md");
+        mat1.setColor("Color", ColorRGBA.Blue);
+        blue.setMaterial(mat1);
+
+        /** create a red box straight above the blue one at (1,3,1) */
+        Box box2 = new Box(1,1,1);
+        Geometry red = new Geometry("Box", box2);
+        red.setLocalTranslation(new Vector3f(1,3,1));
+        Material mat2 = new Material(assetManager,
+                "Common/MatDefs/Misc/Unshaded.j3md");
+        mat2.setColor("Color", ColorRGBA.Red);
+        red.setMaterial(mat2);
+
+        /** Create a pivot node at (0,0,0) and attach it to the root node */
+        Node pivot = new Node("pivot");
+        rootNode.attachChild(pivot); // put this node in the scene
+
+        /** Attach the two boxes to the *pivot* node. (And transitively to the root node.) */
+        pivot.attachChild(blue);
+        pivot.attachChild(red);
+        /** Rotate the pivot node: Note that both boxes have rotated! */
+        pivot.rotate(.4f,.4f,0f);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Build and run the code sample. You should see two colored boxes tilted at the same angle.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="understanding-the-terminology"><a class="anchor" href="#understanding-the-terminology"></a>Understanding the Terminology</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In this tutorial, you learn some new terms:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">What you want to do?</th>
+<th class="tableblock halign-left valign-top">How you say it in JME3 terminology</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Lay out the 3D scene.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Populate the scene graph.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Create scene objects.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Create Spatials. (e.g. create Geometries)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Make an object appear in the scene.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Attach a Spatial to the rootNode.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Make an object disappear from the scene.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Detach the Spatial from the rootNode.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Position/move, turn, or resize an object.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Translate, or rotate, or scale an object = transform an object.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Every JME3 application has a rootNode: Your game automatically inherits the <code>rootNode</code> object from SimpleApplication. Everything attached to the rootNode is part of the scene graph. The elements of the scene graph are Spatials.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A Spatial contains the location, rotation, and scale of an object.</p>
+</li>
+<li>
+<p>A Spatial can be loaded, transformed, and saved.</p>
+</li>
+<li>
+<p>There are two types of Spatials: Nodes and Geometries.</p>
+</li>
+</ul>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 45%;">
+<col style="width: 45%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"></th>
+<th class="tableblock halign-left valign-top">Geometry</th>
+<th class="tableblock halign-left valign-top">Node</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Visibility:</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>A Geometry is a visible scene object.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>A Node is an invisible &#8220;handle&#8221; for scene objects.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Purpose:</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>A Geometry stores an object&#8217;s looks.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>A Node groups Geometries and other Nodes together.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Examples:</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>A box, a sphere, a player, a building, a piece of terrain, a vehicle, missiles, NPCs, etc…</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The <code>rootNode</code>, a floor node grouping several terrains, a custom vehicle-with-passengers node, a player-with-weapon node, an audio node, etc…</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="understanding-the-code"><a class="anchor" href="#understanding-the-code"></a>Understanding the Code</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>What happens in the code snippet? You use the <code>simpleInitApp()</code> method that was introduced in the first tutorial to initialize the scene.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>You create the first box Geometry.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Create a Box shape with extents of (1,1,1), that makes the box 2x2x2 world units big.</p>
+</li>
+<li>
+<p>Position the box at (1,-1,1) using the setLocalTranslation() method.</p>
+</li>
+<li>
+<p>Wrap the Box shape into a Geometry.</p>
+</li>
+<li>
+<p>Create a blue material.</p>
+</li>
+<li>
+<p>Apply the blue material to the Box Geometry.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    Box box1 = new Box(1,1,1);
+    Geometry blue = new Geometry("Box", box1);
+    blue.setLocalTranslation(new Vector3f(1,-1,1));
+    Material mat1 = new Material(assetManager,"Common/MatDefs/Misc/Unshaded.j3md");
+    mat1.setColor("Color", ColorRGBA.Blue);
+    blue.setMaterial(mat1);</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>You create a second box Geometry.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Create a second Box shape with the same size.</p>
+</li>
+<li>
+<p>Position the second box at (1,3,1). This is straight above the first box, with a gap of 2 world units inbetween.</p>
+</li>
+<li>
+<p>Wrap the Box shape into a Geometry.</p>
+</li>
+<li>
+<p>Create a red material.</p>
+</li>
+<li>
+<p>Apply the red material to the Box Geometry.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    Box box2 = new Box(1,1,1);
+    Geometry red = new Geometry("Box", box2);
+    red.setLocalTranslation(new Vector3f(1,3,1));
+    Material mat2 = new Material(assetManager,
+      "Common/MatDefs/Misc/Unshaded.j3md");
+    mat2.setColor("Color", ColorRGBA.Red);
+    red.setMaterial(mat2);</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>You create a pivot Node.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Name the Node &#8220;pivot&#8221;.</p>
+</li>
+<li>
+<p>By default the Node is positioned at (0,0,0).</p>
+</li>
+<li>
+<p>Attach the Node to the rootNode.</p>
+</li>
+<li>
+<p>The Node has no visible appearance in the scene.</p>
+<div class="openblock">
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    Node pivot = new Node("pivot");
+    rootNode.attachChild(pivot);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you run the application with only the code up to here, the scene appears empty. This is because a Node is invisible, and you have not yet attached any visible Geometries to the rootNode.</p>
+</div>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Attach the two boxes to the pivot node.</p>
+<div class="openblock">
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">        pivot.attachChild(blue);
+        pivot.attachChild(red);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you run the app with only the code up to here, you see two cubes: A red cube straight above a blue cube.</p>
+</div>
+</div>
+</div>
+</li>
+<li>
+<p>Rotate the pivot node.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">        pivot.rotate( 0.4f , 0.4f , 0.0f );</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>If you run the app now, you see two boxes on top of each other – both tilted at the same angle.</p>
+</div>
+<div class="sect2">
+<h3 id="what-is-a-pivot-node"><a class="anchor" href="#what-is-a-pivot-node"></a>What is a Pivot Node?</h3>
+<div class="paragraph">
+<p>You can transform (e.g. rotate) Geometries around their own center, or around a user defined center point. A user defined center point for one or more Geometries is called a pivot.</p>
+</div>
+<div class="paragraph">
+<p>In this example, you have grouped two Geometries by attaching them to one pivot Node. You use the pivot Node as a handle to rotate the two Geometries together around one common center. Rotating the pivot Node rotates all attached Geometries, in one step. The pivot node is the center of the rotation. Before attaching the other Geometries, make certain that the pivot node is at (0,0,0). Transforming a parent Node to transform all attached child Spatials is a common task. You will use this method a lot in your games when you move Spatials around.</p>
+</div>
+<div class="paragraph">
+<p><strong>Examples:</strong> A vehicle and its driver move together; a planet with its moon orbits the sun.</p>
+</div>
+<div class="paragraph">
+<p>Contrast this case with the other option. If you don&#8217;t create an extra pivot node and transform a Geometry, then every transformation is done relative to the Geometry&#8217;s origin (typically the center).</p>
+</div>
+<div class="paragraph">
+<p><strong>Examples:</strong> If you rotate each cube directly (using <code>red.rotate(0.1f , 0.2f , 0.3f);</code> and <code>blue.rotate(0.5f , 0.0f , 0.25f);</code>), then each cube is rotated individually around its center. This is similar to a planet rotating around its own center.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="how-do-i-populate-the-scenegraph"><a class="anchor" href="#how-do-i-populate-the-scenegraph"></a>How do I Populate the Scenegraph?</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 30%;">
+<col style="width: 70%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Task…?</th>
+<th class="tableblock halign-left valign-top">Solution!</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Create a Spatial.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Create a Mesh shape, wrap it into a Geometry, and give it a Material. For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Box mesh = new Box(Vector3f.ZERO, 1, 1, 1); // a cuboid default mesh
+Geometry thing = new Geometry("thing", mesh);
+Material mat = new Material(assetManager,
+   "Common/MatDefs/Misc/ShowNormals.j3md");
+thing.setMaterial(mat);</code></pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Make an object appear in the scene.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Attach the Spatial to the <code>rootNode</code>, or to any node that is attached to the rootNode.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">rootNode.attachChild(thing);</code></pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Remove objects from the scene.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Detach the Spatial from the <code>rootNode</code>, and from any node that is attached to the rootNode.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">rootNode.detachChild(thing);</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">rootNode.detachAllChildren();</code></pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Find a Spatial in the scene by the object&#8217;s name, or ID, or by its position in the parent-child hierarchy.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Look at the node&#8217;s children or parent:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Spatial thing = rootNode.getChild("thing");</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Spatial twentyThird = rootNode.getChild(22);</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Spatial parent = myNode.getParent();</code></pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specify what should be loaded at the start.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Everything you initialize and attach to the <code>rootNode</code> in the <code>simpleInitApp()</code> method is part of the scene at the start of the game.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="how-do-i-transform-spatials"><a class="anchor" href="#how-do-i-transform-spatials"></a>How do I Transform Spatials?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>There are three types of 3D transformation: Translation, Scaling, and Rotation.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 55%;">
+<col style="width: 15%;">
+<col style="width: 15%;">
+<col style="width: 15%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Translation moves Spatials</th>
+<th class="tableblock halign-left valign-top">X-axis</th>
+<th class="tableblock halign-left valign-top">Y-axis</th>
+<th class="tableblock halign-left valign-top">Z-axis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specify the new location in three dimensions: How far away is it from the origin going right-up-forward?<br>
+To move a Spatial <em>to</em> specific coordinates, such as (0,40.2f,-2), use:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">thing.setLocalTranslation( new Vector3f( 0.0f, 40.2f, -2.0f ) );</code></pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>To move a Spatial _by_ a certain amount, e.g. higher up (y=40.2f) and further back (z=-2.0f):</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">thing.move( 0.0f, 40.2f, -2.0f );</code></pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>+right -left</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>+up -down</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>+forward -backward</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 55%;">
+<col style="width: 15%;">
+<col style="width: 15%;">
+<col style="width: 15%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Scaling resizes Spatials</th>
+<th class="tableblock halign-left valign-top">X-axis</th>
+<th class="tableblock halign-left valign-top">Y-axis</th>
+<th class="tableblock halign-left valign-top">Z-axis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specify the scaling factor in each dimension: length, height, width.<br>
+A value between 0.0f and 1.0f shrinks the Spatial; bigger than 1.0f stretches it; 1.0f keeps it the same.<br>
+Using the same value for each dimension scales proportionally, different values stretch it.<br>
+To scale a Spatial 10 times longer, one tenth the height, and keep the same width:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">thing.scale( 10.0f, 0.1f, 1.0f );</code></pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>length</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>height</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>width</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 55%;">
+<col style="width: 15%;">
+<col style="width: 15%;">
+<col style="width: 15%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Rotation turns Spatials</th>
+<th class="tableblock halign-left valign-top">X-axis (Pitch)</th>
+<th class="tableblock halign-left valign-top">Y-axis (Yaw)</th>
+<th class="tableblock halign-left valign-top">Z-axis (Roll)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>3-D rotation is a bit tricky (<a href="../rotate.html" class="page">learn details here</a>). In short: You can rotate around three axes: Pitch, yaw, and roll. You can specify angles in degrees by multiplying the degrees value with <code>FastMath.DEG_TO_RAD</code>.<br>
+To roll an object 180° around the z axis:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">thing.rotate( 0f , 0f , 180*FastMath.DEG_TO_RAD );</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Tip: If your game idea calls for a serious amount of rotations, it is worth looking into <a href="../quaternion.html" class="page">quaternions</a>, a data structure that can combine and store rotations efficiently.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">thing.setLocalRotation(  new Quaternion().
+    fromAngleAxis(180*FastMath.DEG_TO_RAD,
+        new Vector3f(1,0,0)));</code></pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>nodding your head</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>shaking your head</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>cocking your head</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="how-do-i-troubleshoot-spatials"><a class="anchor" href="#how-do-i-troubleshoot-spatials"></a>How do I Troubleshoot Spatials?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If you get unexpected results, check whether you made the following common mistakes:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 40%;">
+<col style="width: 60%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Problem?</th>
+<th class="tableblock halign-left valign-top">Solution!</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>A created Geometry does not appear in the scene.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Have you attached it to (a node that is attached to) the rootNode?<br>
+Does it have a Material?<br>
+What is its translation (position)?<br>
+Is it behind the camera or covered up by another Geometry?<br>
+Is it too tiny or too gigantic to see?<br>
+Is it too far from the camera? (Try <a href="https://javadoc.jmonkeyengine.org/v3.3.2-stable/com/jme3/renderer/Camera.html#setFrustumFar-float-">cam.setFrustumFar(111111f);</a> to see further)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>A Spatial rotates in unexpected ways.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Did you use radian values, and not degrees? (If you used degrees, multiply them with FastMath.DEG_TO_RAD to convert them to radians) <br>
+Did you create the Spatial at the origin (Vector.ZERO) before moving it?<br>
+Did you rotate around the intended pivot node or around something else?<br>
+Did you rotate around the right axis?</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>A Geometry has an unexpected Color or Material.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Did you reuse a Material from another Geometry and have inadvertently changed its properties? (If so, consider cloning it: mat2 = mat.clone(); )</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="how-do-i-add-custom-data-to-spatials"><a class="anchor" href="#how-do-i-add-custom-data-to-spatials"></a>How do I Add Custom Data to Spatials?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Many Spatials represent game characters or other entities that the player can interact with. The above code that rotates the two boxes around a common center (pivot) could be used for a spacecraft docked to a orbiting space station, for example.</p>
+</div>
+<div class="paragraph">
+<p>Depending on your game, game entities do not only change their position, rotation, or scale (the transformations that you just learned about). Game entities also have custom properties, such as health, inventory carried, equipment worn for a character, or hull strength and fuel left for a spacecraft. In Java, you represent entity data as class variables, e.g. floats, Strings, or Arrays.</p>
+</div>
+<div class="paragraph">
+<p>You can add custom data directly to any Node or Geometry. <strong>You do not need to extend the Node class to include variables</strong>!
+For example, to add a custom id number to a node, you would use:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">pivot.setUserData( "pivot id", 42 );</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To read this Node&#8217;s id number elsewhere, you would use:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">int id = pivot.getUserData( "pivot id" );</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>By using different Strings keys (here the key is <code>pivot id</code>), you can get and set several values for whatever data the Spatial needs to carry. When you start writing your game, you might add a fuel value to a car node, speed value to an airplane node, or number of gold coins to a player node, and much more. However, one should note that only custom objects that implements Savable can be passed.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="conclusion"><a class="anchor" href="#conclusion"></a>Conclusion</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You have learned that your 3D scene is a scene graph made up of Spatials: Visible Geometries and invisible Nodes. You can transform Spatials, or attach them to nodes and transform the nodes. You know the easiest way how to add custom entity properties (such as player health or vehicle speed) to Spatials.</p>
+</div>
+<div class="paragraph">
+<p>Since standard shapes like spheres and boxes get old fast, continue with the next chapter where you learn to <a href="hello_asset.html" class="page">load assets such as 3-D models</a>.</p>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="hello_simpleapplication.html">Hello SimpleApplication</a></span>
+  <span class="next"><a href="hello_asset.html">Hello Asset</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
