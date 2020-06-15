@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>UI Element Style Guide :: jMonkeyEngine Docs</title>
-    <link rel="canonical" href="https://wiki.jmonkeyengine.org/antora-ui-default/style-guide.html">
-    <link rel="prev" href="add-fonts.html">
-    <link rel="next" href="inline-text-styles.html">
+    <title>UI Development Workflow :: jMonkeyEngine Docs</title>
+    <link rel="canonical" href="https://wiki.jmonkeyengine.org/wiki-ui/development-workflow.html">
+    <link rel="prev" href="build-preview-ui.html">
+    <link rel="next" href="templates.html">
     <meta name="generator" content="Antora 2.3.3">
     <link rel="stylesheet" href="../_/css/site.css">
   </head>
@@ -58,12 +58,12 @@
   </nav>
 </header>
 <div class="body">
-<div class="nav-container" data-component="antora-ui-default" data-version="master">
+<div class="nav-container" data-component="wiki-ui" data-version="master">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
-    <h3 class="title"><a href="index.html">Antora Default UI</a></h3>
+    <h3 class="title"><a href="index.html">Wiki UI</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
@@ -76,7 +76,7 @@
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="build-preview-ui.html">Build and Preview the UI</a>
   </li>
-  <li class="nav-item" data-depth="1">
+  <li class="nav-item is-current-page" data-depth="1">
     <a class="nav-link" href="development-workflow.html">UI Development Workflow</a>
   </li>
   <li class="nav-item" data-depth="1">
@@ -91,7 +91,7 @@
   </li>
 </ul>
   </li>
-  <li class="nav-item is-current-page" data-depth="1">
+  <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="style-guide.html">UI Element Styles</a>
 <ul class="nav-list">
@@ -119,23 +119,23 @@
 </div>
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
-    <span class="title">Antora Default UI</span>
+    <span class="title">Wiki UI</span>
     <span class="version">master</span>
   </div>
   <ul class="components">
-    <li class="component is-current">
-      <span class="title">Antora Default UI</span>
-      <ul class="versions">
-        <li class="version is-current is-latest">
-          <a href="index.html">master</a>
-        </li>
-      </ul>
-    </li>
     <li class="component">
       <span class="title">Docs</span>
       <ul class="versions">
         <li class="version is-latest">
           <a href="../docs/jme3.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <span class="title">Wiki UI</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">master</a>
         </li>
       </ul>
     </li>
@@ -150,58 +150,69 @@
   <a href="../docs/documentation.html" class="home-link"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
-    <li><a href="index.html">Antora Default UI</a></li>
-    <li><a href="style-guide.html">UI Element Styles</a></li>
+    <li><a href="index.html">Wiki UI</a></li>
+    <li><a href="development-workflow.html">UI Development Workflow</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/jMonkeyEngine/wiki-ui/edit/master/docs/modules/ROOT/pages/style-guide.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/jMonkeyEngine/wiki-ui/edit/master/docs/modules/ROOT/pages/development-workflow.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">UI Element Style Guide</h1>
+<h1 class="page">UI Development Workflow</h1>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>When creating a UI theme for Antora, there are certain elements in the UI that require support from the CSS to work correctly.
-This list includes elements in the shell (i.e., frame) and in the document content.
-This document identifies these UI elements.</p>
+<p>All changes pushed to a UI project&#8217;s master branch can trigger a new release (not described here).
+Therefore, you want to make your changes to a development branch and submit it as a pull request (PR) to be approved.
+(Even better would be to issue the PR from a fork).
+Only when the PR is approved and merged will the new release be triggered.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="document-content"><a class="anchor" href="#document-content"></a>Document Content</h2>
+<h2 id="git-steps"><a class="anchor" href="#git-steps"></a>git steps</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The HTML in the main content area is generated from AsciiDoc using Asciidoctor.
-AsciiDoc has numerous content elements that require assistance from CSS to render properly.</p>
+<p>Use the following command to create a local development branch named <code>name-me</code>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ git checkout -b name-me -t origin/master</pre>
+</div>
 </div>
 <div class="paragraph">
-<p>These elements include:</p>
+<p>You&#8217;ll then apply your changes to the UI files.
+Once you&#8217;re done making changes, commit those changes to the local branch:</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="inline-text-styles.html" class="page">Inline text emphasis</a></p>
-</li>
-<li>
-<p><a href="admonition-styles.html" class="page">Admonitions</a></p>
-</li>
-<li>
-<p><a href="list-styles.html" class="page">Lists</a></p>
-</li>
-<li>
-<p><a href="sidebar-styles.html" class="page">Sidebars</a></p>
-</li>
-<li>
-<p><a href="ui-macro-styles.html" class="page">Button, keybinding, and menu UI macros</a></p>
-</li>
-</ul>
+<div class="literalblock">
+<div class="content">
+<pre>$ git commit -a -m "describe your change"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then, push your branch to the remote repository:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ git push origin name-me</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Finally, navigate to your UI project in your browser and create a new pull request from this branch.</p>
+</div>
+<div class="paragraph">
+<p>The maintainer of the UI should review the changes.
+If the changes are acceptable, the maintainer will merge the pull request.
+As soon as the pull request is merged into master, an automated process will take over to publish a new release for the site generator to use.</p>
+</div>
+<div class="paragraph">
+<p>Now that you&#8217;ve got the process down, let&#8217;s review some of the files you&#8217;ll be working with in more detail.</p>
 </div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="add-fonts.html">Add Fonts</a></span>
-  <span class="next"><a href="inline-text-styles.html">Inline Text</a></span>
+  <span class="prev"><a href="build-preview-ui.html">Build and Preview the UI</a></span>
+  <span class="next"><a href="templates.html">Work with the Handlebars Templates</a></span>
 </nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">

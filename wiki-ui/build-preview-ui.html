@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>UI Development Workflow :: jMonkeyEngine Docs</title>
-    <link rel="canonical" href="https://wiki.jmonkeyengine.org/antora-ui-default/development-workflow.html">
-    <link rel="prev" href="build-preview-ui.html">
-    <link rel="next" href="templates.html">
+    <title>Build a UI Project for Local Preview :: jMonkeyEngine Docs</title>
+    <link rel="canonical" href="https://wiki.jmonkeyengine.org/wiki-ui/build-preview-ui.html">
+    <link rel="prev" href="set-up-project.html">
+    <link rel="next" href="development-workflow.html">
     <meta name="generator" content="Antora 2.3.3">
     <link rel="stylesheet" href="../_/css/site.css">
   </head>
@@ -58,12 +58,12 @@
   </nav>
 </header>
 <div class="body">
-<div class="nav-container" data-component="antora-ui-default" data-version="master">
+<div class="nav-container" data-component="wiki-ui" data-version="master">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
-    <h3 class="title"><a href="index.html">Antora Default UI</a></h3>
+    <h3 class="title"><a href="index.html">Wiki UI</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
@@ -73,10 +73,10 @@
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="set-up-project.html">Set up a UI Project</a>
   </li>
-  <li class="nav-item" data-depth="1">
+  <li class="nav-item is-current-page" data-depth="1">
     <a class="nav-link" href="build-preview-ui.html">Build and Preview the UI</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="1">
+  <li class="nav-item" data-depth="1">
     <a class="nav-link" href="development-workflow.html">UI Development Workflow</a>
   </li>
   <li class="nav-item" data-depth="1">
@@ -119,23 +119,23 @@
 </div>
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
-    <span class="title">Antora Default UI</span>
+    <span class="title">Wiki UI</span>
     <span class="version">master</span>
   </div>
   <ul class="components">
-    <li class="component is-current">
-      <span class="title">Antora Default UI</span>
-      <ul class="versions">
-        <li class="version is-current is-latest">
-          <a href="index.html">master</a>
-        </li>
-      </ul>
-    </li>
     <li class="component">
       <span class="title">Docs</span>
       <ul class="versions">
         <li class="version is-latest">
           <a href="../docs/jme3.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <span class="title">Wiki UI</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">master</a>
         </li>
       </ul>
     </li>
@@ -150,69 +150,119 @@
   <a href="../docs/documentation.html" class="home-link"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
-    <li><a href="index.html">Antora Default UI</a></li>
-    <li><a href="development-workflow.html">UI Development Workflow</a></li>
+    <li><a href="index.html">Wiki UI</a></li>
+    <li><a href="build-preview-ui.html">Build and Preview the UI</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/jMonkeyEngine/wiki-ui/edit/master/docs/modules/ROOT/pages/development-workflow.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/jMonkeyEngine/wiki-ui/edit/master/docs/modules/ROOT/pages/build-preview-ui.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">UI Development Workflow</h1>
-<div id="preamble">
+<h1 class="page">Build a UI Project for Local Preview</h1>
+<div class="sect1">
+<h2 id="build-preview-site"><a class="anchor" href="#build-preview-site"></a>Build Preview Site</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>All changes pushed to a UI project&#8217;s master branch can trigger a new release (not described here).
-Therefore, you want to make your changes to a development branch and submit it as a pull request (PR) to be approved.
-(Even better would be to issue the PR from a fork).
-Only when the PR is approved and merged will the new release be triggered.</p>
+<p>Once you&#8217;ve modified the site UI, the first thing you&#8217;ll want to do is check out how it looks.
+That&#8217;s what the files in the <em class="path">preview-src/</em> folder are for.
+This folder contains HTML file fragments that provide a representative sample of content from the site.
+The preview saves you from having to generate the whole site just to test the UI.
+These files should give you an idea of how the UI will look when applied to the actual site.</p>
+</div>
+<div class="paragraph">
+<p>The pages in the preview site are assembled using the Handlebars templates and link to the pre-compiled asset files (emulating the behavior of the site generator).
+Thus, to look at them, you need to run them through the UI build.</p>
+</div>
+<div class="paragraph">
+<p>There are two preview modes available.
+You can run the build once and examine the result or you can run the build continuously so you can see changes as you make them.
+The next two sections explain how to use these modes.</p>
+</div>
+<div class="sect2">
+<h3 id="build-once"><a class="anchor" href="#build-once"></a>Build Once</h3>
+<div class="paragraph">
+<p>To build the UI once for preview, then stop, execute the following command:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ gulp preview:build</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This task pre-compiles the UI files into the <em class="path">public</em> directory.
+To view the preview pages, navigate to the HTML pages in the <em class="path">public</em> directory using your browser (e.g., <em class="path">public/index.html</em>).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="build-continuously"><a class="anchor" href="#build-continuously"></a>Build Continuously</h3>
+<div class="paragraph">
+<p>To avoid the need to run the <code>preview:build</code> task over and over while developing, you can use the <code>preview</code> command instead to have it run continuously.
+This task also launches a local HTTP server so updates get synchronized with the browser (i.e., &#8220;live reload&#8221;).</p>
+</div>
+<div class="paragraph">
+<p>To launch the preview server, execute the following command:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ gulp preview</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You&#8217;ll see a URL listed in the output of this command:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>[12:59:28] Starting 'preview:serve'...
+[12:59:28] Starting server...
+[12:59:28] Server started http://localhost:5252
+[12:59:28] Running server</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Navigate to the URL to view the preview site.
+While this command is running, any changes you make to the source files will be instantly reflected in the browser.
+This works by monitoring the project for changes, running the <code>preview:build</code> task if a change is detected, and sending the updates to the browser.</p>
+</div>
+<div class="paragraph">
+<p>Press <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>C</kbd></span> to stop the preview server and end the continuous build.</p>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="git-steps"><a class="anchor" href="#git-steps"></a>git steps</h2>
+<h2 id="package-for-previewing"><a class="anchor" href="#package-for-previewing"></a>Package for Previewing</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Use the following command to create a local development branch named <code>name-me</code>:</p>
+<p>If you need to bundle the UI in order to preview the UI on the real site in local development, run the following command:</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>$ git checkout -b name-me -t origin/master</pre>
+<pre>$ gulp bundle</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>You&#8217;ll then apply your changes to the UI files.
-Once you&#8217;re done making changes, commit those changes to the local branch:</p>
+<p>The <code>bundle</code> command also invokes the <code>lint</code> command to check that the CSS and JavaScript follow the coding standards.</p>
+</div>
+<div class="paragraph">
+<p>The UI bundle will be available at <em class="path">build/ui-bundle.zip</em>.
+You can then point Antora at this bundle using the <code>--ui-bundle-url</code> command-line option.</p>
+</div>
+<div class="paragraph">
+<p>If you have the preview running, and you want to bundle without causing the preview to be clobbered, use:</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>$ git commit -a -m "describe your change"</pre>
+<pre>$ gulp bundle:pack</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Then, push your branch to the remote repository:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>$ git push origin name-me</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Finally, navigate to your UI project in your browser and create a new pull request from this branch.</p>
-</div>
-<div class="paragraph">
-<p>The maintainer of the UI should review the changes.
-If the changes are acceptable, the maintainer will merge the pull request.
-As soon as the pull request is merged into master, an automated process will take over to publish a new release for the site generator to use.</p>
-</div>
-<div class="paragraph">
-<p>Now that you&#8217;ve got the process down, let&#8217;s review some of the files you&#8217;ll be working with in more detail.</p>
+<p>The UI bundle will again be available at <em class="path">build/ui-bundle.zip</em>.</p>
 </div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="build-preview-ui.html">Build and Preview the UI</a></span>
-  <span class="next"><a href="templates.html">Work with the Handlebars Templates</a></span>
+  <span class="prev"><a href="set-up-project.html">Set up a UI Project</a></span>
+  <span class="next"><a href="development-workflow.html">UI Development Workflow</a></span>
 </nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">

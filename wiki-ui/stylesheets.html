@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Sidebar Styles :: jMonkeyEngine Docs</title>
-    <link rel="canonical" href="https://wiki.jmonkeyengine.org/antora-ui-default/sidebar-styles.html">
-    <link rel="prev" href="list-styles.html">
-    <link rel="next" href="ui-macro-styles.html">
+    <title>Work with the CSS Stylesheets :: jMonkeyEngine Docs</title>
+    <link rel="canonical" href="https://wiki.jmonkeyengine.org/wiki-ui/stylesheets.html">
+    <link rel="prev" href="templates.html">
+    <link rel="next" href="add-fonts.html">
     <meta name="generator" content="Antora 2.3.3">
     <link rel="stylesheet" href="../_/css/site.css">
   </head>
@@ -58,12 +58,12 @@
   </nav>
 </header>
 <div class="body">
-<div class="nav-container" data-component="antora-ui-default" data-version="master">
+<div class="nav-container" data-component="wiki-ui" data-version="master">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
-    <h3 class="title"><a href="index.html">Antora Default UI</a></h3>
+    <h3 class="title"><a href="index.html">Wiki UI</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
@@ -82,7 +82,7 @@
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="templates.html">Work with the Handlebars Templates</a>
   </li>
-  <li class="nav-item" data-depth="1">
+  <li class="nav-item is-current-page" data-depth="1">
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="stylesheets.html">Work with the CSS Stylesheets</a>
 <ul class="nav-list">
@@ -104,7 +104,7 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="list-styles.html">Lists</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="2">
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="sidebar-styles.html">Sidebars</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -119,23 +119,23 @@
 </div>
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
-    <span class="title">Antora Default UI</span>
+    <span class="title">Wiki UI</span>
     <span class="version">master</span>
   </div>
   <ul class="components">
-    <li class="component is-current">
-      <span class="title">Antora Default UI</span>
-      <ul class="versions">
-        <li class="version is-current is-latest">
-          <a href="index.html">master</a>
-        </li>
-      </ul>
-    </li>
     <li class="component">
       <span class="title">Docs</span>
       <ul class="versions">
         <li class="version is-latest">
           <a href="../docs/jme3.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <span class="title">Wiki UI</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">master</a>
         </li>
       </ul>
     </li>
@@ -150,56 +150,61 @@
   <a href="../docs/documentation.html" class="home-link"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
-    <li><a href="index.html">Antora Default UI</a></li>
-    <li><a href="style-guide.html">UI Element Styles</a></li>
-    <li><a href="sidebar-styles.html">Sidebars</a></li>
+    <li><a href="index.html">Wiki UI</a></li>
+    <li><a href="stylesheets.html">Work with the CSS Stylesheets</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/jMonkeyEngine/wiki-ui/edit/master/docs/modules/ROOT/pages/sidebar-styles.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/jMonkeyEngine/wiki-ui/edit/master/docs/modules/ROOT/pages/stylesheets.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">Sidebar Styles</h1>
+<h1 class="page">Work with the CSS Stylesheets</h1>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>This page describes the in-page sidebar block styles, not the styles for the navigation sidebar.</p>
+<p>The stylesheets are written in CSS.
+These stylesheets utilize CSS variables to keep the CSS DRY and easy to customize.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="sidebar-blocks"><a class="anchor" href="#sidebar-blocks"></a>Sidebar blocks</h2>
+<h2 id="stylesheet-organization-and-processing"><a class="anchor" href="#stylesheet-organization-and-processing"></a>Stylesheet organization and processing</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><a href="#antora:asciidoc:sidebar.adoc" class="page unresolved">Sidebars</a> can contain any type of content.
-The sidebar title is specified by the block class title.
-Here&#8217;s an AsciiDoc source example that produces a sidebar with a title:</p>
+<p>Within the default UI project, the stylesheet files are separated into modules to help organize the rules and make them easier to find.
+The UI build combines and minifies these files into a single file named <em class="path">site.css</em>.
+During the build, the CSS is enhanced using PostCSS in much the same way as a CSS preprocessor works, only the modifications are made to the CSS directly.
+The modifications mostly center around injecting vendor prefixes for compatibility or backporting new features to more broadly supported syntax.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="add-a-new-css-rule"><a class="anchor" href="#add-a-new-css-rule"></a>Add a new CSS rule</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Let&#8217;s consider the case when you want to modify the font size of a section title.</p>
+</div>
+<div class="paragraph">
+<p>First, make sure you have set up the project and created a development branch.
+Next, open the file <em class="path">src/css/doc.css</em> and modify the rule for the section title.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">.Optional Title
-****
-This is a paragraph in a sidebar.
-****</code></pre>
+<pre class="highlightjs highlight"><code class="language-css hljs" data-lang="css">.doc h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  margin-top: 2rem
+}</code></pre>
 </div>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;div class="sidebarblock"&gt;
-&lt;div class="content"&gt;
-&lt;div class="title"&gt;Optional Title&lt;/div&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;This is a paragraph in a sidebar.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;</code></pre>
-</div>
+<div class="paragraph">
+<p>Save the file, commit it to git, push the branch, and allow the approval workflow to play out.</p>
 </div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="list-styles.html">Lists</a></span>
-  <span class="next"><a href="ui-macro-styles.html">UI Macros</a></span>
+  <span class="prev"><a href="templates.html">Work with the Handlebars Templates</a></span>
+  <span class="next"><a href="add-fonts.html">Add Fonts</a></span>
 </nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
