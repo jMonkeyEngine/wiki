@@ -1,6 +1,6 @@
 = Logging and Monitoring
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :relfileprefix: ../../
 :imagesdir: ../..
@@ -10,7 +10,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 == Logging Like a Newbie
 
-Many developers just use `System.out.println()` to print diagnostic strings to the terminal. The problem with that is that before the release, you have to go through all your code and make certain you removed all these `println()` calls. You do not want your customers to see them, and needlessly worry about ominous outdated debugging diagnostics. 
+Many developers just use `System.out.println()` to print diagnostic strings to the terminal. The problem with that is that before the release, you have to go through all your code and make certain you removed all these `println()` calls. You do not want your customers to see them, and needlessly worry about ominous outdated debugging diagnostics.
 
 
 == Logging Like a Pro
@@ -34,22 +34,22 @@ private static final Logger LOGGER = Logger.getLogger(HelloWorld.class.getName()
 ----
 
 .  Declare the info that you want to include in the message. The variables (here `a, b, c`) can be any printable Java object. +
-Example: `Vector3f a = cam.getLocation();` 
-.  Put the variables in a new `Object` array. Refer to the variables as `{0},{1},{2}` etc in the message string. Variables are numbered in the order you put them into the `Object` array. 
+Example: `Vector3f a = cam.getLocation();`
+.  Put the variables in a new `Object` array. Refer to the variables as `++{0},{1},{2}++` etc in the message string. Variables are numbered in the order you put them into the `Object` array. 
 .  Add the logger line and specify the log level:
 **  Usecase 1: During debugging, a developer uses a warning to remind himself of a bug:
 +
 [source,java]
 ----
-LOGGER.log(Level.WARNING, "why is {0} set to {1} again?!", 
+LOGGER.log(Level.WARNING, "why is {0} set to {1} again?!",
                       new Object[]{a , b});
 ----
 
-**  Usecase 2: For the release, you inform the customer of a problem and how to solve it. 
+**  Usecase 2: For the release, you inform the customer of a problem and how to solve it.
 +
 [source,java]
 ----
-LOGGER.log(Level.SEVERE, "MyGame error: {0} must not be {1} after {2}! Adjust flux generator settings.", 
+LOGGER.log(Level.SEVERE, "MyGame error: {0} must not be {1} after {2}! Adjust flux generator settings.",
                       new Object[]{a , b , c});
 ----
 
@@ -80,7 +80,7 @@ During development or a beta test, you can tune down the default logger, and set
 Logger.getLogger(””).setLevel(Level.WARNING);
 ----
 
-To activate full logging, e.g. for debugging and testing, use the `fine` level: 
+To activate full logging, e.g. for debugging and testing, use the `fine` level:
 
 [source,java]
 ----
@@ -92,4 +92,4 @@ Logger.getLogger(””).setLevel(Level.FINE);
 
 When an uncaught exception reaches certain parts of the jME3 system then the default response is to log the error and then exit the application. This is because an error happening every frame will rapidly fill logs with repeated failings and potentially mask or over-write the original cause of the problem or even the application may continue for a while and then suffer other errors caused by the first and make the root cause hard to determine.
 
-This behaviour can be partially modified by overriding the method handleError in SimpleApplication, for example to display a custom message to users, or to provide users with information on how to report a bug or even to change the way that the error is logged. 
+This behaviour can be partially modified by overriding the method handleError in SimpleApplication, for example to display a custom message to users, or to provide users with information on how to report a bug or even to change the way that the error is logged.
