@@ -1,19 +1,3 @@
-= Atom Snippets Page
-:author: mitm
-:revnumber: 2
-:revdate: 2017-09-08T23:24:11.262Z
-:relfileprefix: ../
-:imagesdir: ..
-:experimental:
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-
-
-Edit this file to add snippets to the snippets.cson file for the
-link:https://atom.io/[Atom editor]. To use these snippets just copy and paste
-the text below into your snippets.cson file.
-
-[source]
-----
 # Your snippets
 #
 # Atom snippets allow you to enter a simple prefix in the editor and hit tab to
@@ -36,9 +20,15 @@ the text below into your snippets.cson file.
 # Atom Flight Manual:
 # http://flight-manual.atom.io/using-atom/sections/basic-customization/#_cson
 '.source.asciidoc':
-  'Inter-Doc Cross Reference':
-    'prefix': 'xref'
+  'Cross Reference Inter-Doc':
+    'prefix': 'xrefI'
     'body': '<<${1:path/to/wiki/page}#,${2:custom label text}>>'
+  'Cross Reference Module':
+    'prefix': 'xrefM'
+    'body': 'xref:${1:target-page-filename}.adoc[${2:link text}]'
+  'Cross Reference ROOT':
+    'prefix': 'xrefR'
+    'body': 'xref:ROOT:${1:target-page-filename}.adoc[${2:link text}]'
   'Admonition Block':
     'prefix': 'admonB'
     'body': """
@@ -69,44 +59,3 @@ the text below into your snippets.cson file.
     .${1:Optional Title}
     ${2:NOTE}${3:TIP}${4:IMPORTANT}${5:CAUTION}${6:WARNING}: $7
     """
-----
-
-== Snippets Explained
-
-[cols="10, 45,45"*,options="header"]
-|===
-
-| Prefix
-| Inserted Syntax
-| Description
-
-| xref
-|`+<<path/to/wiki/page#,custom label text>>+`
-| Inserts an `Inter-Document Cross Reference`.
-
-| admonB
-| [NOTETIPIMPORTANTCAUTIONWARNING] +
- ==== +
- ====
-| Inserts an `Admonition Block` with the #NOTE# style highlighted. Use the kbd:[Tab] key to cycle to the next style
-and kbd:[Backspace] off any unwanted style as you go. The final kbd:[Tab] will take you into the block.
-
-| admonBwT
-| [NOTETIPIMPORTANTCAUTIONWARNING] +
-.Optional Title +
- ==== +
- ====
-| Inserts an `Admonition Block` with title.
-
-
-| admonP
-| NOTETIPIMPORTANTCAUTIONWARNING:
-| Inserts an `Admonition Paragraph` with the #NOTE# style highlighted. Use the kbd:[Tab] key to cycle to the next style
-and kbd:[Backspace] off any unwanted style as you go. The final kbd:[Tab] will take you to the beginning of the paragraph.
-
-| admonPwT
-| .Optional Title +
-NOTETIPIMPORTANTCAUTIONWARNING:
-| Inserts an `Admonition Paragraph` with title.
-
-|===
