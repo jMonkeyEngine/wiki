@@ -1,0 +1,46 @@
+# This workflow runs the Algolia scraper for in document searches. It will pull
+#in the pre-built docker image from Algolia and build the search index.
+#
+# The cron schedule syntax determines when to run the scrape.
+# see:
+#   https://help.github.com/en/actions/reference/events-that-trigger-workflows#scheduled-events-schedule
+#
+# The token set in the secrets tab (configured on the Algolia account)
+# determines what actions can be taken using the scraper with the index.
+# see:
+#   https://www.algolia.com/doc/guides/security/api-keys/#defining-and-securing-access
+#
+# The *-config.json controls how the search works inside the documents themselves.
+# see:
+#   https://docsearch.algolia.com/docs/config-file
+
+name: Algolia Search
+
+on:
+#  schedule:
+#    - cron:  '0 3 * * 0'
+
+  push:
+    branches: [ master ]
+  pull_request:
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Pull scraper
+      run: docker pull algolia/docsearch-scraper
+
+    - name: Run scraper
+      run: docker run -e "APPLICATION_ID=$APPLICATION_ID" \
+      -e "API_KEY=$API_KEY" \
+      -e "CONFIG=$(cat production-config.json | jq -r tostring)" \
+      algolia/docsearch-scraper
+      env:
+        APPLICATION_ID: ${{ secrets.APPLICATION_ID }}
+        API_KEY: ${{ secrets.API_KEY }}
