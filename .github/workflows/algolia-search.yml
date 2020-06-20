@@ -17,11 +17,11 @@
 name: Algolia Search
 
 on:
-#  schedule:
-#    - cron:  '0 3 * * 0'
+  schedule:
+    - cron:  '0 3 * * 0'
 
-  push:
-    branches: [ master ]
+#  push:
+#    branches: [ master ]
   pull_request:
 
 jobs:
@@ -33,14 +33,12 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Pull scraper
-      run: docker pull algolia/docsearch-scraper
-
     - name: Run scraper
-      run: docker run -e "APPLICATION_ID=$APPLICATION_ID" \
-      -e "API_KEY=$API_KEY" \
-      -e "CONFIG=$(cat production-config.json | jq -r tostring)" \
-      algolia/docsearch-scraper
+      run: |
+        docker pull algolia/docsearch-scraper
+        docker run -e "APPLICATION_ID=$APPLICATION_ID" \
+                   -e "API_KEY=$API_KEY" \
+                   -e "CONFIG=$(cat production-config.json | jq -r tostring)" algolia/docsearch-scraper
       env:
-        APPLICATION_ID: ${{ secrets.APPLICATION_ID }}
-        API_KEY: ${{ secrets.API_KEY }}
+        APPLICATION_ID: ${{secrets.APPLICATION_ID}}
+        API_KEY: ${{secrets.API_KEY}}
