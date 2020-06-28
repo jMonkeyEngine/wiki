@@ -240,6 +240,12 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+    # Antora will not copy folders outside the family tree so we move the
+    # resources into the build/site folder so the peaceiris action will commit
+    # the files.
+#    - name: Copy Tutorials
+#      run: cp -r ./docs/modules/ROOT/resources/* ./build/site/
+
     # Commit changes to the gh-pages branch. Antora requires an empty
     # '.nojekyll' be present in the branch due to certain directories starting
     # with an underscore. This action has an option, set by default, to add that
@@ -253,8 +259,6 @@ jobs:
 #        github_token: ${{ secrets.GITHUB_TOKEN }}
         # Commits these files to gh-pages if and only if there are changes.
 #        publish_dir: ./build/site
-        # Update only changed files in gh-pages
-#        keep_files: true
         # Insert CNAME for repository.
 #        cname: wiki.jmonkeyengine.org
 ----
@@ -427,7 +431,7 @@ Add the configuration files. Once complete, our final source structure will look
 site:
   title: jMonkeyEngine Docs
   url: https://wiki.jmonkeyengine.org
-  robots: disallow
+  robots: allow
   start_page: docs::documentation.adoc
 content:
   sources:
@@ -482,7 +486,7 @@ IMPORTANT: The branches key is set to `antora-setup`. The link:{attachmentsdir}/
 name: docs
 title: Docs
 version: master
-start_page: ROOT:jme3.adoc
+start_page: ROOT:documentation.adoc
 nav:
 - modules/ROOT/nav.adoc
 ```
@@ -539,7 +543,7 @@ nav:
 ----
 .. Stage, commit and push everything to the repo.
 . From the (CLI):
-.. Edit the main.yml file, uncommenting the `Run with CI`, `Build Docs`, `Deploy Docs` commands. If this is for the official wiki site, uncomment the `cname` key as well.
+.. Edit the main.yml file, uncommenting the `Run with CI`, `Build Docs`, `Copy Tutorials` `Deploy Docs` commands. If this is for the official wiki site, uncomment the `cname` key as well.
 +
 ```
     - name: Run with CI
@@ -547,6 +551,12 @@ nav:
 
     - name: Build Docs
       run: npm run buildDocs
+
+    # Antora will not copy folders outside the family tree so we move the
+    # resources into the build/site folder so the peaceiris action will commit
+    # the files.
+    - name: Copy Tutorials
+      run: cp -r ./docs/modules/ROOT/resources/* ./build/site/
 
     - name: Deploy Docs
       uses: peaceiris/actions-gh-pages@v3

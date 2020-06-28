@@ -100,9 +100,15 @@ jobs:
         author_email: mitm001@users.noreply.github.com
         message: "Commit files for CI workflow"
         # Commits these files to root if and only if there are changes.
-        add: "package-lock.json package.json"
+        add: "package-lock.json package.json ./.cache/antora/*"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    # Antora will not copy folders outside the family tree so we move the
+    # resources into the build/site folder so the peaceiris action will commit
+    # the files.
+    - name: Copy Tutorials
+      run: cp -r ./docs/modules/ROOT/resources/* ./build/site/
 
     # Commit changes to the gh-pages branch. Antora requires an empty
     # '.nojekyll' be present in the branch due to certain directories starting
@@ -117,7 +123,5 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         # Commits these files to gh-pages if and only if there are changes.
         publish_dir: ./build/site
-        # Update only changed files in gh-pages
-        keep_files: true
         # Insert CNAME for repository.
         cname: wiki.jmonkeyengine.org
