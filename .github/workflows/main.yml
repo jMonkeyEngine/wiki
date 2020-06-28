@@ -104,6 +104,12 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+    # Antora will not copy folders outside the family tree so we move the
+    # tutorials into the build/site folder so the peaceiris action will commit
+    # the files.
+    - name: Copy tutorials to build
+      run: cp -r ./docs/modules/ROOT/resources/tutorials ./build/site/
+      
     # Commit changes to the gh-pages branch. Antora requires an empty
     # '.nojekyll' be present in the branch due to certain directories starting
     # with an underscore. This action has an option, set by default, to add that
