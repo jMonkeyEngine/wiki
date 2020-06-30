@@ -8,7 +8,7 @@
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
-You can run a search across the whole scene graph and search for individual Spatials (`Nodes` and `Geometry`s) by custom criteria, such as the Spatial's name, or the Spatial's class, or the Spatial's user data, or Spatial's Controls. You do this when you want modify  the found nodes (move them, call a method, etc) but you don't have a local variable for them.
+You can run a search across the whole scene graph and search for individual Spatials (`Node` and `Geometry`) by custom criteria, such as the Spatial's name, or the Spatial's class, or the Spatial's user data, or Spatial's Controls. You do this when you want modify  the found nodes (move them, call a method, etc) but you don't have a local variable for them.
 
 
 == Example Use Cases
@@ -58,7 +58,7 @@ rootNode.breadthFirstTraversal(visitor);
 
 ----
 
-Which of the two methods is faster depends on how you designed the scengraph, and what tree element you are looking for. If you are searching for one single Geometry that is a “leaf of the tree, and then stop searching, depth-first may be faster. If you search for a high-level grouping Node, breadth-first may be faster.
+Which of the two methods is faster depends on how you designed the scengraph, and what tree element you are looking for. If you are searching for one single Geometry that is a "`leaf`" of the tree, and then stop searching, depth-first may be faster. If you search for a high-level grouping Node, breadth-first may be faster.
 
 The choice of depth- vs breadth-first also influences the order in which found elements are returned (children first or parents first). If you want to modify user data that is inherited from the parent node (e.g. transformations), the order of application is important, because the side-effects add up.
 
