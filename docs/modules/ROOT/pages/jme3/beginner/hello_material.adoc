@@ -1,6 +1,6 @@
 = jMonkeyEngine 3 Tutorial (6) - Hello Materials
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :keywords: documentation, beginner, intro, model, material, color, texture, transparency
 :relfileprefix: ../../
@@ -59,7 +59,7 @@ public class HelloMaterial extends SimpleApplication {
     Box cube1Mesh = new Box( 1f,1f,1f);
     Geometry cube1Geo = new Geometry("My Textured Box", cube1Mesh);
     cube1Geo.setLocalTranslation(new Vector3f(-3f,1.1f,0f));
-    Material cube1Mat = new Material(assetManager, 
+    Material cube1Mat = new Material(assetManager,
         "Common/MatDefs/Misc/Unshaded.j3md");
     Texture cube1Tex = assetManager.loadTexture(
         "Interface/Logo/Monkey.jpg");
@@ -70,9 +70,9 @@ public class HelloMaterial extends SimpleApplication {
     /** A translucent/transparent texture, similar to a window frame. */
     Box cube2Mesh = new Box( 1f,1f,0.01f);
     Geometry cube2Geo = new Geometry("window frame", cube2Mesh);
-    Material cube2Mat = new Material(assetManager, 
+    Material cube2Mat = new Material(assetManager,
         "Common/MatDefs/Misc/Unshaded.j3md");
-    cube2Mat.setTexture("ColorMap", 
+    cube2Mat.setTexture("ColorMap",
         assetManager.loadTexture("Textures/ColoredTex/Monkey.png"));
     cube2Mat.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
     cube2Geo.setQueueBucket(Bucket.Transparent);
@@ -84,13 +84,13 @@ public class HelloMaterial extends SimpleApplication {
     Geometry sphereGeo = new Geometry("Shiny rock", sphereMesh);
     sphereMesh.setTextureMode(Sphere.TextureMode.Projected); // better quality on spheres
     TangentBinormalGenerator.generate(sphereMesh);           // for lighting effect
-    Material sphereMat = new Material(assetManager, 
+    Material sphereMat = new Material(assetManager,
         "Common/MatDefs/Light/Lighting.j3md");
-    sphereMat.setTexture("DiffuseMap", 
+    sphereMat.setTexture("DiffuseMap",
         assetManager.loadTexture("Textures/Terrain/Pond/Pond.jpg"));
-    sphereMat.setTexture("NormalMap", 
+    sphereMat.setTexture("NormalMap",
         assetManager.loadTexture("Textures/Terrain/Pond/Pond_normal.png"));
-    sphereMat.setBoolean("UseMaterialColors",true);    
+    sphereMat.setBoolean("UseMaterialColors",true);
     sphereMat.setColor("Diffuse",ColorRGBA.White);
     sphereMat.setColor("Specular",ColorRGBA.White);
     sphereMat.setFloat("Shininess", 64f);  // [0,128]
@@ -98,7 +98,7 @@ public class HelloMaterial extends SimpleApplication {
     sphereGeo.setLocalTranslation(0,2,-2); // Move it a bit
     sphereGeo.rotate(1.6f, 0, 0);          // Rotate it a bit
     rootNode.attachChild(sphereGeo);
-    
+
     /** Must add a light to make the lit object visible! */
     DirectionalLight sun = new DirectionalLight();
     sun.setDirection(new Vector3f(1,0,-2).normalizeLocal());
@@ -129,7 +129,7 @@ Typically you want to give objects in your scene textures: It can be rock, grass
     Box cube1Mesh = new Box( 1f,1f,1f);
     Geometry cube1Geo = new Geometry("My Textured Box", cube1Mesh);
     cube1Geo.setLocalTranslation(new Vector3f(-3f,1.1f,0f));
-    Material cube1Mat = new Material(assetManager, 
+    Material cube1Mat = new Material(assetManager,
         "Common/MatDefs/Misc/Unshaded.j3md");
     Texture cube1Tex = assetManager.loadTexture(
         "Interface/Logo/Monkey.jpg");
@@ -141,23 +141,23 @@ Typically you want to give objects in your scene textures: It can be rock, grass
 
 Here is what we did: to create a textured box:
 
-.  Create a Geometry `cube1Geo` from a Box mesh `cube1Mesh`. 
+.  Create a Geometry `cube1Geo` from a Box mesh `cube1Mesh`.
 .  Create a Material `cube1Mat` based on jME3's default `Unshaded.j3md` material definition.
-.  Create a texture `cube1Tex` from the `Monkey.jpg` file in the `assets/Interface/Logo/` directory of the project. 
-.  Load the texture `cube1Tex` into the `ColorMap` layer of the material `cube1Mat`. 
+.  Create a texture `cube1Tex` from the `Monkey.jpg` file in the `assets/Interface/Logo/` directory of the project.
+.  Load the texture `cube1Tex` into the `ColorMap` layer of the material `cube1Mat`.
 .  Apply the material to the cube, and attach the cube to the rootnode.
 
 
 == Transparent Unshaded Texture
 
-`Monkey.png` is the same texture as `Monkey.jpg`, but with an added alpha channel. The alpha channel allows you to specify which areas of the texture you want to be opaque or transparent: Black areas of the alpha channel remain opaque, gray areas become translucent, and white areas become transparent. 
+`Monkey.png` is the same texture as `Monkey.jpg`, but with an added alpha channel. The alpha channel allows you to specify which areas of the texture you want to be opaque or transparent: Black areas of the alpha channel remain opaque, gray areas become translucent, and white areas become transparent.
 
 For a partially translucent/transparent texture, you need:
 
 *  A Texture with alpha channel
 *  A Texture with blend mode of `BlendMode.Alpha`
 *  A Geometry in the `Bucket.Transparent` render bucket. +
-This bucket ensures that the transparent object is drawn on top of objects behind it, and they show up correctly under the transparent parts. 
+This bucket ensures that the transparent object is drawn on top of objects behind it, and they show up correctly under the transparent parts.
 
 [source,java]
 ----
@@ -165,9 +165,9 @@ This bucket ensures that the transparent object is drawn on top of objects behin
     /** A translucent/transparent texture, similar to a window frame. */
     Box cube2Mesh = new Box( 1f,1f,0.01f);
     Geometry cube2Geo = new Geometry("window frame", cube2Mesh);
-    Material cube2Mat = new Material(assetManager, 
+    Material cube2Mat = new Material(assetManager,
     "Common/MatDefs/Misc/Unshaded.j3md");
-    cube2Mat.setTexture("ColorMap", 
+    cube2Mat.setTexture("ColorMap",
         assetManager.loadTexture("Textures/ColoredTex/Monkey.png"));
     cube2Mat.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);  // !
     cube2Geo.setQueueBucket(Bucket.Transparent);                        // !
@@ -205,7 +205,7 @@ In a lit material, the standard texture layer is refered to as _DiffuseMap_, any
 
 Let's have a look at the part of the code example where you create the shiny bumpy rock.
 
-.  Create a Geometry from a Sphere shape. Note that this shape is a normal smooth sphere mesh. 
+.  Create a Geometry from a Sphere shape. Note that this shape is a normal smooth sphere mesh.
 +
 [source,java]
 ----
@@ -236,39 +236,39 @@ Let's have a look at the part of the code example where you create the shiny bum
 [source,java]
 ----
 
-    Material sphereMat = new Material(assetManager, 
+    Material sphereMat = new Material(assetManager,
         "Common/MatDefs/Light/Lighting.j3md");
 ----
 
-..  Set a standard rocky texture in the `DiffuseMap` layer. 
+..  Set a standard rocky texture in the `DiffuseMap` layer.
 +
 image::https://github.com/jMonkeyEngine/jmonkeyengine/raw/445f7ed010199d30c484fe75bacef4b87f2eb38e/jme3-testdata/src/main/resources/Textures/Terrain/Pond/Pond.jpg[Pond.jpg,64,64,align="right"]
 +
 [source,java]
 ----
 
-    sphereMat.setTexture("DiffuseMap", 
+    sphereMat.setTexture("DiffuseMap",
         assetManager.loadTexture("Textures/Terrain/Pond/Pond.jpg"));
 
 ----
 
-..  Set the `NormalMap` layer that contains the bumpiness. The NormalMap was generated for this particular DiffuseMap with a special tool (e.g. Blender). 
+..  Set the `NormalMap` layer that contains the bumpiness. The NormalMap was generated for this particular DiffuseMap with a special tool (e.g. Blender).
 +
-image::https://github.com/jMonkeyEngine/jmonkeyengine/raw/445f7ed010199d30c484fe75bacef4b87f2eb38e/jme3-testdata/src/main/resources/Textures/Terrain/Pond/Pond_normal.png[Pond_normal.png,64,64,align="right"] 
+image::https://github.com/jMonkeyEngine/jmonkeyengine/raw/445f7ed010199d30c484fe75bacef4b87f2eb38e/jme3-testdata/src/main/resources/Textures/Terrain/Pond/Pond_normal.png[Pond_normal.png,64,64,align="right"]
 +
 [source,java]
 ----
 
-    sphereMat.setTexture("NormalMap", 
+    sphereMat.setTexture("NormalMap",
         assetManager.loadTexture("Textures/Terrain/Pond/Pond_normal.png"));
 ----
 
-..  Set the Material's Shininess to a value between 1 and 128. For a rock, a low fuzzy shininess is appropriate. Use material colors to define the shiny Specular color. 
+..  Set the Material's Shininess to a value between 1 and 128. For a rock, a low fuzzy shininess is appropriate. Use material colors to define the shiny Specular color.
 +
 [source,java]
 ----
 
-    sphereMat.setBoolean("UseMaterialColors",true);    
+    sphereMat.setBoolean("UseMaterialColors",true);
     sphereMat.setColor("Diffuse",ColorRGBA.White);  // minimum material color
     sphereMat.setColor("Specular",ColorRGBA.White); // for shininess
     sphereMat.setFloat("Shininess", 64f); // [1,128] for shininess
@@ -283,7 +283,7 @@ image::https://github.com/jMonkeyEngine/jmonkeyengine/raw/445f7ed010199d30c484fe
     sphereGeo.setMaterial(sphereMat);
 ----
 
-.  Let's move and rotate the geometry a bit to position it better. 
+.  Let's move and rotate the geometry a bit to position it better.
 +
 [source,java]
 ----
@@ -311,22 +311,22 @@ As you have seen, you can find the following default materials in `jme/core-data
 [cols="20,40,40", options="header"]
 |===
 
-a| Default Definition 
-a| Usage 
-<a| Parameters  
+a| Default Definition
+a| Usage
+<a| Parameters
 
-a| `Misc/Unshaded.j3md` 
+a| `Misc/Unshaded.j3md`
 a| Colored: Use with mat.setColor() and ColorRGBA. +
-Textured: Use with mat.setTexture() and Texture. 
+Textured: Use with mat.setTexture() and Texture.
 a| Color : Color +
-ColorMap : Texture2D 
+ColorMap : Texture2D
 
-<a| `Light/Lighting.j3md`      
+<a| `Light/Lighting.j3md`
 a| Use with shiny Textures, Bump- and NormalMaps textures. +
-Requires a light source. 
+Requires a light source.
 a| Ambient, Diffuse, Specular : Color +
 DiffuseMap, NormalMap, SpecularMap : Texture2D +
-Shininess : Float 
+Shininess : Float
 
 |===
 
@@ -345,7 +345,7 @@ Look at the shiny rocky sphere above again. It takes several lines to create and
 *  Note how it activates `UseMaterialColors` and sets `Specular` and `Diffuse` to 4 float values (RGBA color).
 *  Note how it sets `Shininess` to 64.
 
-If you want to use one custom material for several models, you can store it in a .j3m file, and save a few lines of code every time. 
+If you want to use one custom material for several models, you can store it in a .j3m file, and save a few lines of code every time.
 
 You create a j3m file as follows:
 
@@ -368,21 +368,21 @@ Material My shiny custom material : Common/MatDefs/Light/Lighting.j3md {
 
 **  Note that `Material` is a fixed keyword.
 **  Note that `My shiny custom material` is a String that you can choose to describe the material.
-**  Note how the code sets all the same properties as before! 
+**  Note how the code sets all the same properties as before!
 
 .  In the code sample, comment out the eight lines that have `sphereMat` in them.
-.  Below this line, add the following line: 
+.  Below this line, add the following line:
 +
 [source,java]
 ----
-sphereGeo.setMaterial((Material) assetManager.loadMaterial( 
+sphereGeo.setMaterial((Material) assetManager.loadMaterial(
     "Materials/MyCustomMaterial.j3m"));
 
 ----
 
 .  Run the app. The result is the same.
 
-Using this new custom material `MyCustomMaterial.j3m` only takes one line. You have replaced the eight lines of an on-the-fly material definition with one line that loads a custom material from a file. Using .j3m files is very handy if you use the same material often. 
+Using this new custom material `MyCustomMaterial.j3m` only takes one line. You have replaced the eight lines of an on-the-fly material definition with one line that loads a custom material from a file. Using .j3m files is very handy if you use the same material often.
 
 
 === Exercise 2: Bumpiness and Shininess
@@ -415,7 +415,7 @@ See also
 *  <<jme3/intermediate/how_to_use_materials#,How to Use Materials>>
 *  <<sdk/material_editing#,Material Editing>>
 *  link:https://hub.jmonkeyengine.org/t/jmonkeyengine3-material-system-full-explanation/12947[Materials] forum thread
-*  link:http://nbviewer.jupyter.org/github/jMonkeyEngine/wiki/blob/master/src/docs/resources/tutorials/material/jME3_materials.pdf[jME3 Materials documentation (PDF)]
+//*  link:http://nbviewer.jupyter.org/github/jMonkeyEngine/wiki/blob/master/src/docs/resources/tutorials/material/jME3_materials.pdf[jME3 Materials documentation (PDF)]
 *  link:http://www.youtube.com/watch?v=Feu3-mrpolc[Video Tutorial: Editing and Assigning Materials to Models in jMonkeyEngine SDK (from 2010, is there a newer one?]
 *  link:https://www.blender.org/support/tutorials/[Creating textures in Blender]
 *  link:http://www.shaders.co.uk/ifw2_textures/whatsin10.htm[Various Material screenshots] (Not done with JME3, this is just to show the fantastic range of Material parameters in the hands of an expert, until we have a JME3 demo for it.)
