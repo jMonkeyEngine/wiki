@@ -1,10 +1,10 @@
 = How to create free SkyMaps
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2017/04/4 10:23
 :relfileprefix: ../../
 :imagesdir: ../..
-:experimental: 
+:experimental:
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 There are a plethora of ways to create skymaps with varying levels of difficulty and expense. The link:http://planetside.co.uk/[Terragen] program has been mentioned as one way to do so but it is now limited in its use and for commercial purposes is not free. Another program, link:https://www.daz3d.com/bryce-7-pro[Bryce], is also not free and seems to of stalled in development based off there only being a 32bit version available. Maybe they are doing things behind the scenes but its still not a free program. This articles intent is to give the JME3 user other options for the creation of skymaps using the free programs Blender and Gimp. It is not the be all, end all of skymap creation. If you know of better methods or tools please feel free to share your wisdom on the link:https://hub.jmonkeyengine.org/[forums].
@@ -35,7 +35,7 @@ The tutorial is in checklist format so you can mark items as you go to keep your
 - [ ] Press kbd:[R] immediately followed by 180 immediately followed by kbd:[Enter]. This will rotate the camera 180 degrees around the Z axis. Rename this camera to Camera-south.
 - [ ] With the camera still selected, press kbd:[Shift]+kbd:[D]. This will duplicate the camera. Next press kbd:[Enter] to set the selection.
 - [ ] With the camera still selected, press kbd:[R] immediately followed by 90 immediately followed by kbd:[Enter]. This will rotate the camera another 90 degrees around the Z axis. Rename this camera to Camera-west.
-- [ ] With the camera still selected, press kbd:[Shift]+kbd:[D]. This will duplicate the camera. Next press kbd:[Enter] to set the selection.   
+- [ ] With the camera still selected, press kbd:[Shift]+kbd:[D]. This will duplicate the camera. Next press kbd:[Enter] to set the selection.  
 - [ ] With the camera still selected, press kbd:[R] immediately followed by -180 immediately followed by kbd:[Enter]. This will rotate the camera -180 degrees around the Z axis. Rename this camera to Camera-east.
 - [ ] With your mouse inside the 3d view change your view to right-ortho by entering kbd:[NumPad 3].
 - [ ] Select Camera-south in 3d view or in the Outliner panel (top-right panel) and press kbd:[Shift]+kbd:[D]. This will duplicate the camera. Next press kbd:[Enter] to set the selection.
@@ -64,7 +64,7 @@ The tutorial is in checklist format so you can mark items as you go to keep your
 [%interactive]
 .Render Tab
 - [ ] From the properties panel select the Render tab (normal looking camera).
-- [ ] In the Dimensions panel set the resolution to any number that is a power of 2. For this example 1024 x 1024. 
+- [ ] In the Dimensions panel set the resolution to any number that is a power of 2. For this example 1024 x 1024.
 - [ ] Slide the resolution scale to 100%.
 - [ ] In the Output panel change the image type to JPEG. I have found out by trial and error that using a JPEG file has the same image quality as a PNG or DDS file but with a huge difference in image size. A single PNG image will clock in at over 8mb to the JPEG size of 325kb. Even converting to a DDS file comes in at over 3mb for comparison (using RGB888 as is recommended by Momoko_Fan/Core Developer in this link:https://hub.jmonkeyengine.org/t/best-dds-format-for-skyfactory/17668/2[forum post]) with no gain in image quality that I could see. Your welcome to experiment on your own if you wish.
 - [ ] Set the image format to RGB.
@@ -76,9 +76,9 @@ The tutorial is in checklist format so you can mark items as you go to keep your
 - [ ] Check the Real Sky toggle.
 
 [%interactive]
-.Map Generator Setup 
-- [ ] From the header at the top of the 3d view click the btn:[Choose Screen Layout] button next to the word `Default` and select `Split Verticle F/R`. 
-- [ ] Click the `+` sign to create a new layout. 
+.Map Generator Setup
+- [ ] From the header at the top of the 3d view click the btn:[Choose Screen Layout] button next to the word `Default` and select `Split Verticle F/R`.
+- [ ] Click the `+` sign to create a new layout.
 - [ ] Rename this new layout Angular Map Generator or a name of your choosing.
 - [ ] In the left side 3d view, at the bottom, next to the word view, is the btn:[Current Editor Type] button. Click it and change it to `UV/Image Editor`.
 - [ ] Place your mouse inside the right side 3d view and press kbd:[NumPad 5] to toggle ortho view. You're now setup to render your Angular map.
@@ -89,9 +89,9 @@ The tutorial is in checklist format so you can mark items as you go to keep your
 - [ ] With your first camera selected (in this case Camera-down) and your mouse inside the right side 3d view, press kbd:[Ctrl]+kbd:[NumPad 0] to set your selected camera to be the active camera. 
 - [ ] Press kbd:[F12] to render the scene. A image will appear in the left side UV/Image Editor.
 - [ ] With your mouse inside the left side UV/Image Editor you can scroll in or out to center the view.
-- [ ] With your mouse inside the left side UV/Image Editor press kbd:[F3] to save your image. Rename the image (down.jpg in this case). 
+- [ ] With your mouse inside the left side UV/Image Editor press kbd:[F3] to save your image. Rename the image (down.jpg in this case).
 
-Follow this same procedure for the remaining cameras. Rendering, renaming and saving each. After you have rendered all your images you can copy and paste them into your asset folder for JME3. Usually under the `Assets/Texture` directory. 
+Follow this same procedure for the remaining cameras. Rendering, renaming and saving each. After you have rendered all your images you can copy and paste them into your asset folder for JME3. Usually under the `Assets/Texture` directory.
 
 To use your images in your code, in simpleInitApp(), load the Textures and use the SkyFactory to create your sky.
 
@@ -108,35 +108,7 @@ getRootNode().attachChild(SkyFactory.createSky(getAssetManager(), west, east, no
 
 Many thanks go out to contributor glaucomardano for his video. He has excellent taste in music.
 
-Listed below are other Blender tutorials JME3 users may find valuable. 
+Listed below are other Blender tutorials JME3 users may find valuable.
 
 *  link:https://www.katsbits.com/tutorials/blender/cycles-skybox.php[Render a Skybox using Cycles]
 *  link:https://www.katsbits.com/tutorials/blender/render-skybox.php[Render a Skybox Environment Map]
-
-
-== Gimp
-
-
-You can use link:https://www.gimp.org/[Gimp] to create SkyMaps from a single image with the addition of 2 scripts.
-
-*  link:https://code.google.com/archive/p/gimp-dds/[Gimp-dds]
-*  link:http://registry.gimp.org/node/25532[Cubemap Layers Generator]
-
-After installing the scripts you open a image in gimp. This script works by slicing up the image into 6 layers of equal size, each by the power of 2. 
-
-.  After you open the image you select `menu:Filters[Generic > Cubemap Layers Generator]`.
-.  Fill in the details as follows. 
-**  Source: navigate to the image you are slicing.
-**  Cubemap layout: `Cross Horizontal`
-**  2 to the power of: `10` (for 1024 sized Layers) 
-.  Press btn:[OK] to slice up the image.
-.  Select `menu:File[Export As]` and change the `Name` and `File Type` to `.dds`. Choose your save location, typically `Assets/Textures`.
-.  Press btn:[Export].
-. A DDS panel will open. Apply the following settings:
-* Compression: `None`
-* Format: `RGB8`
-* Save: `As cube map`
-* MipMaps: `No mipmaps`
-. Press btn:[OK] to export.
-
-You attach the exported image to your scene as is explained in the <<jme3/advanced/sky#,How to add a Sky to your Scene>> tutorial.
