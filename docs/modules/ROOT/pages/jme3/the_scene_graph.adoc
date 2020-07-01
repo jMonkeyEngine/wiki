@@ -1,6 +1,6 @@
 = The Scene Graph and Other jME3 Terminology
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :keywords: spatial, node, mesh, geometry, scenegraph, rootnode
 :relfileprefix: ../
@@ -10,7 +10,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 Before you start making games, make sure you understand general <<jme3/terminology#,3D Gaming terminology>>.
 
-Second, if you are a beginner, we recommend our <<jme3/scenegraph_for_dummies#,Scene Graph for Dummies>> presentation for a visual introduction to the concept of a scene graph. 
+Second, if you are a beginner, we recommend our <<jme3/scenegraph_for_dummies#,Scene Graph for Dummies>> presentation for a visual introduction to the concept of a scene graph.
 
 Then continue learning about jME3 concepts here.
 
@@ -28,7 +28,7 @@ The coordinate system consists of:
 *  The _origin_, a single central point in space.
 **  The origin point is always at coordinate zero, in Java: `new Vector3f(0,0,0)`.
 
-*  Three _coordinate axes_ that are mutually perpendicular, and meet in the origin. 
+*  Three _coordinate axes_ that are mutually perpendicular, and meet in the origin.
 **  The X axis starts left and goes right.
 **  The Y axis starts below and goes up.
 **  The Z axis starts away from you, and goes towards you.
@@ -47,7 +47,7 @@ The unit of meassurement (“one step) in jME3 is the *world unit*, short: wu. T
 For your orientation:
 
 *  The default camera's location is `Vector3f(0.0f, 0.0f, 10.0f)`.
-*  The default camera is looking in the direction described by the (so called) negative Z unit vector `Vector3f(0.0f, 0.0f, -1.0f)`. 
+*  The default camera is looking in the direction described by the (so called) negative Z unit vector `Vector3f(0.0f, 0.0f, -1.0f)`.
 
 This means the player's point of view is on the positive side of the Z axis, looking back, towards the origin, down the Z axis.
 
@@ -60,9 +60,9 @@ By default, jME3 uses the following common navigation inputs
 [cols="3", options="header"]
 |===
 
-a| Game Inputs 
-a| Camera Motion 
-a| Player POV 
+a| Game Inputs
+a| Camera Motion
+a| Player POV
 
 a|Press the W and S keys
 a|move the camera forward, and backward
@@ -91,13 +91,13 @@ These default settings are called “WASD keys and “Mouse Look. You can custom
 
 == Scene Graph and RootNode
 
-The _scene graph_ represents your 3D world. Objects in the jME3 scene graph are called <<jme3/advanced/spatial#,Spatial>>s. Everything attached to the parent _rootNode_ is part of your scene. Your game inherits the `rootNode` object from the `SimpleApplication` class. 
+The _scene graph_ represents your 3D world. Objects in the jME3 scene graph are called <<jme3/advanced/spatial#,Spatial>>s. Everything attached to the parent _rootNode_ is part of your scene. Your game inherits the `rootNode` object from the `SimpleApplication` class.
 
 
 image::jme3/intermediate/scene-graph.png[scene-graph.png,width="",height="",align="center"]
 
 
-*  _Attaching_ a Spatial to the rootNode (or its child nodes) adds it to the scene; 
+*  _Attaching_ a Spatial to the rootNode (or its child nodes) adds it to the scene;
 *  _Detaching_ a Spatial from the rootNode (or its child nodes) removes it from the scene.
 
 All objects in the scene graph are in a parent-child relationship. When you transform (move, rotate, scale) one parent, all its children follow.
@@ -105,42 +105,42 @@ All objects in the scene graph are in a parent-child relationship. When you tran
 
 [NOTE]
 ====
-The scene graph only manages the parent-child relationship of spatials. The actual location, rotation, or scale of an object is stored inside each Spatial. 
+The scene graph only manages the parent-child relationship of spatials. The actual location, rotation, or scale of an object is stored inside each Spatial.
 ====
 
 
 
 == Spatials: Node vs Geometry
 
-A Spatial can be transformed (in other words, it has a location, a rotation, and a scale). A Spatial can be loaded and saved as a .3jo file. There are two types of Spatials, _Nodes_ and _Geometries_:
+A Spatial can be transformed (in other words, it has a location, a rotation, and a scale). A Spatial can be loaded and saved as a .3jo file. There are two types of Spatials, _Node_ and _Geometry_:
 [cols="10,45,45", options="header"]
 |===
 
-<a|  
-2+a| Spatial 
+<a|
+2+a| Spatial
 
-a| Purpose: 
-2+a| A Spatial is an abstract data structure that stores transformations (translation, rotation, scale). 
+a| Purpose:
+2+a| A Spatial is an abstract data structure that stores transformations (translation, rotation, scale).
 
-<a|  
-a| Geometry 
-a| Node 
+<a|
+a| Geometry
+a| Node
 
-a| Visibility: 
-a| A visible 3-D object. 
-a| An invisible “handle for a group of objects. 
+a| Visibility:
+a| A visible 3-D object.
+a| An invisible “handle for a group of objects.
 
-a| Purpose: 
-a| A Geometry represents the “look of an object: Shape, color, texture, opacity/transparency. 
-a| A Node groups Geometries and other Nodes together: You transform a Node to affect all attached Nodes (parent-child relationship). 
+a| Purpose:
+a| A Geometry represents the “look of an object: Shape, color, texture, opacity/transparency.
+a| A Node groups Geometries and other Nodes together: You transform a Node to affect all attached Nodes (parent-child relationship).
 
-a| Content: 
-a| Transformations, mesh, material. 
-a| Transformations. No mesh, no material. 
+a| Content:
+a| Transformations, mesh, material.
+a| Transformations. No mesh, no material.
 
-a| Examples: 
-a| A box, a sphere, player, a building, a piece of terrain, a vehicle, missiles, NPCs, etc… 
-a| The rootNode, the guiNode, an audioNode, a custom grouping node for a vehicle plus its passengers, etc. 
+a| Examples:
+a| A box, a sphere, player, a building, a piece of terrain, a vehicle, missiles, NPCs, etc…
+a| The rootNode, the guiNode, an audioNode, a custom grouping node for a vehicle plus its passengers, etc.
 
 |===
 
