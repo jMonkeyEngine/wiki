@@ -1,6 +1,6 @@
 = Shader Nodes
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :relfileprefix: ../../
 :imagesdir: ../..
@@ -10,7 +10,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 == Motivations
 
-jME3 material system is entirely based on shaders. While it's pretty powerful, this system has some issues and limitations : 
+jME3 material system is entirely based on shaders. While it's pretty powerful, this system has some issues and limitations :
 
 *  Monolithic shaders have a serious lack of flexibility, and it can be daunting to get into the code for inexperienced users.
 *  Maintenance ease of such shaders is poor. (for example the whole lighting shaders represent around 500 lines of code, and it could be a lot worse with more features)
@@ -31,7 +31,7 @@ Outputs are glsl variables fed with values computed in the shader node code. +
 
 In practice it's a bit more than that.A shader node is declined in several parts :
 
-*  A shader node definition, defining : 
+*  A shader node definition, defining :
 **  The type of shader node (Vertex or Fragment for now)
 **  The minimal glsl version needed for the shader node
 **  The path to the shader file (containing the shader code heh)
@@ -52,25 +52,25 @@ In practice it's a bit more than that.A shader node is declined in several parts
 == Shader Node definition
 
 First ShaderNodes have to be defined either in a separate file (j3sn for jme3 shader node) or directly embed in the Technique block of the j3md file. +
-Please refer to this documentation for global structure of a j3md file 
+Please refer to this documentation for global structure of a j3md file
 <<jme3/advanced/material_specification#,jMonkeyEngine3 Material Specification>>
 
 All is included in a *ShaderNodeDefinitions* bloc. This block can have several nodes defined (it's recommended to define nodes that have strong dependencies with each other in the same j3sn file). +
 A ShaderNode is declared in a *ShaderNodeDefinition* block. +
-The global structure should look like this : 
+The global structure should look like this :
 
 [source,java]
 ----
 
 ShaderNodeDefinitions{
       ShaderNodeDefinition <NodeDefName>{
-            Type : <ShaderType> 
+            Type : <ShaderType>
             Shader <ShaderLangAndVersion> : <ShaderPath>
             [Shader <ShaderLangAndVersion> : <ShaderPath>]
             [...]
             Documentation {
                 <DocContent>
-            } 
+            }
             Input {
                 <GlslVarType> <VarName>
                 [<GlslVarType> <VarName>]
@@ -107,11 +107,11 @@ All that is not between [] is mandatory.
 **  *@output* can be use to prefix an output name so the sdk recognize it and format it accordingly. the syntax id @output &lt;inputName&gt; &lt;description&gt;
 
 *  +++<u>Input</u>+++ : The input block containing all the inputs of this node. A node can have 1 or several inputs.
-**  *GlslVarType* : a valid glsl variable type that will be used in the shader for this input. see link:http://www.opengl.org/wiki/GLSL_Type[http://www.opengl.org/wiki/GLSL_Type] and the “Declare an array chapter
+**  *GlslVarType* : a valid glsl variable type that will be used in the shader for this input. see link:https://www.khronos.org/opengl/wiki/GLSL_Type[https://www.khronos.org/opengl/wiki/GLSL_Type] and the “Declare an array chapter
 **  *VarName* : the name of the variable. Note that you can't have several inputs with the same name.
 
 *  +++<u>Output</u>+++ : The output block containing all the outputs of this node. A node can have 1 or several outputs.
-**  *GlslVarType* : a valid glsl variable type that will be used in the shader for this input. see link:http://www.opengl.org/wiki/GLSL_Type[http://www.opengl.org/wiki/GLSL_Type] and the “Declare an array chapter
+**  *GlslVarType* : a valid glsl variable type that will be used in the shader for this input. see link:https://www.khronos.org/opengl/wiki/GLSL_Type[https://www.khronos.org/opengl/wiki/GLSL_Type] and the “Declare an array chapter
 **  *VarName* : the name of the variable. Note that you can't have several outputs with the same name.
 
 [NOTE]
@@ -132,22 +132,22 @@ ShaderNodeDefinitions{
         Type: Fragment
         Shader GLSL100: Common/MatDefs/ShaderNodes/LightMapping/lightMap.frag
         Documentation {
-            This Node is responsible for multiplying a light mapping contribution to a given color.   
+            This Node is responsible for multiplying a light mapping contribution to a given color.
             @input texCoord the texture coordinates to use for light mapping
-            @input lightMap the texture to use for light mapping   
+            @input lightMap the texture to use for light mapping
             @input color the color the lightmap color will be multiplied to
-            @output color the resulting color             
+            @output color the resulting color
         }
-        Input{            
+        Input{
             vec2 texCoord
-            sampler2D lightMap    
-            vec4 color               
+            sampler2D lightMap
+            vec4 color
         }
         Output{
             vec4 color
         }
-    }   
-}    
+    }
+}
 
 ----
 
@@ -167,7 +167,7 @@ _Example_
 ----
 
 This will declare a float array with 10 elements.
-Any material parameter mapped with this array should be of FloatArray type and it's size will be assumed as 10 when the shader is generated. 
+Any material parameter mapped with this array should be of FloatArray type and it's size will be assumed as 10 when the shader is generated.
 
 *Material parameter driven size* +
 The size can be dynamic and driven by a material parameter. GLSL does not support non constant values for array declaration so this material parameter will be mapped to a define. +
@@ -195,7 +195,7 @@ The shader code associated with a Shader node is similar to any shader code. +
 The code for a Vertex shader node should be in a .vert file and the code for a Fragment shader node should be in a .frag file.
 It has a declarative part containing variable declaration, function declaration and so on… And a main part that is embed in a “void main(){} block. +
 Input and output variables declared in the shader node definition can be used *without* being declared in the shader code. ( they shouldn't even or you'll have issues). +
-Here is a the code of the LightMap.frag shader. 
+Here is a the code of the LightMap.frag shader.
 
 [source,java]
 ----
@@ -259,8 +259,8 @@ For example, let's say we have a Color and ColorMap material parameter, this con
 
 *  +++<u>InputMapping</u>+++ the wiring of the inputs of this node, coming from previous node's outputs or from built in glsl inputs.
 **  *InputVariableName* : the name of the variable to map as declared in the definition.
-**  *Swizzle* : Swizling for the preceding variable. More information on glsl swizzling on this page link:http://www.opengl.org/wiki/GLSL_Type[http://www.opengl.org/wiki/GLSL_Type].
-**  *NameSpace* : The generator will use variable name space to avoid collision between variable names. Name space can be one of these values : 
+**  *Swizzle* : Swizling for the preceding variable. More information on glsl swizzling on this page link:https://www.khronos.org/opengl/wiki/GLSL_Type[https://www.khronos.org/opengl/wiki/GLSL_Type].
+**  *NameSpace* : The generator will use variable name space to avoid collision between variable names. Name space can be one of these values :
 ***  *MatParam* : the following variable is a Material Parameter declared in the MaterialParameters block of the materialDefinition.
 ***  *WorldParam* : the following variable is a World Parameter declared in the WorldParameters block of the current technique block. World parameters can be one of those declared in this file : link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/java/com/jme3/shader/UniformBinding.java[https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/java/com/jme3/shader/UniformBinding.java]
 ***  *Attr* : the following variable is a shader attribute. It can be one those declared in the Type enum of the VertexBuffer class link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/java/com/jme3/scene/VertexBuffer.java[https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/java/com/jme3/scene/VertexBuffer.java].
@@ -284,7 +284,7 @@ Here is an example of a very simple Material definition that just displays a sol
 
 [IMPORTANT]
 ====
-Shader Nodes only work if there is no shader declared in the technique. If you want to bypass the Shader Nodes, you can put a VertexShader and a FragmentShader statement in the technique and the shader nodes will be ignored. 
+Shader Nodes only work if there is no shader declared in the technique. If you want to bypass the Shader Nodes, you can put a VertexShader and a FragmentShader statement in the technique and the shader nodes will be ignored.
 ====
 
 
@@ -331,7 +331,7 @@ MaterialDef Simple {
 This Material definition has one Default technique with 2 node declarations. +
 *+++<u>CommonVert Definition</u>+++* +
 CommonVert is a vertex shader node that has commonly used input and outputs of a vertex shader. It also computes the position of the vertex in projection space. +
-Here is the definition content (Common/MatDefs/ShaderNodes/Common/CommonVert.j3sn) : 
+Here is the definition content (Common/MatDefs/ShaderNodes/Common/CommonVert.j3sn) :
 
 [source,java]
 ----
@@ -342,20 +342,20 @@ ShaderNodesDefinitions {
         Shader GLSL100: Common/MatDefs/ShaderNodes/Common/commonVert.vert
         Documentation {
             This Node is responsible for computing vertex position in projection space.
-            It also can pass texture coordinates 1 & 2, and vertexColor to the frgment shader as varying (or inputs for glsl >=1.3)                   
+            It also can pass texture coordinates 1 & 2, and vertexColor to the frgment shader as varying (or inputs for glsl >=1.3)
             @input modelPosition the vertex position in model space (usually assigned with Attr.inPosition or Global.position)
             @input worldViewProjectionMatrix the World View Projection Matrix transforms model space to projection space.
             @input texCoord1 The first texture coordinates of the vertex (usually assigned with Attr.inTexCoord)
             @input texCoord2 The second texture coordinates of the vertex (usually assigned with Attr.inTexCoord2)
-            @input vertColor The color of the vertex (usually assigned with Attr.inColor)                    
+            @input vertColor The color of the vertex (usually assigned with Attr.inColor)
             @output projPosition Position of the vertex in projection space.(usually assigned to Global.position)
             @output vec2 texCoord1 The first texture coordinates of the vertex (output as a varying)
             @output vec2 texCoord2 The second texture coordinates of the vertex (output as a varying)
             @output vec4 vertColor The color of the vertex (output as a varying)
-        }                
+        }
         Input{
-            vec3 modelPosition                    
-            mat4 worldViewProjectionMatrix                    
+            vec3 modelPosition
+            mat4 worldViewProjectionMatrix
             vec2 texCoord1
             vec2 texCoord2
             vec4 vertColor
@@ -399,7 +399,7 @@ Here we have the most basic yet mandatory thing in a vertex shader, computing ve
 
 [TIP]
 ====
-As mentioned before Global position is initialized with the attribute inPosition, so this is equivalent to : 
+As mentioned before Global position is initialized with the attribute inPosition, so this is equivalent to :
 
 [source, java]
 ----
@@ -425,24 +425,24 @@ The Global.position variable will be assigned to the gl_Position glsl built in o
 
 *+++<u>ColorMult Definition</u>+++* +
 ColorMult is a very basic Shader Node that takes two colors as input and multiply them.
-Here is the definition content (Common/MatDefs/ShaderNodes/Basic/ColorMult.j3sn) : 
+Here is the definition content (Common/MatDefs/ShaderNodes/Basic/ColorMult.j3sn) :
 
 [source,java]
 ----
 
 ShaderNodeDefinitions{
-    ShaderNodeDefinition ColorMult {      
+    ShaderNodeDefinition ColorMult {
         Type: Fragment
         Shader GLSL100: Common/MatDefs/ShaderNodes/Basic/colorMult.frag
         Documentation{
             Multiplies two colors
             @input color1 the first color
-            @input color2 the second color            
+            @input color2 the second color
             @output outColor the resulting color
         }
         Input {
             vec4 color1
-            vec4 color2            
+            vec4 color2
         }
         Output {
             vec4 outColor
@@ -466,7 +466,7 @@ void main(){
 *+++<u>ColorMult input mapping</u>+++* +
 All inputs are mapped here :
 
-*  *color1 = MatParam.Color* : The first color is assigned to the Color Material parameter declared in the MaterialParameter block of the material definition.  
+*  *color1 = MatParam.Color* : The first color is assigned to the Color Material parameter declared in the MaterialParameter block of the material definition.
 *  *color2 = Global.color* : The second color is assigned with the Global color variable. this is defaulted to vec4(1.0) (opaque white).
 
 [NOTE]
@@ -491,7 +491,7 @@ Also note that in case several Global variables are declared, the generator will
 ====
 
 
-*+++<u>Generated shader code</u>+++* 
+*+++<u>Generated shader code</u>+++*
 
 [IMPORTANT]
 ====
@@ -568,7 +568,7 @@ As a rule of thumb you should not assign a value to an input. Inputs are likely 
 ====
 
 
-For more explanations and design decisions please refer to the +++<abbr title="specification">spec</abbr>+++ here 
+For more explanations and design decisions please refer to the +++<abbr title="specification">spec</abbr>+++ here
 link:https://docs.google.com/document/d/1S6xO3d1TBz0xcKe_MPTqY9V-QI59AKdg1OGy3U-HeVY/edit?usp=sharing[https://docs.google.com/document/d/1S6xO3d1TBz0xcKe_MPTqY9V-QI59AKdg1OGy3U-HeVY/edit?usp=sharing].
 
 Thank you for the brave ones that came through all this reading. I'm not gonna offer you a prize in exchange of a password, because we ran out of JME thongs…
