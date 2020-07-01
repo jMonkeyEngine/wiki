@@ -1,6 +1,6 @@
 = Recast Navigation for JME
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :relfileprefix: ../../
 :imagesdir: ../..
@@ -48,7 +48,7 @@ In next code is described how the user should build navigation mesh, and query f
 Config config = new Config();
 
 Mesh mesh = ((Geometry) scene.getChild("terrain")).getMesh();
-            
+
 Vector3f minBounds = RecastBuilder.calculateMinBounds(mesh);
 Vector3f maxBounds = RecastBuilder.calculateMaxBounds(mesh);
 
@@ -84,7 +84,7 @@ if (!RecastBuilder.createHeightfield(context, heightfield, config)) {
     return;
 }
 
-// Allocate array that can hold triangle area types. 
+// Allocate array that can hold triangle area types.
 
 // In Recast terminology, triangles are what indices in jME is. I left this,
 
@@ -100,14 +100,14 @@ RecastBuilder.rasterizeTriangles(context, mesh, areas, heightfield, 20);
 RecastBuilder.filterLowHangingWalkableObstacles(context, config.getWalkableClimb(), heightfield);
 RecastBuilder.filterLedgeSpans(context, config, heightfield);
 RecastBuilder.filterWalkableLowHeightSpans(context, config.getWalkableHeight(), heightfield);
-       
-        
+
+
 // Step 4. Partition walkable surface to simple regions.
 // Compact the heightfield so that it is faster to handle from now on.
 // This will result more cache coherent data as well as the neighbours
 // between walkable cells will be calculated.
 CompactHeightfield compactHeightfield = new CompactHeightfield();
-       
+
 if (!RecastBuilder.buildCompactHeightfield(context, config, heightfield, compactHeightfield)) {
     System.out.println("Could not build compact data");
     return;
@@ -192,21 +192,21 @@ createParams.getData(polyMeshDetail);
 //setting optional off-mesh connections (in my example there are none)
 createParams.getData(config);
 createParams.setBuildBvTree(true);
-        
+
 char[] navData = DetourBuilder.createNavMeshData(createParams);
-        
+
 if (navData == null) {
     System.out.println("Could not build Detour navmesh.");
     return;
 }
-        
+
 NavMesh navMesh = new NavMesh();
-       
+
 if (!navMesh.isAllocationSuccessful()) {
     System.out.println("Could not create Detour navmesh");
     return;
 }
-        
+
 Status status;
 status = navMesh.init(navData, TileFlags.DT_TILE_FREE_DATA.value());
 if (status.isFailed()) {
@@ -263,7 +263,6 @@ If there is problem with building C++ project see <<jme3/advanced/building_recas
 
 === Questions & Suggestions
 
-*  For suggestion and/or question on jNavigation post on link:http://hub.jmonkeyengine.org/forum/board/development/summer-of-code/[forum]
 *  For question on Recast (C++ library) ask on link:https://groups.google.com/forum/#!forum/recastnavigation[Google groups]
 
 
