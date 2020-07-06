@@ -5,15 +5,15 @@
 :keywords: beginner, intro, physics, documentation, input, model, control
 
 
-Do you remember the <<jme3/beginner/hello_collision#,Hello Collision>> tutorial where you made the model of a town solid and walked through it in a first-person perspective? Then you may remember that, for the simulation of physical forces, jME3 integrates the link:http://jbullet.advel.cz/[jBullet] library.
+Do you remember the xref:beginner/hello_collision.adoc[Hello Collision] tutorial where you made the model of a town solid and walked through it in a first-person perspective? Then you may remember that, for the simulation of physical forces, jME3 integrates the link:http://jbullet.advel.cz/[jBullet] library.
 
-Apart from making models “solid, the most common use cases for physics in 3D games are:
+Apart from making models "`solid`", the most common use cases for physics in 3D games are:
 
 *  Driving vehicles with suspensions, tyre friction, ramp jumping, drifting – Example: car racers
 *  Rolling and bouncing balls – Example: pong, pool billiard, bowling
 *  Sliding and falling boxes – Example: Breakout, Arkanoid
 *  Exposing objects to forces and gravity – Example: spaceships or zero-g flight
-*  Animating ragdolls – Example: “realistic character simulations
+*  Animating ragdolls – Example: "`realistic`" character simulations
 *  Swinging pendulums, rope bridges, flexible chains, and much more…
 
 All these physical properties can be simulated in JME3. Let's have a look at a simulation of physical forces in this example where you shoot cannon balls at a brick wall.
@@ -22,17 +22,10 @@ All these physical properties can be simulated in JME3. Let's have a look at a s
 image::beginner/beginner-physics.png[beginner-physics.png,360,291,align="center"]
 
 
-
-[TIP]
-====
-To use the example assets in a new jMonkeyEngine SDK project, right-click your project, select “Properties, go to “Libraries, press “Add Library and add the “jme3-test-data library.
-====
-
+include::partial$add-testdata-tip.adoc[]
 
 
 == Sample Code
-
-Thanks to double1984 for contributing this fun sample!
 
 [source,java]
 ----
@@ -237,7 +230,7 @@ You should see a brick wall. Click to shoot cannon balls. Watch the bricks fall 
 
 == A Basic Physics Application
 
-In the previous tutorials, you used static Geometries (boxes, spheres, and models) that you placed in the scene. Depending on their translation, Geometries can “float in mid-air and even overlap – they are not affected by “gravity and have no physical mass. This tutorial shows how to add physical properties to Geometries.
+In the previous tutorials, you used static Geometries (boxes, spheres, and models) that you placed in the scene. Depending on their translation, Geometries can "`float`" in mid-air and even overlap – they are not affected by "`gravity`" and have no physical mass. This tutorial shows how to add physical properties to Geometries.
 
 As always, start with a standard com.jme3.app.SimpleApplication. To activate physics, create a com.jme3.bullet.BulletAppState, and and attach it to the SimpleApplication's AppState manager.
 
@@ -264,7 +257,7 @@ The BulletAppState gives the game access to a PhysicsSpace. The PhysicsSpace let
 
 === Geometries
 
-In this “shoot at the wall example, you use Geometries such as cannon balls and bricks. Geometries contain meshes, such as Shapes. Let's create and initialize some Shapes: Boxes and Spheres.
+In this "`shoot`" at the wall example, you use Geometries such as cannon balls and bricks. Geometries contain meshes, such as Shapes. Let's create and initialize some Shapes: Boxes and Spheres.
 
 [source,java]
 ----
@@ -470,7 +463,7 @@ The location of the dynamic Spatial is controlled by its RigidBodyControl. Move 
 
 You can make Spatials that are not dynamic: Switch the RigidBodyControl to setKinematic(true) to have it move along with its Spatial.
 
-*  A kinematic is unaffected by forces or gravity, which means it can float in mid-air and cannot be pushed away by dynamic “cannon balls etc.
+*  A kinematic is unaffected by forces or gravity, which means it can float in mid-air and cannot be pushed away by dynamic "`cannon`" balls etc.
 *  A kinematic RigidBody has a mass.
 *  A kinematic can be moved and can exert forces on dynamic RigidBodys. This means you can use a kinematic node as a billiard cue or a remote-controlled battering ram.
 
@@ -508,9 +501,9 @@ What happens if you give a static node, such as the floor, a mass of more than 0
 
 Fill your scene with walls, bricks, and cannon balls. When do you begin to see a performance impact?
 
-Popular AAA games use a clever mix of physics, animation and prerendered graphics to give you the illusion of a real, “physical world. Think of your favorite video games and try to spot where and how the game designers trick you into believing that the whole scene is physical. For example, think of a building “breaking into 4-8 parts after an explosion. The pieces most likely fly on predefined (so called kinematic) paths and are only replaced by dynamic Spatials after they touch the ground… Now that you start to implement game physics yourself, look behind the curtain!
+Popular AAA games use a clever mix of physics, animation and prerendered graphics to give you the illusion of a real, "`physical`" world. Think of your favorite video games and try to spot where and how the game designers trick you into believing that the whole scene is physical. For example, think of a building "`breaking`" into 4-8 parts after an explosion. The pieces most likely fly on predefined (so called kinematic) paths and are only replaced by dynamic Spatials after they touch the ground… Now that you start to implement game physics yourself, look behind the curtain!
 
-Using physics everywhere in a game sounds like a cool idea, but it is easily overused. Although the physics nodes are put to “sleep when they are not moving, creating a world solely out of dynamic physics nodes will quickly bring you to the limits of your computer's capabilities.
+Using physics everywhere in a game sounds like a cool idea, but it is easily overused. Although the physics nodes are put to "`sleep`" when they are not moving, creating a world solely out of dynamic physics nodes will quickly bring you to the limits of your computer's capabilities.
 
 
 == Conclusion
