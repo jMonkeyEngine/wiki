@@ -1,16 +1,9 @@
 = jMonkeyEngine 3 Tutorial (10) - Hello Terrain
-:author: 
-:revnumber: 
-:revdate: 2016/03/17 20:48
+:author:
+:revnumber:
+:revdate: 2020/07/06
 :keywords: beginner, heightmap, documentation, terrain, texture
-:relfileprefix: ../../
-:imagesdir: ../..
-:experimental:
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
-
-Previous: <<jme3/beginner/hello_collision#,Hello Collision>>,
-Next: <<jme3/beginner/hello_audio#,Hello Audio>>
 
 One way to create a 3D landscape is to sculpt a huge terrain model. This gives you a lot of artistic freedom – but rendering such a huge model can be quite slow. This tutorial explains how to create fast-rendering terrains from heightmaps, and how to use texture splatting to make the terrain look good.
 
@@ -67,7 +60,7 @@ public class HelloTerrain extends SimpleApplication {
     flyCam.setMoveSpeed(50);
 
     /** 1. Create terrain material and load four textures into it. */
-    mat_terrain = new Material(assetManager, 
+    mat_terrain = new Material(assetManager,
             "Common/MatDefs/Terrain/Terrain.j3md");
 
     /** 1.1) Add ALPHA map (for red-blue-green coded splat textures) */
@@ -102,7 +95,7 @@ public class HelloTerrain extends SimpleApplication {
     heightmap = new ImageBasedHeightMap(heightMapImage.getImage());
     heightmap.load();
 
-    /** 3. We have prepared material and heightmap. 
+    /** 3. We have prepared material and heightmap.
      * Now we create the actual terrain:
      * 3.1) Create a TerrainQuad and name it "my terrain".
      * 3.2) A good value for terrain tiles is 64x64 -- so we supply 64+1=65.
@@ -131,7 +124,7 @@ When you run this sample you should see a landscape with dirt mountains, grass p
 
 == What is a Heightmap?
 
-Heightmaps are an efficient way of representing the shape of a hilly landscape. Not every pixel of the landscape is stored, instead, a grid of sample values is used to outline the terrain height at certain points. The heights between the samples is interpolated. 
+Heightmaps are an efficient way of representing the shape of a hilly landscape. Not every pixel of the landscape is stored, instead, a grid of sample values is used to outline the terrain height at certain points. The heights between the samples is interpolated.
 
 In Java, a heightmap is a float array containing height values between 0f and 255f. Here is a very simple example of a terrain generated from a heightmap with 5x5=25 height values.
 
@@ -206,11 +199,11 @@ The jMonkeyEngine SDK comes with a <<sdk/terrain_editor#,TerrainEditor plugin>>.
 ====
 
 
-Splat textures are based on the `Terrain.j3md` material defintion. If you open the Terrain.j3md file, and look in the Material Parameters section, you see that you have several texture layers to paint on: `Tex1`, `Tex2`, `Tex3`, etc. 
+Splat textures are based on the `Terrain.j3md` material defintion. If you open the Terrain.j3md file, and look in the Material Parameters section, you see that you have several texture layers to paint on: `Tex1`, `Tex2`, `Tex3`, etc.
 
 Before you can start painting, you have to make a few decisions:
 
-.  Choose three textures. For example grass.jpg, dirt.jpg, and road.jpg. + 
+.  Choose three textures. For example grass.jpg, dirt.jpg, and road.jpg. +
 image:jme3/beginner/grass.jpg[grass.jpg,64,64] image:jme3/beginner/dirt.jpg[dirt.jpg,64,64] image:jme3/beginner/road.jpg[road.jpg,64,64]
 
 .  You '`paint`' three texture layers by using three colors: Red, blue and, green. You arbitrarily decide that…
@@ -277,7 +270,7 @@ The three other textures are the layers that you have previously decided to pain
 
 The individual texture scales (e.g. `mat_terrain.setFloat("Tex3Scale", 128f);`) depend on the size of the textures you use.
 
-*  You can tell you picked too small a scale if, for example, your road tiles appear like tiny grains of sand. 
+*  You can tell you picked too small a scale if, for example, your road tiles appear like tiny grains of sand.
 *  You can tell you picked too big a scale if, for example, the blades of grass look like twigs.
 
 Use `setWrap(WrapMode.Repeat)` to make the small texture fill the wide area. If the repetition is too visible, try adjusting the respective `Tex*Scale` value.
@@ -316,7 +309,7 @@ terrain = new TerrainQuad(
 
 You have created the terrain object.
 
-.  Remember to apply the created material: 
+.  Remember to apply the created material:
 +
 [source,java]
 ----
@@ -407,7 +400,7 @@ try {
 ***  What happens if the size is not a square number +1 ?
 **  Which value controls the number of hills generated?
 **  Which values control the size and steepness of the hills?
-***  What happens if the min is bigger than or equal to max? 
+***  What happens if the min is bigger than or equal to max?
 ***  What happens if both min and max are small values (e.g. 10/20)?
 ***  What happens if both min and max are large values (e.g. 1000/1500)?
 ***  What happens if min and max are very close(e.g. 1000/1001, 20/21)? Very far apart (e.g. 10/1000)?

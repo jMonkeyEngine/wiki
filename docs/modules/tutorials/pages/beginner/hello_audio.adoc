@@ -1,14 +1,9 @@
 = jMonkeyEngine 3 Tutorial (11) - Hello Audio
-:author: 
-:revnumber: 
-:revdate: 2016/03/17 20:48
+:author:
+:revnumber:
+:revdate: 2020/07/06
 :keywords: sound, documentation, beginner, intro
-:relfileprefix: ../../
-:imagesdir: ../..
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
-
-Previous: <<jme3/beginner/hello_terrain#,Hello Terrain>>, Next: <<jme3/beginner/hello_effects#,Hello Effects>>
 
 This tutorial explains how to add 3D sound to a game, and how to make sounds play together with events, such as clicking. You learn how to use an Audio Listener and Audio Nodes. You also make use of an Action Listener and a MouseButtonTrigger from the previous <<jme3/beginner/hello_input_system#,Hello Input>> tutorial to make a mouse click trigger a gun shot sound.
 
@@ -52,7 +47,7 @@ public class HelloAudio extends SimpleApplication {
   @Override
   public void simpleInitApp() {
     flyCam.setMoveSpeed(40);
-    
+
     /** just a blue box floating in space */
     Box box1 = new Box(1, 1, 1);
     player = new Geometry("Player", box1);
@@ -78,7 +73,7 @@ public class HelloAudio extends SimpleApplication {
     /* nature sound - keeps playing in a loop. */
     audio_nature = new AudioNode(assetManager, "Sound/Environment/Ocean Waves.ogg", DataType.Stream);
     audio_nature.setLooping(true);  // activate continuous playing
-    audio_nature.setPositional(true);   
+    audio_nature.setPositional(true);
     audio_nature.setVolume(3);
     rootNode.attachChild(audio_nature);
     audio_nature.play(); // play continuously!
@@ -248,7 +243,7 @@ The two sounds are two different use cases:
 **  This is why you `setLooping(true)`.
 
 
-Now every sound knows whether it should loop or not. 
+Now every sound knows whether it should loop or not.
 
 Apart from the looping boolean, another difference is where `play().playInstance()` is called on those nodes:
 
@@ -284,7 +279,7 @@ As of 3.1-alpha2, the Enum in the AudioNode constructor defines whether the audi
 ----
 audio_gunshot = new AudioNode(assetManager, "Sound/Effects/Gun.wav", DataType.Buffer); // buffered
 ...
-audio_nature = new AudioNode(assetManager, "Sound/Environment/Nature.ogg", DataType.Stream); // streamed 
+audio_nature = new AudioNode(assetManager, "Sound/Environment/Nature.ogg", DataType.Stream); // streamed
 ----
 
 Typically, you stream long sounds, and buffer short sounds.
@@ -301,7 +296,7 @@ a|audio.play()
 a|audio.playInstance()
 
 a|Plays buffered sounds.
-a|Plays buffered sounds. 
+a|Plays buffered sounds.
 
 a|Plays streamed sounds.
 a|Cannot play streamed sounds.
@@ -333,7 +328,7 @@ If you don't do that, the results of 3D audio will be quite random.
 
 == Global, Directional, Positional?
 
-In this example, you defined the nature sound as coming from a certain position, but not the gunshot sound. This means your gunshot is global and can be heard everywhere with the same volume. JME3 also supports directional sounds which you can only hear from a certain direction. 
+In this example, you defined the nature sound as coming from a certain position, but not the gunshot sound. This means your gunshot is global and can be heard everywhere with the same volume. JME3 also supports directional sounds which you can only hear from a certain direction.
 
 It makes equal sense to make the gunshot positional, and let the ambient sound come from every direction. How do you decide which type of 3D sound to use from case to case?
 
