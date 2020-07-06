@@ -134,13 +134,14 @@ After you load the animated model, you register it to the Animation Controller.
   public void simpleInitApp() {
     ...
     /* Load the animation controls, listen to animation events,
-     * create an animation channel, and bring the model in its default position.  */
+     * create an animation channel, and bring the model in its default position.
+     */
     control = player.getControl(AnimControl.class);
     control.addListener(this);
     channel = control.createChannel();
     channel.setAnim("stand");
     ...
-
+}
 ----
 
 This line of code will return NULL if the AnimControl is not in the main node of your model.
@@ -199,7 +200,8 @@ public class HelloAnimation extends SimpleApplication
   public void onAnimChange(AnimControl control, AnimChannel channel, String animName) {
     // unused
   }
-
+ ...
+}
 ----
 
 
@@ -257,11 +259,14 @@ To use the input controller, you need to implement the actionListener by testing
 Make a mouse click trigger another animation sequence!
 
 .  Create a second channel in the controller.
-.  Create a new key trigger mapping and action. (see: <<jme3/beginner/hello_input_system#,Hello Input>>)
+.  Create a new key trigger mapping and action. (see: xref:beginner/hello_input_system.adoc[Hello Input])
 
 [TIP]
 ====
-Do you want to find out what animation sequences are available in the model? Use:
+Do you want to find out what animation sequences are available in the model?
+
+Use:
+
 [source,java]
 ----
 for (String anim : control.getAnimationNames()) {
@@ -274,7 +279,7 @@ for (String anim : control.getAnimationNames()) {
 
 === Exercise 2: Revealing the Skeleton (1)
 
-Open the `skeleton.xml` file in a text editor of your choice. You don't have to be able to read or write these xml files (Blender does that for you) – but it is good to know how skeletons work. “There's no magic to it!
+Open the `skeleton.xml` file in a text editor of your choice. You don't have to be able to read or write these xml files (Blender does that for you) – but it is good to know how skeletons work. There's no magic to it!
 
 *  Note how the bones are numbered and named. All names of animated models follow a naming scheme.
 *  Note the bone hierarchy that specifies how the bones are connected.
@@ -315,8 +320,6 @@ Can you identify individual bones in the skeleton?
 
 Now you can load animated models, identify stored animations, and trigger animations by using onAnimCycleDone() and onAnimChange(). You also learned that you can play several animations simultaneously, by starting each in a channel of its own. This could be useful if you ever want to animate the lower and upper part of the characters body independently, for example the legs run, while the arms use a weapon.
 
-Now that your character can walk, wouldn't it be cool if it could also pick up things, or aim a weapon at things, or open doors? Time to reveal the secrets of <<jme3/beginner/hello_picking#,mouse picking>>!
+*See also:*
 
-'''
-
-See also: link:https://docs.google.com/leaf?id=0B9hhZie2D-fEYmRkMTYwN2YtMzQ0My00NTM4LThhOTYtZTk1MTRlYTNjYTc3&hl=en[Creating Animated OgreXML Models in Blender]
+* link:https://docs.google.com/leaf?id=0B9hhZie2D-fEYmRkMTYwN2YtMzQ0My00NTM4LThhOTYtZTk1MTRlYTNjYTc3&hl=en[Creating Animated OgreXML Models in Blender]
