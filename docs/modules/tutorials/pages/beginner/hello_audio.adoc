@@ -107,7 +107,7 @@ When you run the sample, you should see a blue cube. You should hear a nature-li
 
 In the `initSimpleApp()` method, you create a simple blue cube geometry called `player` and attach it to the scene – this is just arbitrary sample content, so you see something when running the audio sample.
 
-Let's have a closer look at `initAudio()` to learn how to use `AudioNode`s.
+Let's have a closer look at `initAudio()` to learn how to use `AudioNode`.
 
 
 == AudioNodes
@@ -267,7 +267,7 @@ Apart from the looping boolean, another difference is where `play().playInstance
 
 == Buffered or Streaming?
 
-As of 3.1-alpha2, the Enum in the AudioNode constructor defines whether the audio is buffered or streamed. For example:
+The Enum in the AudioNode constructor defines whether the audio is buffered or streamed. For example:
 
 [source,java]
 ----
@@ -277,10 +277,6 @@ audio_nature = new AudioNode(assetManager, "Sound/Environment/Nature.ogg", DataT
 ----
 
 Typically, you stream long sounds, and buffer short sounds.
-
-+++<strike>Note that streamed sounds can not loop (i.e. setLooping will not work as you expect). Check the getStatus on the node and if it has stopped recreate the node.</strike>+++ (In 3.1-alpha2, this is wrong).
-If you still run 3.0, the above is still the case aswell as a simple boolean will be used instead of `DataType`
-
 
 == Play() or PlayInstance()?
 [cols="2", options="header"]
