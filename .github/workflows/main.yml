@@ -21,7 +21,7 @@ name: Build Docs
 
 on:
   push:
-    branches: [ master ]
+    branches: [ modules ]
   # Initiate a build to pull in the wiki-ui repository changes.
   repository_dispatch:
     types: [wiki-ui-build]
@@ -38,7 +38,7 @@ jobs:
         #Static version is used to maintain stability.
         node-version: [12.17.0]
 
-    env: 
+    env:
       ALGOLIA_API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
       ALGOLIA_IDX_NAME: ${{ secrets.ALGOLIA_IDX_NAME }}
 
@@ -46,6 +46,7 @@ jobs:
     - name: Clone the repo
       uses: actions/checkout@v2
       with:
+        ref: modules
         # Number of commits to fetch. 0 indicates all history.
         fetch-depth: 1
 
