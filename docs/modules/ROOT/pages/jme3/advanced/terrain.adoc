@@ -78,12 +78,31 @@ The default material for TerraMonkey is TerrainLighting.j3md. This material comb
 We recommend to <<sdk/terrain_editor#,create and edit Splat Textures for terrains visually in the jMonkeyEngine SDK>>, and not do it manually. If you are simply curious about how the SDK's terrain texture plugin works, or if you indeed want to generate materials manually, then read on for the implementation details.
 ====
 
+[.right.text-left]
+.road.jpg
+image::tutorials:beginner/road.jpg[road.jpg,width="",height=""]
 
-Here are the names of TerrainLighting.j3md's material properties:
+The Diffuse Map of one of the terrain textures depicts the colors of a paved surface.
 
 [.right.text-left]
-image::tutorials:beginner/mountains512.png[A heightmap encodes the topological highs and lows of the terrain,width="128",height="128"]
+.road_normal.png
+image::tutorials:beginner/road_normal.png[road_normal.png,width="",height=""]
 
+The Normal Map of one of the terrain textures depicts the bumpiness of a paved surface.
+
+[.right.text-left]
+.mountains512.png
+image::tutorials:beginner/mountains512.png[mountains512.png,width="128",height="128"]
+
+A heightmap encodes the topological highs and lows of the terrain.
+
+[.right.text-left]
+.alphamap.png
+image:tutorials:beginner/alphamap.png[alphamap.png,width="128",height="128",align="right"]
+
+An alpha map can describe where 4 textures are painted onto the terrain.
+
+Here are the names of TerrainLighting.j3md's material properties:
 
 *  1-3 Alpha Maps
 ***  `AlphaMap`
@@ -95,10 +114,6 @@ image::tutorials:beginner/mountains512.png[A heightmap encodes the topological h
 ***  `DiffuseMap_1`, `DiffuseMap_1_scale`, `NormalMap_1`
 ***  `DiffuseMap_2`, `DiffuseMap_2_scale`, `NormalMap_2`
 ***  `DiffuseMap_3`, `DiffuseMap_3_scale`, `NormalMap_3`
-
-[.right.text-left]
-image:jme3/beginner/alphamap.png[An alpha map can describe where 4 textures are painted onto the terrain.,width="128",height="128",align="right"]
-
 ***  `DiffuseMap_4`, `DiffuseMap_4_scale`, `NormalMap_4`
 ***  …
 ***  `DiffuseMap_11`, `DiffuseMap_11_scale`, `NormalMap_11`
@@ -117,10 +132,6 @@ OpenGL supports a maximum of 16 _samplers_ in any given shader. This means you c
 
 Adhere to the following constraints:
 
-[.right.text-left]
-image::tutorials:beginner/road.jpg[The Diffuse Map of one of the terrain textures depicts the colors of a paved surface,width="",height=""]
-
-
 *  1-12 Diffuse Maps. One Diffuse Map is the minimum!
 *  1-3 Alpha Maps. For each 4 Diffuse Maps, you need 1 more Alpha Map!
 *  0-6 Normal Maps. Diffuse Maps &amp; Normal Maps always come in pairs!
@@ -129,10 +140,6 @@ image::tutorials:beginner/road.jpg[The Diffuse Map of one of the terrain texture
 *  *The sum of all textures used must be 16, or less.*
 
 Here are some common examples what this means:
-
-[.right.text-left]
-image::jme3/beginner/road_normal.png[The Normal Map of one of the terrain textures depicts the bumpiness of a paved surface,width="",height=""]
-
 
 *  3 Alpha + 11 Diffuse + 1 Normal.
 *  3 Alpha + 11 Diffuse + 1 Glow.
