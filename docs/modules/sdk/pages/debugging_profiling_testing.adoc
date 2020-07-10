@@ -1,26 +1,16 @@
 = jMonkeyEngine SDK: Debugging, Profiling, Testing
-:author: 
-:revnumber: 
-:revdate: 2016/03/17 20:48
+:revnumber:2.0
+:revdate: 2020/07/09
 :keywords: documentation, sdk, tool
-:relfileprefix: ../
-:imagesdir: ..
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
 Debugging, testing and profiling are important parts of the development cycle. This documentation shows you how to make the most of the jMonkeyEngine SDK's assistive features.
 
-
-[TIP]
-====
-Since the jMonkeyEngine SDK is based on the NetBeans IDE and the NetBeans Platform, you can learn about certain jMonkeyEngine SDK features by reading the corresponding NetBeans IDE tutorials (in the “see also links).
-====
-
-
+include::partial$sdk-features-tip.adoc[]
 
 == Testing
 
-The jMonkeyEngine SDK supports the JUnit testing framework. It is a good practice to write tests (assertions) for each of your classes. Each test makes certain this “unit (e.g. method) meets its design and behaves as intended. Run your tests after each major change and you immediately see if you broke something.
+The jMonkeyEngine SDK supports the JUnit testing framework. It is a good practice to write tests (assertions) for each of your classes. Each test makes certain this "`unit`" (e.g. method) meets its design and behaves as intended. Run your tests after each major change and you immediately see if you broke something.
 
 
 === Creating Tests
@@ -31,7 +21,7 @@ The jMonkeyEngine SDK supports the JUnit testing framework. It is a good practic
 .  You can use tests such as `assertTrue(), assertFalse(), assertEquals()`, or `assert()`.
 **  The following example assertions test an addition method: `assert( add(1, 1) == 2); assertTrue( add(7,-5) == add(-5,7) )…`
 
-.  “Ideally, you write a test case for every method (100% coverage).
+.  "`Ideally`", you write a test case for every method (100% coverage).
 
 [TIP]
 ====
@@ -42,13 +32,13 @@ Use the Navigate menu to jump from a test to its tested class, and back!
 === Running Tests
 
 .  Run one or all tests:
-**  Right-click the class in the Projects window and Choose Test File, or 
+**  Right-click the class in the Projects window and Choose Test File, or
 **  Right-click the project and select Test to run all tests.
 
-.  Check the Test window to see successful tests (green) and failures (red). 
+.  Check the Test window to see successful tests (green) and failures (red).
 .  If a test fails that has succeeded before, you know that your latest changes broke something!
 
-Using unit tests regularly allows you to detect side-effects on classes that you thought were unaffected by a code change. 
+Using unit tests regularly allows you to detect side-effects on classes that you thought were unaffected by a code change.
 
 See also:
 
@@ -59,24 +49,23 @@ See also:
 
 == Debugging
 
-In the jMonkeyEngine SDK, you have access to a debugger to examine your application for errors such as deadlocks and NullPointerExeptions. You can set breakpoints, watch variables, and execute your code line-by-line to identify the source of a problem. 
+In the jMonkeyEngine SDK, you have access to a debugger to examine your application for errors such as deadlocks and NullPointerExeptions. You can set breakpoints, watch variables, and execute your code line-by-line to identify the source of a problem.
 
 .  First, you set breakpoints and/or watches before the problematic lines of code where you suspect the bug.
 **  If you want to watch a variable's value: Right-click on a variable and select New Watch from the context menu.
 **  If you want to step through the execution line by line: Right-click on a line and choose Toggle Line Breakpoint; a pink box appears as a mark.
 
-.  Choose “Debug &gt; Debug Main Project to start a debugger session for the whole project. Or, right-click a file and select Debug File to debug only one file. 
-.  The application starts running normally. If you have set a breakpoint, the execution stops in this line. Debugger windows open and print debugger output. 
+.  Choose menu:Debug[Debug Main Project] to start a debugger session for the whole project. Or, btn:[RMB] click a file and select "`Debug File`" to debug only one file.
+.  The application starts running normally. If you have set a breakpoint, the execution stops in this line. Debugger windows open and print debugger output.
 .  You can do many things now to track down a bug:
 **  Inspect the values of local variables.
 **  Use the Step buttons in the top to step into, out of, and over expressions while you watch the execution.
 **  Navigate through your application's call stack. Right-click on threads to suspend or resume them.
-**  Choose Debug &gt; Evaluate Expression from the menu to evaluate an expression. 
+**  Choose menu:Debug[Evaluate Expression] from the menu to evaluate an expression.
 **  Move the mouse pointer over a variable to inspect its value in a tooltip.
-**  Inspect the classes loaded on the heap and the percentage and number of object instances. Right-click a class in the Loaded Classes window and choose Show in Instances view (JDK 6 only). 
-**  And more…
+**  Inspect the classes loaded on the heap and the percentage and number of object instances. btn:[RMB] click a class in the Loaded Classes window and choose Show in Instances view (JDK 6 only).
 
-.  To stop debugging, choose Debug &gt; End Debugger Session from the menu.
+.  To stop debugging, choose menu:Debug[End Debugger Session] from the menu.
 
 
 == Profiling
@@ -88,7 +77,7 @@ The profiler tool is used to monitor thread states, CPU performance, and memory 
 
 If you do not see a Profiler menu in the jMonkeyEngine SDK, you need to download the Profiler plugin first.
 
-.  Open the Tools &gt; Plugins menu, and got to the “Available plugins tab 
+.  Open the Tools &gt; Plugins menu, and got to the “Available plugins tab
 .  Find the “Java Profiler plugin (“Java SE category) and check the Install box.
 .  Click the install button and follow the instructions.
 .  When you start the profiler for the first time, you are prompted to run a calibration once. Click OK in the “Profiler integration dialog to complete the installation process.
@@ -96,13 +85,13 @@ If you do not see a Profiler menu in the jMonkeyEngine SDK, you need to download
 
 === Monitoring and Analyzing
 
-.  Choose Profile Project from the Profile menu. 
+.  Choose Profile Project from the Profile menu.
 .  Select one of three tasks:
 **  *Monitor Application* – Collect high-level information about properties of the target JVM, including thread activity and memory allocations.
 **  *Analyze CPU Performance* – Collect detailed data on application performance, including the time to execute methods and the number of times the method is invoked.
 **  *Analyze Memory Usage* – Collect detailed data on object allocation and garbage collection.
 
-.  Click Run. Your application starts and runs normally. 
+.  Click Run. Your application starts and runs normally.
 .  Use the Profiling window to track and collect live profiling results while you application is running.
 
 
@@ -110,7 +99,7 @@ If you do not see a Profiler menu in the jMonkeyEngine SDK, you need to download
 
 Click the Take Snapshot button to capture the profiling data for later!
 
-*  You can store and view snapshots in the Profiling window. 
+*  You can store and view snapshots in the Profiling window.
 *  Choose Compare Snapshots from the profiler window to compare two selected snapshots
 
 
@@ -120,7 +109,7 @@ Profiling points are similar to debugger breakpoints: You place them directly in
 
 *  Open a class in the browser, right-click in a line, and select Profiling &gt; Insert Profiling Point to add a profiling point here.
 *  Use Profiling points if you need a trigger to reset profiling results, take a snapshot or heap dump, record the timestamp or execution time of a code fragment, stop and start a load generator script (requires the load generator plugin).
-*  Open the Profiling Points window to view, modify and delete the Profiling Points in your projects. 
+*  Open the Profiling Points window to view, modify and delete the Profiling Points in your projects.
 
 See also:
 
