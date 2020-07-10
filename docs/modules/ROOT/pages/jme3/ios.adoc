@@ -1,11 +1,7 @@
 = ios
-:revnumber: 2
-:revdate: 03/06/20
+:revnumber: 2.0
+:revdate: 2020/07/10
 :keywords: documentation, iOS, Mac, MacOS, deployment, platform
-:relfileprefix: ../
-:imagesdir: ..
-:experimental:
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
 
@@ -24,7 +20,7 @@ iOS deployment works via cross-compilation to native iOS ARM code, there is no v
 
 After creating a `Basic Game` project in the jMonkeyEngine SDK, add the iOS library by btn:[RMB] selecting your project and navigating to `menu:Properties[Libraries > Add Library... > jme3-ios]` and when ready btn:[Add Library].
 
-image::sdk/xcode_add_ios_lib.jpg[xcode_add_ios_lib.jpg]
+image::xcode_add_ios_lib.jpg[xcode_add_ios_lib.jpg]
 
 
 [TIP]
@@ -47,7 +43,7 @@ To enable iOS deployment, go to the project settings and under menu:Application[
 
 If there is no number present then you need to install XCODE. In this example, my SDK version is 11.3 and I’m using XCODE version 9.3
 
-image::sdk/xcode_enable_ios_deploy.jpg[xcode_enable_ios_deploy.jpg]
+image::xcode_enable_ios_deploy.jpg[xcode_enable_ios_deploy.jpg]
 
 Then adapt the application ID and press btn:[OK].
 
@@ -90,31 +86,31 @@ You should also adapt the project settings like application name and registratio
 
 . First change the selected "`TARGET`" at the top of the screen from `iPhone 7 Plus` to `Generic iOS Device`. This is so we can do a full build. If you want to run it in a simulator then you can change it back later.
 +
-image::sdk/xcode_generic_ios.jpg[xcode_generic_ios.jpg]
+image::xcode_generic_ios.jpg[xcode_generic_ios.jpg]
 
 . From the "`PROJECT`" menu click btn:[BUILD] and the build will fail. Click the btn:[ISSUE NAVIGATOR] button to show the compilation errors.
 +
 --
-image::sdk/xcode_issue_nav.jpg[xcode_issue_nav.jpg]
+image::xcode_issue_nav.jpg[xcode_issue_nav.jpg]
 
 We can see here that the "`Developer`" account is missing, the project settings are out of date and there is a missing image for Retina 4-inch support.
 --
 
 .. Click btn:[Validate Project Settings] followed by btn:[PERFORM CHANGES] to accept all the suggested amendments.
 +
-image::sdk/xcode_perform_changes.jpg[xcode_perform_changes.jpg]
+image::xcode_perform_changes.jpg[xcode_perform_changes.jpg]
 
 .. Click on the Missing Image warning and XCODE will automatically add a placeholder for you.
 +
-image::sdk/xcode_add_placeholder.jpg[xcode_add_placeholder.jpg]
+image::xcode_add_placeholder.jpg[xcode_add_placeholder.jpg]
 
 .. Add your iOS developer account details by clicking on the target and then the Account Drop down.
 +
-image::sdk/xcode_add_account.jpg[xcode_add_account.jpg]
+image::xcode_add_account.jpg[xcode_add_account.jpg]
 
 . Now click the "`PROJECT`" menu and "`BUILD`" again and it should compile now but fails at the linking stage.
 +
-image::sdk/xcode_build.jpg[xcode_build.jpg]
+image::xcode_build.jpg[xcode_build.jpg]
 
 . We need to amend the linker search paths.
 .. Click on btn:[PROJECT NAVIGATOR].
@@ -125,10 +121,10 @@ If you have done it correct then you will only see "`INFO`" & "`BUILD SETTINGS`"
 .. Select btn:[BUILD SETTINGS].
 .. Scroll down to "`LINKING`" section.
 +
-image::sdk/xcode_linking.jpg[xcode_linking.jpg]
+image::xcode_linking.jpg[xcode_linking.jpg]
 .. Double click on btn:[OTHER LINKER FLAGS].
 +
-image::sdk/xcode_linker_flags.jpg[xcode_linker_flags.jpg]
+image::xcode_linker_flags.jpg[xcode_linker_flags.jpg]
 .. Double click on the line referencing "`i386`" and change it from:
 +
 --
@@ -150,7 +146,7 @@ to
 --
 Your other linker flags should now look like this…
 
-image::sdk/xcode_other_linker.png[xcode_other_linker.png]
+image::xcode_other_linker.png[xcode_other_linker.png]
 --
 . Disable "`BITCODE`".
 .. Click on btn:[PROJECT NAVIGATOR].
@@ -161,7 +157,7 @@ If you have followed the directions correctly, then you will see General/Capabil
 .. Select btn:[BUILD SETTINGS].
 .. Scroll down to "`BUILD OPTIONS`" section and change "`ENABLE BITCODE`" to "`NO`".
 +
-image::sdk/xcode_disable_bitcode.jpg[xcode_disable_bitcode.jpg]
+image::xcode_disable_bitcode.jpg[xcode_disable_bitcode.jpg]
 
 . From the "`PROJECT`" menu click "BUILD" and the project should build and link fully.
 
@@ -169,7 +165,7 @@ image::sdk/xcode_disable_bitcode.jpg[xcode_disable_bitcode.jpg]
 +
 This will generate the App Store Archive and show in the organizer screen.
 +
-image::sdk/xcode_publish.png[xcode_publish.png]
+image::xcode_publish.png[xcode_publish.png]
 
 . Click Upload to APP Store and away you go.
 
