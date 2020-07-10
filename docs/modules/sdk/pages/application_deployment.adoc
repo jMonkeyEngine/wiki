@@ -1,12 +1,7 @@
 = jMonkeyEngine SDK: Application Deployment
-:author:
-:revnumber:
-:revdate: 2016/03/17 20:48
+:revnumber:2.0
+:revdate: 2020/07/10
 :keywords: documentation, sdk, deployment, android, applet, webstart, desktop
-:relfileprefix: ../
-:imagesdir: ..
-:stylesheet: twemoji-awesome.css
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
 After you have written and tested your game, you want to brand it and distribute it to your users. If you use the build script provided by the  jMonkeyEngine SDK's BaseGame, you have the following deployment options:
@@ -26,19 +21,18 @@ Since JAR files are platform independent, your customers can play your jMonkeyEn
 == Branding
 
 [.right]
-image::sdk/jmonkey-branding.png[jmonkey-branding.png,width="420",height="216"]
+image::jmonkey-branding.png[jmonkey-branding.png,width="420",height="216"]
 
 Make your game unique and recognizable:
 
-.  Open your game project in the SDK's Projects window.
-.  Right-click the project and open the Properties
-.  Open the Properties → Application section. Here you configure your branding:
+.  Open your game project in the SDK's "`Projects`" window.
+.  btn:[RMB] click the project and open the "`Properties`"
+.  Open the menu:Properties[Application] section. Here you configure your branding:
 ..  Title: Enter the game's name
 ..  Vendor: Enter your name (the development team)
 ..  Description: Write one line why your game is the coolest ever emoji:wink[]
 ..  Homepage: Enter your web +++<abbr title="Uniform Resource Locator">URL</abbr>+++, so your fans can find you
 ..  Splashscreen: Browse to a cool screenshot that will be displayed while the game loads.
-
 .  Click OK.
 .  Clean and Build.
 
@@ -50,7 +44,7 @@ TODO: where does this info actually show up?
 == Creating the Distributable
 
 [.right]
-image::sdk/deploy_android.png[deploy_android.png,width="335",height="220"]
+image::deploy_android.png[deploy_android.png,width="335",height="220"]
 
 When you run the build script provided by the jMonkeyEngine SDK, it automatically compiles your classes, libraries, and assets. It creates a `dist` directory in your project directory which contains the executable JAR and a directory with libraries.
 
@@ -63,9 +57,9 @@ Here are your deployment options in detail:
 
 The JAR file is the most common deployment method for Java desktop applications. The user downloads the executable JAR file to his machine and runs it to start the game.
 
-.  Right-click your project and open the Project Properties.
-.  In the Application&gt;Web Start category, make sure the box “Enable Web Start is not checked. Click OK.
-.  Right-click your project and Clean and Build.
+.  btn:[RMB] click your project and open the "`Project Properties`".
+.  In the menu:Application[Web Start] category, make sure the box "`Enable Web Start`" is not checked. Click btn:[OK].
+.  btn:[RMB] click your project and "`Clean and Build`".
 .  If the build succeeds you see a line similar to  +
 `Building jar: /home/joe/jMonkeyPlatform/MySuperTestGame/dist/MySuperTestGame.jar` +
 this means the executable JAR has been generated successfully in your project directory.
@@ -78,9 +72,9 @@ Most operating systems execute a JAR when users double-click on it, but you can 
 
 jMonkeyEngine SDK allows you to create launchers for different desktop platforms, like an .exe file for Windows systems, an Application for MaxOSX and a launcher for Linux systems.
 
-.  Right-click your project and open the Project Properties.
-.  In the Application&gt;Desktop category, select the checkboxes for the platforms you want to distribute to.
-.  Click OK.
+.  btn:[RMB] click your project and open the "`Project Properties`".
+.  In the menu:Application[Desktop] category, select the checkboxes for the platforms you want to distribute to.
+.  Click btn:[OK].
 
 A `resources` folder in your project folder will be created that contains the template icons and settings files for each selected platform. If you change one of them, de-selecting the deployment for that platform will not delete this resource file anymore and it will not be overwritten when you re-enable deployment for that platform.
 
@@ -91,14 +85,14 @@ When you build your project, zip files for each selected platform will be create
 
 Web Start allows your users to start your application by simply clicking a link that you provide, for example in a button on your web page. The browser downloads the JAR file and then automatically runs your game in an extra window. The only requirement is that the user's browser has the Java plugin installed. This is a very user-friendly way for your customers to play your game without any extra steps to install it. Optionally, you can set it up so the file is saved to their desktop and can be restarted later, so they do not need to be online to play.
 
-.  Right-click your project and open the Project Properties.
-..  In the Application&gt;Web Start category, check the box to Enable Web Start.
+.  btn:[RMB] click your project and open the "`Project Properties`".
+..  In the menu:Application[Web Start] category, check the box to "`Enable Web Start`".
 ..  Check the box to make the application self-signed.
 ..  Optionally, check the box to allow offline use.
 ..  Make sure `Application Descriptor` is activated. Click OK.
 
-.  Right-click your project and Clean and Build. The `dist` directory is generated.
-.  Upload the contents of the `dist` directory to a public http server
+.  btn:[RMB] click your project and Clean and Build. The `dist` directory is generated.
+.  Upload the contents of the `dist` directory to a public http server.
 .  Either edit the sample launch.html file, or simply add a standard link (A HREF) pointing to your .jnlp file to one of your web pages.
 .  Tell your users to open your page in a webbrowser, and click the link to webstart the application.
 
@@ -115,12 +109,12 @@ These instructions assume that you have already written a game that you want to 
 
 ==== To Turn a Project Into an Applet
 
-.  Right-click your project and open the Project Properties.
-..  In the Application&gt;Applet category, check the box to enable Applet creation.
+.  btn:[RMB] click your project and open the "`Project Properties`".
+..  In the menu:Application[Applet] category, check the box to enable "`Applet`" creation.
 ..  Change the applet width and height as you want it.
-..  Click OK.
+..  Click btn:[OK].
 
-.  Right-click your project and Clean and Build.
+.  btn:[RMB] click your project and "`Clean and Build`".
 
 The `dist/Applet` directory now contains all the files necessary for the game to run as Applet. To test the Applet-based game, run the project in the jMonkeyEngine SDK.
 
@@ -143,14 +137,14 @@ The `dist/Applet` directory now contains all the files necessary for the game to
 
 You can set the jMonkeyEngine SDK to build an executable for Android mobile platforms.
 
-Learn more about <<jme3/android#,Android Support>> here.
+Learn more about xref:ROOT:jme3/android.adoc[Android Support] here.
 
 
 === iOS Device
 
 You can set the jMonkeyEngine SDK to build an executable for iOS platforms. A Mac with XCode installed is needed.
 
-Learn more about <<jme3/ios#,iOS Support>> here.
+Learn more about xref:ROOT:jme3/ios.adoc[iOS Support] here.
 
 
 == Tip: Switching Build Configurations
@@ -159,7 +153,7 @@ The jMonkeyEngine SDK has a Run Configuration menu in the toolbar. Use it to sav
 
 .  Click the `Set Project Configuration` popup in the toolbar and choose Customize.
 .  The Project Properties Run section opens. Under Configuration, click New.
-.  Name the saved configuration, for instance “my webstart vs “my desktop app, or “development vs “deployment. Click OK.
+.  Name the saved configuration, for instance "`my webstart`" vs "`my desktop app`", or "`development`" vs "`deployment`". Click btn:[OK].
 .  Make sure the new config is selected in the `Set Project Configuration` popup above the editor.
 .  Make changes to the Project Properties as described above.
 
@@ -172,13 +166,13 @@ There may be several parts of the full jMonkeyEngine library that you do not eve
 
 To remove unused libraries:
 
-.  Right-click your project and select “Properties
-.  Select “Libraries on the left
-.  Select the “jme3-libraries entry and press “remove. +
+.  btn:[RMB] click your project and select "`Properties`"
+.  Select "`Libraries`" on the left
+.  Select the "`jme3-libraries`" entry and press "`remove`". +
 This library package contains *all* libraries for jME3 and is quite large.
-.  Press the “Add Library button
-.  Select the “jme3-libraries-lwjgl-minimum library
+.  Press the "`Add Library`" button
+.  Select the "`jme3-libraries-lwjgl-minimum`" library
 .  Add other jME3 libraries in the same way depending which features you use: +
 jme3-libraries-gui, jme3-libraries-physics, jme3-libraries-video, etc.
-.  Click OK.
+.  Click btn:[OK].
 .  Clean, Build and Run the project and make sure you have not missed anything.
