@@ -15,7 +15,7 @@ The android support is in constant enhancement so if you have questions or sugge
 
 *  Install xref:sdk.adoc[jMonkeyEngine SDK] (Remember to install link:http://www.oracle.com/technetwork/java/javase/downloads/index.html[JDK])
 *  Install link:http://developer.android.com/sdk/index.html[Android SDK Manager 22.6.2] or newer.
-..  (You don't need the ADT Bundle for Windows. Choose “USE AN EXISTING IDE and download the SDK Tools)
+..  (You don't need the ADT Bundle for Windows. Choose "`USE AN EXISTING IDE`" and download the SDK Tools)
 ..  It's recommended to choose another destination folder.
 ..  Start the SDK Manager and install the default selected 13 packages (accept licenses)
 
@@ -24,13 +24,13 @@ image:android_sdk_manager.png[android_sdk_manager.png,width="",height=""]
 
 *  (Optional) Install NBAndroid in the jMonkeyEngine SDK:
 ..  Go to Tools→Plugins→Available Plugins.
-..  Install the “Android plugin.
+..  Install the "`Android`" plugin.
 
 
 
 === User Requirements
 
-*  Android 2.3 device or better with development mode (“USB-Debugging) enabled
+*  Android 2.3 device or better with development mode ("`USB-Debugging`") enabled
 *  Graphic card that supports OpenGL ES 2.0 or better
 *  link:https://hub.jmonkeyengine.org/t/does-my-phone-meet-the-requirements-necessary-to-run-jmonkeyengine-3/17231[Does my phone meet the requirements necessary to run jMonkeyEngine 3?]
 *  Remember to install the driver software on your computer
@@ -58,7 +58,7 @@ image:android_sdk_manager.png[android_sdk_manager.png,width="",height=""]
 
 === jMonkeyEngine SDK Android Integration
 
-Mobile deployment is a “one-click option next to Desktop/WebStart/Applet deployment in the jMonkeyEngine SDK.
+Mobile deployment is a "`one-click`" option next to Desktop/WebStart/Applet deployment in the jMonkeyEngine SDK.
 
 *  Automatic creation of Android harness and settings.
 **  Ant script build target creates APK file.
@@ -76,12 +76,12 @@ Mobile deployment is a “one-click option next to Desktop/WebStart/Applet deplo
 .  Open an existing JME3 project, or create a new JME3 project.
 .  Right-click the project node in the Projects Window and open the Properties.
 .  In the Application&gt;Android Properties, enable Android Deployment, and select an Android target. E.g. `Android 4.2.2` +
-This creates a “mobile folder in your projects directory. This folder contains a complete android project with correct settings to run the application using the AndroidHarness.
+This creates a "`mobile`" folder in your projects directory. This folder contains a complete android project with correct settings to run the application using the AndroidHarness.
 .  (Restart the jMonkeyEngine)
 .  A Mobile Files node appears in the Project window. +
 It lets you edit the MainActivitity.java, the AndroidManifest.xml, and build.properties.
 
-image:jme3/nvyyd.png[nvyyd.png,width="",height=""]
+image:nvyyd.png[nvyyd.png,width="",height=""]
 
 The Android deployment option creates a separate sub-project for android and makes the main project and associated libraries available to the sub-project as libraries. The sub-project can be edited using NBAndroid (see below) or using Eclipse or any other IDE that supports standard android projects. Normally you do not need to edit the android project files. Exceptions are described further below. _The libraries are first added to the android sub-project when the main project is built for the first time._
 
@@ -93,16 +93,16 @@ Open your game project in the jMonkeyEngine SDK.
 *Building*
 
 Right-click the project node to build your project. +
-An APK file is created in the “dist folder.
+An APK file is created in the "`dist`" folder.
 
 *Running*
 
 .  Right-click the project node and choose Set Main Project.
-.  Select the “Android Device build configuration next to the Run toolbar button.
-.  _Make sure “Compile on Save is disabled in your project preferences._
-.  Run the application on a connected phone by right-clicking it and selecting “Run or press the “Play button in the toolbar.
-.  The application will run and output its log to the “Output window of the SDK.
-.  When finished testing, click the “x next to the run status in the lower right to quit the logging output.
+.  Select the "`Android Device`" build configuration next to the Run toolbar button.
+.  _Make sure "`Compile on Save`" is disabled in your project preferences._
+.  Run the application on a connected phone by right-clicking it and selecting "`Run`" or press the "`Play`" button in the toolbar.
+.  The application will run and output its log to the "`Output`" window of the SDK.
+.  When finished testing, click the "`x`" next to the run status in the lower right to quit the logging output.
 
 The default android run target uses the default device set in the Android configuration utility. If you set that to a phone you can run the application directly on your phone, the emulator does not support OpenGLES 2.0 and cannot run the engine.
 
@@ -137,8 +137,8 @@ Activating the nbandroid plugin in the jMonkeyEngine SDK is optional, but recomm
 *  The needed android.jar comes with the plugin and is automatically added to the android build
 *  All non-android project libraries are automatically excluded from the android build. This is currently hard-coded in the build script, check nbproject/mobile-impl.xml for the details.
 *  The main application class parameter for the AndroidHarness is taken from the jme3 project settings when enabling android deployment. Currently it is not updated when you change the main class package or name.
-*  When you disable the mobile deployment option, the whole “mobile” folder is deleted.
-*  The “errors shown in the MainActivity are wrongly displayed only in the editor and will disappear when you install NBAndroid (see below).
+*  When you disable the mobile deployment option, the whole "`mobile`" folder is deleted.
+*  The "`errors`" shown in the MainActivity are wrongly displayed only in the editor and will disappear when you install NBAndroid (see below).
 *  To sign your application, edit the mobile/build.properties file to point at valid keystore files.
 
 
@@ -150,17 +150,17 @@ You can use the jMonkeyEngine SDK to save (theoretically) any jMonkeyEngine app 
 *  *Effects:* Android devices do no support 3D features as well as PCs – or even not at all. This restriction includes post-processor filters (depth-of-field blur, bloom, light scattering, cartoon, etc), drop shadows, water effects, 3D Audio. Be prepared that these effects will (at best) slow down the application or (in the worst case) not work at all. Provide the option to switch to a low-fi equivalent!
 *  *Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++:* Use different base UI layout XML files for the mobile version of your app to account for a different screen resolution.
 
-*Best Practice:* Ideally, you write the core application code in a way that it checks for the environment it's being run on, and automatically adapts the device's limitations by switching off effects, changing input mechanisms etc. Learn how to <<jme3/advanced/read_graphic_card_capabilites#,read graphic card capabilites>> here.
+*Best Practice:* Ideally, you write the core application code in a way that it checks for the environment it's being run on, and automatically adapts the device's limitations by switching off effects, changing input mechanisms etc. Learn how to xref:ROOT:jme3/advanced/read_graphic_card_capabilites.adoc[read graphic card capabilites] here.
 
 
 == Using Android specific functions
 
 As described above, you should always try to design your application as platform independent as possible. If your game becomes a sudden hit on android, why not release it on Facebook as an applet as well? When your application is designed in a platform independent way, you don't have to do much more but check a checkbox to deploy your application as an applet. But what if you want to for example access the camera of an android device? Inevitably you will have to use android specific api to access the camera.
 
-Since the main project is not configured to access the android api directly, you have to install NBAndroid (see above) to be able to edit the created android project in the SDK. After installing, click the “open project button and navigate to the “mobile folder inside the main project folder (it should show up with an android “a icon) and open it.
+Since the main project is not configured to access the android api directly, you have to install NBAndroid (see above) to be able to edit the created android project in the SDK. After installing, click the "`open`" project button and navigate to the "`mobile`" folder inside the main project folder (it should show up with an android "`a`" icon) and open it.
 
 [.right]
-image::jme3/android_access.png[android_access.png,width="",height=""]
+image::android_access.png[android_access.png,width="",height=""]
 
 Although you will use android specific api, using a camera is not exactly android specific and so you should try to design this part of the application as platform independent as possible as well. As an example, if you want to use the phones camera as an image input stream for a texture, you can create e.g. the AppState that manages the image and makes it available to the application inside the main project (no android code is needed). Then in the android part of the code you make a connection to the camera and update the image in the AppState. This also allows you to easily support cameras on other platforms in the same way or fallback to something else in case the platform doesn't support a camera.
 
@@ -169,7 +169,7 @@ Note that you have to build the whole project once to make (new) classes in the 
 
 == Signing an APK
 
-When you have a mobile project in the “important files” section you have an “Android Properties” file. +
+When you have a mobile project in the "`important files`" section you have an "`Android Properties`" file. +
 There are 2 entries in this file : +
 key.store=path/to/your/keystore/on/your/drive/mykeystore.keystore +
 key.alias=mykeystorealias
