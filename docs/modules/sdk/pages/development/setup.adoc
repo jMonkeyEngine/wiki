@@ -1,10 +1,6 @@
 = Creating a jMonkeyEngine SDK plugin
-:author:
-:revnumber:
-:revdate: 2016/03/17 20:48
-:relfileprefix: ../../
-:imagesdir: ../..
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:revnumber: 2.0
+:revdate: 2020/07/10
 
 
 Note that the creation of a Module Suite is only necessary if you want to upload your plugin to the contribution update center.
@@ -12,24 +8,24 @@ Note that the creation of a Module Suite is only necessary if you want to upload
 
 == Using jMonkeyEngine SDK for development
 
-*  Install the “Netbeans Plugin Development and “NetBeans +++<abbr title="Application Programming Interface">API</abbr>+++ Documentation plugins via Tools→Plugins
-*  Create a new “Module Suite project (can be any name, this will be your local “collection of plugins that you create)
+*  Install the "`Netbeans Plugin Development`" and "`NetBeans`" +++<abbr title="Application Programming Interface">API</abbr>+++ Documentation plugins via Tools→Plugins
+*  Create a new "`Module Suite`" project (can be any name, this will be your local "`collection`" of plugins that you create)
 *  If no platform is listed, add one by selecting the SDK application folder
-**  Mac users have to right-click the jmonkeyplatform application and select “show contents and then select the jmonkeyplatform folder under Contents/Resources/
+**  Mac users have to right-click the jmonkeyplatform application and select "`show contents`" and then select the jmonkeyplatform folder under Contents/Resources/
 
-*  Open the suite, right-click the “Modules folder and select “Add new..
-*  For “Project Name enter an all-lowercase name without spaces like `my-library`
-*  Make sure the “Project Location is inside the module suite folder and press “Next
-*  Enter the base java package for your plugin in “Code Name Base like `com.mycompany.plugins.mylibrary`
-*  Enter a “Module Display Name for your plugin like “My Library
+*  Open the suite, right-click the "`Modules`" folder and select "`Add new`"..
+*  For "`Project Name`" enter an all-lowercase name without spaces like `my-library`
+*  Make sure the "`Project Location`" is inside the module suite folder and press "`Next`"
+*  Enter the base java package for your plugin in "`Code Name Base`" like `com.mycompany.plugins.mylibrary`
+*  Enter a "`Module Display Name`" for your plugin like "`My Library`"
 *  Press Finish
-*  To use core SDK or jME3 functions, add “SDK Core and “SDK Engine via “Module Properties→Library→Add Dependency
-*  Write your plugin (e.g. <<sdk/development#,create a new editor>> or <<sdk/development/extension_library#,wrap a jar library>>)
+*  To use core SDK or jME3 functions, add "`SDK Core`" and "`SDK Engine`" via Module Properties→Library→Add Dependency
+*  Write your plugin (e.g. xref:development.adoc[create a new editor] or xref:development/extension_library.adoc[wrap a jar library])
 
 
 == jMonkeyEngine SDK Contributions Update Center
 
-If you want your plugin to appear in the “jMonkeyEngine SDK Contributions Update Center so users can download, install and update it easily via the plugin manager, you can host your plugin in the contributions update center svn repository. The contributions update center is based on a googlecode project for contributed plugins which will be automatically compiled, version-labeled and added to the contributions update center like the core jMonkeyEngine SDK plugins.
+If you want your plugin to appear in the "`jMonkeyEngine SDK Contributions Update Center`" so users can download, install and update it easily via the plugin manager, you can host your plugin in the contributions update center svn repository. The contributions update center is based on a googlecode project for contributed plugins which will be automatically compiled, version-labeled and added to the contributions update center like the core jMonkeyEngine SDK plugins.
 
 Effectively its one large module suite with multiple modules which each represent one plugin, extension library.
 
@@ -38,33 +34,33 @@ Effectively its one large module suite with multiple modules which each represen
 
 To add your plugin to the repository, do the following:
 
-*  Make sure the plugin is part of a “Module Suite and that its located in the folder of the suite (this saves you from problems with the svn and local version not being configured the same)
-*  In “Module Properties→Sources
-**  Set the “Source Level to 1.5 if possible (jMonkeyEngine SDK is compatible to Java 1.5)
+*  Make sure the plugin is part of a "`Module Suite`" and that its located in the folder of the suite (this saves you from problems with the svn and local version not being configured the same)
+*  In Module Properties→Sources
+**  Set the "`Source Level`" to 1.5 if possible (jMonkeyEngine SDK is compatible to Java 1.5)
 
-*  In “Module Properties→+++<abbr title="Application Programming Interface">API</abbr>+++ Versioning
+*  In Module Properties→+++<abbr title="Application Programming Interface">API</abbr>+++ Versioning
 **  Set a specification version for your plugin (like 0.8.1)
-**  Set the “implementation version to “0 and select “append implementation versions automatically
+**  Set the "`implementation version`" to "`0`" and select "`append implementation versions automatically`"
 
-*  In “Module Properties→Display
+*  In Module Properties→Display
 **  Enter a purposeful description of your plugin and one of the following categories:
-***  For a library plugin: “jME3 - Library
-***  For a SDK plugin: “jME3 - SDK Plugin
-***  For a model loader plugin: “jME3 - Loader
+***  For a library plugin: jME3 - Library
+***  For a SDK plugin: jME3 - SDK Plugin
+***  For a model loader plugin: jME3 - Loader
 
 
-*  In “Module Properties→Build→Packaging
+*  In Module Properties→Build→Packaging
 **  Add your name
 **  Add a link to your forum post / home page relating to the plugin
 **  Add a license, you can use `../license-jme.txt` to insert the default jME BSD license or use a text file you store in the project folder
 
 *  Ask the managers or developers for access to the gc project
 *  Commit *only the module project* to trunk:
-**  Right click the Module Project and select “Versioning → Import into Subversion Repository
+**  Right click the Module Project and select Versioning → Import into Subversion Repository
 //**  Enter `link:https://jmonkeyplatform-contributions.googlecode.com/svn/trunk[https://jmonkeyplatform-contributions.googlecode.com/svn/trunk]` in the +++<abbr title="Uniform Resource Locator">URL</abbr>+++ field
-**  Enter your googlecode username and commit password (different than login pass, you can find your password link:https://code.google.com/hosting/settings[here]!) and press “Next
-**  Check that the “Repository Folder is `trunk/mypluginfolder` and enter an import message
-**  Press “Finish
+**  Enter your googlecode username and commit password (different than login pass, you can find your password link:https://code.google.com/hosting/settings[here]!) and press "`Next`"
+**  Check that the "`Repository Folder`" is `trunk/mypluginfolder` and enter an import message
+**  Press "`Finish`"
 
 
 And thats it, from now on each time you commit changes to your module it will be built and added to the contributions center automatically and the version number will be extended by the svn revision number (e.g. 0.8.1.1234)
@@ -74,7 +70,7 @@ And thats it, from now on each time you commit changes to your module it will be
 
 You can just build your library locally and update and commit the jar file and javadoc/sources zip files to the `release/libs` folder of your plugin in the contrib repo. The users plugins will automatically be updated with the new jar files. You can however also build the library project on the server.
 
-As normally only the module project is being built on the server, any projects that create the actual jar files for library plugins (“normal projects from the SDK/NetBeans) have to be built from the module build file. To do that simply add the following ant targets to the module build file (adapt to your project file and folder names):
+As normally only the module project is being built on the server, any projects that create the actual jar files for library plugins (normal projects from the SDK/NetBeans) have to be built from the module build file. To do that simply add the following ant targets to the module build file (adapt to your project file and folder names):
 
 [source,xml]
 ----
