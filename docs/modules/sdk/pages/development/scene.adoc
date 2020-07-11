@@ -1,13 +1,9 @@
 = jMonkeyEngine SDK -- The Scene
-:author: 
-:revnumber: 
-:revdate: 2016/03/17 20:48
-:relfileprefix: ../../
-:imagesdir: ../..
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:revnumber: 2.0
+:revdate: 2020/07/10
 
 
-To reduce system overhead the jMonkeyEngine SDK Core supplies one scene/jme3 application that is shared between plugins. Furthermore there's the “SceneExplorer that shows a visual representation of the scenegraph and its objects properties across plugins.
+To reduce system overhead the jMonkeyEngine SDK Core supplies one scene/jme3 application that is shared between plugins. Furthermore there's the "`SceneExplorer`" that shows a visual representation of the scenegraph and its objects properties across plugins.
 
 
 == How to access the Scene
@@ -20,7 +16,7 @@ There are several ways for your plugin to interact with the Scene:
 
 == Listening for Node selection
 
-In the jMonkeyEngine SDK, all objects are wrapped into NetBeans “Nodes (different thing than jme Nodes!). Such nodes can have properties and icons and can be displayed and selected in the jMonkeyEngine SDK UI. The SceneExplorer shows a tree of Nodes that wrap the Spatials of the current scene and allows manipulating their properties on selection. A jME “Spatial is wrapped by a “JmeSpatial node, for example. One advantage of these Nodes is that one can manipulate properties of Spatials directly from the AWT thread.
+In the jMonkeyEngine SDK, all objects are wrapped into NetBeans "`Nodes`" (different thing than jme Nodes!). Such nodes can have properties and icons and can be displayed and selected in the jMonkeyEngine SDK UI. The SceneExplorer shows a tree of Nodes that wrap the Spatials of the current scene and allows manipulating their properties on selection. A jME "`Spatial`" is wrapped by a "`JmeSpatial`" node, for example. One advantage of these Nodes is that one can manipulate properties of Spatials directly from the AWT thread.
 
 To listen to the current selection, implement org.openide.util.LookupListener and register like this:
 
@@ -48,7 +44,7 @@ public void resultChanged(LookupEvent ev) {
 
 ----
 
-You can also access the “real spatial but since its part of the scenegraph you will have to modify it on that thread:
+You can also access the "`real`" spatial but since its part of the scenegraph you will have to modify it on that thread:
 
 [source,java]
 ----
@@ -75,7 +71,7 @@ for (JmeSpatial jmeSpatial : items) {
 If your plugin wants to use the scene by itself, it first has to implement SceneListener and register at the scene and then send a SceneRequest to the SceneApplication. When the SceneRequest has been approved and the current Scene has been closed, the SceneListener (your class) is called with its own SceneRequest as a parameter. When another plugin sends a SceneRequest it is also reported to you and its a hint that your RootNode has been removed from the Scene and you are no longer in control of it. You could also hook into the SceneRequests of other plugins to see if/when they are activated to display add-on plugins for that plugin.
 
 +
-The SceneRequest object has to contain several things. A thing that you must supply is a jme “Node wrapped into a “JmeNode object. This is your rootNode that you use to display and build your scene. As soon as you control the scene, you will have to control the camera etc. yourself.
+The SceneRequest object has to contain several things. A thing that you must supply is a jme "`Node`" wrapped into a "`JmeNode`" object. This is your rootNode that you use to display and build your scene. As soon as you control the scene, you will have to control the camera etc. yourself.
 
 [source,java]
 ----
@@ -119,10 +115,10 @@ The jMonkeyEngine SDK has a global undo/redo queue that activates the undo/redo 
 [source,java]
 ----
 
-@Override 
-public UndoRedo getUndoRedo() { 
-return Lookup.getDefault().lookup(SceneUndoRedoManager.class); 
-} 
+@Override
+public UndoRedo getUndoRedo() {
+return Lookup.getDefault().lookup(SceneUndoRedoManager.class);
+}
 
 ----
 
@@ -131,27 +127,27 @@ To add a undo/redo event that modifies objects on the Scenegraph, theres a speci
 [source,java]
 ----
 
-Lookup.getDefault().lookup(SceneUndoRedoManager.class).addEdit(this, new AbstractUndoableSceneEdit() { 
+Lookup.getDefault().lookup(SceneUndoRedoManager.class).addEdit(this, new AbstractUndoableSceneEdit() {
 
-@Override 
-public void sceneUndo() { 
+@Override
+public void sceneUndo() {
     //undo stuff in scene here
-} 
+}
 
-@Override 
-public void sceneRedo() { 
+@Override
+public void sceneRedo() {
     //redo stuff in scene here
-} 
+}
 
-@Override 
-public void awtUndo() { 
+@Override
+public void awtUndo() {
     //undo stuff on awt thread here (updating of visual nodes etc, called post scene edit)
-} 
+}
 
-@Override 
-public void awtRedo() { 
+@Override
+public void awtRedo() {
     //redo stuff on awt thread here
-} 
+}
 });
 
 ----
