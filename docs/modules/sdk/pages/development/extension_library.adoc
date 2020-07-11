@@ -1,10 +1,6 @@
 = Creating an extension library plugin
-:author: 
-:revnumber: 
-:revdate: 2016/03/17 20:48
-:relfileprefix: ../../
-:imagesdir: ../..
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:revnumber: 2.0
+:revdate: 2020/07/10
 
 
 This page describes how you can wrap any jar library into a plugin that a jMonkeyEngine SDK user can download, install and then use the contained library in his own game projects.
@@ -14,31 +10,31 @@ Make sure you have your SDK set up for plugin development <<sdk/development/setu
 Creating the plugin project (in jMonkeyEngine SDK):
 
 *  Create a new Module Suite (or use an existing one)
-*  Open the suite, right-click the “Modules folder and select “Add new..
-*  For “Project Name enter an all-lowercase name without spaces like `my-library`
-*  Make sure the “Project Location is inside the module suite folder and press “Next
-*  Enter the base java package for your plugin in “Code Name Base like `com.mycompany.plugins.mylibrary`
-*  Enter a “Module Display Name for your plugin like “My Library
+*  Open the suite, right-click the '`Modules`' folder and select "`Add new`"..
+*  For "`Project Name`" enter an all-lowercase name without spaces like `my-library`
+*  Make sure the "`Project Location`" is inside the module suite folder and press "`Next`"
+*  Enter the base java package for your plugin in "`Code Name Base`" like `com.mycompany.plugins.mylibrary`
+*  Enter a "`Module Display Name`" for your plugin like "`My Library`"
 *  Press Finish
 
 Adding the library:
 
-*  Right click the Module Project and select “New→Other
-*  Under “Module Development select the “Java SE Library Descriptor template and press “Next
-*  If you dont have the external library registered in the jMonkeyEngine SDK yet, click “Manage Libraries and do the following:
-**  Click “New Library, enter a name for the library and press OK
-**  In the “Classpath tab, press “Add JAR/Folder and select the jar file(s) needed for the library
-**  In the “JavaDoc tab, press “Add ZIP/Folder and add the javadoc for the library (zipped or folder)
-**  In the “Sources tab you can add a folder or jar file containing the source files of the library if available
+*  Right click the Module Project and select New→Other
+*  Under "`Module Development`" select the "`Java SE Library Descriptor`" template and press "`Next`"
+*  If you dont have the external library registered in the jMonkeyEngine SDK yet, click "`Manage Libraries`" and do the following:
+**  Click "`New Library`", enter a name for the library and press OK
+**  In the "`Classpath`" tab, press "`Add JAR/Folder`" and select the jar file(s) needed for the library
+**  In the "`JavaDoc`" tab, press "`Add ZIP/Folder`" and add the javadoc for the library (zipped or folder)
+**  In the "`Sources`" tab you can add a folder or jar file containing the source files of the library if available
 **  Press OK
 
-*  Select the external library from the list and press “Next
+*  Select the external library from the list and press "`Next`"
 *  Enter a name for the Library (used as filename for the description file)
 *  Enter a display name for the Library (This is the name the user later sees in his library list)
 *  Press OK
 
-You will notice a new file “MyLibrary.xml is created in the plugins base package and linked to in the layer.xml file. Additionally the jar file and sources /javadoc are copied into a “release folder in the project root. This is basically it, you can configure a version number, license file (should be placed in Module root folder) and more via the Module Properties.
+You will notice a new file "`MyLibrary.xml`" is created in the plugins base package and linked to in the layer.xml file. Additionally the jar file and sources /javadoc are copied into a "`release`" folder in the project root. This is basically it, you can configure a version number, license file (should be placed in Module root folder) and more via the Module Properties.
 
 Note that the files in the release folder are *not* automatically updated when the library changes, you have to pack and replace the jar and zip files manually. See the build script extension in the link below on how you can make your module build script do that automatically.
 
-After you are done, you can <<sdk/development/setup#jmonkeyengine_sdk_contributions_update_center,contribute the plugin in the jMonkeyEngine SDK contribution update center>>.
+After you are done, you can <<development/setup.adoc#jmonkeyengine_sdk_contributions_update_center,contribute the plugin in the jMonkeyEngine SDK contribution update center>>.
