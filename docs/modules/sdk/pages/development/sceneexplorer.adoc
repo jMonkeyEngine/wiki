@@ -1,10 +1,6 @@
 = The SceneExplorer
-:author:
-:revnumber:
-:revdate: 2016/03/17 20:48
-:relfileprefix: ../../
-:imagesdir: ../..
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:revnumber: 2.0
+:revdate: 2020/07/10
 
 
 
@@ -19,13 +15,13 @@ If you want to support special properties of your objects that are not exposed b
 @org.openide.util.lookup.ServiceProvider(service=SceneExplorerNode.class)
 ----
 
- above the body of your class. Thats all, your Spatial type will automatically be used and displayed in the SceneExplorer. Make sure you register a jar with the used classes in the plugin preferences under “wrapped libraries, otherwise the IDE cannot access those classes.
+ above the body of your class. Thats all, your Spatial type will automatically be used and displayed in the SceneExplorer. Make sure you register a jar with the used classes in the plugin preferences under "`wrapped`" libraries, otherwise the IDE cannot access those classes.
 
 AbstractSceneExplorerNode brings some other useful features you might want to include like automatic creation of properly threaded properties etc. JmeSpatial for example bases on it. A simple SceneExplorerNode example for an object extending Spatial would be JmeGeometry (see below). Editors for special variable types can be added using the SceneExplorerPropertyEditor interface, which can be registered as a ServiceProvider as well.
 
 The SceneExplorerNode can be used for Spatial and Control type objects.
 
-* _Add the “Nodes +++<abbr title="Application Programming Interface">API</abbr>+++ and “Lookup +++<abbr title="Application Programming Interface">API</abbr>+++ libraries to your project when you want to use this_
+* _Add the Nodes +++<abbr title="Application Programming Interface">API</abbr>+++ and Lookup +++<abbr title="Application Programming Interface">API</abbr>+++ libraries to your project when you want to use this_
 
 
 === Spatial Example
@@ -308,7 +304,7 @@ public class NewRigidBodyAction extends AbstractNewControlAction {
 
 You can create a new wizard using the wizard template in the SDK (New File→Module Development→Wizard). The Action that the template creates can easily be changed to one for adding a Control or Spatial or for applying a Tool. Note that we extend AbstractNewSpatial*Wizard*Action here.
 
-A good example is the “Add SkyBox Wizard:
+A good example is the Add SkyBox Wizard:
 
 [source,java]
 ----
