@@ -3,15 +3,14 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>jMonkeyEngine SDK: Code Editor and Palette :: jMonkeyEngine Docs</title>
-    <link rel="canonical" href="https://wiki.jmonkeyengine.org/docs/sdk/code_editor.html">
-    <link rel="prev" href="project_creation.html">
-    <link rel="next" href="version_control.html">
-    <meta name="keywords" content="documentation, sdk, editor">
+    <title>android :: jMonkeyEngine Docs</title>
+    <link rel="canonical" href="https://wiki.jmonkeyengine.org/docs/sdk/android_cheat_sheet.html">
+    <link rel="prev" href="android.html">
+    <link rel="next" href="ios.html">
     <meta name="generator" content="Antora 2.3.3">
     <link rel="stylesheet" href="../../_/css/site.css">
 <meta property="og:image" content="https://wiki.jmonkeyengine.org/_/img/iconx128.png">
-<meta property="og:description" content="jMonkeyEngine SDK: Code Editor and Palette">
+<meta property="og:description" content="android">
 <meta property="og:title" content="jMonkeyEngine Docs">
 <link rel="stylesheet" href="../../_/css/site-extra.css">
 <link rel="stylesheet" href="../../_/css/vendor/docsearch.min.css">
@@ -289,7 +288,7 @@
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="project_creation.html">Project Creation</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="3">
+  <li class="nav-item" data-depth="3">
     <a class="nav-link" href="code_editor.html">Code Editor and Palette</a>
   </li>
   <li class="nav-item" data-depth="3">
@@ -308,7 +307,7 @@
   <li class="nav-item" data-depth="4">
     <a class="nav-link" href="android.html">Android</a>
   </li>
-  <li class="nav-item" data-depth="4">
+  <li class="nav-item is-current-page" data-depth="4">
     <a class="nav-link" href="android_cheat_sheet.html">Android Cheat Sheet</a>
   </li>
   <li class="nav-item" data-depth="4">
@@ -474,347 +473,363 @@
     <li><a href="../documentation.html">Docs</a></li>
     <li><a href="sdk.html">SDK</a></li>
     <li>Java Development Features</li>
-    <li><a href="code_editor.html">Code Editor and Palette</a></li>
+    <li><a href="application_deployment.html">Application Deployment</a></li>
+    <li><a href="android_cheat_sheet.html">Android Cheat Sheet</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/jMonkeyEngine/wiki/edit/master/docs/modules/sdk/pages/code_editor.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/jMonkeyEngine/wiki/edit/master/docs/modules/sdk/pages/android_cheat_sheet.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">jMonkeyEngine SDK: Code Editor and Palette</h1>
-<div id="preamble">
+<h1 class="page">android</h1>
+<div class="sect1">
+<h2 id="changing-the-name-of-your-apkapplication"><a class="anchor" href="#changing-the-name-of-your-apkapplication"></a>Changing the Name of Your APK/Application:</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>The Source Code Editor is the central part of the jMonkeyEngine SDK. This documentation shows you how to make the most of the jMonkeyEngine SDK&#8217;s assistive features.</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Open your project’s properties and navigate to Application</p>
+</li>
+<li>
+<p>Update the title</p>
+</li>
+</ol>
 </div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
 <div class="paragraph">
-<p>Since the jMonkeyEngine SDK is based on the NetBeans IDE and the NetBeans Platform, you can learn about certain jMonkeyEngine SDK features by reading the corresponding NetBeans IDE tutorials (in the &#8220;see also&#8221; links).</p>
+<p>This has no real effect, however it keeps continuity throughout your app. Actually, this likely renamed the window created to display your app. So, now go change the actual name of your APK:</p>
 </div>
-</td>
-</tr>
-</table>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Select <code>File View</code> in the left pane of the SDK.</p>
+</li>
+<li>
+<p>Navigate to the <code>mobile/res/values</code> directory and open the <code>strings.xml</code> file.</p>
+</li>
+<li>
+<p>There should be a string tag with the following key pair: name="app_name".</p>
+</li>
+<li>
+<p>Replace <code>MyGame</code> with your app&#8217;s name and save the file.</p>
+</li>
+<li>
+<p>In <code>File view</code>, navigate to nbproject and open the <code>project.properties</code> file.</p>
+</li>
+<li>
+<p>Edit the value of <code>application.title</code> to reflect your game&#8217;s name (unless step 1/2 above altered this for you).</p>
+</li>
+</ol>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="code-completion-and-code-generation"><a class="anchor" href="#code-completion-and-code-generation"></a>Code Completion and Code Generation</h2>
+<h2 id="changing-the-apk-icon"><a class="anchor" href="#changing-the-apk-icon"></a>Changing the APK Icon:</h2>
 <div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Under the <code>File view</code> of your project navigate to <code>mobile/res</code> and add a <code>drawable</code> folder if one does not exist.</p>
+</li>
+<li>
+<p>Add your icon file (png).</p>
+</li>
+<li>
+<p>Open the Android Manifest file and add the following to your application tag:</p>
 <div class="paragraph">
-<p>While typing Java code in the source code editor, you will see popups that help you to write more quickly by completing keywords, and generating code snippets. Additionally, they will let you see the javadoc for the classes you are working with.</p>
+<p><code>android:icon="@drawable/&lt;ICON FILE NAME WITHOUT EXTENSION&gt;"</code></p>
 </div>
-<div class="imageblock">
+</li>
+<li>
+<p>If you would like multiple size icons, add the following folders:</p>
+<div class="literalblock">
 <div class="content">
-<img src="_images/netbeans_code_completion.png" alt="netbeans_code_completion.png" width="" height="">
+<pre>drawable-hdpi (should contain the icon named the same at 72×72 pixels)\\
+drawable-ldpi (should contain the icon named the same at 36×36 pixels)\\
+drawable-mdpi (should contain the icon named the same at 48×48 pixels)\\
+drawable-xhdpi (should contain the icon named the same at 96×96 pixels)\\</pre>
 </div>
 </div>
-<div class="paragraph">
-<p><strong>Code Completion</strong></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Complete keyword / method / variable: <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>Space</kbd></span><br>
-Alternatively you can also use <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>\</kbd></span></p>
-<div class="ulist">
-<ul>
-<li>
-<p>Customize Code Completion options: <span class="menuseq"><b class="menu">Tools</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="submenu">Options</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="submenu">Editor</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">Code Completion</b></span></p>
 </li>
-</ul>
-</div>
-</li>
-<li>
-<p>Show expected parameters of this method in a tooltip: <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>P</kbd></span></p>
-</li>
-<li>
-<p>Complete any string (even non-Java) that has been used before: <span class="keyseq"><kbd>Shift</kbd>+<kbd>Ctrl</kbd>+<kbd>K</kbd></span></p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p><strong>Code Generation</strong></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Auto-fix import statements: <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>I</kbd></span></p>
-</li>
-<li>
-<p>Auto-generate getters/setters, try/catch, equals/hashCode: <span class="keyseq"><kbd>Alt</kbd>+<kbd>Insert</kbd></span></p>
-<div class="ulist">
-<ul>
-<li>
-<p>Customize code completion: Choose <span class="menuseq"><b class="menu">Tools</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="submenu">Options</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="submenu">Editor</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">Code Completion</b></span></p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Auto-generate common code snippets such as loops, declarations, println, by typing the <strong>template name</strong> + <kbd>Tab</kbd></p>
-<div class="ulist">
-<ul>
-<li>
-<p>Customize code templates: Choose <span class="menuseq"><b class="menu">Tools</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="submenu">Options</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="submenu">Editor</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">Code Templates</b></span></p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Rename, move, or introduce methods, fields, and variables, without breaking the project: <strong>Refactoring menu</strong></p>
-</li>
-</ul>
+</ol>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="semantic-and-syntactic-coloring"><a class="anchor" href="#semantic-and-syntactic-coloring"></a>Semantic and Syntactic Coloring</h2>
+<h2 id="adding-a-splash-screen-to-your-app"><a class="anchor" href="#adding-a-splash-screen-to-your-app"></a>Adding a Splash Screen to your app:</h2>
 <div class="sectionbody">
-<div class="imageblock">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Open <code>Android Main Activity</code>, either through the <code>Important Files</code> list in <code>Project view</code> or in the <code>File view</code> under <code>mobile/src/&lt;package name&gt;</code> directory.</p>
+</li>
+<li>
+<p>Add the following line to the <code>MainActivity</code> method:</p>
+<div class="paragraph">
+<p><code>splashPicID = R.drawable.&lt;IMAGE NAME WITHOUT EXTENSION&gt;;</code></p>
+</div>
+</li>
+<li>
+<p>Add the image to the <code>mobile\res\drawable</code> directory.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="compiling-google-play-services-and-adding-it-to-your-project"><a class="anchor" href="#compiling-google-play-services-and-adding-it-to-your-project"></a>Compiling Google Play Services and Adding it to Your Project:</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>First get the api:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Download the google play services add-on through the SDK Manager under Extras (named Google Play services).</p>
+</li>
+<li>
+<p>Copy the directory from where you downloaded it to another location (like JME Projects Folder).</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Compile the jar file for use with your project:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>In the directory you copied, there is an android project file.</p>
+</li>
+<li>
+<p>In JME&#8217;s IDE, open this project</p>
+</li>
+<li>
+<p>In the General section of the project properties, there is a list of potential Android target platforms. Select the one you are using for your project by clicking on the list (this is not intuitive at all, as the list looks like nothing more than info… not selectable items).</p>
+</li>
+<li>
+<p>Under the Library section, click the checkbox that is labeled:</p>
+<div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p><i class="fa fa-check-square-o"></i> Is Library</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Click <b class="button">Ok</b> and then Clean &amp; Build this project.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>This will compile the play services all proper like so you can add it to your project. Now, for that step:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Open your project’s properties.</p>
+</li>
+<li>
+<p>In the Libraries section, click the <b class="button">Add JAR/folder</b> button.</p>
+</li>
+<li>
+<p>Find and add the jar you compiled above. This can be found in:</p>
+<div class="paragraph">
+<p><code>&lt;COPIED DIR&gt;\libproject\google-play-services_lib\libs\google-play-services.jar</code></p>
+</div>
+</li>
+<li>
+<p>Modify your Android Manifest by adding the following tags under application:</p>
+<div class="paragraph">
+<p><code>&lt;meta-data android:name="com.google.android.gms.games.APP_ID"
+android:value="@string/app_id" /&gt;
+&lt;meta-data android:name="com.google.android.gms.version"
+android:value="@integer/google_play_services_version"/&gt;</code></p>
+</div>
+</li>
+<li>
+<p>Add the following tag to your mobile/res/values/integers.xml file (create it if it doesn’t exist):</p>
+<div class="paragraph">
+<p><code>&lt;integer name="google_play_services_version"&gt;4323000&lt;/integer&gt;</code></p>
+</div>
+</li>
+<li>
+<p>Clean &amp; Build your project</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="adding-play-games-services-to-your-project"><a class="anchor" href="#adding-play-games-services-to-your-project"></a>Adding Play Games Services to Your Project:</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Download the project from:</p>
+<div class="paragraph">
+<p><a href="https://github.com/playgameservices/android-samples">https://github.com/playgameservices/android-samples</a></p>
+</div>
+</li>
+<li>
+<p>In the following directory, you find java files you will need to add to your project:</p>
+<div class="literalblock">
 <div class="content">
-<img src="_images/jmonkeyplatform-docu-5.png" alt="jmonkeyplatform-docu-5.png" width="421" height="298">
+<pre>&lt;DOWNLOAD DIR&gt;\android-samples-master\BasicSamples\libraries\BaseGameUtils\src\main\java\com\google\example\games\basegameutils\\
+Grab GameHelper.java and GameHelperUtil.java and add them to the directory you projects Main Activity is in\\</pre>
 </div>
 </div>
-<div class="paragraph">
-<p>The text color in the editor gives you important hints how the compiler will interpret what you typed, even before you compiled it.</p>
-</div>
-<div class="paragraph">
-<p>Examples:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Java keywords are <strong>blue</strong>, variables and fields are <strong>green</strong>, parameters are <strong>orange</strong>.</p>
 </li>
 <li>
-<p><strike>Strikethrough</strike> means deprecated method or field.</p>
-</li>
-<li>
-<p><u>Gray underline</u> means unused variable or method.</p>
-</li>
-<li>
-<p>Place the caret in a method or variable and all its ocurrences are marked <strong>tan</strong>.</p>
-</li>
-<li>
-<p>Place the caret in a method&#8217;s return type to highlight all exit points</p>
-</li>
-<li>
-<p>and many more…</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>To customize Colors and indentation:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><span class="menuseq"><b class="menu">Tools</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="submenu">Options</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="submenu">Editor</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">Formatting</b></span></p>
-</li>
-<li>
-<p><span class="menuseq"><b class="menu">Tools</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="submenu">Options</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">Fonts and Colors</b></span></p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="editor-hints-and-quick-fixes-a-k-a-lightbulbs"><a class="anchor" href="#editor-hints-and-quick-fixes-a-k-a-lightbulbs"></a>Editor Hints and Quick Fixes (a.k.a. Lightbulbs)</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Editor hints and quick fixes show as lightbulbs along the left edge of the editor. They point out warnings and errors, and often propose useful solutions!</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Execute a quick fix: Place the caret in the line next to the lightbulb and press <span class="keyseq"><kbd>Alt</kbd>+<kbd>Enter</kbd></span> (or click the lightbulb)</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Customize hints: Choose <span class="menuseq"><b class="menu">Tools</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="submenu">Options</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="submenu">Editor</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">Hints</b></span></p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="javadoc"><a class="anchor" href="#javadoc"></a>Javadoc</h2>
-<div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p>Place the caret above a method or a class that has no Javadoc, type</p>
-<div class="listingblock">
+<p>In the following directory, you find a resource file you will need to add to your project:</p>
+<div class="literalblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">/**</code></pre>
+<pre>&lt;DOWNLOAD DIR&gt;\android-samples-master\BasicSamples\libraries\BaseGameUtils\src\main\res\values\\
+Grab the gamehelper_strings.xml into your mobile/res/values folder\\</pre>
 </div>
-</div>
-<div class="paragraph">
-<p>and press Enter: The editor generates skeleton code for a Javadoc comment.</p>
 </div>
 </li>
 <li>
-<p><b class="button">RMB</b> click the project in the Projects window and choose Generate Javadoc.</p>
-</li>
-<li>
-<p><b class="button">RMB</b> click a file and choose <span class="menuseq"><b class="menu">Tools</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">Analyze Javadoc</b></span></p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>To display a javadoc popup in the editor, place the caret in a line and press <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>Space</kbd></span> (Alternatively use <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>\</kbd></span>).</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>If the javadoc popup doesn&#8217;t work, make certain that</p>
-<div class="ulist">
-<ul>
-<li>
-<p>You have the Java JDK documentation installed and set up: <span class="menuseq"><b class="menu">Tools</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">Java Platforms</b></span></p>
-</li>
-<li>
-<p>You downloaded and set up javadoc for third-party libraries: <span class="menuseq"><b class="menu">Project properties</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="submenu">Libraries</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">Edit</b></span></p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="navigating-the-jme3-source"><a class="anchor" href="#navigating-the-jme3-source"></a>Navigating the jME3 Source</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>When the JavaDoc does not deliver enough information, you can have a look at the source of every method or object of jME3 that you use. Just <b class="button">RMB</b> click the variable or method, select <span class="menuseq"><b class="menu">Navigate</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">Go to source</b></span> and an editor will open showing you the source file of jME3.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="palette"><a class="anchor" href="#palette"></a>Palette</h2>
-<div class="sectionbody">
-<div class="imageblock">
+<p>Add the following jar from the Adroid SDK folder to your project as a library:</p>
+<div class="literalblock">
 <div class="content">
-<img src="_images/jmonkeyplatform-docu-4.png" alt="jmonkeyplatform-docu-4.png" width="421" height="298">
+<pre>&lt;ANDROID SDK INSTALL DIR&gt;\adt-bundle-windows-x86_64-20131030\sdk\extras\android\support\v4\android-support-v4.jar\\</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Choose <span class="menuseq"><b class="menu">Windows</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">Palette</b></span> to open the context-sensitive Palette. The jMonkeyEngine SDK provides you with jme3 code snippets here that you can drag and drop into your source files.</p>
+<p>And this is the basics for setting this up.</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Examples: Node and Model creation code snippets.</p>
 </li>
-</ul>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Choose <span class="menuseq"><b class="menu">Tools</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">Add to Palette</b></span> from the menu to add your own code snippets to the Palette. (not available yet in beta build)</p>
-</div>
-</td>
-</tr>
-</table>
+</ol>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="keyboard-shortcuts"><a class="anchor" href="#keyboard-shortcuts"></a>Keyboard Shortcuts</h2>
+<h2 id="adding-admob-support-to-your-project"><a class="anchor" href="#adding-admob-support-to-your-project"></a>Adding AdMob Support to Your Project:</h2>
 <div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Open your Android Manifest and add the following tag update the application tag:</p>
 <div class="paragraph">
-<p>Keyboard Shortcuts save you time when when you need to repeat common actions such as Build&amp;Run or navigation to files.</p>
+<p><code>&lt;activity android:name="com.google.android.gms.ads.AdActivity" android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/&gt;</code></p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Go to File: <span class="keyseq"><kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>O</kbd></span></p>
 </li>
 <li>
-<p>Go to Type: <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>O</kbd></span></p>
-</li>
-<li>
-<p>Open in Projects / Files / Favorites window: <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>1</kbd></span>/ <kbd>2</kbd> / <kbd>3</kbd></p>
-</li>
-<li>
-<p>Build&amp;Run the main class of the Project: <kbd>F6</kbd></p>
-</li>
-<li>
-<p>Run the open file: <span class="keyseq"><kbd>Shift</kbd>+<kbd>F6</kbd></span></p>
-</li>
-<li>
-<p>Switch to Editor / Projects / Files / Navigator: <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>0</kbd></span> /<kbd>1</kbd> / <kbd>3</kbd> / <kbd>7</kbd></p>
-</li>
-<li>
-<p>Indent code: <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>F</kbd></span></p>
-</li>
-</ul>
-</div>
+<p>After the application tag, add the following tags:</p>
 <div class="paragraph">
-<p>By default, jMonkeyEngine uses the same <a href="http://netbeans.org/project_downloads/www/shortcuts-6.5.pdf">Editor Shortcuts</a> as the NetBeans IDE, but you can also switch to an Eclipse Keymap, or create your own set.</p>
+<p><code>&lt;uses-permission android:name="android.permission.INTERNET"/&gt;<br>
+&lt;uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/&gt;</code></p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Customize keyboard shortcuts: <span class="menuseq"><b class="menu">Tools</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="submenu">Options</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">Keymap</b></span></p>
 </li>
-</ul>
+<li>
+<p>In the onCreate method of your Main Activity, add the following snippet (configure however you like):</p>
+<div class="literalblock">
+<div class="content">
+<pre>adView = new AdView(this);
+adView.setAdSize(AdSize.FULL_BANNER);
+adView.setAdUnitId("&lt;WHATEVER AD UNIT ID YOU ARE ASSIGNED THROUGH THE GOOGLE DEV CONSOLE&gt;");
+adView.buildLayer();
+LinearLayout ll = new LinearLayout(this);
+ll.setGravity(Gravity.BOTTOM);
+ll.addView(adView);
+addContentView(ll, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));</pre>
+</div>
+</div>
+</li>
+</ol>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="tips-and-tricks"><a class="anchor" href="#tips-and-tricks"></a>Tips and Tricks</h2>
+<h2 id="communication-between-your-application-main-activity"><a class="anchor" href="#communication-between-your-application-main-activity"></a>Communication Between your Application &amp; Main Activity:</h2>
 <div class="sectionbody">
-<div class="ulist">
-<ul>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
-<p>To browse the physical file structure of your project, use the Files window: <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>2</kbd></span></p>
+<p>Create an interface named something along the lines of <code>JmeToHarness.java</code>.</p>
 </li>
 <li>
-<p>To open a file that is not part of a Java project, add it to the Favorites window: <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>3</kbd></span></p>
+<p>Open your <code>Android Main Activity</code> and implement this interface.</p>
 </li>
 <li>
-<p>If you cannot find a particular menu item or option panel, use the IDE Search box in the top right! <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>i</kbd></span></p>
-</li>
-<li>
-<p>If a code block, class, or javadoc is quite long and you don&#8217;t want to scroll over it, click the <strong>+/-</strong> signs to collapse (fold) the code block temporarily.</p>
-</li>
-<li>
-<p>Press <kbd>F1</kbd> for Help</p>
-</li>
-</ul>
+<p>In <code>Main.java</code> of your Application, add the following:</p>
+<div class="literalblock">
+<div class="content">
+<pre> JmeToHarness harness;
+ public JmeToHarness getHarness() {
+   return this.harness;
+ }
+ public void setHarnessListener(JmeToHarness harness) {
+    this.harness = harness;
+ }</pre>
 </div>
-<hr>
+</div>
+</li>
+<li>
+<p>Add the following snippet to the onCreate method of your Android Main Activity:</p>
+<div class="literalblock">
+<div class="content">
+<pre>if (app != null)
+    ((Main)app).setHarnessListener(this);</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Add error handling if you want it.</p>
+</li>
+</ol>
+</div>
 <div class="paragraph">
-<p>See also</p>
+<p>This bit is ultra useful for calling AdMob changes and Play Games methods (like updating achievements, leader boards, etc, etc)</p>
 </div>
-<div class="ulist">
-<ul>
+<div class="paragraph">
+<p>EDIT: Keep this as generic as you possibly can as it should plug &amp; play with iOS &amp; Applets if you keep that in mind. Google Play Services/Play Games Services works for all of the above… soooo… anyways.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="changing-the-package-name-after-project-creation"><a class="anchor" href="#changing-the-package-name-after-project-creation"></a>Changing the Package Name After Project Creation:</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
 <li>
-<p><a href="http://netbeans.org/kb/docs/java/editor-codereference.html">Code Assistance</a></p>
+<p>Open the project properties of your Application</p>
 </li>
-</ul>
+<li>
+<p>Navigate to <code><span class="menuseq"><b class="menu">Application</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">Android</b></span></code> and edit the package name.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>This does absolutely nothing, but help with consistency.</p>
+</div>
+<div class="paragraph">
+<p>So, to actually change the package name, you will want to:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Open the <code>Android Manifest</code></p>
+</li>
+<li>
+<p>Edit the manifest tag key pair: <code>package="&lt;THE NEW PACKAGE NAME&gt;"</code></p>
+</li>
+<li>
+<p>In <code>File view</code>, navigate to nbproject and open the <code>project.properties</code> file.</p>
+</li>
+<li>
+<p>Edit the value of <code>mobile.android.package</code>.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Take a moment or 4 to navigate through the directory structure in file view and remove any artifacts left from the previous package name build. Alternately, you can run <code>Clean</code> on the project prior to updating the package name.</p>
 </div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="project_creation.html">Project Creation</a></span>
-  <span class="next"><a href="version_control.html">File Version Control</a></span>
+  <span class="prev"><a href="android.html">Android</a></span>
+  <span class="next"><a href="ios.html">iOS</a></span>
 </nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">

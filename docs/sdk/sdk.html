@@ -3,15 +3,14 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>jMonkeyEngine SDK: Code Editor and Palette :: jMonkeyEngine Docs</title>
-    <link rel="canonical" href="https://wiki.jmonkeyengine.org/docs/sdk/code_editor.html">
-    <link rel="prev" href="project_creation.html">
-    <link rel="next" href="version_control.html">
-    <meta name="keywords" content="documentation, sdk, editor">
+    <title>jMonkeyEngine SDK Documentation :: jMonkeyEngine Docs</title>
+    <link rel="canonical" href="https://wiki.jmonkeyengine.org/docs/sdk/sdk.html">
+    <link rel="prev" href="../tutorials/beginner/hello_physics.html">
+    <link rel="next" href="update_center.html">
     <meta name="generator" content="Antora 2.3.3">
     <link rel="stylesheet" href="../../_/css/site.css">
 <meta property="og:image" content="https://wiki.jmonkeyengine.org/_/img/iconx128.png">
-<meta property="og:description" content="jMonkeyEngine SDK: Code Editor and Palette">
+<meta property="og:description" content="jMonkeyEngine SDK Documentation">
 <meta property="og:title" content="jMonkeyEngine Docs">
 <link rel="stylesheet" href="../../_/css/site-extra.css">
 <link rel="stylesheet" href="../../_/css/vendor/docsearch.min.css">
@@ -215,7 +214,7 @@
   </li>
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
-  <li class="nav-item" data-depth="1">
+  <li class="nav-item is-current-page" data-depth="1">
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="sdk.html">SDK</a>
 <ul class="nav-list">
@@ -289,7 +288,7 @@
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="project_creation.html">Project Creation</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="3">
+  <li class="nav-item" data-depth="3">
     <a class="nav-link" href="code_editor.html">Code Editor and Palette</a>
   </li>
   <li class="nav-item" data-depth="3">
@@ -473,19 +472,29 @@
   <ul>
     <li><a href="../documentation.html">Docs</a></li>
     <li><a href="sdk.html">SDK</a></li>
-    <li>Java Development Features</li>
-    <li><a href="code_editor.html">Code Editor and Palette</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/jMonkeyEngine/wiki/edit/master/docs/modules/sdk/pages/code_editor.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/jMonkeyEngine/wiki/edit/master/docs/modules/sdk/pages/sdk.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">jMonkeyEngine SDK: Code Editor and Palette</h1>
-<div id="preamble">
+<h1 class="page">jMonkeyEngine SDK Documentation</h1>
+<div class="sect1">
+<h2 id="why-jmonkeyengine-sdk"><a class="anchor" href="#why-jmonkeyengine-sdk"></a>Why jMonkeyEngine SDK?</h2>
 <div class="sectionbody">
+<div class="imageblock text-left">
+<div class="content">
+<img src="_images/jme3-jmonkeyplatform.png" alt="jme3-jmonkeyplatform.png" width="288" height="180">
+</div>
+</div>
 <div class="paragraph">
-<p>The Source Code Editor is the central part of the jMonkeyEngine SDK. This documentation shows you how to make the most of the jMonkeyEngine SDK&#8217;s assistive features.</p>
+<p>The jMonkeyEngine SDK (software development kit) is the recommended game development environment for the jMonkeyEngine 3 library.</p>
+</div>
+<div class="paragraph">
+<p>The jMonkeyEngine SDK is an integrated development environment (IDE) that provides you with unique plugins for creating jMonkeyEngine 3 game content. You can <a href="https://github.com/jMonkeyEngine/sdk/releases/">download and install the jMonkeyEngine SDK</a> as a ready-to-use complete game development environment, rather than using a generic Java IDE. (<a href="what_s_an_ide.html" class="page">What&#8217;s an IDE</a>?)</p>
+</div>
+<div class="paragraph">
+<p>Since the jMonkeyEngine SDK is based on the <a href="http://platform.netbeans.org/">NetBeans Platform</a> (<a href="whynoteclipse.html" class="page">Why not Eclipse RCP?</a>), you have access to all of the developer tools in the <a href="http://www.netbeans.org/">NetBeans IDE</a>, including a wide variety of deployment formats ranging from browser Applet and WebStart to desktop executables. Although we recommend the jMonkeyEngine SDK, experienced users can work with the jMonkeyEngine JARs in their favorite IDE, and choose to only use the jMonkeyEngine SDK to manage assets and JME3 binaries.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -495,326 +504,77 @@
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Since the jMonkeyEngine SDK is based on the NetBeans IDE and the NetBeans Platform, you can learn about certain jMonkeyEngine SDK features by reading the corresponding NetBeans IDE tutorials (in the &#8220;see also&#8221; links).</p>
+<p>Go to <code><span class="menuseq"><b class="menu">Settings</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">Keymap</b></span></code> and choose your favorite keyboard profile: NetBeans default, Eclipse, IntelliJ, or others.</p>
 </div>
 </td>
 </tr>
 </table>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="code-completion-and-code-generation"><a class="anchor" href="#code-completion-and-code-generation"></a>Code Completion and Code Generation</h2>
-<div class="sectionbody">
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p>While typing Java code in the source code editor, you will see popups that help you to write more quickly by completing keywords, and generating code snippets. Additionally, they will let you see the javadoc for the classes you are working with.</p>
+<p>To get help and code samples right in the SDK, press <code><kbd>F1</kbd></code>, or press <code><kbd>Ctrl</kbd></code> + <code><kbd>i</kbd></code> to enter a query in the super search box (top right)!</p>
 </div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/netbeans_code_completion.png" alt="netbeans_code_completion.png" width="" height="">
-</div>
-</div>
-<div class="paragraph">
-<p><strong>Code Completion</strong></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Complete keyword / method / variable: <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>Space</kbd></span><br>
-Alternatively you can also use <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>\</kbd></span></p>
-<div class="ulist">
-<ul>
-<li>
-<p>Customize Code Completion options: <span class="menuseq"><b class="menu">Tools</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="submenu">Options</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="submenu">Editor</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">Code Completion</b></span></p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Show expected parameters of this method in a tooltip: <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>P</kbd></span></p>
-</li>
-<li>
-<p>Complete any string (even non-Java) that has been used before: <span class="keyseq"><kbd>Shift</kbd>+<kbd>Ctrl</kbd>+<kbd>K</kbd></span></p>
-</li>
-</ul>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p><strong>Code Generation</strong></p>
+<p>The built-in help system lets you browse a local copy of the documentation pulled from this wiki. It also contains code samples and info about installed plugins and generic IDE features.</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Auto-fix import statements: <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>I</kbd></span></p>
-</li>
-<li>
-<p>Auto-generate getters/setters, try/catch, equals/hashCode: <span class="keyseq"><kbd>Alt</kbd>+<kbd>Insert</kbd></span></p>
-<div class="ulist">
-<ul>
-<li>
-<p>Customize code completion: Choose <span class="menuseq"><b class="menu">Tools</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="submenu">Options</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="submenu">Editor</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">Code Completion</b></span></p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Auto-generate common code snippets such as loops, declarations, println, by typing the <strong>template name</strong> + <kbd>Tab</kbd></p>
-<div class="ulist">
-<ul>
-<li>
-<p>Customize code templates: Choose <span class="menuseq"><b class="menu">Tools</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="submenu">Options</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="submenu">Editor</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">Code Templates</b></span></p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Rename, move, or introduce methods, fields, and variables, without breaking the project: <strong>Refactoring menu</strong></p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="semantic-and-syntactic-coloring"><a class="anchor" href="#semantic-and-syntactic-coloring"></a>Semantic and Syntactic Coloring</h2>
-<div class="sectionbody">
-<div class="imageblock">
-<div class="content">
-<img src="_images/jmonkeyplatform-docu-5.png" alt="jmonkeyplatform-docu-5.png" width="421" height="298">
-</div>
-</div>
-<div class="paragraph">
-<p>The text color in the editor gives you important hints how the compiler will interpret what you typed, even before you compiled it.</p>
-</div>
-<div class="paragraph">
-<p>Examples:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Java keywords are <strong>blue</strong>, variables and fields are <strong>green</strong>, parameters are <strong>orange</strong>.</p>
-</li>
-<li>
-<p><strike>Strikethrough</strike> means deprecated method or field.</p>
-</li>
-<li>
-<p><u>Gray underline</u> means unused variable or method.</p>
-</li>
-<li>
-<p>Place the caret in a method or variable and all its ocurrences are marked <strong>tan</strong>.</p>
-</li>
-<li>
-<p>Place the caret in a method&#8217;s return type to highlight all exit points</p>
-</li>
-<li>
-<p>and many more…</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>To customize Colors and indentation:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><span class="menuseq"><b class="menu">Tools</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="submenu">Options</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="submenu">Editor</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">Formatting</b></span></p>
-</li>
-<li>
-<p><span class="menuseq"><b class="menu">Tools</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="submenu">Options</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">Fonts and Colors</b></span></p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="editor-hints-and-quick-fixes-a-k-a-lightbulbs"><a class="anchor" href="#editor-hints-and-quick-fixes-a-k-a-lightbulbs"></a>Editor Hints and Quick Fixes (a.k.a. Lightbulbs)</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Editor hints and quick fixes show as lightbulbs along the left edge of the editor. They point out warnings and errors, and often propose useful solutions!</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Execute a quick fix: Place the caret in the line next to the lightbulb and press <span class="keyseq"><kbd>Alt</kbd>+<kbd>Enter</kbd></span> (or click the lightbulb)</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Customize hints: Choose <span class="menuseq"><b class="menu">Tools</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="submenu">Options</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="submenu">Editor</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">Hints</b></span></p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="javadoc"><a class="anchor" href="#javadoc"></a>Javadoc</h2>
-<div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p>Place the caret above a method or a class that has no Javadoc, type</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">/**</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>and press Enter: The editor generates skeleton code for a Javadoc comment.</p>
-</div>
-</li>
-<li>
-<p><b class="button">RMB</b> click the project in the Projects window and choose Generate Javadoc.</p>
-</li>
-<li>
-<p><b class="button">RMB</b> click a file and choose <span class="menuseq"><b class="menu">Tools</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">Analyze Javadoc</b></span></p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>To display a javadoc popup in the editor, place the caret in a line and press <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>Space</kbd></span> (Alternatively use <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>\</kbd></span>).</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>If the javadoc popup doesn&#8217;t work, make certain that</p>
-<div class="ulist">
-<ul>
-<li>
-<p>You have the Java JDK documentation installed and set up: <span class="menuseq"><b class="menu">Tools</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">Java Platforms</b></span></p>
-</li>
-<li>
-<p>You downloaded and set up javadoc for third-party libraries: <span class="menuseq"><b class="menu">Project properties</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="submenu">Libraries</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">Edit</b></span></p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="navigating-the-jme3-source"><a class="anchor" href="#navigating-the-jme3-source"></a>Navigating the jME3 Source</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>When the JavaDoc does not deliver enough information, you can have a look at the source of every method or object of jME3 that you use. Just <b class="button">RMB</b> click the variable or method, select <span class="menuseq"><b class="menu">Navigate</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">Go to source</b></span> and an editor will open showing you the source file of jME3.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="palette"><a class="anchor" href="#palette"></a>Palette</h2>
-<div class="sectionbody">
-<div class="imageblock">
+<div class="imageblock text-right right text-left">
 <div class="content">
 <img src="_images/jmonkeyplatform-docu-4.png" alt="jmonkeyplatform-docu-4.png" width="421" height="298">
 </div>
 </div>
-<div class="paragraph">
-<p>Choose <span class="menuseq"><b class="menu">Windows</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">Palette</b></span> to open the context-sensitive Palette. The jMonkeyEngine SDK provides you with jme3 code snippets here that you can drag and drop into your source files.</p>
+<div class="imageblock text-right">
+<div class="content">
+<img src="_images/jme3-built-in-help.png" alt="jme3-built-in-help.png" width="400" height="260">
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Examples: Node and Model creation code snippets.</p>
-</li>
-</ul>
 </div>
-<div class="admonitionblock tip">
+<div class="admonitionblock note">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Choose <span class="menuseq"><b class="menu">Tools</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">Add to Palette</b></span> from the menu to add your own code snippets to the Palette. (not available yet in beta build)</p>
+<p>jMonkeyEngine SDK is continuously being improved. Check out this link for a list of changes and improvements for the future: <a href="https://github.com/jMonkeyEngine/jmonkeyengine/issues/198">changes and improvements for the future</a></p>
 </div>
 </td>
 </tr>
 </table>
 </div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="_images/jmonkey-sdk-workflow.png" alt="jmonkey-sdk-workflow.png" width="" height="">
 </div>
 </div>
-<div class="sect1">
-<h2 id="keyboard-shortcuts"><a class="anchor" href="#keyboard-shortcuts"></a>Keyboard Shortcuts</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="status-and-roadmap"><a class="anchor" href="#status-and-roadmap"></a>Status and Roadmap</h3>
 <div class="paragraph">
-<p>Keyboard Shortcuts save you time when when you need to repeat common actions such as Build&amp;Run or navigation to files.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Go to File: <span class="keyseq"><kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>O</kbd></span></p>
-</li>
-<li>
-<p>Go to Type: <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>O</kbd></span></p>
-</li>
-<li>
-<p>Open in Projects / Files / Favorites window: <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>1</kbd></span>/ <kbd>2</kbd> / <kbd>3</kbd></p>
-</li>
-<li>
-<p>Build&amp;Run the main class of the Project: <kbd>F6</kbd></p>
-</li>
-<li>
-<p>Run the open file: <span class="keyseq"><kbd>Shift</kbd>+<kbd>F6</kbd></span></p>
-</li>
-<li>
-<p>Switch to Editor / Projects / Files / Navigator: <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>0</kbd></span> /<kbd>1</kbd> / <kbd>3</kbd> / <kbd>7</kbd></p>
-</li>
-<li>
-<p>Indent code: <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>F</kbd></span></p>
-</li>
-</ul>
+<p>See <a href="https://github.com/jMonkeyEngine/jmonkeyengine/labels/roadmap">this page on GitHub</a> for links to up-to-date info on current status and features.</p>
 </div>
 <div class="paragraph">
-<p>By default, jMonkeyEngine uses the same <a href="http://netbeans.org/project_downloads/www/shortcuts-6.5.pdf">Editor Shortcuts</a> as the NetBeans IDE, but you can also switch to an Eclipse Keymap, or create your own set.</p>
+<p><a href="comic.html" class="page">jMonkeyEngine SDK - the Comic</a></p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Customize keyboard shortcuts: <span class="menuseq"><b class="menu">Tools</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="submenu">Options</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">Keymap</b></span></p>
-</li>
-</ul>
+<div class="imageblock">
+<div class="content">
+<img src="_images/jmonkeyplatform-docu-2.png" alt="jmonkeyplatform-docu-2.png" width="420" height="300">
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="tips-and-tricks"><a class="anchor" href="#tips-and-tricks"></a>Tips and Tricks</h2>
-<div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p>To browse the physical file structure of your project, use the Files window: <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>2</kbd></span></p>
-</li>
-<li>
-<p>To open a file that is not part of a Java project, add it to the Favorites window: <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>3</kbd></span></p>
-</li>
-<li>
-<p>If you cannot find a particular menu item or option panel, use the IDE Search box in the top right! <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>i</kbd></span></p>
-</li>
-<li>
-<p>If a code block, class, or javadoc is quite long and you don&#8217;t want to scroll over it, click the <strong>+/-</strong> signs to collapse (fold) the code block temporarily.</p>
-</li>
-<li>
-<p>Press <kbd>F1</kbd> for Help</p>
-</li>
-</ul>
-</div>
-<hr>
-<div class="paragraph">
-<p>See also</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="http://netbeans.org/kb/docs/java/editor-codereference.html">Code Assistance</a></p>
-</li>
-</ul>
 </div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="project_creation.html">Project Creation</a></span>
-  <span class="next"><a href="version_control.html">File Version Control</a></span>
+  <span class="prev"><a href="../tutorials/beginner/hello_physics.html">Hello Physics</a></span>
+  <span class="next"><a href="update_center.html">Updating jMonkeyEngine SDK</a></span>
 </nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
