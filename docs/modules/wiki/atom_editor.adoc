@@ -1,14 +1,10 @@
 = Atom Editor for Wiki Editing
 :author: mitm
-:revnumber:
-:revdate: 2017-09-08T23:24:11.262Z
-:relfileprefix: ../
-:imagesdir: ..
-:experimental:
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:revnumber: 2.0
+:revdate: 2020/07/12
 
 
-Contributing to the Wiki is now easier than it ever has been. Using the Atom editor will give you an easy to use interface that is cross-platform, has code completion, syntax highlighting, instant AsciiDoctor page previewing, with an integrated GitHub client. The only thing it doesn't do is write the page for you.
+Contributing to the Wiki is now easier than it ever has been. Using the Atom editor will give you an easy to use interface that is cross-platform, has code completion, syntax highlighting, instant AsciiDoctor page previewing, with an integrated GitHub client. The only thing it doesn't do is write the page for you. You can use it in conjunction with the link:https://git-scm.com/[Git] command line interface
 
 == Prerequisites
 
@@ -24,6 +20,7 @@ To fork the Wiki repository into your GitHub Account:
 
 == Downloading the Sources
 
+.  Install link:https://git-scm.com/[Git].
 .  Download and install the Atom editor - https://atom.io/
 .  After installation is complete, you can customize the editor by selecting the `Choose A Theme` panel followed by the btn:[Theme Picker] button.
 .  Once you are satisfied with the customization of the editor, you will need to add several packages to make Atom AsciiDoctor compatible. Package installation is painless.
@@ -72,7 +69,9 @@ The clone will take some time due to the size of the Wiki. Once cloned, a new `P
 
 .  Lastly, you will need to create a GitHub token. Follow the directions in the popup to enter the token.
 
-All Wiki documents live in the `asciidoc` folder, images in the `images` folder, and resources for your documents in the `resources` folder. Select an appropriate folder under each to store your new document, image or resource.
+== Source Structure
+
+All documents live in the `docs/modules` directory. Each link:https://docs.antora.org/antora/2.3/named-module-directory/[named] and link:https://docs.antora.org/antora/2.3/root-module-directory/[ROOT] module contain a defined link:https://docs.antora.org/antora/2.3/family-directories/[family] set of directories that hold all content. Select an appropriate module and family directory to store your new page, image, partial, example or attachement.
 
 When you edit a Wiki page, the Git tab will show any unstaged changes. When you're done making changes, you stage any or all changes, write your commit message, commit, and then push the changes.
 
@@ -122,45 +121,23 @@ To submit changes to the Wiki repository after pushing them to your fork:
 IMPORTANT: As a non-member, when there is interaction between the Wiki repository and your fork, you issue commands online. When the interaction is between your forked repository and your local copy, you issue commands from Atom.
 
 
-== Wiki Template
+== Creating pages
 
+You create link:https://docs.antora.org/antora/2.3/page/standard-page/[pages] by saving a file with the `.adoc` extension. The first line of a page must contain a title.
 
-To make things even easier, you can create your own Wiki template for page creation. You must first have the `*file-templates*` package installed. You can find this package by selecting `menu:File[Settings>Install]` and typing "`template`" into the search box.
+```
+= My Title Goes here
+```
 
-.  Once installed, from the `Command Palette` (kbd:[ctrl]+kbd:[shift] +kbd:[P] or `menu:Packages[Command Palette>Toggle]`) enter "`file`" into the search box.
-.  Select btn:[File Templates: New Template].
-.  For `Template Name`, use `Jme3 Wiki Template`, and when ready select btn:[Create].
-.  From the `Command Palette`, enter "`file`" and select btn:[File Templates: Update Template].
-.  If this is the first template it will open automatically. If not, then select the `Jme3 Wiki Template` you just created and press the btn:[Edit Template] button.
-.  Copy and paste the text below into the head of the document.
-+
-[source,subs="+macros"]
-----
-= Enter Document Title Here
-:author: @author@
-:revnumber:
-:revdate: @timestamp@
-:relfileprefix: Enter path to asciidoc folder ../../
-:imagesdir: Enter path to images folder ../..
-:experimental:
-ifdef++::++env-github,env-browser[:outfilesuffix: .adoc]
-----
-.  When done, close the document and when it asks you if you want to save it select btn:[Yes] .
+Everything after the title line, up to the first empty new line, is called the `header` of the document. This is where you set optional link:https://docs.antora.org/antora/2.3/page/attributes/[attributes] for your documents.
 
-You can now use your template when creating new Wiki documents by opening the `Command Palette`, entering "`file`" into the search box, and selecting btn:[File Templates: New File].
+The Antora manual has a very quick to read link:https://docs.antora.org/antora/2.3/asciidoc/asciidoc/[Primer] that will get you up to speed on writing pages fast.
 
-[TIP]
-====
-To edit the template, from the `Command Palette` (kbd:[ctrl]+kbd:[shift] +kbd:[P]) type "`file`" into the search box and select: +
-`menu:File Templates: Update Template[Jme3 Wiki Page>Edit Template]`
+Documents rely heavily on using `References` to link to other content in the same or different modules. This is a criticle part of writing you documents. Knowing how to link to other content. There are two types of `References`, link:https://docs.antora.org/antora/2.3/page/page-id/[Cross Refence] and link:https://docs.antora.org/antora/2.3/asciidoc/in-page-xref/[Internal Cross Reference]. A `Cross Refence` links to a link:https://docs.antora.org/antora/2.3/page/module-and-page-xrefs/[*page*] in the same or different module, an `Internal Cross Reference` links to  *elements* inside a document located either in the same page, same module or a different module.
 
-Save the edit when finished.
-====
+The snippets page contains various forms these `Cross References` that make linking easier.
 
-See also:
-
-<<wiki/wiki_header#,Anatomy of a Wiki Header>>
-
+See also: <<emoji.adoc#How to use emoji in the wiki,How to use emoji in the wiki>>
 
 == Atom Snippets
 
@@ -175,20 +152,23 @@ The Atom AsciiDoc packages add great functionality to the editor, but they do no
 [source]
 ----
 '.source.asciidoc':
-  'Inter-Doc Cross Reference':
-    'prefix': 'xref'
-    'body': '<<${1:path/to/wiki/page}#,${2:custom label text}>>'
+  'Cross reference internal element, same page':
+    'prefix': 'xrefI'
+    'body': '<<${1:reference-a-section-in-the-same-page},${2:custom label text}>>'
 ----
 
-Thereafter just type kbd:[xref] and hit kbd:[Tab] to insert an Inter-Document Cross Reference link. You can then use the kbd:[Tab] key to cycle through each tab stop when your ready.
+Thereafter, just start typing `xrefI` and select it from the popup menu or hit kbd:[Tab] with it highlighted in the menu, to insert an `Internal Cross Reference` link. You can then use the kbd:[Tab] key to cycle through each tab stop an enter the appropriate data for that link.
 
-You can help the jMonkey community by adding new snippets. Use your editor and edit the <<wiki/atom_snippets#,Atom Snippets>> document. Make sure to announce any proposed changes on the link:https://hub.jmonkeyengine.org/[jMonkeyEngine Forum] under the topic "`Documentation`" first so others are aware and can test out your proposed change.
+TIP: A kbd:[Tab] key in the above code is set by wraping any text to be tabbed with the `${1:}` syntax, where the integer represents the tab order. When cycling through tabs, you can backspace them to remove multiple choice tab content or just enter the text for single selection content.
+
+You can help the jMonkey community by adding new snippets. Use your editor and edit the xref:atom_snippets.adoc[Atom Snippets] document. Make sure to announce any proposed changes on the link:https://hub.jmonkeyengine.org/[jMonkeyEngine Forum] under the topic "`Documentation`" first so others are aware and can test out your proposed change.
 
 '''
 Next steps,
 
 *  Read the Wiki link:https://github.com/jMonkeyEngine/wiki[README] page.
-*  Add link:http://asciidoctor.org/docs/user-manual/#introduction-to-asciidoctor[Introduction to Asciidoctor] to your favorites, you will refer to it often.
+*  Add link:https://asciidoctor.org/docs/user-manual/[Asciidoctor User Manual] to your favorites.
+*  Add link:https://docs.antora.org[Antora Docs] to your favorites.
 *  Add the link:https://atom.io/docs[Atom Docs] to your favorites.
 *  Add the link:http://flight-manual.atom.io/[Atom Flight Manual] to your favorites.
 *  Add the link:http://rogerdudler.github.io/git-guide/[git - the simple guide] to your favorites.

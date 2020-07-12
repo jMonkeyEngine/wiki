@@ -1,3 +1,5 @@
+= Atom Snippets
+
 ```
 # Your snippets
 #
@@ -21,14 +23,23 @@
 # Atom Flight Manual:
 # http://flight-manual.atom.io/using-atom/sections/basic-customization/#_cson
 '.source.asciidoc':
-  'Cross Reference Inter-Doc':
+  'Cross reference internal element, same page':
     'prefix': 'xrefI'
-    'body': '<<${1:path/to/wiki/page}#,${2:custom label text}>>'
-  'Cross Reference Module':
-    'prefix': 'xrefM'
+    'body': '<<${1:reference-a-section-in-the-same-page},${2:custom label text}>>'
+  'Cross reference internal element, same module':
+    'prefix': 'xrefIsm'
+    'body': '<<${1:target-page-filename}.adoc#${2:reference-section},${3:custom label text}>>'
+  'Cross reference internal element, different module':
+    'prefix': 'xrefIdm'
+    'body': 'xref:${1:module-name}:${2:target-page-filename}.adoc#${3:reference-section}[${4:label text}]'
+  'Cross reference page, same module':
+    'prefix': 'xrefP'
     'body': 'xref:${1:target-page-filename}.adoc[${2:link text}]'
-  'Cross Reference ROOT':
-    'prefix': 'xrefR'
+  'Cross reference page, named module':
+    'prefix': 'xrefPnm'
+    'body': 'xref:${1:module-name}:${2:target-page-filename}.adoc[${3:link text}]'
+  'Cross reference page, ROOT module':
+    'prefix': 'xrefPrm'
     'body': 'xref:ROOT:${1:target-page-filename}.adoc[${2:link text}]'
   'Admonition Block':
     'prefix': 'admonB'
@@ -60,4 +71,25 @@
     .${1:Optional Title}
     ${2:NOTE}${3:TIP}${4:IMPORTANT}${5:CAUTION}${6:WARNING}: $7
     """
+  'Include partial same module':
+    'prefix': 'part'
+    'body': 'include::partial$${1:partial-filename}.adoc[${3:line=}${4:tag=}${5:tags=}]'
+  'Include partial different module':
+    'prefix': 'partM'
+    'body': 'include::${1:module}:partial$${2:partial-filename}.adoc[${3:line=}${4:tag=}${5:tags=}]'
+  'Include partial ROOT':
+    'prefix': 'partR'
+    'body': 'include::ROOT:partial$${1:partial-filename}.adoc[${2:line=}${3:tag=}${4:tags=}]'
+  'Module inline image':
+    'prefix': 'imgM'
+    'body': 'image:${1:module}:${2:target-resource-filename.ext}[${3:}]'
+  'Module block image':
+    'prefix': 'imageM'
+    'body': 'image::${1:module}:${2:target-resource-filename.ext}[${3:}]'
+  'ROOT inline image':
+    'prefix': 'imgMR'
+    'body': 'image:ROOT:${1:target-resource-filename.ext}[${2:}]'
+  'ROOT block image':
+    'prefix': 'imageMR'
+    'body': 'image::ROOT:${1:target-resource-filename.ext}[${2:}]'
 ```
