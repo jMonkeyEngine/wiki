@@ -1,11 +1,6 @@
 = Best Practices For jME3 Developers
-:author:
-:revnumber:
-:revdate: 2017/11/26 13:30
-:relfileprefix: ../../
-:imagesdir: ../..
-:stylesheet: twemoji-awesome.css
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:revnumber: 2.0
+:revdate: 2020/07/14
 
 
 Every milestone of a game development project is made up of phases: Planning, development, testing, and release. Every milestone involves updates to multi-media assets and to code.
@@ -109,7 +104,7 @@ a| Create simple, low-polygon models.
 a| Don't create high-polygon models, they render too slow to be useful in games.
 
 a| Only use Diffuse Map, Normal Map, Glow Map, Specular Map.
-a| Don't use unsupported material properties that are not listed in the <<jme3/advanced/materials_overview#,Materials Overview>>.
+a| Don't use unsupported material properties that are not listed in the xref:ROOT:jme3/advanced/materials_overview.adoc[Materials Overview].
 
 a| Use UV texture / texture atlases / baking for each texture map.
 a| Don't create models based on multiple separate textures, it will break the model into separate meshes.
@@ -119,7 +114,7 @@ a|Don't reference GLTF/Ogre/OBJ files in your load() code, because these unoptim
 
 |===
 
-Learn details about the <<jme3/intermediate/multi-media_asset_pipeline#,Multi-Media Asset Pipeline>> here.
+Learn details about the xref:intermediate/multi-media_asset_pipeline.adoc[Multi-Media Asset Pipeline] here.
 
 
 == Development Phase
@@ -135,7 +130,7 @@ Even for large experienced game producers, the creation of such a complex game i
 
 === Extend SimpleApplication
 
-Every jME3 game is centered around one main class that (directly or indirectly) extends com.jme3.app.<<jme3/intermediate/simpleapplication#,SimpleApplication>>.
+Every jME3 game is centered around one main class that (directly or indirectly) extends com.jme3.app.xref:ROOT:jme3/intermediate/simpleapplication.adoc[SimpleApplication].
 
 
 [IMPORTANT]
@@ -196,8 +191,8 @@ Example: Players have *methods* such as `walk(), addGold(), getHealth(), pickUpI
 ====
 *Follow the Best Practice:* In general, use composition over inheritance and keep what an entity does (behaviour system) separate from what this entity is (attributes).
 
-*  Use `<<jme3/advanced/spatial#,setUserData()>>` to add custom attributes to Spatials.
-*  Use <<jme3/advanced/custom_controls#,Controls>> and <<jme3/advanced/application_states#,Application States>> to define custom behaviour systems.
+*  Use `xref:ROOT:jme3/advanced/spatial.adoc[setUserData()]` to add custom attributes to Spatials.
+*  Use xref:ROOT:jme3/advanced/custom_control.adoc[Controls] and xref:ROOT:jme3/advanced/application_states.adoc[Application States] to define custom behaviour systems.
 ====
 
 
@@ -212,7 +207,7 @@ If your game is even more complex, you may want to learn about "real" Entity Sys
 
 === The Smart Way to Access Game Features
 
-<<jme3/intermediate/simpleapplication#,SimpleApplication>> gives you access to game features such as a the rootNode, assetManager, guiNode, inputManager, audioManager, physicsSpace, viewPort, and the camera. But what if you need this access also from another class? Don't extend SimpleApplication a second time, and don't pass around tons of object references in constructors! Needing access to application level objects is a sign that this class should be designed as an <<jme3/advanced/application_states#,AppState>> (read details there).
+xref:ROOT:jme3/intermediate/simpleapplication.adoc[SimpleApplication] gives you access to game features such as a the rootNode, assetManager, guiNode, inputManager, audioManager, physicsSpace, viewPort, and the camera. But what if you need this access also from another class? Don't extend SimpleApplication a second time, and don't pass around tons of object references in constructors! Needing access to application level objects is a sign that this class should be designed as an xref:ROOT:jme3/advanced/application_states.adoc[AppState] (read details there).
 
 An AppState has access to all game features in the SimpleApplication via the `this.app` and `this.stateManager` objects. Examples:
 
@@ -228,7 +223,7 @@ this.app.getRootNode().attachChild( sky );
 
 As your SimpleApplication-based game grows more advanced, you find yourself putting more and more interactions in the `simpleUpdate()` loop, and your `simpleInitApp()` methods grows longer and longer. It's a best practice to move blocks of game mechanics into reusable component classes of their own. In jME3, these resuable classes are called `Controls` and `AppStates`.
 
-*  Use <<jme3/advanced/application_states#,AppStates>> to implement _global game mechanics_.
+*  Use xref:ROOT:jme3/advanced/application_states.adoc[AppStates] to implement _global game mechanics_.
 **  Each AppState calls its own `initialize()` and `cleanup()` methods when it is attached to or detached from the game.
 **  Each AppState runs its own _thread-safe_ `update()` loop that hooks into the main `simpleUpdate()` loop.
 **  You specify what happens if an AppState is paused/unpaused.
@@ -236,7 +231,7 @@ As your SimpleApplication-based game grows more advanced, you find yourself putt
 **  An AppState has access to everything in the SimpleApplication (rootNode, AssetManager, StateManager, InputListener, ViewPort, etc).
 
 
-*  Use <<jme3/advanced/custom_controls#,Controls>> to implement the _behaviour of game entities_.
+*  Use xref:ROOT:jme3/advanced/custom_controls.adoc[Controls] to implement the _behaviour of game entities_.
 **  Controls add a type of behaviour (methods and fields) to an individual Spatial (a player, an NPC).
 **  Each Control runs its own _thread-safe_ `controlUpdate()` loop that hooks into the main `simpleUpdate()` loop.
 **  One Spatial can be influenced by several Controls. (!)
@@ -260,14 +255,14 @@ AppStates and Controls are extensions to a SimpleApplication. They are your modu
 ====
 
 
-Read all about <<jme3/advanced/custom_controls#,Custom Controls>> and <<jme3/advanced/application_states#,Application States>> here.
+Read all about xref:ROOT:jme3/advanced/custom_controls.adoc[Custom Controls] and xref:ROOT:jme3/advanced/application_states.adoc[Application States] here.
 
 
 === Optimize Application Performance
 
-*  <<jme3/intermediate/optimization#,Optimization>> – How to avoid wasting cycles
-*  <<jme3/advanced/multithreading#,Multithreading>> – Use concurrency for long-running background tasks, but don't manipulate the scene graph from outside the main thread (update loop)!
-*  You can add a <<sdk/debugging_profiling_testing#,Java Profiler>> to the jMonkeyEngine SDK via Tools → Plugins → Available. The profiler presents statistics on the lifecycle of methods and objects. Performance problems may be caused by just a few methods that take long, or are called too often (try to cache values to avoid this). If object creation and garbage collection counts keep increasing, you are looking at a memory leak.
+*  xref:intermediate/optimization.adoc[Optimization] – How to avoid wasting cycles
+*  xref:ROOT:jme3/advanced/multithreading.adoc[Multithreading] – Use concurrency for long-running background tasks, but don't manipulate the scene graph from outside the main thread (update loop)!
+*  You can add a xref:sdk:debugging_profiling_testing.adoc[Java Profiler] to the jMonkeyEngine SDK via Tools → Plugins → Available. The profiler presents statistics on the lifecycle of methods and objects. Performance problems may be caused by just a few methods that take long, or are called too often (try to cache values to avoid this). If object creation and garbage collection counts keep increasing, you are looking at a memory leak.
 
 
 === Don't Mess With Geometric State
@@ -292,11 +287,11 @@ Treat javadoc as messages to your future self. `genNextVal() generates the next 
 
 == Debugging and Test Phase
 
-*A <<sdk/debugging_profiling_testing#,Java Debugger>>* is included in the jMonkeyEngine SDK. It allows you to set a break point in your code near the line of code where an exception happens. Then you step through the execution line by line and watch object and variable states live, to detect where the bug starts.
+*A xref:sdk:debugging_profiling_testing.adoc[Java Debugger]* is included in the jMonkeyEngine SDK. It allows you to set a break point in your code near the line of code where an exception happens. Then you step through the execution line by line and watch object and variable states live, to detect where the bug starts.
 
-*Use the <<jme3/advanced/logging#,Logger>>* to print status messages during the development and debugging phase, instead of System.out.println(). The logger can be switched off with one line of code, whereas commenting out all your `println()`s takes a while.
+*Use the xref:ROOT:jme3/advanced/logging.adoc[Logger]* to print status messages during the development and debugging phase, instead of System.out.println(). The logger can be switched off with one line of code, whereas commenting out all your `println()`s takes a while.
 
-*Unit Testing (link:https://docs.oracle.com/javase/1.5.0/docs/guide/language/assert.html[Java Assertions])* has a different status in 3D graphics development than in other types of software. You cannot write assertions that automatically test whether the rendered image _looks_ correct, or whether interactions are _intuitive_. Still you should <<sdk/debugging_profiling_testing#,create simple test cases>> for individual game features such as loaders, content generators, effects. Run the test cases now and then to see whether they still work as intended – or whether they are suffering from regressions or side-effects. Keep the test classes in the `test` directory of your project, don't include them in the distribution.
+*Unit Testing (link:https://docs.oracle.com/javase/1.5.0/docs/guide/language/assert.html[Java Assertions])* has a different status in 3D graphics development than in other types of software. You cannot write assertions that automatically test whether the rendered image _looks_ correct, or whether interactions are _intuitive_. Still you should xref:sdk:debugging_profiling_testing.adoc[create simple test cases] for individual game features such as loaders, content generators, effects. Run the test cases now and then to see whether they still work as intended – or whether they are suffering from regressions or side-effects. Keep the test classes in the `test` directory of your project, don't include them in the distribution.
 
 *Quality Assurance (QA)* means repeatedly checking a certain set of features that must work, but that might be unexpectedly broken as a side-effect. Every game has some crazy bugs somewhere – but basic tasks _must work_, no excuse. This includes installing and de-installing; saving and loading; changing options; starting, pausing, quitting; basic actions such as walking, fighting, etc. After every milestone, you go through your QA list again and systematically look for regressions or newly introduced bugs. Check the application _on every supported operating system and hardware_ (!) because not all graphic cards support the same features. If you don't find the obvious bugs, your users will, and carelessness will put them off.
 
@@ -312,7 +307,7 @@ Treat javadoc as messages to your future self. `genNextVal() generates the next 
 *  Verify that all assets are up-to-date and converted to .j3o.
 *  Verify that your code loads the optimized .j3o files, and not the original model formats.
 *  Prepare licenses of assets that you use for inclusion. (You _did_ obtain permission to use them, right…?)
-*  Switch off fine <<jme3/advanced/logging#,logging>> output.
+*  Switch off fine xref:ROOT:jme3/advanced/logging.adoc[logging] output.
 *  Prepare promotional art: The most awesome screenshots (in thumbnail, square, vertical, horizontal, and fullscreen formats) and video clips. Include name, contact info, slogan, etc., so future customers can find you.
 *  Prepare a readme.txt file, or installation guide, or handbook – if applicable.
 *  Get a certificate if one is required for your distribution method (see below).
@@ -321,7 +316,7 @@ Treat javadoc as messages to your future self. `genNextVal() generates the next 
 
 === Distributing the Executables
 
-The <<sdk/application_deployment#,jMonkeyEngine SDK helps you with deployment>>: You specify your branding and deployment options in the Project Properties dialog, and then choose Clean and Build from the context menu. *If you use another IDE, consult this IDE's documentation.*
+The xref:sdk:application_deployment.adoc[jMonkeyEngine SDK helps you with deployment]: You specify your branding and deployment options in the Project Properties dialog, and then choose Clean and Build from the context menu. *If you use another IDE, consult this IDE's documentation.*
 
 Decide whether you want to release your game as WebStart, desktop JAR, mobile APK, or browser Applet – Each has its pros and cons.
 [cols="20,40,40", options="header"]
