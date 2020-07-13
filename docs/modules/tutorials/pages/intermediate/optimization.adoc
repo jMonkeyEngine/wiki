@@ -1,11 +1,7 @@
 = Optimization reference
-:author: 
-:revnumber: 
-:revdate: 2016/03/17 20:48
+:revnumber: 2.0
+:revdate: 2020/07/13
 :keywords: performance
-:relfileprefix: ../../
-:imagesdir: ../..
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
 This page is intended as a reference collection of optimization tricks that can be used to speed up JME3 applications.
@@ -23,8 +19,8 @@ You can optimize nodes using the SceneComposer in the SDK as well: Right-click a
 
 *Side-effects*
 
-*  Using GeometryBatchFactory merges individual Geometries into a single mesh. Thereby it becomes hard to apply specific Materials or to remove a single Geometry. Therefore it should be used for static Geometry only that does not require frequent changes or individual materials/texturing. 
-*  Using a <<jme3/advanced/texture_atlas#,Texture Atlas>> provides limited individual texturing of batched geometries.
+*  Using GeometryBatchFactory merges individual Geometries into a single mesh. Thereby it becomes hard to apply specific Materials or to remove a single Geometry. Therefore it should be used for static Geometry only that does not require frequent changes or individual materials/texturing.
+*  Using a xref:ROOT:jme3/advanced/texture_atlas.adoc[Texture Atlas] provides limited individual texturing of batched geometries.
 *  Using the still experimental BatchNode allows batching Geometry while keeping the single Geometry objects movable separately (similar to animation, the buffer gets updated per Geometry position).
 
 
@@ -55,7 +51,7 @@ To offload much computation to the less CPU intense physics broadphase collision
 
 == Check the Statistics
 
-SimpleApplication displays a HUD with statistics. Use `app.setDisplayStatView(true);` to activate it, and false to deactivate it. 
+SimpleApplication displays a HUD with statistics. Use `app.setDisplayStatView(true);` to activate it, and false to deactivate it.
 The StatsView counts Objects,Uniforms,Triangles,Vertices are in the scene, and it counts how many FrameBuffers, Textures, or Shaders:
 
 *  … were switched in the last frame (S)
@@ -64,4 +60,4 @@ The StatsView counts Objects,Uniforms,Triangles,Vertices are in the scene, and i
 
 For example, `Textures (M)` tells you how many textures are currently in OpenGL memory.
 
-Generally jME3 is well optimized and optimizes these things correctly. Read <<jme3/advanced/statsview#,statsview>> to learn the details about how to interpret the statistics, how to tell whether your values are off, or whether they point out a problem.
+Generally jME3 is well optimized and optimizes these things correctly. Read xref:ROOT:jme3/advanced/statsview.adoc[statsview] to learn the details about how to interpret the statistics, how to tell whether your values are off, or whether they point out a problem.
