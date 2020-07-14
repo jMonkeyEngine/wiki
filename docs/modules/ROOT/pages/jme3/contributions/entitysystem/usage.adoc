@@ -1,6 +1,6 @@
 = JMonkey Entity System Usage
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :relfileprefix: ../../../
 :imagesdir: ../../..
@@ -24,14 +24,14 @@ EntitySystem entitySystem = new EntitySystem(new DefaultEntityData());
 ----
 
 public class MovementComponent extends Component {
- 
+
     private Vector3f movement;
-    
+
     public MovementComponent(Vector3f movement)
     {
         this.movement=movement;
     }
-    
+
     public Vector3f getMovement()
     {
         return movement;
@@ -47,13 +47,13 @@ public class MovementComponent extends Component {
 
 Component[] components = new Component[6];
 
-components[0] = new VisualRepComponent("Models/HoverTank/Tank2.mesh.xml");     
+components[0] = new VisualRepComponent("Models/HoverTank/Tank2.mesh.xml");
 components[1] = new PositionComponent(v3f,new Quaternion());
 components[2] = new MovementComponent(Vector3f.ZERO);
 components[3] = new InSceneComponent(true);
 components[4] = new PlayerComponent();
 components[5] = new CollisionComponent(5);
-       
+
 entitySystem.newEntity(components);
 
 ----
@@ -127,5 +127,5 @@ entity.destroy();
 Use an EntityControl class which is able to display Entitys with visual components.
 In an AppState with a Map containing Entities and and EntitiyControls they can be merged together and updated.
 
-Have a look at the example:
-link:http://peeeq.de/uploads/ogerlord/EntityTest.rar[http://peeeq.de/uploads/ogerlord/EntityTest.rar]
+//Have a look at the example:
+//link:http://peeeq.de/uploads/ogerlord/EntityTest.rar[http://peeeq.de/uploads/ogerlord/EntityTest.rar]
