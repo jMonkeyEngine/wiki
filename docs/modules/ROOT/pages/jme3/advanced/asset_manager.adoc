@@ -1,11 +1,6 @@
 = AssetManager
-:author:
-:revnumber:
-:revdate: 2016/03/17 20:48
-:relfileprefix: ../../
-:imagesdir: ../..
-:experimental:
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:revnumber: 2.0
+:revdate: 2020/07/13
 
 
 By assets we mean multi-media files, such as 3D models, materials, textures, scenes, custom shaders, music and sound files, and custom fonts. JME3 has an integrated asset manager that helps you keep your project assets organized. Think of the asset manager as the filesystem of your game, independent of the actual deployment platform. By default, store your assets in the `MyGame/assets/ ` directory of your project.
@@ -15,7 +10,7 @@ Advantages of the AssetManager:
 *  The paths stay the same, no matter whether the game runs on Windows, Mac, Linux, etc!
 *  The AssetManager automatically caches and optimizes the handling of OpenGL objects. +
 For example, the same textures are not uploaded to the graphics card multiple times when multiple models use them.
-*  The <<sdk/default_build_script#,default build script>> automatically bundles the contents of the `assets` directory into the executable.
+*  The xref:sdk:default_build_script.adoc[default build script] automatically bundles the contents of the `assets` directory into the executable.
 
 Advanced users can write a custom build and packaging script, and can register custom paths to the AssetManager, but this is up to you then.
 
@@ -36,7 +31,7 @@ jMonkeyProjects/MyGame/test/      # You store test classes here (optional)
 
 ----
 
-See also <<jme3/intermediate/best_practices#,Best Practices>>.
+See also xref:tutorials:intermediate/best_practices.adoc[Best Practices].
 
 
 === Usage
@@ -248,7 +243,7 @@ If you use the default build script, *original models and scenes (.mesh.xml, .ob
 
 *Solution*
 
-Before building the executable, you must use the jMonkeyEngine SDK's context menu action to <<sdk/model_loader_and_viewer#,convert 3D models to .j3o binary format>>.
+Before building the executable, you must use the jMonkeyEngine SDK's context menu action to xref:sdk:model_loader_and_viewer.adoc[convert 3D models to .j3o binary format].
 
 .  Save your original models (.mesh.xml, .scene, .gltf, or .obj files, plus textures) into `assets/Textures/`. (!)
 .  Open the jME3 project in the jMonkeyEngine SDK.
@@ -263,7 +258,7 @@ This ensures that the model's Texture paths keep working between your 3D mesh ed
 
 [IMPORTANT]
 ====
-If you must load custom assets from a non-.j3o ZIP file, you must manually ammend the <<sdk/default_build_script#,default build script>> to copy ZIP files into your distribution. ZIPs are skipped by default.
+If you must load custom assets from a non-.j3o ZIP file, you must manually ammend the xref:sdk:default_build_script.adoc[default build script] to copy ZIP files into your distribution. ZIPs are skipped by default.
 ====
 
 
@@ -290,7 +285,7 @@ Convert assets as described above.
 
 [IMPORTANT]
 ====
-If you don't use the SDK for some reason, you can still convert models to j3o format: Load any model in Ogre3D or Wavefront format with the AssetManager.loadModel() as a spatial. Then save the spatial as j3o file using <<jme3/advanced/save_and_load#,BinaryExporter>>.
+If you don't use the SDK for some reason, you can still convert models to j3o format: Load any model in Ogre3D or Wavefront format with the AssetManager.loadModel() as a spatial. Then save the spatial as j3o file using xref:jme3/advanced/save_and_load.adoc[BinaryExporter].
 ====
 
 
