@@ -1,17 +1,13 @@
 = Multi-Media Asset Pipeline
-:author:
-:revnumber:
-:revdate: 2016/03/17 20:48
+:revnumber: 2.0
+:revdate: 2020/07/13
 :keywords: spatial, node, mesh, geometry, scenegraph, sdk
-:relfileprefix: ../../
-:imagesdir: ../..
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
 Assets are files that are not code. Your multi-media assets includes, for example, your textures (image files), models (mesh files), and sounds (audio files).
 
 *  You create textures in a graphic editor, for example link:http://gimp.org[Gimp], and export them as PNG or JPG.
-*  You <<jme3/external/blender#,create models>> in a 3D mesh editor, for example link:http://blender.org[Blender], and export them in GLTF, Wavefront OBJ, or any <<jme3/features#supported-external-file-types,Supported External File Type>>.
+*  You xref:ROOT:jme3/external/blender.adoc[create models] in a 3D mesh editor, for example link:http://blender.org[Blender], and export them in GLTF, Wavefront OBJ, or any xref:ROOT:jme3/features.adoc#supported-external-file-types[Supported External File Type].
 *  You create sounds in an audio editor, for example link:http://audacity.sourceforge.net[Audacity], and export them as WAVE or OGG.
 
 == Asset Pipeline
@@ -31,7 +27,7 @@ a| Create low-polygon models.
 a| Don't create high-polygon models, they render too slow to be useful in games.
 
 a| Only use Diffuse Map, Normal Map, Glow Map, Specular Map in your models' materials.
-a| Don't use unsupported material properties that are not listed in the <<jme3/advanced/materials_overview#,Materials Overview>>.
+a| Don't use unsupported material properties that are not listed in the xref:ROOT:jme3/advanced/materials_overview.adoc[Materials Overview].
 
 a| Use UV texture / texture atlases / baking for each texture map.
 a| Don't create models based on multiple separate textures, it will break the model into separate meshes.
@@ -49,7 +45,7 @@ Read on for details.
 
 == Use The Assets Folder
 
-Store your assets in subfolders of your project's `assets` directory. The `assets` directory is the default path where a JME game's <<jme3/advanced/asset_manager#,Asset Manager>> looks for files to load.
+Store your assets in subfolders of your project's `assets` directory. The `assets` directory is the default path where a JME game's xref:ROOT:jme3/advanced/asset_manager.adoc[Asset Manager] looks for files to load.
 
 [source]
 ----
@@ -81,8 +77,8 @@ link:http://www.youtube.com/watch?v=HFR4socSv_E[Video: Horrible things happen if
 
 See also:
 
-*  More details on <<jme3/advanced/asset_manager#,Asset Manager>>, including tips how to work with assets when using other IDEs.
-*  Use <<sdk/asset_packs#,Asset Packs>> to bundle, share, and manage assets!
+*  More details on xref:ROOT:jme3/advanced/asset_manager.adoc[Asset Manager], including tips how to work with assets when using other IDEs.
+*  Use xref:sdk:asset_packs.adoc[Asset Packs] to bundle, share, and manage assets!
 
 
 == Create Textures and Materials
@@ -108,7 +104,7 @@ It is imperative to keep the same directory structure from beginning to end. If 
 
 == Create 3D Models
 
-Install a mesh editor such as <<jme3/external/blender#,Blender>> or 3D Studio MAX. Reuse textures and materials as much as possible. *Consult the mesh editor's documentation for specific details how to do the following tasks.*
+Install a mesh editor such as xref:ROOT:jme3/external/blender.adoc[Blender] or 3D Studio MAX. Reuse textures and materials as much as possible. *Consult the mesh editor's documentation for specific details how to do the following tasks.*
 
 
 [TIP]
@@ -119,12 +115,12 @@ Note that UV coords are part of the mesh and not part of the material, so if you
 
 .  Create 3D models in a mesh editor.
 ..  Create efficient *low-polygon models*. High-polygon models may look pretty in static 3D art contests, but they slow down dynamic games!
-..  <<jme3/advanced/j3m_material_files#,Create materials>> for your models either in the 3D editor, or in the jME3 SDK. Only use the following material features: *Diffuse Map or Diffuse Color (minimum); plus optionally Normal Map, Glow Map, Specular Map.* +
-Every material feature not listed in the <<jme3/advanced/materials_overview#,Materials Overview>> is unsupported and ignored by JME3's renderer.
+..  xref:ROOT:jme3/advanced/j3m_material_files.adoc[Create materials] for your models either in the 3D editor, or in the jME3 SDK. Only use the following material features: *Diffuse Map or Diffuse Color (minimum); plus optionally Normal Map, Glow Map, Specular Map.* +
+Every material feature not listed in the xref:ROOT:jme3/advanced/materials_overview.adoc[Materials Overview] is unsupported and ignored by JME3's renderer.
 ..  Unwrap the model in the 3D editor and generate a *UV texture* (i.e. one texture file that contains all the pieces of one model from different angles). +
 Don't use multiple separate texture files with one model, it will break the model into several meshes.
 
-.  Export the model mesh in one of the supported <<jme3/features#supported-external-file-types,Supported External File Types>>.
+.  Export the model mesh in one of the supported xref:ROOT:jme3/features.adoc##supported-external-file-types[Supported External File Types].
 ..  *Bake* each texture into one file when exporting. Create a Texture Atlas.
 ..  *Save exported models to subfolders of the `assets/Textures` (sic) directory, so they are together with their textures*!
 
@@ -135,14 +131,14 @@ See also: link:http://www.gamasutra.com/view/feature/2530/practical_texture_atla
 [IMPORTANT]
 ====
 *When I load the model in JME3, why does it look different than in the 3D editor?* +
-3D models will never look identical in a game engine and in a mesh editor. Mesh editors are optimized for high-quality offline rendering, and many of the material and texture options simply do not work in a live rendering context such as games. Also, the shaders that render the materials in JME3 are different implementations than in your mesh editor's renderer. Remind your graphic designers to <<jme3/advanced/materials_overview#,focus on features that game engines support>>.
+3D models will never look identical in a game engine and in a mesh editor. Mesh editors are optimized for high-quality offline rendering, and many of the material and texture options simply do not work in a live rendering context such as games. Also, the shaders that render the materials in JME3 are different implementations than in your mesh editor's renderer. Remind your graphic designers to xref:ROOT:jme3/advanced/materials_overview.adoc[focus on features that game engines support].
 ====
 
 
 
 == Convert 3D Models to .j3o Format
 
-Convert all models and scenes to jME3's binary .j3o format to load() them. Use one of the conversion methods listed for the <<jme3/features#supported-external-file-types,Supported External File Type>> you have chosen.
+Convert all models and scenes to jME3's binary .j3o format to load() them. Use one of the conversion methods listed for the xref:ROOT:jme3/features.adoc#supported-external-file-types[Supported External File Type] you have chosen.
 
 .  Confirm that you exported the model into the `assets/Textures` directory (or subdirectories) together with all its textures.
 .  In the SDK, right-click the model and choose "`Convert to j3o Binary`". +
@@ -161,7 +157,7 @@ The .j3o file format is an optimized format to store parts of a jME3 scene graph
 *  Only .j3o files can store all of jme3's material options and other features. Other formats can only be considered meshes with UV mapping data and always need extra work.
 *  .j3o files work seamlessly across platforms and can also be automatically adapted for certain platforms on distribution.
 *  (Optional) You can store the model's physical properties, materials, lights, particle emitters, and audio nodes, in the .j3o file. +
-Use Java commands, or use the <<sdk/scene_composer#,jMonkeyEngine SDK SceneComposer>> as a user-friendly interface to add these properties.
+Use Java commands, or use the xref:sdk:scene_composer.adoc[jMonkeyEngine SDK SceneComposer] as a user-friendly interface to add these properties.
 *  The default Ant build script of the SDK copies .j3o files, .j3m files, sounds, and textures, into the distributable JAR automatically.
 
 
@@ -174,5 +170,5 @@ Important: Unoptimized external model files (.mesh.xml, .material, .obj, .mat, .
 
 == See Also
 
-*  <<jme3/advanced/save_and_load#,Save and Load>>
-*  <<sdk/model_loader_and_viewer#,Model Loader and Viewer>>
+*  xref:ROOT:jme3/advanced/save_and_load.adoc[Save and Load]
+*  xref:sdk:model_loader_and_viewer.adoc[Model Loader and Viewer]
