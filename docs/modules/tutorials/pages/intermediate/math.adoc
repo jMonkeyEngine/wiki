@@ -1,17 +1,12 @@
 = Introduction to Mathematical Functionality
-:author:
-:revnumber:
-:revdate: 2016/03/17 20:48
-:relfileprefix: ../
-:imagesdir: ..
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:revnumber: 2.0
+:revdate: 2020/07/13
 
-
-It's a fact of life, math is hard. Unfortunately, 3D graphics require a fair bit of knowledge about the subject. Fortunately, jME is able to hide the majority of the details away from the user. Vectors are the fundamental type in the 3D environment, and it is used extensively. Matrices are also a basic necessity of 3D for representing linear systems. <<jme3/quaternion#,Quaternions>> are perhaps the most powerful and complicated of the basic types and are used for rotation in jME.
+It's a fact of life, math is hard. Unfortunately, 3D graphics require a fair bit of knowledge about the subject. Fortunately, jME is able to hide the majority of the details away from the user. Vectors are the fundamental type in the 3D environment, and it is used extensively. Matrices are also a basic necessity of 3D for representing linear systems. xref:ROOT:jme3/quaternion.adoc[Quaternions] are perhaps the most powerful and complicated of the basic types and are used for rotation in jME.
 
 I'll discuss how these are used in the system for the core functionality. Including Transforming, Visibility Determination, Collision Detection, and the Coordinate System. Note, that these are low level details. Further chapters will discuss how to use these various systems from a high level perspective.
 
-To get a visual introduction to math in jME3 for the absolute beginner, check out our <<jme3/math_for_dummies#,Math for Dummies>> introduction class.
+To get a visual introduction to math in jME3 for the absolute beginner, check out our xref:intermediate/math_for_dummies.adoc[Math for Dummies] introduction class.
 
 
 == Coordinate System
@@ -26,7 +21,7 @@ jME uses a Right-Handed coordinate system (as OpenGL does).
 The definition of a coordinate system is defined in jME by the properties sent to Camera. There are no error checks to insure that: 1) the coordinate system is right-handed and 2) The axes are mutually perpendicular. Therefore, if the user sets the axes incorrectly, they are going to experience very odd rendering artifacts (random culling, etc).
 
 
-image::jme3/intermediate/coordinate-system.png[coordinate-system.png,width="235",height="210",align="center"]
+image::intermediate/coordinate-system.png[coordinate-system.png,width="235",height="210",align="center"]
 
 
 
@@ -96,7 +91,7 @@ See link:{link-javadoc}/com/jme3/math/Matrix3f.html[Matrix3f Javadoc] and link:{
 
 === Definition
 
-A Matrix is typically used as a _linear transformation_ to map vectors to vectors. That is: Y = MX where X is a Vector and M is a Matrix applying any or all transformations (scale, <<jme3/rotate#,rotate>>, translate).
+A Matrix is typically used as a _linear transformation_ to map vectors to vectors. That is: Y = MX where X is a Vector and M is a Matrix applying any or all transformations (scale, xref:intermediate/rotate.adoc[rotate], translate).
 
 There are a few special matrices:
 
@@ -317,7 +312,7 @@ Quaternions define a subset of a hypercomplex number system. Quaternions are def
 
 Additional benefits of the Quaternion is reducing the chance of link:http://en.wikipedia.org/wiki/Gimbal_lock[Gimbal Lock] and allowing for easily interpolation between two rotations (spherical linear interpolation or slerp).
 
-While Quaternions are quite difficult to fully understand, there are an exceeding number of convenience methods to allow you to use them without having to understand the math behind it. Basically, these methods involve nothing more than setting the Quaternion's x,y,z,w values using other means of representing rotations. The Quaternion is then contained in the <<jme3/advanced/spatial#,Spatial>> as its local rotation component.
+While Quaternions are quite difficult to fully understand, there are an exceeding number of convenience methods to allow you to use them without having to understand the math behind it. Basically, these methods involve nothing more than setting the Quaternion's x,y,z,w values using other means of representing rotations. The Quaternion is then contained in the xref:ROOT:jme3/advanced/spatial.adoc[Spatial] as its local rotation component.
 
 Quaternion *q* has the form
 
@@ -345,7 +340,7 @@ These basic operations allow us to convert various rotation representations to Q
 
 === Angle Axis
 
-You might wish to represent your rotations as Angle Axis pairs. That is, you define a axis of rotation and the angle with which to <<jme3/rotate#,rotate>> about this axis. <<jme3/quaternion#,Quaternion>> defines a method `fromAngleAxis` (and `fromAngleNormalAxis`) to create a Quaternion from this pair. This is acutally used quite a bit in jME demos to continually rotate objects. You can also obtain a Angle Axis rotation from an existing Quaternion using `toAngleAxis`.
+You might wish to represent your rotations as Angle Axis pairs. That is, you define a axis of rotation and the angle with which to xref:intermediate/rotate.adoc[rotate] about this axis. xref:ROOT:jme3/quaternion.adoc[Quaternions] defines a method `fromAngleAxis` (and `fromAngleNormalAxis`) to create a Quaternion from this pair. This is acutally used quite a bit in jME demos to continually rotate objects. You can also obtain a Angle Axis rotation from an existing Quaternion using `toAngleAxis`.
 
 
 ==== Example - Rotate a Spatial Using fromAngleAxis
@@ -381,7 +376,7 @@ s.getLocalRotation().fromAngles(angles);
 
 === Three Axes
 
-If you have three axes that define your rotation, where the axes define the left axis, up axis and directional axis respectively) you can make use of `fromAxes` to generate the Quaternion. It should be noted that this will generate a new <<jme3/matrix#,Matrix>> object that is then garbage collected, thus, this method should not be used if it will be called many times. Again, `toAxes` will populate a Vector3f array.
+If you have three axes that define your rotation, where the axes define the left axis, up axis and directional axis respectively) you can make use of `fromAxes` to generate the Quaternion. It should be noted that this will generate a new xref:ROOT:jme3/matrix.adoc[Matrix] object that is then garbage collected, thus, this method should not be used if it will be called many times. Again, `toAxes` will populate a Vector3f array.
 
 
 ==== Example - Rotate a Spatial Using fromAxes
@@ -402,7 +397,7 @@ s.getLocalRotation().fromAxes(axes);
 
 === Rotation Matrix
 
-Commonly you might find yourself with a <<jme3/matrix#,Matrix>> defining a rotation. In fact, it's very common to contain a rotation in a Matrix create a Quaternion, rotate the Quaternion, and then get the Matrix back. Quaternion contains a `fromRotationMatrix` method that will create the appropriate Quaternion based on the give Matrix. The `toRotationMatrix` will populate a given Matrix.
+Commonly you might find yourself with a xref:ROOT:jme3/matrix.adoc[Matrix] defining a rotation. In fact, it's very common to contain a rotation in a Matrix create a Quaternion, rotate the Quaternion, and then get the Matrix back. Quaternion contains a `fromRotationMatrix` method that will create the appropriate Quaternion based on the give Matrix. The `toRotationMatrix` will populate a given Matrix.
 
 
 ==== Example - Rotate a Spatial Using a Rotation Matrix
@@ -589,7 +584,7 @@ This gives us the general equation: (ax + by + cz + d = 0)
 
 jME defines the Plane as ax + by + cz = -d. Therefore, during creation of the plane, the normal of the plane (a,b,c) and the constant d is supplied.
 
-The most common usage of Plane is <<jme3/advanced/camera#,Camera>> frustum planes. Therefore, the primary purpose of Plane is to determine if a point is on the positive side, negative side, or intersecting a plane.
+The most common usage of Plane is xref:ROOT:jme3/advanced/camera.adoc[Camera] frustum planes. Therefore, the primary purpose of Plane is to determine if a point is on the positive side, negative side, or intersecting a plane.
 
 Plane defines the constants:
 
@@ -700,7 +695,7 @@ See link:{link-javadoc}/com/jme3/math/Ray.html[Ray Javadoc]
 
 Ray defines a line that starts at a point *A* and continues in a direction through *B* into infinity.
 
-This Ray is used extensively in jME for <<jme3/beginner/hello_picking#,Picking>>. A Ray is cast from a point in screen space into the scene. Intersections are found and returned. To create a ray supply the object with two points, where the first point is the origin.
+This Ray is used extensively in jME for xref:beginner/hello_picking.adoc[Picking]. A Ray is cast from a point in screen space into the scene. Intersections are found and returned. To create a ray supply the object with two points, where the first point is the origin.
 
 
 === Example 1 - Create a Ray That Represents Where the Camera is Looking
@@ -725,7 +720,7 @@ Rectangle defines a finite plane within three dimensional space that is specifie
 
 === jME Usage
 
-Rectangle is a straight forward data class that simply maintains values that defines a Rectangle in 3D space. One interesting use is the `random` method that will create a random point on the Rectangle. The <<jme3/advanced/effects_overview#,Particle System>> makes use of this to define an area that generates <<jme3/advanced/particle_emitters#,Particles>>.
+Rectangle is a straight forward data class that simply maintains values that defines a Rectangle in 3D space. One interesting use is the `random` method that will create a random point on the Rectangle. The xref:ROOT:jme3/advanced/effects_overview.adoc[Particle System] makes use of this to define an area that generates xref:ROOT:jme3/advanced/particle_emitters.adoc[Particles].
 
 
 === Example 1 : Define a Rectangle and Get a Point From It
@@ -754,7 +749,7 @@ A triangle is a 3-sided polygon. Every triangle has three sides and three angles
 
 === Usage
 
-jME's Triangle class is a simple data class. It contains three <<jme3/terminology.html#vectors#,Vector3f>> objects that represent the three points of the triangle. These can be retrieved via the `get` method. The `get` method, obtains the point based on the index provided. Similarly, the values can be set via the `set` method.
+jME's Triangle class is a simple data class. It contains three <<intermediate/terminology.adoc#vectors,Vector3f>> objects that represent the three points of the triangle. These can be retrieved via the `get` method. The `get` method, obtains the point based on the index provided. Similarly, the values can be set via the `set` method.
 
 
 === Example 1 - Creating a Triangle
@@ -794,9 +789,3 @@ float z = ( (BoundingBox)spatial.getWorldBound()).getZExtent();
 ----
 geo.center().move(pos);
 ----
-
-
-=== See Also
-
-*  <<jme3/rotate#,Rotate>>
-*  <<jme3/quaternion#,Quaternion>>
