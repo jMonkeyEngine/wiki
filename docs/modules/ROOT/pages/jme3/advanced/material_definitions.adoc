@@ -1,6 +1,6 @@
 = How to Use Material Definitions (.j3md)
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :keywords: Material, SDK, MatDef, file, documentation
 :relfileprefix: ../../
@@ -8,7 +8,7 @@
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
-All Geometries need a Material to be visible. Every Material is based on a Material Definition. Material definitions provide the “logic for the material, and a shader draws the material according to the parameters specified in the definition. The J3MD file abstracts the shader and its configuration away from the user, allowing a simple interface where the user can simply set a few parameters on the material to change its appearance and the way its handled by the shaders. 
+All Geometries need a Material to be visible. Every Material is based on a Material Definition. Material definitions provide the “logic for the material, and a shader draws the material according to the parameters specified in the definition. The J3MD file abstracts the shader and its configuration away from the user, allowing a simple interface where the user can simply set a few parameters on the material to change its appearance and the way its handled by the shaders.
 
 The most common Material Definitions are included in the engine, advanced users can create custom ones. In this case you will also be interested in the <<jme3/advanced/material_specification#,in-depth developer specification of the jME3 material system>>.
 
@@ -36,15 +36,15 @@ If you use one custom material with certain settings very often, learn about sto
 
 In the <<jme3/advanced/materials_overview#,Materials Overview>> list:
 
-.  Choose a Material Definition that has the features that you need. 
+.  Choose a Material Definition that has the features that you need.
 **  Tip: If you don't know, start with `Unshaded.j3md` or `Lighting.j3md`.
 
-.  Look at the applicable parameters of the Material Definition and determine which parameters you need to achieve the desired effect (e.g. “glow or “color). Most parameters are optional! 
+.  Look at the applicable parameters of the Material Definition and determine which parameters you need to achieve the desired effect (e.g. “glow or “color). Most parameters are optional!
 .  Create and save the necessary Texture files to your `assets/Textures` directory.
 **  E.g. mytex_diffuse.png as ColorMap / DiffuseMap, mytex_normal.png as NormalMap, mytex_alpha.png as AlphaMap, etc…
 
 .  Determine the required values to achieve the effect that you want.
-**  E.g. set colors, floats, booleans, etc… 
+**  E.g. set colors, floats, booleans, etc…
 
 
 
@@ -52,28 +52,28 @@ In the <<jme3/advanced/materials_overview#,Materials Overview>> list:
 
 In your Java code,
 
-.  Create a Material object based on the chosen Material Definition (.j3md file): 
+.  Create a Material object based on the chosen Material Definition (.j3md file):
 +
 [source,java]
 ----
 Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
 ----
 
-.  Configure your Material by setting the appropriate values listed in the <<jme3/advanced/materials_overview#,Materials Overview>> table. 
+.  Configure your Material by setting the appropriate values listed in the <<jme3/advanced/materials_overview#,Materials Overview>> table.
 +
 [source,java]
 ----
 mat.setColor("Color", ColorRGBA.Yellow ); // and more
 ----
 
-.  Apply your prepared Material to a Geometry: 
+.  Apply your prepared Material to a Geometry:
 +
 [source,java]
 ----
 myGeometry.setMaterial(mat);
 ----
 
-.  (Optional) Adjust the texture scale of the mesh: 
+.  (Optional) Adjust the texture scale of the mesh:
 +
 [source,java]
 ----
@@ -81,14 +81,14 @@ myGeometryMesh.scaleTextureCoordinates(new Vector2f(2f, 2f));
 ----
 
 
-For details see also: <<jme3/intermediate/how_to_use_materials#,How to Use Materials>>
+For details see also: xref:tutorials:intermediate/how_to_use_materials.adoc[How to Use Materials]
 
 
 === Examples
 
 Here are examples of the methods that set the different data types:
 
-*  `mat.setColor(   “Color,       ColorRGBA.White );` 
+*  `mat.setColor(   “Color,       ColorRGBA.White );`
 *  `mat.setTexture( “ColorMap,    assetManager.loadTexture(“Interface/Logo/Monkey.png ));`
 *  `mat.setFloat(   “Shininess,   5f);`
 *  `mat.setBoolean( “SphereMap,   true);`
@@ -99,7 +99,7 @@ A simpled textured material.
 [source,java]
 ----
 
-Material mat = new Material(assetManager, 
+Material mat = new Material(assetManager,
     "Common/MatDefs/Misc/Unshaded.j3md");
 mat.setTexture("ColorMap", assetManager.loadTexture(
     "Interface/Logo/Monkey.jpg"));
@@ -111,7 +111,7 @@ A textured material with a color bleeding through transparent areas.
 [source,java]
 ----
 
-Material mat = new Material(assetManager, 
+Material mat = new Material(assetManager,
     "Common/MatDefs/Misc/Unshaded.j3md");
 mat.setTexture("ColorMap", assetManager.loadTexture(
     "Textures/ColoredTex/Monkey.png"));
@@ -141,11 +141,11 @@ You can find these and other common code snippets in the jMonkeyEngine SDK Code 
 
 == Creating a Custom Material Definition
 
-First read the <<jme3/advanced/material_specification#,developer specification of the jME3 material system (.j3md,.j3m)>>. Also check out the <<jme3/build_from_sources#,engine source code>> and have a look at how some Material Definitions are implemented. 
+First read the <<jme3/advanced/material_specification#,developer specification of the jME3 material system (.j3md,.j3m)>>. Also check out the <<jme3/build_from_sources#,engine source code>> and have a look at how some Material Definitions are implemented.
 
 You can create your own Material Definitions and place them in your project's `assets/MatDefs` directory.
 
-.  Find the existing MatDefs in `engine/src/core-data/Common/MatDefs/`. 
+.  Find the existing MatDefs in `engine/src/core-data/Common/MatDefs/`.
 .  Open a Something.j3md file in a text editor. You see that this .j3md file defines Material Parameters and Techniques.
 **  Material Parameters are the ones that you set in Materials, as shown in the examples above.
 **  The Techniques rely on VertexShaders and FragmentShaders: You find those in the files Something.vert and Something.frag in the same directory.
