@@ -1,11 +1,7 @@
 = SimpleApplication
-:author:
-:revnumber:
-:revdate: 2016/03/17 20:48
+:revnumber: 2.0
+:revdate: 2020/07/15
 :keywords: display, basegame, documentation, intro, intermediate, init, input, game, loop, rootnode, application, simpleapplication
-:relfileprefix: ../../
-:imagesdir: ../..
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
 The base class of the jMonkeyEngine3 is `com.jme3.app.SimpleApplication`. Your first game's Main class extends SimpleApplication directly. When you feel confident you understand the features, you will typically extend SimpleApplication to create a custom base class for the type of games that you want to develop.
@@ -15,10 +11,10 @@ SimpleApplication gives you access to standard game features, such as a scene gr
 
 [IMPORTANT]
 ====
-For each game, you (directly or indirectly) extend SimpleApplication exactly once as the central class. If you need access to any SimpleApplication features from another game class, make the other class extend <<jme3/advanced/application_states#,AbstractAppState>> (don't extend SimpleApplication once more).
+For each game, you (directly or indirectly) extend SimpleApplication exactly once as the central class. If you need access to any SimpleApplication features from another game class, make the other class extend xref:jme3/advanced/application_states.adoc[AbstractAppState] (don't extend SimpleApplication once more).
 ====
 
-NOTE: The SimpleApplication class is undergoing changes. To understand how these changes may affect your projects and how to best prepare for them, see  <<jme3/beginner/hello_simpleapplication#the-future-of-simpleapplication#,The Future of SimpleApplication>> topic in the "`Hello SimpleApplication`" tutorial for beginners.
+NOTE: The SimpleApplication class is undergoing changes. To understand how these changes may affect your projects and how to best prepare for them, see  xref:jme3/beginner/hello_simpleapplication.adoc#the-future-of-simpleapplication.adoc[The Future of SimpleApplication] topic in the "`Hello SimpleApplication`" tutorial for beginners.
 
 The following code sample shows the typical base structure of a jME3 game:
 
@@ -65,37 +61,37 @@ a|Purpose
 
 a|viewPort +
 getViewPort()
-a|The view object for the default camera. You can register advanced <<jme3/advanced/effects_overview#,post-processor filters>> here.
+a|The view object for the default camera. You can register advanced xref:jme3/advanced/effects_overview.adoc[post-processor filters] here.
 
 a|settings +
 setSettings()
 a|Use this AppSettings object to specify the display width and height (by default 640x480), color bit depth, z-buffer bits, anti-aliasing samples, and update frequency, video and audio renderer, asset manager. +
-See: <<jme3/intermediate/appsettings#,AppSettings>>.
+See: xref:jme3/intermediate/appsettings.adoc[AppSettings].
 
 a|cam +
 getCamera()
-a|The default <<jme3/advanced/camera#,camera>> provides perspective projection, 45° field of view, near plane = 1 wu, far plane = 1000 wu.
+a|The default xref:jme3/advanced/camera.adoc[camera] provides perspective projection, 45° field of view, near plane = 1 wu, far plane = 1000 wu.
 
 a|assetManager +
 getAssetManager()
 a|An object that manages paths for loading models, textures, materials, sounds, etc. +
-By default the <<jme3/advanced/asset_manager#,Asset Manager>> paths are relative to your project's root directory.
+By default the xref:jme3/advanced/asset_manager.adoc[Asset Manager] paths are relative to your project's root directory.
 
 a|audioRenderer +
 getAudioRenderer()
-a|This object gives you access to the jME3 <<jme3/advanced/audio#,audio>> system.
+a|This object gives you access to the jME3 xref:jme3/advanced/audio.adoc[audio] system.
 
 a|listener +
 getListener()
-a|This object represents the user's ear for the jME3 <<jme3/advanced/audio#,audio>> system.
+a|This object represents the user's ear for the jME3 xref:jme3/advanced/audio.adoc[audio] system.
 
 a|inputManager +
 getInputManager()
-a|Use the <<jme3/advanced/input_handling#,inputManager>> to configure your custom inputs (mouse movement, clicks, key presses, etc) and set mouse pointer visibility.
+a|Use the xref:jme3/advanced/input_handling.adoc[inputManager] to configure your custom inputs (mouse movement, clicks, key presses, etc) and set mouse pointer visibility.
 
 a|stateManager +
 getStateManager()
-a|You use the Application's state manager to activate <<jme3/advanced/application_states#,AppStates>>, such as <<jme3/advanced/physics#,Physics>>.
+a|You use the Application's state manager to activate xref:jme3/advanced/application_states.adoc[AppStates], such as xref:jme3/advanced/physics.adoc[Physics].
 
 |===
 [cols="25,75", options="header"]
@@ -111,7 +107,7 @@ a|start()
 a|Call this method to start a jME3 game. By default this opens a new jME3 window, initializes the scene, and starts the event loop.
 
 a|restart()
-a|Loads modified <<jme3/intermediate/appsettings#,AppSettings>> into the current application context.
+a|Loads modified xref:jme3/intermediate/appsettings.adoc[AppSettings] into the current application context.
 
 a|stop()
 a|Stops the running jME3 game and closes the jME3 window.
@@ -119,8 +115,8 @@ a|Stops the running jME3 game and closes the jME3 window.
 a|start(Type.Headless) etc
 a|Switch Context com.​jme3.​system.​JmeContext.Type when starting the application: +
 Type.Display – jME application runs in a window of its own. (This is the default.) +
-Type.Canvas – jME application is embedded in a <<jme3/advanced/swing_canvas#,Swing Canvas>>. +
-Type.Headless – jME application runs its event loop without calculating any view and without opening any window. Can be used for a <<jme3/advanced/headless_server#,Headless Server>> application. +
+Type.Canvas – jME application is embedded in a xref:jme3/advanced/swing_canvas.adoc[Swing Canvas]. +
+Type.Headless – jME application runs its event loop without calculating any view and without opening any window. Can be used for a xref:jme3/advanced/headless_server.adoc[Headless Server] application. +
 Type.OffscreenSurface – jME application view is not shown and no window opens, but everything calculated and cached as bitmap (back buffer) for use by other applications.
 
 |===
@@ -132,10 +128,10 @@ a|Purpose
 
 a|context +
 getContext()
-a|The application context contains the renderer, <<jme3/intermediate/appsettings#,AppSettings>>, timer, etc. Typically, you do not directly access the context object.
+a|The application context contains the renderer, xref:jme3/intermediate/appsettings.adoc[AppSettings], timer, etc. Typically, you do not directly access the context object.
 
 a|inputEnabled
-a|this internal boolean is true if you want the system to listen for user inputs, and false if you just want to play a non-interactive scene. You change the boolean using <<jme3/intermediate/appsettings#,AppSettings>>.
+a|this internal boolean is true if you want the system to listen for user inputs, and false if you just want to play a non-interactive scene. You change the boolean using xref:jme3/intermediate/appsettings.adoc[AppSettings].
 
 a|keyInput, mouseInput +
 joyInput, touchInput
@@ -149,7 +145,7 @@ a|Low-level and high-level rendering interface. Mostly used internally.
 
 a|guiViewPort +
 getGuiViewPort()
-a|The view object for the orthogonal +++<abbr title="Graphical User Interface">GUI</abbr>+++ view. Only used internally for <<jme3/advanced/hud#,HUD>>s.
+a|The view object for the orthogonal +++<abbr title="Graphical User Interface">GUI</abbr>+++ view. Only used internally for xref:jme3/advanced/hud.adoc[HUD]s.
 
 a|timer
 a|An internal update loop timer, don't use. See `tpf` in `simpleUpdate()` below to learn about timers.
@@ -177,11 +173,11 @@ a|Purpose
 
 a|rootNode +
 getRootNode()
-a|The root node of the scene graph. Attach a <<jme3/advanced/spatial#,Spatial>> to the rootNode and it appears in the 3D scene.
+a|The root node of the scene graph. Attach a xref:jme3/advanced/spatial.adoc[Spatial] to the rootNode and it appears in the 3D scene.
 
 a|guiNode +
 getGuiNode()
-a|Attach flat +++<abbr title="Graphical User Interface">GUI</abbr>+++ elements (such as <<jme3/advanced/hud#,HUD>> images and text) to this orthogonal +++<abbr title="Graphical User Interface">GUI</abbr>+++ node to make them appear on the screen.
+a|Attach flat +++<abbr title="Graphical User Interface">GUI</abbr>+++ elements (such as xref:jme3/advanced/hud.adoc[HUD] images and text) to this orthogonal +++<abbr title="Graphical User Interface">GUI</abbr>+++ node to make them appear on the screen.
 
 a|flyCam +
 getFlyByCamera()
@@ -220,11 +216,11 @@ a|SimpleApplication Interface
 a|Purpose
 
 a|public void simpleInitApp()
-a|Override this method to initialize the game scene. Here you load and create objects, attach Spatials to the rootNode, and bring everything in its starts position. See also <<jme3/advanced/application_states#,Application States>> for best practices.
+a|Override this method to initialize the game scene. Here you load and create objects, attach Spatials to the rootNode, and bring everything in its starts position. See also xref:jme3/advanced/application_states.adoc[Application States] for best practices.
 
 a|public void simpleUpdate(float tpf)
-a|Override this method to hook into the <<jme3/advanced/update_loop#,update loop>>, all code you put here is repeated in a loop. Use this loop to poll the current game state and respond to changes, or to let the game mechanics generate encounters and initiate state changes. Use the float `tpf` as a factor to time actions relative to the _time per frame_ in seconds: `tpf` is large on slow PCs, and small on fast PCs. +
-For more info on how to hook into the update loop, see <<jme3/advanced/application_states#,Application States>> and <<jme3/advanced/custom_controls#,Custom Controls>>.
+a|Override this method to hook into the xref:jme3/advanced/update_loop.adoc[update loop], all code you put here is repeated in a loop. Use this loop to poll the current game state and respond to changes, or to let the game mechanics generate encounters and initiate state changes. Use the float `tpf` as a factor to time actions relative to the _time per frame_ in seconds: `tpf` is large on slow PCs, and small on fast PCs. +
+For more info on how to hook into the update loop, see xref:jme3/advanced/application_states.adoc[Application States] and xref:jme3/advanced/custom_controls.adoc[Custom Controls].
 
 a|public void simpleRender(RenderManager rm)
 a|*Optional:* Advanced developers can override this method if the need to modify the frameBuffer and scene graph directly.
@@ -234,14 +230,14 @@ a|*Optional:* Advanced developers can override this method if the need to modify
 
 [TIP]
 ====
-Use `app.setShowSettings(true);` to present the user with a splashscreen and the built-in display settings dialog when starting the game; or use `app.setShowSettings(false);` to hide the built-in screen (in this case, you may want to provide a custom splashscreen and settings panel). Set this boolean before calling `app.start()` in the `main()` method of the SimpleApplication. See also <<jme3/intermediate/appsettings#,AppSettings>>.
+Use `app.setShowSettings(true);` to present the user with a splashscreen and the built-in display settings dialog when starting the game; or use `app.setShowSettings(false);` to hide the built-in screen (in this case, you may want to provide a custom splashscreen and settings panel). Set this boolean before calling `app.start()` in the `main()` method of the SimpleApplication. See also xref:jme3/intermediate/appsettings.adoc[AppSettings].
 ====
 
 
 
 == Default Input Mappings
 
-The following default navigational input actions are mapped by the default `flyCam` control in a SimpleApplication: You can use these mappings for debugging and testing until you implement custom <<jme3/advanced/input_handling#,input handling>>.
+The following default navigational input actions are mapped by the default `flyCam` control in a SimpleApplication: You can use these mappings for debugging and testing until you implement custom xref:jme3/advanced/input_handling.adoc[input handling].
 [cols="2", options="header"]
 |===
 
