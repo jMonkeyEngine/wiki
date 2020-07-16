@@ -1,14 +1,10 @@
 = Main Update Loop
-:author:
-:revnumber:
-:revdate: 2016/03/17 20:48
+:revnumber: 2.0
+:revdate: 2020/07/15
 :keywords: basegame, control, input, init, keyinput, loop, states, state
-:relfileprefix: ../../
-:imagesdir: ../..
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
-Extending your application from com.jme3.app.<<jme3/intermediate/simpleapplication#,SimpleApplication>> provides you with an update loop. This is where you implement your game logic (game mechanics).
+Extending your application from com.jme3.app.xref:tutorials:intermediate/simpleapplication.adoc[SimpleApplication] provides you with an update loop. This is where you implement your game logic (game mechanics).
 
 Some usage examples: Here you remote-control NPCs (computer controlled characters), generate game events, and respond to user input.
 
@@ -16,14 +12,14 @@ To let you see the main update loop in context, understand that the SimpleApplic
 
 *  *Initialization* – Execute `simpleInitApp()` method once.
 *  *Main Update Loop*
-..  Input listeners respond to mouse clicks and keyboard presses – <<jme3/advanced/input_handling#,Input handling>>
+..  Input listeners respond to mouse clicks and keyboard presses – xref:jme3/advanced/input_handling.adoc[Input handling]
 ..  Update game state:
-...  Update overall game state – Execute <<jme3/advanced/application_states#,Application States>>
+...  Update overall game state – Execute xref:jme3/advanced/application_states.adoc[Application States]
 ...  User code update – Execute `simpleUpdate()` method
-...  Logical update of entities – Execute <<jme3/advanced/custom_controls#,Custom Controls>>
+...  Logical update of entities – Execute xref:jme3/advanced/custom_controls.adoc[Custom Controls]
 
 ..  Render audio and video
-...  <<jme3/advanced/application_states#,Application States>> rendering.
+...  xref:jme3/advanced/application_states.adoc[Application States] rendering.
 ...  Scene rendering.
 ...  User code rendering – Execute `simpleRender()` method.
 
@@ -35,11 +31,11 @@ The jME window closes and the loop ends.
 
 == Usage
 
-In a trivial <<jme3/intermediate/simpleapplication#,SimpleApplication>> (such as a xref:tutorials:beginner.adoc[Hello World tutorial]), all code is either in the `simpleInitApp()` (initialization) or `simpleUpdate()` (behaviour) method – or in a helper method/class that is called from one of these two. This trivial approach will make your main class very long, hard to read, and hard to maintain. You don't need to load the whole scene at once, and you don't need to run all conditionals tests all the time.
+In a trivial xref:tutorials:intermediate/simpleapplication.adoc[SimpleApplication] (such as a xref:tutorials:beginner.adoc[Hello World tutorial]), all code is either in the `simpleInitApp()` (initialization) or `simpleUpdate()` (behaviour) method – or in a helper method/class that is called from one of these two. This trivial approach will make your main class very long, hard to read, and hard to maintain. You don't need to load the whole scene at once, and you don't need to run all conditionals tests all the time.
 
 It's a best practice to modularize your game mechanics and spread out initialization and update loop code over several Java objects:
 
-*  Move modular code blocks from the `simpleInitApp()` method into <<jme3/advanced/application_states#,AppStates>>. Attach AppStates to initialize custom subsets of “one dungeon, and detach it when the player exits this “dungeon. +
+*  Move modular code blocks from the `simpleInitApp()` method into xref:jme3/advanced/application_states.adoc[AppStates]. Attach AppStates to initialize custom subsets of “one dungeon, and detach it when the player exits this “dungeon. +
 Examples: Weather/sky audio and visuals, physics collision shapes, sub-rootnodes of individual dungeons including dungeon NPCs, etc.
-*  Move modular code blocks from the `simpleUpdate()` method into the update loops of <<jme3/advanced/custom_controls#,Custom Controls>> to control individual entity behavior (NPCs), and into the update method of <<jme3/advanced/application_states#,AppStates>> to control world events. +
+*  Move modular code blocks from the `simpleUpdate()` method into the update loops of xref:jme3/advanced/custom_controls.adoc[Custom Controls] to control individual entity behavior (NPCs), and into the update method of xref:jme3/advanced/application_states.adoc[AppStates] to control world events. +
 Examples: Weather behaviour, light behaviour, physics behaviour, individual NPC behaviour, trap behaviour, etc.
