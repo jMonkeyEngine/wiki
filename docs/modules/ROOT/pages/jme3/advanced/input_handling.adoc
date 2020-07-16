@@ -1,11 +1,7 @@
 = Input Handling
-:author: 
-:revnumber: 
-:revdate: 2016/03/17 20:48
+:revnumber: 2.0
+:revdate: 2020/07/15
 :keywords: keyinput, input, documentation
-:relfileprefix: ../../
-:imagesdir: ../..
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
 Users interact with your jME3 application with different input devices – the mouse, the keyboard, or a joystick. To respond to inputs we use the `inputManager` object in `SimpleApplication`.
@@ -27,7 +23,7 @@ This is how you add interaction to your game:
 
 == 1. Choose Trigger
 
-Choose one or several key/mouse events for the interaction. We use `KeyTrigger`, `MouseAxisTrigger`, `MouseButtonTrigger`, `JoyAxisTrigger` and `JoyButtonTrigger` constants from the `com.jme3.input.controls` package. 
+Choose one or several key/mouse events for the interaction. We use `KeyTrigger`, `MouseAxisTrigger`, `MouseButtonTrigger`, `JoyAxisTrigger` and `JoyButtonTrigger` constants from the `com.jme3.input.controls` package.
 
 [NOTE]
 ====
@@ -38,90 +34,90 @@ The MouseAxis and JoyAxis triggers go along the X axis (right/left) or Y axis (u
 
 |===
 
-a| Trigger 
-a| Code 
+a| Trigger
+a| Code
 
-a| Mouse button: Left Click 
-a| MouseButtonTrigger(MouseInput.BUTTON_LEFT) 
+a| Mouse button: Left Click
+a| MouseButtonTrigger(MouseInput.BUTTON_LEFT)
 
-a| Mouse button: Right Click 
-a| MouseButtonTrigger(MouseInput.BUTTON_RIGHT) 
+a| Mouse button: Right Click
+a| MouseButtonTrigger(MouseInput.BUTTON_RIGHT)
 
-a| Mouse button: Middle Click 
-a| MouseButtonTrigger(MouseInput.BUTTON_MIDDLE) 
+a| Mouse button: Middle Click
+a| MouseButtonTrigger(MouseInput.BUTTON_MIDDLE)
 
-a| Mouse movement: Right 
-a| MouseAxisTrigger(MouseInput.AXIS_X, true) 
+a| Mouse movement: Right
+a| MouseAxisTrigger(MouseInput.AXIS_X, true)
 
-a| Mouse movement: Left 
+a| Mouse movement: Left
 a| MouseAxisTrigger(MouseInput.AXIS_X, false)
 
-a| Mouse movement: Up 
-a| MouseAxisTrigger(MouseInput.AXIS_Y, true) 
+a| Mouse movement: Up
+a| MouseAxisTrigger(MouseInput.AXIS_Y, true)
 
-a| Mouse movement: Down 
-a| MouseAxisTrigger(MouseInput.AXIS_Y, false) 
+a| Mouse movement: Down
+a| MouseAxisTrigger(MouseInput.AXIS_Y, false)
 
-a| Mouse wheel: Up 
-a| MouseAxisTrigger(MouseInput.AXIS_WHEEL,false) 
+a| Mouse wheel: Up
+a| MouseAxisTrigger(MouseInput.AXIS_WHEEL,false)
 
-a| Mouse wheel: Down 
-a| MouseAxisTrigger(MouseInput.AXIS_WHEEL,true) 
+a| Mouse wheel: Down
+a| MouseAxisTrigger(MouseInput.AXIS_WHEEL,true)
 
-a| NumPad: 1, 2, 3, … 
-a| KeyTrigger(KeyInput.KEY_NUMPAD1) … 
+a| NumPad: 1, 2, 3, …
+a| KeyTrigger(KeyInput.KEY_NUMPAD1) …
 
-a| Keyboard: 1, 2 , 3, … 
-a| KeyTrigger(KeyInput.KEY_1) … 
+a| Keyboard: 1, 2 , 3, …
+a| KeyTrigger(KeyInput.KEY_1) …
 
-a| Keyboard: A, B, C, … 
-a| KeyTrigger(KeyInput.KEY_A) … 
+a| Keyboard: A, B, C, …
+a| KeyTrigger(KeyInput.KEY_A) …
 
-a| Keyboard: Spacebar 
-a| KeyTrigger(KeyInput.KEY_SPACE) 
+a| Keyboard: Spacebar
+a| KeyTrigger(KeyInput.KEY_SPACE)
 
-a| Keyboard: Shift 
+a| Keyboard: Shift
 a| KeyTrigger(KeyInput.KEY_RSHIFT), +
-KeyTrigger(KeyInput.KEY_LSHIFT) 
+KeyTrigger(KeyInput.KEY_LSHIFT)
 
-a| Keyboard: F1, F2, … 
-a| KeyTrigger(KeyInput.KEY_F1) … 
+a| Keyboard: F1, F2, …
+a| KeyTrigger(KeyInput.KEY_F1) …
 
-a| Keyboard: Return, Enter 
+a| Keyboard: Return, Enter
 <a| KeyTrigger(KeyInput.KEY_RETURN), +
-KeyTrigger(KeyInput.KEY_NUMPADENTER)  
+KeyTrigger(KeyInput.KEY_NUMPADENTER)
 
-a| Keyboard: PageUp, PageDown 
+a| Keyboard: PageUp, PageDown
 a| KeyTrigger(KeyInput.KEY_PGUP), +
-KeyTrigger(KeyInput.KEY_PGDN) 
+KeyTrigger(KeyInput.KEY_PGDN)
 
-a| Keyboard: Delete, Backspace 
+a| Keyboard: Delete, Backspace
 a| KeyTrigger(KeyInput.KEY_BACK), +
-KeyTrigger(KeyInput.KEY_DELETE) 
+KeyTrigger(KeyInput.KEY_DELETE)
 
-a| Keyboard: Escape 
-a| KeyTrigger(KeyInput.KEY_ESCAPE) 
+a| Keyboard: Escape
+a| KeyTrigger(KeyInput.KEY_ESCAPE)
 
-a| Keyboard: Arrows 
+a| Keyboard: Arrows
 a| KeyTrigger(KeyInput.KEY_DOWN), +
 KeyTrigger(KeyInput.KEY_UP) +
-KeyTrigger(KeyInput.KEY_LEFT), KeyTrigger(KeyInput.KEY_RIGHT) 
+KeyTrigger(KeyInput.KEY_LEFT), KeyTrigger(KeyInput.KEY_RIGHT)
 
-a| Joystick Button: 
+a| Joystick Button:
 a| JoyButtonTrigger(0, JoyInput.AXIS_POV_X), +
-JoyButtonTrigger(0, JoyInput.AXIS_POV_Y) ? 
+JoyButtonTrigger(0, JoyInput.AXIS_POV_Y) ?
 
-a| Joystick Movement: Right 
-a| JoyAxisTrigger(0, JoyInput.AXIS_POV_X, true) 
+a| Joystick Movement: Right
+a| JoyAxisTrigger(0, JoyInput.AXIS_POV_X, true)
 
-a| Joystick Movement: Left 
-a| JoyAxisTrigger(0, JoyInput.AXIS_POV_X, false) 
+a| Joystick Movement: Left
+a| JoyAxisTrigger(0, JoyInput.AXIS_POV_X, false)
 
-a| Joystick Movement: Forward 
-a| JoyAxisTrigger(0, JoyInput.AXIS_POV_Z, true) 
+a| Joystick Movement: Forward
+a| JoyAxisTrigger(0, JoyInput.AXIS_POV_Z, true)
 
 a| Joystick Movement: Backward
-a| JoyAxisTrigger(0, JoyInput.AXIS_POV_Z, false) 
+a| JoyAxisTrigger(0, JoyInput.AXIS_POV_Z, false)
 
 |===
 
@@ -162,7 +158,7 @@ a|Closes the application by calling `stop();`. Typically you do not remove this,
 
 == 3. Add Custom Trigger Mapping
 
-When initializing the application, add a Mapping for each Trigger. 
+When initializing the application, add a Mapping for each Trigger.
 
 Give the mapping a meaningful name. The name should reflect the action, not the button/key (because buttons/keys can change). Here some examples:
 
@@ -180,9 +176,9 @@ There are cases where you may want to provide more then one trigger for one acti
 [source,java]
 ----
 
-inputManager.addMapping("Left",  new KeyTrigger(KeyInput.KEY_A), 
+inputManager.addMapping("Left",  new KeyTrigger(KeyInput.KEY_A),
                                  new KeyTrigger(KeyInput.KEY_LEFT)); // A and left arrow
-inputManager.addMapping("Right", new KeyTrigger(KeyInput.KEY_D), 
+inputManager.addMapping("Right", new KeyTrigger(KeyInput.KEY_D),
                                  new KeyTrigger(KeyInput.KEY_RIGHT)); // D and right arrow
                                  ...
 
@@ -195,7 +191,7 @@ The jME3 input manager supports two types of event listeners for inputs: AnalogL
 
 [NOTE]
 ====
-The two input listeners do not know, and do not care, which actual key was pressed. They only know which _named input mapping_ was triggered. 
+The two input listeners do not know, and do not care, which actual key was pressed. They only know which _named input mapping_ was triggered.
 ====
 
 
@@ -203,7 +199,7 @@ The two input listeners do not know, and do not care, which actual key was press
 
 `com.jme3.input.controls.ActionListener`
 
-*  Use for absolute “button pressed or released?, “on or off? actions. 
+*  Use for absolute “button pressed or released?, “on or off? actions.
 **  Examples: Pause/unpause, a rifle or revolver shot, jump, click to select.
 
 *  JME gives you access to:
@@ -276,7 +272,7 @@ Did you register an action, but it does not work? Check the string's capitalizat
 
 == 5. Implement Actions in Listeners
 
-You specify the action to be triggered where it says TODO in the Listener code snippets. Typically, you write a series of if/else conditions, testing for all the mapping names, and then calling the respective action. 
+You specify the action to be triggered where it says TODO in the Listener code snippets. Typically, you write a series of if/else conditions, testing for all the mapping names, and then calling the respective action.
 
 Make use of the distinction between `if` and `else if` in this conditional.
 
@@ -286,7 +282,7 @@ Make use of the distinction between `if` and `else if` in this conditional.
 
 === ActionListener
 
-In the most common case, you want an action to be triggered once, in the moment when the button or key trigger is released. For example, when the player presses a key to open a door, or clicks to pick up an item. For these cases, use an ActionListener and test for `&amp;&amp; !keyPressed`, like shown in the following example. 
+In the most common case, you want an action to be triggered once, in the moment when the button or key trigger is released. For example, when the player presses a key to open a door, or clicks to pick up an item. For these cases, use an ActionListener and test for `&amp;&amp; !keyPressed`, like shown in the following example.
 
 [source,java]
 ----
@@ -295,8 +291,8 @@ private ActionListener actionListener = new ActionListener() {
 
       if (name.equals("Pause Game") && !keyPressed) { // test?
         isRunning = !isRunning;                       // action!
-      } 
-      
+      }
+
       if ...
 
     }
@@ -316,8 +312,8 @@ private AnalogListener analogListener = new AnalogListener() {
 
       if (name.equals("Rotate")) {         // test?
         player.rotate(0, value*speed, 0);  // action!
-      } 
-      
+      }
+
       if ...
 
     }
@@ -327,10 +323,10 @@ private AnalogListener analogListener = new AnalogListener() {
 
 == Let Users Remap Keys
 
-It is likely that your players have different keyboard layouts, are used to “reversed mouse navigation, or prefer different navigational keys than the ones that you defined. You should create an options screen that lets users customize their mouse/key triggers for your mappings. Replace the trigger literals in the `inputManager.addMapping()` lines with variables, and load sets of triggers when the game starts. 
+It is likely that your players have different keyboard layouts, are used to “reversed mouse navigation, or prefer different navigational keys than the ones that you defined. You should create an options screen that lets users customize their mouse/key triggers for your mappings. Replace the trigger literals in the `inputManager.addMapping()` lines with variables, and load sets of triggers when the game starts.
 
-The abstraction of separating triggers and mappings has the advantage that you can remap triggers easily. Your code only needs to remove and add some trigger mappings. The core of the code (the listeners and actions) remains unchanged. 
+The abstraction of separating triggers and mappings has the advantage that you can remap triggers easily. Your code only needs to remove and add some trigger mappings. The core of the code (the listeners and actions) remains unchanged.
 
 == Detecting Joystick Connection States
 
-For information regarding the connection state of a joystick see <<jme3/beginner/hello_input_system.adoc#listening-for-joystick-connections, Listening for Joystick Connections>>.
+For information regarding the connection state of a joystick see xref:tutorials:beginner/hello_input_system.adoc#listening-for-joystick-connections[Listening for Joystick Connections].
