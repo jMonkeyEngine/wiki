@@ -1,10 +1,7 @@
 = TerraMonkey - The jMonkeyEngine Terrain System
 :author:
 :revnumber:
-:revdate: 2016/03/17 20:48
-:relfileprefix: ../../
-:imagesdir: ../..
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:revdate: 2020/07/15
 
 
 
@@ -20,7 +17,7 @@ TerraMonkey is a GeoMipMapping quad tree of terrain tiles that supports real tim
 ].
 *  *Quad Tree:* The entire terrain structure is made up of TerrainPatches (these hold the actual meshes) as leaves in a quad tree (TerrainQuad). TerrainQuads are subdivided by 4 until they reach minimum size, then a TerrainPatch is created, and that is where the actual geometry mesh lives. This allows for fast culling of the terrain that you can't see.
 *  *Splatting:* The ability to paint multiple textures onto your terrain. What differs here from JME2 is that this is all done in a shader, no more render passes. So it performs much faster.
-*  *Real-time editing:* <<sdk/terrain_editor#,TerraMonkey terrains are editable in jMonkeyEngine SDK>>, and you are able to modify them in real time, for example by raising and lowering the terrain.
+*  *Real-time editing:* xref:sdk:sdk/terrain_editor.adoc[TerraMonkey terrains are editable in jMonkeyEngine SDK], and you are able to modify them in real time, for example by raising and lowering the terrain.
 
 
 === Current Features:
@@ -29,7 +26,7 @@ TerraMonkey is a GeoMipMapping quad tree of terrain tiles that supports real tim
 *  GeoMipMapping: LodControl optimizes the level of detail
 *  Terrain can be randomized or generated from a heightmap
 *  jMonkeyEngine SDK terrain editor
-*  Streaming <<jme3/advanced/endless_terraingrid#,terrain grid>> (i.e. infinite terrain)
+*  Streaming xref:jme3/advanced/endless_terraingrid.adoc[terrain grid] (i.e. infinite terrain)
 
 
 === Planned Features:
@@ -75,7 +72,7 @@ The default material for TerraMonkey is TerrainLighting.j3md. This material comb
 
 [IMPORTANT]
 ====
-We recommend to <<sdk/terrain_editor#,create and edit Splat Textures for terrains visually in the jMonkeyEngine SDK>>, and not do it manually. If you are simply curious about how the SDK's terrain texture plugin works, or if you indeed want to generate materials manually, then read on for the implementation details.
+We recommend to xref:sdk:terrain_editor.adoc[create and edit Splat Textures for terrains visually in the jMonkeyEngine SDK], and not do it manually. If you are simply curious about how the SDK's terrain texture plugin works, or if you indeed want to generate materials manually, then read on for the implementation details.
 ====
 
 [cols="80,20",frame=none,grid=none]
@@ -143,7 +140,7 @@ Here are some common examples what this means:
 *  2 Alpha + 6 Diffuse + 6 Normal + 1 Glow + 1 Specular.
 *  1 Alpha + 3 Diffuse + 3 Normal + 1 Glow + 1 Specular (rest unused)
 
-You can hand-paint Alpha, Diffuse, Glow, and Specular maps in a drawing program, like Photoshop. Define each splat texture in the Alpha Map in either Red, Green, Blue, or Alpha (=RGBA). The JmeTests project bundled in the <<sdk#,SDK>> includes some image files that show you how this works. The example images show a terrain heightmap next to its Alpha Map (which has been prepare for 3 Diffuse Maps), and one examplary Diffuse/Normal Map pair.
+You can hand-paint Alpha, Diffuse, Glow, and Specular maps in a drawing program, like Photoshop. Define each splat texture in the Alpha Map in either Red, Green, Blue, or Alpha (=RGBA). The JmeTests project bundled in the xref:sdk:sdk.adoc[SDK] includes some image files that show you how this works. The example images show a terrain heightmap next to its Alpha Map (which has been prepare for 3 Diffuse Maps), and one examplary Diffuse/Normal Map pair.
 
 
 == Code Sample: Terrain.j3md
