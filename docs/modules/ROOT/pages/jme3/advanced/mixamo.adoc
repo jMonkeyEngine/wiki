@@ -1,11 +1,6 @@
 = Animating Blender Models With Mixamo
-:author:
-:revnumber:
-:revdate: 2017/05/25 13:04
-:relfileprefix: ../../
-:imagesdir: ../..
-:experimental:
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:revnumber: 2.0
+:revdate: 2020/07/15
 
 
 
@@ -33,13 +28,13 @@ To properly animate your models there are a few rules you should follow.
 - [ ] You have UV Mapped your model. It isn't required by Mixamo, just for loading your models into jme.
 - [ ] Your models origin is at the base of the mesh.
 - [ ] You have your materials and textures done for your model. It isn't required by Mixamo, just for loading your model into jme.
-  - [ ] You have <<jme3/external/blender/blender_buffer_clearing#,cleared your buffers>>. It isn't required by Mixamo, just makes your models cleaner for jme.
+  - [ ] You have xref:jme3/external/blender/blender_buffer_clearing.adoc[cleared your buffers]. It isn't required by Mixamo, just makes your models cleaner for jme.
 - [ ] You have applied the Location, Rotation, and Scale to your model.
 - [ ] *MOST IMPORTANT OF ALL*, in the `menu:Properties Panel[Scene Tab > Units Panel]` set the btn:[Unit of Measure] to Meters and the Length to Metric. Adobe uses centimeters for the FBX exporter and if this is not set the models scale will be unusual to say the least. JME3 uses 1 WU = whatever you determine but meters will make things easier for all aspects of your modeling. If you are doing this now, you may have to re-scale your model before proceeding.
 
 [TIP]
 ====
-See <<jme3/external/blender#,Creating assets in Blender3D>> for help on creating jME3 compatible models.
+See xref:jme3/external/blender.adoc[Creating assets in Blender3D] for help on creating jME3 compatible models.
 ====
 
 == Blender FBX Export
@@ -175,7 +170,7 @@ Armatures::
 .  Select the Armature.
 .  In the `Timeline`, determine the Length of the animation by btn:[RMB] selecting the last keyframe in the timeline. +
  Set `End:` to this value.
-.  Click the btn:[|<<] button to reset timeline back to the first frame.
+.  Click the btn:[|xref:] button to reset timeline back to the first frame.
 .  In the `Info` header, change the `Default` screen layout to `Animation`.
 .  In the `Dope Sheet Editor`, change the `Dope Sheet` mode/context to `Action Editor`. The `Linked Action` will now show the action name of the animation you imported.
 .  Rename this to the name of the imported animation. In this instance it was TPose.
@@ -256,12 +251,12 @@ NOTE: If the action is not visible, navigate to the `Dope Sheet Editor` and from
 == Export
 
 
-Your rigged file is now ready to export. Export your model using one of the <<jme3/features#supported-external-file-types,Supported External File Types>> of your choice.
+Your rigged file is now ready to export. Export your model using one of the xref:jme3/features#supported-external-file-types,Supported External File Types] of your choice.
 
 
 == Appending Blender Animations
 
-Follow the directions for <<jme3/advanced/mixamo#mixamo-animations#,Mixamo Animations>>, <<jme3/advanced/mixamo#mixamo-download#,Mixamo Download>>, <<jme3/advanced/mixamo#creating-blender-animations#,Creating Blender Animations>>, <<jme3/external/blender#action-baking,Blender Action Baking>> and <<jme3/external/blender/blender_buffer_clearing#the-linked-action-buffer,Clearing The Linked Action Buffer>> for all animations you wish to append to your *rigged* animation file.
+Follow the directions for xref:jme3/advanced/mixamo.adoc#mixamo-animations.adoc[Mixamo Animations], xref:jme3/advanced/mixamo.adoc#mixamo-download.adoc[Mixamo Download], xref:jme3/advanced/mixamo.adoc#creating-blender-animations.adoc[Creating Blender Animations], xref:jme3/external/blender#action-baking,Blender Action Baking] and xref:jme3/external/blender/blender_buffer_clearing#the-linked-action-buffer,Clearing The Linked Action Buffer] for all animations you wish to append to your *rigged* animation file.
 
 .  If your `Rigged` file is closed, open it.
 .  From the `Info` header, change the Layout to `Default`.
@@ -274,7 +269,7 @@ Follow the directions for <<jme3/advanced/mixamo#mixamo-animations#,Mixamo Anima
 .  In the `Dope Sheet Editor`, change the context to `Action Editor` if not already selected.
 .  Click the btn:[Action to be linked] button and select your append action from the list.
 .  Select the btn:[F] button to save the action.
-.  From the `Info` header, change the layout from `Animation` to the `NLA Editing` layout we created in the <<jme3/advanced/mixamo#creating-the-rigged-animation-file#,Creating The Rigged Animation File>> section of this tutorial. You will see your append `Action` at the top of the list.
+.  From the `Info` header, change the layout from `Animation` to the `NLA Editing` layout we created in the xref:jme3/advanced/mixamo.adoc#creating-the-rigged-animation-file.adoc[Creating The Rigged Animation File] section of this tutorial. You will see your append `Action` at the top of the list.
 .  From the `NLA Editor` header, select `menu:Add[Add Tracks]`. A new track has now been added to the top of the list.
 .  Click the icon:angle-double-down[] button next to the `Action` to push it down into the stack.
 .  btn:[LMB] select the strip to make it the only strip selected.
@@ -298,7 +293,7 @@ You can drag the slider, at the bottom of the strip window, to the right or left
 .  In the `Active Strip` panel, under `Strip Extents`, you will see the `End Frame` number. In the `Timeline`, set `End:` to this number. Every time you append an `Action` you must increase this number to equal the total length off all strips combined, including the gaps between strips.
 .  Save your file.
 
-Your file is now ready to <<jme3/advanced/mixamo#export,export>>.
+Your file is now ready to xref:jme3/advanced/mixamo#export,export].
 
 [IMPORTANT]
 ====
@@ -310,7 +305,7 @@ In the `Dope Sheet Editor` make sure no `Actions` are selected in the `Action Ed
 
 An `Action` that has not been pushed down into the `NLA Stack` will block your `NLA Strip` from playing.
 
-Some export methods bake your actions automatically on export, others don't. Test the animation in-game and if your animations are all messed up, try <<jme3/external/blender/blender_action_baking#,baking them>> or use a different exporter.
+Some export methods bake your actions automatically on export, others don't. Test the animation in-game and if your animations are all messed up, try xref:jme3/external/blender/blender_action_baking.adoc[baking them] or use a different exporter.
 ====
 
 Your NLA strip should look something like this:
@@ -321,5 +316,5 @@ image::jme3/advanced/MixamoNLA.png[MixamoNLA.png,width="",height=""]
 == Notes
 
 
-*  You can see a similar video demonstration of this entire process in <<jme3#animations-and-scenes#,Animations And Scenes>> under the CadNav icon:long-arrow-right[]  Mixamo icon:long-arrow-right[] JME Workflow heading.
-*  See <<jme3/beginner/hello_animation#,Hello Animation>> and <<jme3/advanced/animation#,Animation in JME3>> to learn how to use your animated model.
+*  You can see a similar video demonstration of this entire process in xref:jme3.adoc#animations-and-scenes.adoc[Animations And Scenes] under the CadNav icon:long-arrow-right[]  Mixamo icon:long-arrow-right[] JME Workflow heading.
+*  See xref:tutorials:beginner/hello_animation.adoc[Hello Animation] and xref:jme3/advanced/animation.adoc[Animation in JME3] to learn how to use your animated model.
