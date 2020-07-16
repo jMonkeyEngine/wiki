@@ -1,21 +1,17 @@
 = Saving and Loading Games (.j3o)
-:author:
-:revnumber:
-:revdate: 2016/03/17 20:48
+:revnumber: 2.0
+:revdate: 2020/07/15
 :keywords: convert, j3o, models, load, save, documentation, serialization, import, export, spatial, node, mesh, geometry, scenegraph, sdk
-:relfileprefix: ../../
-:imagesdir: ../..
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
 Spatials (that is Nodes and Geometries) can contain audio and light nodes, particle emitters, controls, and user data (player score, health, inventory, etc). For your game distribution, you must convert all original models to a faster binary format. You save individual Spatials as well as scenes using `com.jme3.export.binary.BinaryExporter`.
 
-The jMonkeyEngine's binary file format is called `.j3o`. You can convert, view and edit .j3o files and their materials in the jMonkeyEngine <<sdk#,SDK>> and compose scenes (this does not include editing meshes). For the conversion, you can either use the BinaryExporters, or a context menu in the SDK.
+The jMonkeyEngine's binary file format is called `.j3o`. You can convert, view and edit .j3o files and their materials in the jMonkeyEngine xref:sdk:sdk.adoc[SDK] and compose scenes (this does not include editing meshes). For the conversion, you can either use the BinaryExporters, or a context menu in the SDK.
 
 
 [IMPORTANT]
 ====
-The jMonkeyEngine's serialization system is the `com.jme3.export.Savable` interface. JME3's BinaryExporter can write standard Java objects, JME3 objects, and primitive data types that are included in a <<jme3/advanced/spatial#,spatial's user data>>. If you use custom game data classes, see below how to make them “Savable.
+The jMonkeyEngine's serialization system is the `com.jme3.export.Savable` interface. JME3's BinaryExporter can write standard Java objects, JME3 objects, and primitive data types that are included in a xref:jme3/advanced/spatial.adoc[spatial's user data]. If you use custom game data classes, see below how to make them “Savable.
 ====
 
 
@@ -29,7 +25,7 @@ There is also a com.jme3.export.xml.XMLExporter and com.jme3.export.xml.XMLImpor
 
 == Saving a Node
 
-The following example overrides `stop()` in SimpleApplication to save the rootNode to a file when the user quits the application. The saved rootNode is a normal .j3o binary file that you can open in the <<sdk#,SDK>>.
+The following example overrides `stop()` in SimpleApplication to save the rootNode to a file when the user quits the application. The saved rootNode is a normal .j3o binary file that you can open in the xref:sdk:sdk.adoc[SDK].
 
 
 [WARNING]
@@ -86,7 +82,7 @@ Here you see why we save user data inside spatials – so it can be saved and lo
 
 JME's BinaryExporter can write standard Java objects (String, ArrayList, buffers, etc), JME objects (Savables, such as Material), and primitive data types (int, float, etc). If you are using any custom class together with a Spatial, then the custom class must implement the `com.jme3.export.Savable` interface. There are two common cases where this is relevant:
 
-*  The Spatial is carrying any <<jme3/advanced/custom_controls#,Custom Controls>>. +
+*  The Spatial is carrying any xref:jme3/advanced/custom_controls.adoc[Custom Controls]. +
 Example: You used something like `mySpatial.addControl(myControl);`
 *  The Spatial's user data can contain a custom Java object. +
 Example: You used something like `mySpatial.setUserData("inventory", myInventory);`
