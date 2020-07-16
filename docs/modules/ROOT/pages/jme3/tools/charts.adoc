@@ -1,20 +1,17 @@
 = JME 3 Tutorial - Visualizing 3D Charts
 :author:
 :revnumber:
-:revdate: 2016/03/17 20:48
-:relfileprefix: ../../
-:imagesdir: ../..
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:revdate: 2020/07/15
 
 
-Previous: <<jme3/tools/navigation#,Navigation>>
+Previous: xref:jme3/tools/navigation.adoc[Navigation]
 
 In this tutorial we will have a look at creating a simple 3D cartography application that allows you to display 3D charts at different zoom levels.
 
 This tutorial assumes that you know:
 
-*  About the <<jme3/tools/navigation#,Navigation package>>.
-*  How to create a <<jme3/beginner/hello_terrain#,3D landscape>> using image-based heightmaps.
+*  About the xref:jme3/tools/navigation.adoc[Navigation package].
+*  How to create a xref:tutorials:beginner/hello_terrain.adoc[3D landscape] using image-based heightmaps.
 
 image:jme3/tools/mercator_grid_3d_small.png[mercator_grid_3d_small.png,width="",height=""]
 
@@ -25,7 +22,7 @@ You will learn that how to account for distortions that arise when mapping of on
 
 == Displaying your first chart
 
-Let's think about how we are going to get JME to display our terrain. The easiest way is to use JME's`ImageBasedHeightMap`. Recall from the <<jme3/beginner/hello_terrain#,Hello Terrain>> tutorial that these are grayscale images which JME uses to create a terrain quad. So, in order to display a chart, we need an image of a (two-dimensional) mercator projection (such as the one depicted below), which we then load using:
+Let's think about how we are going to get JME to display our terrain. The easiest way is to use JME's`ImageBasedHeightMap`. Recall from the xref:tutorials:beginner/hello_terrain.adoc[Hello Terrain] tutorial that these are grayscale images which JME uses to create a terrain quad. So, in order to display a chart, we need an image of a (two-dimensional) mercator projection (such as the one depicted below), which we then load using:
 
 [source,java]
 ----
@@ -40,9 +37,9 @@ applyDefaultTexture();
 
 image:jme3/tools/globe.png[A 256x256 mercator projection of planet earth.,width="",height=""]
 
-In essence, 3D chart visualization is achieved by converting the polygons composing planet earth's landmass into float matrices whereby each value within the matrix represents a specific terrain height. For example, given a terrain of 100 x 100 world units, we construct a heightmap by creating a 100 x 100 matrix. Each cell within the matrix corresponds to a terrain coordinate; each cell’s value to that coordinate’s desired height. But you already knew that, so where's the tricky part? Well, when visualizing a chart an accurate projection requires a translation of latitude/longitude coordinates into their equivalent world unit (x,y,z) counterparts. This translation however is not a straight forward mapping of one coordinate system into the other due to the distortion arising from projecting an oblate spheroid onto a flat surface (see my previous wiki article <<jme3/tools/navigation#,here>>). This means that if one would adhere to a linear scale, the Mercator projection would distort the size and shape of objects as the object distances itself from the equator, eventually resulting in infinite scaling as the pole is reached. So the first task at hand, is to construct accurate 2D projections of planet earth which we can then use as heightmaps. We can achieve this using the jme3.tools.navigation package and co-ordinate sets available at link:https://maps.ngdc.noaa.gov/viewers/geophysics/[noaa.gov].
+In essence, 3D chart visualization is achieved by converting the polygons composing planet earth's landmass into float matrices whereby each value within the matrix represents a specific terrain height. For example, given a terrain of 100 x 100 world units, we construct a heightmap by creating a 100 x 100 matrix. Each cell within the matrix corresponds to a terrain coordinate; each cell’s value to that coordinate’s desired height. But you already knew that, so where's the tricky part? Well, when visualizing a chart an accurate projection requires a translation of latitude/longitude coordinates into their equivalent world unit (x,y,z) counterparts. This translation however is not a straight forward mapping of one coordinate system into the other due to the distortion arising from projecting an oblate spheroid onto a flat surface (see my previous wiki article xref:jme3/tools/navigation.adoc[here]). This means that if one would adhere to a linear scale, the Mercator projection would distort the size and shape of objects as the object distances itself from the equator, eventually resulting in infinite scaling as the pole is reached. So the first task at hand, is to construct accurate 2D projections of planet earth which we can then use as heightmaps. We can achieve this using the jme3.tools.navigation package and co-ordinate sets available at link:https://maps.ngdc.noaa.gov/viewers/geophysics/[noaa.gov].
 
-As <<jme3/tools/navigation#,previously discussed>>, the distortion in latitude is derived by using the difference in meridional parts between the chart’s centre and the current position as a baseline; through converting the difference to world units by dividing it by the number of world units contained within one minute, a latitude’s y-coordinate can be obtained. Calculating a position’s x-coordinate is somewhat easier as the distortion only applies to latitude, not longitude. Therefore x merely equals the sum or difference between itself and the viewport’s centre coordinate, depending on the relative location of the position itself and the chart’s centre. Despite being able to convert between the two coordinate systems, slight precision problems remain once the chart projection is scaled down past a level of 6 meters. This is caused by the pixel referencing system of modern displays being integer based; once the ratio of minutes to pixels exceeds the aforementioned threshold, slight inaccuracies are introduced into the display. However this is of little relevance to most GIS (such as Debrief) as a) the inaccuracies are a matter of meters (or even centimetres) and b) it is impossible to notice this variation as GPS exposes a much higher inaccuracy (between 10 - 100 meters).
+As xref:jme3/tools/navigation.adoc[previously discussed], the distortion in latitude is derived by using the difference in meridional parts between the chart’s centre and the current position as a baseline; through converting the difference to world units by dividing it by the number of world units contained within one minute, a latitude’s y-coordinate can be obtained. Calculating a position’s x-coordinate is somewhat easier as the distortion only applies to latitude, not longitude. Therefore x merely equals the sum or difference between itself and the viewport’s centre coordinate, depending on the relative location of the position itself and the chart’s centre. Despite being able to convert between the two coordinate systems, slight precision problems remain once the chart projection is scaled down past a level of 6 meters. This is caused by the pixel referencing system of modern displays being integer based; once the ratio of minutes to pixels exceeds the aforementioned threshold, slight inaccuracies are introduced into the display. However this is of little relevance to most GIS (such as Debrief) as a) the inaccuracies are a matter of meters (or even centimetres) and b) it is impossible to notice this variation as GPS exposes a much higher inaccuracy (between 10 - 100 meters).
 
 
 [TIP]
