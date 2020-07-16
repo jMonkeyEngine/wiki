@@ -1,18 +1,14 @@
 = Creating JME3 User Interfaces with Nifty GUI
-:author:
-:revnumber:
-:revdate: 2016/03/17 20:48
+:revnumber: 2.0
+:revdate: 2020/07/15
 :keywords: gui, documentation, nifty, hud
-:relfileprefix: ../../
-:imagesdir: ../..
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
 
 image::jme3/advanced/nifty-gui-13.png[nifty-gui-13.png,width="276",height="217",align="left"]
 
 
-You may want your players to press a button to save a game, you want a scrolling text field for highscores, a text label to display the score, drop-downs to select keymap preferences, or checkboxes to specify multi-media options. Usually you solve these tasks by using Swing controls. Although it is possible to embed a <<jme3/advanced/swing_canvas#,jME3 canvas>> in a Swing +++<abbr title="Graphical User Interface">GUI</abbr>+++, a 3D game typically runs full-screen, or in a window of its own.
+You may want your players to press a button to save a game, you want a scrolling text field for highscores, a text label to display the score, drop-downs to select keymap preferences, or checkboxes to specify multi-media options. Usually you solve these tasks by using Swing controls. Although it is possible to embed a xref:jme3/advanced/swing_canvas.adoc[jME3 canvas] in a Swing +++<abbr title="Graphical User Interface">GUI</abbr>+++, a 3D game typically runs full-screen, or in a window of its own.
 
 This document introduces you to link:https://github.com/nifty-gui/nifty-gui/[Nifty GUI], a Java library for building interactive graphical user interfaces (GUIs) for games or similar applications. Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++ (the `de.lessvoid.nifty` package) is well integrated with jME3 through the `com.jme3.niftygui` package. You define the base +++<abbr title="Graphical User Interface">GUI</abbr>+++ layout in XML, and control it dynamically from your Java code. The necessary JAR libraries are included in your jME3 download, you do not need to install anything extra. (Just make sure they are on the classpath.)
 
@@ -24,16 +20,16 @@ This document introduces you to link:https://github.com/nifty-gui/nifty-gui/[Nif
 Learn to add a Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++ to your jME3 game by going through this multi-part tutorial:
 
 .  Understand the Nifty GUI Concepts described on this page.
-.  <<jme3/advanced/nifty_gui_best_practices#,Browse this short list of Best Practices>>
+.  xref:jme3/advanced/nifty_gui_best_practices.adoc[Browse this short list of Best Practices]
 .  Lay out your graphical user interface:
-**  <<jme3/advanced/nifty_gui_xml_layout#,Lay out the GUI in XML>> – or –
-**  <<jme3/advanced/nifty_gui_java_layout#,Lay out the GUI in Java>>
+**  xref:jme3/advanced/nifty_gui_xml_layout.adoc[Lay out the GUI in XML] – or –
+**  xref:jme3/advanced/nifty_gui_java_layout.adoc[Lay out the GUI in Java]
 
 .  Integrate the +++<abbr title="Graphical User Interface">GUI</abbr>+++ into the game:
-**  <<jme3/advanced/nifty_gui_overlay#,Overlay the User Interface Over the Screen>>  – or –
-**  <<jme3/advanced/nifty_gui_projection#,Project the User Interface Onto a Texture>>
+**  xref:jme3/advanced/nifty_gui_overlay.adoc[Overlay the User Interface Over the Screen]  – or –
+**  xref:jme3/advanced/nifty_gui_projection.adoc[Project the User Interface Onto a Texture]
 
-.  <<jme3/advanced/nifty_gui_java_interaction#,Interact with the GUI from Java>>
+.  xref:jme3/advanced/nifty_gui_java_interaction.adoc[Interact with the GUI from Java]
 
 
 == Must Know: Nifty GUI Concepts
@@ -45,7 +41,7 @@ Nifty GUIs are made up of the following *elements*:
 *  A Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++ contains one or more *screens*.
 **  Only one screen is visible at a time.
 **  Name the first screen `start`. Name any others whatever you like.
-**  Screen are <<jme3/advanced/nifty_gui_java_interaction#,controlled by a Java Controller class>>.
+**  Screen are xref:jme3/advanced/nifty_gui_java_interaction.adoc[controlled by a Java Controller class].
 
 *  A screen contains one or more *layers*.
 **  Layers are containers that impose alignment on their contents (vertical, horizontal, or centered)
@@ -61,17 +57,17 @@ Nifty GUIs are made up of the following *elements*:
 === JME-Nifty Sample Code
 
 *  XML examples
-**  link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-testdata/src/main/resources/Interface/Nifty/HelloJme.xml[HelloJme.xml] - Can be found in <<sdk/sample_code#jme3testdata-assets#,jme-testdata/Interface/Nifty>> also.
+**  link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-testdata/src/main/resources/Interface/Nifty/HelloJme.xml[HelloJme.xml] - Can be found in xref:sdk:sample_code.adoc#jme3testdata-assets.adoc[jme-testdata/Interface/Nifty] also.
 
 *  Java examples
-**  link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/niftygui/TestNiftyGui.java[TestNiftyGui.java] - Can be found in <<sdk/sample_code#the-jme3tests-project-template#,jme3 tests>> also.
-**  link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/niftygui/TestNiftyToMesh.java[TestNiftyToMesh.java] - Can be found in <<sdk/sample_code#the-jme3tests-project-template#,jme3 tests>> also.
+**  link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/niftygui/TestNiftyGui.java[TestNiftyGui.java] - Can be found in xref:sdk:sample_code.adoc#the-jme3tests-project-template.adoc[jme3 tests] also.
+**  link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/niftygui/TestNiftyToMesh.java[TestNiftyToMesh.java] - Can be found in xref:sdk:sample_code.adoc#the-jme3tests-project-template.adoc[jme3 tests] also.
 
 *  jME3-ready version of the Nifty +++<abbr title="Graphical User Interface">GUI</abbr>+++ 1.3 demo (sample code, Java)
 **  link:http://files.seapegasus.org/NiftyGuiDemo.zip[NiftyGuiDemo.zip]
 
 *  Find more sample code in the link:https://github.com/nifty-gui/nifty-gui/tree/1.4/nifty-examples/src/main/java/de/lessvoid/nifty/examples[nifty-examples] repositories.
-**  link:https://github.com/nifty-gui/nifty-gui/wiki/Examples[Running The Nifty Examples] 
+**  link:https://github.com/nifty-gui/nifty-gui/wiki/Examples[Running The Nifty Examples]
 
 
 === External Documentation
@@ -83,7 +79,7 @@ Learn more from the NiftyGUI page:
 *  link:http://nifty-gui.sourceforge.net/projects/1.4.2/nifty/nifty/apidocs/index.html[Nifty 1.4.2 JavaDoc]
 *  link:http://nifty-gui.sourceforge.net/projects/1.4.2/nifty/nifty-default-controls/apidocs/index.html[Nifty 1.4.2 Controls JavaDoc]
 *  link:https://hub.jmonkeyengine.org/t/anyone-succeeded-in-changing-text-in-nifty-programatically/14424[Forum post: Changing Text in Nifty GUIs programmatically]
-//*  <<jme3/advanced/nifty_gui/groovy#,Nifty GUI with Groovy>>
+//*  xref:jme3/advanced/nifty_gui/groovy.adoc[Nifty GUI with Groovy]
 
 
 == Nifty Logging (Nifty 1.4.2)
