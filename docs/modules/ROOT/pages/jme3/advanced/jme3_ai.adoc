@@ -1,11 +1,6 @@
 = jMonkeyEngine Artificial Intelligence
-:author:
-:revnumber:
-:revdate: 2017/04/15 13:30
-:relfileprefix: ../../
-:imagesdir: ../..
-:experimental:
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:revnumber: 2.0
+:revdate: 2020/07/15
 
 
 
@@ -20,7 +15,7 @@ You can read about the introduction of the library in the forum thread: link:htt
 
 *  link:https://github.com/MeFisto94/jme3-artificial-intelligence/releases[jme3 Artificial Intelligence Library] - The library and javaDocs for jme3AI. This is also where you can report problems or help in maintaining the library.
 *  link:https://github.com/stevefsp/critterai/releases[CritterAI] - Stephen Pratt's link:http://www.critterai.org/projects/nmgen_study/[NMGen Study] project files to generate the navmesh.
-*  To get the assets (3D models) used in this example, add the <<sdk/sample_code#jme3testdata-assets#,jME3-testdata.jar>> to your classpath.
+*  To get the assets (3D models) used in this example, add the xref:sdk:sample_code.adoc#jme3testdata-assets.adoc[jME3-testdata.jar] to your classpath.
 *  Java SDK 8+.
 
 Stephen Pratt explains in detail the configuration parameters of CritterAI/Jme3AI in a easy to follow format and is suggested reading.
@@ -38,7 +33,7 @@ The jme3 Artificial Intelligence Library contains:
 
 [NOTE]
 ====
-This scope of this tutorial is restricted to the NavMesh part of the library and expands upon the lessons taught in the <<jme3#tutorials-for-beginners,tutorials>>. It demonstrates the use of some classes and methods found in the Medium and Advanced topics of the wiki as well. You can find the source code for this tutorial in the  link:https://github.com/jMonkeyEngine/doc-examples/tree/master/src/com/jme3/examples/jme3ai[jMonkeyEngine/docs-examples] repository.
+This scope of this tutorial is restricted to the NavMesh part of the library and expands upon the lessons taught in the xref:jme3#tutorials-for-beginners,tutorials]. It demonstrates the use of some classes and methods found in the Medium and Advanced topics of the wiki as well. You can find the source code for this tutorial in the  link:https://github.com/jMonkeyEngine/doc-examples/tree/master/src/com/jme3/examples/jme3ai[jMonkeyEngine/docs-examples] repository.
 ====
 
 Moving a character through your scene requires three things.
@@ -62,7 +57,7 @@ Both methods produce exactly the same NavMesh and both will be covered in this t
 *  Open your scene in the Terrain Editor or Scene Explorer by btn:[RMB] selecting the file in your assets folder and choosing `Edit Terrain` or `Edit in SceneComposer`.
 *  Once open, btn:[RMB] select the root node in the `SceneExplorer` and then select `menu:Spatial[NavMesh]`.
 
-This will open the `Create NavMesh` dialog with default settings. You can read in depth about each parameter by following the `Configuration Parameters` link under <<jme3/advanced/jme3_ai#requirements#,Requirements>>.
+This will open the `Create NavMesh` dialog with default settings. You can read in depth about each parameter by following the `Configuration Parameters` link under xref:jme3/advanced/jme3_ai.adoc#requirements.adoc[Requirements].
 
 .Parameter Insight
 The jme3AI system uses CritterAI, which is based off link:https://github.com/recastnavigation/recastnavigation[Recast and Detour] navigation. The author of Recast lays out a few specific rules for NavMesh creation in this link:http://digestingduck.blogspot.dk/2009/08/recast-settings-uncovered.html[blog post], which logically apply to jme3AI. Below is a translation of this post as it pertains to jme3AI.
@@ -89,7 +84,7 @@ CAUTION: Cell size has the greatest impact on your NavMesh. The smaller the cell
 TIP: Selecting the NavMesh node in the SceneExplorer will show the NavMesh in the Terrain Editor or SceneComposer view-port. If it doesn't show, with the NavMesh node selected, change the `Cull Hint` to `Never` in the `NavMesh - Properties` panel.
 
 === Procedural Method
-There are many ways to create a NavMesh. If you look at the constructor for the link:https://github.com/jMonkeyEngine/doc-examples/blob/master/src/com/jme3/examples/jme3ai/Jme3AI.java[Jme3AI.java] file, you will see I use a <<jme3/advanced/application_states#baseappstate#,BaseAppState>> named link:https://github.com/jMonkeyEngine/doc-examples/blob/master/src/com/jme3/examples/jme3ai/ai/NavMeshState.java[NavMeshState.java] which creates a `generator` object and builds the `NavMesh` new every time the program is ran.
+There are many ways to create a NavMesh. If you look at the constructor for the link:https://github.com/jMonkeyEngine/doc-examples/blob/master/src/com/jme3/examples/jme3ai/Jme3AI.java[Jme3AI.java] file, you will see I use a xref:jme3/advanced/application_states.adoc#baseappstate.adoc[BaseAppState] named link:https://github.com/jMonkeyEngine/doc-examples/blob/master/src/com/jme3/examples/jme3ai/ai/NavMeshState.java[NavMeshState.java] which creates a `generator` object and builds the `NavMesh` new every time the program is ran.
 
 .Jme3AI constructor
 [source, java]
@@ -341,7 +336,7 @@ These are implementation decisions that are left up to you.
 
 === Loading the NavMesh
 
-In this tutorial example, the optimized mesh was exported as a geometry using the jMonkey binary format `.j3o`. Doing so means the loading of your `NavMeshes` is done the same way you load any model, by using the `AssetManager`. Once you load the `.j3o`, you grab its `Mesh` and create the `NavMesh` object to be passed to the link:https://github.com/jMonkeyEngine/doc-examples/blob/master/src/com/jme3/examples/jme3ai/ai/NavigationControl.java[NavigationControl] constructor. This tutorial uses a <<jme3/advanced/application_states#baseappstate#,BaseAppState>> for model loading so access to the `Application` class is built in.
+In this tutorial example, the optimized mesh was exported as a geometry using the jMonkey binary format `.j3o`. Doing so means the loading of your `NavMeshes` is done the same way you load any model, by using the `AssetManager`. Once you load the `.j3o`, you grab its `Mesh` and create the `NavMesh` object to be passed to the link:https://github.com/jMonkeyEngine/doc-examples/blob/master/src/com/jme3/examples/jme3ai/ai/NavigationControl.java[NavigationControl] constructor. This tutorial uses a xref:jme3/advanced/application_states.adoc#baseappstate.adoc[BaseAppState] for model loading so access to the `Application` class is built in.
 
 [source, java]
 ----
@@ -371,7 +366,7 @@ public NavigationControl(NavMesh navMesh) {
 
 === Communicating with NavigationControl
 
-This tutorial makes use of the <<jme3/beginner/hello_picking#,Hello Picking>> and <<jme3/advanced/mouse_picking#pick-a-target-using-the-mouse-pointer#,Mouse Picking>> tutorials so you should already be familiar with this method for picking and how to add the <<jme3/beginner/hello_input_system#,input mappings>> to your game. How you implement your ActionListener is up to you.
+This tutorial makes use of the xref:tutorials:beginner/hello_picking.adoc[Hello Picking] and xref:jme3/advanced/mouse_picking.adoc#pick-a-target-using-the-mouse-pointer.adoc[Mouse Picking] tutorials so you should already be familiar with this method for picking and how to add the xref:tutorials:beginner/hello_input_system.adoc[input mappings] to your game. How you implement your ActionListener is up to you.
 
 .PCState ActionListener
 [source, java]
@@ -442,7 +437,7 @@ At this point you have loaded your `NavMesh`, added the `NavigationControl` to y
 === NavigationControl
 
 
-The link:https://github.com/jMonkeyEngine/doc-examples/blob/master/src/com/jme3/examples/jme3ai/ai/NavigationControl.java[NavigationControl] is a <<jme3/advanced/custom_controls#,custom control>> that extends the link:https://github.com/MeFisto94/jme3-artificial-intelligence/blob/master/AI/src/com/jme3/ai/navmesh/NavMeshPathfinder.java[NavMeshPathFinder] class of the Jme3AI library and implements the `Pickable` interface.
+The link:https://github.com/jMonkeyEngine/doc-examples/blob/master/src/com/jme3/examples/jme3ai/ai/NavigationControl.java[NavigationControl] is a xref:jme3/advanced/custom_controls.adoc[custom control] that extends the link:https://github.com/MeFisto94/jme3-artificial-intelligence/blob/master/AI/src/com/jme3/ai/navmesh/NavMeshPathfinder.java[NavMeshPathFinder] class of the Jme3AI library and implements the `Pickable` interface.
 
 [source, java]
 ----
@@ -514,7 +509,7 @@ private void shutdownAndAwaitTermination(ExecutorService pool) {
 }
 ----
 
-The easiest way to move a physics character is by using the <<jme3/advanced/walking_character#bettercharactercontrol#,BetterCharacterControl>> class. In this implementation, this is done in the link:https://github.com/jMonkeyEngine/doc-examples/blob/master/src/com/jme3/examples/jme3ai/controls/PCControl.java[PCControl] class by extending `BetterCharacterControl`. Since `BetterCharacterControl` is required to be present on the spatial for pathfinding, in the `setSpatial()` method, we throw an exception to let us know if it's missing.
+The easiest way to move a physics character is by using the xref:jme3/advanced/walking_character#bettercharactercontrol.adoc[BetterCharacterControl] class. In this implementation, this is done in the link:https://github.com/jMonkeyEngine/doc-examples/blob/master/src/com/jme3/examples/jme3ai/controls/PCControl.java[PCControl] class by extending `BetterCharacterControl`. Since `BetterCharacterControl` is required to be present on the spatial for pathfinding, in the `setSpatial()` method, we throw an exception to let us know if it's missing.
 
 [source, java]
 ----
