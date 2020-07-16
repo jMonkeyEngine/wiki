@@ -1,23 +1,19 @@
 = Material Definition Properties
-:author:
-:revnumber:
-:revdate: 2016/03/17 20:48
+:revnumber: 2.0
+:revdate: 2020/07/15
 :keywords: material, texture, MatDefs, light, culling, RenderStates, documentation
-:relfileprefix: ../../
-:imagesdir: ../..
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
 In jMonkeyEngine 3, colors and textures are represented as Material objects.
 
 *  All Geometries must have Materials. To improve performance, reuse Materials for similar models, don't create a new Material object for every Geometry. (E.g. use one bark Material for several tree models.)
-*  Each Material is based on one of jme3's default Material Definitions (.j3md files) that are included in the engine. Advanced users can create additional custom Material Definitions (see how it's done in the <<jme3/build_from_sources#,jme3 sources>>).
+*  Each Material is based on one of jme3's default Material Definitions (.j3md files) that are included in the engine. Advanced users can create additional custom Material Definitions (see how it's done in the xref:jme3/build_from_sources.adoc[jme3 sources]).
 
 
 [TIP]
 ====
 Find out quickly xref:tutorials:intermediate/how_to_use_materials.adoc[How to Use Materials], including the most commonly used code samples and RenderStates. +
-Or find more background info on <<jme3/advanced/material_definitions#,How to use Material Definitions>>.
+Or find more background info on xref:jme3/advanced/material_definitions.adoc[How to use Material Definitions].
 ====
 
 
@@ -31,8 +27,8 @@ The following Materials table shows the Material Definitions that jMonkeyEngine 
 ====
 Looks confusing? +
 1) Start learning about `Unshaded.j3md` and `Lighting.j3md`, they cover 90% of the cases. +
-2) Use <<sdk/material_editing#,the SDK's visual material editor>> to try out and save material settings easily. +
-3) The <<sdk/code_editor#,SDK's Palette>> contains drag&drop code snippets for loading materials.
+2) Use xref:sdk:material_editing.adoc[the SDK's visual material editor] to try out and save material settings easily. +
+3) The xref:sdk:code_editor.adoc[SDK's Palette] contains drag&drop code snippets for loading materials.
 ====
 
 
@@ -62,7 +58,7 @@ a| Standard, non-illuminated Materials.
 
 Use this for simple coloring, texturing, glow, and transparency.
 
-See also: <<jme3/beginner/hello_material#,Hello Material>>
+See also: xref:tutorials:beginner/hello_material.adoc[Hello Material]
 a| *Texture Maps* +
 setTexture("`ColorMap`", assetManager.loadTexture("`name`")); +
 setBoolean("`SeparateTexCoord`",true); +
@@ -90,7 +86,7 @@ a| Usage
 Sky.j3md
 a| A solid sky blue, or use with a custom SkyDome texture.
 
-See also: <<jme3/advanced/sky#,Sky>>
+See also: xref:jme3/advanced/sky.adoc[Sky]
 a| setTexture("`Texture`", assetManager.loadTexture("`name`")); +
 setBoolean("`SphereMap`",true); +
 setVector3("`NormalScale`", new Vector3f(0,0,0));
@@ -99,7 +95,7 @@ a| Common/MatDefs/Terrain/ +
 Terrain.j3md
 a| Splat textures for, e.g. terrains.
 
-See also: <<jme3/beginner/hello_terrain#,Hello Terrain>>
+See also: xref:tutorials:beginner/hello_terrain.adoc[Hello Terrain]
 a| setTexture("`Tex1`", assetManager.loadTexture("`name`")); +
 (red) +
 setFloat("`Tex1Scale`",1f); +
@@ -153,7 +149,7 @@ The Quadratic value scales the particle for perspective view. (link:https://gith
 
 Does support an optional colored glow effect.
 
-See also: <<jme3/beginner/hello_effects#,Hello Effects>>
+See also: xref:tutorials:beginner/hello_effects.adoc[Hello Effects]
 a| setTexture("`Texture`", assetManager.loadTexture("`name`")); +
 setTexture("`GlowMap`", assetManager.loadTexture("`name`")); +
 setColor("`GlowColor`", ColorRGBA.White); +
@@ -170,7 +166,7 @@ jMonkeyEngine supports illuminated and unshaded Material Definitions.
 *  Phong Illuminated materials look more naturalistic.
 *  Unshaded materials look more abstract.
 
-Illuminated materials require a <<jme3/advanced/light_and_shadow#,light source>> added to at least one of their parent nodes! (e.g. rootNode.) Illuminated materials are darker on the sides facing away from light sources. They use Phong illumination model (default), or the Ward isotropic gaussian specular shader (WardIso) which looks more like plastic. They do not cast <<jme3/advanced/light_and_shadow#,drop shadows>> unless you use a FilterPostProcessor.
+Illuminated materials require a xref:jme3/advanced/light_and_shadow.adoc[light source] added to at least one of their parent nodes! (e.g. rootNode.) Illuminated materials are darker on the sides facing away from light sources. They use Phong illumination model (default), or the Ward isotropic gaussian specular shader (WardIso) which looks more like plastic. They do not cast xref:jme3/advanced/light_and_shadow.adoc[drop shadows] unless you use a FilterPostProcessor.
 
 [cols="20,30,50", options="header"]
 .Standard Illuminated
@@ -188,7 +184,7 @@ Use this material together with DiffuseMap, SpecularMap, BumpMap (NormalMaps, Pa
 
 Supports shininess, transparency, and plain material colors (Diffuse, Ambient, Specular).
 
-See also: <<jme3/beginner/hello_material#,Hello Material>>
+See also: xref:tutorials:beginner/hello_material.adoc[Hello Material]
 <a| *Texture Maps* +
 setTexture("`DiffuseMap`", assetManager.loadTexture("`name`")); +
 setBoolean("`UseAlpha`",true); footnote:[UseAlpha specifies whether DiffuseMap uses the alpha channel]  +
@@ -453,4 +449,4 @@ a|Use this when you have meshes that have triangles really close to each over (e
 
 *Related Links*
 
-*  <<jme3/advanced/material_specification#,Developer specification of the jME3 material system (.j3md,.j3m)>>
+*  xref:jme3/advanced/material_specification.adoc[Developer specification of the jME3 material system (.j3md,.j3m)]
