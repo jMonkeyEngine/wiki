@@ -1,21 +1,16 @@
 = Level of Detail (LOD) Optimization
-:author:
-:revnumber:
-:revdate: 2016/03/17 20:48
-:relfileprefix: ../../
-:imagesdir: ../..
-:experimental:
+:revnumber: 2.0
+:revdate: 2020/07/15
 :uri-jme3: https://github.com/jMonkeyEngine/jmonkeyengine/blob/master
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
 A mesh with a high level of detail has lots of polygons and looks good close up. But when the mesh is further away (and the detail is not visible), the high-polygon count slows down performance unnecessarily.
 
-One solution for this problem is to use high-detail meshes for objects close to the camera, and low-detail meshes for objects far from the camera. As the player moves through the scene, you must keep replacing close objects by more detailed meshes, and far objects by less detailed meshes. The goal is to keep few high-quality slow-rendering objects in the foreground, and many low-quality fast-rendering objects in the background. (Experienced users can compare this approach to <<jme3/advanced/terrain#,JME's TerraMonkey terrain system>>, which internally uses the specialized GeoMipMapping algorithm to generate a terrain's Levels of Detail.)
+One solution for this problem is to use high-detail meshes for objects close to the camera, and low-detail meshes for objects far from the camera. As the player moves through the scene, you must keep replacing close objects by more detailed meshes, and far objects by less detailed meshes. The goal is to keep few high-quality slow-rendering objects in the foreground, and many low-quality fast-rendering objects in the background. (Experienced users can compare this approach to xref:jme3/advanced/terrain.adoc[JME's TerraMonkey terrain system], which internally uses the specialized GeoMipMapping algorithm to generate a terrain's Levels of Detail.)
 
 You see now why you may want to be able to generate Levels of Detail for complex Geometries automatically. JME3 supports a Java implementation of the Ogre engine's LOD generator (originally by Péter Szücs and Stan Melax): You use link:{uri-jme3}/jme3-core/src/tools/java/jme3tools/optimize/LodGenerator.java[jme3tools.optimize.LodGenerator] in conjunction with link:{uri-jme3}/jme3-core/src/main/java/com/jme3/scene/control/LodControl.java[com.jme3.scene.control.LodControl].
 
-For a demo, run link:{uri-jme3}/jme3-examples/src/main/java/jme3test/stress/TestLodGeneration.java[TestLodGeneration.java] from <<sdk/sample_code#,JmeTests>>, then press +/- and spacebar to experiment. The following screenshots show a monkey model with three reduced Levels of Detail:
+For a demo, run link:{uri-jme3}/jme3-examples/src/main/java/jme3test/stress/TestLodGeneration.java[TestLodGeneration.java] from xref:sdk:sample_code.adoc[JmeTests], then press +/- and spacebar to experiment. The following screenshots show a monkey model with three reduced Levels of Detail:
 
 image::jme3/advanced/jmonkey-lod.gif[jmonkey-lod.gif,width="",height="",align="center"]
 
@@ -170,4 +165,4 @@ the lower the quality.
 *  link:https://github.com/worldforge/ember/tree/master/src/components/ogre/lod[https://github.com/worldforge/ember/tree/master/src/components/ogre/lod]
 *  link:http://www.melax.com/polychop[http://www.melax.com/polychop]
 *  link:http://sajty.elementfx.com/progressivemesh/GSoC2012.pdf[http://sajty.elementfx.com/progressivemesh/GSoC2012.pdf]
-*  <<jme3/advanced/terrain#,JME3 TerraMonkey Terrain>>
+*  xref:jme3/advanced/terrain.adoc[JME3 TerraMonkey Terrain]
