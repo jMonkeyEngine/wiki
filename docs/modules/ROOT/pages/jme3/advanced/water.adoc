@@ -24,12 +24,12 @@ A JME3 scene with water can use a `com.jme3.water.SimpleWaterProcessor` (which i
 To achieve a water effect, JME3 uses shaders and a special material, `Common/MatDefs/Water/SimpleWater.j3md`. The water surface is a quad, and we use normal map and dU/dV map texturing to simulate the waves.
 
 .  Every frame, we render to three texture maps:
-**  For the water surface (reflection), we take a snapshot of the environment, flip it upside down, and clip it to the visible water surface. Note that we do not actually use a “water texture color map: The “texture of the water is solely a distorted reflection.
-**  For the “wavy distortion (refraction), we use the derivative of a normal map, a dU/dV map.
+**  For the water surface (reflection), we take a snapshot of the environment, flip it upside down, and clip it to the visible water surface. Note that we do not actually use a "`water`" texture color map: The "`texture`" of the water is solely a distorted reflection.
+**  For the "`wavy`" distortion (refraction), we use the derivative of a normal map, a dU/dV map.
 **  For the fogginess of water (depth) we use a depth map from the terrains z-buffer.
 
 .  In the shaders, we add all of the texture maps together.
-**  For the “bumpy displacement of the waves, we use a normal map and a du/dv map that are shifted against each other over time to create the wave effect.
+**  For the "`bumpy`" displacement of the waves, we use a normal map and a du/dv map that are shifted against each other over time to create the wave effect.
 **  For the light reflection vectors on the water surface, we use the Fresnel formula, together with normal vectors.
 **  We add specular lighting.
 
