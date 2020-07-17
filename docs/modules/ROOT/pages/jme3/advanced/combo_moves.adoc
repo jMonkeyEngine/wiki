@@ -1,6 +1,6 @@
 = Combo Moves
-:author: 
-:revnumber: 
+:author:
+:revnumber:
 :revdate: 2016/03/17 20:48
 :keywords: keyinput, input, documentation
 :relfileprefix: ../../
@@ -10,28 +10,28 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 The ComboMoves class allows you to define combinations of inputs that trigger special actions. Entering an input combo correctly can bring the player incremental rewards, such as an increased chance to hit, an increased effectiveness, or decreased change of being blocked, whatever the game designer chooses. link:http://en.wikipedia.org/wiki/Combo_%28video_gaming%29[More background info]
 
-Combos are usually a series of inputs, in a fixed order: For example a keyboard combo can look  like: “press Down, then Down+Right together, then Right. 
+Combos are usually a series of inputs, in a fixed order: For example a keyboard combo can look  like: “press Down, then Down+Right together, then Right.
 
 Usage:
 
-.  Create input triggers 
+.  Create input triggers
 .  Define combos
-.  Detect combos in ActionListener 
-.  Execute combos in update loop 
+.  Detect combos in ActionListener
+.  Execute combos in update loop
 
 Copy the two classes ComboMoveExecution.java and ComboMove.java into your application and adjust them to your package paths.
 
 
 == Example Code
 
-*  link:http://code.google.com/p/jmonkeyengine/source/browse/trunk/engine/src/test/jme3test/input/combomoves/TestComboMoves.java[TestComboMoves.java]
-*  link:http://code.google.com/p/jmonkeyengine/source/browse/trunk/engine/src/test/jme3test/input/combomoves/ComboMoveExecution.java[ComboMoveExecution.java] ← required
+*  link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/d57c362ec3b510c1ba6356f719efa3b1576b95c6/jme3-examples/src/main/java/jme3test/input/combomoves/ComboMove.java[TestComboMoves.java]
+*  link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/d57c362ec3b510c1ba6356f719efa3b1576b95c6/jme3-examples/src/main/java/jme3test/input/combomoves/ComboMoveExecution.java[ComboMoveExecution.java] ← required
 *  link:http://code.google.com/p/jmonkeyengine/source/browse/trunk/engine/src/test/jme3test/input/combomoves/ComboMove.java[ComboMove.java] ← required
 
 
 == Create Input Triggers
 
-First you <<jme3/advanced/input_handling#,define your game's inputs>> as you usually do: Implement the com.jme3.input.controls.ActionListener interface for your class, and add triggers mappings such as com.jme3.input.controls.KeyTrigger and com.jme3.input.KeyInput. 
+First you <<jme3/advanced/input_handling#,define your game's inputs>> as you usually do: Implement the com.jme3.input.controls.ActionListener interface for your class, and add triggers mappings such as com.jme3.input.controls.KeyTrigger and com.jme3.input.KeyInput.
 
 For example:
 
@@ -51,7 +51,7 @@ inputManager.addListener(this, "Left", "Right", "Up", "Down", "Attack1");
 
 == Define Combos
 
-For each of  your combo moves, you specify the series of inputs that will trigger it. The order in which you define them is the order the player has to press them for the step to be recorded. When all steps have been recorded, the combo is triggered. 
+For each of  your combo moves, you specify the series of inputs that will trigger it. The order in which you define them is the order the player has to press them for the step to be recorded. When all steps have been recorded, the combo is triggered.
 
 The following example shows how a fireball combo move is triggered by pressing the navigation keys for “down, down+right, right, in this order.
 
@@ -131,7 +131,7 @@ a|Returns the priority of this move
 
 Now that you have specified the combo steps, you want to detect them. You do that in the onAction() method that you get from the ActionListener interface.
 
-Create a HashSet `pressMappings` to track curently pressed mappings, and a ComboMove object `currentMove` to track the current move. 
+Create a HashSet `pressMappings` to track curently pressed mappings, and a ComboMove object `currentMove` to track the current move.
 
 We also track the cast time of a combo to determine if it has timed out (see update loop below).
 
@@ -193,7 +193,7 @@ Now that you have detected the current move, you want to execute it. You do that
 @Override
 public void simpleUpdate(float tpf){
     time += tpf;
-    fireballExec.updateExpiration(time); 
+    fireballExec.updateExpiration(time);
     // ... update more ComboExecs here....
 
     if (currentMove != null){
