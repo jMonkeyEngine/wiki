@@ -1,18 +1,14 @@
 = Bloom and Glow
-:author: 
-:revnumber: 
-:revdate: 2016/03/17 20:48
+:revnumber: 2.0
+:revdate: 2020/07/22
 :keywords: documentation, effect, light
-:relfileprefix: ../../
-:imagesdir: ../..
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
 Bloom is a popular shader effect in 3D games industry. It usually consist in displaying a glowing halo around light sources or bright areas of a scene.
 In practice, the bright areas are extracted from the rendered scene, blurred and finally added up to the render.
 
 Those images gives an idea of what bloom does. The left image has no bloom effect, the right image does. +
-image:jme3/advanced/nobloomsky.png[No bloom,width="",height=""]image:jme3/advanced/blomsky.png[Bloom,width="",height=""]
+image:effect/nobloomsky.png[No bloom,width="",height=""]image:effect/blomsky.png[Bloom,width="",height=""]
 
 
 == Bloom Usage
@@ -36,30 +32,30 @@ Here are the parameters that you can tweak :
 [cols="4", options="header"]
 |===
 
-<a| Parameter           
-<a| Method                
-a| Default 
-a| Description 
+<a| Parameter
+<a| Method
+a| Default
+a| Description
 
-<a| blur scale              
-a| `setBlurScale(float)` 
-<a|1.5f  
-a| the scale of the bloom effect, but be careful, high values does artifacts 
+<a| blur scale
+a| `setBlurScale(float)`
+<a|1.5f
+a| the scale of the bloom effect, but be careful, high values does artifacts
 
-<a| exposure Power              
-a| `setExposurePower(float)` 
-<a|5.0f  
-a| the glowing channel color is raised to the value power 
+<a| exposure Power
+a| `setExposurePower(float)`
+<a|5.0f
+a| the glowing channel color is raised to the value power
 
-<a| exposure cut-off              
-a| `setExposureCutOff(float)` 
-<a|0.0f  
-a| the threshold of color to bloom during extraction 
+<a| exposure cut-off
+a| `setExposureCutOff(float)`
+<a|0.0f
+a| the threshold of color to bloom during extraction
 
-<a| bloom intensity              
-a| `setBloomIntensity(float)` 
-<a|2.0f  
-a| the resulting bloom value is multiplied by this intensity 
+<a| bloom intensity
+a| `setBloomIntensity(float)`
+<a|2.0f
+a| the resulting bloom value is multiplied by this intensity
 
 |===
 
@@ -68,7 +64,7 @@ You'll probably need to adjust those parameters depending on your scene.
 
 == Bloom with a glow map
 
-Sometimes, you want to have more control over what glows and does not glow. 
+Sometimes, you want to have more control over what glows and does not glow.
 The bloom filter supports a glow map or a glow color.
 
 
@@ -76,11 +72,11 @@ The bloom filter supports a glow map or a glow color.
 
 Let's take the hover tank example bundled with JME3 test data. +
 Here you can see the diffuse map of the tank, and the associated glow map that only contains the parts of the texture that will glow and their glowing color: +
-image:jme3/advanced/tank_diffuse_ss.png[Tank diffuse map,width="",height=""]
-image:jme3/advanced/tank_glow_map_ss.png[Tank glow map,width="",height=""]
+image:effect/tank_diffuse_ss.png[Tank diffuse map,width="",height=""]
+image:effect/tank_glow_map_ss.png[Tank glow map,width="",height=""]
 
 Glow maps work with Lighting.j3md, Particles.j3md and Unshaded.j3md material definitions.
-The tank material looks like this : 
+The tank material looks like this :
 
 [source]
 ----
@@ -122,7 +118,7 @@ The glow map is defined here : *GlowMap : Models/HoverTank/tank_glow_map_highres
 ----
 
 Here is the result : +
-image:jme3/advanced/tanlglow1.png[Glowing hover tank,width="",height=""]
+image:effect/tanlglow1.png[Glowing hover tank,width="",height=""]
 
 
 == Bloom with a glow color
@@ -146,7 +142,7 @@ In this case you'll need to use the glow color parameter.
     mat.setColor("Color", ColorRGBA.Green);
     mat.setColor("GlowColor", ColorRGBA.Green);
     fpp=new FilterPostProcessor(assetManager);
-    bloom= new BloomFilter(BloomFilter.GlowMode.Objects);        
+    bloom= new BloomFilter(BloomFilter.GlowMode.Objects);
     fpp.addFilter(bloom);
     viewPort.addProcessor(fpp);
 
@@ -154,7 +150,7 @@ In this case you'll need to use the glow color parameter.
 
 Here is the result on Oto's plasma ball (before and after) : +
 
-image:jme3/advanced/otonobloom.png[Oto's plasma ball is just a big pea,width="400",height="",align="left"]image:jme3/advanced/otoglow.png[Oto's plasma ball radiates incredible power!!!,width="400",height="",align="left"]
+image:effect/otonobloom.png[Oto's plasma ball is just a big pea,width="400",height="",align="left"]image:effect/otoglow.png[Oto's plasma ball radiates incredible power!!!,width="400",height="",align="left"]
 
 
 
@@ -170,7 +166,7 @@ You can reduce the size of the bloom sampling just by using the setDownSamplingF
 ----
 
  BloomFilter bloom=new BloomFilter();
- bloom.setDownSamplingFactor(2.0f); 
+ bloom.setDownSamplingFactor(2.0f);
 
 ----
 
@@ -202,7 +198,7 @@ In your material definition you need to add those lines in the MaterialParameter
 ----
 
  MaterialParameters {
-        
+
         ....
 
         // Texture of the glowing parts of the material
@@ -213,7 +209,7 @@ In your material definition you need to add those lines in the MaterialParameter
 
 ----
 
-Then add the following technique : 
+Then add the following technique :
 
 [source]
 ----
