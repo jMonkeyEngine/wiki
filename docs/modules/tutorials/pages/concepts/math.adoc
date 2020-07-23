@@ -6,7 +6,7 @@ It's a fact of life, math is hard. Unfortunately, 3D graphics require a fair bit
 
 I'll discuss how these are used in the system for the core functionality. Including Transforming, Visibility Determination, Collision Detection, and the Coordinate System. Note, that these are low level details. Further chapters will discuss how to use these various systems from a high level perspective.
 
-To get a visual introduction to math in jME3 for the absolute beginner, check out our xref:intermediate/math_for_dummies.adoc[Math for Dummies] introduction class.
+To get a visual introduction to math in jME3 for the absolute beginner, check out our xref:concepts/math_for_dummies.adoc[Math for Dummies] introduction class.
 
 
 == Coordinate System
@@ -21,7 +21,7 @@ jME uses a Right-Handed coordinate system (as OpenGL does).
 The definition of a coordinate system is defined in jME by the properties sent to Camera. There are no error checks to insure that: 1) the coordinate system is right-handed and 2) The axes are mutually perpendicular. Therefore, if the user sets the axes incorrectly, they are going to experience very odd rendering artifacts (random culling, etc).
 
 
-image::intermediate/coordinate-system.png[coordinate-system.png,width="235",height="210",align="center"]
+image::concepts/coordinate-system.png[coordinate-system.png,width="235",height="210",align="center"]
 
 
 
@@ -91,7 +91,7 @@ See link:{link-javadoc}/com/jme3/math/Matrix3f.html[Matrix3f Javadoc] and link:{
 
 === Definition
 
-A Matrix is typically used as a _linear transformation_ to map vectors to vectors. That is: Y = MX where X is a Vector and M is a Matrix applying any or all transformations (scale, xref:intermediate/rotate.adoc[rotate], translate).
+A Matrix is typically used as a _linear transformation_ to map vectors to vectors. That is: Y = MX where X is a Vector and M is a Matrix applying any or all transformations (scale, xref:concepts/rotate.adoc[rotate], translate).
 
 There are a few special matrices:
 
@@ -340,7 +340,7 @@ These basic operations allow us to convert various rotation representations to Q
 
 === Angle Axis
 
-You might wish to represent your rotations as Angle Axis pairs. That is, you define a axis of rotation and the angle with which to xref:intermediate/rotate.adoc[rotate] about this axis. xref:ROOT:jme3/quaternion.adoc[Quaternions] defines a method `fromAngleAxis` (and `fromAngleNormalAxis`) to create a Quaternion from this pair. This is acutally used quite a bit in jME demos to continually rotate objects. You can also obtain a Angle Axis rotation from an existing Quaternion using `toAngleAxis`.
+You might wish to represent your rotations as Angle Axis pairs. That is, you define a axis of rotation and the angle with which to xref:concepts/rotate.adoc[rotate] about this axis. xref:ROOT:jme3/quaternion.adoc[Quaternions] defines a method `fromAngleAxis` (and `fromAngleNormalAxis`) to create a Quaternion from this pair. This is acutally used quite a bit in jME demos to continually rotate objects. You can also obtain a Angle Axis rotation from an existing Quaternion using `toAngleAxis`.
 
 
 ==== Example - Rotate a Spatial Using fromAngleAxis

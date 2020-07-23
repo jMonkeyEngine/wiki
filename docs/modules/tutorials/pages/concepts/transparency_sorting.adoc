@@ -11,7 +11,7 @@ Hopefully these diagrams help show the futility of it all… I mean the trade of
 The first image I'll show is the 'best case' where all objects are drawn back to front.  I'll then discuss briefly the steps JME goes through to try to make that happen.
 
 
-image::intermediate/transparency_sorting1.png[transparency_sorting1.png,width="600",height="",align="center"]
+image::concepts/transparency_sorting1.png[transparency_sorting1.png,width="600",height="",align="center"]
 
 
 In JME, the opaque layer would generally be placed in the opaque bucket.  All opaque layers are drawn first and within the ability to sort them, they are sorted front to back to prevent overdraw.
@@ -28,7 +28,7 @@ Sorting is done at the object level and it can never be perfect.  It is impossib
 Next I'll show an image of the worst case scenario to show why sorting is important and how your 'best friend' the z-buffer is really transparency's worst enemy.
 
 
-image::intermediate/transparency_sorting2.png[transparency_sorting2.png,width="600",height="",align="center"]
+image::concepts/transparency_sorting2.png[transparency_sorting2.png,width="600",height="",align="center"]
 
 
 This is what will happen if you put all of your objects in the opaque buffer.  JME will sort them front to back and you will get these strange 'windows' into your background.
@@ -43,7 +43,7 @@ Because sorting is done at the object level, you may have triangle to triangle o
 Finally, I'll augment the worst case sorting with something like `alphaDiscardThreshold` (or the old alphaTest/alphaFalloff values).  In this example, let's pretend we only discard pixels with alpha = 0.
 
 
-image::intermediate/transparency_sorting3.png[transparency_sorting3.png,width="600",height="",align="center"]
+image::concepts/transparency_sorting3.png[transparency_sorting3.png,width="600",height="",align="center"]
 
 
 It's better but not perfect.  Any partially transparent pixels will still show the issue.  Partial transparency will drive you crazy if you let it.

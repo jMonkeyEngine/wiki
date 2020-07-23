@@ -1,11 +1,6 @@
 = Physically Based Rendering – Part one
-:author:
-:revnumber:
-:revdate: 2018/01/15 23:16
-:relfileprefix: ../../
-:imagesdir: ../..
-:experimental:
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:revnumber: 2.0
+:revdate: 2020/07/23
 
 
 I’ve been looking at Physically Based Rendering (PBR from now on) since a few weeks, because that’s what all the cool kids are talking about these days. I read almost all the interweb about it and finally somehow wrapped my head around the mechanics behind the concept.
@@ -63,14 +58,14 @@ A material can now be described with 3 parameters :
 
 *Metalness :* The degree of metallicity of the material. What does that mean? is your material rather metallic or rather not (non metallic materials are called dielectric materials in the literature). Some implementation calls that parameter “specular”, but I found it pretty misleading as it’s completely different as the specular we know today. In practice, just start out with extreme values to get the feel for it: 1 for metallic, 0 for dielectric.
 
-image::jme3/advanced/metalness.png[metalness,width="320",height="250",align="center"]
+image::articles/pbr/metalness.png[metalness,width="320",height="250",align="center"]
 Here is the same material with metalness of 0 (dielectric) on the left and 1 (metallic) on the right.
 
 Of course there are intermediary values, but from my reading, most dielectric material should vary from 0.04 and 0.1, and metallic are usually 1. Those values are based on real life measures and you can find some references about them link:https://seblagarde.wordpress.com/2012/04/30/dontnod-specular-and-glossiness-chart/[here] and link:https://seblagarde.wordpress.com/2014/04/14/dontnod-physically-based-rendering-chart-for-unreal-engine-4/[here]. Note that those values are not subject to interpretation, and are “known” factors and artist may follow them if they want to keep realistic look.
 
 *Roughness :* The degree of roughness of the material : Is your material smooth or rough. 0 means smooth, 1 means rough. Some implementations refer to this as Smoothness or Glossiness. That’s essentially the same except it’s the other way around. 1 is smooth and 0 is rough. I find the term “Roughness” pretty much self explanatory and doesn’t leave room for misinterpretation.
 
-image::jme3/advanced/Roughness.png[Roughness,width="320",height="250",align="center"]
+image::articles/pbr/Roughness.png[Roughness,width="320",height="250",align="center"]
 Here is the same material with different level of roughness from 0 (left) to 1 (right). As opposed to metalness, this parameter is very artist driven. The roughness of a material does not really depend on physics, it’s more related to micro scratches, wearing, etc… So that’s where artists should be creative!
 
 These parameters are the basics of PBR. Of course, each of them can be stored in a texture, and more common additional parameters can be used.
