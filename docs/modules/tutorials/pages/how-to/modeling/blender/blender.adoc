@@ -20,10 +20,10 @@ Game-compatible models are models that basically only consist of a mesh and UV-m
 
 To successfully import a texture, the texture *has to* be UV-mapped to the model. Heres how to assign "`Diffuse`", "`Normal`" and "`Specular`" maps:
 
-image::jme3/external/blender-material-4.png[blender-material-4.png,width="",height=""]
-image::jme3/external/blender-material-3.png[blender-material-3.png,width="",height=""]
-image::jme3/external/blender-material-2.png[blender-material-2.png,width="",height=""]
-image::jme3/external/blender-material-1.png[blender-material-1.png,width="",height=""]
+image::how-to/modeling/blender/blender-material-4.png[blender-material-4.png,width="",height=""]
+image::how-to/modeling/blender/blender-material-3.png[blender-material-3.png,width="",height=""]
+image::how-to/modeling/blender/blender-material-2.png[blender-material-2.png,width="",height=""]
+image::how-to/modeling/blender/blender-material-1.png[blender-material-1.png,width="",height=""]
 
 It's important to note that each used texture will create one separate geometry. So it's best to either combine the UV maps or use a pre-made atlas with different texture types from the start and then map the uv coords of the models to the atlas instead of painting on the texture. This works best for large models like cities and space ships.
 
@@ -43,7 +43,7 @@ TIP: Did you know? You can make any model from a box by only using extrusion, th
 ..  Start by placing the cursor at zero.
 ..  Go to the `menu:Add[Armature > Single Bone]` menu and create the root bone.
 +
-image::jme3/external/blender-add-bone.png[blender-add-bone.png,width="",height=""]
+image::how-to/modeling/blender/blender-add-bone.png[blender-add-bone.png,width="",height=""]
 
 ..  Select the bone and go to edit mode (press kbd:[Tab]).
 ..  Select the root bone end and press kbd:[E] to extrude the bone, then start rigging your model this way.
@@ -59,7 +59,7 @@ IMPORTANT: Make sure your armature's location, rotation and scale is applied (se
 ====
 When you parent your mesh to the armature, Blender automatically adds the `Armature` modifier to the mesh.
 
-image:jme3/external/blender-make-armature.png[blender-make-armature.png,width="",height=""]
+image:how-to/modeling/blender/blender-make-armature.png[blender-make-armature.png,width="",height=""]
 ====
 +
 Voila, your model should move when you move the bones in pose mode.
@@ -67,16 +67,16 @@ Voila, your model should move when you move the bones in pose mode.
 .  From the `Info` header, press the btn:[Choose Screen Layout] button and select the `Animation` layout.
 .  In the `Dope Sheet Editor` window, press the btn:[Context] button and select `Action Editor`.
 +
-image::jme3/external/blender-action-editor.png[blender-action-editor.png,width="",height=""]
+image::how-to/modeling/blender/blender-action-editor.png[blender-action-editor.png,width="",height=""]
 
 .  Add an action by pressing the btn:[+] button.
 .  Set the "`Rotation Mode`" of the bone to `Quaternion` or switch later from your "`Rotation Mode`" to `Quaternion` and make a `Keyframe`.
 +
-image::jme3/external/blender-switch-rotationmode.png[blender-switch-rotationmode.png,width="",height=""]
+image::how-to/modeling/blender/blender-switch-rotationmode.png[blender-switch-rotationmode.png,width="",height=""]
 .  Create the ``Keyframe``s (select the model armature and press kbd:[I]) along the timeline.
 +
 --
-image::jme3/external/blender-add-keyframes.png[blender-add-keyframes.png,width="",height=""]
+image::how-to/modeling/blender/blender-add-keyframes.png[blender-add-keyframes.png,width="",height=""]
 
 Each action will be an animation available via the animation control in jME after the import.
 
@@ -96,11 +96,11 @@ TIP: This checklist is interactive for your convenience.
 * [ ] The animation has to be a *bone animation*.
 * [ ] Apply Location, Rotation and Scale to the mesh in Blender: In the `3D Viewport` in Blender, select the mesh in `Object Mode`, from the `3D View Editor` header, click `menu:Object[Apply > Location / Rotation / Scale]`.
 +
-image::jme3/external/blender_apply_mesh.png[blender_apply_mesh.png,width="300",height=""]
+image::how-to/modeling/blender/blender_apply_mesh.png[blender_apply_mesh.png,width="300",height=""]
 
 * [ ] Apply Location, Rotation and Scale to the armature in Blender: In the `3D Viewport` in Blender, select the armature in `Object Mode`, from the `3D View Editor` header, click `menu:Object[Apply > Location / Rotation / Scale]`.
 +
-image::jme3/external/blender_apply_bones.png[blender_apply_bones.png,width="300",height=""]
+image::how-to/modeling/blender/blender_apply_bones.png[blender_apply_bones.png,width="300",height=""]
 
 * [ ] Set the mesh’s origin point in the bottom of the mesh (see the image below).
 * [ ] Set the armature’s origin point in the bottom of the armature (see the image below).
@@ -112,12 +112,12 @@ image::jme3/external/blender_apply_bones.png[blender_apply_bones.png,width="300"
 --
 on the Armature modifier for the mesh (see the image below).
 
-image::jme3/external/blender_envelopes.png[blender_envelopes.png,width="300",height=""]
+image::how-to/modeling/blender/blender_envelopes.png[blender_envelopes.png,width="300",height=""]
 --
 * [ ] Under the armature data tab, make sure the bone type is `Octahedral` (see image below).
 //*  Uncheck "`Envelopes`" checkbox on the armature (see the image below).
 +
-image::jme3/external/blender_rootbone2.png[blender_rootbone2.png,width="",height=""]
+image::how-to/modeling/blender/blender_rootbone2.png[blender_rootbone2.png,width="",height=""]
 
 
 You can use `SkeletonDebugger` to show the skeleton on your game in order to check if the mesh and the skeleton are loaded correctly:
@@ -146,7 +146,7 @@ skeletonDebug.setMaterial(mat);
 soldier2Node.attachChild(skeletonDebug);
 ----
 
-image::jme3/external/blender_finished.png[blender_finished.png,width="500",height=""]
+image::how-to/modeling/blender/blender_finished.png[blender_finished.png,width="500",height=""]
 
 Also check out these videos and resources:
 
@@ -194,14 +194,14 @@ Models for live rendering should have a low polygon count. To increase the perce
 .Method 1
 If you use the `Multiresolution` modifier you only need one object. Let's look at this example, the Blender object Monkey, with an applied `Triangulate` modifier:
 
-image::jme3/external/monkey.png[monkey.png,width="50%",height=""]
+image::how-to/modeling/blender/monkey.png[monkey.png,width="50%",height=""]
 
 .  Add a "`Monkey`" object by selecting the btn:[Monkey] button located on the "`Create Tab`".
 .. While in `Object Mode`, in the `Properties` panel under the `Modifiers` tab, add a `Triangulate` modifier and apply it:
 ..  While in `Object Mode`, in the `Properties` panel under the `Modifiers` tab, add a `Multiresolution` modifier:
 +
 --
-image::jme3/external/3.1.gif[3.1.gif,width="300",height=""]
+image::how-to/modeling/blender/3.1.gif[3.1.gif,width="300",height=""]
 
 There are two types of modifiers: Catmull-Clark and Simple.
 
@@ -214,7 +214,7 @@ Regardless of the choice, the larger the difference is between "`Render`" and "`
 
 *  Here is an example of `Preview 1`, it's more smooth than the original mesh:
 
-image::jme3/external/monkeyprev1.png[monkkeyprev1.png,width="50%",height=""]
+image::how-to/modeling/blender/monkeyprev1.png[monkkeyprev1.png,width="50%",height=""]
 --
 .  From the `File` header at the top of the 3d View, click the btn:[Choose Screen layout] button and select "`UV Editing`".
 .  In the `3d View`, select the Monkey and kbd:[Tab] into "`Edit Mode`".
@@ -233,7 +233,7 @@ image::jme3/external/monkeyprev1.png[monkkeyprev1.png,width="50%",height=""]
 .  Now go into the `Render` tab, and bake a `Normal` map using the same configuration as here:
 +
 --
-image::jme3/external/4.gif[4.gif,width="300",height=""]
+image::how-to/modeling/blender/4.gif[4.gif,width="300",height=""]
 
 IMPORTANT: Remember! The actual preview affects the baking output and mesh export!
 --
@@ -243,7 +243,7 @@ IMPORTANT: Remember! The actual preview affects the baking output and mesh expor
 TIP: The asterisk kbd:[*] next to the `Image` menu item means the image has not yet been saved.
 
 .Normal map from Method 1
-image::jme3/external/monkey_bump.png[monkey_bump.png,width="50%",height=""]
+image::how-to/modeling/blender/monkey_bump.png[monkey_bump.png,width="50%",height=""]
 
 This second method produces the best results by far:
 
@@ -278,7 +278,7 @@ You are either missing the image for the "`LowPoly`" model, or in the Outliner, 
 ====
 
 .Normal map from Method 2
-image::jme3/external/monkey_bump2.png[monkey_bump2.png,width="50%",height=""]
+image::how-to/modeling/blender/monkey_bump2.png[monkey_bump2.png,width="50%",height=""]
 
 === Fixing the Normal colors in Blender
 
@@ -297,7 +297,7 @@ To do this after baking and saving the original Normal map image:
 .  Save the inverted image to a destination you want and use it with the JME Lighting Material and the "`LowPoly`" version of the model.
 
 .Normal map invert results (Method 2 example)
-image::jme3/external/monkey_bump2_invert.png[monkey_bump2_invert.png,width="50%",height=""]
+image::how-to/modeling/blender/monkey_bump2_invert.png[monkey_bump2_invert.png,width="50%",height=""]
 
 [TIP]
 .Inverting Tips
@@ -314,7 +314,7 @@ You can also use the SDK to invert the channel:
 This is what the final outcome of Normal map baking should produce for you. A "`LowPoly`" model that looks like it's a "`HighPoly`" model.
 
 .Final results (Method 2 example)
-image::jme3/external/monkey_final.gif[monkey_final.gif,width="",height=""]
+image::how-to/modeling/blender/monkey_final.gif[monkey_final.gif,width="",height=""]
 
 
 == LightMap baking
@@ -325,7 +325,7 @@ The goal of this tutorial is to explain briefly how to bake light map in blender
 === Blender modeling + texturing
 
 *  create a mesh in blender and unwrap it to create uvs
-**  image:jme3/advanced/1.jpg[1.jpg,width="600",height=""]
+**  image:how-to/modeling/blender/1.jpg[1.jpg,width="600",height=""]
 
 
 *  In the mesh tab you can see the sets of Uvs, it will create the first one.
@@ -335,15 +335,15 @@ The goal of this tutorial is to explain briefly how to bake light map in blender
 *  In the 3D view in edit mode select all your mesh vertice and hit 'U'/LightMap pack then ok it will unfold the mesh for light map.
 *  Create a new image, go to the render tab an all at the end check the "`Bake`" section and select shadows. Then click bake.
 *  If all went ok it will create a light map like this.
-**  image:jme3/advanced/2.jpg[2.jpg,width="600",height=""]
+**  image:how-to/modeling/blender/2.jpg[2.jpg,width="600",height=""]
 
 *  Go to the material tab, create a new one for your model and go to the Texture Tab.
 *  Create 2 textures one for the color map, and one for the light map.
 *  In the Mapping section be sure to select coordinates : UV and select the good set of coordinates.
-**  image:jme3/advanced/3.jpg[3.jpg,width="600",height=""]
+**  image:how-to/modeling/blender/3.jpg[3.jpg,width="600",height=""]
 
 *  Then the light map
-**  image:jme3/advanced/4.jpg[4.jpg,width="600",height=""]
+**  image:how-to/modeling/blender/4.jpg[4.jpg,width="600",height=""]
 
 
 
@@ -354,10 +354,10 @@ Once this is done, export your model with one of the 3D model xref:jme3/features
 *  Create material for it using the lighting definition.
 *  Add the colorMap in the diffuse map slot and the lightMap in the light map slot.
 *  Make sure you check "`SeparateTexCoords`"
-**  image:jme3/advanced/5.jpg[5.jpg,width="600",height=""]
+**  image:how-to/modeling/blender/5.jpg[5.jpg,width="600",height=""]
 
 *  It should roughly result in something like that :
-**  image:jme3/advanced/6.jpg[6.jpg,width="600",height=""]
+**  image:how-to/modeling/blender/6.jpg[6.jpg,width="600",height=""]
 
 
 == Modelling racing tracks and cars
@@ -378,7 +378,7 @@ There are several ways to create static images to use for a sky in your game. Th
 
 A sky box is a texture mapped cube, it can also, loosely, be called en EnvMap or a CubeMap. The camera is inside the cube and the clever thing that jME does is to draw the sky so it is always behind whatever else is in your scene. Imagine the monkey is the camera in the picture.
 
-*  image:jme3/external/skybox-concept.png[skybox-concept.png,width="",height=""]
+*  image:how-to/modeling/blender/skybox-concept.png[skybox-concept.png,width="",height=""]
 
 But a real sky is not a box around our heads, it is more like a sphere. So if we put any old image in the sky it will look strange and might even look like a box. This is not what we want. The trick is to distort the image so that it will _look_ like a sphere even if it in fact is a picture pasted on a box. Luckily blender can do that tricky distortion for us.
 
@@ -387,24 +387,24 @@ The screenshots are from Blender 2.63 but the equivalent operations have been in
 So let's get started
 
 *  Fire up blender and you'll see something like this.
-**  image:jme3/external/start-screen2.png[start-screen2.png,width="",height=""]
+**  image:how-to/modeling/blender/start-screen2.png[start-screen2.png,width="",height=""]
 
 *  The cube in the start scene is perfect for us. What we'll do is have Blender render the scene onto that cube. The resulting image is what we'll use for our sky box. So our jME sky will look like we stood inside the blender box and looked out on the scene in blender.
 *  Start by selecting the box and set its material to shadeless.
-**  image:jme3/external/shadeless.png[shadeless.png,width="",height=""]
+**  image:how-to/modeling/blender/shadeless.png[shadeless.png,width="",height=""]
 
 *  Now we will create a texture for the box. Make sure the texture is an `Environment Map`, that the `Viewpoint Object` is set to the cube. The resolution is how large the resulting image will be. More pixels makes the sky look better but comes at the cost of texture memory. You'll have to trim the resolution to what works in your application.
-**  image:jme3/external/texture.png[texture.png,width="",height=""]
+**  image:how-to/modeling/blender/texture.png[texture.png,width="",height=""]
 
 *  Next up is the fun part, create the sky scene in blender. You can do whatever fits your application, include models for a city landscape, set up a texture mapped sphere in blender with a nice photographed sky, whatever you can think will make a good sky. I am not so creative so I created this scene:
-**  image:jme3/external/scene.png[scene.png,width="",height=""]
+**  image:how-to/modeling/blender/scene.png[scene.png,width="",height=""]
 
 *  Now render the scene (press F12). It doesn't actually matter where the camera is in blender but you might see something similar to this:
-**  image:jme3/external/render.png[render.png,width="",height=""]
+**  image:how-to/modeling/blender/render.png[render.png,width="",height=""]
 
 *  You can see that Blender has actually drawn the scene onto the cube. This is exactly what we want. Now to save the image.
 *  Select the texture of the cube and select save environment map.
-**  image:jme3/external/saveenvmap.png[saveenvmap.png,width="",height=""]
+**  image:how-to/modeling/blender/saveenvmap.png[saveenvmap.png,width="",height=""]
 
 *  That is it for Blender. Open the saved image in some image editor (I use the Gimp from link:http://www.gimp.org[http://www.gimp.org] here).
 
@@ -416,7 +416,7 @@ The SDK also contains an image editor, right-click the image and select "`edit`"
 
 
 *  You will notice that Blender has taken the 6 sides of the cube and pasted together into one image (3x2). So now we need to cut it up again into 6 separate images. In gimp I usually set the guides to where I want to cut and then go into Filters→Web→Slice and let gimp cut it up for me.
-**  image:jme3/external/post-slice.png[post-slice.png,width="",height=""]
+**  image:how-to/modeling/blender/post-slice.png[post-slice.png,width="",height=""]
 
 *  Next up is to move the image files into your assets directory and create the sky in jME. You can do that in the Scene Composer by right clicking the scene node, select `Add Spatial` and then select `Skybox`.
 
