@@ -1,13 +1,9 @@
 = Light and Shadow
-:author:
-:revnumber:
-:revdate: 2016/03/17 20:48
-:relfileprefix: ../../
-:imagesdir: ../..
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:revnumber: 2.0
+:revdate: 2020/07/22
 
 
-image::jme3/advanced/shading-ani.gif[Examples of shading and lighting.,width="",height=""]
+image::light/shading-ani.gif[Examples of shading and lighting.,width="",height=""]
 
 Light and Shadow are two separate things in 3D engines, although we percieve them together in real life:
 
@@ -24,8 +20,7 @@ A light source with a direction or location is required for all Geometries with 
 
 == Light Sources and Colors
 
-[.right.text-left]
-image::jme3/advanced/light-sources.png[A lit scene with multiple light sources,width="300",height="200",align="right"]
+image::light/light-sources.png[A lit scene with multiple light sources,width="300",height="200"]
 
 
 You can add several types of light sources to a scene using `rootNode.addLight(mylight)`.
@@ -46,14 +41,10 @@ You can get a list of all lights added to a Spatial by calling `getWorldLightLis
 
 === PointLight
 
-[.float-group]
---
-[.right.text-left]
-image::jme3/advanced/elephant-pointlights.png[An elephant model illuminated by pointlights,width="300",height="205",align="right"]
+image::light/elephant-pointlights.png[An elephant model illuminated by pointlights,width="300",height="205"]
 
 
 A PointLight has a location and shines from there in all directions as far as its radius reaches. The light intensity decreases with increased distance from the light source. A PointLight can be used to cast shadows along with a PointLightShadowRenderer (see the Casting Shadows section)
---
 
 *Typical example:* Lamp, lightbulb, torch, candle.
 
@@ -69,14 +60,10 @@ rootNode.addLight(lamp_light);
 
 === DirectionalLight
 
-[.float-group]
---
-[.right.text-left]
-image::jme3/advanced/house-directionallight.png[A house model illuminated with a sun-like directional light,width="300",height="210",align="right"]
+image::light/house-directionallight.png[A house model illuminated with a sun-like directional light,width="300",height="210"]
 
 
 A DirectionalLight has no position, only a direction. It sends out parallel beams of light and is considered “infinitely far away. You typically have one directional light per scene. A DirectionalLight can be used together with shadows.
---
 
 *Typically example:* Sun light.
 
@@ -91,14 +78,10 @@ rootNode.addLight(sun);
 
 === SpotLight
 
-[.float-group]
---
-[.right.text-left]
-image::jme3/advanced/spotlight.png[Spotlight,width="",height="",align="right"]
+image::light/spotlight.png[Spotlight,width="",height=""]
 
 
 A SpotLight sends out a distinct beam or cone of light. A SpotLight has a direction, a position, distance (range) and two angles. The inner angle is the central maximum of the light cone, the outer angle the edge of the light cone. Everything outside the light cone's angles is not affected by the light.
---
 
 *Typical Example:* Flashlight
 
@@ -271,4 +254,4 @@ viewPort.addProcessor(fpp);
 
 ----
 
-image::jme3/advanced/shading-textured-ani.gif[Shading with and without Ambient Occlusion,width="",height=""]
+image::light/shading-textured-ani.gif[Shading with and without Ambient Occlusion,width="",height=""]
