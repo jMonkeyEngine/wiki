@@ -1,14 +1,10 @@
 = jME3 Headless Server
-:author: 
-:revnumber: 
-:revdate: 2016/03/17 20:48
+:revnumber: 2.0
+:revdate: 2020/07/24
 :keywords: server, spidermonkey, headless, network, documentation
-:relfileprefix: ../../
-:imagesdir: ../..
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
-When adding multiplayer to your game, you may find that your server needs to know about game state (e.g. where are players, objects? Was that a direct hit? etc.) You can code all this up yourself, but there's an easier way. 
+When adding multiplayer to your game, you may find that your server needs to know about game state (e.g. where are players, objects? Was that a direct hit? etc.) You can code all this up yourself, but there's an easier way.
 
 It's very easy to change your current (client) game to function as a server as well.
 
@@ -59,6 +55,6 @@ public static void main(String[] args) {
 Okay, so you can now start your game in a headless 'server mode', where to go from here?
 
 *  Parse `String[] args` from the `main`-method to enable server mode on demand (e.g. start your server like `java -jar mygame.jar –server`.
-*  Integrate <<jme3/advanced/networking#,SpiderMonkey>>, to provide game updates to the server over a network.
+*  Integrate xref:networking.adoc.adoc[SpiderMonkey], to provide game updates to the server over a network.
 *  Only execute code that's needed. (E.g. place all rendering code inside an `if (servermode)`-block) (or `if (!servermode)` for the client).
 *  Add decent <<jme3/advanced/logging#,logging>> so your server actually makes sense.
