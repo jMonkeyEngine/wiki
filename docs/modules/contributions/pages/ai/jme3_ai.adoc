@@ -1,6 +1,6 @@
 = jMonkeyEngine Artificial Intelligence
-:revnumber: 2.0
-:revdate: 2020/07/15
+:revnumber: 2.1
+:revdate: 2020/07/24
 
 
 
@@ -84,7 +84,7 @@ CAUTION: Cell size has the greatest impact on your NavMesh. The smaller the cell
 TIP: Selecting the NavMesh node in the SceneExplorer will show the NavMesh in the Terrain Editor or SceneComposer view-port. If it doesn't show, with the NavMesh node selected, change the `Cull Hint` to `Never` in the `NavMesh - Properties` panel.
 
 === Procedural Method
-There are many ways to create a NavMesh. If you look at the constructor for the link:https://github.com/jMonkeyEngine/doc-examples/blob/master/src/com/jme3/examples/jme3ai/Jme3AI.java[Jme3AI.java] file, you will see I use a xref:jme3/advanced/application_states.adoc#baseappstate.adoc[BaseAppState] named link:https://github.com/jMonkeyEngine/doc-examples/blob/master/src/com/jme3/examples/jme3ai/ai/NavMeshState.java[NavMeshState.java] which creates a `generator` object and builds the `NavMesh` new every time the program is ran.
+There are many ways to create a NavMesh. If you look at the constructor for the link:https://github.com/jMonkeyEngine/doc-examples/blob/master/src/com/jme3/examples/jme3ai/Jme3AI.java[Jme3AI.java] file, you will see I use a xref:core:app/state/application_states.adoc#baseappstate[BaseAppState] named link:https://github.com/jMonkeyEngine/doc-examples/blob/master/src/com/jme3/examples/jme3ai/ai/NavMeshState.java[NavMeshState.java] which creates a `generator` object and builds the `NavMesh` new every time the program is ran.
 
 .Jme3AI constructor
 [source, java]
@@ -336,7 +336,7 @@ These are implementation decisions that are left up to you.
 
 === Loading the NavMesh
 
-In this tutorial example, the optimized mesh was exported as a geometry using the jMonkey binary format `.j3o`. Doing so means the loading of your `NavMeshes` is done the same way you load any model, by using the `AssetManager`. Once you load the `.j3o`, you grab its `Mesh` and create the `NavMesh` object to be passed to the link:https://github.com/jMonkeyEngine/doc-examples/blob/master/src/com/jme3/examples/jme3ai/ai/NavigationControl.java[NavigationControl] constructor. This tutorial uses a xref:jme3/advanced/application_states.adoc#baseappstate.adoc[BaseAppState] for model loading so access to the `Application` class is built in.
+In this tutorial example, the optimized mesh was exported as a geometry using the jMonkey binary format `.j3o`. Doing so means the loading of your `NavMeshes` is done the same way you load any model, by using the `AssetManager`. Once you load the `.j3o`, you grab its `Mesh` and create the `NavMesh` object to be passed to the link:https://github.com/jMonkeyEngine/doc-examples/blob/master/src/com/jme3/examples/jme3ai/ai/NavigationControl.java[NavigationControl] constructor. This tutorial uses a xref:core:app/state/application_states.adoc#baseappstate[BaseAppState] for model loading so access to the `Application` class is built in.
 
 [source, java]
 ----

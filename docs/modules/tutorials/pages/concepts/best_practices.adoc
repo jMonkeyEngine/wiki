@@ -192,7 +192,7 @@ Example: Players have *methods* such as `walk(), addGold(), getHealth(), pickUpI
 *Follow the Best Practice:* In general, use composition over inheritance and keep what an entity does (behaviour system) separate from what this entity is (attributes).
 
 *  Use `xref:ROOT:jme3/advanced/spatial.adoc[setUserData()]` to add custom attributes to Spatials.
-*  Use xref:ROOT:jme3/advanced/custom_controls.adoc[Controls] and xref:ROOT:jme3/advanced/application_states.adoc[Application States] to define custom behaviour systems.
+*  Use xref:ROOT:jme3/advanced/custom_controls.adoc[Controls] and xref:core:app/state/application_states.adoc[Application States] to define custom behaviour systems.
 ====
 
 
@@ -207,7 +207,7 @@ If your game is even more complex, you may want to learn about "real" Entity Sys
 
 === The Smart Way to Access Game Features
 
-xref:ROOT:jme3/intermediate/simpleapplication.adoc[SimpleApplication] gives you access to game features such as a the rootNode, assetManager, guiNode, inputManager, audioManager, physicsSpace, viewPort, and the camera. But what if you need this access also from another class? Don't extend SimpleApplication a second time, and don't pass around tons of object references in constructors! Needing access to application level objects is a sign that this class should be designed as an xref:ROOT:jme3/advanced/application_states.adoc[AppState] (read details there).
+xref:ROOT:jme3/intermediate/simpleapplication.adoc[SimpleApplication] gives you access to game features such as a the rootNode, assetManager, guiNode, inputManager, audioManager, physicsSpace, viewPort, and the camera. But what if you need this access also from another class? Don't extend SimpleApplication a second time, and don't pass around tons of object references in constructors! Needing access to application level objects is a sign that this class should be designed as an xref:core:app/state/application_states.adoc[AppState] (read details there).
 
 An AppState has access to all game features in the SimpleApplication via the `this.app` and `this.stateManager` objects. Examples:
 
@@ -223,7 +223,7 @@ this.app.getRootNode().attachChild( sky );
 
 As your SimpleApplication-based game grows more advanced, you find yourself putting more and more interactions in the `simpleUpdate()` loop, and your `simpleInitApp()` methods grows longer and longer. It's a best practice to move blocks of game mechanics into reusable component classes of their own. In jME3, these resuable classes are called `Controls` and `AppStates`.
 
-*  Use xref:ROOT:jme3/advanced/application_states.adoc[AppStates] to implement _global game mechanics_.
+*  Use xref:core:app/state/application_states.adoc[AppStates] to implement _global game mechanics_.
 **  Each AppState calls its own `initialize()` and `cleanup()` methods when it is attached to or detached from the game.
 **  Each AppState runs its own _thread-safe_ `update()` loop that hooks into the main `simpleUpdate()` loop.
 **  You specify what happens if an AppState is paused/unpaused.
@@ -255,7 +255,7 @@ AppStates and Controls are extensions to a SimpleApplication. They are your modu
 ====
 
 
-Read all about xref:ROOT:jme3/advanced/custom_controls.adoc[Custom Controls] and xref:ROOT:jme3/advanced/application_states.adoc[Application States] here.
+Read all about xref:ROOT:jme3/advanced/custom_controls.adoc[Custom Controls] and xref:core:app/state/application_states.adoc[Application States] here.
 
 
 === Optimize Application Performance
