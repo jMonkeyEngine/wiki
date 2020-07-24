@@ -1,11 +1,7 @@
 = Physical Hinges and Joints
-:author: 
-:revnumber: 
-:revdate: 2016/03/17 20:48
+:revnumber: 2.0
+:revdate: 2020/07/24
 :keywords: documentation, physics, joint
-:relfileprefix: ../../
-:imagesdir: ../..
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
 The jMonkeyEngine3 has built-in support for link:http://jbullet.advel.cz[jBullet physics] via the `com.jme3.bullet` package.
@@ -22,21 +18,21 @@ In this example, we will create a pendulum. The joint is the (invisible) connect
 
 == Overview of this Physics Application
 
-.  Create a SimpleApplication with a <<jme3/advanced/physics#,BulletAppState>> 
+.  Create a SimpleApplication with a xref:physics.adoc[BulletAppState]
 **  This gives us a PhysicsSpace for PhysicsControls
 
 .  For the pendulum, we use a Spatial with a PhysicsControl, and we apply physical forces to them.
-**  The parts of the “pendulum are Physics Control'ed Spatials with Collision Shapes. 
-**  We create a fixed `hookNode` and a dynamic `pendulumNode`. 
+**  The parts of the “pendulum are Physics Control'ed Spatials with Collision Shapes.
+**  We create a fixed `hookNode` and a dynamic `pendulumNode`.
 
-.  We can “crank the handle and rotate the joint like a hinge, or we can let loose and expose the joints freely to gravity. 
+.  We can “crank the handle and rotate the joint like a hinge, or we can let loose and expose the joints freely to gravity.
 **  For physical forces we will use the method `joint.enableMotor();`
 
 
 
 == Creating a Fixed Node
 
-The hookNode is the fixed point from which the pendulum hangs. It has no mass. 
+The hookNode is the fixed point from which the pendulum hangs. It has no mass.
 
 [source,java]
 ----
@@ -55,7 +51,7 @@ For a rope bridge, there would be two fixed nodes where the bridge is attached t
 
 == Creating a Dynamic Node
 
-The pendulumNode is the dynamic part of the construction. It has a mass. 
+The pendulumNode is the dynamic part of the construction. It has a mass.
 
 [source,java]
 ----
@@ -68,12 +64,12 @@ getPhysicsSpace().add(pendulumNode);
 
 ----
 
-For a rope bridge, each set of planks would be one dynamic node. 
+For a rope bridge, each set of planks would be one dynamic node.
 
 
 == Understanding DOF, Joints, and Hinges
 
-A PhysicsHingeJoint is an invisible connection between two nodes – here between the pendulum body and the hook. Why are hinges and joints represented by the same class? Hinges and joints have something in common: They constrain the _mechanical degree of freedom_ (DOF) of another object. 
+A PhysicsHingeJoint is an invisible connection between two nodes – here between the pendulum body and the hook. Why are hinges and joints represented by the same class? Hinges and joints have something in common: They constrain the _mechanical degree of freedom_ (DOF) of another object.
 
 Consider a free falling, “unchained object in physical 3D space: It has 6 DOFs:
 
@@ -84,7 +80,7 @@ Now consider some examples of objects with joints:
 
 *  An individual chain link is free to spin and move around, but joined into a chain, the link's movement is restricted to stay with the surrounding links.
 *  A person's arm can rotate around some axes, but not around others. The shoulder joint allows one and restricts the other.
-*  A door hinge is one of the most restricted types of joint: It can only rotate around one axis. 
+*  A door hinge is one of the most restricted types of joint: It can only rotate around one axis.
 
 You'll understand that, when creating any type of joint, it is important to correctly specify the DOFs that the joint restricts, and the DOFs that the joint allows. For the typical DOF of a <<jme3/advanced/ragdoll#,ragDoll>> character's limbs, jME even offers a special joint, `ConeJoint`.
 
@@ -102,11 +98,11 @@ private HingeJoint joint;
     ...
     // hookNode and pendulumNode are created here...
     ...
-    
+
     joint=new HingeJoint(hookNode.getControl(RigidBodyControl.class), // A
                      pendulumNode.getControl(RigidBodyControl.class), // B
                      new Vector3f(0f, 0f, 0f),  // pivot point local to A
-                     new Vector3f(0f, 1f, 0f),  // pivot point local to B 
+                     new Vector3f(0f, 1f, 0f),  // pivot point local to B
                      Vector3f.UNIT_Z,           // DoF Axis of A (Z axis)
                      Vector3f.UNIT_Z  );        // DoF Axis of B (Z axis)
 
@@ -136,7 +132,7 @@ bulletAppState.getPhysicsSpace().add(joint);
 
 == Apply Physical Forces
 
-You can apply forces to dynamic nodes (the ones that have a mass), and see how other joined (“chained) objects are dragged along. 
+You can apply forces to dynamic nodes (the ones that have a mass), and see how other joined (“chained) objects are dragged along.
 
 Alternatively, you can also apply forces to the joint itself. In a game, you may want to spin an automatic revolving door, or slam a door closed in a spooky way, or dramatically open the lid of a treasure chest.
 
@@ -149,7 +145,7 @@ joint.enableMotor(true, -1, .1f);
 ----
 
 .  Switch the motor on by supplying `true`
-.  Specify the velocity with which the joint should rotate around the specified axis. 
+.  Specify the velocity with which the joint should rotate around the specified axis.
 **  Use positive and negative numbers to change direction.
 
 .  Specify the impulse for this motor. Heavier masses need a bigger impulse to be moved.
