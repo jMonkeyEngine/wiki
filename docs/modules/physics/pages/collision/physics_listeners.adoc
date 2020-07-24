@@ -1,11 +1,7 @@
 = Physics Listeners
-:author: 
-:revnumber: 
-:revdate: 2016/03/17 20:48
+:revnumber: 2.0
+:revdate: 2020/07/24
 :keywords: documentation, physics, collision, forces, interaction
-:relfileprefix: ../../
-:imagesdir: ../..
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
 You can control physical objects (push them around) by applying physical forces to them. Typically, you also want to respond to the resulting collisions, e.g. by substracting health points or by playing a sound. To specify how the game responds to such physics events, you use Physics Listeners.
@@ -20,11 +16,11 @@ You can control physical objects (push them around) by applying physical forces 
 
 == PhysicsGhostObjects
 
-Attach a com.jme3.bullet.control.GhostControl to any Spatial to turn it into a PhysicsGhostObject. Ghost objects automatically follow their spatial and detect collisions. The attached ghost itself is invisible and non-solid (!) and doesn't interfere with your game otherwise, it only passively reports collisions. 
+Attach a com.jme3.bullet.control.GhostControl to any Spatial to turn it into a PhysicsGhostObject. Ghost objects automatically follow their spatial and detect collisions. The attached ghost itself is invisible and non-solid (!) and doesn't interfere with your game otherwise, it only passively reports collisions.
 
-You can leave the GhostControl non-solid and invisible and attach it to an (invisible) Node in the scene to create something like a motion detector. But a GhostControl also works fine when added to spatials that are solid (with RigidBodyControl) and visible (with Geometry). One use case for GhostControls is to check for collisions among <<jme3/advanced/walking_character#,CharacterControls>> when the characters are walking.
+You can leave the GhostControl non-solid and invisible and attach it to an (invisible) Node in the scene to create something like a motion detector. But a GhostControl also works fine when added to spatials that are solid (with RigidBodyControl) and visible (with Geometry). One use case for GhostControls is to check for collisions among xref:control/walking_character.adoc[CharacterControls] when the characters are walking.
 
-The shape of the ghost depends on the CollisionShape that you gave the GhostControl. This means that the GhostControl's shape can be different from the RigidBodyControl's shape. For example, the non-solid ghost shape can be bigger than the solid shape of the Spatial (so you can “feel ahead).
+The shape of the ghost depends on the CollisionShape that you gave the GhostControl. This means that the GhostControl's shape can be different from the RigidBodyControl's shape. For example, the non-solid ghost shape can be bigger than the solid shape of the Spatial (so you can "`feel`" ahead).
 
 [source,java]
 ----
@@ -110,7 +106,7 @@ public void physicsTick(PhysicsSpace space, float tpf){
 
 === When (Not) to Use Collision Listener
 
-If you do not implement the Collision Listener interface (com.jme3.bullet.collision.PhysicsCollisionListener), a collisions will just mean that physical forces between solid objects are applied automatically. If you just want “Balls rolling, bricks falling you do not need a listener.
+If you do not implement the Collision Listener interface (com.jme3.bullet.collision.PhysicsCollisionListener), a collisions will just mean that physical forces between solid objects are applied automatically. If you just want "`Balls`" rolling, bricks falling you do not need a listener.
 
 If however you want to respond to a collision event (com.jme3.bullet.collision.PhysicsCollisionEvent) with a custom action, then you need to implement the PhysicsCollisionListener interface. Typical actions triggered by collisions include:
 
@@ -167,27 +163,27 @@ The PhysicsCollisionEvent `event` gives you access to detailed information about
 [cols="2", options="header"]
 |===
 
-<a|Method                        
+<a|Method
 a|Purpose
 
 <a| getObjectA() +
-getObjectB()     
-a| The two participants in the collision. You cannot know in advance whether some node will be recorded as A or B, you always have to consider both cases. 
+getObjectB()
+a| The two participants in the collision. You cannot know in advance whether some node will be recorded as A or B, you always have to consider both cases.
 
-<a| getAppliedImpulse()          
-a| A float value representing the collision impulse 
+<a| getAppliedImpulse()
+a| A float value representing the collision impulse
 
-<a| getAppliedImpulseLateral1()  
-a| A float value representing the lateral collision impulse 
+<a| getAppliedImpulseLateral1()
+a| A float value representing the lateral collision impulse
 
-<a| getAppliedImpulseLateral2()  
-a| A float value representing the lateral collision impulse 
+<a| getAppliedImpulseLateral2()
+a| A float value representing the lateral collision impulse
 
-<a| getCombinedFriction()        
-a| A float value representing the collision friction 
+<a| getCombinedFriction()
+a| A float value representing the collision friction
 
-<a| getCombinedRestitution()     
-a| A float value representing the collision restitution (bounciness) 
+<a| getCombinedRestitution()
+a| A float value representing the collision restitution (bounciness)
 
 |===
 
@@ -198,7 +194,7 @@ Note that after the collision method has been called the object is not valid any
 
 You can improve performance by resricting the number of tests that collision detection has to perform. If you have a case where you are only interested in collisions between certain objects but not others, you can assign sets of physical obejcts to different collision groups.
 
-For example, for a click-to-select, you only care if the selection ray collides with a few selectable objects such as dropped weapons or powerups (one group), but not with non-selectables such as floors or walls (different group). 
+For example, for a click-to-select, you only care if the selection ray collides with a few selectable objects such as dropped weapons or powerups (one group), but not with non-selectables such as floors or walls (different group).
 
 [source,java]
 ----
