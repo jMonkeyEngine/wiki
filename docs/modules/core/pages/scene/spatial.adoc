@@ -25,7 +25,7 @@ a|
 2+a|com.jme3.scene.Spatial
 
 a| Purpose:
-2+a| A Spatial is an abstract data structure that stores user data and transformations (= translation, rotation, scale) of elements of the 3D scene graph. Spatials can be saved and loaded using the xref:jme3/advanced/asset_manager.adoc[Asset Manager].
+2+a| A Spatial is an abstract data structure that stores user data and transformations (= translation, rotation, scale) of elements of the 3D scene graph. Spatials can be saved and loaded using the xref:asset/asset_manager.adoc[Asset Manager].
 
 <a|
 a| com.jme3.scene.Geometry
@@ -33,7 +33,7 @@ a| com.jme3.scene.Node
 
 a| Visibility:
 a| A Geometry represents a *visible* 3D object in the scene graph.
-a| A Node is an *invisible “handle* for a group of Spatials in the scene graph.
+a| A Node is an *invisible "`handle`"* for a group of Spatials in the scene graph.
 
 <a| Purpose:
 a| Use Geometries to represent an object's *look*: Every Geometry contains a polygon mesh and a material, specifying its shape, color, texture, and opacity/transparency. +
@@ -56,7 +56,7 @@ a| rootNode, guiNode, audioNode, a custom grouping node such as vehicleNode or s
 
 [IMPORTANT]
 ====
-You never create a Spatial with `+++<strike>Spatial s = new Spatial();</strike>+++`! A Spatial is an abstract concept, like a mammal (there is no actual creature called “mammal walking around here). You create either a com.jme3.scene.Node or com.jme3.scene.Geometry instance. Some methods, however, require a `Spatial` type as argument: This is because they are able to accept both Nodes and Geometries as arguments. In this case, you simply _cast_ a Node or Geometry to Spatial.
+You never create a Spatial with `+++<strike>Spatial s = new Spatial();</strike>+++`! A Spatial is an abstract concept, like a mammal (there is no actual creature called "`mammal`" walking around here). You create either a com.jme3.scene.Node or com.jme3.scene.Geometry instance. Some methods, however, require a `Spatial` type as argument: This is because they are able to accept both Nodes and Geometries as arguments. In this case, you simply _cast_ a Node or Geometry to Spatial.
 ====
 
 
@@ -66,7 +66,7 @@ You never create a Spatial with `+++<strike>Spatial s = new Spatial();</strike>+
 The polygon xref:jme3/advanced/mesh.adoc[Mesh] inside a Geometry can be one of three things:
 
 *  *Shapes:* The simplest type of Meshes are jME's default xref:jme3/advanced/shape.adoc[Shape]s such as cubes and spheres. You can use several Shapes to build complex Geometries. Shapes are built-in and can be created without using the AssetManager.
-*  *3D Models:* xref:jme3/advanced/3d_models.adoc[3D models and scenes] are also made up of meshes, but are more complex than Shapes. You create Models and Scenes in external 3D Mesh Editors and export them as Ogre XML or Wavefront OBJ. Use the xref:jme3/advanced/asset_manager.adoc[Asset Manager] to load models into a your jME3 game.
+*  *3D Models:* xref:jme3/advanced/3d_models.adoc[3D models and scenes] are also made up of meshes, but are more complex than Shapes. You create Models and Scenes in external 3D Mesh Editors and export them as Ogre XML or Wavefront OBJ. Use the xref:asset/asset_manager.adoc[Asset Manager] to load models into a your jME3 game.
 *  *Custom Meshes:* Advanced users can create xref:jme3/advanced/custom_meshes.adoc[Custom Meshes] programmatically.
 
 
@@ -79,12 +79,12 @@ The second use case is: When you load a model using `loadModel()` from the Asset
 *  If the model is not animated (it has no `xref:jme3/advanced/animation.adoc[AnimControl]`), jME loads a clone. All clones share one mesh object in order to use less memory.
 *  If the model is animated (it has a `xref:jme3/advanced/animation.adoc[AnimControl]`), then `loadModel()` duplicates the mesh for each loaded instance. (Uses more memory, but can animate.)
 
-Usually there is no need to manually use any of the `clone()` methods on models. Using the xref:jme3/advanced/asset_manager.adoc[Asset Manager]'s `loadModel()` method will automatically do the right thing for your models.
+Usually there is no need to manually use any of the `clone()` methods on models. Using the xref:asset/asset_manager.adoc[Asset Manager]'s `loadModel()` method will automatically do the right thing for your models.
 
 
 [NOTE]
 ====
-“Box worlds are not made up of statically cloned `Box()` shapes, this would still be too slow for large worlds. To learn how to make real fast box worlds, search the web for _voxelization_ techniques.
+"`Box`" worlds are not made up of statically cloned `Box()` shapes, this would still be too slow for large worlds. To learn how to make real fast box worlds, search the web for _voxelization_ techniques.
 ====
 
 
@@ -177,12 +177,12 @@ There are two types of culling: Face culling, and view frustrum culling.
 
 *Face culling* means not drawing certain polygons of a mesh. Face culling behaviour is a property of the material.
 
-Usage: The “inside of a mesh (the so called backface) is typically never visible to the player, and as an optimization, the `Back` mode skips calculating all backfaces by default. Activating the `Off` or `Front` modes can be useful when you are debugging xref:jme3/advanced/custom_meshes.adoc[custom meshes] and try to identify accidental inside-out faces.
+Usage: The "`inside`" of a mesh (the so called backface) is typically never visible to the player, and as an optimization, the `Back` mode skips calculating all backfaces by default. Activating the `Off` or `Front` modes can be useful when you are debugging xref:jme3/advanced/custom_meshes.adoc[custom meshes] and try to identify accidental inside-out faces.
 
 You can switch the com.jme3.material.RenderState.FaceCullMode to either:
 
 *  `FaceCullMode.Back` (default) – Only the frontsides of a mesh are drawn. Backface culling is the default behaviour.
-*  `FaceCullMode.Front` – Only the backsides of a mesh are drawn. A mesh with frontface culling will most likely be invisible. Used for debugging “inside-out custom meshes.
+*  `FaceCullMode.Front` – Only the backsides of a mesh are drawn. A mesh with frontface culling will most likely be invisible. Used for debugging "`inside-out`" custom meshes.
 *  `FaceCullMode.FrontAndBack` – Use this to make a mesh temporarily invisible.
 *  `FaceCullMode.Off` – Every side of the mesh is drawn. Looks normal, but slows down large scenes.
 
@@ -193,7 +193,7 @@ Example:
 material.getAdditionalRenderState().setFaceCullMode(FaceCullMode.FrontAndBack);
 ----
 
-*View frustum culling* refers to not drawing (and not even calculating) certain whole models in the scene. At any given moment, half of the scene is behind the player and out of sight anyway. View frustum culling is an optimization to not calculate scene elements that are not visible – elements that are “outside the view frustrum.
+*View frustum culling* refers to not drawing (and not even calculating) certain whole models in the scene. At any given moment, half of the scene is behind the player and out of sight anyway. View frustum culling is an optimization to not calculate scene elements that are not visible – elements that are "`outside`" the view frustrum.
 
 The decision what is visible and what not, is done automatically by the engine (`CullHint.Dynamic`). Optionally, you can manually control whether the engine culls individual spatials (and children) from the scene graph:
 
