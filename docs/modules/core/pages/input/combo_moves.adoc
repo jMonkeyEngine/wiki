@@ -1,16 +1,12 @@
 = Combo Moves
-:author:
-:revnumber:
-:revdate: 2016/03/17 20:48
+:revnumber: 2.0
+:revdate: 2020/07/24
 :keywords: keyinput, input, documentation
-:relfileprefix: ../../
-:imagesdir: ../..
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
 The ComboMoves class allows you to define combinations of inputs that trigger special actions. Entering an input combo correctly can bring the player incremental rewards, such as an increased chance to hit, an increased effectiveness, or decreased change of being blocked, whatever the game designer chooses. link:http://en.wikipedia.org/wiki/Combo_%28video_gaming%29[More background info]
 
-Combos are usually a series of inputs, in a fixed order: For example a keyboard combo can look  like: “press Down, then Down+Right together, then Right.
+Combos are usually a series of inputs, in a fixed order: For example a keyboard combo can look  like: "`press`" Down, then Down+Right together, then Right.
 
 Usage:
 
@@ -31,7 +27,7 @@ Copy the two classes ComboMoveExecution.java and ComboMove.java into your applic
 
 == Create Input Triggers
 
-First you <<jme3/advanced/input_handling#,define your game's inputs>> as you usually do: Implement the com.jme3.input.controls.ActionListener interface for your class, and add triggers mappings such as com.jme3.input.controls.KeyTrigger and com.jme3.input.KeyInput.
+First you xref:input/input_handling.adoc.adoc[define your game's inputs] as you usually do: Implement the com.jme3.input.controls.ActionListener interface for your class, and add triggers mappings such as com.jme3.input.controls.KeyTrigger and com.jme3.input.KeyInput.
 
 For example:
 
@@ -53,7 +49,7 @@ inputManager.addListener(this, "Left", "Right", "Up", "Down", "Attack1");
 
 For each of  your combo moves, you specify the series of inputs that will trigger it. The order in which you define them is the order the player has to press them for the step to be recorded. When all steps have been recorded, the combo is triggered.
 
-The following example shows how a fireball combo move is triggered by pressing the navigation keys for “down, down+right, right, in this order.
+The following example shows how a fireball combo move is triggered by pressing the navigation keys for "`down, down+right, right`", in this order.
 
 [source,java]
 ----
@@ -86,27 +82,27 @@ Use the following ComboMove methods to specify the combo:
 a|ComboMove Method
 a|Description
 
-a|press(“A).done(); +press(“A,“B).done();
+a|press("`A`").done(); +press("`A`","`B`").done();
 a|Combo step is recorded if A is entered. +Combo step is recorded if A and B are entered simultaneously.
 
-a|notPress(“A).done(); +notPress(“A,“B).done();
+a|notPress("`A`").done(); +notPress("`A`","`B`").done();
 a|Combo step is recorded if A is released. +Combo step is recorded if A and B are both released.
 
-a|press(“A).notPress(“B).done();
+a|press("`A`").notPress("`B`").done();
 a|Combo step is recorded if A is entered, and not B
 
-a|press(“A).notPress(“B).timeElapsed(0.11f).done();
+a|press("`A`").notPress("`B`").timeElapsed(0.11f).done();
 a|Combo step is recorded a certain time after A and not B is entered. +etc, etc …
 
 a|setPriority(0.5f);
-a|If there is an ambiguity, a high-priority combo will trigger instead of a low-priority combo. This prevents that a similar looking combo step “hijacks another Combo. Use only once per ComboMove.
+a|If there is an ambiguity, a high-priority combo will trigger instead of a low-priority combo. This prevents that a similar looking combo step "`hijacks`" another Combo. Use only once per ComboMove.
 
 a|setUseFinalState(false); +setUseFinalState(true);
 a|This is the final command of the series. +False: Do not wait on a final state, chain combo steps. (?) +True: This is the final state, do not chain combo steps. (?)
 
 |===
 
-The `press()` and `notPress()` methods accept sets of Input Triggers, e.g. `fireball.press(“A,“B,“C).done()`.
+The `press()` and `notPress()` methods accept sets of Input Triggers, e.g. `fireball.press("`A`","`B`","`C`").done()`.
 
 The following getters give you more information about the game state:
 [cols="2", options="header"]
@@ -216,4 +212,4 @@ Test `currentMove.getMoveName()` and proceed to call methods that implement any 
 Depending on the game genre, the designer can reward the players' intrinsical or extrinsical skills:
 
 *  (intrinsical:) RPGs typically calculate the success of an attack from the character's in-game training level: The player plays the role of a character whose skill level is defined in numbers. RPGs typically do not offer any Combos.
-*  (extrinsical:) Sport and fighter games typically choose to reward the player's “manual skills: The success of a special move solely depends on the player's own dexterity. These games typically offer optional Combos.
+*  (extrinsical:) Sport and fighter games typically choose to reward the player's "`manual`" skills: The success of a special move solely depends on the player's own dexterity. These games typically offer optional Combos.
