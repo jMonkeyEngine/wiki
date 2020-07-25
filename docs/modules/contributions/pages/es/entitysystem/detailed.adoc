@@ -1,6 +1,6 @@
 = detailed
-:revnumber: 2.0
-:revdate: 2020/07/15
+:revnumber: 2.1
+:revdate: 2020/07/25
 
 
 
@@ -11,7 +11,7 @@
 
 This wiki is dedicated to who want to do research about Entity System.
 
-You should 've read a brief introduction here: xref:jme3/contributions/entitysystem/introduction.adoc[jme3:contributions:entitysystem:introduction]
+You should 've read a brief introduction here: xref:es/entitysystem/introduction.adoc[entitysystem:introduction]
 
 And if you still have some concerning you are in the right place!
 
@@ -164,9 +164,9 @@ Short explanation
 .  Regular workload : software that run at regular rate, kind of ballance trade off between performance and complexity
 .  Simple dataflow: the flow of the data is easy to watch, inspect, start stop, manipulate. As the root reason for regular workload!
 
-....
+```
 Ideas similarities here actually is resulted from with decades of history of revolving of the paradigm. That's why you will see the same concepts of Entity system appear every where from a database to a repository. Of course because it have the same root.Check Pros and Cons chapter for full, detailed idea and design goals and successes.
-....
+```
 
 
 == Terms
@@ -184,7 +184,7 @@ Here is some terms will be mentioned below but ussually have misunderstaned or m
 *  Data driven programming
 *  Data driven solution (architecture)
 
-Here is a short one to help you get start quickly : xref:jme3/contributions/entitysystem/terms.adoc[terms]
+Here is a short one to help you get start quickly : xref:es/entitysystem/terms.adoc[terms]
 
 
 == What is NOT an ES ?
@@ -192,14 +192,13 @@ Here is a short one to help you get start quickly : xref:jme3/contributions/enti
 From more 'open' perspective the core elements can be viewed as, but remember the name as a noun can be mislead:
 _This resulted as a dicussion of @pspeed and toolforger, eventually is form a skeptical question, it's really interesting by how we all see this problem confused at first!!_
 
-....
+```
   Entity -> ID. It just binds the components together, in the sense that there is one function that creates a bunch of components with the same ID, and one function to destroy all components for an ID. An entity is the set of objects that have the same ID, entities don’t exist as coherent objects inside the code.
 
   Component -> Facet. A position is a facet of an entity, as its velocity, its health, its armor, its whatever. If entities were Java objects, facets would be groups of interrelated properties.
 
   System -> Processor. A function that operates on a slice of components.
-....
-
+```
 This often result in mislead skepticism about the design. So get back to read it carefully one more time and some gotchas and practical wisdom below.
 
 
@@ -208,23 +207,23 @@ This often result in mislead skepticism about the design. So get back to read it
 
 [TIP]
 ====
-This area contain some best gotchas and practical wisdom when working with ES. I change this to upper position in the page be cause I think practical works save us more than theories. This page can be called a “Design course after all without this section!!!
+This area contain some best gotchas and practical wisdom when working with ES. I change this to upper position in the page be cause I think practical works save us more than theories. This page can be called a "`Design`" course after all without this section!!!
 ====
 
 
 
 === System ~ Processor?
 
-....
-  In a pure ES, this is not a thing, really. Some implementations force this on you because they couldn’t think how to do the ES job efficiently… but it’s still not a thing. All of your code that isn’t an ES is a “system”, technically.
-....
+```
+  In a pure ES, this is not a thing, really. Some implementations force this on you because they couldn’t think how to do the ES job efficiently… but it’s still not a thing. All of your code that isn’t an ES is a "`system`", technically.
+```
 
 System = everything that isn’t an Entity or a Component but uses Entities and Components.
 
 
 === Entity ~ GameObject?
 
-Entity should just be interpreted as a bunch of its Component. GameObject or anything else represented by an Entity is by accident. So no force to represent “all-every” gameobject as Entity; and no force that “all-every” Entity is gameobject.
+Entity should just be interpreted as a bunch of its Component. GameObject or anything else represented by an Entity is by accident. So no force to represent "`all-every`" gameobject as Entity; and no force that "`all-every`" Entity is gameobject.
 
 
 === Has ~ Is?
@@ -236,7 +235,7 @@ The deception ‘Has’ relationship between Entity and its Component actually r
 
 === Some insights
 
-This is the place to share the “real world difficuties when working with ES, here in JME3 or in other engines. In Practical wisdoms will raise some known solutions for them. This section may revive some part of the Cons or known issues sections but practically.
+This is the place to share the "`real`" world difficuties when working with ES, here in JME3 or in other engines. In Practical wisdoms will raise some known solutions for them. This section may revive some part of the Cons or known issues sections but practically.
 
 
 === Practical wisdoms
@@ -251,7 +250,7 @@ Because this topic is so debatable, there is no solid candidate for ES done righ
 
 Because apply to each game, the scenarios and usecases are vary difference. Situation changes, a design which should be right can be a failure!  You may see the point.
 
-This topic start flame in almost every dicussions I've come through, someone should be like OOP versus COP, ES is not for all,..etc. At first, the debate should focus into a specific scope, specific genre. Here (this page) we still arrange the statements like general scope. But later in the interviews you can see some “real applications and implementations.
+This topic start flame in almost every dicussions I've come through, someone should be like OOP versus COP, ES is not for all,..etc. At first, the debate should focus into a specific scope, specific genre. Here (this page) we still arrange the statements like general scope. But later in the interviews you can see some "`real`" applications and implementations.
 
 
 ==== Should be?
@@ -292,7 +291,7 @@ Theoricaly an Java ES done right should be:
 ..  – The separation of Systems. Ex: any contract about that?
 
 
-Detailed explaination : xref:jme3/contributions/entitysystem/points.adoc[points]
+Detailed explaination : xref:es/entitysystem/points.adoc[points]
 
 
 == Design
@@ -375,7 +374,7 @@ You can see I try as the one who repeat sentences that speak out by others in va
 
 Read: link:http://gamearchitect.net/Articles/GameObjects1.html[http://gamearchitect.net/Articles/GameObjects1.html]
 
-A lot of good things come if done “right”!
+A lot of good things come if done "`right`"!
 
 .  Simple, intuitive
 .  Communication made simple
@@ -396,7 +395,7 @@ A lot of good things come if done “right”!
 ====
 
 
-.  No OOP: COP Done “right” means forget about almost all OOP things: Pure data, Class become Type, no inheritance, encapsulation…etc , no best of both world!
+.  No OOP: COP Done "`right`" means forget about almost all OOP things: Pure data, Class become Type, no inheritance, encapsulation…etc , no best of both world!
 .  Spliting dilemma: Same with OOP Classify problem: How to split, how to change the data when you change the splits?
 . Duplicated component: Same root as confusion in component spliting but, this problem about how can we made a more than one component of a kind per object entity… Ex: Car with 4 wheels, the component will be a 1stWheel, 2ndWheel, or a single list of WheelComponent… ?
 .  Data resampling problem in game, data such as textures, text, 3d models everything … should be crafted: made, converted again to suite with existing data model – that’s the component in the ES.
@@ -422,7 +421,7 @@ Of course, ES has its mising features!!!!
 ====
 
 
-But for some reason its design ‘s consider good for real=time application like a “common” video Game, or “common” simmulation; especially common in MMO world.
+But for some reason its design ‘s consider good for real=time application like a "`common`" video Game, or "`common`" simmulation; especially common in MMO world.
 
 Here is a short of ‘why’ answers from a software architecture designer view, explain based on its borrowed ideas: [This is very different from various source you've read, because it's not embeded any implementation details!!!]
 
@@ -458,20 +457,20 @@ have fundamental relationship with decoupling.
 .  Regular workload : software that run at regular rate, kind of ballance trade off between performance and complexity
 .  Simple dataflow: the flow of the data is easy to watch, inspect, start stop, manipulate. As the root reason for regular workload!
 
-(*) These lead to a lot of simple but efficient algorithm to get high performance in runtime for a software such like a “common” video game, which run in console, GPU, CPU which envolve and share the same model with cache and batch intructions, an a certain hearbeat…Notice the bottleneck of CPU-GPU and between different processing unit, platform is the most headache of Game designer for decade is ease with the regular workload; let the game run smoothly and stable, result into nice visual representation..
+(*) These lead to a lot of simple but efficient algorithm to get high performance in runtime for a software such like a "`common`" video game, which run in console, GPU, CPU which envolve and share the same model with cache and batch intructions, an a certain hearbeat…Notice the bottleneck of CPU-GPU and between different processing unit, platform is the most headache of Game designer for decade is ease with the regular workload; let the game run smoothly and stable, result into nice visual representation..
 
 
 === ES consider bad design in …?
 
 From @pspeed:
 
-....
+```
   It is a bad design choice where:
   - there aren’t many entities and/or the behavior is so clearly defined that you’d just implement it one or two classes. Thing card games, a lot of puzzle games, etc..
   - the game is so simple that it’s just implemented as JME controls and a few app states. You could use an ES here but it would be wasted.
   - the game logic cuts across all objects nearly all the time. (I think of card games and puzzle games again.) This usually implies that there are few entities, though.
   - the team doing the work will have trouble understanding an ES. To me this is a huge one. Sometimes our choice of technologies is not dictated by what might be technically best… but what is technically best for the skills of the team. For example, if your artist only knows Sketchup then Blender is probably not the right tool even if it is superior in many ways.
-....
+```
 
 
 === Known issues:
@@ -480,13 +479,13 @@ Even if done right, the ES also have it underlying issues which noticed by its a
 
 *Why this section havs things from the Cons section but consider differrently?*
 
-....
+```
 In Cons section descible problem should be concerned, likely to be done wrong, or the limit of the design they can be solve in implementations or not is not important!
-....
+```
 
-....
+```
 Known issue is the problem persist in even the well designed; or persist due to the underlying infrastructure, application, programming language, etc!!
-....
+```
 
 
 ==== Communication:
@@ -494,21 +493,20 @@ Known issue is the problem persist in even the well designed; or persist due to 
 Happen in non pure data solution, when Components don’t function independently of each other. Some means of communication is necessary
 • Two approaches (both viable):
 
-....
+```
 – Direct communication using dynamic cast and function calls
 – Indirect communication using message passing
-....
+```
 
 In pure data solution, by not query or just loop through interested component at one update cycle, the Processor eases out the need of other communication, but in complex scenario, such as combine with outter event handling such as Network, where message passing is nature, the problem still persist!
 
 //as decribled in reference [6]
 //Read: link:http://acmantwerp.acm.org/wp-content/uploads/2010/10/componentbasedprogramming.pdf[http://acmantwerp.acm.org/wp-content/uploads/2010/10/componentbasedprogramming.pdf]
-———————————————————–
 
 
 ==== Script
 
-The “script problem” happen by the same reason with the “communication problem” mixed with “pure data or not” problem. When an component is hard to inspect, its outter relationship hard to define and its property is rejected to change, how can you script it?
+The "`script problem`" happen by the same reason with the "`communication problem`" mixed with "`pure`" data or "`not`" problem. When an component is hard to inspect, its outter relationship hard to define and its property is rejected to change, how can you script it?
 
 Read: link:http://blog.gemserk.com/2011/11/13/scripting-with-artemis/[http://blog.gemserk.com/2011/11/13/scripting-with-artemis/]
 
@@ -603,7 +601,6 @@ Review: HERE! xref:jme3/contributions/entitysystem/interviews/artemis.adoc[artem
 ==== Spartan: [used for Slick. abandoned]
 
 GoogleCode: link:https://code.google.com/archive/p/spartanframework/[https://code.google.com/archive/p/spartanframework/]
-————————————————————-
 
 
 === JME integrated
@@ -615,7 +612,7 @@ Post: link:https://hub.jmonkeyengine.org/t/my-es-in-contrib-zay-es/25702[https:/
 
 Forum : link:https://hub.jmonkeyengine.org/c/user-code-projects/zay-es[https://hub.jmonkeyengine.org/c/user-code-projects/zay-es]
 
-Wiki: xref:jme3/contributions/entitysystem.adoc[jme3:contributions:entitysystem]
+Wiki: xref:es/entitysystem/entitysystem.adoc[entitysystem]
 
 Links: link:https://hub.jmonkeyengine.org/t/zay-es-links-more-chars-because-forum-is-dumb/27135[https://hub.jmonkeyengine.org/t/zay-es-links-more-chars-because-forum-is-dumb/27135]
 
@@ -678,7 +675,7 @@ link:http://t-machine.org/index.php/2011/06/24/using-an-entity-system-with-jmonk
 
 *Our wiki link*
 
-pass:[[4]] xref:jme3/contributions/entitysystem/introduction.adoc[jme3:contributions:entitysystem:introduction]
+pass:[[4]] xref:es/entitysystem/introduction.adoc[entitysystem:introduction]
 
 *Beside of BLOB anti pattern, explain why ES suite as data in modern GPU, CPU!*
 

@@ -1,15 +1,11 @@
 = Zay-ES Beginner Tutorial
-:author: 
-:revnumber: 
-:revdate: 2016/03/17 20:48
-:relfileprefix: ../../../
-:imagesdir: ../../..
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:revnumber: 2.0
+:revdate: 2020/07/25
 
 
 In this article we explain the first steps how to work with Zay-ES and what you should know about the background.
 
-If you are new Entity Systems please read the <<jme3/contributions/entitysystem/introduction#,Entity System Introduction>> first.
+If you are new Entity Systems please read the xref:es/entitysystem/introduction.adoc[Entity System Introduction] first.
 
 
 == Sample Code
@@ -28,7 +24,7 @@ public class Main {
 
         //Creating the EntityData
         EntityData entityData = new DefaultEntityData();
-        
+
         //Creates a new EntityId, the id is handled as an object to prevent botching
         EntityId entityId = entityData.createEntity();
         //A new TestComponent is added to the Entity
@@ -39,7 +35,7 @@ public class Main {
         //Get the Component and display the value
         TestComponent testComponent = entity.get(TestComponent.class);
         System.out.println(testComponent.getValue());
-        
+
         //Overwrite the existing component
         entity.set(new TestComponent("New Value"));
         System.out.println(testComponent.getValue());
@@ -62,14 +58,14 @@ You simply create a component by implementing the EntityComponent interface:
 [source,java]
 ----
 public class TestComponent implements EntityComponent {
-    
+
     private String value;
-    
+
     public TestComponent(String value)
     {
         this.value=value;
     }
-    
+
     public String getValue()
     {
         return value;
@@ -94,7 +90,7 @@ This is a big mistake because such objects contain logic and in our approach com
 [IMPORTANT]
 ====
 
-Never subclass Component classes. 
+Never subclass Component classes.
 ====
 
 
@@ -133,7 +129,7 @@ Ids are not reused because, if they were, they would not be unique anymore, whic
 ====
 
 Often people are scared that they will run out of ids:
-If you create a new entity every nano second, you would need roughly 585 years before it wraps. 
+If you create a new entity every nano second, you would need roughly 585 years before it wraps.
 
 ====
 
@@ -187,11 +183,10 @@ entityData.removeEntity(entity.getId());
 === Entity Sets
 
 The most important feature of Zay-ES are the Entity Sets.
-It is strongly recommended that you read the <<jme3/contributions/entitysystem/entityset#,Entity Set tutorial>> after reading this article.
+It is strongly recommended that you read the xref:es/entitysystem/entityset.adoc[Entity Set tutorial] after reading this article.
 
 
 [IMPORTANT]
 ====
-Read the <<jme3/contributions/entitysystem/entityset#,tutorial>> about entity sets
+Read the xref:es/entitysystem/entityset.adoc[tutorial] about entity sets
 ====
-
