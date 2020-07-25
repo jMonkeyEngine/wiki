@@ -29,7 +29,7 @@ The issue with this model is that it’s complicated to have a material that loo
 
    * Ambient is supposed to represent Ambient lighting, being some sort of omnipresent dim light, that tries to fake indirect lighting coming from reflection of light on the surrounding objects.
    * Diffuse is more straightforward: it’s the actual color of the object when it’s under a white light.
-   * Specular represent the color of the reflected highlights, and the intensity is driven by a “shininess” parameter (at least in jME but that’s pretty common). The issue is that the specular color also drives the intensity because the brighter the color the more intense the specular will be.
+   * Specular represent the color of the reflected highlights, and the intensity is driven by a "`shininess`" parameter (at least in jME but that’s pretty common). The issue is that the specular color also drives the intensity because the brighter the color the more intense the specular will be.
 
 All of this leads to a lot of tweaking to look correct, and may not look as good as it should under a different lighting environment. It also relies heavily on an artist’s best guesses about the material.
 
@@ -40,7 +40,7 @@ Everybody has their own way to implement PBR, but every implementation share com
 *Goals :*
 
    * Ease the artist’s material workflow.
-   * More “photo realistic” rendering.
+   * More "`photo realistic`" rendering.
 
 *Concepts :*
 
@@ -56,14 +56,14 @@ A material can now be described with 3 parameters :
    * It should not contain any shading information. Very often with phong model, Ambient Occlusion (AO) is baked into the diffuse map. Here Base color must be the raw color of the material
    * It does not only influence the diffuse color, but also the specular color of the material.
 
-*Metalness :* The degree of metallicity of the material. What does that mean? is your material rather metallic or rather not (non metallic materials are called dielectric materials in the literature). Some implementation calls that parameter “specular”, but I found it pretty misleading as it’s completely different as the specular we know today. In practice, just start out with extreme values to get the feel for it: 1 for metallic, 0 for dielectric.
+*Metalness :* The degree of metallicity of the material. What does that mean? is your material rather metallic or rather not (non metallic materials are called dielectric materials in the literature). Some implementation calls that parameter "`specular`", but I found it pretty misleading as it’s completely different as the specular we know today. In practice, just start out with extreme values to get the feel for it: 1 for metallic, 0 for dielectric.
 
 image::how-to/articles/pbr/metalness.png[metalness,width="320",height="250",align="center"]
 Here is the same material with metalness of 0 (dielectric) on the left and 1 (metallic) on the right.
 
-Of course there are intermediary values, but from my reading, most dielectric material should vary from 0.04 and 0.1, and metallic are usually 1. Those values are based on real life measures and you can find some references about them link:https://seblagarde.wordpress.com/2012/04/30/dontnod-specular-and-glossiness-chart/[here] and link:https://seblagarde.wordpress.com/2014/04/14/dontnod-physically-based-rendering-chart-for-unreal-engine-4/[here]. Note that those values are not subject to interpretation, and are “known” factors and artist may follow them if they want to keep realistic look.
+Of course there are intermediary values, but from my reading, most dielectric material should vary from 0.04 and 0.1, and metallic are usually 1. Those values are based on real life measures and you can find some references about them link:https://seblagarde.wordpress.com/2012/04/30/dontnod-specular-and-glossiness-chart/[here] and link:https://seblagarde.wordpress.com/2014/04/14/dontnod-physically-based-rendering-chart-for-unreal-engine-4/[here]. Note that those values are not subject to interpretation, and are "`known`" factors and artist may follow them if they want to keep realistic look.
 
-*Roughness :* The degree of roughness of the material : Is your material smooth or rough. 0 means smooth, 1 means rough. Some implementations refer to this as Smoothness or Glossiness. That’s essentially the same except it’s the other way around. 1 is smooth and 0 is rough. I find the term “Roughness” pretty much self explanatory and doesn’t leave room for misinterpretation.
+*Roughness :* The degree of roughness of the material : Is your material smooth or rough. 0 means smooth, 1 means rough. Some implementations refer to this as Smoothness or Glossiness. That’s essentially the same except it’s the other way around. 1 is smooth and 0 is rough. I find the term "`Roughness`" pretty much self explanatory and doesn’t leave room for misinterpretation.
 
 image::how-to/articles/pbr/Roughness.png[Roughness,width="320",height="250",align="center"]
 Here is the same material with different level of roughness from 0 (left) to 1 (right). As opposed to metalness, this parameter is very artist driven. The roughness of a material does not really depend on physics, it’s more related to micro scratches, wearing, etc… So that’s where artists should be creative!
@@ -87,13 +87,13 @@ Since this post I had some discussions about it and it appears, it lacks some in
 
 The post above is about the *Metalness Workflow*.
 
-The question I had frequently about it is “how one specify the specular color if you just have a black and white metalness texture?”.
+The question I had frequently about it is "`how one specify the specular color if you just have a black and white metalness texture?`".
 
 The answer is you do in the albedo map.
 
 In the metalness workflow the albedo map is used for both diffuse color and specular color. When the metalness is zero (dielectric material) the base color is the diffuse color of the material. When the metalness is one (metallic material), the base color is the specular color.
 
-So if you wonder what this base color should be, just look at it in the most naive way. “What color is that thing?” and don’t care if that’s diffuse or specular.
+So if you wonder what this base color should be, just look at it in the most naive way. "`What color is that thing?`" and don’t care if that’s diffuse or specular.
 
 The other common workflow is called the *Specular workflow* as it uses a specular color map instead of the metalness map. In this workflow, the albedo map is the diffuse color, the specular map is the specular color, and you have a gray scale gloss map that is the same as the roughness map but inverted (1 is smooth and 0 is rough).
 
@@ -129,8 +129,3 @@ Now there are pro and cons on using one or the other. Here are the main points :
 IMO, the metalness workflow is more suited to real time 3D engine. And as an artist I find it more intuitive.
 
 That  said, as a developer making his PBR pipeline; especially for an engine mainly used by Indie devs; whatever pipeline you choose, you can’t ignore the other. Free or charged PBR ready model you can find are done with whatever workflow suited the artist. Some conversion are possible, but that’s easier for user to be able to use the model as is. That’s why I decided to support both in my implementation.
-
-'''
-
-*  <<jme3/advanced/pbr_part2#,Physically Based Rendering – Part Two>>
-*  <<jme3/advanced/pbr_part3#image-based-lighting-in-pbr#,Physically Based Rendering – Part Three>>
