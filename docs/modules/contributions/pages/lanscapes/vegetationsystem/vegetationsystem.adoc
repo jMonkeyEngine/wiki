@@ -1,10 +1,6 @@
 = The Forester
-:author: 
-:revnumber: 
-:revdate: 2016/03/17 20:48
-:relfileprefix: ../../
-:imagesdir: ../..
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:revnumber: 2.0
+:revdate: 2020/07/25
 
 
 This is the wiki page for the Forester grass/tree loading system. It contains information on how to add vegetation to a scene, and how to manage it. Grass and trees are treated differently, but the approaches are very similar.
@@ -15,19 +11,19 @@ The library can be found in the Github link:https://github.com/jMonkeyEngine-Con
 
 == The Forester (Basic)
 
-The Forester class is the root class of this lib. You can use it to create grass/treeloaders, and a few other things. It also manages random number tables and a few other things. 
+The Forester class is the root class of this lib. You can use it to create grass/treeloaders, and a few other things. It also manages random number tables and a few other things.
 
 It is a singleton class, so it can be used anywhere for easy access to Forester data.
 
 
 == The grass
 
-Proceed to the grass section: <<jme3/contributions/vegetationsystem/grass#,jme3:contributions:vegetationsystem:grass>>
+Proceed to the grass section: xref:lanscapes/vegetationsystem/grass.adoc[contributions:vegetationsystem:grass]
 
 
 == The trees
 
-Proceed to the tree section: <<jme3/contributions/vegetationsystem/trees#,jme3:contributions:vegetationsystem:trees>>
+Proceed to the tree section: xref:lanscapes/vegetationsystem/trees.adoc[contributions:vegetationsystem:trees]
 
 
 == Tuning the paging engine (Advanced)
@@ -37,9 +33,9 @@ All tree/grassloaders use a paging engine to load/unload data. There are some th
 
 === Manipulating the cache
 
-The cache saves expired tiles for some time before disposing of them. This makes it possible for the engine to re-use pages instead of having to load and prepare them again. 
+The cache saves expired tiles for some time before disposing of them. This makes it possible for the engine to re-use pages instead of having to load and prepare them again.
 
-An example: Lets say you walk across the border between two tiles. Passing the border between two tiles prompts the engine to load new tiles in the direction you are moving, and toss old ones away. Lets say you then walk back directly. Or keep walking back and forth across that border. Without the cache, you'd be loading and unloading tiles all the time. 
+An example: Lets say you walk across the border between two tiles. Passing the border between two tiles prompts the engine to load new tiles in the direction you are moving, and toss old ones away. Lets say you then walk back directly. Or keep walking back and forth across that border. Without the cache, you'd be loading and unloading tiles all the time.
 
 There is no point in turning it off, unless maybe if you use extremely small tiles. You can change the cache timer however. Default time is 2 seconds (2000 ms actually, the value is in ms). After 2 seconds the tiles are dropped from the cache.
 
@@ -64,7 +60,7 @@ Having few but large geometries is more efficient when rendering, however. That 
 
 Having many geometries, on the other side, ensures more geometry is culled on average. If you use one mega-block of 512x512 square units, you'd have to render the entire block even if you can only see a tiny fraction of it. Also, when massive blocks are pushed in and out of the rendering queue you might get noticeable increases/drops in frame-rate.
 
-It is very hard to say what is the correct resolution in an application, because it depends on very much, but it is possible to try a few different settings and see which is best. This may have an effect on performance; particularly if you're using massive amounts of grass. 
+It is very hard to say what is the correct resolution in an application, because it depends on very much, but it is possible to try a few different settings and see which is best. This may have an effect on performance; particularly if you're using massive amounts of grass.
 
 
 [TIP]
