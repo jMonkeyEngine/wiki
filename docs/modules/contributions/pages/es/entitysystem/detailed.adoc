@@ -164,9 +164,9 @@ Short explanation
 .  Regular workload : software that run at regular rate, kind of ballance trade off between performance and complexity
 .  Simple dataflow: the flow of the data is easy to watch, inspect, start stop, manipulate. As the root reason for regular workload!
 
-```
+
 Ideas similarities here actually is resulted from with decades of history of revolving of the paradigm. That's why you will see the same concepts of Entity system appear every where from a database to a repository. Of course because it have the same root.Check Pros and Cons chapter for full, detailed idea and design goals and successes.
-```
+
 
 
 == Terms
@@ -192,13 +192,13 @@ Here is a short one to help you get start quickly : xref:es/entitysystem/terms.a
 From more 'open' perspective the core elements can be viewed as, but remember the name as a noun can be mislead:
 _This resulted as a dicussion of @pspeed and toolforger, eventually is form a skeptical question, it's really interesting by how we all see this problem confused at first!!_
 
-```
-  Entity -> ID. It just binds the components together, in the sense that there is one function that creates a bunch of components with the same ID, and one function to destroy all components for an ID. An entity is the set of objects that have the same ID, entities don’t exist as coherent objects inside the code.
+]
+Entity -> ID. It just binds the components together, in the sense that there is one function that creates a bunch of components with the same ID, and one function to destroy all components for an ID. An entity is the set of objects that have the same ID, entities don’t exist as coherent objects inside the code.
 
-  Component -> Facet. A position is a facet of an entity, as its velocity, its health, its armor, its whatever. If entities were Java objects, facets would be groups of interrelated properties.
+Component -> Facet. A position is a facet of an entity, as its velocity, its health, its armor, its whatever. If entities were Java objects, facets would be groups of interrelated properties.
 
-  System -> Processor. A function that operates on a slice of components.
-```
+System -> Processor. A function that operates on a slice of components.
+
 This often result in mislead skepticism about the design. So get back to read it carefully one more time and some gotchas and practical wisdom below.
 
 
@@ -214,9 +214,9 @@ This area contain some best gotchas and practical wisdom when working with ES. I
 
 === System ~ Processor?
 
-```
-  In a pure ES, this is not a thing, really. Some implementations force this on you because they couldn’t think how to do the ES job efficiently… but it’s still not a thing. All of your code that isn’t an ES is a "`system`", technically.
-```
+
+In a pure ES, this is not a thing, really. Some implementations force this on you because they couldn’t think how to do the ES job efficiently… but it’s still not a thing. All of your code that isn’t an ES is a "`system`", technically.
+
 
 System = everything that isn’t an Entity or a Component but uses Entities and Components.
 
@@ -464,13 +464,11 @@ have fundamental relationship with decoupling.
 
 From @pspeed:
 
-```
-  It is a bad design choice where:
-  - there aren’t many entities and/or the behavior is so clearly defined that you’d just implement it one or two classes. Thing card games, a lot of puzzle games, etc..
-  - the game is so simple that it’s just implemented as JME controls and a few app states. You could use an ES here but it would be wasted.
-  - the game logic cuts across all objects nearly all the time. (I think of card games and puzzle games again.) This usually implies that there are few entities, though.
-  - the team doing the work will have trouble understanding an ES. To me this is a huge one. Sometimes our choice of technologies is not dictated by what might be technically best… but what is technically best for the skills of the team. For example, if your artist only knows Sketchup then Blender is probably not the right tool even if it is superior in many ways.
-```
+It is a bad design choice where:
+- there aren’t many entities and/or the behavior is so clearly defined that you’d just implement it one or two classes. Thing card games, a lot of puzzle games, etc..
+- the game is so simple that it’s just implemented as JME controls and a few app states. You could use an ES here but it would be wasted.
+- the game logic cuts across all objects nearly all the time. (I think of card games and puzzle games again.) This usually implies that there are few entities, though.
+- the team doing the work will have trouble understanding an ES. To me this is a huge one. Sometimes our choice of technologies is not dictated by what might be technically best… but what is technically best for the skills of the team. For example, if your artist only knows Sketchup then Blender is probably not the right tool even if it is superior in many ways.
 
 
 === Known issues:
@@ -479,24 +477,22 @@ Even if done right, the ES also have it underlying issues which noticed by its a
 
 *Why this section havs things from the Cons section but consider differrently?*
 
-```
-In Cons section descible problem should be concerned, likely to be done wrong, or the limit of the design they can be solve in implementations or not is not important!
-```
 
-```
+In Cons section descible problem should be concerned, likely to be done wrong, or the limit of the design they can be solve in implementations or not is not important!
+
+
+
 Known issue is the problem persist in even the well designed; or persist due to the underlying infrastructure, application, programming language, etc!!
-```
+
 
 
 ==== Communication:
 
 Happen in non pure data solution, when Components don’t function independently of each other. Some means of communication is necessary
-• Two approaches (both viable):
 
-```
-– Direct communication using dynamic cast and function calls
-– Indirect communication using message passing
-```
+* Two approaches (both viable):
+** Direct communication using dynamic cast and function calls
+** Indirect communication using message passing
 
 In pure data solution, by not query or just loop through interested component at one update cycle, the Processor eases out the need of other communication, but in complex scenario, such as combine with outter event handling such as Network, where message passing is nature, the problem still persist!
 
@@ -511,7 +507,6 @@ The "`script problem`" happen by the same reason with the "`communication proble
 Read: link:http://blog.gemserk.com/2011/11/13/scripting-with-artemis/[http://blog.gemserk.com/2011/11/13/scripting-with-artemis/]
 
 Nearly one end up back to half ass solution, not a pure data ES if their really need scripting in.
-———————————————————–
 
 
 ==== Arbitrary Routine and Query
