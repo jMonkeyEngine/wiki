@@ -1,39 +1,35 @@
 = Next Generation Particles - Reference
-:author: 
-:revnumber: 
-:revdate: 2016/03/17 20:48
-:relfileprefix: ../../../
-:imagesdir: ../../..
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:revnumber: 2.0
+:revdate: 2020/07/25
 
 
 The Parameters for a ParticleController are:
 [cols="2", options="header"]
 |===
 
-a| name 
-a| The name to use for the geometry in the scene graph 
+a| name
+a| The name to use for the geometry in the scene graph
 
-a| mesh 
-a| The mesh to use (Usually either PointMesh or QuadMesh) 
+a| mesh
+a| The mesh to use (Usually either PointMesh or QuadMesh)
 
-a| maxParticles 
-a| The maximum number of particles to allow active at any one time 
+a| maxParticles
+a| The maximum number of particles to allow active at any one time
 
-a| lifeMin 
-a| The minimum amount of time (in seconds) for which each particle lives 
+a| lifeMin
+a| The minimum amount of time (in seconds) for which each particle lives
 
-a| lifeMax 
-a| The maximum amount of time (in seconds) for which each particle lives 
+a| lifeMax
+a| The maximum amount of time (in seconds) for which each particle lives
 
-a| source 
-a| The source from which the particles are spawned 
+a| source
+a| The source from which the particles are spawned
 
-a| emissionController 
-a| The frequency and timing with which particles are spawned. If null then no particles are automatically spawned and they must be triggered manually using emitNextParticle() or emitAllParticles() 
+a| emissionController
+a| The frequency and timing with which particles are spawned. If null then no particles are automatically spawned and they must be triggered manually using emitNextParticle() or emitAllParticles()
 
-a| influencers 
-a| Zero or more ParticleInfluencers, each of which changes the behaviour of the particles. 
+a| influencers
+a| Zero or more ParticleInfluencers, each of which changes the behaviour of the particles.
 
 |===
 
@@ -49,13 +45,13 @@ The Mesh options are:
 |===
 
 a| PointMesh 
-a| Fastest and most efficient, but also most limited 
+a| Fastest and most efficient, but also most limited
 
-a| QuadMesh 
-a| Much more flexible than point mesh, all particles are represented as 2-dimensional quads 
+a| QuadMesh
+a| Much more flexible than point mesh, all particles are represented as 2-dimensional quads
 
-a| TemplateMesh 
-a| Allows particles to be full 3d objects, with the mesh for each particle being generated from one of any number of template meshes. This allows fully 3d particles and takes in texture co-ordinates and even (if required) vertex colours and normals from the original mesh converting them as required. 
+a| TemplateMesh
+a| Allows particles to be full 3d objects, with the mesh for each particle being generated from one of any number of template meshes. This allows fully 3d particles and takes in texture co-ordinates and even (if required) vertex colours and normals from the original mesh converting them as required.
 
 |===
 
@@ -66,17 +62,17 @@ The Source options are:
 [cols="2", options="header"]
 |===
 
-a| PointSource 
-a| Generates all particles from a specific point with a random velocity. The point itself is a spatial so can be attached to the scene graph and will move with it. 
+a| PointSource
+a| Generates all particles from a specific point with a random velocity. The point itself is a spatial so can be attached to the scene graph and will move with it.
 
-a| MeshSource 
-a| Generates all particles from a randomly selected point on the given mesh. A random triangle is selected and then the particle emitter from a random point within that triangle along the triangle's normal vector. 
+a| MeshSource
+a| Generates all particles from a randomly selected point on the given mesh. A random triangle is selected and then the particle emitter from a random point within that triangle along the triangle's normal vector.
 
-a| WeightedMeshSource 
-a| Provides the same functionality as MeshSource but weights triangles based on their relative size, larger triangles will tend to emit more particles. This provides a more even spread but uses more resources and needs to be kept updated if the mesh changes. 
+a| WeightedMeshSource
+a| Provides the same functionality as MeshSource but weights triangles based on their relative size, larger triangles will tend to emit more particles. This provides a more even spread but uses more resources and needs to be kept updated if the mesh changes.
 
-a| ParticleParticleSource 
-a| Emits particles from another ParticleController. The particle is emitted from a randomly selected active particle and the new particle starts with identical velocity, rotation, etc as the particle it is being emitted from. 
+a| ParticleParticleSource
+a| Emits particles from another ParticleController. The particle is emitted from a randomly selected active particle and the new particle starts with identical velocity, rotation, etc as the particle it is being emitted from.
 
 |===
 
@@ -85,11 +81,11 @@ a| Emits particles from another ParticleController. The particle is emitted from
 [cols="2", options="header"]
 |===
 
-a| NULL 
-a| The NULL EmissionController does not automatically emit any particles, they must be emitted externally by a call to the ParticleController emitNextParticle() or emitAllParticles(). Note that if the ParticleController is not in use for an extended period of time it is recommended that to save resources you pause it by either disabling the controller or removing the Geometry from the scene graph. 
+a| NULL
+a| The NULL EmissionController does not automatically emit any particles, they must be emitted externally by a call to the ParticleController emitNextParticle() or emitAllParticles(). Note that if the ParticleController is not in use for an extended period of time it is recommended that to save resources you pause it by either disabling the controller or removing the Geometry from the scene graph.
 
-a| RegularEmission 
-a| This EmissionController just emits particles at regular intervals, it will emit multiple particles in one frame if more than one interval has passed since the previous frame. 
+a| RegularEmission
+a| This EmissionController just emits particles at regular intervals, it will emit multiple particles in one frame if more than one interval has passed since the previous frame.
 
 |===
 
@@ -98,40 +94,40 @@ a| This EmissionController just emits particles at regular intervals, it will em
 [cols="2", options="header"]
 |===
 
-a| ColorInfluencer 
-a| Modify the particle's color over time 
+a| ColorInfluencer
+a| Modify the particle's color over time
 
-a| GravityInfluencer 
-a| Apply steady acceleration in a specified direction over time 
+a| GravityInfluencer
+a| Apply steady acceleration in a specified direction over time
 
-a| MultiColorInfluencer 
-a| Modify the particle's color through multiple colors over time 
+a| MultiColorInfluencer
+a| Modify the particle's color through multiple colors over time
 
-a| PreferredDestinationInfluencer 
-a| Move the particle towards a specified point 
+a| PreferredDestinationInfluencer
+a| Move the particle towards a specified point
 
-a| PreferredDirectionInfluencer 
-a| Rotate the particles velocity towards the given direction over time 
+a| PreferredDirectionInfluencer
+a| Rotate the particles velocity towards the given direction over time
 
-a| RandomImpulseInfluencer 
-a| Apply a random impulse to the particle either at initialization or every frame 
+a| RandomImpulseInfluencer
+a| Apply a random impulse to the particle either at initialization or every frame
 
-a| RandomSpriteInfluencer 
-a| Select a random sprite for the particle from those available when it is initialized 
+a| RandomSpriteInfluencer
+a| Select a random sprite for the particle from those available when it is initialized
 
-a| RotationInfluencer 
-a| Rotate the particle by picking an initial rotational velocity at random and then maintaining it 
+a| RotationInfluencer
+a| Rotate the particle by picking an initial rotational velocity at random and then maintaining it
 
-a| SizeInfluencer 
-a| Modify the particle's size over time 
+a| SizeInfluencer
+a| Modify the particle's size over time
 
-a| SpatialDestinationInfluencer 
-a| Move the particle towards a given spatial, it will attempt to reach the current location of the spatial by the end of the particle's life cycle. 
+a| SpatialDestinationInfluencer
+a| Move the particle towards a given spatial, it will attempt to reach the current location of the spatial by the end of the particle's life cycle.
 
-a| SpeedInfluencer 
-a| Modify the particle's speed over time 
+a| SpeedInfluencer
+a| Modify the particle's speed over time
 
-a| SpriteAnimationInfluencer 
-a| Animate the particle through the available sprites over time 
+a| SpriteAnimationInfluencer
+a| Animate the particle through the available sprites over time
 
 |===
