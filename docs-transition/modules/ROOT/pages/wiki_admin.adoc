@@ -3,9 +3,89 @@
 :revnumber: 1.0
 :revdate: 2020/07/25
 
+== Overview
 
+The wiki consists of two repositories.
+
+* link:https://github.com/jMonkeyEngine/wiki[wiki]
+* link:https://github.com/jMonkeyEngine/wiki-ui[wiki-ui]
+
+The wiki repository holds all documentation while the wiki-ui repository is the user interface for the documentation.
+
+== Wiki
+
+The wiki repository has a workflow that will be triggered when any push is made to the repository or whenever the user interface issues a new release. Every build, all pages are deleted and re-created. The workflow will cache the user interface under the `menu:cache[antora]` directory if there are any changes. This cache allows the build process to run offline.
+
+The workflow can be configured to update the `package-lock` and `package.json` files by editing the `Install node` command, just as if you were running this from a local repo.
+
+DO NOT UPDATE OR PUSH THESE FILES UNLESS YOU DISCUSS IT WITH THE OTHER ADMINISTRATORS FIRST!
+
+The `supplemental-ui` folder holds the content for Anotra search, the header and footer for the ui. Edit these as needed in the wiki repository, but *do not edit* these same files on the `wiki-ui` repository.
+
+Technically, the entire ui can be configured from the wiki repo.
+
+The wiki is an link:https://docs.antora.org/antora/2.3/[Antora]   site using the link:https://asciidoctor.org/docs/user-manual/[asciidoctor] syntax. A quick primer for syntax can be found link:https://docs.antora.org/antora/2.3/asciidoc/asciidoc/[here].
+
+
+== Source files
+
+The source structure is now modularized.
+
+* ROOT - holds content that introduces new users to the jMonkyEngine, installing and features.
+* core - this is the main module for any content that is *specific* to an existing jMonkeyEngine class. It maintains similar directories as are found in the jMonkeyEngine link:https://github.com/jMonkeyEngine/jmonkeyengine[repository].
+* networking - holds content *specific* to jMonkeyEngine networking.
+* physics - holds content *specific* to jMonkeyEngine physics.
+* tutorials - holds any content that is not *specific* to any jMonkeyEngine class, that gives direction on how to use the engine, concepts or articles.
+* sdk - sdk content only. This module may be moved to the sdk repository in the future.
+* contributions - existing user project pages. This is a deprecated module and will be removed in the near furture. Do not add new content to this module.
+
+You can decide if a page belongs in the core module by asking yourself a simple question.
+
+_Does the page explain an existing jMonkeyEngine class (excluding physics and networking), found in the jMonkeyEngine repository, without using an external application?_
+
+If yes, then it belongs, otherwise it needs to go someplace else.
+
+
+== Broken link checking
+
+There is a workflow that can be used to check for broken links.
+
+link:https://github.com/mitm001/link-checker/blob/master/.github/workflows/main.yml[link-checker]
+
+To use it, simply create a repository, paste a copy of the workflow into the `menu:github[workflows]` directory. Before commiting for the first time, set the link:https://github.com/mitm001/link-checker/blob/abddf3d5012b90186ae485073a8c1aaf15a3c447/.github/workflows/main.yml#L25[repo url] to point to the wiki.
+
+If there are any errors, a `linkchecker.md` or `unresolved.md` file will be committed to your repository under the `checked-links` directory. You may need to issue a pull request after a push because of this. The typical workflow consists of fixing reported broken links, deleting all `.md` files and pushing to the repo. Then issue a pull request to see if there are any remaining problems. These files will only be built if there are errors.
+
+If there are no files in the `link-checker` directory and you need to run a check, just create any new file in the `link-checker` directory and push it.
+
+The reason for two files is that the `peter-evans/link-checker@v1` action is not capable of reading relative links properly. This is the only action that is available currently. However, we are in luck in that the Anotora build will set a class on any relative link that fails named `class="page unresolved"`. We can then use a grep command to parse the gh-pages branch and find any file with this class and write it to file.
+
+This is an example of the output for a broken relative link.
 ```
 tutorials/beginner/hello_collision.html:1289:<p>For a detailed description of the separate jar files see
 <a href="#getting-started/jme3_source_structure.adoc#structure-of-jmonkeyengine3-jars"
 class="page unresolved">this list</a>.</p>
 ```
+
+This gives you the file name:
+```
+tutorials/beginner/hello_collision.html
+```
+
+and the name of the broken link to search for in the file:
+
+```
+#getting-started/jme3_source_structure.adoc#structure-of-jmonkeyengine3-jars
+```
+
+All broken links start with a kbd:[#] sign. In this instance, we have an inter document link thats broken as there are two pound signs.
+
+The `peterevans` action will locate all broken image and web urls. There is a problem though that prevents its full use, which is running this on a schedule and automatically opening issues. When Antora builds a site, it will build links from the "`nav-menu`" and "`Table of Contents`" into every page. This will lead to `Too Many Requests (HTTP error 429)` errors. The easiest way to get around this would be to filter the href attribute class for the `nav-link` class, since we know these links are good, and skip them. This is currently not possible using the `petereveans` action. To work around it, just search the `linkchecker.md` for `file or directory` errors.
+
+== User Interface
+
+The `wiki-ui` repository has a two workflows. A workflow that will build on any push (main.yml), and one that builds on pushing a tag (release.yml). If you push any tag to the master branch, a release will be created, triggering the wiki build, thereby updating the wiki cache and user interface for the wiki.
+
+This will allow you to make changes to the ui without triggering a build unless you are ready.
+
+The user interface uses standard html in its templates so editing should be familiar to anyone who knows html.
