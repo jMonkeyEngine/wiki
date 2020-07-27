@@ -1,10 +1,6 @@
 = customcontrols
-:author: 
-:revnumber: 
-:revdate: 2016/03/17 20:48
-:relfileprefix: ../../../
-:imagesdir: ../../..
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:revnumber: 2.0
+:revdate: 2020/07/27
 
 
 
@@ -39,15 +35,15 @@ public abstract class ContextualMenu extends Menu {
         );
     }
 
-    public ContextualMenu(Screen screen, String UID, Vector2f position, Vector2f dimensions, 
+    public ContextualMenu(Screen screen, String UID, Vector2f position, Vector2f dimensions,
             boolean isScrollable) {
         this(screen, UID, position, dimensions,
             screen.getStyle("Menu").getVector4f("resizeBorders"),
             screen.getStyle("Menu").getString("defaultImg"),
             isScrollable
         );
-    }	
-    public ContextualMenu(Screen screen, String UID, Vector2f position, Vector2f dimensions, 
+    }
+    public ContextualMenu(Screen screen, String UID, Vector2f position, Vector2f dimensions,
             Vector4f resizeBorders, String defaultImg, boolean isScrollable) {
         // Call the super class to construct our basic menu
         super(screen, UID, position, dimensions, resizeBorders, defaultImg, false);
@@ -118,7 +114,7 @@ We need to entend the window class in order to add right-click event handling an
 
 public abstract class ContextualWindow extends Window implements MouseButtonListener {
     // Add the 3 standard contructors from the Window class and rename them
-    
+
     // implement all abstract methods from the listener and add the following to right mouse button up:
     @Override
     public void onRightMouseReleased(MouseButtonEvent evt) {
@@ -130,7 +126,7 @@ public abstract class ContextualWindow extends Window implements MouseButtonList
         // Show the menu
         rcMenu.showMenu(this, screen.getMouseXY().x, screen.getMouseXY().y);
     }
-    
+
     // Add the setOption method tohandle menu item events
     public void setOption(String value, boolean isToggled) {
         if (value.equals("position")) {

@@ -1,10 +1,6 @@
 = Virtual Reality
-:author: 
-:revnumber: 
-:revdate: 2016/10/23 11:22
-:relfileprefix: ../
-:imagesdir: ..
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:revnumber: 2.0
+:revdate: 2020/07/27
 
 Please see this link:https://hub.jmonkeyengine.org/t/official-vr-module/37830/67[forum post] for additional information on JME Official VR module.
 
@@ -27,7 +23,7 @@ To use the JNA based bindings, put:
 in your settings. To use LWJGL, instead put:
 
     settings.put(VRConstants.SETTING_VRAPI, VRConstants.SETTING_VRAPI_OPENVR_LWJGL_VALUE);
-    
+
 Note that the LWJGL bindings require LWJGL3 (jme3-lwjgl3) to be used.
 
 
@@ -41,11 +37,11 @@ public class Main extends SimpleApplication {
         AppSettings settings = new AppSettings(true);
         settings.put(VRConstants.SETTING_VRAPI, VRConstants.SETTING_VRAPI_OPENVR_LWJGL_VALUE);
         settings.put(VRConstants.SETTING_ENABLE_MIRROR_WINDOW, true);
-       
+
         VREnvironment env = new VREnvironment(settings);
         env.initialize();
-        
-    	// Checking if the VR environment is well initialized 
+
+    	// Checking if the VR environment is well initialized
     	// (access to the underlying VR system is effective, VR devices are detected).
     	if (env.isInitialized()){
             VRAppState vrAppState = new VRAppState(settings, env);
@@ -57,7 +53,7 @@ public class Main extends SimpleApplication {
             app.start();
         }
     }
-    
+
     public Main(AppState... appStates) {
         super(appStates);
     }

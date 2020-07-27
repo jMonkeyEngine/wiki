@@ -1,11 +1,7 @@
 = Multithreading Bullet Physics in jme3
-:author: 
-:revnumber: 
-:revdate: 2016/03/17 20:48
+:revnumber: 2.0
+:revdate: 2020/07/27
 :keywords: documentation, physics, threading
-:relfileprefix: ../../
-:imagesdir: ../..
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
 
@@ -16,7 +12,7 @@ Since bullet is not (yet) multithreaded or GPU accelerated, the jME3 implementat
 
 == How is it handled in jme3 and bullet?
 
-A SimpleApplication with a BulletAppState allows setting the threading type via 
+A SimpleApplication with a BulletAppState allows setting the threading type via
 
 [source]
 ----
@@ -42,7 +38,7 @@ a|PARALLEL
 a|SEQUENTIAL
 
 a|1. update(), 2. render() and physics update().
-<a|1. update(), 2. render(), 3. physics update().  
+<a|1. update(), 2. render(), 3. physics update().
 
 a|Physics Debug View is rendered inaccurately (out of sync)
 a|Physics Debug View is rendered accurately.
@@ -52,6 +48,5 @@ a|Physics Debug View is rendered accurately.
 
 [TIP]
 ====
-You can add more physics spaces by using multiple PARALLEL bulletAppStates. You would do that if you have sets physical objects that never collide (for example, underground bolders and flying cannon balls above ground), so you put those into separate physics spaces, which improves performances (less collisions to check!). 
+You can add more physics spaces by using multiple PARALLEL bulletAppStates. You would do that if you have sets physical objects that never collide (for example, underground bolders and flying cannon balls above ground), so you put those into separate physics spaces, which improves performances (less collisions to check!).
 ====
-
