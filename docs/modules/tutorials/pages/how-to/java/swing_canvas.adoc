@@ -1,11 +1,6 @@
 = JME3 Canvas in a Swing GUI
-:author: 
-:revnumber: 
-:revdate: 2016/03/17 20:48
-:keywords: documentation, gui
-:relfileprefix: ../../
-:imagesdir: ../..
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:revnumber: 2.0
+:revdate: 2020/07/27
 
 
 3D games are typically played full-screen, or in a window that takes over the mouse and all inputs. However it is also possible to embed a jME 3 canvas in a standard Swing application. +
@@ -43,7 +38,7 @@ In short: The first thing that is different is the `main()` method. We don't cal
 
 == Main() and Runnable()
 
-The Swing isn't thread-safe and doesn't allow us to keep the jME3 canvas up-to-date. This is why we create a runnable for the jME canvas and queue it in the AWT event thread, so it can be invoked “later in the loop, when Swing is ready with updating its own stuff. +
+The Swing isn't thread-safe and doesn't allow us to keep the jME3 canvas up-to-date. This is why we create a runnable for the jME canvas and queue it in the AWT event thread, so it can be invoked "`later`" in the loop, when Swing is ready with updating its own stuff. +
 In the SwingCanvasTest's main() method, create a queued runnable(). It will contain the jME canvas and the Swing frame.
 
 [source,java]
@@ -106,7 +101,7 @@ JFrame window = new JFrame("Swing Application");
 window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 ----
 
-We create a standard JPanel inside the JFrame. Give it any Layout you wish – here we use a simple Flow Layout. Where the code sample says “Some Swing Component, this is where you add your buttons and controls. +
+We create a standard JPanel inside the JFrame. Give it any Layout you wish – here we use a simple Flow Layout. Where the code sample says "`Some Swing Component`", this is where you add your buttons and controls. +
 The important step is to add() the canvas component into the panel, like all the other Swing components.
 
 [source,java]

@@ -14,7 +14,7 @@ jME3 material system is entirely based on shaders. While it's pretty powerful, t
 *  Users can't add their own feature to the shader unless they fork it, and fall back to the same issues explained in previous points.
 
 Shader Nodes were designed with this in mind and are the fruit of many long discussions in the core chat balancing the pros and cons of this or that pattern. +
-At first this system was referred to as “Shader injection. The basic idea was to allow users to inject code into shaders with a tag replacement system. +
+At first this system was referred to as "`Shader`" injection. The basic idea was to allow users to inject code into shaders with a tag replacement system. +
 We finally came with a different concept called Shader Nodes, that is inspired from blender nodes system for textures and post process. +
 *The final shader is generated at run time by the system by assembling shader nodes together.*
 
@@ -92,7 +92,7 @@ All that is not between [] is mandatory.
 **  *NodeDefName* : The name of this ShaderNodeDefinition
 
 *  +++<u>Type</u>+++ : define the type of this shader node
-**  *ShaderType* : The type of shader for this definition. For now only “Vertex and “Fragment are supported.
+**  *ShaderType* : The type of shader for this definition. For now only "`Vertex`" and "`Fragment`" are supported.
 
 *  +++<u>Shader</u>+++ : the version and path of the shader code to use. note that you can have several shader with different GLSL version. The generator will pick the relevant one according to GPU capabilities.
 **  *ShaderLangAndVersion* : follows the same syntax than the shader declaration in the j3md file : GLSL&lt;version&gt;, version being 100 for glsl 1.0 , 130 for glsl 1.3, 150 for glsl 1.5 and so on. Note that this is the *minimum* glsl version this shader supports
@@ -103,11 +103,11 @@ All that is not between [] is mandatory.
 **  *@output* can be use to prefix an output name so the sdk recognize it and format it accordingly. the syntax id @output &lt;inputName&gt; &lt;description&gt;
 
 *  +++<u>Input</u>+++ : The input block containing all the inputs of this node. A node can have 1 or several inputs.
-**  *GlslVarType* : a valid glsl variable type that will be used in the shader for this input. see link:https://www.khronos.org/opengl/wiki/GLSL_Type[https://www.khronos.org/opengl/wiki/GLSL_Type] and the “Declare an array chapter
+**  *GlslVarType* : a valid glsl variable type that will be used in the shader for this input. see link:https://www.khronos.org/opengl/wiki/GLSL_Type[https://www.khronos.org/opengl/wiki/GLSL_Type] and the "`Declare`" an array chapter
 **  *VarName* : the name of the variable. Note that you can't have several inputs with the same name.
 
 *  +++<u>Output</u>+++ : The output block containing all the outputs of this node. A node can have 1 or several outputs.
-**  *GlslVarType* : a valid glsl variable type that will be used in the shader for this input. see link:https://www.khronos.org/opengl/wiki/GLSL_Type[https://www.khronos.org/opengl/wiki/GLSL_Type] and the “Declare an array chapter
+**  *GlslVarType* : a valid glsl variable type that will be used in the shader for this input. see link:https://www.khronos.org/opengl/wiki/GLSL_Type[https://www.khronos.org/opengl/wiki/GLSL_Type] and the "`Declare`" an array chapter
 **  *VarName* : the name of the variable. Note that you can't have several outputs with the same name.
 
 [NOTE]
@@ -189,7 +189,7 @@ If this value change the shader will have to be recompiled, due to the fact that
 
 The shader code associated with a Shader node is similar to any shader code. +
 The code for a Vertex shader node should be in a .vert file and the code for a Fragment shader node should be in a .frag file.
-It has a declarative part containing variable declaration, function declaration and so on… And a main part that is embed in a “void main(){} block. +
+It has a declarative part containing variable declaration, function declaration and so on… And a main part that is embed in a "`void main(){}`" block. +
 Input and output variables declared in the shader node definition can be used *without* being declared in the shader code. ( they shouldn't even or you'll have issues). +
 Here is a the code of the LightMap.frag shader.
 
@@ -240,9 +240,9 @@ ShaderNode <ShaderNodeName>{
 **  *DefinitionPath* : in case the definition is declared in it's own j3sn file, you have to set the path to this file here.
 
 *  +++<u>Condition</u>+++ a condition that dictates if the node is active or not.
-**  *ActivationCondition* : The condition for this node to be used. Today we use Defines to use different blocks of code used depending on the state of a Material Parameter. The condition here use the exact same paradigm. A valid condition must be the name of a material parameter or any combinations using logical operators &#8220;||,“&amp;&amp;,“! or grouping characters “( and “). The generator will create the corresponding define and the shader node code will be embed into and #ifdef statement.
+**  *ActivationCondition* : The condition for this node to be used. Today we use Defines to use different blocks of code used depending on the state of a Material Parameter. The condition here use the exact same paradigm. A valid condition must be the name of a material parameter or any combinations using logical operators &#8220;||,"`&amp;&amp;`", "`!`" or grouping characters "`(`" and "`)`". The generator will create the corresponding define and the shader node code will be embed into and #ifdef statement.
 
-For example, let's say we have a Color and ColorMap material parameter, this condition “Color || ColorMap will generate this statement :
+For example, let's say we have a Color and ColorMap material parameter, this condition "`Color || ColorMap`" will generate this statement :
 
 [source,java]
 ----
@@ -267,7 +267,7 @@ For example, let's say we have a Color and ColorMap material parameter, this con
 **  *MappingCondition* : Follows the same rules as the activation condition for the shaderNode, this mapping will be embed in a #ifdef statement n the resulting shader.
 
 *  +++<u>OutputMapping</u>+++ : This block is optional, as mapping of output will be done in input mapping block of following shaderNodes, ecept if you want to output a value to the Global output of the shader.
-**  *NameSpace* : the name space of the output to assign, this can only be “Global here.
+**  *NameSpace* : the name space of the output to assign, this can only be "`Global`" here.
 **  *VarName* : the name of a global output (can be anything, just be aware that 2 different names result in 2 different outputs).
 **  *OutputVariable* : Must be an output of the current node's definition.
 **  *MappingCondition* : Same as before.

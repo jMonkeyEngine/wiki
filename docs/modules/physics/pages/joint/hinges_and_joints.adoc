@@ -22,10 +22,10 @@ In this example, we will create a pendulum. The joint is the (invisible) connect
 **  This gives us a PhysicsSpace for PhysicsControls
 
 .  For the pendulum, we use a Spatial with a PhysicsControl, and we apply physical forces to them.
-**  The parts of the “pendulum are Physics Control'ed Spatials with Collision Shapes.
+**  The parts of the "`pendulum`" are Physics Control'ed Spatials with Collision Shapes.
 **  We create a fixed `hookNode` and a dynamic `pendulumNode`.
 
-.  We can “crank the handle and rotate the joint like a hinge, or we can let loose and expose the joints freely to gravity.
+.  We can "`crank`" the handle and rotate the joint like a hinge, or we can let loose and expose the joints freely to gravity.
 **  For physical forces we will use the method `joint.enableMotor();`
 
 
@@ -71,7 +71,7 @@ For a rope bridge, each set of planks would be one dynamic node.
 
 A PhysicsHingeJoint is an invisible connection between two nodes – here between the pendulum body and the hook. Why are hinges and joints represented by the same class? Hinges and joints have something in common: They constrain the _mechanical degree of freedom_ (DOF) of another object.
 
-Consider a free falling, “unchained object in physical 3D space: It has 6 DOFs:
+Consider a free falling, "`unchained`" object in physical 3D space: It has 6 DOFs:
 
 *  It translates along 3 axes
 *  It rotates around 3 axes
@@ -105,7 +105,8 @@ private HingeJoint joint;
                      new Vector3f(0f, 1f, 0f),  // pivot point local to B
                      Vector3f.UNIT_Z,           // DoF Axis of A (Z axis)
                      Vector3f.UNIT_Z  );        // DoF Axis of B (Z axis)
-
+...
+}
 ----
 
 The pivot point's position will be at `(0,0,0)` in the global 3D space. In A's local space that is at `(0,0,0)` and in B's local space (remember B's position was set to `(0,-1,0)`) that is at `(0,1,0)`.
@@ -132,7 +133,7 @@ bulletAppState.getPhysicsSpace().add(joint);
 
 == Apply Physical Forces
 
-You can apply forces to dynamic nodes (the ones that have a mass), and see how other joined (“chained) objects are dragged along.
+You can apply forces to dynamic nodes (the ones that have a mass), and see how other joined (chained) objects are dragged along.
 
 Alternatively, you can also apply forces to the joint itself. In a game, you may want to spin an automatic revolving door, or slam a door closed in a spooky way, or dramatically open the lid of a treasure chest.
 

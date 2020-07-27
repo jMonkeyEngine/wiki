@@ -1,10 +1,6 @@
 = Gamma Correction or sRGB pipeline
-:author:
-:revnumber:
-:revdate: 2016/03/17 20:48
-:relfileprefix: ../../
-:imagesdir: ../..
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:revnumber: 2.0
+:revdate: 2020/07/27
 
 
 
@@ -20,7 +16,7 @@ Gamma Correction is the technique that tends to correct the issue. Gamma is an p
 
 *Knowing what colors we have as input* +
 The other aspect of gamma correction is the colors we get as input in the rendering process that are stored in textures or in ColorRGBA material params. Almost all image editors are storing color data in images already gamma corrected (so that colors are correct when you display the picture in a viewer of in a browser). Also most hand picked colors (in a color picker) can be assumed as gamma corrected as you most probably chose this color through a monitor display.
-Such images or color are said to be in sRGB color space, meaning “standard RGB” (which is not the standard one would guess).
+Such images or color are said to be in sRGB color space, meaning "`standard RGB`" (which is not the standard one would guess).
 That means that textures and colors that we use as input in our shaders are not in a linear space. The issue is that we need them in linear space when we compute the lighting, else the lighting is wrong.
 To avoid this we need to apply some gamma correction to the colors : (pow(color, gamma);
 This only apply to textures that will render colors on screen (basically diffuse map, specular, light maps). Normal maps, height maps don’t need the correction.
@@ -90,7 +86,7 @@ This uses Opengl hardware gamma correction that uses an approximated Gamma value
 [NOTE]
 ====
 This will not yield exact results, as the real gamma can vary depending on the monitor. +
-If this is a problem, please refer to the “handling gamma correction in a post process section.
+If this is a problem, please refer to the "`handling gamma correction`" in a post process section.
 ====
 
 
@@ -163,7 +159,7 @@ For example here is how the NormalMap parameter is declared in the lighting mate
 
 ----
 
-When a texture is assigned to this material param by using material.setTexture(“NormalMap, myNormalTexture), the color space of this texture's image will be forced to linear. So if you make your own material and want to use Gamma Correction, make sure you properly mark your textures as in the proper color space.
+When a texture is assigned to this material param by using material.setTexture("NormalMap", myNormalTexture), the color space of this texture's image will be forced to linear. So if you make your own material and want to use Gamma Correction, make sure you properly mark your textures as in the proper color space.
 
 This can sound complicated, but you just have to answer this question :  Does my image represent color data? if the answer is no, then you have to set the -Linear flag.
 

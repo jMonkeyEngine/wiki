@@ -183,21 +183,21 @@ Keep an eye on the application's output stream, it will give you more details: T
 
 The methods `makeCube()`,  `makeFloor()`, `initMark()`, and `initCrossHairs`, are custom helper methods. We call them from  `simpleInitApp()` to initialize the scenegraph with sample content.
 
-.  `makeCube()` creates simple colored boxes for “target practice.
-.  `makeFloor()` creates a gray floor node for “target practice.
-.  `initMark()` creates a red sphere (“mark). We will use it later to mark the spot that was hit.
+.  `makeCube()` creates simple colored boxes for "`target`" practice.
+.  `makeFloor()` creates a gray floor node for "`target`" practice.
+.  `initMark()` creates a red sphere (mark). We will use it later to mark the spot that was hit.
 **  Note that the mark is not attached and therefor not visible at the start!
 
-.  `initCrossHairs()` creates simple cross-hairs by printing a “+ sign in the middle of the screen.
+.  `initCrossHairs()` creates simple cross-hairs by printing a "`+`" sign in the middle of the screen.
 **  Note that the cross-hairs are attached to the `guiNode`, not to the `rootNode`.
 
 
-In this example, we attached all “shootable objects to one custom node, `Shootables`. This is an optimization so the engine only has to calculate intersections with objects we are actually interested in.  The `Shootables` node is attached to the `rootNode` as usual.
+In this example, we attached all "`shootable`" objects to one custom node, `Shootables`. This is an optimization so the engine only has to calculate intersections with objects we are actually interested in.  The `Shootables` node is attached to the `rootNode` as usual.
 
 
 == Understanding Ray Casting for Hit Testing
 
-Our goal is to determine which box the user “shot (picked). In general, we want to determine which mesh the user has selected by aiming the cross-hairs at it. Mathematically, we draw a line from the camera and see whether it intersects with objects in the 3D scene. This line is called a ray.
+Our goal is to determine which box the user "`shot`" (picked). In general, we want to determine which mesh the user has selected by aiming the cross-hairs at it. Mathematically, we draw a line from the camera and see whether it intersects with objects in the 3D scene. This line is called a ray.
 
 Here is our simple ray casting algorithm for picking objects:
 
@@ -310,7 +310,7 @@ Note how it prints a lot of output to show you which hits were registered.
   };
 ----
 
-TIP: Notice how you use the provided method `results.getClosestCollision().getContactPoint()` to determine the _closest_ hit's location. If your game includes a “weapon or “spell that can hit multiple targets, you could also loop over the list of results, and interact with each of them.
+TIP: Notice how you use the provided method `results.getClosestCollision().getContactPoint()` to determine the _closest_ hit's location. If your game includes a "`weapon`" or "`spell`" that can hit multiple targets, you could also loop over the list of results, and interact with each of them.
 
 
 === Picking Action Using Mouse Pointer
@@ -366,7 +366,7 @@ Here are some tips:
 
 Shooting boxes isn't very exciting – can you add code that loads and positions a model in the scene, and shoot at it?
 
-*  Tip: You can use `Spatial golem = assetManager.loadModel(“Models/Oto/Oto.mesh.xml);` from the engine's jme3-test-data.jar.
+*  Tip: You can use `Spatial golem = assetManager.loadModel("Models/Oto/Oto.mesh.xml");` from the engine's jme3-test-data.jar.
 *  Tip: Models are shaded! You need some light!
 
 
@@ -377,7 +377,7 @@ Change the code as follows to simulate the player picking up objects into the in
 .  Create an inventory node to store the detached nodes temporarily.
 .  The inventory node is not attached to the rootNode.
 .  You can make the inventory visible by attaching the inventory node to the guiNode (which attaches it to the HUD). Note the following caveats:
-**  If your nodes use a lit Material (not “Unshaded.j3md), also add a light to the guiNode.
+**  If your nodes use a lit Material (not "`Unshaded.j3md`"), also add a light to the guiNode.
 **  Size units are pixels in the HUD, therefor a 2-wu cube is displayed only 2 pixels wide in the HUD. – Scale it bigger!
 **  Position the nodes: The bottom left corner of the HUD is (0f,0f), and the top right corner is at (settings.getWidth(),settings.getHeight()).
 

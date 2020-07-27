@@ -4,7 +4,7 @@
 
 
 image::how-to/articles/pbr/irradianceMap.png[irradianceMap,width="320",height="250",align="center"]
-*Note* : after several discussions in the team, I realized that some points were not clear in the  “PBR for artists” post. I’ve made an update with additional information on how to handle metalness and specular. I invite you to read it.
+*Note* : after several discussions in the team, I realized that some points were not clear in the  "`PBR for artists`" post. I’ve made an update with additional information on how to handle metalness and specular. I invite you to read it.
 
 xref:how-to/articles/pbr/pbr_part1.adoc[Physically Based Rendering – Part one]
 
@@ -95,7 +95,7 @@ Here is the diffuse effect of indirect lighting using an irradiance cube map
 
 === IBL Specular
 
-Indirect diffuse is cool, but we want “shiny”!! Shiny implies specular lighting.
+Indirect diffuse is cool, but we want "`shiny`"!! Shiny implies specular lighting.
 
 It’s important to understand what we want as a specular reflection. We want it to be very neat when the roughness is low and very blurry when it’s high.
 
@@ -122,7 +122,7 @@ As explained before, we need the reflection to be more blurry as the roughness i
 
 From mip levels to mip levels we’re going to convolve (blur) the images depending on the roughness. The more the roughness increase the more samples we’re going to use, and the more spread out they will be.
 
-But that’s not all, we also want to “bake” the specular BRDF in the map, so for each pixel we are going to compute the Cook-Torrentz microfacet BRDF (remember last post).
+But that’s not all, we also want to "`bake`" the specular BRDF in the map, so for each pixel we are going to compute the Cook-Torrentz microfacet BRDF (remember last post).
 
 But, as we are preprocessing the map, we don’t have any information about the shaded surface normal and view direction. So we are going to assume they are all the same, and equal to the envVector we’ll use to fetch pixels from the map. Also we assume that the shading point is exactly at the center of the cube map.
 

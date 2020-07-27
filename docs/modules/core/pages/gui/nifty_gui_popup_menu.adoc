@@ -1,13 +1,9 @@
 = Nifty GUI: Create a PopUp Menu
-:author: 
-:revnumber: 
-:revdate: 2016/03/17 20:48
-:relfileprefix: ../../
-:imagesdir: ../..
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:revnumber: 2.0
+:revdate: 2020/07/27
 
 
-Even though you create and populate the popup menu in Java, you still need a “placeholder in your XML file.
+Even though you create and populate the popup menu in Java, you still need a "`placeholder`" in your XML file.
 The popup element needs to be placed _outside_ of any screen!
 
 [source,xml]
@@ -41,21 +37,21 @@ public void createMyPopupMenu(){
   popup = nifty.createPopup("niftyPopupMenu");
   Menu myMenu = popup.findNiftyControl("#menu", Menu.class);
   myMenu.setWidth(new SizeValue("100px")); // must be set
-  myMenu.addMenuItem("Click me!", "menuItemIcon.png", 
+  myMenu.addMenuItem("Click me!", "menuItemIcon.png",
     new menuItem("menuItemid", "blah blah")); // menuItem is a custom class
   nifty.subscribe(
-    nifty.getCurrentScreen(), 
-    myMenu.getId(), 
-    MenuItemActivatedEvent.class, 
+    nifty.getCurrentScreen(),
+    myMenu.getId(),
+    MenuItemActivatedEvent.class,
     new MenuItemActivatedEventSubscriber());
 }
 
 public void showMenu() { // the method to trigger the menu
   // If this is a menu that is going to be used many times, then
-  // call this in your constructor rather than here   
-  createMyPopupMenu() 
+  // call this in your constructor rather than here
+  createMyPopupMenu()
   // call the popup to screen of your choice:
-  nifty.showPopup(nifty.getCurrentScreen(), popup.getId(), null); 
+  nifty.showPopup(nifty.getCurrentScreen(), popup.getId(), null);
 }
 
 private class menuItem {
@@ -78,9 +74,9 @@ To handle menu item events (i.e. calling a method when you click on a menu item)
 [source,java]
 ----
 
-  private class MenuItemActivatedEventSubscriber 
+  private class MenuItemActivatedEventSubscriber
     implements EventTopicSubscriber<MenuItemActivatedEvent> {
-    
+
     @Override
     public void onEvent(final String id, final MenuItemActivatedEvent event) {
     	menuItem item = (menuItem) event.getItem();

@@ -1,10 +1,6 @@
 = quickstart
-:author: 
-:revnumber: 
-:revdate: 2016/03/17 20:48
-:relfileprefix: ../../../
-:imagesdir: ../../..
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:revnumber: 2.0
+:revdate: 2020/07/27
 
 
 
@@ -35,7 +31,7 @@ guiNode.addControl(screen);
 ----
 
 // this = any JME Application
-Screen screen = new Screen(this, “tonegod/gui/style/def/style_map.xml”);
+Screen screen = new Screen(this, "tonegod/gui/style/def/style_map.xml");
 guiNode.addControl(screen);
 
 ----
@@ -62,8 +58,8 @@ Here are the three contrustor choices for creating the window:
   * String UID,
   * Vector2f position
   */
- 
-Window win = new Window(screen, “win”, new Vector2f(15, 15));
+
+Window win = new Window(screen, "win", new Vector2f(15, 15));
 screen.addElement(win);
 
 ----
@@ -78,8 +74,8 @@ The second adds a 4th parameter to specify the windows dimensions, like such:
 
 /** Additional Parameter:
   * Vector2f dimensions  */
- 
-Window win = new Window(screen, “win”, new Vector2f(15, 15),
+
+Window win = new Window(screen, "win", new Vector2f(15, 15),
     new Vector2f(400, 300)
 );
 screen.addElement(win);
@@ -96,10 +92,10 @@ The third option adds 2 more parameters and looks like this:
   * Vector4f resizeBorders,
   * String defaultImg
   */
- 
-Window win = new Window(screen, “win”, new Vector2f(15, 15), new Vector2f(400, 300),
+
+Window win = new Window(screen, "win", new Vector2f(15, 15), new Vector2f(400, 300),
     new Vector4f(14,14,14,14),
-    “tonegod/gui/style/def/Window/panel_x.png”
+    "tonegod/gui/style/def/Window/panel_x.png"
 );
 screen.addElement(win);
 
@@ -137,11 +133,11 @@ First, lets setup a method to create new windows:
 ----
 
 private int winCount = 0;
- 
+
 public final void createNewWindow(String someWindowTitle) {
     Window nWin = new Window(
         screen,
-        “Window” + winCount,
+        "Window" + winCount,
         new Vector2f( (screen.getWidth()/2)-175, (screen.getHeight()/2)-100 )
     );
     nWin.setWindowTitle(someWindowTitle);
@@ -161,14 +157,14 @@ Now we can add the button will call our create window method.
   * String UID,
   * Vector2f position
   */
- 
-ButtonAdapter makeWindow = new ButtonAdapter( screen, “Btn1″, new Vector2f(15, 55) ) {
+
+ButtonAdapter makeWindow = new ButtonAdapter( screen, "Btn1", new Vector2f(15, 55) ) {
     @Override
     public void onButtonMouseLeftUp(MouseButtonEvent evt, boolean toggled) {
-        createNewWindow(“New Window ” + winCount);
+        createNewWindow("New Window " + winCount);
     }
 };
- 
+
 // Add it to out initial window
 win.addChild(makeWindow);
 
@@ -233,37 +229,37 @@ There are more behaviors, however, these are the most critical when creating cus
 
 public int winCount = 0;
 private Screen screen;
- 
+
 public final void createNewWindow(String someWindowTitle) {
     Window nWin = new Window(
         screen,
-        “Window” + winCount,
+        "Window" + winCount,
         new Vector2f( (screen.getWidth()/2)-175, (screen.getHeight()/2)-100 )
     );
     nWin.setWindowTitle(someWindowTitle);
     screen.addElement(nWin);
     winCount++;
 }
- 
+
 public void simpleInitApp() {
-    screen = new Screen(this, “tonegod/gui/style/def/style_map.xml”);
+    screen = new Screen(this, "tonegod/gui/style/def/style_map.xml");
     screen.initialize();
     guiNode.addControl(screen);
- 
+
     // Add window
-    Window win = new Window(screen, “win”, new Vector2f(15, 15));
- 
+    Window win = new Window(screen, "win", new Vector2f(15, 15));
+
     // create button and add to window
-    ButtonAdapter makeWindow = new ButtonAdapter( screen, “Btn1″, new Vector2f(15, 55) ) {
+    ButtonAdapter makeWindow = new ButtonAdapter( screen, "Btn1", new Vector2f(15, 55) ) {
         @Override
         public void onButtonMouseLeftUp(MouseButtonEvent evt, boolean toggled) {
-            createNewWindow(“New Window ” + winCount);
+            createNewWindow("New Window " + winCount);
         }
     };
- 
+
     // Add it to our initial window
     win.addChild(makeWindow);
- 
+
     // Add window to the screen
    screen.addElement(win);
 }

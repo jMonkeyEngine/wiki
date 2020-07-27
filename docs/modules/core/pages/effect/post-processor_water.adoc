@@ -23,7 +23,7 @@ The SeaMonkey WaterFilter is ideal for oceans and lakes, and especially for unde
 
 The effect is part of a deferred rendering process, taking advantage of the pre-computed position buffer and back buffer (a texture representing the screen’s pixels position in view space, and a texture of the rendered scene).
 
-After some calculation, this allows to reconstruct the position in world space for each pixel on the screen. “If a pixel is under a given water height, let’s render it as a blue pixel! Blue pixel? Not exactly, we want waves, we want ripples, we want foam, we want reflection and refraction.
+After some calculation, this allows to reconstruct the position in world space for each pixel on the screen. If a pixel is under a given water height, let’s render it as a blue pixel! Blue pixel? Not exactly, we want waves, we want ripples, we want foam, we want reflection and refraction.
 
 The GameDev.net article describes how those effects are achieved, but the main idea is to generate waves from a height map, create ripples from a normal map, blend in the foam texture when the water depth is below a certain height, compute the refraction color with a clever color extinction algorithm, and then, display the reflection and specular effect by computing a Fresnel term (like in the simple water effect). In addition, this effect allows to blend the water shore with the ground to avoid the hard edges of classic water effects based on grids or quads.
 
@@ -135,14 +135,14 @@ a|How fast the waves move. Set it to 0.0f for still water.
 a|1.0f
 
 a|water.setHeightTexture( (Texture2D) +
-manager.loadTexture(“Textures/waveheight.png) )
+manager.loadTexture("Textures/waveheight.png") )
 a|This height map describes the shape of the waves
-a|“Common/MatDefs/Water/Textures/heightmap.jpg
+a|"Common/MatDefs/Water/Textures/heightmap.jpg"
 
 a|water.setNormalTexture( (Texture2D) +
-manager.loadTexture(“Textures/wavenormals.png) )
+manager.loadTexture("Textures/wavenormals.png") )
 a|This normal map describes the shape of the waves
-a|“Common/MatDefs/Water/Textures/gradient_map.jpg
+a|"Common/MatDefs/Water/Textures/gradient_map.jpg"
 
 a|water.setUseRipples(false);
 a|Switches the ripples effect on or off.
@@ -184,7 +184,7 @@ a|Sets how fast colors fade out. use this to control how clear (e.g. 0.05f) or m
 a| 0.1f
 
 a|water.setColorExtinction(new Vector3f(10f,20f,30f));
-a|Sets At what depth the refraction color extincts. The three values are RGB (red, green, blue) in this order. Play with these parameters to “muddy the water.
+a|Sets At what depth the refraction color extincts. The three values are RGB (red, green, blue) in this order. Play with these parameters to "`muddy`" the water.
 a|Vector3f(5f,20f,30f)
 
 |===
@@ -231,9 +231,9 @@ a|The three values describe what depth foam starts to fade out, at what depth it
 a|Vector3f(0.45f,4.35f,1.0f)
 
 a|water.setFoamTexture( (Texture2D) +
-manager.loadTexture(“Textures/foam.png) )
+manager.loadTexture("Textures/foam.png") )
 a|This foam texture will be used with WrapMode.Repeat
-a|“Common/MatDefs/Water/Textures/foam.jpg
+a|"Common/MatDefs/Water/Textures/foam.jpg"
 
 |===
 
