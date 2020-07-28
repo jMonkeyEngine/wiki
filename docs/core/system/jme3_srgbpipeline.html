@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Gamma Correction or sRGB pipeline :: jMonkeyEngine Docs</title>
+    <link rel="canonical" href="https://wiki.jmonkeyengine.org/docs/core/system/jme3_srgbpipeline.html">
+    <link rel="prev" href="../texture/anisotropic_filtering.html">
+    <link rel="next" href="../audio/audio.html">
+    <meta name="generator" content="Antora 2.3.3">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+<meta property="og:image" content="https://wiki.jmonkeyengine.org/_/img/iconx128.png">
+<meta property="og:description" content="Gamma Correction or sRGB pipeline">
+<meta property="og:title" content="jMonkeyEngine Docs">
+<link rel="stylesheet" href="../../../_/css/site-extra.css">
+<link rel="stylesheet" href="../../../_/css/vendor/docsearch.min.css">
+<!-- fetched from https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css -->
+<link rel="icon" href="../../../_/img/favicon.ico" type="image/x-icon">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://wiki.jmonkeyengine.org">
+        <img alt="" src="../../../_/img/jme-logo.png" height="32" type="image/x-icon">
+      </a>
+      <div class="navbar-item hide-for-print">
+        <input id="search-input" type="text" placeholder="Search docs">
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item theme-switch-wrapper">
+          <label class="theme-switch" for="checkbox">
+            <input type="checkbox" id="checkbox" />
+            <div class="slider round"></div>
+          </label>
+        </div>
+        <a class="navbar-item" href="https://github.com/jmonkeyengine/wiki">Github</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="docs" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../../documentation.html">JME</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../documentation.html">Getting Started</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="https://javadoc.jmonkeyengine.org/v3.3.2-stable">JavaDoc</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../tutorials/beginner/beginner.html">Beginner Tutorials</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_simpleapplication.html">Hello SimpleApplication</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_node.html">Hello Node</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_asset.html">Hello Asset</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_main_event_loop.html">Hello Update Loop</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_input_system.html">Hello Input System</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_material.html">Hello Material</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_animation.html">Hello Animation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_picking.html">Hello Picking</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_collision.html">Hello Collision</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_terrain.html">Hello Terrain</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_audio.html">Hello Audio</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_effects.html">Hello Effects</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_physics.html">Hello Physics</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Key Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/best_practices.html">Best Practices</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/optimization.html">Optimization</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/faq.html">Frequently Asked Questions</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/math_for_dummies.html">Math for Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/math.html">Math overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/math_cheet_sheet.html">3D math "cheat sheet"</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/rotate.html">3-D Rotation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/math_video_tutorials.html">Math video tutorial series</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/multi-media_asset_pipeline.html">Multi-Media Asset Pipeline</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/the_scene_graph.html">The Scene Graph</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/scenegraph_for_dummies.html">Scene Graph for Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/terminology.html">3D Graphics Terminology</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/transparency_sorting.html">Transparency Sorting</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Articles and How-to&#8217;s</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">How to Model</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../tutorials/how-to/modeling/3dsmax/3dsmax.html">3dsmax</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../tutorials/how-to/modeling/blender/blender.html">Blender</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../tutorials/how-to/modeling/blender/blender_buffer_clearing.html">Buffer Clearing</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../tutorials/how-to/modeling/blender/blender_gltf.html">Export as GlTF</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../tutorials/how-to/modeling/blender/blender_ogre_export.html">Export as Ogre XML</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../tutorials/how-to/modeling/blender/blender_ogre_compatibility.html">Ogre Compatibility</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../tutorials/how-to/modeling/blender/makehuman.html">MakeHuman</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../tutorials/how-to/modeling/blender/makehuman_blender_ogrexml_toolchain.html">MakeHuman toolchain</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">How to Animate</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Mixamo</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../tutorials/how-to/modeling/blender/mixamo.html">Blender Models</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Video</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="https://youtu.be/jHgAgTWIers?list=PLv6qR9TGkz8RcUr-fOHI2SksWA4BAU9TS">Part 1- Download Model</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="https://youtu.be/GQJSrOpNQwI?list=PLv6qR9TGkz8RcUr-fOHI2SksWA4BAU9TS">Part 2- Rig and Animate</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="https://youtu.be/JzRe2Dxbcmc?list=PLv6qR9TGkz8RcUr-fOHI2SksWA4BAU9TS">Part 3- Import to JME</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="https://youtu.be/8wwDRDJop7k?list=PLv6qR9TGkz8RcUr-fOHI2SksWA4BAU9TS">Part 4- Play Animation</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/how-to/debugging.html">Debugging with Wireframes</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/how-to/util/free_skymaps.html">How to create free skymaps</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Java Tips</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../tutorials/how-to/java/localization.html">Localization</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../tutorials/how-to/java/swing_canvas.html">Swing Canvas</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../tutorials/how-to/java/logging.html">Logging</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../tutorials/how-to/java/read_graphic_card_capabilites.html">Read Graphics Capabilites</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Articles</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Physically Based Rendering</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../tutorials/how-to/articles/pbr/pbr_part1.html">PBR – Part one</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../tutorials/how-to/articles/pbr/pbr_part2.html">PBR – Part two</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../tutorials/how-to/articles/pbr/pbr_part3.html">PBR – Part three</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Core Engine</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../app/simpleapplication.html">SimpleApplication</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="appsettings.html">AppSettings</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Controlling Game Logic</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../app/update_loop.html">Update Loop</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../app/state/application_states.html">Application States</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../scene/control/custom_controls.html">Custom Controls</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Video</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="https://www.youtube.com/watch?v=MNDiZ9YHIpM">Control any scene node</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="https://www.youtube.com/watch?v=-OzRZscLlHY">Control a character</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="https://wiki.jmonkeyengine.org/Scenes/SDK-UsecaseDemo_1.zip">Video Source Code</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../app/multithreading.html">Multithreading</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Scene Graph</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../scene/traverse_scenegraph.html">Traverse SceneGraph</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../scene/spatial.html">Spatial: Node vs Geometry</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../scene/mesh.html">Mesh</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../scene/custom_meshes.html">Custom Meshes</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../scene/shape/shape.html">Shape</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../scene/3d_models.html">3D Models</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../asset/asset_manager.html">Asset Manager</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../export/save_and_load.html">Saving and Loading Nodes</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../collision/collision_and_intersection.html">Collision and Intersection</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../scene/control/level_of_detail.html">Level of Detail</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Animation, Scene</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../animation/animation.html">Animation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../cinematic/cinematics.html">Cinematics (cutscenes, fake destruction physics)</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../cinematic/motionpath.html">MotionPaths and Waypoints</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Material, Light, Shadow</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../material/how_to_use_materials.html">How to use Materials</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../material/j3m_material_files.html">.j3m Material Files</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../material/material_definitions.html">.j3md Material Definitions</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../material/materials_overview.html">.j3md Properties</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../shader/jme3_shaders.html">Shaders and JME3</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../shader/jme3_shadernodes.html">Shader Node System</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../shader/shader_video_tutorials.html">Shader Video Tutorials</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../light/light_and_shadow.html">Light and Shadow</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../texture/anisotropic_filtering.html">Anisotropic Filtering</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="jme3_srgbpipeline.html">Gamma Correction</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Audio, Video</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../audio/audio.html">Playing Sounds</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../audio/audio_environment_presets.html">Audio Environment Presets</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../app/state/screenshots.html">Capture Screenshots</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../app/state/capture_audio_video_to_a_file.html">Capture Audio/Video</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Filter, Effect</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../effect/effects_overview.html">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../effect/bloom_and_glow.html">Bloom and Glow</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../effect/particle_emitters.html">Particle Emitters</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Landscapes</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../util/sky.html">Sky</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../terrain/terrain.html">Terrain (TerraMonkey)</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../collision/terrain_collision.html">Terrain Collision</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../effect/water.html">Simple Water</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../effect/post-processor_water.html">Post-Processor Water</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Camera</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../renderer/camera.html">Camera</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../renderer/making_the_camera_follow_a_character.html">Follow a Character</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../renderer/remote-controlling_the_camera.html">Remote-Controlling</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../renderer/multiple_camera_views.html">Multiple Camera Views</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../renderer/jme3_renderbuckets.html">Render Buckets</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">User Interaction</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../input/input_handling.html">Input Handling</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../input/combo_moves.html">Combo Moves</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../input/mouse_picking.html">Mouse Picking</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Graphical User Interface</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Nifty GUI</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../gui/nifty_gui.html">Integration Tutorial</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../gui/nifty_gui_best_practices.html">Best Practices</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../gui/nifty_gui_scenarios.html">Scenarios</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../ui/hud.html">Head-Up Display (HUD)</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Virtual Reality</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../vr/virtualreality.html">Virtual Reality</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../physics/physics.html">Physics</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../physics/bullet_multithreading.html">Multi-Threaded Physics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../physics/collision/physics_listeners.html">Collision Detection</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../physics/joint/hinges_and_joints.html">Hinges and Joints</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../physics/control/walking_character.html">Walking Character</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../physics/control/ragdoll.html">Ragdoll</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../physics/control/vehicles.html">Vehicles</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../physics/control/softbody.html">Softbody</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../physics/bullet_pitfalls.html">Bullet Physics Pitfalls</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Networking</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../networking/networking.html">Networking (SpiderMonkey)</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../networking/headless_server.html">Headless Server</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../networking/monkey_zone.html">Multi-Player Demo Code</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../networking/networking_video_tutorials.html">Networking Video Tutorials</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">User Contributions</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#docs\modules\contributions\pages\contributions.adoc">User Made Utilities</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Shader</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/shader/shaderblow_project.html">ShaderBlow Project</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Landscapes</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/lanscapes/vegetationsystem/vegetationsystem.html">Vegetation System</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Networking</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/networking/open_game_finder.html">Open Game Finder</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Entity System</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#es/entitysystem.adoc">The Zay-ES Entity System</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Artificial Intelligence</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/ai/recast.html">Recast Navigation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/ai/building_recast.html">Updating and building Recast Native Bindings</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/ai/monkey_brains.html">Monkey Brains</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/ai/steer_behaviours.html">Steer Behaviours</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/ai/jme3_ai.html">jME3 Artificial Intelligence</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">GUI</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="https://github.com/jMonkeyEngine-Contributions/Lemur">Lemur - a native jME3 GUI library with scene graph tools</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="https://github.com/jMonkeyEngine-Contributions/Lemur/wiki/Modules">Lemur Scene Graph Tools</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="http://hub.jmonkeyengine.org/t/lemur-gems-1-inputmapper-based-camera-movement/28703">Lemur Gems #1 - Input mapper based camera movement. </a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="http://hub.jmonkeyengine.org/t/lemur-gems-2-inputmapper-delegates/28710">Lemur Gems #2 - Input mapper delegates</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="http://hub.jmonkeyengine.org/t/lemur-gems-3-scene-picking/28713">Lemur Gems #3 - Scene picking</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/gui/tonegodgui/tonegodgui.html">tonegodGUI - a native jME3 GUI library</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Tools</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/tools/navigation.html">Mercator Projection Tool (Marine Navigation)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/tools/charts.html">Visualizing Maps in JME3 (Marine Charts)</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Projects</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/projects/rise_of_mutants_project.html">Rise of Mutants Project</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../sdk/sdk.html">SDK</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Video Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">SDK Use Case Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=-OzRZscLlHY">Demo 1 (Quixote demo)</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=6-YWxD3JByE">Demo 2 (Models and Materials)</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">SDK Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=M1_0pbeyJzI">Basics</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=nL7woH40i5c">Importing Models</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=DUmgAjiNzhY">Dragging&amp;Dropping Nodes</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=ntPAmtsQ6eM">Scene Composing</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=zgPV3W6dD4s">Terrain with Collision Shape</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=Feu3-mrpolc">Working with Materials</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=MNDiZ9YHIpM">Custom Controls</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=oZnssg8TBWQ">WebStart Deployment</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=D7JM4VMKqPc">Animation and Effect TrackEditing</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Getting Started</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/update_center.html">Updating jMonkeyEngine SDK</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/troubleshooting.html">Troubleshooting</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Java Development Features</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/project_creation.html">Project Creation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/code_editor.html">Code Editor and Palette</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/version_control.html">File Version Control</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/debugging_profiling_testing.html">Debug, Profile, Test</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../sdk/application_deployment.html">Application Deployment</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../sdk/default_build_script.html">Default Build Script</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../sdk/android.html">Android</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../sdk/android_cheat_sheet.html">Android Cheat Sheet</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../sdk/ios.html">iOS</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Unique Features</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../sdk/model_loader_and_viewer.html">Import, View, Convert Models</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../sdk/asset_packs.html">Asset Packs</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/scene_explorer.html">The SceneExplorer</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/scene_composer.html">Composing a Scene</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/terrain_editor.html">Terrain Editor</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/sample_code.html">Sample Code</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/material_editing.html">Material Editing</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/font_creation.html">Creating Bitmap Fonts</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="https://hub.jmonkeyengine.org/t/effecttrack-and-audiotrack-editing-in-the-sdk/23378">Audio and Effect Track Editing</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="https://www.youtube.com/watch?v=D7JM4VMKqPc">Video: Effect and AudioTrack editing in jMonkeyEngine 3 sdk</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/filters.html">Post-Processor Filter Editor and Viewer</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../app/state/application_states.html">Application States</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../scene/control/custom_controls.html">Custom Controls</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/vehicle_creator.html">Vehicle Creator</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Advanced Usage</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/build_platform.html">Building jMonkeyEngine SDK</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/use_own_jme.html#.adoc">Using your own (modified) version of jME3 in jMonkeyEngine SDK</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/increasing_heap_memory.html">Increasing Heap Memory</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/log_files.html">Log Files</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Available external plugins</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/contributions.html">Contributions</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/neotexture.html">Neo Texture Editor for procedural textures</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=yS9a9o4WzL8">Video: Mesh Tool &amp; Physics Editor</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../sdk/development.html">Developing plugins for jMonkeyEngine SDK</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/development/setup.html">Creating a plugin</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/development/general.html">Creating components</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/development/scene.html">The Main Scene</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/development/sceneexplorer.html">The Scene Explorer</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/development/projects_assets.html">Projects and Assets</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/development/extension_library.html">Create a library plugin from a jar file</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/development/model_loader.html">Create a new or custom model filetype and loader</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">JME</span>
+    <span class="version">master</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">JME</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../../documentation.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Wiki Contribution</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../wiki-contribution/wiki_contributor.html">master</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Wiki UI</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../wiki-ui/index.html">master</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../documentation.html">JME</a></li>
+    <li>Material, Light, Shadow</li>
+    <li><a href="jme3_srgbpipeline.html">Gamma Correction</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/jMonkeyEngine/wiki/edit/master/docs/modules/core/pages/system/jme3_srgbpipeline.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Gamma Correction or sRGB pipeline</h1>
+<div class="sect1">
+<h2 id="overview"><a class="anchor" href="#overview"></a>Overview</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>We consider color values to be linear when computing lighting. What does that means? That means that we assume that the color 0.5,0.5,0.5 is half way between black and white.<br>
+The problem is that it’s not the case, or at least not when you look at the color through a monitor.<br>
+CRT monitors had physical limitations that prevented them to have a linear way of representing colors. that means that 0.5,0.5,0.5 through a monitor is not half way between black and white (it’s darker). Note that black and white remains the same though.<br>
+If we do not take that into account, the rendered images are overly darken and feels dull.<br>
+LCD monitors still mimic this physical limitation (I guess for backward compatibility).<br>
+<strong>Output correct colors</strong><br>
+Gamma Correction is the technique that tends to correct the issue. Gamma is an power factor applied to the color by the monitor when lighting a pixel on screen (or at least a simplification of the function applied). So when we output the color, we have to apply the inverse power of this factor to nullify the effect : finalColor = pow(computedColor, 1/gamma);<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Knowing what colors we have as input</strong><br>
+The other aspect of gamma correction is the colors we get as input in the rendering process that are stored in textures or in ColorRGBA material params. Almost all image editors are storing color data in images already gamma corrected (so that colors are correct when you display the picture in a viewer of in a browser). Also most hand picked colors (in a color picker) can be assumed as gamma corrected as you most probably chose this color through a monitor display.
+Such images or color are said to be in sRGB color space, meaning &#8220;standard RGB&#8221; (which is not the standard one would guess).
+That means that textures and colors that we use as input in our shaders are not in a linear space. The issue is that we need them in linear space when we compute the lighting, else the lighting is wrong.
+To avoid this we need to apply some gamma correction to the colors : (pow(color, gamma);
+This only apply to textures that will render colors on screen (basically diffuse map, specular, light maps). Normal maps, height maps don’t need the correction.</p>
+</div>
+<div class="paragraph">
+<p>This is the kind of difference you can have :<br>
+left is non corrected output, right is gamma corrected output.<br>
+<span class="image"><img src="http://i.imgur.com/uNL7vw8.png" alt="uNL7vw8.png" width="" height=""></span></p>
+</div>
+<div class="sect2">
+<h3 id="implementation"><a class="anchor" href="#implementation"></a>Implementation</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>To handle proper gamma corrected ouput colors, Opengl expose an ARB extension that allows you to output a color in linear space and have the GPU automatically correct it : <a href="https://www.opengl.org/registry/specs/ARB/framebuffer_sRGB.txt">https://www.opengl.org/registry/specs/ARB/framebuffer_sRGB.txt</a></p>
+</li>
+<li>
+<p>To handle the input, instead of classic RGBA8 image format, one can use SRGB8_ALPHA8_EXT which is basically RGBA in sRGB. Using this you specify the GPU that the texture is in sRGB space and when fetching  a color from it, the GPU will linearize the color value for you (for free). There are sRGB equivalent to all 8 bits formats (even compressed format like DXT).</p>
+</li>
+<li>
+<p>But all textures don&#8217;t need this. For example, normal maps, height maps colors are most probably generated and not hand picked by an artist looking through a monitor. The implementation needs to account for it and expose a way to exclude some textures from the sRGB pipeline.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Gamma Correction in jME 3.0 is based on those three statements.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Note that Gamma Correction is only available on desktop with LWJGL or JOGL renderer. They are not yet supported on Android or iOS renderers.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="turning-gamma-correction-onoff"><a class="anchor" href="#turning-gamma-correction-onoff"></a>Turning Gamma Correction on/off</h4>
+<div class="paragraph">
+<p>You can turn Gamma Correction on and off using the AppSettings. There is a method setGammaCorrection(boolean) that changes the setting.
+use this in the main() method of your application :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">AppSettings settings = new AppSettings(true);
+settings.setGammaCorrection(true);
+app.setSettings(settings);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This setting is also exposed in the Settings dialog displayed when you launch a jME application.<br>
+<span class="image"><img src="http://i.imgur.com/Lya1ldH.png" alt="Lya1ldH.png" width="400" height=""></span></p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This is a short hand to enable both linearization of input textures and Gamma correction of the rendered output on screen.<br>
+<strong>Both can be enabled separately</strong>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect4">
+<h5 id="enabling-output-gamma-correction"><a class="anchor" href="#enabling-output-gamma-correction"></a>Enabling output Gamma Correction</h5>
+<div class="paragraph">
+<p>You can enable or disable the Gamma correction of the rendered output by using:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">renderer.setMainFrameBufferSrgb(boolean srgb)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will be ignored if the hardware doesn&#8217;t have the GL_ARB_framebuffer_sRGB or the GL_EXT_texture_sRGB.
+This can be toggled at run time.</p>
+</div>
+<div class="paragraph">
+<p>This uses Opengl hardware gamma correction that uses an approximated Gamma value of 2.2 and uses the following formula : color = pow(color,1/gamma)</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This will not yield exact results, as the real gamma can vary depending on the monitor.<br>
+If this is a problem, please refer to the &#8220;handling gamma correction&#8221; in a post process section.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="enabling-texture-linearization"><a class="anchor" href="#enabling-texture-linearization"></a>Enabling texture linearization</h5>
+<div class="paragraph">
+<p>You can enable or disable texture linearization by using</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">renderer.setLinearizeSrgbImages(boolean linearize)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will be ignored if the hardware doesn&#8217;t have the GL_ARB_framebuffer_sRGB or the GL_EXT_texture_sRGB.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Toggling this setting at runtime will produce unexpected behavior for now. A change in this setting would need a proper reload of the context to work.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>All images marked as in sRGB color space will be uploaded to the GPU using a sRGB image format.
+Opengl hardware texture linearization also uses an approximated Gamma value of 2.2 and linearize the fetched texel color using the following formula : color = pow(color, gamma)<br>
+As with output gamma correction this will not give exact result, but the error is less important since most image editor uses the same approximation to correct images and save them in sRGB color space.</p>
+</div>
+<div class="paragraph">
+<p>Not all image format have their sRGB equivalent, and only 8bit formats.
+Here is an exhaustive list of the supported format and there equivalent :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>RGB8 : GL_SRGB8</p>
+</li>
+<li>
+<p>RGBA8 : GL_SRGB8_ALPHA8</p>
+</li>
+<li>
+<p>BGR8 : GL_SRGB8</p>
+</li>
+<li>
+<p>ABGR8 : GL_SRGB8_ALPHA8</p>
+</li>
+<li>
+<p>Luminance8 : GL_SLUMINANCE8</p>
+</li>
+<li>
+<p>Luminance8Alpha8 : GL_SLUMINANCE8_ALPHA8</p>
+</li>
+<li>
+<p>DXT1 : GL_COMPRESSED_SRGB_S3TC_DXT1</p>
+</li>
+<li>
+<p>DXT1A : GL_COMPRESSED_SRGB_ALPHA_S3TC_DXT1</p>
+</li>
+<li>
+<p>DXT3 : GL_COMPRESSED_SRGB_ALPHA_S3TC_DXT3</p>
+</li>
+<li>
+<p>DXT5 : GL_COMPRESSED_SRGB_ALPHA_S3TC_DXT5</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Conventionally only the rgb channels are gamma corrected, as the alpha channel does not a represent a color value</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="excluding-images-from-the-srgb-pipeline"><a class="anchor" href="#excluding-images-from-the-srgb-pipeline"></a>Excluding images from the sRGB pipeline</h4>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Only loaded images will be marked as in sRGB color space, when using assetManager.loadTexture or loadAsset.<br>
+The color space of an image created by code will have to be specified in the constructor or will be assumed as Linear if not specified.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Not all images need to be linearized. Some images don&#8217;t represent color information that will be displayed on screen, but more different sort of data packed in a texture.<br>
+The best example is a Normal map that will contains normal vectors for each pixel. Height maps will contain elevation values. These textures must not be linearized.</p>
+</div>
+<div class="paragraph">
+<p>There is no way to determine the real color space of an image when loading it, so we must deduce the color space from the usage it&#8217;s loaded for. The usage is dictated by the material, those textures are used for, and by the material parameter they are assigned to.
+One can now specify in a material definition file (j3md) if a texture parameter must be assumed as in linear color space, and thus, must not be linearized, by using the keyword -LINEAR next to the parameter (case does not matter).</p>
+</div>
+<div class="paragraph">
+<p>For example here is how the NormalMap parameter is declared in the lighting material definition.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code> // Normal map
+ Texture2D NormalMap -LINEAR</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When a texture is assigned to this material param by using material.setTexture("NormalMap", myNormalTexture), the color space of this texture&#8217;s image will be forced to linear. So if you make your own material and want to use Gamma Correction, make sure you properly mark your textures as in the proper color space.</p>
+</div>
+<div class="paragraph">
+<p>This can sound complicated, but you just have to answer this question :  Does my image represent color data? if the answer is no, then you have to set the -Linear flag.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="colorrgba-as-srgb"><a class="anchor" href="#colorrgba-as-srgb"></a>ColorRGBA as sRGB</h4>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The r, g, b attributes of a ColorRGBA object are <strong>ALWAYS</strong> assumed in Linear color space.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>If you want to set a color that you hand picked in a color picker, you should use the setAsSRGB method of ColorRGBA. This will convert the given values to linear color space by using the same formula as before : color = pow (color, gamma) where gamma = 2.2;</p>
+</div>
+<div class="paragraph">
+<p>If you want to retrieve those values from a ColorRGBA, you can call the getAsSRGB method. The values will be converted back to sRGB color Space.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The return type of that method is a Vector4f and not a ColorRGBA, because as stated before, all ColorRGBA objects r,g,b attributes are assumed in Linear color space.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="handling-rendered-output-gamma-correction-with-a-post-process-filter"><a class="anchor" href="#handling-rendered-output-gamma-correction-with-a-post-process-filter"></a>Handling rendered output Gamma Correction with a post process filter</h4>
+<div class="paragraph">
+<p>As stated before, the hardware gamma correction uses and approximated gamma value of 2.2.
+Some may not be satisfied with that approximations and may want to pick a more appropriate gamma value.
+You can see in some games some Gamma calibration screens, that are here to help the player pick a correct gamma value for the monitor he&#8217;s using.</p>
+</div>
+<div class="paragraph">
+<p>For this particular case, you can do as follow :</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Enable Gamma Correction global app setting.</p>
+</li>
+<li>
+<p>Disable rendered output correction : renderer.setMainFrameBufferSrgb(false); (for example in the simpleInit method of your SimpleApplication).</p>
+</li>
+<li>
+<p>Use the GammaCorrectionFilter in a FilterPostProcessor, and set the proper gamma value on it (default is 2.2).</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="should-you-use-this"><a class="anchor" href="#should-you-use-this"></a>Should you use this?</h3>
+<div class="paragraph">
+<p>Yes. Mostly because it&#8217;s the only way to have proper lighting.
+If you&#8217;re starting a new project it&#8217;s a no brainer…use it, period. And don&#8217;t allow the player to turn it off.</p>
+</div>
+<div class="paragraph">
+<p>Now if you already spent time to adjust lighting in your scenes, without gamma correction, turning it on will make everything too bright, and you&#8217;ll have to adjust all your lighting and colors again.
+That&#8217;s why we kept a way to turn it off, for backward compatibility.</p>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="../texture/anisotropic_filtering.html">Anisotropic Filtering</a></span>
+  <span class="next"><a href="../audio/audio.html">Playing Sounds</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>Copyright 2020 jMonkeyEngine Wiki Contributors. Licensed BSD-3.</p>
+</footer>
+<script src="../../../_/js/vendor/docsearch.min.js"></script>
+<!-- fetched from https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js -->
+<script>
+var search = docsearch({
+  apiKey: 'a736b6d93de805e26ec2f49b55013fbd',
+  indexName: 'jmonkeyengine',
+  inputSelector: '#search-input',
+  autocompleteOptions: { hint: false, keyboardShortcuts: ['s'] },
+  algoliaOptions: { hitsPerPage: 10 }
+}).autocomplete
+search.on('autocomplete:closed', function () { search.autocomplete.setVal() })
+function focusSearchInput () { document.querySelector('#search-input').focus() }
+if (document.querySelector('.home-link.is-current')) window.addEventListener('load', focusSearchInput)
+</script>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
