@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>JME3 and Shaders :: jMonkeyEngine Docs</title>
+    <link rel="canonical" href="https://wiki.jmonkeyengine.org/docs/3.2/core/shader/jme3_shaders.html">
+    <link rel="prev" href="../material/materials_overview.html">
+    <link rel="next" href="jme3_shadernodes.html">
+    <meta name="generator" content="Antora 2.3.3">
+    <link rel="stylesheet" href="../../../../_/css/site.css">
+<meta property="og:image" content="https://wiki.jmonkeyengine.org/_/img/iconx128.png">
+<meta property="og:description" content="JME3 and Shaders">
+<meta property="og:title" content="jMonkeyEngine Docs">
+<link rel="stylesheet" href="../../../../_/css/site-extra.css">
+<link rel="stylesheet" href="../../../../_/css/vendor/docsearch.min.css">
+<!-- fetched from https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css -->
+<link rel="icon" href="../../../../_/img/favicon.ico" type="image/x-icon">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://wiki.jmonkeyengine.org">
+        <img alt="" src="../../../../_/img/jme-logo.png" height="32" type="image/x-icon">
+      </a>
+      <div class="navbar-item hide-for-print">
+        <input id="search-input" type="text" placeholder="Search docs">
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item theme-switch-wrapper">
+          <label class="theme-switch" for="checkbox">
+            <input type="checkbox" id="checkbox" />
+            <div class="slider round"></div>
+          </label>
+        </div>
+        <a class="navbar-item" href="https://github.com/jmonkeyengine/wiki">Github</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="docs" data-version="3.2">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../../documentation.html">JME</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../documentation.html">Getting Started</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="https://javadoc.jmonkeyengine.org/v3.3.2-stable">JavaDoc</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../tutorials/beginner/beginner.html">Beginner Tutorials</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_simpleapplication.html">Hello SimpleApplication</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_node.html">Hello Node</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_asset.html">Hello Asset</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_main_event_loop.html">Hello Update Loop</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_input_system.html">Hello Input System</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_material.html">Hello Material</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_animation.html">Hello Animation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_picking.html">Hello Picking</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_collision.html">Hello Collision</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_terrain.html">Hello Terrain</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_audio.html">Hello Audio</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_effects.html">Hello Effects</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_physics.html">Hello Physics</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Key Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/best_practices.html">Best Practices</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/optimization.html">Optimization</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/faq.html">Frequently Asked Questions</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/math_for_dummies.html">Math for Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/math.html">Math overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/math_cheet_sheet.html">3D math "cheat sheet"</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/rotate.html">3-D Rotation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/math_video_tutorials.html">Math video tutorial series</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/multi-media_asset_pipeline.html">Multi-Media Asset Pipeline</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/the_scene_graph.html">The Scene Graph</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/scenegraph_for_dummies.html">Scene Graph for Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/terminology.html">3D Graphics Terminology</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/transparency_sorting.html">Transparency Sorting</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Articles and How-to&#8217;s</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">How to Model</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../tutorials/how-to/modeling/3dsmax/3dsmax.html">3dsmax</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../tutorials/how-to/modeling/blender/blender.html">Blender</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../tutorials/how-to/modeling/blender/blender_buffer_clearing.html">Buffer Clearing</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../tutorials/how-to/modeling/blender/blender_gltf.html">Export as GlTF</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../tutorials/how-to/modeling/blender/blender_ogre_export.html">Export as Ogre XML</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../tutorials/how-to/modeling/blender/blender_ogre_compatibility.html">Ogre Compatibility</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../tutorials/how-to/modeling/blender/makehuman.html">MakeHuman</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../tutorials/how-to/modeling/blender/makehuman_blender_ogrexml_toolchain.html">MakeHuman toolchain</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">How to Animate</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Mixamo</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../tutorials/how-to/modeling/blender/mixamo.html">Blender Models</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Video</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="https://youtu.be/jHgAgTWIers?list=PLv6qR9TGkz8RcUr-fOHI2SksWA4BAU9TS">Part 1- Download Model</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="https://youtu.be/GQJSrOpNQwI?list=PLv6qR9TGkz8RcUr-fOHI2SksWA4BAU9TS">Part 2- Rig and Animate</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="https://youtu.be/JzRe2Dxbcmc?list=PLv6qR9TGkz8RcUr-fOHI2SksWA4BAU9TS">Part 3- Import to JME</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="https://youtu.be/8wwDRDJop7k?list=PLv6qR9TGkz8RcUr-fOHI2SksWA4BAU9TS">Part 4- Play Animation</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/how-to/debugging.html">Debugging with Wireframes</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/how-to/util/free_skymaps.html">How to create free skymaps</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Java Tips</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../tutorials/how-to/java/localization.html">Localization</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../tutorials/how-to/java/swing_canvas.html">Swing Canvas</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../tutorials/how-to/java/logging.html">Logging</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../tutorials/how-to/java/read_graphic_card_capabilites.html">Read Graphics Capabilites</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Articles</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Physically Based Rendering</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../tutorials/how-to/articles/pbr/pbr_part1.html">PBR – Part one</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../tutorials/how-to/articles/pbr/pbr_part2.html">PBR – Part two</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../tutorials/how-to/articles/pbr/pbr_part3.html">PBR – Part three</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Core Engine</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../app/simpleapplication.html">SimpleApplication</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../system/appsettings.html">AppSettings</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Controlling Game Logic</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../app/update_loop.html">Update Loop</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../app/state/application_states.html">Application States</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../scene/control/custom_controls.html">Custom Controls</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Video</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="https://www.youtube.com/watch?v=MNDiZ9YHIpM">Control any scene node</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="https://www.youtube.com/watch?v=-OzRZscLlHY">Control a character</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="https://wiki.jmonkeyengine.org/Scenes/SDK-UsecaseDemo_1.zip">Video Source Code</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../app/multithreading.html">Multithreading</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Scene Graph</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../scene/traverse_scenegraph.html">Traverse SceneGraph</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../scene/spatial.html">Spatial: Node vs Geometry</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../scene/mesh.html">Mesh</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../scene/custom_meshes.html">Custom Meshes</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../scene/shape/shape.html">Shape</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../scene/3d_models.html">3D Models</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../asset/asset_manager.html">Asset Manager</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../export/save_and_load.html">Saving and Loading Nodes</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../collision/collision_and_intersection.html">Collision and Intersection</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../scene/control/level_of_detail.html">Level of Detail</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Animation, Scene</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../animation/animation.html">Animation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../cinematic/cinematics.html">Cinematics (cutscenes, fake destruction physics)</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../cinematic/motionpath.html">MotionPaths and Waypoints</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Material, Light, Shadow</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../material/how_to_use_materials.html">How to use Materials</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../material/j3m_material_files.html">.j3m Material Files</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../material/material_definitions.html">.j3md Material Definitions</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../material/materials_overview.html">.j3md Properties</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="jme3_shaders.html">Shaders and JME3</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="jme3_shadernodes.html">Shader Node System</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="shader_video_tutorials.html">Shader Video Tutorials</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../light/light_and_shadow.html">Light and Shadow</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../texture/anisotropic_filtering.html">Anisotropic Filtering</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../system/jme3_srgbpipeline.html">Gamma Correction</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Audio, Video</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../audio/audio.html">Playing Sounds</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../audio/audio_environment_presets.html">Audio Environment Presets</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../app/state/screenshots.html">Capture Screenshots</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../app/state/capture_audio_video_to_a_file.html">Capture Audio/Video</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Filter, Effect</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../effect/effects_overview.html">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../effect/bloom_and_glow.html">Bloom and Glow</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../effect/particle_emitters.html">Particle Emitters</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Landscapes</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../util/sky.html">Sky</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../terrain/terrain.html">Terrain (TerraMonkey)</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../collision/terrain_collision.html">Terrain Collision</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../effect/water.html">Simple Water</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../effect/post-processor_water.html">Post-Processor Water</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Camera</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../renderer/camera.html">Camera</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../renderer/making_the_camera_follow_a_character.html">Follow a Character</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../renderer/remote-controlling_the_camera.html">Remote-Controlling</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../renderer/multiple_camera_views.html">Multiple Camera Views</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../renderer/jme3_renderbuckets.html">Render Buckets</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">User Interaction</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../input/input_handling.html">Input Handling</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../input/combo_moves.html">Combo Moves</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../input/mouse_picking.html">Mouse Picking</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Graphical User Interface</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Nifty GUI</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../gui/nifty_gui.html">Integration Tutorial</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../gui/nifty_gui_best_practices.html">Best Practices</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../gui/nifty_gui_scenarios.html">Scenarios</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../ui/hud.html">Head-Up Display (HUD)</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Virtual Reality</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../vr/virtualreality.html">Virtual Reality</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../physics/physics.html">Physics</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../physics/bullet_multithreading.html">Multi-Threaded Physics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../physics/collision/physics_listeners.html">Collision Detection</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../physics/joint/hinges_and_joints.html">Hinges and Joints</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../physics/control/walking_character.html">Walking Character</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../physics/control/ragdoll.html">Ragdoll</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../physics/control/vehicles.html">Vehicles</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../physics/control/softbody.html">Softbody</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../physics/bullet_pitfalls.html">Bullet Physics Pitfalls</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Networking</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../networking/networking.html">Networking (SpiderMonkey)</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../networking/headless_server.html">Headless Server</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../networking/monkey_zone.html">Multi-Player Demo Code</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../networking/networking_video_tutorials.html">Networking Video Tutorials</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">User Contributions</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#docs\modules\contributions\pages\contributions.adoc">User Made Utilities</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Shader</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/shader/shaderblow_project.html">ShaderBlow Project</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Landscapes</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/lanscapes/vegetationsystem/vegetationsystem.html">Vegetation System</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Networking</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/networking/open_game_finder.html">Open Game Finder</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Entity System</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#es/entitysystem.adoc">The Zay-ES Entity System</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Artificial Intelligence</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/ai/recast.html">Recast Navigation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/ai/building_recast.html">Updating and building Recast Native Bindings</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/ai/monkey_brains.html">Monkey Brains</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/ai/steer_behaviours.html">Steer Behaviours</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/ai/jme3_ai.html">jME3 Artificial Intelligence</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">GUI</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="https://github.com/jMonkeyEngine-Contributions/Lemur">Lemur - a native jME3 GUI library with scene graph tools</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="https://github.com/jMonkeyEngine-Contributions/Lemur/wiki/Modules">Lemur Scene Graph Tools</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="http://hub.jmonkeyengine.org/t/lemur-gems-1-inputmapper-based-camera-movement/28703">Lemur Gems #1 - Input mapper based camera movement. </a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="http://hub.jmonkeyengine.org/t/lemur-gems-2-inputmapper-delegates/28710">Lemur Gems #2 - Input mapper delegates</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="http://hub.jmonkeyengine.org/t/lemur-gems-3-scene-picking/28713">Lemur Gems #3 - Scene picking</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/gui/tonegodgui/tonegodgui.html">tonegodGUI - a native jME3 GUI library</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Tools</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/tools/navigation.html">Mercator Projection Tool (Marine Navigation)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/tools/charts.html">Visualizing Maps in JME3 (Marine Charts)</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Projects</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/projects/rise_of_mutants_project.html">Rise of Mutants Project</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../sdk/sdk.html">SDK</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Video Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">SDK Use Case Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=-OzRZscLlHY">Demo 1 (Quixote demo)</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=6-YWxD3JByE">Demo 2 (Models and Materials)</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">SDK Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=M1_0pbeyJzI">Basics</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=nL7woH40i5c">Importing Models</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=DUmgAjiNzhY">Dragging&amp;Dropping Nodes</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=ntPAmtsQ6eM">Scene Composing</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=zgPV3W6dD4s">Terrain with Collision Shape</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=Feu3-mrpolc">Working with Materials</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=MNDiZ9YHIpM">Custom Controls</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=oZnssg8TBWQ">WebStart Deployment</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=D7JM4VMKqPc">Animation and Effect TrackEditing</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Getting Started</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/update_center.html">Updating jMonkeyEngine SDK</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/troubleshooting.html">Troubleshooting</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Java Development Features</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/project_creation.html">Project Creation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/code_editor.html">Code Editor and Palette</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/version_control.html">File Version Control</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/debugging_profiling_testing.html">Debug, Profile, Test</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../sdk/application_deployment.html">Application Deployment</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../sdk/default_build_script.html">Default Build Script</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../sdk/android.html">Android</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../sdk/android_cheat_sheet.html">Android Cheat Sheet</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../sdk/ios.html">iOS</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Unique Features</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../sdk/model_loader_and_viewer.html">Import, View, Convert Models</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../sdk/asset_packs.html">Asset Packs</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/scene_explorer.html">The SceneExplorer</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/scene_composer.html">Composing a Scene</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/terrain_editor.html">Terrain Editor</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/sample_code.html">Sample Code</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/material_editing.html">Material Editing</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/font_creation.html">Creating Bitmap Fonts</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="https://hub.jmonkeyengine.org/t/effecttrack-and-audiotrack-editing-in-the-sdk/23378">Audio and Effect Track Editing</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="https://www.youtube.com/watch?v=D7JM4VMKqPc">Video: Effect and AudioTrack editing in jMonkeyEngine 3 sdk</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/filters.html">Post-Processor Filter Editor and Viewer</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../app/state/application_states.html">Application States</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../scene/control/custom_controls.html">Custom Controls</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/vehicle_creator.html">Vehicle Creator</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Advanced Usage</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/build_platform.html">Building jMonkeyEngine SDK</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/use_own_jme.html#.adoc">Using your own (modified) version of jME3 in jMonkeyEngine SDK</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/increasing_heap_memory.html">Increasing Heap Memory</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/log_files.html">Log Files</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Available external plugins</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/contributions.html">Contributions</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/neotexture.html">Neo Texture Editor for procedural textures</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=yS9a9o4WzL8">Video: Mesh Tool &amp; Physics Editor</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../sdk/development.html">Developing plugins for jMonkeyEngine SDK</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/development/setup.html">Creating a plugin</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/development/general.html">Creating components</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/development/scene.html">The Main Scene</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/development/sceneexplorer.html">The Scene Explorer</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/development/projects_assets.html">Projects and Assets</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/development/extension_library.html">Create a library plugin from a jar file</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/development/model_loader.html">Create a new or custom model filetype and loader</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">JME</span>
+    <span class="version">3.2</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">JME</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../../documentation.html">3.2</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Wiki Contribution</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../docs-wiki/3.2/wiki_contributor.html">3.2</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Wiki UI</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../wiki-ui/index.html">master</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../documentation.html">JME</a></li>
+    <li>Material, Light, Shadow</li>
+    <li><a href="jme3_shaders.html">Shaders and JME3</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/jMonkeyEngine/wiki/edit/master/docs/modules/core/pages/shader/jme3_shaders.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">JME3 and Shaders</h1>
+<div class="sect1">
+<h2 id="shaders-basics"><a class="anchor" href="#shaders-basics"></a>Shaders Basics</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Shaders are sets of instructions that are executed on the GPU. They are used to take advantage of hardware acceleration available on the GPU for rendering purposes.</p>
+</div>
+<div class="paragraph">
+<p>This paper only covers Vertex and Fragment shaders because they are the only ones supported by JME3 for the moment. Be aware that there are some other types of shaders (geometry, tessellation,…).</p>
+</div>
+<div class="paragraph">
+<p>There are multiple frequently used languages that you may encounter to code shaders but as JME3 is based on OpenGL, shaders in JME use GLSL and any example in this paper will be written in GLSL.</p>
+</div>
+<div class="sect2">
+<h3 id="how-does-it-work"><a class="anchor" href="#how-does-it-work"></a>How Does it work?</h3>
+<div class="paragraph">
+<p>To keep it Simple: The Vertex shader is executed once for each vertex in the view, then the Fragment shader (also called the Pixel shader) is executed once for each pixel on the screen.</p>
+</div>
+<div class="paragraph">
+<p>The main purpose of the Vertex shader is to compute the screen coordinate of a vertex (where this vertex will be displayed on screen) while the main purpose of the Fragment shader is to compute the color of a pixel.</p>
+</div>
+<div class="paragraph">
+<p>This is a very simplified graphic to describe the call stack:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="../_images/shader/jme3andshaders.png" alt="jme3andshaders.png" width="" height=""></span></p>
+</div>
+<div class="paragraph">
+<p>The main program sends mesh data to the vertex shader (vertex position in object space, normals, tangents, etc..). The vertex shader computes the screen position of the vertex and sends it to the Fragment shader. The fragment shader computes the color, and the result is displayed on screen or in a texture.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="variables-scope"><a class="anchor" href="#variables-scope"></a>Variables scope</h3>
+<div class="paragraph">
+<p>There are different types of scope for variables in a shader:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>uniform: User defined variables that are passed by the main program to the vertex and fragment shader, these variables are global for a given execution of a shader.</p>
+</li>
+<li>
+<p>attribute: Per-vertex variables passed by the engine to the shader, like position, normal, etc (Mesh data in the graphic)</p>
+</li>
+<li>
+<p>varying: Variables passed from the vertex shader to the fragment shader.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>There is a large panel of variable types to be used, for more information about it I recommend reading the GLSL specification <a href="http://www.opengl.org/registry/doc/GLSLangSpec.Full.1.20.8.pdf">here</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="spaces-and-matrices"><a class="anchor" href="#spaces-and-matrices"></a>Spaces and Matrices</h3>
+<div class="paragraph">
+<p>To understand the coming example you must know about the different spaces in 3D computer graphics, and the matrices used to translate coordinate from one space to another.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="../_images/shader/jme3andshaders-1.png" alt="jme3andshaders-1.png" width="" height=""></span></p>
+</div>
+<div class="paragraph">
+<p>The engine passes the object space coordinates to the vertex shader. We need to compute its position in projection space. To do that we transform the object space position by the WorldViewProjectionMatrix, which is a combination of the World, View, Projection matrices (who would have guessed?).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="simple-example-rendering-a-solid-color-on-an-object"><a class="anchor" href="#simple-example-rendering-a-solid-color-on-an-object"></a>Simple example: rendering a solid color on an object</h3>
+<div class="paragraph">
+<p>Here is the simplest application to shaders, rendering a solid color.</p>
+</div>
+<div class="paragraph">
+<p>Vertex Shader:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">//the global uniform World view projection matrix
+//(more on global uniforms below)
+uniform mat4 g_WorldViewProjectionMatrix;
+//The attribute inPosition is the Object space position of the vertex
+attribute vec3 inPosition;
+void main(){
+    //Transformation of the object space coordinate to projection space
+    //coordinates.
+    //- gl_Position is the standard GLSL variable holding projection space
+    //position. It must be filled in the vertex shader
+    //- To convert position we multiply the worldViewProjectionMatrix by
+    //by the position vector.
+    //The multiplication must be done in this order.
+    gl_Position = g_WorldViewProjectionMatrix * vec4(inPosition, 1.0);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Fragment Shader :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">void main(){
+    //returning the color of the pixel (here solid blue)
+    //- gl_FragColor is the standard GLSL variable that holds the pixel
+    //color. It must be filled in the Fragment Shader.
+    gl_FragColor = vec4(0.0, 0.0, 1.0, 1.0);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For example applying this shader to a sphere would render a solid blue sphere on screen.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="how-to-use-shaders-in-jme3"><a class="anchor" href="#how-to-use-shaders-in-jme3"></a>How to use shaders in JME3</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You probably heard that JME3 is &#8220;shader oriented&#8221;, but what does that mean?<br>
+Usually, to use shaders you must create a program. This program specifies the vertex shader and the fragment shader to use. JME3 encloses this in the material system. Every material in JME3 uses shaders.</p>
+</div>
+<div class="paragraph">
+<p>For example let’s have a look at the SolidColor.j3md file :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">MaterialDef Solid Color {
+    //This is the complete list of user defined uniforms to be used in the
+    //shaders
+    MaterialParameters {
+        Vector4 Color
+    }
+    Technique {
+        //This is where the vertex and fragment shader files are
+        //specified
+        VertexShader GLSL100:   Common/MatDefs/Misc/SolidColor.vert
+        FragmentShader GLSL100: Common/MatDefs/Misc/SolidColor.frag
+        //This is where you specify which global uniform you need for your
+        //shaders
+        WorldParameters {
+            WorldViewProjectionMatrix
+        }
+    }
+    Technique FixedFunc {
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For more information on JME3 material system, I suggest you read <a href="https://hub.jmonkeyengine.org/t/jmonkeyengine3-material-system-full-explanation/12947">jMonkeyEngine3 material system - full explanation</a>.</p>
+</div>
+<div class="sect2">
+<h3 id="jme3-global-uniforms"><a class="anchor" href="#jme3-global-uniforms"></a>JME3 Global uniforms</h3>
+<div class="paragraph">
+<p>JME3 can expose pre-computed global uniforms to your shaders. You must specify the ones that are required for your shader in the WorldParameter&#8217;s section of the material definition file (.j3md).</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In the shader, the uniform names will be prefixed by a &#8220;g_&#8221;.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>In the example above, WorldViewProjectionMatrix is declared as uniform mat4 g_WorldViewProjectionMatrix in the shader.</p>
+</div>
+<div class="paragraph">
+<p>The complete list of global uniforms that can be used in JME3 can be found in <a href="https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/java/com/jme3/shader/UniformBinding.java">UniformBinding.java</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="jme3-lighting-global-uniforms"><a class="anchor" href="#jme3-lighting-global-uniforms"></a>JME3 Lighting Global uniforms</h3>
+<div class="paragraph">
+<p>JME3 uses some global uniforms for lighting:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>g_LightDirection (vec4): the direction of the light</p>
+<div class="ulist">
+<ul>
+<li>
+<p>use for SpotLight: x,y,z contain the world direction vector of the light, the w component contains the spotlight angle cosine</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>g_LightColor (vec4): the color of the light</p>
+</li>
+<li>
+<p>g_LightPosition: the position of the light</p>
+<div class="ulist">
+<ul>
+<li>
+<p>use for SpotLight: x,y,z contain the world position of the light, the w component contains 1/lightRange</p>
+</li>
+<li>
+<p>use for PointLight: x,y,z contain the world position of the light, the w component contains 1/lightRadius</p>
+</li>
+<li>
+<p>use for DirectionalLight: strangely enough it&#8217;s used for the direction of the light…this might change though. The fourth component contains -1 and it&#8217;s used in the lighting shader to know if it&#8217;s a directionalLight or not.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>g_AmbientLightColor: the color of the ambient light.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>These uniforms are passed to the shader without having to declare them in the j3md file, but you have to specify in the technique definition &#8220;LightMode MultiPass&#8221; see lighting.j3md for more information.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="jme3-attributes"><a class="anchor" href="#jme3-attributes"></a>JME3 attributes</h3>
+<div class="paragraph">
+<p>Those are different attributes that are always passed to your shader.</p>
+</div>
+<div class="paragraph">
+<p>You can find a complete list of those attribute in the Type enum of the VertexBuffer in <a href="https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/java/com/jme3/scene/VertexBuffer.java">VertexBuffer.java</a>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In the shader the attributes names will be prefixed by an &#8220;in&#8221;.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>When the enumeration lists some usual types for each attribute (for example texCoord specifies two floats) then that is the format expected by all standard JME3 shaders that use that attribute. When writing your own shaders though you can use alternative formats such as placing three floats in texCoord simply by declaring the attribute as vec3 in the shader and passing 3 as the component count into the mesh setBuffer call.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="users-uniforms"><a class="anchor" href="#users-uniforms"></a>User&#8217;s uniforms</h3>
+<div class="paragraph">
+<p>At some point when making your own shader you&#8217;ll need to pass your own uniforms.</p>
+</div>
+<div class="paragraph">
+<p>Any uniform has to be declared in the material definition file (.j3md) in the &#8220;MaterialParameters&#8221; section.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    MaterialParameters {
+        Vector4 Color
+        Texture2D ColorMap
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can also pass some define to your vertex/fragment programs to know if an uniform as been declared.</p>
+</div>
+<div class="paragraph">
+<p>You simply add it in the Defines section of your Technique in the definition file.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    Defines {
+        COLORMAP : ColorMap
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For integer and floating point parameters, the define will contain the value that was set.</p>
+</div>
+<div class="paragraph">
+<p>For all other types of parameters, the value 1 is defined.</p>
+</div>
+<div class="paragraph">
+<p>If no value is set for that parameter, the define is not declared in the shader.</p>
+</div>
+<div class="paragraph">
+<p>Those material parameters will be sent from the engine to the shader as follows,
+there are setXXXX methods for any type of uniform you want to pass.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">   material.setColor("Color", new ColorRGBA(1.0f, 0.0f, 0.0f, 1.0f)); // red color
+   material.setTexture("ColorMap", myTexture); // bind myTexture for that sampler uniform</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To use this uniform in the shader, you need to declare it in the .frag or .vert files (depending on where you need it).
+You can make use of the defines here and later in the code: <strong>Note that the &#8220;m_&#8221; prefix specifies that the uniform is a material parameter.</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">   uniform vec4 m_Color;
+   #ifdef COLORMAP
+     uniform sampler2D m_ColorMap;
+   #endif</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The uniforms will be populated at runtime with the value you sent.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="example-adding-color-keying-to-the-lighting-j3md-material-definition"><a class="anchor" href="#example-adding-color-keying-to-the-lighting-j3md-material-definition"></a>Example: Adding Color Keying to the Lighting.j3md Material Definition</h3>
+<div class="paragraph">
+<p>Color Keying is useful in games involving many players. It consists of adding some player-specific color on models textures. The easiest way of doing this is to use a keyMap which will contain the amount of color to add in its alpha channel.</p>
+</div>
+<div class="paragraph">
+<p>We need to pass 2 new parameters to the Lighting.j3md definition, MaterialParameters section:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Keying Map
+Texture2D KeyMap
+
+// Key Color
+Color KeyColor</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Below, add a new Define in the main Technique section:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">KEYMAP : KeyMap</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the Lighting.frag file, define the new uniforms:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">#ifdef KEYMAP
+  uniform sampler2D m_KeyMap;
+  uniform vec4 m_KeyColor;
+#endif</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Further, when obtaining the diffuseColor from the DiffuseMap texture, check
+if we need to blend it:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">#ifdef KEYMAP
+  vec4 keyColor = texture2D(m_KeyMap, newTexCoord);
+  diffuseColor.rgb = (1.0-keyColor.a) * diffuseColor.rgb + keyColor.a * m_KeyColor.rgb;
+#endif</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This way, a transparent pixel in the KeyMap texture doesn&#8217;t modify the color. A black pixel replaces it for the m_KeyColor and values in between are blended.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="step-by-step"><a class="anchor" href="#step-by-step"></a>Step by step</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Create a vertex shader (.vert) file</p>
+</li>
+<li>
+<p>Create a fragment shader (.frag) file</p>
+</li>
+<li>
+<p>Create a material definition (j3md) file specifying the user defined uniforms, path to the shaders and the global uniforms to use</p>
+</li>
+<li>
+<p>In your initSimpleApplication, create a material using this definition, apply it to a geometry</p>
+</li>
+<li>
+<p>That’s it!!</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    // A cube
+    Box box= new Box(Vector3f.ZERO, 1f,1f,1f);
+    Geometry cube = new Geometry("box", box);
+    Material mat = new Material(assetManager,"Path/To/My/materialDef.j3md");
+    cube.setMaterial(mat);
+    rootNode.attachChild(cube);</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="jme3-and-opengl-3-4-compatibility"><a class="anchor" href="#jme3-and-opengl-3-4-compatibility"></a>JME3 and OpenGL 3 &amp; 4 compatibility</h3>
+<div class="paragraph">
+<p>GLSL 1.0 to 1.2 comes with built in attributes and uniforms (ie, gl_Vertex, gl_ModelViewMatrix, etc…). Those attributes are deprecated since GLSL 1.3 (opengl 3), hence JME3 global uniforms and attributes.</p>
+</div>
+<div class="paragraph">
+<p>Here is a list of deprecated attributes and their equivalent in JME3.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">GLSL 1.2 attributes</th>
+<th class="tableblock halign-left valign-top">JME3 equivalent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>gl_Vertex</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>inPosition</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>gl_Normal</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>inNormal</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>gl_Color</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>inColor</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>gl_MultiTexCoord0</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>inTexCoord</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>gl_ModelViewMatrix</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>g_WorldViewMatrix</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>gl_ProjectionMatrix</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>g_ProjectionMatrix</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>gl_ModelViewProjectionMatrix</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>g_WorldViewProjectionMatrix</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>gl_NormalMatrix</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>g_NormalMatrix</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="useful-links"><a class="anchor" href="#useful-links"></a>Useful links</h3>
+<div class="paragraph">
+<p><a href="../_attachments/GLSL-ATI-Intro.pdf">GLSL-ATI-Intro.pdf</a></p>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="../material/materials_overview.html">.j3md Properties</a></span>
+  <span class="next"><a href="jme3_shadernodes.html">Shader Node System</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>Copyright 2020 jMonkeyEngine Wiki Contributors. Licensed BSD-3.</p>
+</footer>
+<script src="../../../../_/js/vendor/docsearch.min.js"></script>
+<!-- fetched from https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js -->
+<script>
+var search = docsearch({
+  apiKey: 'a736b6d93de805e26ec2f49b55013fbd',
+  indexName: 'jmonkeyengine',
+  inputSelector: '#search-input',
+  autocompleteOptions: { hint: false, keyboardShortcuts: ['s'] },
+  algoliaOptions: { hitsPerPage: 10 }
+}).autocomplete
+search.on('autocomplete:closed', function () { search.autocomplete.setVal() })
+function focusSearchInput () { document.querySelector('#search-input').focus() }
+if (document.querySelector('.home-link.is-current')) window.addEventListener('load', focusSearchInput)
+</script>
+<script src="../../../../_/js/site.js"></script>
+<script async src="../../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

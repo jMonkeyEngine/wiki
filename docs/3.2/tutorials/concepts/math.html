@@ -1,0 +1,2133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Introduction to Mathematical Functionality :: jMonkeyEngine Docs</title>
+    <link rel="canonical" href="https://wiki.jmonkeyengine.org/docs/3.2/tutorials/concepts/math.html">
+    <link rel="prev" href="math_for_dummies.html">
+    <link rel="next" href="math_cheet_sheet.html">
+    <meta name="generator" content="Antora 2.3.3">
+    <link rel="stylesheet" href="../../../../_/css/site.css">
+<meta property="og:image" content="https://wiki.jmonkeyengine.org/_/img/iconx128.png">
+<meta property="og:description" content="Introduction to Mathematical Functionality">
+<meta property="og:title" content="jMonkeyEngine Docs">
+<link rel="stylesheet" href="../../../../_/css/site-extra.css">
+<link rel="stylesheet" href="../../../../_/css/vendor/docsearch.min.css">
+<!-- fetched from https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css -->
+<link rel="icon" href="../../../../_/img/favicon.ico" type="image/x-icon">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://wiki.jmonkeyengine.org">
+        <img alt="" src="../../../../_/img/jme-logo.png" height="32" type="image/x-icon">
+      </a>
+      <div class="navbar-item hide-for-print">
+        <input id="search-input" type="text" placeholder="Search docs">
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item theme-switch-wrapper">
+          <label class="theme-switch" for="checkbox">
+            <input type="checkbox" id="checkbox" />
+            <div class="slider round"></div>
+          </label>
+        </div>
+        <a class="navbar-item" href="https://github.com/jmonkeyengine/wiki">Github</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="docs" data-version="3.2">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../../documentation.html">JME</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../documentation.html">Getting Started</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="https://javadoc.jmonkeyengine.org/v3.3.2-stable">JavaDoc</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../beginner/beginner.html">Beginner Tutorials</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../beginner/hello_simpleapplication.html">Hello SimpleApplication</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../beginner/hello_node.html">Hello Node</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../beginner/hello_asset.html">Hello Asset</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../beginner/hello_main_event_loop.html">Hello Update Loop</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../beginner/hello_input_system.html">Hello Input System</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../beginner/hello_material.html">Hello Material</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../beginner/hello_animation.html">Hello Animation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../beginner/hello_picking.html">Hello Picking</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../beginner/hello_collision.html">Hello Collision</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../beginner/hello_terrain.html">Hello Terrain</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../beginner/hello_audio.html">Hello Audio</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../beginner/hello_effects.html">Hello Effects</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../beginner/hello_physics.html">Hello Physics</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Key Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="best_practices.html">Best Practices</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="optimization.html">Optimization</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="faq.html">Frequently Asked Questions</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="math_for_dummies.html">Math for Dummies</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="math.html">Math overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="math_cheet_sheet.html">3D math "cheat sheet"</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="rotate.html">3-D Rotation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="math_video_tutorials.html">Math video tutorial series</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="multi-media_asset_pipeline.html">Multi-Media Asset Pipeline</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="the_scene_graph.html">The Scene Graph</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="scenegraph_for_dummies.html">Scene Graph for Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="terminology.html">3D Graphics Terminology</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="transparency_sorting.html">Transparency Sorting</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Articles and How-to&#8217;s</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">How to Model</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../how-to/modeling/3dsmax/3dsmax.html">3dsmax</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../how-to/modeling/blender/blender.html">Blender</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../how-to/modeling/blender/blender_buffer_clearing.html">Buffer Clearing</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../how-to/modeling/blender/blender_gltf.html">Export as GlTF</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../how-to/modeling/blender/blender_ogre_export.html">Export as Ogre XML</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../how-to/modeling/blender/blender_ogre_compatibility.html">Ogre Compatibility</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../how-to/modeling/blender/makehuman.html">MakeHuman</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../how-to/modeling/blender/makehuman_blender_ogrexml_toolchain.html">MakeHuman toolchain</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">How to Animate</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Mixamo</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../how-to/modeling/blender/mixamo.html">Blender Models</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Video</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="https://youtu.be/jHgAgTWIers?list=PLv6qR9TGkz8RcUr-fOHI2SksWA4BAU9TS">Part 1- Download Model</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="https://youtu.be/GQJSrOpNQwI?list=PLv6qR9TGkz8RcUr-fOHI2SksWA4BAU9TS">Part 2- Rig and Animate</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="https://youtu.be/JzRe2Dxbcmc?list=PLv6qR9TGkz8RcUr-fOHI2SksWA4BAU9TS">Part 3- Import to JME</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="https://youtu.be/8wwDRDJop7k?list=PLv6qR9TGkz8RcUr-fOHI2SksWA4BAU9TS">Part 4- Play Animation</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../how-to/debugging.html">Debugging with Wireframes</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../how-to/util/free_skymaps.html">How to create free skymaps</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Java Tips</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../how-to/java/localization.html">Localization</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../how-to/java/swing_canvas.html">Swing Canvas</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../how-to/java/logging.html">Logging</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../how-to/java/read_graphic_card_capabilites.html">Read Graphics Capabilites</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Articles</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Physically Based Rendering</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../how-to/articles/pbr/pbr_part1.html">PBR – Part one</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../how-to/articles/pbr/pbr_part2.html">PBR – Part two</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../how-to/articles/pbr/pbr_part3.html">PBR – Part three</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Core Engine</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/app/simpleapplication.html">SimpleApplication</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/system/appsettings.html">AppSettings</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Controlling Game Logic</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/app/update_loop.html">Update Loop</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/app/state/application_states.html">Application States</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../core/scene/control/custom_controls.html">Custom Controls</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Video</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="https://www.youtube.com/watch?v=MNDiZ9YHIpM">Control any scene node</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="https://www.youtube.com/watch?v=-OzRZscLlHY">Control a character</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="https://wiki.jmonkeyengine.org/Scenes/SDK-UsecaseDemo_1.zip">Video Source Code</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/app/multithreading.html">Multithreading</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Scene Graph</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/scene/traverse_scenegraph.html">Traverse SceneGraph</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/scene/spatial.html">Spatial: Node vs Geometry</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../core/scene/mesh.html">Mesh</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../core/scene/custom_meshes.html">Custom Meshes</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../core/scene/shape/shape.html">Shape</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../core/scene/3d_models.html">3D Models</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/asset/asset_manager.html">Asset Manager</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/export/save_and_load.html">Saving and Loading Nodes</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/collision/collision_and_intersection.html">Collision and Intersection</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/scene/control/level_of_detail.html">Level of Detail</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Animation, Scene</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/animation/animation.html">Animation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/cinematic/cinematics.html">Cinematics (cutscenes, fake destruction physics)</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/cinematic/motionpath.html">MotionPaths and Waypoints</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Material, Light, Shadow</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/material/how_to_use_materials.html">How to use Materials</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/material/j3m_material_files.html">.j3m Material Files</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/material/material_definitions.html">.j3md Material Definitions</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/material/materials_overview.html">.j3md Properties</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/shader/jme3_shaders.html">Shaders and JME3</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/shader/jme3_shadernodes.html">Shader Node System</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/shader/shader_video_tutorials.html">Shader Video Tutorials</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/light/light_and_shadow.html">Light and Shadow</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/texture/anisotropic_filtering.html">Anisotropic Filtering</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/system/jme3_srgbpipeline.html">Gamma Correction</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Audio, Video</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/audio/audio.html">Playing Sounds</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/audio/audio_environment_presets.html">Audio Environment Presets</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/app/state/screenshots.html">Capture Screenshots</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/app/state/capture_audio_video_to_a_file.html">Capture Audio/Video</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Filter, Effect</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/effect/effects_overview.html">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/effect/bloom_and_glow.html">Bloom and Glow</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/effect/particle_emitters.html">Particle Emitters</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Landscapes</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/util/sky.html">Sky</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/terrain/terrain.html">Terrain (TerraMonkey)</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/collision/terrain_collision.html">Terrain Collision</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/effect/water.html">Simple Water</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/effect/post-processor_water.html">Post-Processor Water</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Camera</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/renderer/camera.html">Camera</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/renderer/making_the_camera_follow_a_character.html">Follow a Character</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/renderer/remote-controlling_the_camera.html">Remote-Controlling</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/renderer/multiple_camera_views.html">Multiple Camera Views</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/renderer/jme3_renderbuckets.html">Render Buckets</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">User Interaction</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/input/input_handling.html">Input Handling</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/input/combo_moves.html">Combo Moves</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/input/mouse_picking.html">Mouse Picking</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Graphical User Interface</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Nifty GUI</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../core/gui/nifty_gui.html">Integration Tutorial</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../core/gui/nifty_gui_best_practices.html">Best Practices</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../core/gui/nifty_gui_scenarios.html">Scenarios</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/ui/hud.html">Head-Up Display (HUD)</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Virtual Reality</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/vr/virtualreality.html">Virtual Reality</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../physics/physics.html">Physics</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../physics/bullet_multithreading.html">Multi-Threaded Physics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../physics/collision/physics_listeners.html">Collision Detection</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../physics/joint/hinges_and_joints.html">Hinges and Joints</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../physics/control/walking_character.html">Walking Character</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../physics/control/ragdoll.html">Ragdoll</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../physics/control/vehicles.html">Vehicles</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../physics/control/softbody.html">Softbody</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../physics/bullet_pitfalls.html">Bullet Physics Pitfalls</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Networking</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../networking/networking.html">Networking (SpiderMonkey)</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../networking/headless_server.html">Headless Server</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../networking/monkey_zone.html">Multi-Player Demo Code</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../networking/networking_video_tutorials.html">Networking Video Tutorials</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">User Contributions</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#docs\modules\contributions\pages\contributions.adoc">User Made Utilities</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Shader</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/shader/shaderblow_project.html">ShaderBlow Project</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Landscapes</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/lanscapes/vegetationsystem/vegetationsystem.html">Vegetation System</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Networking</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/networking/open_game_finder.html">Open Game Finder</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Entity System</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#es/entitysystem.adoc">The Zay-ES Entity System</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Artificial Intelligence</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/ai/recast.html">Recast Navigation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/ai/building_recast.html">Updating and building Recast Native Bindings</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/ai/monkey_brains.html">Monkey Brains</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/ai/steer_behaviours.html">Steer Behaviours</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/ai/jme3_ai.html">jME3 Artificial Intelligence</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">GUI</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="https://github.com/jMonkeyEngine-Contributions/Lemur">Lemur - a native jME3 GUI library with scene graph tools</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="https://github.com/jMonkeyEngine-Contributions/Lemur/wiki/Modules">Lemur Scene Graph Tools</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="http://hub.jmonkeyengine.org/t/lemur-gems-1-inputmapper-based-camera-movement/28703">Lemur Gems #1 - Input mapper based camera movement. </a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="http://hub.jmonkeyengine.org/t/lemur-gems-2-inputmapper-delegates/28710">Lemur Gems #2 - Input mapper delegates</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="http://hub.jmonkeyengine.org/t/lemur-gems-3-scene-picking/28713">Lemur Gems #3 - Scene picking</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/gui/tonegodgui/tonegodgui.html">tonegodGUI - a native jME3 GUI library</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Tools</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/tools/navigation.html">Mercator Projection Tool (Marine Navigation)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/tools/charts.html">Visualizing Maps in JME3 (Marine Charts)</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Projects</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/projects/rise_of_mutants_project.html">Rise of Mutants Project</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../sdk/sdk.html">SDK</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Video Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">SDK Use Case Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=-OzRZscLlHY">Demo 1 (Quixote demo)</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=6-YWxD3JByE">Demo 2 (Models and Materials)</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">SDK Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=M1_0pbeyJzI">Basics</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=nL7woH40i5c">Importing Models</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=DUmgAjiNzhY">Dragging&amp;Dropping Nodes</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=ntPAmtsQ6eM">Scene Composing</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=zgPV3W6dD4s">Terrain with Collision Shape</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=Feu3-mrpolc">Working with Materials</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=MNDiZ9YHIpM">Custom Controls</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=oZnssg8TBWQ">WebStart Deployment</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=D7JM4VMKqPc">Animation and Effect TrackEditing</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Getting Started</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/update_center.html">Updating jMonkeyEngine SDK</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/troubleshooting.html">Troubleshooting</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Java Development Features</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/project_creation.html">Project Creation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/code_editor.html">Code Editor and Palette</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/version_control.html">File Version Control</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/debugging_profiling_testing.html">Debug, Profile, Test</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../sdk/application_deployment.html">Application Deployment</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../sdk/default_build_script.html">Default Build Script</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../sdk/android.html">Android</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../sdk/android_cheat_sheet.html">Android Cheat Sheet</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../sdk/ios.html">iOS</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Unique Features</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../sdk/model_loader_and_viewer.html">Import, View, Convert Models</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../sdk/asset_packs.html">Asset Packs</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/scene_explorer.html">The SceneExplorer</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/scene_composer.html">Composing a Scene</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/terrain_editor.html">Terrain Editor</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/sample_code.html">Sample Code</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/material_editing.html">Material Editing</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/font_creation.html">Creating Bitmap Fonts</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="https://hub.jmonkeyengine.org/t/effecttrack-and-audiotrack-editing-in-the-sdk/23378">Audio and Effect Track Editing</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="https://www.youtube.com/watch?v=D7JM4VMKqPc">Video: Effect and AudioTrack editing in jMonkeyEngine 3 sdk</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/filters.html">Post-Processor Filter Editor and Viewer</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../core/app/state/application_states.html">Application States</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../core/scene/control/custom_controls.html">Custom Controls</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/vehicle_creator.html">Vehicle Creator</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Advanced Usage</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/build_platform.html">Building jMonkeyEngine SDK</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/use_own_jme.html#.adoc">Using your own (modified) version of jME3 in jMonkeyEngine SDK</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/increasing_heap_memory.html">Increasing Heap Memory</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/log_files.html">Log Files</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Available external plugins</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/contributions.html">Contributions</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/neotexture.html">Neo Texture Editor for procedural textures</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=yS9a9o4WzL8">Video: Mesh Tool &amp; Physics Editor</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../sdk/development.html">Developing plugins for jMonkeyEngine SDK</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/development/setup.html">Creating a plugin</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/development/general.html">Creating components</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/development/scene.html">The Main Scene</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/development/sceneexplorer.html">The Scene Explorer</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/development/projects_assets.html">Projects and Assets</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/development/extension_library.html">Create a library plugin from a jar file</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/development/model_loader.html">Create a new or custom model filetype and loader</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">JME</span>
+    <span class="version">3.2</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">JME</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../../documentation.html">3.2</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Wiki Contribution</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../docs-wiki/3.2/wiki_contributor.html">3.2</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Wiki UI</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../wiki-ui/index.html">master</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../documentation.html">JME</a></li>
+    <li>Key Concepts</li>
+    <li><a href="math.html">Math overview</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/jMonkeyEngine/wiki/edit/master/docs/modules/tutorials/pages/concepts/math.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Introduction to Mathematical Functionality</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>It&#8217;s a fact of life, math is hard. Unfortunately, 3D graphics require a fair bit of knowledge about the subject. Fortunately, jME is able to hide the majority of the details away from the user. Vectors are the fundamental type in the 3D environment, and it is used extensively. Matrices are also a basic necessity of 3D for representing linear systems. <a href="../../core/math/quaternion.html" class="page">Quaternions</a> are perhaps the most powerful and complicated of the basic types and are used for rotation in jME.</p>
+</div>
+<div class="paragraph">
+<p>I&#8217;ll discuss how these are used in the system for the core functionality. Including Transforming, Visibility Determination, Collision Detection, and the Coordinate System. Note, that these are low level details. Further chapters will discuss how to use these various systems from a high level perspective.</p>
+</div>
+<div class="paragraph">
+<p>To get a visual introduction to math in jME3 for the absolute beginner, check out our <a href="math_for_dummies.html" class="page">Math for Dummies</a> introduction class.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="coordinate-system"><a class="anchor" href="#coordinate-system"></a>Coordinate System</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="definition"><a class="anchor" href="#definition"></a>Definition</h3>
+<div class="paragraph">
+<p>A <em>coordinate system</em> consists of an origin (single point in space) and three coordinate axes that are each unit length and mutually perpendicular. The axes can be written as the column of a Matrix, R = [U1|U2|U3]. In fact, this is exactly how CameraNode works. The coordinate system defined by Camera is stored in a Matrix.</p>
+</div>
+<div class="paragraph">
+<p>jME uses a Right-Handed coordinate system (as OpenGL does).</p>
+</div>
+<div class="paragraph">
+<p>The definition of a coordinate system is defined in jME by the properties sent to Camera. There are no error checks to insure that: 1) the coordinate system is right-handed and 2) The axes are mutually perpendicular. Therefore, if the user sets the axes incorrectly, they are going to experience very odd rendering artifacts (random culling, etc).</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="../_images/concepts/coordinate-system.png" alt="coordinate-system.png" width="235" height="210">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="homogenous-coordinates"><a class="anchor" href="#homogenous-coordinates"></a>Homogenous coordinates</h3>
+<div class="paragraph">
+<p>Homogenous coordinates have an additional <em>W</em> value tacked on to the end. The XYZ values are to be divided by W to give the true coordinates.</p>
+</div>
+<div class="paragraph">
+<p>This has several advantages, one technical, some relevant to application programmers:</p>
+</div>
+<div class="paragraph">
+<p>Technically, it simplifies some formulae used inside the vector math. For example, some operations need to apply the same factor to the XYZ coordinates. Chain multiple operations of that kind (and vector math tends to do that), and you can save a lot of multiplications by simply keeping the scaling factor around and doing the multiplication to XYZ at the end of the pipeline, in the 3D card (which does accept homogenous coordinates).
+It also simplifies some formulae, in particular anything that is related to rotations.</p>
+</div>
+<div class="paragraph">
+<p>For application programmers, this means you can express infinitely long vectors that still have a direction - these tend to be used in lighting. Just use a W value of 0.0.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="transformations"><a class="anchor" href="#transformations"></a>Transformations</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Transformations define an operation that converts points from one coordinate system to another. This includes translation, rotation and scaling. In jME, local transforms are used to represent the positioning of objects relative to a parent coordinate system. While, world transforms are used to represent the positioning of objects in a global coordinate system.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="visibility-determination"><a class="anchor" href="#visibility-determination"></a>Visibility Determination</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Visibility Determination concerns itself with minimizing the amount of data that is sent to the graphics card for rendering. Specifically, we do not want to send data that will not be seen. Data not sent to the graphics card is said to be culled. The primary focus of this section is Frustum Culling based on the Camera&#8217;s view frustum. In essence, this frustum creates six standard view planes. The BoundingVolume of an object is tested against the frustum planes to determine if it is contained in the frustum. If at any point the object&#8217;s bounding is outside of the plane, it is tossed out and no longer processed for rendering. This also includes any children that it managed, allowing fast culling of large sections of the scene.</p>
+</div>
+<div class="sect2">
+<h3 id="fundamental-types"><a class="anchor" href="#fundamental-types"></a>Fundamental Types</h3>
+
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="colorrgba"><a class="anchor" href="#colorrgba"></a>ColorRGBA</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="definition-2"><a class="anchor" href="#definition-2"></a>Definition</h3>
+<div class="paragraph">
+<p>ColorRGBA defines a color value in the jME library. The color value is made of three components, red, green and blue. A fourth component defines the alpha value (transparent) of the color. Every value is set between [0, 1]. Anything less than 0 will be clamped to 0 and anything greater than 1 will be clamped to 1.</p>
+</div>
+<div class="paragraph">
+<p><strong>Note:</strong> If you would like to &#8220;convert&#8221; an ordinary RGB value (0-255) to the format used here (0-1), simply multiply it with: 1/255.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="jme-class"><a class="anchor" href="#jme-class"></a>jME Class</h3>
+<div class="paragraph">
+<p>ColorRGBA defines a few static color values for ease of use. That is, rather than:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">ColorRGBA red = new ColorRGBA(1,0,0,1);
+object.setSomeColor(red);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>you can simply say:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">object.setSomeColor(ColorRGBA.red)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>ColorRGBA will also handle interpolation between two colors. Given a second color and a value between 0 and 1, a the owning ColorRGBA object will have its color values altered to this new interpolated color.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="matrix"><a class="anchor" href="#matrix"></a>Matrix</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>See <a href="https://javadoc.jmonkeyengine.org/v3.3.2-stable/com/jme3/math/Matrix3f.html">Matrix3f Javadoc</a> and <a href="https://javadoc.jmonkeyengine.org/v3.3.2-stable/com/jme3/math/Matrix4f.html">Matrix4f Javadoc</a></p>
+</div>
+<div class="sect2">
+<h3 id="definition-3"><a class="anchor" href="#definition-3"></a>Definition</h3>
+<div class="paragraph">
+<p>A Matrix is typically used as a <em>linear transformation</em> to map vectors to vectors. That is: Y = MX where X is a Vector and M is a Matrix applying any or all transformations (scale, <a href="rotate.html" class="page">rotate</a>, translate).</p>
+</div>
+<div class="paragraph">
+<p>There are a few special matrices:</p>
+</div>
+<div class="paragraph">
+<p><em>zero matrix</em> is the Matrix with all zero entries.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">0</th>
+<th class="tableblock halign-left valign-top">0</th>
+<th class="tableblock halign-left valign-top">0</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>0</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>0</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>0</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>0</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>0</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>0</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The <em>Identity Matrix</em> is the matrix with 1 on the diagonal entries and 0 for all other entries.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">1</th>
+<th class="tableblock halign-left valign-top">0</th>
+<th class="tableblock halign-left valign-top">0</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>0</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>1</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>0</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>0</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>0</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>1</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>A Matrix is <em>invertible</em> if there is a matrix <em>M<sup>-1</sup></em> where <em>MM<sup>-1</sup> = M<sup>-1</sup>M = I</em>.</p>
+</div>
+<div class="paragraph">
+<p>The <em>transpose</em> of a matrix <em>M = [m<sub>ij</sub>]</em> is <em>M<sup>T</sup> = [m<sub>ji</sub>]</em>. This causes the rows of <em>M</em> to become the columns of <em>M<sup>T</sup></em>.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 14.2857%;">
+<col style="width: 14.2857%;">
+<col style="width: 14.2857%;">
+<col style="width: 14.2857%;">
+<col style="width: 14.2857%;">
+<col style="width: 14.2857%;">
+<col style="width: 14.2858%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">1</th>
+<th class="tableblock halign-left valign-top">1</th>
+<th class="tableblock halign-left valign-top">1</th>
+<th class="tableblock halign-left valign-top"></th>
+<th class="tableblock halign-left valign-top">1</th>
+<th class="tableblock halign-left valign-top">2</th>
+<th class="tableblock halign-left valign-top">3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>2</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>2</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>2</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>⇒</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>1</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>2</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>3</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>3</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>3</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>3</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>1</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>2</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>3</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>A Matrix is symmetric if <em>M</em> = <em>M<sup>T</sup></em>.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">X</th>
+<th class="tableblock halign-left valign-top">A</th>
+<th class="tableblock halign-left valign-top">B</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>A</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>X</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>C</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>B</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>C</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>X</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Where X, A, B, and C equal numbers</p>
+</div>
+<div class="paragraph">
+<p>jME includes two types of Matrix classes: Matrix3f and Matrix4f. Matrix3f is a 3x3 matrix and is the most commonly used (able to handle scaling and rotating), while Matrix4f is a 4x4 matrix that can also handle translation.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="transformations-2"><a class="anchor" href="#transformations-2"></a>Transformations</h3>
+<div class="paragraph">
+<p>Multiplying a vector with a Matrix allows the vector to be transformed. Either rotating, scaling or translating that vector.</p>
+</div>
+<div class="sect3">
+<h4 id="scaling"><a class="anchor" href="#scaling"></a>Scaling</h4>
+<div class="paragraph">
+<p>If a <em>diagonal Matrix</em>, defined by D = [d<sub>ij</sub>] and d<sub>ij</sub> = 0 for i != j, has all positive entries it is a <em>scaling matrix</em>. If d<sub>i</sub> is greater than 1 then the resulting vector will grow, while if d<sub>i</sub> is less than 1 it will shrink.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="rotation"><a class="anchor" href="#rotation"></a>Rotation</h4>
+<div class="paragraph">
+<p>A <em>rotation matrix</em> requires that the transpose and inverse are the same matrix (R<sup>-1</sup> = R<sup>T</sup>). The <em>rotation matrix</em> R can then be calculated as: R = I + (sin(angle)) S + (1 - cos(angle)S<sup>2</sup> where S is:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">0</th>
+<th class="tableblock halign-left valign-top">u<sub>2</sub></th>
+<th class="tableblock halign-left valign-top">-u<sub>1</sub></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>-u<sub>2</sub></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>0</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>u<sub>0</sub></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>u<sub>1</sub></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>-u<sub>0</sub></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>0</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="translation"><a class="anchor" href="#translation"></a>Translation</h4>
+<div class="paragraph">
+<p>Translation requires a 4x4 matrix, where the vector (x,y,z) is mapped to (x,y,z,1) for multiplication. The <em>Translation Matrix</em> is then defined as:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">M</th>
+<th class="tableblock halign-left valign-top">T</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>S<sup>T</sup></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>1</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>where M is the 3x3 matrix (containing any rotation/scale information), T is the translation vector and S<sup>T</sup> is the transpose Vector of T. 1 is just a constant.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="jme-class-2"><a class="anchor" href="#jme-class-2"></a>jME Class</h3>
+<div class="paragraph">
+<p>Both Matrix3f and Matrix4f store their values as floats and are publicly available as (m00, m01, m02, …, mNN) where N is either 2 or 3.</p>
+</div>
+<div class="paragraph">
+<p>Most methods are straight forward, and I will leave documentation to the Javadoc.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="vector"><a class="anchor" href="#vector"></a>Vector</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>See <a href="https://javadoc.jmonkeyengine.org/v3.3.2-stable/com/jme3/math/Vector3f.html">Vector3f Javadoc</a> and <a href="https://javadoc.jmonkeyengine.org/v3.3.2-stable/com/jme3/math/Vector2f.html">Vector2f Javadoc</a></p>
+</div>
+<div class="sect2">
+<h3 id="definition-4"><a class="anchor" href="#definition-4"></a>Definition</h3>
+<div class="paragraph">
+<p>Vectors are used to represent a multitude of things in jME, points in space, vertices in a triangle mesh, normals, etc. These classes (Vector3f in particular) are probably the most used class in jME.</p>
+</div>
+<div class="paragraph">
+<p>A Vector is defined by an n-tuple of real numbers. <strong>V</strong> = &lt;V<sub>1</sub>, V<sub>2</sub>,…, V<sub>n</sub>&gt;.</p>
+</div>
+<div class="paragraph">
+<p>We have two Vectors (2f and 3f) meaning we have tuples of 2 float values or 3 float values.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="operations"><a class="anchor" href="#operations"></a>Operations</h3>
+<div class="sect3">
+<h4 id="multiplication-by-scalar"><a class="anchor" href="#multiplication-by-scalar"></a>Multiplication by Scalar</h4>
+<div class="paragraph">
+<p>A Vector can be multiplied by a scalar value to produce a second Vector with the same proportions as the first. a<strong>V</strong> = <strong>V</strong>a = &lt;aV<sub>1</sub>, aV<sub>2</sub>,…,aV<sub>n</sub>&gt;</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="addition-and-subtraction"><a class="anchor" href="#addition-and-subtraction"></a>Addition and Subtraction</h4>
+<div class="paragraph">
+<p>Adding or subtracting two Vectors occurs component-wise. That is the first component is added (subtracted) with the first component of the second Vector and so on.</p>
+</div>
+<div class="paragraph">
+<p><strong>P</strong> + <strong>Q</strong> = &lt;P<sub>1</sub>+Q<sub>1</sub>, P<sub>2</sub>+Q<sub>2</sub>, …, P<sub>n</sub>+Q<sub>n</sub>&gt;</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="magnitude"><a class="anchor" href="#magnitude"></a>Magnitude</h4>
+<div class="paragraph">
+<p>The <em>magnitude</em> defines the length of a Vector. A Vector of magnitude 1 is <em>unit length</em>.</p>
+</div>
+<div class="paragraph">
+<p>For example, if <strong>V</strong> = (x, y, z), the magnitude is the square root of (x<sup>2</sup> + y<sup>2</sup> + z<sup>2</sup>).</p>
+</div>
+<div class="paragraph">
+<p>A Vector can be <em>normalized</em> or made <em>unit length</em> by multiplying the Vector by (1/magnitude).</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="dot-products"><a class="anchor" href="#dot-products"></a>Dot Products</h4>
+<div class="paragraph">
+<p>The dot product of two vectors is defined as:
+<strong>P</strong> dot <strong>Q</strong> = P<sub>x</sub>Q<sub>x</sub> + P<sub>y</sub>Q<sub>y</sub> + P<sub>z</sub>Q<sub>z</sub></p>
+</div>
+<div class="paragraph">
+<p>Using the dot product allows us to determine how closely two Vectors are pointing to the same point. If the dot product is negative they are facing in relatively opposite directions, while postive tells us they are pointing in the relative same direction.</p>
+</div>
+<div class="paragraph">
+<p>If the dot product is 0 then the two Vectors are <em>orthogonal</em> or 90 degrees off.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="cross-product"><a class="anchor" href="#cross-product"></a>Cross Product</h4>
+<div class="paragraph">
+<p>The Cross Product of two Vectors returns a third Vector that is prependicular to the two Vectors. This is very useful for calculating surface normals.</p>
+</div>
+<div class="paragraph">
+<p><strong>P</strong> X <strong>Q</strong> = &lt;P<sub>y</sub>Q<sub>z</sub> - P<sub>z</sub>Q<sub>y</sub>, P<sub>z</sub>Q<sub>x</sub> - P<sub>x</sub>Q<sub>z</sub>, P<sub>x</sub>Q<sub>y</sub> - P<sub>y</sub>Q<sub>x</sub>&gt;</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="jme-class-3"><a class="anchor" href="#jme-class-3"></a>jME Class</h4>
+<div class="paragraph">
+<p>Vector3f and Vector2f store their values (x, y, z) and (x, y) respectively as floats. Most methods are straight forward, and I will leave documentation to the Javadoc.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="quaternion"><a class="anchor" href="#quaternion"></a>Quaternion</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>See <a href="https://javadoc.jmonkeyengine.org/v3.3.2-stable/com/jme3/math/Quaternion.html">Quaternion Javadoc</a></p>
+</div>
+<div class="sect2">
+<h3 id="definition-5"><a class="anchor" href="#definition-5"></a>Definition</h3>
+<div class="paragraph">
+<p>Quaternions define a subset of a hypercomplex number system. Quaternions are defined by (i<sup>2</sup> = j<sup>2</sup> = k<sup>2</sup> = ijk = -1). jME makes use of Quaternions because they allow for compact representations of rotations, or correspondingly, orientations, in 3D space. With only four float values, we can represent an object&#8217;s orientation, where a rotation matrix would require nine. They also require fewer arithmetic operations for concatenation.</p>
+</div>
+<div class="paragraph">
+<p>Additional benefits of the Quaternion is reducing the chance of <a href="http://en.wikipedia.org/wiki/Gimbal_lock">Gimbal Lock</a> and allowing for easily interpolation between two rotations (spherical linear interpolation or slerp).</p>
+</div>
+<div class="paragraph">
+<p>While Quaternions are quite difficult to fully understand, there are an exceeding number of convenience methods to allow you to use them without having to understand the math behind it. Basically, these methods involve nothing more than setting the Quaternion&#8217;s x,y,z,w values using other means of representing rotations. The Quaternion is then contained in the <a href="../../core/scene/spatial.html" class="page">Spatial</a> as its local rotation component.</p>
+</div>
+<div class="paragraph">
+<p>Quaternion <strong>q</strong> has the form</p>
+</div>
+<div class="paragraph">
+<p><strong>q</strong> = &lt;_w,x,y,z_&gt; = <em>w + xi + yj + zk</em></p>
+</div>
+<div class="paragraph">
+<p>or alternatively, it can be written as:</p>
+</div>
+<div class="paragraph">
+<p><strong>q</strong> = <strong>s</strong> + <strong>v</strong>, where <strong>s</strong> represents the scalar part corresponding to the w-component of <strong>q</strong>, and <strong>v</strong> represents the vector part of the (x, y, z) components of <strong>q</strong>.</p>
+</div>
+<div class="paragraph">
+<p>Multiplication of Quaternions uses the distributive law and adheres to the following rules with multiplying the imaginary components (i, j, k):</p>
+</div>
+<div class="paragraph">
+<p><code>i<sup>2</sup> = j<sup>2</sup> = k<sup>2</sup> = -1</code>+
+<code>ij = -ji = k</code>+
+<code>jk = -kj = i</code>+
+<code>ki = -ik = j</code></p>
+</div>
+<div class="paragraph">
+<p>However, Quaternion multiplication is <em>not</em> commutative, so we have to pay attention to order.</p>
+</div>
+<div class="paragraph">
+<p><strong>q<sub>1</sub>q<sub>2</sub></strong> = s<sub>1</sub>s<sub>2</sub> - <strong>v<sub>1</sub></strong> dot <strong>v<sub>2</sub></strong> + s<sub>1</sub><strong>v<sub>2</sub></strong> + s<sub>2</sub><strong>v<sub>1</sub></strong> + <strong>v<sub>1</sub></strong> X <strong>v<sub>2</sub></strong></p>
+</div>
+<div class="paragraph">
+<p>Quaternions also have conjugates where the conjugate of <strong>q</strong> is (s - <strong>v</strong>)</p>
+</div>
+<div class="paragraph">
+<p>These basic operations allow us to convert various rotation representations to Quaternions.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="angle-axis"><a class="anchor" href="#angle-axis"></a>Angle Axis</h3>
+<div class="paragraph">
+<p>You might wish to represent your rotations as Angle Axis pairs. That is, you define a axis of rotation and the angle with which to <a href="rotate.html" class="page">rotate</a> about this axis. <a href="../../core/math/quaternion.html" class="page">Quaternions</a> defines a method <code>fromAngleAxis</code> (and <code>fromAngleNormalAxis</code>) to create a Quaternion from this pair. This is acutally used quite a bit in jME demos to continually rotate objects. You can also obtain a Angle Axis rotation from an existing Quaternion using <code>toAngleAxis</code>.</p>
+</div>
+<div class="sect3">
+<h4 id="example-rotate-a-spatial-using-fromangleaxis"><a class="anchor" href="#example-rotate-a-spatial-using-fromangleaxis"></a>Example - Rotate a Spatial Using fromAngleAxis</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">//rotate about the Y-Axis by approximately 1 pi
+Vector3f axis = Vector3f.UNIT_Y;
+// UNIT_Y equals (0,1,0) and does not require to create a new object
+float angle = 3.14f;
+s.getLocalRotation().fromAngleAxis(angle, axis);</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="three-angles"><a class="anchor" href="#three-angles"></a>Three Angles</h3>
+<div class="paragraph">
+<p>You can also represent a rotation by defining three angles. The angles represent the rotation about the individual axes. Passing in a three-element array of floats defines the angles where the first element is X, second Y and third is Z. The method provided by Quaternion is <code>fromAngles</code> and can also fill an array using <code>toAngles</code></p>
+</div>
+<div class="sect3">
+<h4 id="example-rotate-a-spatial-using-fromangles"><a class="anchor" href="#example-rotate-a-spatial-using-fromangles"></a>Example - Rotate a Spatial Using fromAngles</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">//rotate 1 radian on the x, 3 on the y and 0 on z
+float[] angles = {1, 3, 0};
+s.getLocalRotation().fromAngles(angles);</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="three-axes"><a class="anchor" href="#three-axes"></a>Three Axes</h3>
+<div class="paragraph">
+<p>If you have three axes that define your rotation, where the axes define the left axis, up axis and directional axis respectively) you can make use of <code>fromAxes</code> to generate the Quaternion. It should be noted that this will generate a new <a href="../../core/math/matrix.html" class="page">Matrix</a> object that is then garbage collected, thus, this method should not be used if it will be called many times. Again, <code>toAxes</code> will populate a Vector3f array.</p>
+</div>
+<div class="sect3">
+<h4 id="example-rotate-a-spatial-using-fromaxes"><a class="anchor" href="#example-rotate-a-spatial-using-fromaxes"></a>Example - Rotate a Spatial Using fromAxes</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">//rotate a spatial to face up ~45 degrees
+Vector3f[] axes = new Vector3f[3];
+axes[0] = new Vector3f(-1, 0, 0); //left
+axes[1] = new Vector3f(0, 0.5f, 0.5f); //up
+axes[2] = new Vector3f(0, 0.5f, 0.5f); //dir
+
+s.getLocalRotation().fromAxes(axes);</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="rotation-matrix"><a class="anchor" href="#rotation-matrix"></a>Rotation Matrix</h3>
+<div class="paragraph">
+<p>Commonly you might find yourself with a <a href="../../core/math/matrix.html" class="page">Matrix</a> defining a rotation. In fact, it&#8217;s very common to contain a rotation in a Matrix create a Quaternion, rotate the Quaternion, and then get the Matrix back. Quaternion contains a <code>fromRotationMatrix</code> method that will create the appropriate Quaternion based on the give Matrix. The <code>toRotationMatrix</code> will populate a given Matrix.</p>
+</div>
+<div class="sect3">
+<h4 id="example-rotate-a-spatial-using-a-rotation-matrix"><a class="anchor" href="#example-rotate-a-spatial-using-a-rotation-matrix"></a>Example - Rotate a Spatial Using a Rotation Matrix</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Matrix3f mat = new Matrix3f();
+mat.setColumn(0, new Vector3f(1,0,0));
+mat.setColumn(1, new Vector3f(0,-1,0));
+mat.setColumn(2, new Vector3f(0,0,1));
+
+s.getLocalRotation().fromRotationMatrix(mat);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As you can see there are many ways to build a Quaternion. This allows you to work with rotations in a way that is conceptually easier to picture, but still build Quaternions for internal representation.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="slerp"><a class="anchor" href="#slerp"></a>Slerp</h3>
+<div class="paragraph">
+<p>One of the biggest advantages to using Quaternions is allowing interpolation between two rotations. That is, if you have an initial Quaternion representing the original orientation of an object, and you have a final Quaternion representing the orientation you want the object to face, you can do this very smoothly with slerp. Simply supply the time, where time is [0, 1] and 0 is the initial rotation and 1 is the final rotation.</p>
+</div>
+<div class="sect3">
+<h4 id="example-use-slerp-to-rotate-between-two-quaternions"><a class="anchor" href="#example-use-slerp-to-rotate-between-two-quaternions"></a>Example - Use Slerp to Rotate Between two Quaternions</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">/*
+You can interpolate rotations between two quaternions using spherical linear
+interpolation (slerp).
+*/
+Quaternion Xroll45 = new Quaternion();
+Xroll45.fromAngleAxis(45 * FastMath.DEG_TO_RAD, Vector3f.UNIT_X);
+//
+Quaternion Yroll45 = new Quaternion();
+Yroll45.fromAngleAxis(45 * FastMath.DEG_TO_RAD, Vector3f.UNIT_Y);
+
+//the rotation half - way between these two
+
+Quaternion halfBetweenXroll45Yroll45 = new Quaternion();
+halfBetweenXroll45Yroll45.slerp(Xroll45, Yroll45, 0.5f);
+geom2.setLocalRotation(halfBetweenXroll45Yroll45);</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="multiplication"><a class="anchor" href="#multiplication"></a>Multiplication</h3>
+<div class="paragraph">
+<p>You can concatenate (add) rotations: This means you turn the object first around one axis, then around the other, in one step.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Quaternion myRotation = pitch90.mult(roll45); /* pitch and roll */</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To rotate a Vector3f around its origin by the Quaternion amount, use the multLocal method of the Quaternion:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Quaternion myRotation = pitch90;
+Vector3f myVector = new Vector3f(0,0,-1);
+myRotation.multLocal(myVector);</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="utility-classes"><a class="anchor" href="#utility-classes"></a>Utility Classes</h4>
+<div class="paragraph">
+<p>Along with the base Math classes, jME provides a number of Math classes to make development easier (and, hopefully, faster). Most of these classes find uses throughout the jME system internally. They can also prove beneficial to users as well.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="fast-math"><a class="anchor" href="#fast-math"></a>Fast Math</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>See <a href="https://javadoc.jmonkeyengine.org/v3.3.2-stable/com/jme3/math/FastMath.html">FastMath Javadoc</a></p>
+</div>
+<div class="sect2">
+<h3 id="definition-6"><a class="anchor" href="#definition-6"></a>Definition</h3>
+<div class="paragraph">
+<p>FastMath provides a number of convience methods, and where possible faster versions (although this can be at the sake of accuracy).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="usage"><a class="anchor" href="#usage"></a>Usage</h3>
+<div class="paragraph">
+<p>FastMath provides a number of constants that can help with general math equations. One important attribute is <code>USE_FAST_TRIG</code> if you set this to true, a look-up table will be used for trig functions rather than Java&#8217;s standard Math library. This provides significant speed increases, but might suffer from accuracy so care should be taken.</p>
+</div>
+<div class="paragraph">
+<p>There are five major categories of functions that FastMath provides.</p>
+</div>
+<div class="sect3">
+<h4 id="trig-functions"><a class="anchor" href="#trig-functions"></a>Trig Functions</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>cos and acos - provide <a href="http://en.wikipedia.org/wiki/cosine">cosine</a> and <a href="https://en.wikipedia.org/wiki/Inverse_trigonometric_functions">arc cosine</a> values (make use of the look-up table if <code>USE_FAST_TRIG</code> is true)</p>
+</li>
+<li>
+<p>sin and asin - provide <a href="http://en.wikipedia.org/wiki/sine">sine</a> and <a href="https://en.wikipedia.org/wiki/Inverse_trigonometric_functions">arc sine</a> values (make use of the look-up table if <code>USE_FAST_TRIG</code> is true)</p>
+</li>
+<li>
+<p>tan and atan - provide <a href="http://en.wikipedia.org/wiki/tangent">tangent</a> and <a href="https://en.wikipedia.org/wiki/Inverse_trigonometric_functions">arc tangent</a> values</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="numerical-methods"><a class="anchor" href="#numerical-methods"></a>Numerical Methods</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>ceil - provides the ceiling (smallest value that is greater than or equal to a given value and an integer)of a value.</p>
+</li>
+<li>
+<p>floor - provides the floor (largest value that is less than or equal to a given value and an integer) of a value.</p>
+</li>
+<li>
+<p>exp - provides the <a href="http://en.wikipedia.org/wiki/Euler_number">euler number</a> (e) raised to the provided value.</p>
+</li>
+<li>
+<p>sqr - provides the square of a value (i.e. value * value).</p>
+</li>
+<li>
+<p>pow - provides the first given number raised to the second.</p>
+</li>
+<li>
+<p>isPowerOfTwo - provides a boolean if a value is a power of two or not (e.g. 32, 64, 4).</p>
+</li>
+<li>
+<p>abs - provides the <a href="http://en.wikipedia.org/wiki/Absolute_value">absolute value</a> of a given number.</p>
+</li>
+<li>
+<p>sign - provides the sign of a value (1 if positive, -1 if negative, 0 if 0).</p>
+</li>
+<li>
+<p>log - provides the <a href="http://en.wikipedia.org/wiki/Natural_logarithm">natural logarithm</a> of a value.</p>
+</li>
+<li>
+<p>sqrt - provides the <a href="http://en.wikipedia.org/wiki/Square_root">square root</a> of a value.</p>
+</li>
+<li>
+<p>invSqrt - provides the inverse square root of a value (1 / sqrt(value).</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="linear-algebra"><a class="anchor" href="#linear-algebra"></a>Linear Algebra</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>LERP - calculate the <a href="http://en.wikipedia.org/wiki/Linear_interpolation">linear interpolation</a> of two points given a time between 0 and 1.</p>
+</li>
+<li>
+<p>determinant - calculates the <a href="http://en.wikipedia.org/wiki/determinant">determinant</a> of a 4x4 matrix.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="geometric-functions"><a class="anchor" href="#geometric-functions"></a>Geometric Functions</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>counterClockwise - given three points (defining a triangle), the winding is determined. 1 if counter-clockwise, -1 if clockwise and 0 if the points define a line.</p>
+</li>
+<li>
+<p>pointInsideTriangle - calculates if a point is inside a triangle.</p>
+</li>
+<li>
+<p>sphericalToCartesian - converts a point from <a href="https://en.wikipedia.org/wiki/Spherical_coordinate_system">spherical coordinates</a> to <a href="https://en.wikipedia.org/wiki/Cartesian">cartesian coordinates</a>.</p>
+</li>
+<li>
+<p>cartesianToSpherical - converts a point from cartesian coordinates to <a href="https://en.wikipedia.org/wiki/Spherical_coordinate_system">spherical coordinates</a>.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="misc"><a class="anchor" href="#misc"></a>Misc.</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>newRandomFloat - obtains a random float.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="line"><a class="anchor" href="#line"></a>Line</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>See <a href="https://javadoc.jmonkeyengine.org/v3.3.2-stable/com/jme3/math/Line.html">Line Javadoc</a></p>
+</div>
+<div class="sect2">
+<h3 id="definition-7"><a class="anchor" href="#definition-7"></a>Definition</h3>
+<div class="paragraph">
+<p>A line is a straight one-dimensional figure having no thickness and extending infinitely in both directions. A line is defined by two points <strong>A</strong> and <strong>B</strong> with the line passing through both.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="usage-2"><a class="anchor" href="#usage-2"></a>Usage</h3>
+<div class="paragraph">
+<p>jME defines a Line class that is defined by an origin and direction. In reality, this Line class is typically used as a <em>line segment</em>. Where the line is finite and contained between these two points.</p>
+</div>
+<div class="paragraph">
+<p><code>random</code> provides a means of generate a random point that falls on the line between the origin and direction points.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="example-1-find-a-random-point-on-a-line"><a class="anchor" href="#example-1-find-a-random-point-on-a-line"></a>Example 1 - Find a Random Point on a Line</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Line l = new Line(new Vector3f(0,1,0), new Vector3f(3,2,1));
+Vector3f randomPoint = l.random();</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="plane"><a class="anchor" href="#plane"></a>Plane</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>See <a href="https://javadoc.jmonkeyengine.org/v3.3.2-stable/com/jme3/math/Plane.html">Plane Javadoc</a></p>
+</div>
+<div class="sect2">
+<h3 id="definition-8"><a class="anchor" href="#definition-8"></a>Definition</h3>
+<div class="paragraph">
+<p>A plane is defined by the equation <strong>N</strong> . (<strong>X</strong> - <strong>X<sub>0</sub></strong>) = 0 where <strong>N</strong> = (a, b, c) and passes through the point <strong>X<sub>0</sub></strong> = (x<sub>0</sub>, y<sub>0</sub>, z<sub>0</sub>). <strong>X</strong> defines another point on this plane (x, y, z).</p>
+</div>
+<div class="paragraph">
+<p><strong>N</strong> . (<strong>X</strong> - <strong>X<sub>0</sub></strong>) = 0 can be described as (<strong>N</strong> . <strong>X</strong>) + (<strong>N</strong> . -<strong>X<sub>0</sub></strong>) = 0</p>
+</div>
+<div class="paragraph">
+<p>or</p>
+</div>
+<div class="paragraph">
+<p>(ax + by + cz) + (-ax<sub>0</sub>-by<sub>0</sub>-cz<sub>0</sub>) = 0</p>
+</div>
+<div class="paragraph">
+<p>where (-ax<sub>0</sub>-by<sub>0</sub>-cz<sub>0</sub>) = d</p>
+</div>
+<div class="paragraph">
+<p>Where d is the negative value of a point in the plane times the unit vector describing the orientation of the plane.</p>
+</div>
+<div class="paragraph">
+<p>This gives us the general equation: (ax + by + cz + d = 0)</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="usage-in-jme"><a class="anchor" href="#usage-in-jme"></a>Usage in jME</h3>
+<div class="paragraph">
+<p>jME defines the Plane as ax + by + cz = -d. Therefore, during creation of the plane, the normal of the plane (a,b,c) and the constant d is supplied.</p>
+</div>
+<div class="paragraph">
+<p>The most common usage of Plane is <a href="../../core/renderer/camera.html" class="page">Camera</a> frustum planes. Therefore, the primary purpose of Plane is to determine if a point is on the positive side, negative side, or intersecting a plane.</p>
+</div>
+<div class="paragraph">
+<p>Plane defines the constants:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>NEGATIVE_SIDE</code> - represents a point on the opposite side to which the normal points.</p>
+</li>
+<li>
+<p><code>NO_SIDE</code> - represents a point that lays on the plane itself.</p>
+</li>
+<li>
+<p><code>POSITIVE_SIDE</code> - represents a point on the side to which the normal points.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>These values are returned on a call to <code>whichSide</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="example-1-determining-if-a-point-is-on-the-positive-side-of-a-plane"><a class="anchor" href="#example-1-determining-if-a-point-is-on-the-positive-side-of-a-plane"></a>Example 1 - Determining if a Point is On the Positive Side of a Plane</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Vector3f normal = new Vector3f(0,1,0);
+float constant = new Vector3f(1,1,1).dot(normal);
+Plane testPlane = new Plane(normal, constant);
+
+int side = testPlane.whichSide(new Vector3f(2,1,0));
+
+if(side == Plane.NO_SIDE) {
+   System.out.println("This point lies on the plane");
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="example-2-for-the-layperson"><a class="anchor" href="#example-2-for-the-layperson"></a>Example 2 - For the Layperson</h3>
+<div class="paragraph">
+<p>Using the standard constructor Plane(Vector3f normal, float constant), here is what you need to do to create a plane, and then use it to check which side of the plane a point is on.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package test;
+
+import java.util.logging.Logger;
+
+import com.jme.math.*;
+
+/**
+ *@author Nick Wiggill
+ */
+
+public class TestPlanes
+{
+  public static final Logger logger = Logger.getLogger(LevelGraphBuilder.class.getName());
+
+  public static void main(String[] args) throws Exception
+  {
+    //***Outline.
+    //This example shows how to construct a plane representation using
+    //com.jme.math.Plane.
+    //We will create a very simple, easily-imagined 3D plane. It will
+    //be perpendicular to the x axis (it's facing). It's "centre" (if
+    //such a thing exists in an infinite plane) will be positioned 1
+    //unit along the positive x axis.
+
+    //***Step 1.
+    //The vector that represents the normal to the plane, in 3D space.
+    //Imagine a vector coming out of the origin in this direction.
+    //There is no displacement yet (see Step 2, below).
+    Vector3f normal = new Vector3f(5f,0,0);
+
+    //***Step 2.
+    //This is our displacement vector. The plane remains facing in the
+    //direction we've specified using the normal above, but now we are
+    //are actually giving it a position other than the origin.
+    //We will use this displacement to define the variable "constant"
+    //needed to construct the plane. (see step 3)
+    Vector3f displacement = Vector3f.UNIT_X;
+    //or
+    //Vector3f displacement = new Vector3f(1f, 0, 0);
+
+    //***Step 3.
+    //Here we generate the constant needed to define any plane. This
+    //is semi-arcane, don't let it worry you. All you need to
+    //do is use this same formula every time.
+    float constant = displacement.dot(normal);
+
+    //***Step 4.
+    //Finally, construct the plane using the data you have assembled.
+    Plane plane = new Plane(normal, constant);
+
+    //***Some tests.
+    logger.info("Plane info: "+plane.toString()); //trace our plane's information
+
+    Vector3f p1  = new Vector3f(1.1f,0,0); //beyond the plane (further from origin than plane)
+    Vector3f p2  = new Vector3f(0.9f,0,0); //before the plane (closer to origin than plane)
+    Vector3f p3  = new Vector3f(1f,0,0); //on the plane
+
+    logger.info("p1 position relative to plane is "+plane.whichSide(p1)); //outputs NEGATIVE
+    logger.info("p2 position relative to plane is "+plane.whichSide(p2)); //outputs POSITIVE
+    logger.info("p3 position relative to plane is "+plane.whichSide(p3)); //outputs NONE
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ray"><a class="anchor" href="#ray"></a>Ray</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>See <a href="https://javadoc.jmonkeyengine.org/v3.3.2-stable/com/jme3/math/Ray.html">Ray Javadoc</a></p>
+</div>
+<div class="sect2">
+<h3 id="definition-9"><a class="anchor" href="#definition-9"></a>Definition</h3>
+<div class="paragraph">
+<p>Ray defines a line that starts at a point <strong>A</strong> and continues in a direction through <strong>B</strong> into infinity.</p>
+</div>
+<div class="paragraph">
+<p>This Ray is used extensively in jME for <a href="../beginner/hello_picking.html" class="page">Picking</a>. A Ray is cast from a point in screen space into the scene. Intersections are found and returned. To create a ray supply the object with two points, where the first point is the origin.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="example-1-create-a-ray-that-represents-where-the-camera-is-looking"><a class="anchor" href="#example-1-create-a-ray-that-represents-where-the-camera-is-looking"></a>Example 1 - Create a Ray That Represents Where the Camera is Looking</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Ray ray = new Ray(cam.getLocation(), cam.getDirection());</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="rectangle"><a class="anchor" href="#rectangle"></a>Rectangle</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>See <a href="https://javadoc.jmonkeyengine.org/v3.3.2-stable/com/jme3/math/Rectangle.html">Rectangle Javadoc</a></p>
+</div>
+<div class="sect2">
+<h3 id="definition-10"><a class="anchor" href="#definition-10"></a>Definition</h3>
+<div class="paragraph">
+<p>Rectangle defines a finite plane within three dimensional space that is specified via three points (A, B, C). These three points define a triangle with the forth point defining the rectangle ( (B + C) - A ).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="jme-usage"><a class="anchor" href="#jme-usage"></a>jME Usage</h3>
+<div class="paragraph">
+<p>Rectangle is a straight forward data class that simply maintains values that defines a Rectangle in 3D space. One interesting use is the <code>random</code> method that will create a random point on the Rectangle. The <a href="../../core/effect/effects_overview.html" class="page">Particle System</a> makes use of this to define an area that generates <a href="../../core/effect/particle_emitters.html" class="page">Particles</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="example-1-define-a-rectangle-and-get-a-point-from-it"><a class="anchor" href="#example-1-define-a-rectangle-and-get-a-point-from-it"></a>Example 1 : Define a Rectangle and Get a Point From It</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Vector3f v1 = new Vector3f(1,0,0);
+Vector3f v2 = new Vector3f(1,1,0);
+Vector3f v3 = new Vector3f(0,1,0);
+Rectangle r = new Rectangle(v1, v2, v3);
+Vector3f point = r.random();</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="triangle"><a class="anchor" href="#triangle"></a>Triangle</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>See <a href="https://javadoc.jmonkeyengine.org/v3.3.2-stable/com/jme3/math/Triangle.html">Triangle Javadoc</a></p>
+</div>
+<div class="sect2">
+<h3 id="definition-11"><a class="anchor" href="#definition-11"></a>Definition</h3>
+<div class="paragraph">
+<p>A triangle is a 3-sided polygon. Every triangle has three sides and three angles, some of which may be the same. If the triangle is a right triangle (one angle being 90 degrees), the side opposite the 90 degree angle is the hypotenuse, while the other two sides are the legs. All triangles are <a href="http://en.wikipedia.org/wiki/Convex_polygon">convex</a> and <a href="http://mathworld.wolfram.com/BicentricPolygon.html">bicentric</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="usage-3"><a class="anchor" href="#usage-3"></a>Usage</h3>
+<div class="paragraph">
+<p>jME&#8217;s Triangle class is a simple data class. It contains three <a href="terminology.html#vectors" class="page">Vector3f</a> objects that represent the three points of the triangle. These can be retrieved via the <code>get</code> method. The <code>get</code> method, obtains the point based on the index provided. Similarly, the values can be set via the <code>set</code> method.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="example-1-creating-a-triangle"><a class="anchor" href="#example-1-creating-a-triangle"></a>Example 1 - Creating a Triangle</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">//the three points that make up the triangle
+Vector3f p1 = new Vector3f(0,1,0);
+Vector3f p2 = new Vector3f(1,1,0);
+Vector3f p3 = new Vector3f(0,1,1);
+Triangle t = new Triangle(p1, p2, p3);</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="tips-and-tricks"><a class="anchor" href="#tips-and-tricks"></a>Tips and Tricks</h4>
+
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="how-do-i-get-heightwidth-of-a-spatial"><a class="anchor" href="#how-do-i-get-heightwidth-of-a-spatial"></a>How do I get height/width of a spatial?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Cast the spatial to com.jme3.bounding.BoundingBox to be able to use getExtent().</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Vector3f extent = ((BoundingBox) spatial.getWorldBound()).getExtent(new Vector3f());
+float x = ( (BoundingBox)spatial.getWorldBound()).getXExtent();
+float y = ( (BoundingBox)spatial.getWorldBound()).getYExtent();
+float z = ( (BoundingBox)spatial.getWorldBound()).getZExtent();</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="how-do-i-position-the-center-of-a-geomtry"><a class="anchor" href="#how-do-i-position-the-center-of-a-geomtry"></a>How do I position the center of a Geomtry?</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">geo.center().move(pos);</code></pre>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="math_for_dummies.html">Math for Dummies</a></span>
+  <span class="next"><a href="math_cheet_sheet.html">3D math "cheat sheet"</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>Copyright 2020 jMonkeyEngine Wiki Contributors. Licensed BSD-3.</p>
+</footer>
+<script src="../../../../_/js/vendor/docsearch.min.js"></script>
+<!-- fetched from https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js -->
+<script>
+var search = docsearch({
+  apiKey: 'a736b6d93de805e26ec2f49b55013fbd',
+  indexName: 'jmonkeyengine',
+  inputSelector: '#search-input',
+  autocompleteOptions: { hint: false, keyboardShortcuts: ['s'] },
+  algoliaOptions: { hitsPerPage: 10 }
+}).autocomplete
+search.on('autocomplete:closed', function () { search.autocomplete.setVal() })
+function focusSearchInput () { document.querySelector('#search-input').focus() }
+if (document.querySelector('.home-link.is-current')) window.addEventListener('load', focusSearchInput)
+</script>
+<script src="../../../../_/js/site.js"></script>
+<script async src="../../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
