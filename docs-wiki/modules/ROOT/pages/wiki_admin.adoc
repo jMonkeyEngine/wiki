@@ -89,3 +89,64 @@ The `wiki-ui` repository has two workflows. A workflow that will build on any pu
 This will allow you to make changes to the ui without triggering a build unless you are ready.
 
 The user interface uses standard html in its templates so editing should be familiar to anyone who knows html.
+
+== Versioning
+
+The wiki uses branches for versioning. The current branch being used for the jMonkeyEngine is *always* the master branch of the wiki. This means you use the previous branch of the jMonkeyEngine for the new versioned branch name. If the current *wiki version* is targeting 3.3 and you are creating a new version, then the new version branch would be v3.3. Branch version names should only target major/minor releases, not the patch of a version.
+
+When it's time to cut a new version for the wiki, the process is as follows.
+
+IMPORTANT: A component module is a module that has an `antora.yml` file. A named module lives inside a component module. The version in the `antora.yml` file controls the version for the component module i.e. the wiki, not the version in the `wiki-playbook.yml`.
+
+. We do not want the Antora cache to be versioned so you need to first remove the cache from the `Commit Packages` command in the main.yml workflow, located in the '.github/workflows' directory.
++
+```
+# Commits these files to root if and only if there are changes.
+add: "package-lock.json package.json ./.cache/antora/*"
+```
+. Next, delete the `.cache` folder.
+. Stage, commit and push your changes to the repository.
+. Create a new branch that matches the *current version* of the wiki. If master is currently targeting 3.2 for example, that would mean the branch name would be v3.2.
+. Push the branch to the repository.
+. On the `master` branch, edit these files:
+.. Add the newly created branch to the `branches:` array in wiki-playbook.yml.
++
+.wiki-playbook.yml
+```
+content:
+  sources:
+  - url: https://github.com/mitm001/jme-wiki.git
+    branches: [HEAD, v3.2]
+```
+.. Increment the version of any antora.yml file. At the time of this writing, there were two:
++
+--
+.The docs antora.yml
+```
+name: docs
+title: JME
+version: '3.3'
+```
+and
+
+.The docs-wiki antora.yml
+```
+name: docs-wiki
+title: Wiki Contribution
+version: '3.3'
+```
+
+NOTE: The version value is enclosed in a set of single quote marks (') because it starts with a number. As was mentioned earlier, the versioning is controlled by the antora.yml file, not the playbook, so they do not have to match.
+--
+
+. Edit any links found in the `README.adoc`, located in the root of the repository, that are versioned, so they match the version value you just set in the `antora.yml` file.
+. Add `./.cache/antora/*` back to the  `Commit Packages` command to rebuild the cache.
+. Stage, commit and push the changes to the repository.
+
+Things to know about versions and component modules.
+
+If a version isn't specified in the target page ID (pass:[xref:version@path-to-page.adoc][link text]), and the target and current pages belong to a different docs components, Antora will use the latest version of the target component to complete the page ID.
+
+At the time of this writing, we have two links in the `docs` module (documentation.adoc page) that link to the `docs-wiki` module and one that points from the `docs-wiki` module to the `docs` module license.
+
+Since this is a wiki module, we would want to point to the most current content so not versioning them is the best approach.
