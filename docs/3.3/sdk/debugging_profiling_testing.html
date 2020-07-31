@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>jMonkeyEngine SDK: Debugging, Profiling, Testing :: jMonkeyEngine Docs</title>
+    <link rel="canonical" href="https://wiki.jmonkeyengine.org/docs/3.3/sdk/debugging_profiling_testing.html">
+    <link rel="prev" href="version_control.html">
+    <link rel="next" href="application_deployment.html">
+    <meta name="keywords" content="documentation, sdk, tool">
+    <meta name="generator" content="Antora 2.3.3">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+<meta property="og:image" content="https://wiki.jmonkeyengine.org/_/img/iconx128.png">
+<meta property="og:description" content="jMonkeyEngine SDK: Debugging, Profiling, Testing">
+<meta property="og:title" content="jMonkeyEngine Docs">
+<link rel="stylesheet" href="../../../_/css/site-extra.css">
+<link rel="stylesheet" href="../../../_/css/vendor/docsearch.min.css">
+<!-- fetched from https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css -->
+<link rel="icon" href="../../../_/img/favicon.ico" type="image/x-icon">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://wiki.jmonkeyengine.org">
+        <img alt="" src="../../../_/img/jme-logo.png" height="32" type="image/x-icon">
+      </a>
+      <div class="navbar-item hide-for-print">
+        <input id="search-input" type="text" placeholder="Search docs">
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item theme-switch-wrapper">
+          <label class="theme-switch" for="checkbox">
+            <input type="checkbox" id="checkbox" />
+            <div class="slider round"></div>
+          </label>
+        </div>
+        <a class="navbar-item" href="https://github.com/jmonkeyengine/wiki">Github</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="docs" data-version="3.3">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../documentation.html">JME</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../documentation.html">Getting Started</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="https://javadoc.jmonkeyengine.org/v3.3.2-stable">JavaDoc</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../tutorials/beginner/beginner.html">Beginner Tutorials</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tutorials/beginner/hello_simpleapplication.html">Hello SimpleApplication</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tutorials/beginner/hello_node.html">Hello Node</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tutorials/beginner/hello_asset.html">Hello Asset</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tutorials/beginner/hello_main_event_loop.html">Hello Update Loop</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tutorials/beginner/hello_input_system.html">Hello Input System</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tutorials/beginner/hello_material.html">Hello Material</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tutorials/beginner/hello_animation.html">Hello Animation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tutorials/beginner/hello_picking.html">Hello Picking</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tutorials/beginner/hello_collision.html">Hello Collision</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tutorials/beginner/hello_terrain.html">Hello Terrain</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tutorials/beginner/hello_audio.html">Hello Audio</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tutorials/beginner/hello_effects.html">Hello Effects</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tutorials/beginner/hello_physics.html">Hello Physics</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Key Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tutorials/concepts/best_practices.html">Best Practices</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tutorials/concepts/optimization.html">Optimization</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tutorials/concepts/faq.html">Frequently Asked Questions</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tutorials/concepts/math_for_dummies.html">Math for Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tutorials/concepts/math.html">Math overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tutorials/concepts/math_cheet_sheet.html">3D math "cheat sheet"</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tutorials/concepts/rotate.html">3-D Rotation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tutorials/concepts/math_video_tutorials.html">Math video tutorial series</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tutorials/concepts/multi-media_asset_pipeline.html">Multi-Media Asset Pipeline</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tutorials/concepts/the_scene_graph.html">The Scene Graph</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tutorials/concepts/scenegraph_for_dummies.html">Scene Graph for Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tutorials/concepts/terminology.html">3D Graphics Terminology</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tutorials/concepts/transparency_sorting.html">Transparency Sorting</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Articles and How-to&#8217;s</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">How to Model</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../tutorials/how-to/modeling/3dsmax/3dsmax.html">3dsmax</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../tutorials/how-to/modeling/blender/blender.html">Blender</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../tutorials/how-to/modeling/blender/blender_buffer_clearing.html">Buffer Clearing</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../tutorials/how-to/modeling/blender/blender_gltf.html">Export as GlTF</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../tutorials/how-to/modeling/blender/blender_ogre_export.html">Export as Ogre XML</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../tutorials/how-to/modeling/blender/blender_ogre_compatibility.html">Ogre Compatibility</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../tutorials/how-to/modeling/blender/makehuman.html">MakeHuman</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../tutorials/how-to/modeling/blender/makehuman_blender_ogrexml_toolchain.html">MakeHuman toolchain</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">How to Animate</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Mixamo</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../tutorials/how-to/modeling/blender/mixamo.html">Blender Models</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Video</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="https://youtu.be/jHgAgTWIers?list=PLv6qR9TGkz8RcUr-fOHI2SksWA4BAU9TS">Part 1- Download Model</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="https://youtu.be/GQJSrOpNQwI?list=PLv6qR9TGkz8RcUr-fOHI2SksWA4BAU9TS">Part 2- Rig and Animate</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="https://youtu.be/JzRe2Dxbcmc?list=PLv6qR9TGkz8RcUr-fOHI2SksWA4BAU9TS">Part 3- Import to JME</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="https://youtu.be/8wwDRDJop7k?list=PLv6qR9TGkz8RcUr-fOHI2SksWA4BAU9TS">Part 4- Play Animation</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tutorials/how-to/debugging.html">Debugging with Wireframes</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tutorials/how-to/util/free_skymaps.html">How to create free skymaps</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Java Tips</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../tutorials/how-to/java/localization.html">Localization</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../tutorials/how-to/java/swing_canvas.html">Swing Canvas</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../tutorials/how-to/java/logging.html">Logging</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../tutorials/how-to/java/read_graphic_card_capabilites.html">Read Graphics Capabilites</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Articles</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Physically Based Rendering</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../tutorials/how-to/articles/pbr/pbr_part1.html">PBR – Part one</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../tutorials/how-to/articles/pbr/pbr_part2.html">PBR – Part two</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../tutorials/how-to/articles/pbr/pbr_part3.html">PBR – Part three</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Core Engine</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/app/simpleapplication.html">SimpleApplication</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/system/appsettings.html">AppSettings</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Controlling Game Logic</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/app/update_loop.html">Update Loop</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/app/state/application_states.html">Application States</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../core/scene/control/custom_controls.html">Custom Controls</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Video</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="https://www.youtube.com/watch?v=MNDiZ9YHIpM">Control any scene node</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="https://www.youtube.com/watch?v=-OzRZscLlHY">Control a character</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="https://wiki.jmonkeyengine.org/Scenes/SDK-UsecaseDemo_1.zip">Video Source Code</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/app/multithreading.html">Multithreading</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Scene Graph</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/scene/traverse_scenegraph.html">Traverse SceneGraph</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/scene/spatial.html">Spatial: Node vs Geometry</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../core/scene/mesh.html">Mesh</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../core/scene/custom_meshes.html">Custom Meshes</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../core/scene/shape/shape.html">Shape</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../core/scene/3d_models.html">3D Models</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/asset/asset_manager.html">Asset Manager</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/export/save_and_load.html">Saving and Loading Nodes</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/collision/collision_and_intersection.html">Collision and Intersection</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/scene/control/level_of_detail.html">Level of Detail</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Animation, Scene</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/animation/animation.html">Animation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/cinematic/cinematics.html">Cinematics (cutscenes, fake destruction physics)</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/cinematic/motionpath.html">MotionPaths and Waypoints</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Material, Light, Shadow</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/material/how_to_use_materials.html">How to use Materials</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/material/j3m_material_files.html">.j3m Material Files</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/material/material_definitions.html">.j3md Material Definitions</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/material/materials_overview.html">.j3md Properties</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/shader/jme3_shaders.html">Shaders and JME3</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/shader/jme3_shadernodes.html">Shader Node System</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/shader/shader_video_tutorials.html">Shader Video Tutorials</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/light/light_and_shadow.html">Light and Shadow</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/texture/anisotropic_filtering.html">Anisotropic Filtering</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/system/jme3_srgbpipeline.html">Gamma Correction</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Audio, Video</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/audio/audio.html">Playing Sounds</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/audio/audio_environment_presets.html">Audio Environment Presets</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/app/state/screenshots.html">Capture Screenshots</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/app/state/capture_audio_video_to_a_file.html">Capture Audio/Video</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Filter, Effect</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/effect/effects_overview.html">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/effect/bloom_and_glow.html">Bloom and Glow</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/effect/particle_emitters.html">Particle Emitters</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Landscapes</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/util/sky.html">Sky</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/terrain/terrain.html">Terrain (TerraMonkey)</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/collision/terrain_collision.html">Terrain Collision</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/effect/water.html">Simple Water</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/effect/post-processor_water.html">Post-Processor Water</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Camera</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/renderer/camera.html">Camera</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/renderer/making_the_camera_follow_a_character.html">Follow a Character</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/renderer/remote-controlling_the_camera.html">Remote-Controlling</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/renderer/multiple_camera_views.html">Multiple Camera Views</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/renderer/jme3_renderbuckets.html">Render Buckets</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">User Interaction</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/input/input_handling.html">Input Handling</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/input/combo_moves.html">Combo Moves</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/input/mouse_picking.html">Mouse Picking</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Graphical User Interface</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Nifty GUI</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../core/gui/nifty_gui.html">Integration Tutorial</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../core/gui/nifty_gui_best_practices.html">Best Practices</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../core/gui/nifty_gui_scenarios.html">Scenarios</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/ui/hud.html">Head-Up Display (HUD)</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Virtual Reality</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../core/vr/virtualreality.html">Virtual Reality</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../physics/physics.html">Physics</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../physics/bullet_multithreading.html">Multi-Threaded Physics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../physics/collision/physics_listeners.html">Collision Detection</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../physics/joint/hinges_and_joints.html">Hinges and Joints</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../physics/control/walking_character.html">Walking Character</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../physics/control/ragdoll.html">Ragdoll</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../physics/control/vehicles.html">Vehicles</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../physics/control/softbody.html">Softbody</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../physics/bullet_pitfalls.html">Bullet Physics Pitfalls</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Networking</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../networking/networking.html">Networking (SpiderMonkey)</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../networking/headless_server.html">Headless Server</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../networking/monkey_zone.html">Multi-Player Demo Code</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../networking/networking_video_tutorials.html">Networking Video Tutorials</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">User Contributions</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#docs\modules\contributions\pages\contributions.adoc">User Made Utilities</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Shader</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../contributions/shader/shaderblow_project.html">ShaderBlow Project</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Landscapes</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../contributions/lanscapes/vegetationsystem/vegetationsystem.html">Vegetation System</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Networking</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../contributions/networking/open_game_finder.html">Open Game Finder</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Entity System</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#es/entitysystem.adoc">The Zay-ES Entity System</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Artificial Intelligence</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../contributions/ai/recast.html">Recast Navigation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../contributions/ai/building_recast.html">Updating and building Recast Native Bindings</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../contributions/ai/monkey_brains.html">Monkey Brains</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../contributions/ai/steer_behaviours.html">Steer Behaviours</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../contributions/ai/jme3_ai.html">jME3 Artificial Intelligence</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">GUI</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="https://github.com/jMonkeyEngine-Contributions/Lemur">Lemur - a native jME3 GUI library with scene graph tools</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="https://github.com/jMonkeyEngine-Contributions/Lemur/wiki/Modules">Lemur Scene Graph Tools</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="http://hub.jmonkeyengine.org/t/lemur-gems-1-inputmapper-based-camera-movement/28703">Lemur Gems #1 - Input mapper based camera movement. </a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="http://hub.jmonkeyengine.org/t/lemur-gems-2-inputmapper-delegates/28710">Lemur Gems #2 - Input mapper delegates</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="http://hub.jmonkeyengine.org/t/lemur-gems-3-scene-picking/28713">Lemur Gems #3 - Scene picking</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../contributions/gui/tonegodgui/tonegodgui.html">tonegodGUI - a native jME3 GUI library</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Tools</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../contributions/tools/navigation.html">Mercator Projection Tool (Marine Navigation)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../contributions/tools/charts.html">Visualizing Maps in JME3 (Marine Charts)</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Projects</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../contributions/projects/rise_of_mutants_project.html">Rise of Mutants Project</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="sdk.html">SDK</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Video Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">SDK Use Case Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=-OzRZscLlHY">Demo 1 (Quixote demo)</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=6-YWxD3JByE">Demo 2 (Models and Materials)</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">SDK Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=M1_0pbeyJzI">Basics</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=nL7woH40i5c">Importing Models</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=DUmgAjiNzhY">Dragging&amp;Dropping Nodes</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=ntPAmtsQ6eM">Scene Composing</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=zgPV3W6dD4s">Terrain with Collision Shape</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=Feu3-mrpolc">Working with Materials</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=MNDiZ9YHIpM">Custom Controls</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=oZnssg8TBWQ">WebStart Deployment</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=D7JM4VMKqPc">Animation and Effect TrackEditing</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Getting Started</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="update_center.html">Updating jMonkeyEngine SDK</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="troubleshooting.html">Troubleshooting</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Java Development Features</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="project_creation.html">Project Creation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="code_editor.html">Code Editor and Palette</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="version_control.html">File Version Control</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="3">
+    <a class="nav-link" href="debugging_profiling_testing.html">Debug, Profile, Test</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="application_deployment.html">Application Deployment</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="default_build_script.html">Default Build Script</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="android.html">Android</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="android_cheat_sheet.html">Android Cheat Sheet</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="ios.html">iOS</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Unique Features</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="model_loader_and_viewer.html">Import, View, Convert Models</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="asset_packs.html">Asset Packs</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="scene_explorer.html">The SceneExplorer</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="scene_composer.html">Composing a Scene</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="terrain_editor.html">Terrain Editor</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="sample_code.html">Sample Code</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="material_editing.html">Material Editing</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="font_creation.html">Creating Bitmap Fonts</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="https://hub.jmonkeyengine.org/t/effecttrack-and-audiotrack-editing-in-the-sdk/23378">Audio and Effect Track Editing</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="https://www.youtube.com/watch?v=D7JM4VMKqPc">Video: Effect and AudioTrack editing in jMonkeyEngine 3 sdk</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="filters.html">Post-Processor Filter Editor and Viewer</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../core/app/state/application_states.html">Application States</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../core/scene/control/custom_controls.html">Custom Controls</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="vehicle_creator.html">Vehicle Creator</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Advanced Usage</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="build_platform.html">Building jMonkeyEngine SDK</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="use_own_jme.html#.adoc">Using your own (modified) version of jME3 in jMonkeyEngine SDK</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="increasing_heap_memory.html">Increasing Heap Memory</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="log_files.html">Log Files</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Available external plugins</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../contributions/contributions.html">Contributions</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="neotexture.html">Neo Texture Editor for procedural textures</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=yS9a9o4WzL8">Video: Mesh Tool &amp; Physics Editor</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="development.html">Developing plugins for jMonkeyEngine SDK</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="development/setup.html">Creating a plugin</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="development/general.html">Creating components</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="development/scene.html">The Main Scene</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="development/sceneexplorer.html">The Scene Explorer</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="development/projects_assets.html">Projects and Assets</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="development/extension_library.html">Create a library plugin from a jar file</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="development/model_loader.html">Create a new or custom model filetype and loader</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">JME</span>
+    <span class="version">3.3</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">JME</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../documentation.html">3.3</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Wiki Contribution</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../docs-wiki/3.3/wiki_contributor.html">3.3</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Wiki UI</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../wiki-ui/index.html">master</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../documentation.html">JME</a></li>
+    <li><a href="sdk.html">SDK</a></li>
+    <li>Java Development Features</li>
+    <li><a href="debugging_profiling_testing.html">Debug, Profile, Test</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/jMonkeyEngine/wiki/edit/master/docs/modules/sdk/pages/debugging_profiling_testing.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">jMonkeyEngine SDK: Debugging, Profiling, Testing</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Debugging, testing and profiling are important parts of the development cycle. This documentation shows you how to make the most of the jMonkeyEngine SDK&#8217;s assistive features.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Since the jMonkeyEngine SDK is based on the NetBeans IDE and the NetBeans Platform, you can learn about certain jMonkeyEngine SDK features by reading the corresponding NetBeans IDE tutorials (in the &#8220;see also&#8221; links).</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="testing"><a class="anchor" href="#testing"></a>Testing</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The jMonkeyEngine SDK supports the JUnit testing framework. It is a good practice to write tests (assertions) for each of your classes. Each test makes certain this &#8220;unit&#8221; (e.g. method) meets its design and behaves as intended. Run your tests after each major change and you immediately see if you broke something.</p>
+</div>
+<div class="sect2">
+<h3 id="creating-tests"><a class="anchor" href="#creating-tests"></a>Creating Tests</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><b class="button">RMB</b> click a Java file in the Projects window and choose <span class="menuseq"><b class="menu">Tools</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">Create JUnit Tests</b></span>.</p>
+</li>
+<li>
+<p><b class="button">LMB</b>  click OK. The jMonkeyEngine SDK creates a JUnit test skeleton in the Test Package directory.</p>
+</li>
+<li>
+<p>The body of each generated test method is provided solely as a guide. In their place, you need to write your actual test cases!</p>
+</li>
+<li>
+<p>You can use tests such as <code>assertTrue(), assertFalse(), assertEquals()</code>, or <code>assert()</code>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>The following example assertions test an addition method: <code>assert( add(1, 1) == 2); assertTrue( add(7,-5) == add(-5,7) )…</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>&#8220;Ideally&#8221;, you write a test case for every method (100% coverage).</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Use the Navigate menu to jump from a test to its tested class, and back!</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="running-tests"><a class="anchor" href="#running-tests"></a>Running Tests</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Run one or all tests:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><b class="button">RMB</b> click the class in the Projects window and Choose &#8220;Test File&#8221;, or</p>
+</li>
+<li>
+<p><b class="button">RMB</b> click the project and select &#8220;Test&#8221; to run all tests.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Check the Test window to see successful tests (green) and failures (red).</p>
+</li>
+<li>
+<p>If a test fails that has succeeded before, you know that your latest changes broke something!</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Using unit tests regularly allows you to detect side-effects on classes that you thought were unaffected by a code change.</p>
+</div>
+<div class="paragraph">
+<p>See also:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http://netbeans.org/kb/docs/java/junit-intro.html">Writing JUnit Tests</a></p>
+</li>
+<li>
+<p><a href="http://www.junit.org">http://www.junit.org</a></p>
+</li>
+<li>
+<p><a href="https://docs.oracle.com/javase/7/docs/technotes/guides/language/assert.html">Java Assertions</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="debugging"><a class="anchor" href="#debugging"></a>Debugging</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In the jMonkeyEngine SDK, you have access to a debugger to examine your application for errors such as deadlocks and NullPointerExeptions. You can set breakpoints, watch variables, and execute your code line-by-line to identify the source of a problem.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>First, you set breakpoints and/or watches before the problematic lines of code where you suspect the bug.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>If you want to watch a variable&#8217;s value: <b class="button">RMB</b> click on a variable and select New Watch from the context menu.</p>
+</li>
+<li>
+<p>If you want to step through the execution line by line: <b class="button">RMB</b> click on a line and choose &#8220;Toggle Line Breakpoint&#8221;; a pink box appears as a mark.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Choose <span class="menuseq"><b class="menu">Debug</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">Debug Main Project</b></span> to start a debugger session for the whole project. Or, <b class="button">RMB</b> click a file and select &#8220;Debug File&#8221; to debug only one file.</p>
+</li>
+<li>
+<p>The application starts running normally. If you have set a breakpoint, the execution stops in this line. Debugger windows open and print debugger output.</p>
+</li>
+<li>
+<p>You can do many things now to track down a bug:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Inspect the values of local variables.</p>
+</li>
+<li>
+<p>Use the Step buttons in the top to step into, out of, and over expressions while you watch the execution.</p>
+</li>
+<li>
+<p>Navigate through your application&#8217;s call stack. <b class="button">RMB</b> click on threads to suspend or resume them.</p>
+</li>
+<li>
+<p>Choose <span class="menuseq"><b class="menu">Debug</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">Evaluate Expression</b></span> from the menu to evaluate an expression.</p>
+</li>
+<li>
+<p>Move the mouse pointer over a variable to inspect its value in a tooltip.</p>
+</li>
+<li>
+<p>Inspect the classes loaded on the heap and the percentage and number of object instances. <b class="button">RMB</b> click a class in the Loaded Classes window and choose Show in Instances view (JDK 6 only).</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>To stop debugging, choose <span class="menuseq"><b class="menu">Debug</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">End Debugger Session</b></span> from the menu.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="profiling"><a class="anchor" href="#profiling"></a>Profiling</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The profiler tool is used to monitor thread states, CPU performance, and memory usage of your jme3 application. It helps you detect memory leaks and bottlenecks in your game while it&#8217;s running.</p>
+</div>
+<div class="sect2">
+<h3 id="installing-the-profiler"><a class="anchor" href="#installing-the-profiler"></a>Installing the Profiler</h3>
+<div class="paragraph">
+<p>If you do not see a Profiler menu in the jMonkeyEngine SDK, you need to download the Profiler plugin first.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Open the <span class="menuseq"><b class="menu">Tools</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">Plugins</b></span> menu, and got to the &#8220;Available&#8221; plugins tab</p>
+</li>
+<li>
+<p>Find the &#8220;Java Profiler&#8221; plugin (&#8220;Java SE&#8221; category) and check the Install box.</p>
+</li>
+<li>
+<p>Click the install button and follow the instructions.</p>
+</li>
+<li>
+<p>When you start the profiler for the first time, you are prompted to run a calibration once. Click OK in the &#8220;Profiler&#8221; integration dialog to complete the installation process.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="monitoring-and-analyzing"><a class="anchor" href="#monitoring-and-analyzing"></a>Monitoring and Analyzing</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Choose Profile Project from the Profile menu.</p>
+</li>
+<li>
+<p>Select one of three tasks:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Monitor Application</strong> – Collect high-level information about properties of the target JVM, including thread activity and memory allocations.</p>
+</li>
+<li>
+<p><strong>Analyze CPU Performance</strong> – Collect detailed data on application performance, including the time to execute methods and the number of times the method is invoked.</p>
+</li>
+<li>
+<p><strong>Analyze Memory Usage</strong> – Collect detailed data on object allocation and garbage collection.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><b class="button">LMB</b> click Run. Your application starts and runs normally.</p>
+</li>
+<li>
+<p>Use the Profiling window to track and collect live profiling results while you application is running.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="comparing-snapshots"><a class="anchor" href="#comparing-snapshots"></a>Comparing Snapshots</h3>
+<div class="paragraph">
+<p><b class="button">LMB</b> click the &#8220;Take Snapshot&#8221; button to capture the profiling data for later!</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>You can store and view snapshots in the Profiling window.</p>
+</li>
+<li>
+<p>Choose Compare Snapshots from the profiler window to compare two selected snapshots</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="using-profiling-points"><a class="anchor" href="#using-profiling-points"></a>Using Profiling Points</h3>
+<div class="paragraph">
+<p>Profiling points are similar to debugger breakpoints: You place them directly in the source code and they can trigger profiling behaviour when hit.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Open a class in the browser, <b class="button">RMB</b> click in a line, and select <span class="menuseq"><b class="menu">Profiling</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">Insert Profiling Point</b></span> to add a profiling point here.</p>
+</li>
+<li>
+<p>Use Profiling points if you need a trigger to reset profiling results, take a snapshot or heap dump, record the timestamp or execution time of a code fragment, stop and start a load generator script (requires the load generator plugin).</p>
+</li>
+<li>
+<p>Open the Profiling Points window to view, modify and delete the Profiling Points in your projects.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>See also:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http://netbeans.org/kb/docs/java/profiler-intro.html">Introduction to Profiling Java Applications (netbeans.org)</a></p>
+</li>
+<li>
+<p><a href="http://netbeans.org/kb/docs/java/profiler-profilingpoints.html">Using Profiling Points (netbeans.org)</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="version_control.html">File Version Control</a></span>
+  <span class="next"><a href="application_deployment.html">Application Deployment</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>Copyright 2020 jMonkeyEngine Wiki Contributors. Licensed BSD-3.</p>
+</footer>
+<script src="../../../_/js/vendor/docsearch.min.js"></script>
+<!-- fetched from https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js -->
+<script>
+var search = docsearch({
+  apiKey: 'a736b6d93de805e26ec2f49b55013fbd',
+  indexName: 'jmonkeyengine',
+  inputSelector: '#search-input',
+  autocompleteOptions: { hint: false, keyboardShortcuts: ['s'] },
+  algoliaOptions: { hitsPerPage: 10 }
+}).autocomplete
+search.on('autocomplete:closed', function () { search.autocomplete.setVal() })
+function focusSearchInput () { document.querySelector('#search-input').focus() }
+if (document.querySelector('.home-link.is-current')) window.addEventListener('load', focusSearchInput)
+</script>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Controlling a Physical Vehicle :: jMonkeyEngine Docs</title>
+    <link rel="canonical" href="https://wiki.jmonkeyengine.org/docs/3.3/physics/control/vehicles.html">
+    <link rel="prev" href="ragdoll.html">
+    <link rel="next" href="softbody.html">
+    <meta name="keywords" content="documentation, physics, vehicle, collision">
+    <meta name="generator" content="Antora 2.3.3">
+    <link rel="stylesheet" href="../../../../_/css/site.css">
+<meta property="og:image" content="https://wiki.jmonkeyengine.org/_/img/iconx128.png">
+<meta property="og:description" content="Controlling a Physical Vehicle">
+<meta property="og:title" content="jMonkeyEngine Docs">
+<link rel="stylesheet" href="../../../../_/css/site-extra.css">
+<link rel="stylesheet" href="../../../../_/css/vendor/docsearch.min.css">
+<!-- fetched from https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css -->
+<link rel="icon" href="../../../../_/img/favicon.ico" type="image/x-icon">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://wiki.jmonkeyengine.org">
+        <img alt="" src="../../../../_/img/jme-logo.png" height="32" type="image/x-icon">
+      </a>
+      <div class="navbar-item hide-for-print">
+        <input id="search-input" type="text" placeholder="Search docs">
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item theme-switch-wrapper">
+          <label class="theme-switch" for="checkbox">
+            <input type="checkbox" id="checkbox" />
+            <div class="slider round"></div>
+          </label>
+        </div>
+        <a class="navbar-item" href="https://github.com/jmonkeyengine/wiki">Github</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="docs" data-version="3.3">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../../documentation.html">JME</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../documentation.html">Getting Started</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="https://javadoc.jmonkeyengine.org/v3.3.2-stable">JavaDoc</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../tutorials/beginner/beginner.html">Beginner Tutorials</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_simpleapplication.html">Hello SimpleApplication</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_node.html">Hello Node</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_asset.html">Hello Asset</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_main_event_loop.html">Hello Update Loop</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_input_system.html">Hello Input System</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_material.html">Hello Material</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_animation.html">Hello Animation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_picking.html">Hello Picking</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_collision.html">Hello Collision</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_terrain.html">Hello Terrain</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_audio.html">Hello Audio</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_effects.html">Hello Effects</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_physics.html">Hello Physics</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Key Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/best_practices.html">Best Practices</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/optimization.html">Optimization</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/faq.html">Frequently Asked Questions</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/math_for_dummies.html">Math for Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/math.html">Math overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/math_cheet_sheet.html">3D math "cheat sheet"</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/rotate.html">3-D Rotation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/math_video_tutorials.html">Math video tutorial series</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/multi-media_asset_pipeline.html">Multi-Media Asset Pipeline</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/the_scene_graph.html">The Scene Graph</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/scenegraph_for_dummies.html">Scene Graph for Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/terminology.html">3D Graphics Terminology</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/transparency_sorting.html">Transparency Sorting</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Articles and How-to&#8217;s</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">How to Model</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../tutorials/how-to/modeling/3dsmax/3dsmax.html">3dsmax</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../tutorials/how-to/modeling/blender/blender.html">Blender</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../tutorials/how-to/modeling/blender/blender_buffer_clearing.html">Buffer Clearing</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../tutorials/how-to/modeling/blender/blender_gltf.html">Export as GlTF</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../tutorials/how-to/modeling/blender/blender_ogre_export.html">Export as Ogre XML</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../tutorials/how-to/modeling/blender/blender_ogre_compatibility.html">Ogre Compatibility</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../tutorials/how-to/modeling/blender/makehuman.html">MakeHuman</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../tutorials/how-to/modeling/blender/makehuman_blender_ogrexml_toolchain.html">MakeHuman toolchain</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">How to Animate</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Mixamo</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../tutorials/how-to/modeling/blender/mixamo.html">Blender Models</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Video</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="https://youtu.be/jHgAgTWIers?list=PLv6qR9TGkz8RcUr-fOHI2SksWA4BAU9TS">Part 1- Download Model</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="https://youtu.be/GQJSrOpNQwI?list=PLv6qR9TGkz8RcUr-fOHI2SksWA4BAU9TS">Part 2- Rig and Animate</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="https://youtu.be/JzRe2Dxbcmc?list=PLv6qR9TGkz8RcUr-fOHI2SksWA4BAU9TS">Part 3- Import to JME</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="https://youtu.be/8wwDRDJop7k?list=PLv6qR9TGkz8RcUr-fOHI2SksWA4BAU9TS">Part 4- Play Animation</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/how-to/debugging.html">Debugging with Wireframes</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/how-to/util/free_skymaps.html">How to create free skymaps</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Java Tips</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../tutorials/how-to/java/localization.html">Localization</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../tutorials/how-to/java/swing_canvas.html">Swing Canvas</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../tutorials/how-to/java/logging.html">Logging</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../tutorials/how-to/java/read_graphic_card_capabilites.html">Read Graphics Capabilites</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Articles</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Physically Based Rendering</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../tutorials/how-to/articles/pbr/pbr_part1.html">PBR – Part one</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../tutorials/how-to/articles/pbr/pbr_part2.html">PBR – Part two</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../tutorials/how-to/articles/pbr/pbr_part3.html">PBR – Part three</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Core Engine</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/app/simpleapplication.html">SimpleApplication</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/system/appsettings.html">AppSettings</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Controlling Game Logic</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/app/update_loop.html">Update Loop</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/app/state/application_states.html">Application States</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../core/scene/control/custom_controls.html">Custom Controls</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Video</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="https://www.youtube.com/watch?v=MNDiZ9YHIpM">Control any scene node</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="https://www.youtube.com/watch?v=-OzRZscLlHY">Control a character</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="https://wiki.jmonkeyengine.org/Scenes/SDK-UsecaseDemo_1.zip">Video Source Code</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/app/multithreading.html">Multithreading</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Scene Graph</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/scene/traverse_scenegraph.html">Traverse SceneGraph</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/scene/spatial.html">Spatial: Node vs Geometry</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../core/scene/mesh.html">Mesh</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../core/scene/custom_meshes.html">Custom Meshes</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../core/scene/shape/shape.html">Shape</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../core/scene/3d_models.html">3D Models</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/asset/asset_manager.html">Asset Manager</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/export/save_and_load.html">Saving and Loading Nodes</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/collision/collision_and_intersection.html">Collision and Intersection</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/scene/control/level_of_detail.html">Level of Detail</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Animation, Scene</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/animation/animation.html">Animation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/cinematic/cinematics.html">Cinematics (cutscenes, fake destruction physics)</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/cinematic/motionpath.html">MotionPaths and Waypoints</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Material, Light, Shadow</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/material/how_to_use_materials.html">How to use Materials</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/material/j3m_material_files.html">.j3m Material Files</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/material/material_definitions.html">.j3md Material Definitions</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/material/materials_overview.html">.j3md Properties</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/shader/jme3_shaders.html">Shaders and JME3</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/shader/jme3_shadernodes.html">Shader Node System</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/shader/shader_video_tutorials.html">Shader Video Tutorials</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/light/light_and_shadow.html">Light and Shadow</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/texture/anisotropic_filtering.html">Anisotropic Filtering</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/system/jme3_srgbpipeline.html">Gamma Correction</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Audio, Video</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/audio/audio.html">Playing Sounds</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/audio/audio_environment_presets.html">Audio Environment Presets</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/app/state/screenshots.html">Capture Screenshots</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/app/state/capture_audio_video_to_a_file.html">Capture Audio/Video</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Filter, Effect</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/effect/effects_overview.html">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/effect/bloom_and_glow.html">Bloom and Glow</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/effect/particle_emitters.html">Particle Emitters</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Landscapes</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/util/sky.html">Sky</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/terrain/terrain.html">Terrain (TerraMonkey)</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/collision/terrain_collision.html">Terrain Collision</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/effect/water.html">Simple Water</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/effect/post-processor_water.html">Post-Processor Water</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Camera</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/renderer/camera.html">Camera</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/renderer/making_the_camera_follow_a_character.html">Follow a Character</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/renderer/remote-controlling_the_camera.html">Remote-Controlling</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/renderer/multiple_camera_views.html">Multiple Camera Views</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/renderer/jme3_renderbuckets.html">Render Buckets</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">User Interaction</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/input/input_handling.html">Input Handling</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/input/combo_moves.html">Combo Moves</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/input/mouse_picking.html">Mouse Picking</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Graphical User Interface</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Nifty GUI</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../core/gui/nifty_gui.html">Integration Tutorial</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../core/gui/nifty_gui_best_practices.html">Best Practices</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../core/gui/nifty_gui_scenarios.html">Scenarios</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/ui/hud.html">Head-Up Display (HUD)</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Virtual Reality</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../core/vr/virtualreality.html">Virtual Reality</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../physics.html">Physics</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../bullet_multithreading.html">Multi-Threaded Physics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../collision/physics_listeners.html">Collision Detection</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../joint/hinges_and_joints.html">Hinges and Joints</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="walking_character.html">Walking Character</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="ragdoll.html">Ragdoll</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="vehicles.html">Vehicles</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="softbody.html">Softbody</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../bullet_pitfalls.html">Bullet Physics Pitfalls</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Networking</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../networking/networking.html">Networking (SpiderMonkey)</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../networking/headless_server.html">Headless Server</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../networking/monkey_zone.html">Multi-Player Demo Code</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../networking/networking_video_tutorials.html">Networking Video Tutorials</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">User Contributions</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#docs\modules\contributions\pages\contributions.adoc">User Made Utilities</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Shader</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/shader/shaderblow_project.html">ShaderBlow Project</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Landscapes</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/lanscapes/vegetationsystem/vegetationsystem.html">Vegetation System</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Networking</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/networking/open_game_finder.html">Open Game Finder</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Entity System</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#es/entitysystem.adoc">The Zay-ES Entity System</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Artificial Intelligence</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/ai/recast.html">Recast Navigation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/ai/building_recast.html">Updating and building Recast Native Bindings</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/ai/monkey_brains.html">Monkey Brains</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/ai/steer_behaviours.html">Steer Behaviours</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/ai/jme3_ai.html">jME3 Artificial Intelligence</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">GUI</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="https://github.com/jMonkeyEngine-Contributions/Lemur">Lemur - a native jME3 GUI library with scene graph tools</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="https://github.com/jMonkeyEngine-Contributions/Lemur/wiki/Modules">Lemur Scene Graph Tools</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="http://hub.jmonkeyengine.org/t/lemur-gems-1-inputmapper-based-camera-movement/28703">Lemur Gems #1 - Input mapper based camera movement. </a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="http://hub.jmonkeyengine.org/t/lemur-gems-2-inputmapper-delegates/28710">Lemur Gems #2 - Input mapper delegates</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="http://hub.jmonkeyengine.org/t/lemur-gems-3-scene-picking/28713">Lemur Gems #3 - Scene picking</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/gui/tonegodgui/tonegodgui.html">tonegodGUI - a native jME3 GUI library</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Tools</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/tools/navigation.html">Mercator Projection Tool (Marine Navigation)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/tools/charts.html">Visualizing Maps in JME3 (Marine Charts)</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Projects</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/projects/rise_of_mutants_project.html">Rise of Mutants Project</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../sdk/sdk.html">SDK</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Video Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">SDK Use Case Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=-OzRZscLlHY">Demo 1 (Quixote demo)</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=6-YWxD3JByE">Demo 2 (Models and Materials)</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">SDK Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=M1_0pbeyJzI">Basics</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=nL7woH40i5c">Importing Models</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=DUmgAjiNzhY">Dragging&amp;Dropping Nodes</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=ntPAmtsQ6eM">Scene Composing</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=zgPV3W6dD4s">Terrain with Collision Shape</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=Feu3-mrpolc">Working with Materials</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=MNDiZ9YHIpM">Custom Controls</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=oZnssg8TBWQ">WebStart Deployment</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=D7JM4VMKqPc">Animation and Effect TrackEditing</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Getting Started</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/update_center.html">Updating jMonkeyEngine SDK</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/troubleshooting.html">Troubleshooting</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Java Development Features</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/project_creation.html">Project Creation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/code_editor.html">Code Editor and Palette</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/version_control.html">File Version Control</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/debugging_profiling_testing.html">Debug, Profile, Test</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../sdk/application_deployment.html">Application Deployment</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../sdk/default_build_script.html">Default Build Script</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../sdk/android.html">Android</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../sdk/android_cheat_sheet.html">Android Cheat Sheet</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../sdk/ios.html">iOS</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Unique Features</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../sdk/model_loader_and_viewer.html">Import, View, Convert Models</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../sdk/asset_packs.html">Asset Packs</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/scene_explorer.html">The SceneExplorer</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/scene_composer.html">Composing a Scene</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/terrain_editor.html">Terrain Editor</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/sample_code.html">Sample Code</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/material_editing.html">Material Editing</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/font_creation.html">Creating Bitmap Fonts</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="https://hub.jmonkeyengine.org/t/effecttrack-and-audiotrack-editing-in-the-sdk/23378">Audio and Effect Track Editing</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="https://www.youtube.com/watch?v=D7JM4VMKqPc">Video: Effect and AudioTrack editing in jMonkeyEngine 3 sdk</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/filters.html">Post-Processor Filter Editor and Viewer</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../core/app/state/application_states.html">Application States</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../core/scene/control/custom_controls.html">Custom Controls</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/vehicle_creator.html">Vehicle Creator</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Advanced Usage</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/build_platform.html">Building jMonkeyEngine SDK</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/use_own_jme.html#.adoc">Using your own (modified) version of jME3 in jMonkeyEngine SDK</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/increasing_heap_memory.html">Increasing Heap Memory</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/log_files.html">Log Files</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Available external plugins</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/contributions.html">Contributions</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/neotexture.html">Neo Texture Editor for procedural textures</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=yS9a9o4WzL8">Video: Mesh Tool &amp; Physics Editor</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../sdk/development.html">Developing plugins for jMonkeyEngine SDK</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/development/setup.html">Creating a plugin</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/development/general.html">Creating components</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/development/scene.html">The Main Scene</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/development/sceneexplorer.html">The Scene Explorer</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/development/projects_assets.html">Projects and Assets</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/development/extension_library.html">Create a library plugin from a jar file</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/development/model_loader.html">Create a new or custom model filetype and loader</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">JME</span>
+    <span class="version">3.3</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">JME</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../../documentation.html">3.3</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Wiki Contribution</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../docs-wiki/3.3/wiki_contributor.html">3.3</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Wiki UI</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../wiki-ui/index.html">master</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../documentation.html">JME</a></li>
+    <li><a href="../physics.html">Physics</a></li>
+    <li><a href="vehicles.html">Vehicles</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/jMonkeyEngine/wiki/edit/master/docs/modules/physics/pages/control/vehicles.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Controlling a Physical Vehicle</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>For physical vehicles, jME&#8217;s uses the jBullet ray-cast vehicle. In this vehicle implementation, the physical chassis 'floats' along on four non-physical vertical rays.</p>
+</div>
+<div class="paragraph">
+<p>Internally, each wheel casts a ray down, and using the ray&#8217;s intersection point, jBullet calculates the suspension length, and the suspension force. The suspension force is applied to the chassis, keeping it from hitting the ground. The friction force is calculated for each wheel where the ray intersects with the ground. Friction is applied as a sideways and forwards force. <sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnotedef_1" title="View footnote.">1</a>]</sup></p>
+</div>
+<div class="paragraph">
+<p>This article shows how you use this vehicle implementation in a jME3 application.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="../_images/control/physics-vehicle.png" alt="physics-vehicle.png" width="" height="">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="sample-code"><a class="anchor" href="#sample-code"></a>Sample Code</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Full code samples are here:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/bullet/TestPhysicsCar.java">TestPhysicsCar.java</a></p>
+</li>
+<li>
+<p><a href="https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/bullet/TestFancyCar.java">TestFancyCar.java</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="overview-of-this-physics-application"><a class="anchor" href="#overview-of-this-physics-application"></a>Overview of this Physics Application</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The goal is to create a physical vehicle with wheels that can be steered and that interacts (collides with) with the floor and obstacles.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create a SimpleApplication with a <a href="../physics.html" class="page">BulletAppState</a></p>
+<div class="ulist">
+<ul>
+<li>
+<p>This gives us a PhysicsSpace for PhysicsNodes</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Create a VehicleControl + CompoundCollisionShape for the physical vehicle behaviour</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Set physical properties of the vehicle, such as suspension.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Create a VehicleNode for the car model</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Create a box plus 4 cylinders as wheels (using <code>vehicle.addWheel()</code>).</p>
+</li>
+<li>
+<p>Add the VehicleControl behaviour to the VehicleNode geometry.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Create a RigidBodyControl and CollisionShape for the floor</p>
+</li>
+<li>
+<p>Map key triggers and add input listeners</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Navigational commands Left, Right, Foward, Brake.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Define the steering actions to be triggered by the key events.</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>vehicle.steer()</code></p>
+</li>
+<li>
+<p><code>vehicle.accelerate()</code></p>
+</li>
+<li>
+<p><code>vehicle.brake()</code></p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="creating-the-vehicle-chassis"><a class="anchor" href="#creating-the-vehicle-chassis"></a>Creating the Vehicle Chassis</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The vehicle that we create here in the <a href="https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/bullet/TestPhysicsCar.java">TestPhysicsCar.java</a> example is just a &#8220;box&#8221; on wheels, a basic vehicle shape that you can replace with a fancy car model, as demonstrated in <a href="https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/bullet/TestFancyCar.java">TestFancyCar.java</a>.</p>
+</div>
+<div class="paragraph">
+<p>Every physical object must have a collision shape, that we prepare first. For the vehicle, we choose a compound collision shape that is made up of a box-shaped body of the right size for the vehicle. We will add the wheels later.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">CompoundCollisionShape compoundShape = new CompoundCollisionShape();
+BoxCollisionShape box = new BoxCollisionShape(new Vector3f(1.2f, 0.5f, 2.4f));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Best Practice:</strong> We attach the BoxCollisionShape (the vehicle body) to the CompoundCollisionShape at a Vector of (0,1,0): This shifts the effective center of mass of the BoxCollisionShape downwards to 0,-1,0 and makes a moving vehicle more stable!</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">compoundShape.addChildShape(box, new Vector3f(0, 1, 0));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Any kind of geometry can make up the visible part of the vehicle, here we use a wireframe box. We create a node that we use to group the geometry.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Node vehicleNode=new Node("vehicleNode");
+vehicle = new VehicleControl(compoundShape, 400);
+vehicleNode.addControl(vehicle);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We initialize the Vehicle Control with the compound shape, and set its mass to a heavy value, 400f. The Vehicle Control represents the car&#8217;s physical behaviour.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">vehicle = new VehicleControl(compoundShape, 400);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Finally we add the behaviour (VehicleControl) to the visible Geometry (node).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">vehicleNode.addControl(vehicle);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We configure the physical properties of the vehicle&#8217;s suspension: Compresion, Damping, Stiffness, and MaxSuspenionForce. Picking workable values for the wheel suspension can be tricky – for background info have a look at these <a href="https://docs.google.com/Doc?docid=0AXVUZ5xw6XpKZGNuZG56a3FfMzU0Z2NyZnF4Zmo&amp;hl=en">Suspension Settings Tips</a>. For now, let&#8217;s work with the following values:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">float stiffness = 60.0f;//200=f1 car
+float compValue = .3f; //(should be lower than damp)
+float dampValue = .4f;
+vehicle.setSuspensionCompression(compValue * 2.0f * FastMath.sqrt(stiffness));
+vehicle.setSuspensionDamping(dampValue * 2.0f * FastMath.sqrt(stiffness));
+vehicle.setSuspensionStiffness(stiffness);
+vehicle.setMaxSuspensionForce(10000.0f);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We now have a node <code>vehicleNode</code> with a visible &#8220;car&#8221; geometry, which acts like a vehicle. One thing that&#8217;s missing are wheels.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="adding-the-wheels"><a class="anchor" href="#adding-the-wheels"></a>Adding the Wheels</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>We create four wheel Geometries and add them to the vehicle. Our wheel geometries are simple, non-physical discs (flat Cylinders), they are just visual decorations. Note that the physical wheel behaviour (the com.jme3.bullet.objects.VehicleWheel objects) is created internally by the <code>vehicle.addWheel()</code> method.</p>
+</div>
+<div class="paragraph">
+<p>The <code>addWheel()</code> method sets following properties:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Vector3f connectionPoint – Coordinate where the suspension connects to the chassis (internally, this is where the Ray is casted downwards).</p>
+</li>
+<li>
+<p>Vector3f direction – Wheel direction is typically a (0,-1,0) vector.</p>
+</li>
+<li>
+<p>Vector3f axle – Axle direction is typically a (-1,0,0) vector.</p>
+</li>
+<li>
+<p>float suspensionRestLength – Suspension rest length in world units</p>
+</li>
+<li>
+<p>float wheelRadius – Wheel radius in world units</p>
+</li>
+<li>
+<p>boolean isFrontWheel – Whether this wheel is one of the steering wheels.<br>
+Front wheels are the ones that rotate visibly when the vehicle turns.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>We initialize a few variables that we will reuse when we add the four wheels. yOff, etc, are the particular wheel offsets for our small vehicle model.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Vector3f wheelDirection = new Vector3f(0, -1, 0);
+Vector3f wheelAxle = new Vector3f(-1, 0, 0);
+float radius = 0.5f;
+float restLength = 0.3f;
+float yOff = 0.5f;
+float xOff = 1f;
+float zOff = 2f;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We create a Cylinder mesh shape that we use to create the four visible wheel geometries.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Cylinder wheelMesh = new Cylinder(16, 16, radius, radius * 0.6f, true);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For each wheel, we create a Node and a Geometry. We attach the Cylinder Geometry to the Node. We rotate the wheel by 90° around the Y axis. We set a material to make it visible. Finally we add the wheel (plus its properties) to the vehicle.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Node node1 = new Node("wheel 1 node");
+Geometry wheels1 = new Geometry("wheel 1", wheelMesh);
+node1.attachChild(wheels1);
+wheels1.rotate(0, FastMath.HALF_PI, 0);
+wheels1.setMaterial(mat);
+
+vehicle.addWheel(node1, new Vector3f(-xOff, yOff, zOff),
+    wheelDirection, wheelAxle, restLength, radius, true);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The three next wheels are created in the same fashion, only the offsets are different. Remember to set the Boolean parameter correctly to indicate whether it&#8217;s a front wheel.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">...
+vehicle.addWheel(node2, new Vector3f(xOff, yOff, zOff),
+  wheelDirection, wheelAxle, restLength, radius, true);
+...
+vehicle.addWheel(node3, new Vector3f(-xOff, yOff, -zOff),
+  wheelDirection, wheelAxle, restLength, radius, false);
+...
+vehicle.addWheel(node4, new Vector3f(xOff, yOff, -zOff),
+  wheelDirection, wheelAxle, restLength, radius, false);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Attach the wheel Nodes to the vehicle Node to group them, so they move together.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">vehicleNode.attachChild(node1);
+vehicleNode.attachChild(node2);
+vehicleNode.attachChild(node3);
+vehicleNode.attachChild(node4);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As always, attach the vehicle Node to the rootNode to make it visible, and add the Vehicle Control to the PhysicsSpace to make the car physical.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">rootNode.attachChild(vehicleNode);
+getPhysicsSpace().add(vehicle);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Not shown here is that we also created a Material <code>mat</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="steering-the-vehicle"><a class="anchor" href="#steering-the-vehicle"></a>Steering the Vehicle</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Not shown here is the standard way how we map the input keys to actions (see full code sample). Also refer to <a href="../../core/input/input_handling.html" class="page">Input Handling</a>).</p>
+</div>
+<div class="paragraph">
+<p>In the ActionListener, we implement the actions that control the vehicle&#8217;s direction and speed. For the four directions (accelerate=up, brake=down, left, right), we specify how we want the vehicle to move.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The braking action is pretty straightforward:<br>
+<code>vehicle.brake(brakeForce)</code></p>
+</li>
+<li>
+<p>For left and right turns, we add a constant to <code>steeringValue</code> when the key is pressed, and subtract it when the key is released.<br>
+<code>vehicle.steer(steeringValue);</code></p>
+</li>
+<li>
+<p>For acceleration we add a constant to <code>accelerationValue</code> when the key is pressed, and substract it when the key is released.<br>
+<code>vehicle.accelerate(accelerationValue);</code></p>
+</li>
+<li>
+<p>Because we can and it&#8217;s fun, we also add a turbo booster that makes the vehicle jump when you press the assigned key (spacebar).<br>
+<code>vehicle.applyImpulse(jumpForce, Vector3f.ZERO);</code></p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public void onAction(String binding, boolean value, float tpf) {
+  if (binding.equals("Lefts")) {
+      if (value) { steeringValue += .5f; } else { steeringValue += -.5f; }
+      vehicle.steer(steeringValue);
+  } else if (binding.equals("Rights")) {
+      if (value) { steeringValue += -.5f; } else { steeringValue += .5f; }
+      vehicle.steer(steeringValue);
+  } else if (binding.equals("Ups")) {
+      if (value) {
+        accelerationValue += accelerationForce;
+      } else {
+        accelerationValue -= accelerationForce;
+      }
+      vehicle.accelerate(accelerationValue);
+  } else if (binding.equals("Downs")) {
+      if (value) { vehicle.brake(brakeForce); } else { vehicle.brake(0f); }
+  } else if (binding.equals("Space")) {
+      if (value) {
+        vehicle.applyImpulse(jumpForce, Vector3f.ZERO);
+      }
+  } else if (binding.equals("Reset")) {
+      if (value) {
+        System.out.println("Reset");
+        vehicle.setPhysicsLocation(Vector3f.ZERO);
+        vehicle.setPhysicsRotation(new Matrix3f());
+        vehicle.setLinearVelocity(Vector3f.ZERO);
+        vehicle.setAngularVelocity(Vector3f.ZERO);
+        vehicle.resetSuspension();
+      } else {
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For your reference, this is how we initialized the constants for this example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">private final float accelerationForce = 1000.0f;
+private final float brakeForce = 100.0f;
+private float steeringValue = 0;
+private float accelerationValue = 0;
+private Vector3f jumpForce = new Vector3f(0, 3000, 0);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Remember, the standard input listener code that maps the actions to keys can be found in the code samples.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="detecting-collisions"><a class="anchor" href="#detecting-collisions"></a>Detecting Collisions</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Read the <a href="../collision/physics_listeners.html" class="page">Physics Listeners</a> documentation on how to detect collisions. You would do this if you want to react to collisions with custom events, such as adding points or substracting health.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="best-practices"><a class="anchor" href="#best-practices"></a>Best Practices</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This example shows a very simple but functional vehicle. For a game you would implement steering behaviour and acceleration with values that are typical for the type of vehicle that you want to simulate. Instead of a box, you load a chassis model. You can consider using an <a href="../../core/input/input_handling.html" class="page">AnalogListener</a> to respond to key events in a more sophisticated way.</p>
+</div>
+<div class="paragraph">
+<p>For a more advanced example, look at <a href="https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/bullet/TestFancyCar.java">TestFancyCar.java</a>.</p>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<hr>
+<div class="footnote" id="_footnotedef_1">
+<a href="#_footnoteref_1">1</a>. <a href="https://docs.google.com/Doc?docid=0AXVUZ5xw6XpKZGNuZG56a3FfMzU0Z2NyZnF4Zmo&amp;hl=en">https://docs.google.com/Doc?docid=0AXVUZ5xw6XpKZGNuZG56a3FfMzU0Z2NyZnF4Zmo&amp;hl=en</a>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="ragdoll.html">Ragdoll</a></span>
+  <span class="next"><a href="softbody.html">Softbody</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>Copyright 2020 jMonkeyEngine Wiki Contributors. Licensed BSD-3.</p>
+</footer>
+<script src="../../../../_/js/vendor/docsearch.min.js"></script>
+<!-- fetched from https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js -->
+<script>
+var search = docsearch({
+  apiKey: 'a736b6d93de805e26ec2f49b55013fbd',
+  indexName: 'jmonkeyengine',
+  inputSelector: '#search-input',
+  autocompleteOptions: { hint: false, keyboardShortcuts: ['s'] },
+  algoliaOptions: { hitsPerPage: 10 }
+}).autocomplete
+search.on('autocomplete:closed', function () { search.autocomplete.setVal() })
+function focusSearchInput () { document.querySelector('#search-input').focus() }
+if (document.querySelector('.home-link.is-current')) window.addEventListener('load', focusSearchInput)
+</script>
+<script src="../../../../_/js/site.js"></script>
+<script async src="../../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
