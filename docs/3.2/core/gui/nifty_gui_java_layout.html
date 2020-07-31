@@ -1,0 +1,2022 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Laying Out the GUI in Java :: jMonkeyEngine Docs</title>
+    <link rel="canonical" href="https://wiki.jmonkeyengine.org/docs/3.3/core/gui/nifty_gui_java_layout.html">
+    <meta name="keywords" content="gui, documentation, nifty, hud">
+    <meta name="generator" content="Antora 2.3.3">
+    <link rel="stylesheet" href="../../../../_/css/site.css">
+<meta property="og:image" content="https://wiki.jmonkeyengine.org/_/img/iconx128.png">
+<meta property="og:description" content="Laying Out the GUI in Java">
+<meta property="og:title" content="jMonkeyEngine Docs">
+<link rel="stylesheet" href="../../../../_/css/site-extra.css">
+<link rel="stylesheet" href="../../../../_/css/vendor/docsearch.min.css">
+<!-- fetched from https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css -->
+<link rel="icon" href="../../../../_/img/favicon.ico" type="image/x-icon">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://wiki.jmonkeyengine.org">
+        <img alt="" src="../../../../_/img/jme-logo.png" height="32" type="image/x-icon">
+      </a>
+      <div class="navbar-item hide-for-print">
+        <input id="search-input" type="text" placeholder="Search docs">
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item theme-switch-wrapper">
+          <label class="theme-switch" for="checkbox">
+            <input type="checkbox" id="checkbox" />
+            <div class="slider round"></div>
+          </label>
+        </div>
+        <a class="navbar-item" href="https://github.com/jmonkeyengine/wiki">Github</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="docs" data-version="3.2">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../../documentation.html">JME</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../documentation.html">Getting Started</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="https://javadoc.jmonkeyengine.org/v3.3.2-stable">JavaDoc</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../tutorials/beginner/beginner.html">Beginner Tutorials</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_simpleapplication.html">Hello SimpleApplication</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_node.html">Hello Node</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_asset.html">Hello Asset</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_main_event_loop.html">Hello Update Loop</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_input_system.html">Hello Input System</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_material.html">Hello Material</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_animation.html">Hello Animation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_picking.html">Hello Picking</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_collision.html">Hello Collision</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_terrain.html">Hello Terrain</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_audio.html">Hello Audio</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_effects.html">Hello Effects</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/beginner/hello_physics.html">Hello Physics</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Key Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/best_practices.html">Best Practices</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/optimization.html">Optimization</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/faq.html">Frequently Asked Questions</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/math_for_dummies.html">Math for Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/math.html">Math overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/math_cheet_sheet.html">3D math "cheat sheet"</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/rotate.html">3-D Rotation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/math_video_tutorials.html">Math video tutorial series</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/multi-media_asset_pipeline.html">Multi-Media Asset Pipeline</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/the_scene_graph.html">The Scene Graph</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/scenegraph_for_dummies.html">Scene Graph for Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/terminology.html">3D Graphics Terminology</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/concepts/transparency_sorting.html">Transparency Sorting</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Articles and How-to&#8217;s</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">How to Model</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../tutorials/how-to/modeling/3dsmax/3dsmax.html">3dsmax</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../tutorials/how-to/modeling/blender/blender.html">Blender</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../tutorials/how-to/modeling/blender/blender_buffer_clearing.html">Buffer Clearing</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../tutorials/how-to/modeling/blender/blender_gltf.html">Export as GlTF</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../tutorials/how-to/modeling/blender/blender_ogre_export.html">Export as Ogre XML</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../tutorials/how-to/modeling/blender/blender_ogre_compatibility.html">Ogre Compatibility</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../tutorials/how-to/modeling/blender/makehuman.html">MakeHuman</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../tutorials/how-to/modeling/blender/makehuman_blender_ogrexml_toolchain.html">MakeHuman toolchain</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">How to Animate</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Mixamo</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../tutorials/how-to/modeling/blender/mixamo.html">Blender Models</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Video</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="https://youtu.be/jHgAgTWIers?list=PLv6qR9TGkz8RcUr-fOHI2SksWA4BAU9TS">Part 1- Download Model</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="https://youtu.be/GQJSrOpNQwI?list=PLv6qR9TGkz8RcUr-fOHI2SksWA4BAU9TS">Part 2- Rig and Animate</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="https://youtu.be/JzRe2Dxbcmc?list=PLv6qR9TGkz8RcUr-fOHI2SksWA4BAU9TS">Part 3- Import to JME</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="https://youtu.be/8wwDRDJop7k?list=PLv6qR9TGkz8RcUr-fOHI2SksWA4BAU9TS">Part 4- Play Animation</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/how-to/debugging.html">Debugging with Wireframes</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../tutorials/how-to/util/free_skymaps.html">How to create free skymaps</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Java Tips</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../tutorials/how-to/java/localization.html">Localization</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../tutorials/how-to/java/swing_canvas.html">Swing Canvas</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../tutorials/how-to/java/logging.html">Logging</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../tutorials/how-to/java/read_graphic_card_capabilites.html">Read Graphics Capabilites</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Articles</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Physically Based Rendering</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../tutorials/how-to/articles/pbr/pbr_part1.html">PBR – Part one</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../tutorials/how-to/articles/pbr/pbr_part2.html">PBR – Part two</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../tutorials/how-to/articles/pbr/pbr_part3.html">PBR – Part three</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Core Engine</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../app/simpleapplication.html">SimpleApplication</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../system/appsettings.html">AppSettings</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Controlling Game Logic</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../app/update_loop.html">Update Loop</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../app/state/application_states.html">Application States</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../scene/control/custom_controls.html">Custom Controls</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Video</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="https://www.youtube.com/watch?v=MNDiZ9YHIpM">Control any scene node</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="https://www.youtube.com/watch?v=-OzRZscLlHY">Control a character</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="https://wiki.jmonkeyengine.org/Scenes/SDK-UsecaseDemo_1.zip">Video Source Code</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../app/multithreading.html">Multithreading</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Scene Graph</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../scene/traverse_scenegraph.html">Traverse SceneGraph</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../scene/spatial.html">Spatial: Node vs Geometry</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../scene/mesh.html">Mesh</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../scene/custom_meshes.html">Custom Meshes</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../scene/shape/shape.html">Shape</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../scene/3d_models.html">3D Models</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../asset/asset_manager.html">Asset Manager</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../export/save_and_load.html">Saving and Loading Nodes</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../collision/collision_and_intersection.html">Collision and Intersection</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../scene/control/level_of_detail.html">Level of Detail</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Animation, Scene</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../animation/animation.html">Animation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../cinematic/cinematics.html">Cinematics (cutscenes, fake destruction physics)</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../cinematic/motionpath.html">MotionPaths and Waypoints</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Material, Light, Shadow</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../material/how_to_use_materials.html">How to use Materials</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../material/j3m_material_files.html">.j3m Material Files</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../material/material_definitions.html">.j3md Material Definitions</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../material/materials_overview.html">.j3md Properties</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../shader/jme3_shaders.html">Shaders and JME3</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../shader/jme3_shadernodes.html">Shader Node System</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../shader/shader_video_tutorials.html">Shader Video Tutorials</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../light/light_and_shadow.html">Light and Shadow</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../texture/anisotropic_filtering.html">Anisotropic Filtering</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../system/jme3_srgbpipeline.html">Gamma Correction</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Audio, Video</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../audio/audio.html">Playing Sounds</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../audio/audio_environment_presets.html">Audio Environment Presets</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../app/state/screenshots.html">Capture Screenshots</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../app/state/capture_audio_video_to_a_file.html">Capture Audio/Video</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Filter, Effect</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../effect/effects_overview.html">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../effect/bloom_and_glow.html">Bloom and Glow</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../effect/particle_emitters.html">Particle Emitters</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Landscapes</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../util/sky.html">Sky</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../terrain/terrain.html">Terrain (TerraMonkey)</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../collision/terrain_collision.html">Terrain Collision</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../effect/water.html">Simple Water</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../effect/post-processor_water.html">Post-Processor Water</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Camera</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../renderer/camera.html">Camera</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../renderer/making_the_camera_follow_a_character.html">Follow a Character</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../renderer/remote-controlling_the_camera.html">Remote-Controlling</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../renderer/multiple_camera_views.html">Multiple Camera Views</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../renderer/jme3_renderbuckets.html">Render Buckets</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">User Interaction</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../input/input_handling.html">Input Handling</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../input/combo_moves.html">Combo Moves</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../input/mouse_picking.html">Mouse Picking</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Graphical User Interface</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Nifty GUI</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="nifty_gui.html">Integration Tutorial</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="nifty_gui_best_practices.html">Best Practices</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="nifty_gui_scenarios.html">Scenarios</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../ui/hud.html">Head-Up Display (HUD)</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Virtual Reality</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../vr/virtualreality.html">Virtual Reality</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../physics/physics.html">Physics</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../physics/bullet_multithreading.html">Multi-Threaded Physics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../physics/collision/physics_listeners.html">Collision Detection</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../physics/joint/hinges_and_joints.html">Hinges and Joints</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../physics/control/walking_character.html">Walking Character</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../physics/control/ragdoll.html">Ragdoll</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../physics/control/vehicles.html">Vehicles</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../physics/control/softbody.html">Softbody</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../physics/bullet_pitfalls.html">Bullet Physics Pitfalls</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Networking</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../networking/networking.html">Networking (SpiderMonkey)</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../networking/headless_server.html">Headless Server</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../networking/monkey_zone.html">Multi-Player Demo Code</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../networking/networking_video_tutorials.html">Networking Video Tutorials</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">User Contributions</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#docs\modules\contributions\pages\contributions.adoc">User Made Utilities</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Shader</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/shader/shaderblow_project.html">ShaderBlow Project</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Landscapes</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/lanscapes/vegetationsystem/vegetationsystem.html">Vegetation System</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Networking</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/networking/open_game_finder.html">Open Game Finder</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Entity System</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#es/entitysystem.adoc">The Zay-ES Entity System</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Artificial Intelligence</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/ai/recast.html">Recast Navigation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/ai/building_recast.html">Updating and building Recast Native Bindings</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/ai/monkey_brains.html">Monkey Brains</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/ai/steer_behaviours.html">Steer Behaviours</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/ai/jme3_ai.html">jME3 Artificial Intelligence</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">GUI</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="https://github.com/jMonkeyEngine-Contributions/Lemur">Lemur - a native jME3 GUI library with scene graph tools</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="https://github.com/jMonkeyEngine-Contributions/Lemur/wiki/Modules">Lemur Scene Graph Tools</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="http://hub.jmonkeyengine.org/t/lemur-gems-1-inputmapper-based-camera-movement/28703">Lemur Gems #1 - Input mapper based camera movement. </a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="http://hub.jmonkeyengine.org/t/lemur-gems-2-inputmapper-delegates/28710">Lemur Gems #2 - Input mapper delegates</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="http://hub.jmonkeyengine.org/t/lemur-gems-3-scene-picking/28713">Lemur Gems #3 - Scene picking</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/gui/tonegodgui/tonegodgui.html">tonegodGUI - a native jME3 GUI library</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Tools</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/tools/navigation.html">Mercator Projection Tool (Marine Navigation)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/tools/charts.html">Visualizing Maps in JME3 (Marine Charts)</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Projects</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/projects/rise_of_mutants_project.html">Rise of Mutants Project</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../sdk/sdk.html">SDK</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Video Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">SDK Use Case Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=-OzRZscLlHY">Demo 1 (Quixote demo)</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=6-YWxD3JByE">Demo 2 (Models and Materials)</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">SDK Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=M1_0pbeyJzI">Basics</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=nL7woH40i5c">Importing Models</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=DUmgAjiNzhY">Dragging&amp;Dropping Nodes</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=ntPAmtsQ6eM">Scene Composing</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=zgPV3W6dD4s">Terrain with Collision Shape</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=Feu3-mrpolc">Working with Materials</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=MNDiZ9YHIpM">Custom Controls</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=oZnssg8TBWQ">WebStart Deployment</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=D7JM4VMKqPc">Animation and Effect TrackEditing</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Getting Started</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/update_center.html">Updating jMonkeyEngine SDK</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/troubleshooting.html">Troubleshooting</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Java Development Features</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/project_creation.html">Project Creation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/code_editor.html">Code Editor and Palette</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/version_control.html">File Version Control</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/debugging_profiling_testing.html">Debug, Profile, Test</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../sdk/application_deployment.html">Application Deployment</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../sdk/default_build_script.html">Default Build Script</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../sdk/android.html">Android</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../sdk/android_cheat_sheet.html">Android Cheat Sheet</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../sdk/ios.html">iOS</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Unique Features</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../sdk/model_loader_and_viewer.html">Import, View, Convert Models</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../sdk/asset_packs.html">Asset Packs</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/scene_explorer.html">The SceneExplorer</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/scene_composer.html">Composing a Scene</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/terrain_editor.html">Terrain Editor</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/sample_code.html">Sample Code</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/material_editing.html">Material Editing</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/font_creation.html">Creating Bitmap Fonts</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="https://hub.jmonkeyengine.org/t/effecttrack-and-audiotrack-editing-in-the-sdk/23378">Audio and Effect Track Editing</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="https://www.youtube.com/watch?v=D7JM4VMKqPc">Video: Effect and AudioTrack editing in jMonkeyEngine 3 sdk</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/filters.html">Post-Processor Filter Editor and Viewer</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../app/state/application_states.html">Application States</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../scene/control/custom_controls.html">Custom Controls</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/vehicle_creator.html">Vehicle Creator</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Advanced Usage</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/build_platform.html">Building jMonkeyEngine SDK</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/use_own_jme.html#.adoc">Using your own (modified) version of jME3 in jMonkeyEngine SDK</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/increasing_heap_memory.html">Increasing Heap Memory</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/log_files.html">Log Files</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Available external plugins</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../contributions/contributions.html">Contributions</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/neotexture.html">Neo Texture Editor for procedural textures</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=yS9a9o4WzL8">Video: Mesh Tool &amp; Physics Editor</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../sdk/development.html">Developing plugins for jMonkeyEngine SDK</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/development/setup.html">Creating a plugin</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/development/general.html">Creating components</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/development/scene.html">The Main Scene</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/development/sceneexplorer.html">The Scene Explorer</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/development/projects_assets.html">Projects and Assets</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/development/extension_library.html">Create a library plugin from a jar file</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../sdk/development/model_loader.html">Create a new or custom model filetype and loader</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">JME</span>
+    <span class="version">3.2</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">JME</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../3.3/documentation.html">3.3</a>
+        </li>
+        <li class="version is-current">
+          <a href="../../documentation.html">3.2</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Wiki Contribution</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../docs-wiki/3.3/wiki_contributor.html">3.3</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Wiki UI</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../wiki-ui/index.html">master</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../documentation.html">JME</a></li>
+    <li><a href="nifty_gui_java_layout.html">Laying Out the GUI in Java</a></li>
+  </ul>
+</nav>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">3.2</button>
+  <div class="version-menu">
+    <a class="version" href="../../../3.3/core/gui/nifty_gui_java_layout.html">3.3</a>
+    <a class="version is-current" href="nifty_gui_java_layout.html">3.2</a>
+  </div>
+</div>
+  <div class="edit-this-page"><a href="https://github.com/jMonkeyEngine/wiki/edit/v3.2/docs/modules/core/pages/gui/nifty_gui_java_layout.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Laying Out the GUI in Java</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="nifty_gui.html" class="page">Nifty GUI Concepts</a></p>
+</li>
+<li>
+<p><a href="nifty_gui_best_practices.html" class="page">Nifty GUI Best Practices</a></p>
+</li>
+<li>
+<p><a href="nifty_gui_xml_layout.html" class="page">Nifty GUI XML Layout</a> or <strong>Nifty <abbr title="Graphical User Interface">GUI</abbr> Java Layout</strong></p>
+</li>
+<li>
+<p><a href="nifty_gui_overlay.html" class="page">Nifty GUI Overlay</a> or <a href="nifty_gui_projection.html" class="page">Nifty GUI Projection</a></p>
+</li>
+<li>
+<p><a href="nifty_gui_java_interaction.html" class="page">Interact with the GUI from Java</a></p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>You can &#8220;draw&#8221; the <abbr title="Graphical User Interface">GUI</abbr> to the screen by writing Java code – alternatively to using XML. Typically you lay out the static base <abbr title="Graphical User Interface">GUI</abbr> in XML, and use Java commands if you need to change the <abbr title="Graphical User Interface">GUI</abbr> dynamically at runtime. In theory, you can also lay out the whole <abbr title="Graphical User Interface">GUI</abbr> in Java (but we don&#8217;t cover that here).</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="sample-code"><a class="anchor" href="#sample-code"></a>Sample Code</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Sample project</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Original Source Code:</strong> <a href="https://github.com/nifty-gui/nifty-gui/tree/1.4/nifty-examples/src/main/java/de/lessvoid/nifty/examples/defaultcontrols">/nifty-examples/src/main/java/de/lessvoid/nifty/examples/defaultcontrols/</a>.</p>
+</li>
+<li>
+<p><strong>Download demo project:</strong> <a href="../_attachments/niftyguidemo.zip">niftyguidemo.zip</a> (jme3-ready)<br>
+The full demo ZIP is based on <code>de.lessvoid.nifty.examples.controls.ControlsDemo.java</code>.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>The demo is a SimpleApplication-based game (use e.g. the BasicGame template in the jMonkeyEngine SDK).</p>
+</li>
+<li>
+<p>Copy images and sound files into your project&#8217;s <code>assets/Interface/</code> directory. (In this example, I copied them from <code>nifty-default-controls-examples/trunk/src/main/resources/</code> to <code>assets/Interface/</code>).</p>
+</li>
+<li>
+<p>Make sure to use paths relative to your project&#8217;s <code>assets/</code> directory.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>E.g. for .fnt/.png/.jpg files use filename <code>Interface/yang.png</code> not filename <code>yang.png</code>.</p>
+</li>
+<li>
+<p>E.g. for .wav/.ogg files use filename <code>Interface/sounds/gong.wav</code> not filename <code>sounds/gong.wav</code>.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Just so you get a quick picture what Nifty <abbr title="Graphical User Interface">GUI</abbr>'s Java Syntax looks like, here is the most basic example. It creates a screen with a layer and a panel that contains a button.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package mygame;
+
+import com.jme3.app.Application;
+import com.jme3.app.SimpleApplication;
+import com.jme3.app.state.BaseAppState;
+import com.jme3.niftygui.NiftyJmeDisplay;
+import de.lessvoid.nifty.Nifty;
+import de.lessvoid.nifty.builder.LayerBuilder;
+import de.lessvoid.nifty.builder.PanelBuilder;
+import de.lessvoid.nifty.builder.ScreenBuilder;
+import de.lessvoid.nifty.controls.button.builder.ButtonBuilder;
+import de.lessvoid.nifty.screen.DefaultScreenController;
+
+public class MyStartScreen extends BaseAppState {
+
+    @Override
+    protected void initialize(Application app) {
+        //It is technically safe to do all initialization and cleanup in the
+        //onEnable()/onDisable() methods. Choosing to use initialize() and
+        //cleanup() for this is a matter of performance specifics for the
+        //implementor.
+        //TODO: initialize your AppState, e.g. attach spatials to rootNode
+    }
+
+    @Override
+    protected void cleanup(Application app) {
+        //TODO: clean up what you initialized in the initialize method,
+        //e.g. remove all spatials from rootNode
+    }
+
+    //onEnable()/onDisable() can be used for managing things that should
+    //only exist while the state is enabled. Prime examples would be scene
+    //graph attachment or input listener attachment.
+    @Override
+    protected void onEnable() {
+        NiftyJmeDisplay niftyDisplay = NiftyJmeDisplay.newNiftyJmeDisplay(
+                getApplication().getAssetManager(),
+                getApplication().getInputManager(),
+                getApplication().getAudioRenderer(),
+                getApplication().getGuiViewPort());
+
+        Nifty nifty = niftyDisplay.getNifty();
+        getApplication().getGuiViewPort().addProcessor(niftyDisplay);
+        ((SimpleApplication) getApplication()).getFlyByCamera().setDragToRotate(true);
+
+        nifty.loadStyleFile("nifty-default-styles.xml");
+        nifty.loadControlFile("nifty-default-controls.xml");
+
+        // &lt;screen&gt;
+        nifty.addScreen("Screen_ID", new ScreenBuilder("Hello Nifty Screen"){{
+            controller(new DefaultScreenController()); // Screen properties
+
+            // &lt;layer&gt;
+            layer(new LayerBuilder("Layer_ID") {{
+                childLayoutVertical(); // layer properties, add more...
+
+                // &lt;panel&gt;
+                panel(new PanelBuilder("Panel_ID") {{
+                   childLayoutCenter(); // panel properties, add more...
+
+                    // GUI elements
+                    control(new ButtonBuilder("Button_ID", "Hello Nifty"){{
+                        alignCenter();
+                        valignCenter();
+                        height("5%");
+                        width("15%");
+                    }});
+
+                    //.. add more GUI elements here
+
+                }});
+                // &lt;/panel&gt;
+              }});
+            // &lt;/layer&gt;
+          }}.build(nifty));
+        // &lt;/screen&gt;
+
+        nifty.gotoScreen("Screen_ID"); // start the screen
+    }
+
+    @Override
+    protected void onDisable() {
+        //Called when the state was previously enabled but is now disabled
+        //either because setEnabled(false) was called or the state is being
+        //cleaned up.
+    }
+
+    @Override
+    public void update(float tpf) {
+        //TODO: implement behavior during runtime
+    }
+
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="implement-your-gui-layout"><a class="anchor" href="#implement-your-gui-layout"></a>Implement Your GUI Layout</h2>
+<div class="sectionbody">
+<div class="imageblock text-left">
+<div class="content">
+<img src="../_images/gui/gui-layout-draft.png" alt="gui-layout-draft.png" width="" height="">
+</div>
+</div>
+<div class="paragraph">
+<p>In this tutorial, you recreate the same screen as in the <a href="nifty_gui_xml_layout.html" class="page"> Laying out the GUI in XML</a> example.</p>
+</div>
+<div class="paragraph">
+<p>Create an Screen.Java file that extends BaseAppState in the mygame directory of your project. One Java file can contain several, or even all screens. As a reminder: Nifty displays one screen at a time; a screen contains several layers on top of one another; each layer contains panels that are embedded into another; the panels contain the actual content (text, images, or controls).</p>
+</div>
+<div class="paragraph">
+<p>Next, setup your Nifty display.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">NiftyJmeDisplay niftyDisplay = NiftyJmeDisplay.newNiftyJmeDisplay(
+        getApplication().getAssetManager(),
+        getApplication().getInputManager(),
+        getApplication().getAudioRenderer(),
+        getApplication().getGuiViewPort());
+
+Nifty nifty = niftyDisplay.getNifty();
+getApplication().getGuiViewPort().addProcessor(niftyDisplay);
+((SimpleApplication) getApplication()).getFlyByCamera().setDragToRotate(true);
+
+nifty.loadStyleFile("nifty-default-styles.xml");
+nifty.loadControlFile("nifty-default-controls.xml");
+
+// &lt;!-- ... --&gt;
+
+nifty.gotoScreen("start"); // start the screen</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="make-screens"><a class="anchor" href="#make-screens"></a>Make Screens</h3>
+<div class="paragraph">
+<p>The following minimal Java file contains a start screen and a HUD screen. (Neither has been defined yet.)</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">nifty.addScreen("start", new ScreenBuilder("start") {{
+    controller(new DefaultScreenController());
+    // &lt;!-- ... --&gt;
+}}.build(nifty));
+
+nifty.addScreen("hud", new ScreenBuilder("hud") {{
+    controller(new DefaultScreenController());
+    // &lt;!-- ... --&gt;
+}}.build(nifty));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Every Nifty <abbr title="Graphical User Interface">GUI</abbr> must have a start screen. The others (in this example, the HUD screen) are optional.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="make-layers"><a class="anchor" href="#make-layers"></a>Make Layers</h3>
+<div class="paragraph">
+<p>The following Java code shows how we add layers to the start screen and HUD screen. Add the following to your <code>Screen.java</code> file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">nifty.addScreen("start", new ScreenBuilder("start") {{
+    controller(new DefaultScreenController());
+    // layer added
+    layer(new LayerBuilder("background") {{
+        childLayoutCenter();
+        backgroundColor("#000f");
+
+        // &lt;!-- ... --&gt;
+    }});
+
+    layer(new LayerBuilder("foreground") {{
+        childLayoutVertical();
+        backgroundColor("#0000");
+
+        // &lt;!-- ... --&gt;
+    }});
+    // layer added
+
+}}.build(nifty));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Repeat the same, but use</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>nifty.addScreen("hud", new ScreenBuilder("hud"){{</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>for the HUD screen.</p>
+</div>
+<div class="paragraph">
+<p>In a layer, you can now add panels and arrange them. Panels are containers that mark the areas where you want to display text, images, or controls (buttons etc) later.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="make-panels"><a class="anchor" href="#make-panels"></a>Make Panels</h3>
+<div class="paragraph">
+<p>A panel is the inner-most container (that will contain the actual content: text, images, or controls). You place panels inside layers. The following panels go into in the <code>start</code> screen <code>foreground</code> layer:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">nifty.addScreen("start", new ScreenBuilder("start") {{
+    controller(new DefaultScreenController());
+    // layer added
+    layer(new LayerBuilder("background") {{
+        childLayoutCenter();
+        backgroundColor("#000f");
+
+        // &lt;!-- ... --&gt;
+    }});
+
+    layer(new LayerBuilder("foreground") {{
+        childLayoutVertical();
+        backgroundColor("#0000");
+
+        // panel added
+        panel(new PanelBuilder("panel_top") {{
+            childLayoutCenter();
+            alignCenter();
+            backgroundColor("#f008");
+            height("25%");
+            width("75%");
+        }});
+
+        panel(new PanelBuilder("panel_mid") {{
+            childLayoutCenter();
+            alignCenter();
+            backgroundColor("#0f08");
+            height("50%");
+            width("75%");
+        }});
+
+        panel(new PanelBuilder("panel_bottom") {{
+            childLayoutHorizontal();
+            alignCenter();
+            backgroundColor("#00f8");
+            height("25%");
+            width("75%");
+
+            panel(new PanelBuilder("panel_bottom_left") {{
+                childLayoutCenter();
+                valignCenter();
+                backgroundColor("#44f8");
+                height("50%");
+                width("50%");
+            }});
+
+            panel(new PanelBuilder("panel_bottom_right") {{
+                childLayoutCenter();
+                valignCenter();
+                backgroundColor("#88f8");
+                height("50%");
+                width("50%");
+            }});
+        }}); // panel added
+    }});
+    // layer added
+
+}}.build(nifty));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following panels go into in the <code>hud</code> screen:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-Java hljs" data-lang="Java">nifty.addScreen("hud", new ScreenBuilder("hud") {{
+    controller(new DefaultScreenController());
+
+    layer(new LayerBuilder("background") {{
+        childLayoutCenter();
+        backgroundColor("#000f");
+        // &lt;!-- ... --&gt;
+    }});
+
+    layer(new LayerBuilder("foreground") {{
+        childLayoutHorizontal();
+        backgroundColor("#0000");
+
+        // panel added
+        panel(new PanelBuilder("panel_left") {{
+            childLayoutVertical();
+            backgroundColor("#0f08");
+            height("100%");
+            width("80%");
+            // &lt;!-- spacer --&gt;
+        }});
+
+        panel(new PanelBuilder("panel_right") {{
+            childLayoutVertical();
+            backgroundColor("#00f8");
+            height("100%");
+            width("20%");
+
+            panel(new PanelBuilder("panel_top_right1") {{
+                childLayoutCenter();
+                backgroundColor("#00f8");
+                height("15%");
+                width("100%");
+            }});
+
+            panel(new PanelBuilder("panel_top_right2") {{
+                childLayoutCenter();
+                backgroundColor("#44f8");
+                height("15%");
+                width("100%");
+            }});
+
+            panel(new PanelBuilder("panel_bot_right") {{
+                childLayoutCenter();
+                valignCenter();
+                backgroundColor("#88f8");
+                height("70%");
+                width("100%");
+            }});
+        }}); // panel added
+    }});
+}}.build(nifty));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Try the sample. Remember to activate a screen using <code>nifty.gotoScreen("start");</code> or <code>hud</code> respectively.
+The result should look as follows:</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="../_images/gui/nifty-gui-panels.png" alt="nifty-gui-panels.png" width="" height="">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="adding-content-to-panels"><a class="anchor" href="#adding-content-to-panels"></a>Adding Content to Panels</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>See also <a href="https://github.com/nifty-gui/nifty-gui/raw/1.4/nifty-core/manual/nifty-gui-the-manual-1.3.2.pdf">Nifty GUI - the Manual: Layouts</a> on the Nifty <abbr title="Graphical User Interface">GUI</abbr> site.</p>
+</div>
+<div class="sect2">
+<h3 id="add-images"><a class="anchor" href="#add-images"></a>Add Images</h3>
+<div class="paragraph">
+<p>The <code>start-background.png</code> image is a fullscreen background picture. In the <code>start</code> screen, add the following image element:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">nifty.addScreen("start", new ScreenBuilder("start") {{
+    controller(new DefaultScreenController());
+    // layer added
+    layer(new LayerBuilder("background") {{
+        childLayoutCenter();
+        backgroundColor("#000f");
+
+        // add image
+        image(new ImageBuilder() {{
+            filename("Interface/start-background.png");
+        }});
+    }});
+    // &lt;!-- ... --&gt;
+}}.build(nifty));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>hud-frame.png</code> image is a transparent frame that we use as HUD decoration. In the <code>hud</code> screen, add the following image element:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">nifty.addScreen("hud", new ScreenBuilder("hud") {{
+    controller(new DefaultScreenController());
+
+    layer(new LayerBuilder("background") {{
+        childLayoutCenter();
+        backgroundColor("#000f");
+
+        // add image
+        image(new ImageBuilder() {{
+            filename("Interface/hud-frame.png");
+        }});
+    }});
+    // &lt;!-- ... --&gt;
+}}.build(nifty));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>face1.png</code> image is an image that you want to use as a status icon.
+In the <code>hud</code> screens <code>foreground</code> layer, add the following image element:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">panel(new PanelBuilder("panel_top_right2") {{
+    childLayoutCenter();
+    backgroundColor("#44f8");
+    height("15%");
+    width("100%");
+
+    // add image
+    image(new ImageBuilder() {{
+        filename("Interface/face1.png");
+        valignCenter();
+        alignCenter();
+        height("50%");
+        width("30%");
+    }});
+}});</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This image is scaled to use 50% of the height and 30% of the width of its container.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="add-static-text"><a class="anchor" href="#add-static-text"></a>Add Static Text</h3>
+<div class="paragraph">
+<p>The game title is a typical example of static text. In the <code>start</code> screen <code>foreground</code> layer, add the following text element:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// panel added
+panel(new PanelBuilder("panel_top") {{
+    childLayoutCenter();
+    alignCenter();
+    backgroundColor("#f008");
+    height("25%");
+    width("75%");
+
+    text(new TextBuilder() {{
+        text("My Cool Game");
+        font("Interface/Fonts/Default.fnt");
+        height("100%");
+        width("100%");
+    }});
+}});</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For longer pieces of static text, such as an introduction, you can use <code>wrap="true"</code>. Setting <code>wrap="true"</code> will only work when you set a width for the text element, so that Nifty knows when to wrap a line. Add the following text element to the <code>Start</code> screen <code>foreground</code> layer:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">panel(new PanelBuilder("panel_mid") {{
+    childLayoutCenter();
+    alignCenter();
+    backgroundColor("#0f08");
+    height("50%");
+    width("75%");
+
+    // add text
+    text(new TextBuilder() {{
+        text("Here goes some text describing the game and the rules and stuff. "
+           + "Incidentally, the text is quite long and needs to wrap at the end of lines.");
+        font("Interface/Fonts/Default.fnt");
+        wrap(true);
+        height("100%");
+        width("100%");
+    }});
+}});</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The font used is jME3&#8217;s default font &#8220;Interface/Fonts/Default.fnt&#8221; which is included in the jMonkeyEngine.JAR. You can add your own fonts to your own <code>assets/Interface</code> directory. Set your font to the one you created during the start of the <a href="nifty_gui_xml_layout.html#implement-your-gui-layout" class="page">Gui Implementation</a> phase of your game.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="add-controls"><a class="anchor" href="#add-controls"></a>Add Controls</h3>
+<div class="paragraph">
+<p>Before you can use any control, you must load a Control Definition first. Thats why we add the following two lines <em>before</em> the screen definitions:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">nifty.loadStyleFile("nifty-default-styles.xml");
+nifty.loadControlFile("nifty-default-controls.xml");</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="label-control"><a class="anchor" href="#label-control"></a>Label Control</h4>
+<div class="paragraph">
+<p>Use label controls for text that you want to edit dynamically from Java. One example for this is the score display.
+In the <code>hud</code> screen&#8217;s <code>foreground</code> layer, add the following text element:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">panel(new PanelBuilder("panel_top_right1") {{
+    childLayoutCenter();
+    backgroundColor("#00f8");
+    height("15%");
+    width("100%");
+
+    control(new LabelBuilder(){{
+        color("#000");
+        text("123");
+        width("100%");
+        height("100%");
+    }});
+}});</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that the width and height do not scale the bitmap font, but make indirectly certain it is centered. If you want a different size for the font, you need to provide an extra bitmap font (they come with fixes sizes and don&#8217;t scale well).</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="button-control"><a class="anchor" href="#button-control"></a>Button Control</h4>
+<div class="paragraph">
+<p>Our <abbr title="Graphical User Interface">GUI</abbr> plan asks for two buttons on the start screen. You add the Start and Quit buttons to the bottom panel of the <code>start</code> screen using the <code>&lt;control&gt;</code> element:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">panel(new PanelBuilder("panel_bottom_left") {{
+    childLayoutCenter();
+    valignCenter();
+    backgroundColor("#44f8");
+    height("50%");
+    width("50%");
+
+    // add control
+    control(new ButtonBuilder("StartButton", "Start") {{
+        alignCenter();
+        valignCenter();
+        height("50%");
+        width("50%");
+    }});
+}});
+
+panel(new PanelBuilder("panel_bottom_right") {{
+    childLayoutCenter();
+    valignCenter();
+    backgroundColor("#88f8");
+    height("50%");
+    width("50%");
+
+    // add control
+    control(new ButtonBuilder("QuitButton", "Quit") {{
+        alignCenter();
+        valignCenter();
+        height("50%");
+        width("50%");
+    }});
+}});</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that these controls don&#8217;t do anything yet – we&#8217;ll get to that soon.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="other-controls"><a class="anchor" href="#other-controls"></a>Other Controls</h4>
+<div class="paragraph">
+<p>Nifty additionally offers many customizable controls such as check boxes, text fields, menus, chats, tabs, …</p>
+</div>
+<div class="paragraph">
+<p>See also:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/nifty-gui/nifty-gui/raw/1.4/nifty-core/manual/nifty-gui-the-manual-1.3.2.pdf">Nifty GUI - the Manual: Elements</a></p>
+</li>
+<li>
+<p><a href="https://github.com/nifty-gui/nifty-gui/wiki/Controls">Controls</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="intermediate-result"><a class="anchor" href="#intermediate-result"></a>Intermediate Result</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>When you preview this code in the jMonkeyEngine SDK, our tutorial demo should looks as follows: A start screen with two buttons, and a game screen with a simple HUD frame and a blue cube (which stands for any jME3 game content).</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Remove all lines that set background colors, you only needed them to see the arrangement.
+</td>
+</tr>
+</table>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="../_images/gui/nifty-gui-simple-demo.png" alt="nifty-gui-simple-demo.png" width="" height="">
+</div>
+</div>
+<div class="paragraph">
+<p>Your <code>Screen.java</code> file should look like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package mygame;
+
+import com.jme3.app.Application;
+import com.jme3.app.SimpleApplication;
+import com.jme3.app.state.BaseAppState;
+import com.jme3.niftygui.NiftyJmeDisplay;
+import de.lessvoid.nifty.Nifty;
+import de.lessvoid.nifty.builder.ImageBuilder;
+import de.lessvoid.nifty.builder.LayerBuilder;
+import de.lessvoid.nifty.builder.PanelBuilder;
+import de.lessvoid.nifty.builder.ScreenBuilder;
+import de.lessvoid.nifty.builder.TextBuilder;
+import de.lessvoid.nifty.controls.button.builder.ButtonBuilder;
+import de.lessvoid.nifty.controls.label.builder.LabelBuilder;
+import de.lessvoid.nifty.screen.DefaultScreenController;
+
+public class Screen extends BaseAppState {
+
+    @Override
+    protected void initialize(Application app) {
+        //It is technically safe to do all initialization and cleanup in the
+        //onEnable()/onDisable() methods. Choosing to use initialize() and
+        //cleanup() for this is a matter of performance specifics for the
+        //implementor.
+        //TODO: initialize your AppState, e.g. attach spatials to rootNode
+    }
+
+    @Override
+    protected void cleanup(Application app) {
+        //TODO: clean up what you initialized in the initialize method,
+        //e.g. remove all spatials from rootNode
+    }
+
+    //onEnable()/onDisable() can be used for managing things that should
+    //only exist while the state is enabled. Prime examples would be scene
+    //graph attachment or input listener attachment.
+    @Override
+    protected void onEnable() {
+        NiftyJmeDisplay niftyDisplay = NiftyJmeDisplay.newNiftyJmeDisplay(
+                getApplication().getAssetManager(),
+                getApplication().getInputManager(),
+                getApplication().getAudioRenderer(),
+                getApplication().getGuiViewPort());
+
+        Nifty nifty = niftyDisplay.getNifty();
+        getApplication().getGuiViewPort().addProcessor(niftyDisplay);
+        ((SimpleApplication) getApplication()).getFlyByCamera().setDragToRotate(true);
+
+        nifty.loadStyleFile("nifty-default-styles.xml");
+        nifty.loadControlFile("nifty-default-controls.xml");
+
+        nifty.addScreen("start", new ScreenBuilder("start") {{
+            controller(new DefaultScreenController());
+            // layer added
+            layer(new LayerBuilder("background") {{
+                childLayoutCenter();
+//                backgroundColor("#000f");
+
+                // add image
+                image(new ImageBuilder() {{
+                    filename("Interface/start-background.png");
+                }});
+            }});
+
+            layer(new LayerBuilder("foreground") {{
+                childLayoutVertical();
+//                backgroundColor("#0000");
+
+                // panel added
+                panel(new PanelBuilder("panel_top") {{
+                    childLayoutCenter();
+                    alignCenter();
+//                    backgroundColor("#f008");
+                    height("25%");
+                    width("75%");
+
+                    text(new TextBuilder() {{
+                        text("My Cool Game");
+                        font("Interface/Fonts/Arial.fnt");
+                        height("100%");
+                        width("100%");
+                    }});
+                }});
+
+                panel(new PanelBuilder("panel_mid") {{
+                    childLayoutCenter();
+                    alignCenter();
+//                    backgroundColor("#0f08");
+                    height("50%");
+                    width("75%");
+
+                    // add text
+                    text(new TextBuilder() {{
+                        text("Here goes some text describing the game and the rules and stuff. "
+                           + "Incidentally, the text is quite long and needs to wrap at the end of lines. ");
+                        font("Interface/Fonts/Arial.fnt");
+                        wrap(true);
+                        height("100%");
+                        width("100%");
+                    }});
+                }});
+
+                panel(new PanelBuilder("panel_bottom") {{
+                    childLayoutHorizontal();
+                    alignCenter();
+//                    backgroundColor("#00f8");
+                    height("25%");
+                    width("75%");
+
+                    panel(new PanelBuilder("panel_bottom_left") {{
+                        childLayoutCenter();
+                        valignCenter();
+//                        backgroundColor("#44f8");
+                        height("50%");
+                        width("50%");
+
+                        // add control
+                        control(new ButtonBuilder("StartButton", "Start") {{
+                            alignCenter();
+                            valignCenter();
+                            height("50%");
+                            width("50%");
+                        }});
+                    }});
+
+                    panel(new PanelBuilder("panel_bottom_right") {{
+                        childLayoutCenter();
+                        valignCenter();
+//                        backgroundColor("#88f8");
+                        height("50%");
+                        width("50%");
+
+                        // add control
+                        control(new ButtonBuilder("QuitButton", "Quit") {{
+                            alignCenter();
+                            valignCenter();
+                            height("50%");
+                            width("50%");
+                        }});
+                    }});
+                }}); // panel added
+            }});
+            // layer added
+
+        }}.build(nifty));
+
+        nifty.addScreen("hud", new ScreenBuilder("hud") {{
+            controller(new DefaultScreenController());
+
+            layer(new LayerBuilder("background") {{
+                childLayoutCenter();
+//                backgroundColor("#000f");
+
+                // add image
+                image(new ImageBuilder() {{
+                    filename("Interface/hud-frame.png");
+                }});
+            }});
+
+            layer(new LayerBuilder("foreground") {{
+                childLayoutHorizontal();
+//                backgroundColor("#0000");
+
+                // panel added
+                panel(new PanelBuilder("panel_left") {{
+                    childLayoutVertical();
+//                    backgroundColor("#0f08");
+                    height("100%");
+                    width("80%");
+                    // &lt;!-- spacer --&gt;
+                }});
+
+                panel(new PanelBuilder("panel_right") {{
+                    childLayoutVertical();
+//                    backgroundColor("#00f8");
+                    height("100%");
+                    width("20%");
+
+                    panel(new PanelBuilder("panel_top_right1") {{
+                        childLayoutCenter();
+//                        backgroundColor("#00f8");
+                        height("15%");
+                        width("100%");
+
+                        control(new LabelBuilder(){{
+                            color("#000");
+                            text("123");
+                            width("100%");
+                            height("100%");
+                        }});
+                    }});
+
+                    panel(new PanelBuilder("panel_top_right2") {{
+                        childLayoutCenter();
+//                        backgroundColor("#44f8");
+                        height("15%");
+                        width("100%");
+
+                        // add image
+                        image(new ImageBuilder() {{
+                            filename("Interface/face1.png");
+                            valignCenter();
+                            alignCenter();
+                            height("50%");
+                            width("30%");
+                        }});
+                    }});
+
+                    panel(new PanelBuilder("panel_bot_right") {{
+                        childLayoutCenter();
+                        valignCenter();
+//                        backgroundColor("#88f8");
+                        height("70%");
+                        width("100%");
+                    }});
+                }}); // panel added
+            }});
+        }}.build(nifty));
+
+        nifty.gotoScreen("hud"); // start the screen
+
+    }
+
+    @Override
+    protected void onDisable() {
+        //Called when the state was previously enabled but is now disabled
+        //either because setEnabled(false) was called or the state is being
+        //cleaned up.
+    }
+
+    @Override
+    public void update(float tpf) {
+        //TODO: implement behavior during runtime
+    }
+
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="nifty-java-settings"><a class="anchor" href="#nifty-java-settings"></a>Nifty Java Settings</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Before initializing the nifty screens, you set up properties and register media.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Nifty Method</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>registerSound("mysound", "Interface/abc.wav");</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>registerMusic("mymusic", "Interface/xyz.ogg");</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>registerMouseCursor("mypointer", "Interface/abc.png", 5, 4);</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>registerEffect(?);</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>?</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>setDebugOptionPanelColors(true);</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Highlight all panels, makes it easier to arrange them.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">nifty.registerMouseCursor("hand", "Interface/mouse-cursor-hand.png", 5, 4);</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="next-steps"><a class="anchor" href="#next-steps"></a>Next Steps</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Integrate the <abbr title="Graphical User Interface">GUI</abbr> into the game. Typically, you will overlay the <abbr title="Graphical User Interface">GUI</abbr>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="nifty_gui_overlay.html" class="page">Nifty GUI Overlay</a> (recommended)</p>
+</li>
+<li>
+<p><a href="nifty_gui_projection.html" class="page">Nifty GUI Projection</a> (optional)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>Copyright 2020 jMonkeyEngine Wiki Contributors. Licensed BSD-3.</p>
+</footer>
+<script src="../../../../_/js/vendor/docsearch.min.js"></script>
+<!-- fetched from https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js -->
+<script>
+var search = docsearch({
+  apiKey: 'a736b6d93de805e26ec2f49b55013fbd',
+  indexName: 'jmonkeyengine',
+  inputSelector: '#search-input',
+  autocompleteOptions: { hint: false, keyboardShortcuts: ['s'] },
+  algoliaOptions: { hitsPerPage: 10 }
+}).autocomplete
+search.on('autocomplete:closed', function () { search.autocomplete.setVal() })
+function focusSearchInput () { document.querySelector('#search-input').focus() }
+if (document.querySelector('.home-link.is-current')) window.addEventListener('load', focusSearchInput)
+</script>
+<script src="../../../../_/js/site.js"></script>
+<script async src="../../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
