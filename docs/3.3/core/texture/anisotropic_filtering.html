@@ -1007,44 +1007,75 @@
 <h2 id="anisotropic-filtering-for-textures"><a class="anchor" href="#anisotropic-filtering-for-textures"></a>Anisotropic Filtering for Textures</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Anisotropic Filtering is very important for Desktop Games and their textures. Most games use AnisotropicFiltering = 4/8/16. It sharpens your textures under different Angle View.
-Anisotropy makes a performance draw back about 10-40 fps, but the result looks much better.</p>
+<p>Anisotropic filtering is important for desktop games.
+It sharpens textures that are viewed from an oblique angle.
+Anisotropy has a performance impact, but the results look much better.</p>
 </div>
 <div class="paragraph">
-<p>See Example: <a href="http://i.imgur.com/0yiv9.jpg">http://i.imgur.com/0yiv9.jpg</a></p>
+<p>For example: <a href="http://i.imgur.com/0yiv9.jpg">http://i.imgur.com/0yiv9.jpg</a></p>
 </div>
 <div class="imageblock text-right">
 <div class="content">
 <img src="../_images/texture/anisotropy_example_mifth_01.jpg" alt="anisotropy_example_mifth_01.jpg" width="360" height="900">
 </div>
 </div>
-<div class="paragraph">
-<p>JME has DEFAULT AnisotropicFiltering = 0. So, if you make a game for Windows/Linux/Mac.. you need to set the Anisotropic Filtering more than 0.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+JME supports anisotropic filtering only on desktop platforms,
+      not on mobile devices.
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p>Example how to set AnisotropicFiltering = 8 for all textures:</p>
+<p>The maximum possible degree of anisotropy depends on the graphics hardware.
+To determine this limit, simply query the renderer:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">        AssetEventListener asl = new AssetEventListener() {
-            public void assetLoaded(AssetKey key) {
-//                throw new UnsupportedOperationException("Not supported yet.");
-            }
-
-            public void assetRequested(AssetKey key) {
-                if (key.getExtension().equals("png") || key.getExtension().equals("jpg") || key.getExtension().equals("dds")) {
-                    System.out.println(key.getExtension());
-                    TextureKey tkey = (TextureKey) key;
-                    tkey.setAnisotropy(8);
-                }
-            }
-
-            public void assetDependencyNotFound(AssetKey parentKey, AssetKey dependentAssetKey) {
-//                throw new UnsupportedOperationException("Not supported yet.");
-            }
-        };
-
-        assetManager.addAssetEventListener(asl);</code></pre>
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Renderer renderer = application.getRenderer();
+int maxDegree = renderer.getLimits().get(Limits.TextureAnisotropy);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>By default, anisotropic filtering is disabled.
+To enable it for a specific texture, specify the desired degree of anisotropy
+in the key used to load the texture.
+For instance, to load a texture with 8x anisotropic filtering:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">TextureKey key = new TextureKey(assetPath);
+int degree = 8;
+key.setAnisotropy(degree);
+Texture texture = assetManager.loadTexture(key);</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Specifying <code>degree = 1</code> disables anisotropic filtering for the texture.</p>
+</li>
+<li>
+<p>Specifying <code>degree = 0</code> (the default) causes the loader
+to apply JME&#8217;s global setting.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The global setting defaults to 1, but this can be changed.
+For instance, to set the global default to 4x filtering:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Renderer renderer = application.getRenderer();
+int degree = 4;
+renderer.setDefaultAnisotropicFilter(degree);</code></pre>
 </div>
 </div>
 </div>
