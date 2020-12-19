@@ -128,3 +128,10 @@ jobs:
         publish_dir: ./build/site
         # Insert CNAME for repository.
         cname: wiki.jmonkeyengine.org
+        
+    - name: Purge Cloudflare caches
+      shell: bash
+      run: |
+        curl -X POST "https://api.cloudflare.com/client/v4/zones/${{ secrets.JMONKEYENGINE_ORG_CLOUDFLARE_ZONE }}/purge_cache" \
+        -H "Authorization: Bearer ${{ secrets.JMONKEYENGINE_ORG_CLOUDFLARE_API_KEY }}" \
+        -H "Content-Type: application/json"  --data '{"purge_everything":true}' 
