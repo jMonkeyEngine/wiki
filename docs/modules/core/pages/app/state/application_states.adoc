@@ -140,6 +140,7 @@ public class MyAppState extends AbstractAppState {
 
     @Override
     public void initialize(AppStateManager stateManager, Application app) {
+      //initialize is called after a state is attached via statemanager.attach
       super.initialize(stateManager, app);
       this.app = (SimpleApplication)app;          // cast to a more specific class
 
@@ -150,6 +151,7 @@ public class MyAppState extends AbstractAppState {
 
    @Override
     public void cleanup() {
+      //cleanup is called after a state is detached via statemanager.detach
       super.cleanup();
       // unregister all my listeners, detach all my nodes, etc...
       this.app.getRootNode().detachChild(getX()); // modify scene graph...
@@ -194,6 +196,7 @@ Definition:
 public class MyBaseAppState extends BaseAppState {       
     @Override   
     protected void initialize(Application app) {       
+        //initialize is called after a state is attached via statemanager.attach
         //It is technically safe to do all initialization and cleanup in the        
         //onEnable()/onDisable() methods. Choosing to use initialize() and        
         //cleanup() for this is a matter of performance specifics for the        
@@ -203,6 +206,7 @@ public class MyBaseAppState extends BaseAppState {       
 
     @Override   
     protected void cleanup(Application app) {       
+        //cleanup is called after a state is detached via statemanager.detach
         //TODO: clean up what you initialized in the initialize method,       
         //e.g. remove all spatials from rootNode   
     }
