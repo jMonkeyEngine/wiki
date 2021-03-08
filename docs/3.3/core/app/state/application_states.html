@@ -1110,12 +1110,15 @@ Each AppState has its own update loop, which hooks into the main simpleUpdate() 
 <div class="sect2">
 <h3 id="usage"><a class="anchor" href="#usage"></a>Usage</h3>
 <div class="paragraph">
+<p>There are two ways to implement AppStates, extend either AbstractAppState or BaseAppState. The differences will be explained in greater detail later.</p>
+</div>
+<div class="paragraph">
 <p>To implement game logic:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Create one AbstractAppState instance for each set of game mechanics.</p>
+<p>Create one AbstractAppState or BaseAppState instance for each set of game mechanics.</p>
 </li>
 <li>
 <p>Implement game behaviour in the AppState&#8217;s update() method.</p>
@@ -1194,78 +1197,74 @@ Each AppState has its own update loop, which hooks into the main simpleUpdate() 
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>When this AppState is added to the game, the RenderThread initializes the AppState and then calls this method. You can modify the scene graph from here (e.g. attach nodes). To get access to the main app, call:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">super.initialize(stateManager, app);
-this.app = (SimpleApplication) app;</code></pre>
-</div>
 </div></div></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[source,java]
+----
+super.initialize(stateManager, app);
+this.app = (SimpleApplication) app;
+----</p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>cleanup()</p>
 </div></div></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>This method is executed after you remove the AppState from the game. Here you implement clean-up code for when this state is detached. You can modify the scene graph from here (e.g. detach nodes).</p>
 </div></div></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>update(float tpf)</p>
 </div></div></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Here you implement the behaviour that you want to hook into the simpleUpdate() loop while this state is attached to the game. You can modify the scene graph from here.</p>
 </div></div></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>isInitialized()</p>
 </div></div></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Your implementations of this interface should return the correct respective boolean value. (See AbstractAppState)</p>
 </div></div></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>setEnabled(true)<br>
 setEnabled(false)</p>
 </div></div></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Temporarily enables or disables an AppState. (See AbstractAppState)</p>
 </div></div></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>isEnabled()</p>
 </div></div></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Test whether AppState is enabled or disabled. Your implementation should consider the boolean. (See AbstractAppState)</p>
 </div></div></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>stateAttached(asm)<br>
 stateDetached(asm)</p>
 </div></div></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>The AppState knows when it is attached to, or detached from, the AppStateManager, and triggers these two methods. Don&#8217;t modify the scene graph from here! (Typically not used.)</p>
 </div></div></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>render(RenderManager rm)</p>
 </div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Renders the state, plus your optional customizations. (Typically not used.)</p>
-</div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>postRender()</p>
+<p>Renders the state, plus your optional customizations. (Typically not used.)</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Called after all rendering commands are flushed, including your optional customizations. (Typically not used.)</p>
+<p>postRender()</p>
 </div></div></td>
 </tr>
 </tbody>
@@ -1276,7 +1275,7 @@ stateDetached(asm)</p>
 <h2 id="abstractappstate"><a class="anchor" href="#abstractappstate"></a>AbstractAppState</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <a href="https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/java/com/jme3/app/state/AbstractAppState.java">AbstractAppState</a> class already implements some common methods (<code>isInitialized(), setEnabled(), isEnabled()</code>) and makes creation of custom AppStates a bit easier. We recommend you extend AbstractAppState and override the remaining AppState methods: <code>initialize(), setEnabled(), cleanup()</code>.</p>
+<p>The <a href="https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/java/com/jme3/app/state/AbstractAppState.java">AbstractAppState</a> class already implements some common methods (<code>isInitialized(), setEnabled(), isEnabled()</code>) and makes creation of custom AppStates a bit easier. When you extend AbstractAppState, we recommend you override the remaining AppState methods: <code>initialize(), setEnabled(), cleanup()</code>.</p>
 </div>
 <div class="paragraph">
 <p>Definition:</p>
@@ -1317,8 +1316,7 @@ stateDetached(asm)</p>
         this.app.getRootNode().attachChild(getX()); // modify scene graph...
         this.app.doSomethingElse();                 // call custom methods...
       } else {
-        // take away everything not needed while this state is PAUSED
-        ...
+        // take away everything not needed while this state is PAUSED ...
       }
     }
 
