@@ -92,24 +92,32 @@ The user interface uses standard html in its templates so editing should be fami
 
 == Versioning
 
-The wiki uses branches for versioning. The current branch being used for the jMonkeyEngine is *always* the master branch of the wiki. This means you use the previous branch of the jMonkeyEngine for the new versioned branch name. If the current *wiki version* is targeting 3.3 and you are creating a new version, then the new version branch would be v3.3. Branch version names should only target major/minor releases, not the patch of a version.
+There are two files that control versioning for the wiki, each serves a different purpose.
+
+. `wiki-playbook.yml` - determines what branches to use for content.
+. `antora.yml` - controls module versioning.
+
+The wiki uses branches for versioning. The current branch being used for the jMonkeyEngine is *always* the master branch of the wiki.  In the playbook this is known as the `*HEAD*` branch.
+
+The `docs` module is the main module for the wiki. Its `antora.yml` file controls the version of the wiki. The playbook uses this version to create the folders inside the `gh-pages` branch, building the content from the branches configured in the playbook.
+
+Branch version names should only target major/minor releases, not the patch of a version and start with "`v`".
 
 When it's time to cut a new version for the wiki, the process is as follows.
 
-IMPORTANT: A component module is a module that has an `antora.yml` file. A named module lives inside a component module. The version in the `antora.yml` file controls the version for the component module i.e. the wiki, not the version in the `wiki-playbook.yml`.
-
-We do not want the Antora cache to be versioned so you need to either remove the cache from the master branch before creating the new version branch or delete it after creating the new version branch.
-
+. We do not want the Antora cache to be versioned so you need to either remove the cache from the master branch before creating the new version branch or delete it after creating the new version branch.
++
 .How to remove first
-. From the `Commit Packages` command in the main.yml workflow, located in the `.github/workflows` directory, remove the cache part from the `add:` line.
+.. From the `Commit Packages` command in the main.yml workflow, located in the `.github/workflows` directory, remove the cache part from the `add:` line.
 +
 ```
 # Commits these files to root if and only if there are changes.
 add: "package-lock.json package.json ./.cache/antora/*"
 ```
-. Next, delete the `.cache` folder.
-. Stage, commit and push your changes to the repository.
-. Create a new branch that matches the *current version* of the wiki. If master is currently targeting 3.4 for example, that would mean the branch name would be v3.3.
+.. Next, delete the `.cache` folder.
+.. Stage, commit and push your changes to the repository.
+. Create a new branch that matches the *current version* of the wiki. If the current version (HEAD) is targeting version 3.3 in the `antora.yml` for example, and you are creating a new version, you would name the new branch v3.3. Thereby preserving the current master branch content.
+. If you didn't remove the cache during step one, delete it from the newly created branch.
 . Push the branch to the repository.
 . On the `master` branch, edit these files:
 .. Add the newly created branch to the `branches:` array in wiki-playbook.yml.
@@ -121,7 +129,7 @@ content:
   - url: https://github.com/jMonkeyEngine/wiki.git
     branches: [HEAD, v3.3, v3.2]
 ```
-.. Increment the version of any antora.yml file. At the time of this writing, there were two:
+.. Increment the version of the antora.yml file.
 +
 --
 .The docs antora.yml
@@ -130,8 +138,6 @@ name: docs
 title: JME
 version: '3.4'
 ```
-and
-
 .The docs-wiki antora.yml
 ```
 name: docs-wiki
@@ -139,19 +145,20 @@ title: Wiki Contribution
 version: '3.4'
 ```
 
-NOTE: The version value is enclosed in a set of single quote marks (') because it starts with a number. As was mentioned earlier, the versioning is controlled by the antora.yml file, not the playbook, so they do not have to match.
+NOTE: The version value is enclosed in a set of single quote marks (') because it starts with a number. As was mentioned earlier, the module versioning is controlled by the `antora.yml` file, not the playbook, so they do not have to match.
 --
 
 . Edit any links found in the `README.adoc`, located in the root of the repository, that are versioned, so they match the version value you just set in the `antora.yml` file.
-. Add `./.cache/antora/*` back to the  `Commit Packages` command to rebuild the cache.
-. Stage, commit and push the changes to the repository.
+. Add `./.cache/antora/*` back to the  `Commit Packages` command to rebuild the cache if you removed it in the first step.
+. Stage, commit and push your changes to the repository.
+
+The wiki versioning is now complete but you will need to update the docsearch repo to reflect the changes so that search works properly.
+
 . Navigate to the Docsearch config repo and update the search script.
 +
 https://github.com/algolia/docsearch-configs
-
-.. From the main page, click the btn:[Go to file] button and Enter `jmonkeyengine` into the search line.
-
-.. Edit the version line to point to the new version used in the `Antora.yml` file. In this example, search is targeting 3.3.
+. From the main page, click the btn:[Go to file] button and Enter `jmonkeyengine` into the search line.
+. Edit the version line to point to the new version used in the `Antora.yml` file. In this example, the current search is targeting 3.3.
 +
 --
 .Old jmonkeyengine.json
@@ -174,7 +181,7 @@ https://github.com/algolia/docsearch-configs
 }
 ----
 
-and the master branch `Antora.yml` file is using 3.4.
+The master branch `Antora.yml` file is using 3.4.
 
 .Antora.yml
 [source, yml]
@@ -185,7 +192,7 @@ and the master branch `Antora.yml` file is using 3.4.
 
 ...
 ----
-
+Edit the `jmonkeyengine.json` file and push your commit to update the search. It takes aproximately 24hrs after the commit is merged for it to take affect.
 .Updated jmonkeyengine.json
 [source, .json]
 ----
