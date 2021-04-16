@@ -290,29 +290,37 @@ class="page unresolved"&gt;this list&lt;/a&gt;.&lt;/p&gt;</code></pre>
 <h2 id="versioning"><a class="anchor" href="#versioning"></a>Versioning</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The wiki uses branches for versioning. The current branch being used for the jMonkeyEngine is <strong>always</strong> the master branch of the wiki. This means you use the previous branch of the jMonkeyEngine for the new versioned branch name. If the current <strong>wiki version</strong> is targeting 3.3 and you are creating a new version, then the new version branch would be v3.3. Branch version names should only target major/minor releases, not the patch of a version.</p>
+<p>There are two files that control versioning for the wiki, each serves a different purpose.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>wiki-playbook.yml</code> - determines what branches to use for content.</p>
+</li>
+<li>
+<p><code>antora.yml</code> - controls module versioning.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The wiki uses branches for versioning. The current branch being used for the jMonkeyEngine is <strong>always</strong> the master branch of the wiki.  In the playbook this is known as the <code><strong>HEAD</strong></code> branch.</p>
+</div>
+<div class="paragraph">
+<p>The <code>docs</code> module is the main module for the wiki. Its <code>antora.yml</code> file controls the version of the wiki. The playbook uses this version to create the folders inside the <code>gh-pages</code> branch, building the content from the branches configured in the playbook.</p>
+</div>
+<div class="paragraph">
+<p>Branch version names should only target major/minor releases, not the patch of a version and start with &#8220;v&#8221;.</p>
 </div>
 <div class="paragraph">
 <p>When it&#8217;s time to cut a new version for the wiki, the process is as follows.</p>
 </div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-A component module is a module that has an <code>antora.yml</code> file. A named module lives inside a component module. The version in the <code>antora.yml</code> file controls the version for the component module i.e. the wiki, not the version in the <code>wiki-playbook.yml</code>.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>We do not want the Antora cache to be versioned so you need to either remove the cache from the master branch before creating the new version branch or delete it after creating the new version branch.</p>
-</div>
 <div class="olist arabic">
-<div class="title">How to remove first</div>
 <ol class="arabic">
+<li>
+<p>We do not want the Antora cache to be versioned so you need to either remove the cache from the master branch before creating the new version branch or delete it after creating the new version branch.</p>
+<div class="olist loweralpha">
+<div class="title">How to remove first</div>
+<ol class="loweralpha" type="a">
 <li>
 <p>From the <code>Commit Packages</code> command in the main.yml workflow, located in the <code>.github/workflows</code> directory, remove the cache part from the <code>add:</code> line.</p>
 <div class="listingblock">
@@ -328,8 +336,14 @@ add: "package-lock.json package.json ./.cache/antora/*"</code></pre>
 <li>
 <p>Stage, commit and push your changes to the repository.</p>
 </li>
+</ol>
+</div>
+</li>
 <li>
-<p>Create a new branch that matches the <strong>current version</strong> of the wiki. If master is currently targeting 3.4 for example, that would mean the branch name would be v3.3.</p>
+<p>Create a new branch that matches the <strong>current version</strong> of the wiki. If the current version (HEAD) is targeting version 3.3 in the <code>antora.yml</code> for example, and you are creating a new version, you would name the new branch v3.3. Thereby preserving the current master branch content.</p>
+</li>
+<li>
+<p>If you didn&#8217;t remove the cache during step one, delete it from the newly created branch.</p>
 </li>
 <li>
 <p>Push the branch to the repository.</p>
@@ -351,7 +365,7 @@ add: "package-lock.json package.json ./.cache/antora/*"</code></pre>
 </div>
 </li>
 <li>
-<p>Increment the version of any antora.yml file. At the time of this writing, there were two:</p>
+<p>Increment the version of the antora.yml file.</p>
 <div class="openblock">
 <div class="content">
 <div class="listingblock">
@@ -361,9 +375,6 @@ add: "package-lock.json package.json ./.cache/antora/*"</code></pre>
 title: JME
 version: '3.4'</code></pre>
 </div>
-</div>
-<div class="paragraph">
-<p>and</p>
 </div>
 <div class="listingblock">
 <div class="title">The docs-wiki antora.yml</div>
@@ -380,7 +391,7 @@ version: '3.4'</code></pre>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-The version value is enclosed in a set of single quote marks (') because it starts with a number. As was mentioned earlier, the versioning is controlled by the antora.yml file, not the playbook, so they do not have to match.
+The version value is enclosed in a set of single quote marks (') because it starts with a number. As was mentioned earlier, the module versioning is controlled by the <code>antora.yml</code> file, not the playbook, so they do not have to match.
 </td>
 </tr>
 </table>
@@ -395,23 +406,29 @@ The version value is enclosed in a set of single quote marks (') because it star
 <p>Edit any links found in the <code>README.adoc</code>, located in the root of the repository, that are versioned, so they match the version value you just set in the <code>antora.yml</code> file.</p>
 </li>
 <li>
-<p>Add <code>./.cache/antora/*</code> back to the  <code>Commit Packages</code> command to rebuild the cache.</p>
+<p>Add <code>./.cache/antora/*</code> back to the  <code>Commit Packages</code> command to rebuild the cache if you removed it in the first step.</p>
 </li>
 <li>
-<p>Stage, commit and push the changes to the repository.</p>
+<p>Stage, commit and push your changes to the repository.</p>
 </li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The wiki versioning is now complete but you will need to update the docsearch repo to reflect the changes so that search works properly.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
 <p>Navigate to the Docsearch config repo and update the search script.</p>
 <div class="paragraph">
 <p><a href="https://github.com/algolia/docsearch-configs" class="bare">https://github.com/algolia/docsearch-configs</a></p>
 </div>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
+</li>
 <li>
 <p>From the main page, click the <b class="button">Go to file</b> button and Enter <code>jmonkeyengine</code> into the search line.</p>
 </li>
 <li>
-<p>Edit the version line to point to the new version used in the <code>Antora.yml</code> file. In this example, search is targeting 3.3.</p>
+<p>Edit the version line to point to the new version used in the <code>Antora.yml</code> file. In this example, the current search is targeting 3.3.</p>
 <div class="openblock">
 <div class="content">
 <div class="listingblock">
@@ -435,7 +452,7 @@ The version value is enclosed in a set of single quote marks (') because it star
 </div>
 </div>
 <div class="paragraph">
-<p>and the master branch <code>Antora.yml</code> file is using 3.4.</p>
+<p>The master branch <code>Antora.yml</code> file is using 3.4.</p>
 </div>
 <div class="listingblock">
 <div class="title">Antora.yml</div>
@@ -447,8 +464,11 @@ The version value is enclosed in a set of single quote marks (') because it star
 ...</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>Edit the <code>jmonkeyengine.json</code> file and push your commit to update the search. It takes aproximately 24hrs after the commit is merged for it to take affect.
+.Updated jmonkeyengine.json</p>
+</div>
 <div class="listingblock">
-<div class="title">Updated jmonkeyengine.json</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-.json hljs" data-lang=".json">{
   "index_name": "jmonkeyengine",
@@ -468,9 +488,6 @@ The version value is enclosed in a set of single quote marks (') because it star
 </div>
 </div>
 </div>
-</div>
-</li>
-</ol>
 </div>
 </li>
 </ol>
