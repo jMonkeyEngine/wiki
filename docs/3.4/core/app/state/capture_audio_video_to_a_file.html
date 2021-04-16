@@ -1,0 +1,1644 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Capture Audio/Video to a File :: jMonkeyEngine Docs</title>
+    <link rel="canonical" href="https://wiki.jmonkeyengine.org/docs/3.4/core/app/state/capture_audio_video_to_a_file.html">
+    <link rel="prev" href="screenshots.html">
+    <link rel="next" href="../../effect/effects_overview.html">
+    <meta name="generator" content="Antora 2.3.3">
+    <link rel="stylesheet" href="../../../../../_/css/site.css">
+<meta property="og:image" content="https://wiki.jmonkeyengine.org/_/img/iconx128.png">
+<meta property="og:description" content="Capture Audio/Video to a File">
+<meta property="og:title" content="jMonkeyEngine Docs">
+<link rel="stylesheet" href="../../../../../_/css/site-extra.css">
+<link rel="stylesheet" href="../../../../../_/css/vendor/docsearch.min.css">
+<!-- fetched from https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css -->
+<link rel="icon" href="../../../../../_/img/favicon.ico" type="image/x-icon">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://wiki.jmonkeyengine.org">
+        <img alt="" src="../../../../../_/img/jme-logo.png" height="32" type="image/x-icon">
+      </a>
+      <div class="navbar-item hide-for-print">
+        <input id="search-input" type="text" placeholder="Search docs">
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item theme-switch-wrapper">
+          <label class="theme-switch" for="checkbox">
+            <input type="checkbox" id="checkbox" />
+            <div class="slider round"></div>
+          </label>
+        </div>
+        <a class="navbar-item" href="https://github.com/jmonkeyengine/wiki">Github</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="docs" data-version="3.4">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../../../documentation.html">JME</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../../documentation.html">Getting Started</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="https://javadoc.jmonkeyengine.org/v3.3.2-stable">JavaDoc</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../../tutorials/beginner/beginner.html">Beginner Tutorials</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../tutorials/beginner/hello_simpleapplication.html">Hello SimpleApplication</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../tutorials/beginner/hello_node.html">Hello Node</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../tutorials/beginner/hello_asset.html">Hello Asset</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../tutorials/beginner/hello_main_event_loop.html">Hello Update Loop</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../tutorials/beginner/hello_input_system.html">Hello Input System</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../tutorials/beginner/hello_material.html">Hello Material</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../tutorials/beginner/hello_animation.html">Hello Animation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../tutorials/beginner/hello_picking.html">Hello Picking</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../tutorials/beginner/hello_collision.html">Hello Collision</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../tutorials/beginner/hello_terrain.html">Hello Terrain</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../tutorials/beginner/hello_audio.html">Hello Audio</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../tutorials/beginner/hello_effects.html">Hello Effects</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../tutorials/beginner/hello_physics.html">Hello Physics</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Key Concepts</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../tutorials/concepts/best_practices.html">Best Practices</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../tutorials/concepts/optimization.html">Optimization</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../tutorials/concepts/faq.html">Frequently Asked Questions</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../tutorials/concepts/math_for_dummies.html">Math for Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../tutorials/concepts/math.html">Math overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../tutorials/concepts/math_cheet_sheet.html">3D math "cheat sheet"</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../tutorials/concepts/rotate.html">3-D Rotation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../tutorials/concepts/math_video_tutorials.html">Math video tutorial series</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../tutorials/concepts/multi-media_asset_pipeline.html">Multi-Media Asset Pipeline</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../tutorials/concepts/the_scene_graph.html">The Scene Graph</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../tutorials/concepts/scenegraph_for_dummies.html">Scene Graph for Dummies</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../tutorials/concepts/terminology.html">3D Graphics Terminology</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../tutorials/concepts/transparency_sorting.html">Transparency Sorting</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Articles and How-to&#8217;s</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">How to Model</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../tutorials/how-to/modeling/3dsmax/3dsmax.html">3dsmax</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../../tutorials/how-to/modeling/blender/blender.html">Blender</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../../tutorials/how-to/modeling/blender/blender_buffer_clearing.html">Buffer Clearing</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../../tutorials/how-to/modeling/blender/blender_gltf.html">Export as GlTF</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../../tutorials/how-to/modeling/blender/blender_ogre_export.html">Export as Ogre XML</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../../tutorials/how-to/modeling/blender/blender_ogre_compatibility.html">Ogre Compatibility</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../../tutorials/how-to/modeling/blender/makehuman.html">MakeHuman</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../../tutorials/how-to/modeling/blender/makehuman_blender_ogrexml_toolchain.html">MakeHuman toolchain</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">How to Animate</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Mixamo</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../../tutorials/how-to/modeling/blender/mixamo.html">Blender Models</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Video</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="https://youtu.be/jHgAgTWIers?list=PLv6qR9TGkz8RcUr-fOHI2SksWA4BAU9TS">Part 1- Download Model</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="https://youtu.be/GQJSrOpNQwI?list=PLv6qR9TGkz8RcUr-fOHI2SksWA4BAU9TS">Part 2- Rig and Animate</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="https://youtu.be/JzRe2Dxbcmc?list=PLv6qR9TGkz8RcUr-fOHI2SksWA4BAU9TS">Part 3- Import to JME</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="https://youtu.be/8wwDRDJop7k?list=PLv6qR9TGkz8RcUr-fOHI2SksWA4BAU9TS">Part 4- Play Animation</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../tutorials/how-to/debugging.html">Debugging with Wireframes</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../tutorials/how-to/util/free_skymaps.html">How to create free skymaps</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Java Tips</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../tutorials/how-to/java/localization.html">Localization</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../tutorials/how-to/java/swing_canvas.html">Swing Canvas</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../tutorials/how-to/java/logging.html">Logging</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../tutorials/how-to/java/read_graphic_card_capabilites.html">Read Graphics Capabilites</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Articles</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Physically Based Rendering</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../../tutorials/how-to/articles/pbr/pbr_part1.html">PBR – Part one</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../../tutorials/how-to/articles/pbr/pbr_part2.html">PBR – Part two</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../../tutorials/how-to/articles/pbr/pbr_part3.html">PBR – Part three</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Core Engine</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../simpleapplication.html">SimpleApplication</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../system/appsettings.html">AppSettings</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Controlling Game Logic</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../update_loop.html">Update Loop</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="application_states.html">Application States</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../scene/control/custom_controls.html">Custom Controls</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Video</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="https://www.youtube.com/watch?v=MNDiZ9YHIpM">Control any scene node</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="https://www.youtube.com/watch?v=-OzRZscLlHY">Control a character</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="https://wiki.jmonkeyengine.org/Scenes/SDK-UsecaseDemo_1.zip">Video Source Code</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../multithreading.html">Multithreading</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Scene Graph</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../scene/traverse_scenegraph.html">Traverse SceneGraph</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../scene/spatial.html">Spatial: Node vs Geometry</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../scene/mesh.html">Mesh</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../scene/custom_meshes.html">Custom Meshes</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../scene/shape/shape.html">Shape</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../scene/3d_models.html">3D Models</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../asset/asset_manager.html">Asset Manager</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../export/save_and_load.html">Saving and Loading Nodes</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../collision/collision_and_intersection.html">Collision and Intersection</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../scene/control/level_of_detail.html">Level of Detail</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Animation, Scene</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../animation/animation.html">Animation-Old</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../anim/animation.html">Animation-New</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../cinematic/cinematics.html">Cinematics (cutscenes, fake destruction physics)</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../cinematic/motionpath.html">MotionPaths and Waypoints</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Material, Light, Shadow</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../material/how_to_use_materials.html">How to use Materials</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../material/j3m_material_files.html">.j3m Material Files</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../material/material_definitions.html">.j3md Material Definitions</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../material/materials_overview.html">.j3md Properties</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../shader/jme3_shaders.html">Shaders and JME3</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../shader/jme3_shadernodes.html">Shader Node System</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../shader/shader_video_tutorials.html">Shader Video Tutorials</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../light/light_and_shadow.html">Light and Shadow</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../texture/anisotropic_filtering.html">Anisotropic Filtering</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../system/jme3_srgbpipeline.html">Gamma Correction</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Audio, Video</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../audio/audio.html">Playing Sounds</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../audio/audio_environment_presets.html">Audio Environment Presets</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="screenshots.html">Capture Screenshots</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="capture_audio_video_to_a_file.html">Capture Audio/Video</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Filter, Effect</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../effect/effects_overview.html">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../effect/bloom_and_glow.html">Bloom and Glow</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../effect/particle_emitters.html">Particle Emitters</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Landscapes</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../util/sky.html">Sky</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../terrain/terrain.html">Terrain (TerraMonkey)</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../collision/terrain_collision.html">Terrain Collision</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../effect/water.html">Simple Water</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../effect/post-processor_water.html">Post-Processor Water</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Camera</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../renderer/camera.html">Camera</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../renderer/making_the_camera_follow_a_character.html">Follow a Character</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../renderer/remote-controlling_the_camera.html">Remote-Controlling</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../renderer/multiple_camera_views.html">Multiple Camera Views</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../renderer/jme3_renderbuckets.html">Render Buckets</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">User Interaction</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../input/input_handling.html">Input Handling</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../input/combo_moves.html">Combo Moves</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../input/mouse_picking.html">Mouse Picking</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Graphical User Interface</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Nifty GUI</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../gui/nifty_gui.html">Integration Tutorial</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../gui/nifty_gui_best_practices.html">Best Practices</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../gui/nifty_gui_scenarios.html">Scenarios</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../ui/hud.html">Head-Up Display (HUD)</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Virtual Reality</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../vr/virtualreality.html">Virtual Reality</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../../physics/physics.html">Physics</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../physics/bullet_multithreading.html">Multi-Threaded Physics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../physics/collision/physics_listeners.html">Collision Detection</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../physics/joint/hinges_and_joints.html">Hinges and Joints</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../physics/control/walking_character.html">Walking Character</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../physics/control/ragdoll.html">Ragdoll</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../physics/control/vehicles.html">Vehicles</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../physics/control/softbody.html">Softbody</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../physics/bullet_pitfalls.html">Bullet Physics Pitfalls</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Networking</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../networking/networking.html">Networking (SpiderMonkey)</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../networking/headless_server.html">Headless Server</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../networking/monkey_zone.html">Multi-Player Demo Code</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../networking/networking_video_tutorials.html">Networking Video Tutorials</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">User Contributions</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../contributions/contributions.html">User Made Utilities</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Shader</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../contributions/shader/shaderblow_project.html">ShaderBlow Project</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Landscapes</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../contributions/lanscapes/vegetationsystem/vegetationsystem.html">Vegetation System</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Networking</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../contributions/networking/open_game_finder.html">Open Game Finder</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Entity System</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#es/entitysystem.adoc">The Zay-ES Entity System</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Artificial Intelligence</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../contributions/ai/recast.html">Recast Navigation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../contributions/ai/building_recast.html">Updating and building Recast Native Bindings</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../contributions/ai/monkey_brains.html">Monkey Brains</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../contributions/ai/steer_behaviours.html">Steer Behaviours</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../contributions/ai/jme3_ai.html">jME3 Artificial Intelligence</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">GUI</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="https://github.com/jMonkeyEngine-Contributions/Lemur">Lemur - a native jME3 GUI library with scene graph tools</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="https://github.com/jMonkeyEngine-Contributions/Lemur/wiki/Modules">Lemur Scene Graph Tools</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="http://hub.jmonkeyengine.org/t/lemur-gems-1-inputmapper-based-camera-movement/28703">Lemur Gems #1 - Input mapper based camera movement. </a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="http://hub.jmonkeyengine.org/t/lemur-gems-2-inputmapper-delegates/28710">Lemur Gems #2 - Input mapper delegates</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="http://hub.jmonkeyengine.org/t/lemur-gems-3-scene-picking/28713">Lemur Gems #3 - Scene picking</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../contributions/gui/tonegodgui/tonegodgui.html">tonegodGUI - a native jME3 GUI library</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Tools</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../contributions/tools/navigation.html">Mercator Projection Tool (Marine Navigation)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../contributions/tools/charts.html">Visualizing Maps in JME3 (Marine Charts)</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Projects</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../contributions/projects/rise_of_mutants_project.html">Rise of Mutants Project</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../../sdk/sdk.html">SDK</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Video Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">SDK Use Case Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=-OzRZscLlHY">Demo 1 (Quixote demo)</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=6-YWxD3JByE">Demo 2 (Models and Materials)</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">SDK Tutorials</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=M1_0pbeyJzI">Basics</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=nL7woH40i5c">Importing Models</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=DUmgAjiNzhY">Dragging&amp;Dropping Nodes</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=ntPAmtsQ6eM">Scene Composing</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=zgPV3W6dD4s">Terrain with Collision Shape</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=Feu3-mrpolc">Working with Materials</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=MNDiZ9YHIpM">Custom Controls</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=oZnssg8TBWQ">WebStart Deployment</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=D7JM4VMKqPc">Animation and Effect TrackEditing</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Getting Started</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../sdk/update_center.html">Updating jMonkeyEngine SDK</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../sdk/troubleshooting.html">Troubleshooting</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Java Development Features</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../sdk/project_creation.html">Project Creation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../sdk/code_editor.html">Code Editor and Palette</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../sdk/version_control.html">File Version Control</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../sdk/debugging_profiling_testing.html">Debug, Profile, Test</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../../sdk/application_deployment.html">Application Deployment</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../../sdk/default_build_script.html">Default Build Script</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../../sdk/android.html">Android</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../../sdk/android_cheat_sheet.html">Android Cheat Sheet</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../../sdk/ios.html">iOS</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Unique Features</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../../sdk/model_loader_and_viewer.html">Import, View, Convert Models</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../../sdk/asset_packs.html">Asset Packs</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../sdk/scene_explorer.html">The SceneExplorer</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../sdk/scene_composer.html">Composing a Scene</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../sdk/terrain_editor.html">Terrain Editor</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../sdk/sample_code.html">Sample Code</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../sdk/material_editing.html">Material Editing</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../sdk/font_creation.html">Creating Bitmap Fonts</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="https://hub.jmonkeyengine.org/t/effecttrack-and-audiotrack-editing-in-the-sdk/23378">Audio and Effect Track Editing</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="https://www.youtube.com/watch?v=D7JM4VMKqPc">Video: Effect and AudioTrack editing in jMonkeyEngine 3 sdk</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../sdk/filters.html">Post-Processor Filter Editor and Viewer</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="application_states.html">Application States</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../scene/control/custom_controls.html">Custom Controls</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../sdk/vehicle_creator.html">Vehicle Creator</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Advanced Usage</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../sdk/build_platform.html">Building jMonkeyEngine SDK</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../sdk/use_own_jme.html#.adoc">Using your own (modified) version of jME3 in jMonkeyEngine SDK</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../sdk/increasing_heap_memory.html">Increasing Heap Memory</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../sdk/log_files.html">Log Files</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Available external plugins</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../contributions/contributions.html">Contributions</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../sdk/neotexture.html">Neo Texture Editor for procedural textures</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="http://www.youtube.com/watch?v=yS9a9o4WzL8">Video: Mesh Tool &amp; Physics Editor</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../../sdk/development.html">Developing plugins for jMonkeyEngine SDK</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../sdk/development/setup.html">Creating a plugin</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../sdk/development/general.html">Creating components</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../sdk/development/scene.html">The Main Scene</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../sdk/development/sceneexplorer.html">The Scene Explorer</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../sdk/development/projects_assets.html">Projects and Assets</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../sdk/development/extension_library.html">Create a library plugin from a jar file</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../sdk/development/model_loader.html">Create a new or custom model filetype and loader</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">JME</span>
+    <span class="version">3.4</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">JME</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../../../documentation.html">3.4</a>
+        </li>
+        <li class="version">
+          <a href="../../../../3.3/documentation.html">3.3</a>
+        </li>
+        <li class="version">
+          <a href="../../../../3.2/documentation.html">3.2</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Wiki Contribution</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../../docs-wiki/3.3/wiki_contributor.html">3.3</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <span class="title">Wiki UI</span>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../../../wiki-ui/index.html">master</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../../documentation.html">JME</a></li>
+    <li>Audio, Video</li>
+    <li><a href="capture_audio_video_to_a_file.html">Capture Audio/Video</a></li>
+  </ul>
+</nav>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">3.4</button>
+  <div class="version-menu">
+    <a class="version is-current" href="capture_audio_video_to_a_file.html">3.4</a>
+    <a class="version" href="../../../../3.3/core/app/state/capture_audio_video_to_a_file.html">3.3</a>
+    <a class="version" href="../../../../3.2/core/app/state/capture_audio_video_to_a_file.html">3.2</a>
+  </div>
+</div>
+  <div class="edit-this-page"><a href="https://github.com/jMonkeyEngine/wiki/edit/master/docs/modules/core/pages/app/state/capture_audio_video_to_a_file.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Capture Audio/Video to a File</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>So you&#8217;ve made your cool new JMonkeyEngine3 game and you want to
+create a demo video to show off your hard work. Or maybe you want to
+make a cutscene for your game using the physics and characters in the
+game itself.  Screen capturing is the most straightforward way to do
+this, but it can slow down your game and produce low-quality video and
+audio as a result. A better way is to record video and audio directly
+from the game while it is running using VideoRecorderAppState.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Combine this method with jMonkeyEngine&#8217;s
+<a href="../../cinematic/cinematics.html" class="page">Cinematics</a>
+feature to record high-quality game trailers!</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="simple-way"><a class="anchor" href="#simple-way"></a>Simple Way</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>First off, if all you need is to record video at 30fps with no sound, then look
+no further than jMonkeyEngine 3&#8217;s built in <code>VideoRecorderAppState</code>
+class.</p>
+</div>
+<div class="paragraph">
+<p>Add the following code to your <code>simpleInitApp()</code> method.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">stateManager.attach(new VideoRecorderAppState()); //start recording</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The game will run slow, but the recording will be in high-quality and
+normal speed. Recording starts when the state is
+attached, and ends when the application quits or the state is detached.</p>
+</div>
+<div class="paragraph">
+<p>The video files will be stored in your <strong>user home directory</strong>.
+If you want to save to another path, specify a File object in the
+VideoRecorderAppState constructor.</p>
+</div>
+<div class="paragraph">
+<p>That&#8217;s all!</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="advanced-way"><a class="anchor" href="#advanced-way"></a>Advanced Way</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If you want to record audio as well, record at different framerates,
+or record from multiple viewpoints at once, then there&#8217;s a full
+solution for doing this already made for you here:</p>
+</div>
+<div class="paragraph">
+<p><a href="http://www.aurellem.com/releases/jmeCapture-latest.zip">http://www.aurellem.com/releases/jmeCapture-latest.zip</a></p>
+</div>
+<div class="paragraph">
+<p><a href="http://www.aurellem.com/releases/jmeCapture-latest.tar.bz2">http://www.aurellem.com/releases/jmeCapture-latest.tar.bz2</a></p>
+</div>
+<div class="paragraph">
+<p>Download the archive in your preferred format, extract,
+add the jars to your project, and you are ready to go.</p>
+</div>
+<div class="paragraph">
+<p>The javadoc is here:
+<a href="http://www.aurellem.com/jmeCapture/docs/">http://www.aurellem.com/jmeCapture/docs/</a></p>
+</div>
+<div class="paragraph">
+<p>To capture video and audio you use the
+<code>com.aurellem.capture.Capture</code> class, which has two methods,
+<code>captureAudio()</code> and <code>captureVideo()</code>, and the
+<code>com.aurellem.capture.IsoTimer</code> class, which sets the audio and
+video framerate.</p>
+</div>
+<div class="paragraph">
+<p>The steps are:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">yourApp.setTimer(new IsoTimer(desiredFramesPerSecond));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This causes jMonkeyEngine to take as much time as it needs to fully
+calculate every frame of the video and audio.  You will see your game
+speed up and slow down depending on how computationally demanding your
+game is, but the final recorded audio and video will be perfectly
+sychronized and will run at exactly the fps which you specified.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">captureVideo(yourApp, targetVideoFile);
+captureAudio(yourApp, targetAudioFile);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>These will cause the app to record audio and video when it is run.
+Audio and video will stop being recorded when the app stops. Your
+audio will be recorded as a 44,100 Hz linear PCM wav file, while the
+video will be recorded according to the following rules:</p>
+</div>
+<div class="paragraph">
+<p>1.) (Preferred) If you supply an empty directory as the file, then
+the video will be saved as a sequence of .png files, one file per
+frame.  The files start at 0000000.png and increment from there.
+You can then combine the frames into your preferred
+container/codec. If the directory is not empty, then writing
+video frames to it will fail, and nothing will be written.</p>
+</div>
+<div class="paragraph">
+<p>2.) If the filename ends in &#8220;.avi&#8221; then the frames will be encoded as
+a RAW stream inside an AVI 1.0 container.  The resulting file
+will be quite large and you will probably want to re-encode it to
+your preferred container/codec format.  Be advised that some
+video payers cannot process AVI with a RAW stream, and that AVI
+1.0 files generated by this method that exceed 2.0GB are invalid
+according to the AVI 1.0 <abbr title="specification">spec</abbr> (but many programs can still deal
+with them.)  Thanks to
+<a href="http://www.randelshofer.ch/blog/2008/08/writing-avi-videos-in-pure-java/">Werner Randelshofer</a>
+for his excellent work which made the AVI file writer option possible.</p>
+</div>
+<div class="paragraph">
+<p>3.) Any non-directory file ending in anything other than &#8220;.avi&#8221; will
+be processed through Xuggle.  Xuggle provides the option to use
+many codecs/containers, but you will have to install it on your
+system yourself in order to use this option. Please visit
+<a href="http://www.xuggle.com/">http://www.xuggle.com/</a> to learn how to do this.</p>
+</div>
+<div class="paragraph">
+<p>Note that you will not hear any sound if you choose to record sound to
+a file.</p>
+</div>
+<div class="sect2">
+<h3 id="basic-example"><a class="anchor" href="#basic-example"></a>Basic Example</h3>
+<div class="paragraph">
+<p>Here is a complete example showing how to capture both audio and video
+from one of jMonkeyEngine3&#8217;s advanced demo applications.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import java.io.File;
+import java.io.IOException;
+
+import jme3test.water.TestPostWater;
+
+import com.aurellem.capture.Capture;
+import com.aurellem.capture.IsoTimer;
+import com.jme3.app.SimpleApplication;
+
+
+/**
+ * Demonstrates how to use basic Audio/Video capture with a
+ * jMonkeyEngine application. You can use these techniques to make
+ * high quality cutscenes or demo videos, even on very slow laptops.
+ *
+ * @author Robert McIntyre
+ */
+
+public class Basic {
+
+    public static void main(String[] ignore) throws IOException{
+	File video = File.createTempFile("JME-water-video", ".avi");
+	File audio = File.createTempFile("JME-water-audio", ".wav");
+
+	SimpleApplication app = new TestPostWater();
+	app.setTimer(new IsoTimer(60));
+	app.setShowSettings(false);
+
+	Capture.captureVideo(app, video);
+	Capture.captureAudio(app, audio);
+
+	app.start();
+
+	System.out.println(video.getCanonicalPath());
+	System.out.println(audio.getCanonicalPath());
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="how-it-works"><a class="anchor" href="#how-it-works"></a>How it works</h3>
+<div class="paragraph">
+<p>A standard JME3 application that extends <code>SimpleApplication</code> or
+<code>Application</code> tries as hard as it can to keep in sync with
+<em>user-time</em>.  If a ball is rolling at 1 game-mile per game-hour in the
+game, and you wait for one user-hour as measured by the clock on your
+wall, then the ball should have traveled exactly one game-mile. In
+order to keep sync with the real world, the game throttles its physics
+engine and graphics display.  If the computations involved in running
+the game are too intense, then the game will first skip frames, then
+sacrifice physics accuracy.  If there are particuraly demanding
+computations, then you may only get 1 fps, and the ball may tunnel
+through the floor or obstacles due to inaccurate physics simulation,
+but after the end of one user-hour, that ball will have traveled one
+game-mile.</p>
+</div>
+<div class="paragraph">
+<p>When we&#8217;re recording video, we don&#8217;t care if the game-time syncs with
+user-time, but instead whether the time in the recorded video
+(video-time) syncs with user-time. To continue the analogy, if we
+recorded the ball rolling at 1 game-mile per game-hour and watched the
+video later, we would want to see 30 fps video of the ball rolling at
+1 video-mile per <em>user-hour</em>. It doesn&#8217;t matter how much user-time it
+took to simulate that hour of game-time to make the high-quality
+recording.</p>
+</div>
+<div class="paragraph">
+<p>The IsoTimer ignores real-time and always reports that the same amount
+of time has passed every time it is called. That way, one can put code
+to write each video/audio frame to a file without worrying about that
+code itself slowing down the game to the point where the recording
+would be useless.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="advanced-example"><a class="anchor" href="#advanced-example"></a>Advanced Example</h3>
+<div class="paragraph">
+<p>The package from aurellem.com was made for AI research and can do more
+than just record a single stream of audio and video. You can use it
+to:</p>
+</div>
+<div class="paragraph">
+<p>1.) Create multiple independent listeners that each hear the world
+from their own perspective.</p>
+</div>
+<div class="paragraph">
+<p>2.) Process the sound data in any way you wish.</p>
+</div>
+<div class="paragraph">
+<p>3.) Do the same for visual data.</p>
+</div>
+<div class="paragraph">
+<p>Here is a more advanced example, which can also be found along with
+other examples in the jmeCapture.jar file included in the
+distribution.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package com.aurellem.capture.examples;
+
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.nio.ByteBuffer;
+
+import javax.sound.sampled.AudioFormat;
+
+import org.tritonus.share.sampled.FloatSampleTools;
+
+import com.aurellem.capture.AurellemSystemDelegate;
+import com.aurellem.capture.Capture;
+import com.aurellem.capture.IsoTimer;
+import com.aurellem.capture.audio.CompositeSoundProcessor;
+import com.aurellem.capture.audio.MultiListener;
+import com.aurellem.capture.audio.SoundProcessor;
+import com.aurellem.capture.audio.WaveFileWriter;
+import com.jme3.app.SimpleApplication;
+import com.jme3.audio.AudioNode;
+import com.jme3.audio.Listener;
+import com.jme3.cinematic.MotionPath;
+import com.jme3.cinematic.events.AbstractCinematicEvent;
+import com.jme3.cinematic.events.MotionTrack;
+import com.jme3.material.Material;
+import com.jme3.math.ColorRGBA;
+import com.jme3.math.FastMath;
+import com.jme3.math.Quaternion;
+import com.jme3.math.Vector3f;
+import com.jme3.scene.Geometry;
+import com.jme3.scene.Node;
+import com.jme3.scene.shape.Box;
+import com.jme3.scene.shape.Sphere;
+import com.jme3.system.AppSettings;
+import com.jme3.system.JmeSystem;
+
+/**
+ *
+ * Demonstrates advanced use of the audio capture and recording
+ * features.  Multiple perspectives of the same scene are
+ * simultaneously rendered to different sound files.
+ *
+ * A key limitation of the way multiple listeners are implemented is
+ * that only 3D positioning effects are realized for listeners other
+ * than the main LWJGL listener.  This means that audio effects such
+ * as environment settings will *not* be heard on any auxiliary
+ * listeners, though sound attenuation will work correctly.
+ *
+ * Multiple listeners as realized here might be used to make AI
+ * entities that can each hear the world from their own perspective.
+ *
+ * @author Robert McIntyre
+ */
+
+public class Advanced extends SimpleApplication {
+
+	/**
+	 * You will see three grey cubes, a blue sphere, and a path which
+	 * circles each cube.  The blue sphere is generating a constant
+	 * monotone sound as it moves along the track.  Each cube is
+	 * listening for sound; when a cube hears sound whose intensity is
+	 * greater than a certain threshold, it changes its color from
+	 * grey to green.
+	 *
+	 *  Each cube is also saving whatever it hears to a file.  The
+	 *  scene from the perspective of the viewer is also saved to a
+	 *  video file.  When you listen to each of the sound files
+	 *  alongside the video, the sound will get louder when the sphere
+	 *  approaches the cube that generated that sound file.  This
+	 *  shows that each listener is hearing the world from its own
+	 *  perspective.
+	 *
+	 */
+	public static void main(String[] args) {
+		Advanced app = new Advanced();
+		AppSettings settings = new AppSettings(true);
+		settings.setAudioRenderer(AurellemSystemDelegate.SEND);
+		JmeSystem.setSystemDelegate(new AurellemSystemDelegate());
+		app.setSettings(settings);
+		app.setShowSettings(false);
+		app.setPauseOnLostFocus(false);
+
+
+		try {
+			Capture.captureVideo(app, File.createTempFile("advanced",".avi"));
+			Capture.captureAudio(app, File.createTempFile("advanced", ".wav"));
+		}
+		catch (IOException e) {e.printStackTrace();}
+
+		app.start();
+	}
+
+
+	private Geometry bell;
+	private Geometry ear1;
+	private Geometry ear2;
+	private Geometry ear3;
+	private AudioNode music;
+	private MotionTrack motionControl;
+	private IsoTimer motionTimer = new IsoTimer(60);
+
+	private Geometry makeEar(Node root, Vector3f position){
+		Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+		Geometry ear = new Geometry("ear", new Box(1.0f, 1.0f, 1.0f));
+		ear.setLocalTranslation(position);
+		mat.setColor("Color", ColorRGBA.Green);
+		ear.setMaterial(mat);
+		root.attachChild(ear);
+		return ear;
+	}
+
+	private Vector3f[] path = new Vector3f[]{
+			// loop 1
+			new Vector3f(0, 0, 0),
+			new Vector3f(0, 0, -10),
+			new Vector3f(-2, 0, -14),
+			new Vector3f(-6, 0, -20),
+			new Vector3f(0, 0, -26),
+			new Vector3f(6, 0, -20),
+			new Vector3f(0, 0, -14),
+			new Vector3f(-6, 0, -20),
+			new Vector3f(0, 0, -26),
+			new Vector3f(6, 0, -20),
+			// loop 2
+			new Vector3f(5, 0, -5),
+			new Vector3f(7, 0, 1.5f),
+			new Vector3f(14, 0, 2),
+			new Vector3f(20, 0, 6),
+			new Vector3f(26, 0, 0),
+			new Vector3f(20, 0, -6),
+			new Vector3f(14, 0, 0),
+			new Vector3f(20, 0, 6),
+			new Vector3f(26, 0, 0),
+			new Vector3f(20, 0, -6),
+			new Vector3f(14, 0, 0),
+			// loop 3
+			new Vector3f(8, 0, 7.5f),
+			new Vector3f(7, 0, 10.5f),
+			new Vector3f(6, 0, 20),
+			new Vector3f(0, 0, 26),
+			new Vector3f(-6, 0, 20),
+			new Vector3f(0, 0, 14),
+			new Vector3f(6, 0, 20),
+			new Vector3f(0, 0, 26),
+			new Vector3f(-6, 0, 20),
+			new Vector3f(0, 0, 14),
+			// begin ellipse
+			new Vector3f(16, 5, 20),
+			new Vector3f(0, 0, 26),
+			new Vector3f(-16, -10, 20),
+			new Vector3f(0, 0, 14),
+			new Vector3f(16, 20, 20),
+			new Vector3f(0, 0, 26),
+			new Vector3f(-10, -25, 10),
+			new Vector3f(-10, 0, 0),
+			// come at me!
+			new Vector3f(-28.00242f, 48.005623f, -34.648228f),
+			new Vector3f(0, 0 , -20),
+	};
+
+	private void createScene() {
+		Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+		bell = new Geometry( "sound-emitter" , new Sphere(15,15,1));
+		mat.setColor("Color", ColorRGBA.Blue);
+		bell.setMaterial(mat);
+		rootNode.attachChild(bell);
+
+		ear1 = makeEar(rootNode, new Vector3f(0, 0 ,-20));
+		ear2 = makeEar(rootNode, new Vector3f(0, 0 ,20));
+		ear3 = makeEar(rootNode, new Vector3f(20, 0 ,0));
+
+		MotionPath track = new MotionPath();
+
+		for (Vector3f v : path){
+			track.addWayPoint(v);
+		}
+		track.setCurveTension(0.80f);
+
+		motionControl = new MotionTrack(bell,track);
+		// for now, use reflection to change the timer...
+		// motionControl.setTimer(new IsoTimer(60));
+
+		try {
+			Field timerField;
+			timerField = AbstractCinematicEvent.class.getDeclaredField("timer");
+			timerField.setAccessible(true);
+			try {timerField.set(motionControl, motionTimer);}
+			catch (IllegalArgumentException e) {e.printStackTrace();}
+			catch (IllegalAccessException e) {e.printStackTrace();}
+		}
+		catch (SecurityException e) {e.printStackTrace();}
+		catch (NoSuchFieldException e) {e.printStackTrace();}
+
+
+		motionControl.setDirectionType(MotionTrack.Direction.PathAndRotation);
+		motionControl.setRotation(new Quaternion().fromAngleNormalAxis(-FastMath.HALF_PI, Vector3f.UNIT_Y));
+		motionControl.setInitialDuration(20f);
+		motionControl.setSpeed(1f);
+
+		track.enableDebugShape(assetManager, rootNode);
+		positionCamera();
+	}
+
+
+	private void positionCamera(){
+		this.cam.setLocation(new Vector3f(-28.00242f, 48.005623f, -34.648228f));
+		this.cam.setRotation(new Quaternion(0.3359635f, 0.34280345f, -0.13281013f, 0.8671653f));
+	}
+
+	private void initAudio() {
+		org.lwjgl.input.Mouse.setGrabbed(false);
+		music = new AudioNode(assetManager, "Sound/Effects/Beep.ogg", false);
+
+		rootNode.attachChild(music);
+		audioRenderer.playSource(music);
+		music.setPositional(true);
+		music.setVolume(1f);
+		music.setReverbEnabled(false);
+		music.setDirectional(false);
+		music.setMaxDistance(200.0f);
+		music.setRefDistance(1f);
+		//music.setRolloffFactor(1f);
+		music.setLooping(false);
+		audioRenderer.pauseSource(music);
+	}
+
+	public class Dancer implements SoundProcessor {
+		Geometry entity;
+		float scale = 2;
+		public Dancer(Geometry entity){
+			this.entity = entity;
+		}
+
+		/**
+		 * this method is irrelevant since there is no state to cleanup.
+		 */
+		public void cleanup() {}
+
+
+		/**
+		 * Respond to sound!  This is the brain of an AI entity that
+		 * hears its surroundings and reacts to them.
+		 */
+		public void process(ByteBuffer audioSamples, int numSamples, AudioFormat format) {
+			audioSamples.clear();
+			byte[] data = new byte[numSamples];
+			float[] out = new float[numSamples];
+			audioSamples.get(data);
+			FloatSampleTools.byte2floatInterleaved(data, 0, out, 0,
+					numSamples/format.getFrameSize(), format);
+
+			float max = Float.NEGATIVE_INFINITY;
+			for (float f : out){if (f &gt; max) max = f;}
+			audioSamples.clear();
+
+			if (max &gt; 0.1){entity.getMaterial().setColor("Color", ColorRGBA.Green);}
+			else {entity.getMaterial().setColor("Color", ColorRGBA.Gray);}
+		}
+	}
+
+	private void prepareEar(Geometry ear, int n){
+		if (this.audioRenderer instanceof MultiListener){
+			MultiListener rf = (MultiListener)this.audioRenderer;
+
+			Listener auxListener = new Listener();
+			auxListener.setLocation(ear.getLocalTranslation());
+
+			rf.addListener(auxListener);
+			WaveFileWriter aux = null;
+
+			try {aux = new WaveFileWriter(File.createTempFile("advanced-audio-" + n, ".wav"));}
+			catch (IOException e) {e.printStackTrace();}
+
+			rf.registerSoundProcessor(auxListener,
+					new CompositeSoundProcessor(new Dancer(ear), aux));
+
+		}
+	}
+
+
+	public void simpleInitApp() {
+		this.setTimer(new IsoTimer(60));
+		initAudio();
+
+		createScene();
+
+		prepareEar(ear1, 1);
+		prepareEar(ear2, 1);
+		prepareEar(ear3, 1);
+
+		motionControl.play();
+
+	}
+
+	public void simpleUpdate(float tpf) {
+		motionTimer.update();
+		if (music.getStatus() != AudioSource.Status.Playing){
+			music.play();
+		}
+		Vector3f loc = cam.getLocation();
+		Quaternion rot = cam.getRotation();
+		listener.setLocation(loc);
+		listener.setRotation(rot);
+		music.setLocalTranslation(bell.getLocalTranslation());
+	}
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="https://youtu.be/oCEfK0yhDrY" alt="https://youtu.be/oCEfK0yhDrY" width="400" height=""></span></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="using-advanced-features-to-record-from-more-than-one-perspective-at-once"><a class="anchor" href="#using-advanced-features-to-record-from-more-than-one-perspective-at-once"></a>Using Advanced features to Record from more than one perspective at once</h3>
+<div class="paragraph">
+<p><span class="image"><img src="https://youtu.be/WIJt9aRGusc" alt="https://youtu.be/WIJt9aRGusc" width="400" height=""></span></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="more-information"><a class="anchor" href="#more-information"></a>More Information</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This is the old page showing the first version of this idea
+<a href="http://aurellem.org/cortex/html/capture-video.html">http://aurellem.org/cortex/html/capture-video.html</a></p>
+</div>
+<div class="paragraph">
+<p>All source code can be found here:</p>
+</div>
+<div class="paragraph">
+<p><a href="http://hg.bortreb.com/audio-send">http://hg.bortreb.com/audio-send</a></p>
+</div>
+<div class="paragraph">
+<p><a href="http://hg.bortreb.com/jmeCapture">http://hg.bortreb.com/jmeCapture</a></p>
+</div>
+<div class="paragraph">
+<p>More information on the modifications to OpenAL to support multiple
+listeners can be found here.</p>
+</div>
+<div class="paragraph">
+<p><a href="http://aurellem.org/audio-send/html/ear.html">http://aurellem.org/audio-send/html/ear.html</a></p>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="screenshots.html">Capture Screenshots</a></span>
+  <span class="next"><a href="../../effect/effects_overview.html">Overview</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>Copyright 2020 jMonkeyEngine Wiki Contributors. Licensed BSD-3.</p>
+</footer>
+<script src="../../../../../_/js/vendor/docsearch.min.js"></script>
+<!-- fetched from https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js -->
+<script>
+var search = docsearch({
+  apiKey: 'a736b6d93de805e26ec2f49b55013fbd',
+  indexName: 'jmonkeyengine',
+  inputSelector: '#search-input',
+  autocompleteOptions: { hint: false, keyboardShortcuts: ['s'] },
+  algoliaOptions: { hitsPerPage: 10 }
+}).autocomplete
+search.on('autocomplete:closed', function () { search.autocomplete.setVal() })
+function focusSearchInput () { document.querySelector('#search-input').focus() }
+if (document.querySelector('.home-link.is-current')) window.addEventListener('load', focusSearchInput)
+</script>
+<script src="../../../../../_/js/site.js"></script>
+<script async src="../../../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
