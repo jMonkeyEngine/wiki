@@ -1,0 +1,685 @@
+= Joysticks
+:revnumber: 2.0
+:revdate: 2021/04/15
+:keywords: gamepad, joystick, controller, xbox, playstation, nintendo, steam, input, documentation
+
+
+
+== Terminology
+
+===== Joystick
+A game controller, such as the one that comes with the Xbox or Playstation, or sold by Valve for Steam.
+
+==== Axis
+Any input method on the joystick that lets users input a range of continuous values from -1 to 1. This usually applies to the analog sticks, and sometimes the Dpad and triggers.
+
+==== Button
+Any input method on the joystick that lets users input an either "is pressed" or "is not pressed" signal.
+
+===== Element
+
+A collective term for buttons and axes.
+
+===== Analog Stick:
+
+image:input/axes.png[axes.png,width="",height=""]
+
+These input elements contain two axes each: one axis for up and down movement, and another axis for left-to-right movement. They also have a button that can be triggered by pressing the stick into the joystick.
+
+===== DPad:
+
+image:input/dpad.png[dpad.png,width="",height=""]
+
+This element is for inputting discrete directional input. This is represented as a set of four buttons on some joysticks and as two axes (similar to an analog stick) on others.
+
+===== Action Buttons:
+
+image:input/action.png[action.png,width="",height=""]
+
+Action Buttons are a group of labeled buttons on the front of the controller. They usually have colors and letter/shape labels associated with them.
+
+===== Bumpers:
+
+image:input/bumpers.png[bumpers.png,width="",height=""]
+
+Buttons on the top of the controller.
+
+===== Triggers:
+
+image:input/triggers.png[triggers.png,width="",height=""]
+
+The other buttons on the top of the controller. These can be represented as either buttons similar to the bumpers, or as axes with a range, depending on the manufacturer.
+
+== Getting Started
+
+To get started with joysticks, you first need to enable them in your settings by calling `AppSettings.setUseJoysticks()`. Without this, they won't work!
+
+[source,java]
+----
+
+  public static void main(String[] args) {
+      TestJoystick app = new TestJoystick();
+      AppSettings settings = new AppSettings(true);
+      settings.setUseJoysticks(true); // Critical!
+      app.setSettings(settings);
+      app.start();
+  }
+
+----
+
+After this, any input events from joysticks should register. Note that if you are using the `jme3-lwjgl` library in your code, all joysticks need to be connected to the computer before your game starts for input to register. If you are using `jme3-lwjgl3` or `jme3-android`, then joypads will connect automatically mid-game.
+
+Assigning mappings to joysticks is a little different from keys, primarily because of the fact that there can be multiple joysticks connected at once.
+
+[source,java]
+----
+
+// This is sometimes null on Android if you have no joysticks connected.
+if (getInputManager().getJoysticks() != null) {
+  for (int i = 0; i < getInputManager().getJoysticks().length; i++) {
+    Joystick joy = getInputManager().getJoysticks()[i];
+    // Assigns the "jump" mapping to the bottom action button
+    // (A on Xbox joysticks, X on Playstation joysticks, and
+    // B on Nintendo joysticks).
+    joy.getButton(JoystickButton.BUTTON_0).assignButton("jump");
+    // Assigns the "walkLeft" and "walkRight" mappings to the left joystick
+    // axis's left and right motion. This is similar to mapping "walkLeft" to A
+    // or the left arrow key and "walkRight" to D or the right arrow key.
+    // However, since they are both controlled by the same axis moving in
+    // different directions in this case, we can do them both at once.
+    joy.getAxis(JoystickAxis.X_AXIS).assignAxis("walkRight", "walkLeft");
+    // For convenience, the most notable axes have special getter methods in
+    // the joystick. This will assign the "flashlight" mapping to the down
+    // direction on the DPad. Nothing will be added to the "up" button (and any
+    // mappings already assigned to the "up" button will be untouched).
+    joy.getPovYAxis().assignAxis(null, "flashlight");
+  }
+}
+
+// Add the mappings to your listener as before.
+getInputManager().addListener(myListener, "jump", "walkLeft", "walkRight", "flashlight");
+
+----
+
+This code excerpt loops over every joystick connected to the computer and assigns mappings to their buttons and axes. It then adds all those mappings to a listener, just as before.
+
+`joy.getButton(BUTTON_NAME).assignButton(MAPPING);`
+
+The button is straightforward enough. You can select a button from the list of available buttons provided in the `JoystickButton` constants (or provide your own string, if you are supporting gamepads with nonstandard buttons), and then provide a mapping to assign to it.
+
+`joy.getAxis(AXIS_NAME).assignAxis(POSITIVE_MAPPING, NEGATIVE_MAPPING)`
+
+Axes are a bit more complicated. Unlike buttons, most axes can go into two directions: a positive direction, and a negative direction. These are treated as two seperate triggers. They usually are assigned to related functions (like walkLeft and walkRight), but, should your game call for it, you can technically assign them to completeyl different functions, like this:
+
+`joy.getAxis(JoystickAxis.X_AXIS).assignAxis("shoot", "crouch")`
+
+Here, moving the left analogue stick to the right (the positive direction) will trigger the "shoot" mapping, but moving it to the left will trigger the "crouch" mapping. This isn't very intuitive for the player, but it works nonetheless!
+
+`joy.getPovYAxis().assignAxis(null, "flashlight")`
+
+For convenience, the Joystick class provides some helper methods to obtain some of the most common axes. A list of them can be found on the xref:input/joystick_ref.adoc[Joystick Reference] page.
+
+Furthermore, we have specifically set the "positive" field to null. This means that we are not assigning anything to that side of the axis for now. Should we want to do so later, we can call something like:
+
+`joy.getPovYAxis().assignAxis("launchRocket", "deployMine")`
+
+Now, pressing the positive side of this axis will launch a rocket. Pressing the negative side will both deploy a mine and trigger the flashlight (as you'll recall, we can add multiple mappings to one button).
+
+With this strategy, you can easily integrate joystick functionality into our game, such as below
+
+[source,java]
+----
+
+// Add keyboard mappings
+getInputManager().addMapping("jump", new KeyTrigger(KeyInput.KEY_SPACE));
+getInputManager().addMapping("walkLeft", new KeyTrigger(KeyInput.KEY_A));
+getInputManager().addMapping("walkRight", new KeyTrigger(KeyInput.KEY_D));
+getInputManager().addMapping("flashlight", new KeyTrigger(KeyInput.KEY_F));
+
+// Add joystick mappings
+if (getInputManager().getJoysticks() != null) {
+  for (int i = 0; i < getInputManager().getJoysticks().length; i++) {
+    Joystick joy = getInputManager().getJoysticks()[i];
+    joy.getButton(JoystickButton.BUTTON_0).assignButton("jump");
+    joy.getAxis(JoystickAxis.X_AXIS).assignAxis("walkRight", "walkLeft");
+    joy.getPovYAxis().assignAxis(null, "flashlight");
+  }
+}
+
+// Add the mappings to your listener as before.
+getInputManager().addListener(myListener, "jump", "walkLeft", "walkRight", "flashlight");
+
+----
+
+With this code, you can press either the space bar or the bottom action button on any joystick to trigger "jump."
+
+==== Adding mappings for all joysticks
+
+This approach of looping through each joystick does have its limitations. For one, if a new joystick is connected, the new one will not register. To deal with this, we can add a listener for when a joystick is connected and disconnected. When it is connected, we can add the mappings then.
+
+[source,java]
+----
+
+JoystickConnectionListener connListener = new JoystickConnectionListener() {
+  @Override
+  void onConnected(Joystick joy) {
+    joy.getButton(JoystickButton.BUTTON_0).assignButton("jump");
+    joy.getAxis(JoystickAxis.X_AXIS).assignAxis("walkRight", "walkLeft");
+    joy.getPovYAxis().assignAxis(null, "flashlight");
+  }
+
+  @Override
+  void onDisconnected(Joystick joy) {
+
+  }
+}
+
+// Add keyboard mappings
+getInputManager().addJoystickConnectionListener(connListener);
+
+----
+
+Once we add that listener, connListener will trigger every time a joystick is connected or disconnected. If it is connected, it will add the mappings as needed.
+
+[WARNING]
+====
+The connection listener won't trigger for joysticks that are already connected at the start of the game. It may be in your best interest to have both the listener method and the above loop call a single method to assign your joystick mappings.
+====
+
+Of course, joystick mappings aren't the only good thing connection listeners are for. You can trigger whatever you like from here, such as connecting a new player whenever someone connects.
+
+Like with all listeners, remember to remove the listener when you are done with it.
+
+[source,java]
+----
+
+getInputManager().removeConnectionListener(connListener);
+
+----
+
+== Mappings
+
+There are a very large number of joysticks in the world and, unfortunately, not all manufacturers agree on how the joysticks should communicate with the computer. Often, the buttons will be mixed up, under different names, or even completely different from what most people would expect. To alleviate this problem, the `JoystickCompatibilityMappings` class will automatically recognize a variety of gamepads and converts whatever values they input into something more recognizable.
+
+Ideally, it should be a system that you can just ignore as it does all the work for you. However, there are nevertheless a large variety of gamepads, and it would be difficult to map them all. Until we get closer to this, you can easily write up your own mappings files and load them up.
+
+Mappings files are simply regular `.properties` files that map the name of an element as provided by the system to a name it should use. A sample is provided below:
+
+[source]
+----
+
+Xbox\ 360\ Wireless\ Receiver.18=12
+Xbox\ 360\ Wireless\ Receiver.17=15
+Xbox\ 360\ Wireless\ Receiver.16=13
+Xbox\ 360\ Wireless\ Receiver.15=14
+Xbox\ 360\ Wireless\ Receiver.14=null
+Xbox\ 360\ Wireless\ Receiver.13=null
+Xbox\ 360\ Wireless\ Receiver.12=null
+Xbox\ 360\ Wireless\ Receiver.11=null
+Xbox\ 360\ Wireless\ Receiver.10=11
+Xbox\ 360\ Wireless\ Receiver.rz=z
+Xbox\ 360\ Wireless\ Receiver.pov_y=y
+Xbox\ 360\ Wireless\ Receiver.pov_x=x
+Xbox\ 360\ Wireless\ Receiver.9=10
+Xbox\ 360\ Wireless\ Receiver.8=null
+axis.Xbox\ 360\ Wireless\ Receiver.pov_y=y[1.0600424,-1.0]
+Xbox\ 360\ Wireless\ Receiver.7=9
+axis.Xbox\ 360\ Wireless\ Receiver.pov_x=x[-1.0,1.0]
+Xbox\ 360\ Wireless\ Receiver.6=8
+button.Xbox\ 360\ Wireless\ Receiver.9=10
+button.Xbox\ 360\ Wireless\ Receiver.8=null
+
+----
+
+The key has two or three parts, each one seperated by a period. The first part is optional. It determines whether the remapping is for a button (`button.`) or an axis (`axis.`). Normally, the mapping system can tell the difference. However, manufacturers will sometimes give the same name to an axis and a button. In those cases, adding the prefix can help.
+
+The next part specifies the type of controller the mapping is for, as specified by the `Joystick.getName()` method (i.e., xbox wireless, playstation 3 wired, etc.). Spaces are preceded by backslashes.
+
+The final part is the name of the actual element, as specified by `JoystickButton.getName()` and `JoystickButton.getName()`. This is the given name of the element, and it doesn't change.
+
+The value is pretty simple: it is the name of the element that it should act like, as defined by the String constants in `JoystickButton` and `JoystickAxis`. You can see these values at the xref:input/joystick_ref.adoc[Joystick Reference].
+
+The value has a second feature, however: range remapping. If a mapping is for an axis (specifying a range implies that it is), you can change what values it maps to by adding a pair of brackets after the new name and putting a pair of numbers in between them. Say, for example, that an axis posts that it is at value -1 by default (as is done with some trigger axes). Let us then say that you want that axis to be at 0 on default, and at 1 when fully compressed. By specifying a range, you can accomplish that:
+
+[source]
+----
+
+axis.Xbox\ 360\ Wireless\ Receiver.5=rx[0.0,1.0]
+
+----
+
+Now, the axis with the name of "5" will be treated as the "rx" axis (the left trigger, JoystickAxis.LEFT_TRIGGER), and its values will be scaled to be within the range of 0 and 1. That way, when the trigger is not being pressed, it will always report its values as 0. Furthermore, when fully pulled, it will report its values as 1.
+
+[NOTE]
+====
+While you may have to use numbers beyond 1 and -1 here to get the axis to get into the proper range (i.e., if the axis isn't able to get to its full range due to wear and tear), the axis should not output any values beyond -1.0 and 1.0 in the end. It isn't the end of the world if it happens, but an axis that is suddenly returning a value of -2.3 when it is only moved a little bit to the right isn't helpful.
+====
+
+Alternatively, say that an axis is backwards from what is expected (i.e. moving the left analog stick to the left triggers the positive mapping rather than the negative mapping). We can simply remap the range backwards to fix this.
+
+[source]
+----
+
+axis.Xbox\ 360\ Wireless\ Receiver.x=x[1.0,-1.0]
+
+----
+
+[WARNING]
+====
+This system should NOT be a replacement for proper axis inversion settings! It is purely to ensure that the user's actions and the results correspond to each other. Vertical look inversion on the other hand (i.e. moving the right analog stick down to look up) is a user preference, and should be given its own setting.
+====
+
+=== Loading Properties
+
+To load a mapping file, first put the properties file somewhere where your compiler can find it and put it in the jar (the resources folder is usually the go-to option here). Then, override the initialize() method of your SimpleApplication class (NOT the simpleInitApp() method, that's everything else goes). Then, before the method calls its super implementation, you will need to pass the URL of the method to JoystickCompatibilityMappings.loadMappingProperties(URL), as such:
+[source,java]
+----
+
+@Override
+public void initialize() {
+  URL mappingUrl = Main.class.
+                        getResource("/my-joystick-mapping.properties");
+  try
+  {
+      JoystickCompatibilityMappings
+              .loadMappingProperties(mappingUrl);
+  }
+  catch (IOException e)
+  {
+      logger.error("Unable to load joystick mappings for " +
+              mappingUrl, e);
+  }
+  super.initialize();
+}
+
+@Override
+public void simpleInitApp() {
+  // Everything else, like input initialization, state manager setup, setting up the scene graph, etc.
+}
+----
+
+[WARNING]
+====
+The call to JoystickCompatibilityMappings.loadMappingProperties() MUST happen before super.initialize() is called. Otherwise, it won't be registered in time to take effect.
+====
+
+[WARNING]
+====
+Do not mix up the initialize() and simpleInitApp() methods. The initialize() method is for special-case instances like this when you absolutely need to register something before everything else, but the constructor is too early. Everything else should go into simpleInitApp().
+====
+
+You can load as many property files as you want. In fact, considering that different gamepads may have different mappings on different operating systems, this may be helpful, as such:
+
+[source,java]
+----
+
+/*
+ * Copyright 2020 Markil 3. All rights reserved.
+ * https://github.com/Markil3/JMEControllerConfig/blob/master/desktop/src/main/java/markil3/controller/Main.java
+ */
+URL mappingUrl;
+
+// Loads a general purpose file to get started.
+mappingUrl = Main.class.getResource("/joystick-mapping.general.properties");
+try
+{
+    JoystickCompatibilityMappings.loadMappingProperties(
+            mappingUrl);
+}
+catch (IOException e)
+{
+    logger.error("Unable to load joystick mappings.", e);
+}
+
+// Loads a properties file based on the type of operating system.
+switch (JmeSystem.getPlatform())
+{
+case Windows32:
+case Windows64:
+    mappingUrl = Main.class.
+            getResource("/joystick-mapping.windows.properties");
+    break;
+case MacOSX32:
+case MacOSX64:
+case MacOSX_PPC32:
+case MacOSX_PPC64:
+    mappingUrl = Main.class.
+            getResource("/joystick-mapping.osx.properties");
+    break;
+case Linux32:
+case Linux64:
+case Linux_ARM32:
+case Linux_ARM64:
+    mappingUrl = Main.class.
+            getResource("/joystick-mapping.linux.properties");
+    break;
+case Android_ARM5:
+case Android_ARM6:
+case Android_ARM7:
+case Android_ARM8:
+case Android_X86:
+case Android_Other:
+    mappingUrl = Main.class.
+            getResource("/joystick-mapping.android.properties");
+    break;
+case iOS_ARM:
+case iOS_X86:
+    mappingUrl = Main.class.
+            getResource("/joystick-mapping.ios.properties");
+    break;
+default:
+    mappingUrl = null;
+}
+if (mappingUrl != null)
+{
+    try
+    {
+        JoystickCompatibilityMappings
+                .loadMappingProperties(mappingUrl);
+    }
+    catch (IOException e)
+    {
+        logger.error("Unable to load joystick mappings for " +
+                mappingUrl, e);
+    }
+}
+
+// Load another properties file based on the exact platform type
+mappingUrl = Main.class.
+        getResource("/joystick-mapping." +
+                JmeSystem.getPlatform().toString().toLowerCase() +
+                ".properties");
+if (mappingUrl != null)
+{
+    try
+    {
+        JoystickCompatibilityMappings
+                .loadMappingProperties(mappingUrl);
+    }
+    catch (IOException e)
+    {
+        logger.error("Unable to load joystick mappings for " +
+                mappingUrl, e);
+    }
+}
+
+// Loads a user-configurable file from the file system.
+File CALIBRATION_FILE = new File(JmeSystem.getStorageFolder(
+                                JmeSystem.StorageFolderType.External), "joystick-mapping.properties");
+if (CALIBRATION_FILE.isFile())
+{
+    try
+    {
+        JoystickCompatibilityMappings.loadMappingProperties(
+                CALIBRATION_FILE.toURI().toURL());
+    }
+    catch (IOException e)
+    {
+        logger.error("Unable to load joystick mappings.", e);
+    }
+}
+
+----
+
+In the case of a conflict, the newest one applied will take precedence over the rules of the older ones.
+
+[NOTE]
+====
+JMonkey comes with its own compatibility mappings file that is always loaded first, called `joystick-mapping.properties`. If you are planning on putting any compatibility mappings files in your jar, you should probably give yours a different name to avoid conflicts.
+====
+
+=== Creating the mappings file
+
+It is perfectly possible to write your own compatibility mappings file. The link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-examples/src/main/java/jme3test/input/TestJoystick.java[`TestJoystick`] application in the jme3-examples reports the name of connected joysticks and all the elements that belong to them. From there, you can use that information and the preview feature to create a mappings file. However, the community has also provided tools to shortcut that process. The easiest tool to use is Markil 3's link:https://store.jmonkeyengine.org/a1befa4d-9727-44bb-9d06-e343de82b180[JME Controller Configuration] library. It not only provides extensive information on what each controller is doing, but it also comes with a calibrator that can generate mappings files for you.
+
+To start, download the source code and build the standalone application as per the instructions on the link.
+
+image:https://store.jmonkeyengine.org/image/LHEe7f5I22mG[LHEe7f5I22mG.png,width="",height=""]
+
+Next, start the application and plug in/power on your controllers. You can then click on the "calibrate gamepad" button at the top. Follow the prompts to generate a new mappings file. When you are done, click the "Close Application" button to close the application. Open up the application again to test your results. If they are satisfactory, you can find the properties file in the same folder as the jar file (or directly within the project folder if you ran it from an IDE or Gradle). Simply copy the properties within that file to your project's mappings file, and you are good to go.
+
+Note that, since this is an automated tool you may need to tweak the values some (particularly for triggers; at the time of this writing, the library does not automatically handle triggers). Nevertheless, the tool will give you a very strong starting point.
+
+== Best Practices
+
+TODO - We can probably move this to a whole new article
+
+The above information should give you what you need to implement joystick functionality. Nevertheless, here are some tips for various cases you may come across.
+
+=== Local Multiplayer
+
+In many cases, local multiplayer (multiple people playing together on the same device) involves giving each person their own joystick, and having each joystick control a different character. However, as it stands, the code from above has no way of determining which joystick an action came from; all the joysticks have the same mappings. The solution is to provide a flag to the mapping name, depending on which player the joystick corresponds to. The code below demonstrates this:
+
+[source,java]
+----
+
+// This is sometimes null on Android if you have no joysticks connected.
+if (getInputManager().getJoysticks() != null) {
+  for (int i = 0; i < getInputManager().getJoysticks().length; i++) {
+    Joystick joy = getInputManager().getJoysticks()[i];
+    int joyId = joy.getJoyId();
+    joy.getButton(JoystickButton.BUTTON_0).assignButton("jump" + joyId);
+    joy.getAxis(JoystickAxis.X_AXIS).assignAxis("walkRight" + joyId, "walkLeft" + joyId);
+    joy.getPovYAxis().assignAxis(null, "flashlight" + joyId);
+  }
+}
+
+JoystickConnectionListener connListener = new JoystickConnectionListener() {
+  @Override
+  void onConnected(Joystick joy) {
+  int joyId = joy.getJoyId();
+  joy.getButton(JoystickButton.BUTTON_0).assignButton("jump" + joyId);
+  joy.getAxis(JoystickAxis.X_AXIS).assignAxis("walkRight" + joyId, "walkLeft" + joyId);
+  joy.getPovYAxis().assignAxis(null, "flashlight" + joyId);
+  }
+
+  @Override
+  void onDisconnected(Joystick joy) {
+
+  }
+}
+
+getInputManager().addJoystickConnectionListener(connListener);
+
+// Somewhere down the line:
+for (int i = 0; i < NUM_PLAYERS; i++) {
+  getInputManager().addListener(myListener, "jump" + i, "walkLeft" + i, "walkRight" + i, "flashlight" + i);
+}
+
+----
+
+You can then adapt your listener as such:
+
+
+[source,java]
+----
+
+@Override
+public void onAction(String name, boolean isPressed, float tpf) {
+  String action = name.substring(0, name.length() - 1);
+  int player = Integer.parseInt(name.substring(name.length() - 1));
+
+  switch (action) {
+    case "jump":
+      if (isPressed) {
+        getPlayer(player).jump();
+      }
+      break;
+    case "flashlight":
+      if (isPressed) {
+        getPlayer(player).toggleFlashlight();
+      }
+      break;
+  }
+}
+
+@Override
+public void onAnalog(String name, float value, float tpf) {
+  String action = name.substring(0, name.length() - 1);
+  int player = Integer.parseInt(name.substring(name.length() - 1));
+
+  float sideSpeed = 0;
+  switch (action) {
+    case "walkLeft":
+      sideSpeed -= value * tpf;
+      break;
+    case "walkRight":
+      sideSpeed += value * tpf;
+      break;
+  }
+  getPlayer(player).setSideSpeed(sideSpeed);
+}
+
+----
+
+A breakdown of the important points:
+
+[source,java]
+----
+
+joy.getButton(JoystickButton.BUTTON_0).assignButton("jump" + joyId);
+
+----
+
+Every one of our mappings now has the format of "actionX," where X is the player number (this currently corresponds to the ID of the joystick, which in turn usually corresponds to the order they were connected in). For example, the bottom action button of the second joystick would map to "jump1".
+
+[source,java]
+----
+
+String action = name.substring(0, name.length() - 1);
+int player = Integer.parseInt(name.substring(name.length() - 1));
+
+----
+
+What our listeners then do is split the mapping into its components: the actual action we want to perform, and the player that action should be performed on. Continuing to use the "jump" example, we would receive "jump1" as our mapping name. The above two lines will then set `action` to "jump" and `player` to the number 1. After that, we can just perform our logic as normal.
+
+=== Remapping
+
+The best games will often let the end user decide what buttons they want to use. Of course, you will provide a default scheme (maybe several), but it is often nice when you let the user pick their own choices should they be inclined to do so.
+
+The key to accomplishing this is JMonkey's `RawInputListener` class. Unlike `AnalogListener` or `ActionListener`, this class will report what button is actually pressed, rather than any mappings. Here is one example of an implementation:
+
+[source,java]
+----
+
+class ActionRemapper implements RawInputListener {
+
+  private String mapping;
+  private Map<String, String> actionMap;
+
+  public ActionRemapper(String mapping, Map<String, String> actionMap) {
+    this.mapping = mapping;
+    this.actionMap = actionMap;
+  }
+
+  public void beginInput() {
+
+  }
+
+  public void endInput() {
+
+  }
+
+  public void onJoyAxisEvent(JoyAxisEvent evt) {
+    if (evt.getValue() > 0.5F) {
+      actionMap.put(mapping, "joyAxis+" + evt.getAxis().getLogicalId())
+      finish();
+      getInputManager().removeRawInputListener(this);
+    }
+    else if (evt.getValue() < 0.5F) {
+      actionMap.put(mapping, "joyAxis-" + evt.getAxis().getLogicalId())
+      finish();
+      getInputManager().removeRawInputListener(this);
+    }
+  }
+
+  public void onJoyButtonEvent(JoyButtonEvent evt) {
+    if (!evt.isPressed()) {
+      actionMap.put(mapping, "joyButton" + evt.getButton().getLogicalId())
+      finish();
+      getInputManager().removeRawInputListener(this);
+    }
+  }
+
+  public void onMouseMotionEvent(MouseMotionEvent evt) {
+    // Generally not useful for this. Leave it blank
+  }
+
+  public void onMouseButtonEvent(MouseButtonEvent evt) {
+    if (!evt.isPressed()) {
+      actionMap.put(mapping, "mouse" + evt.getButtonIndex())
+      finish();
+      getInputManager().removeRawInputListener(this);
+    }
+  }
+
+  public void onKeyEvent(KeyInputEvent evt) {
+    if (!evt.isPressed()) {
+      actionMap.put(mapping, "key" + evt.getKeyCode())
+      finish();
+      getInputManager().removeRawInputListener(this);
+    }
+  }
+
+  public void onTouchEvent(TouchEvent evt) {
+    // Generally not useful for this. Leave it blank.
+  }
+}
+
+----
+
+When the user selects the UI action to remap an action, it can create a new instance of ActionRemapper, providing the action to use. After which, the UI can just wait for the ActionRemapper to call finish().
+
+[source,java]
+----
+getInputManager().addRawInputListener(new ActionRemapper("jump", getMappings()));
+----
+
+Later, when you are setting up inputs for the actual game, you can do something like this:
+
+[source,java]
+----
+
+Joystick joy = getInputManager().getJoysticks()[playerId];
+
+for (Map.Entry<String, String> mapping: getMappings().entrySet()) {
+  if (mapping.getValue().startsWith("key")) {
+    getInputManager().addMapping(mapping.getKey(), new KeyTrigger(Integer.parseInt(mapping.getValue().substring(3))));
+  }
+  else if (mapping.getValue().startsWith("mouse")) {
+    getInputManager().addMapping(mapping.getKey(), new MouseButtonTrigger(Integer.parseInt(mapping.getValue().substring(5))));
+  }
+  else if (mapping.getValue().startsWith("joyButton")) {
+    joy.getButton(mapping.getValue().substring(9)).assignButton(mapping.getKey());
+  }
+  else if (mapping.getValue().startsWith("joyAxis+")) {
+    joy.getAxis(mapping.getValue().substring(8)).assignAxis(mapping.getKey(), null);
+  }
+  else if (mapping.getValue().startsWith("joyAxis-")) {
+    joy.getAxis(mapping.getValue().substring(8)).assignAxis(null, mapping.getKey());
+  }
+}
+
+----
+
+This implementation makes a few assumptions. First of all, it assumes that there is method getMappings() (presumably in the enclosing class) that returns a Map<String, String> that stores actions as keys and inputs as values. Secondly, it assumes that there is a finish() method that tells the interface that a selection was made. Of course, how you implement these is up to you, but this example should give you an idea how to accomplish it.
+
+[TIP]
+====
+If you wanted to implement the local multiplayer suggestion from before, you can pretty easily add "playerId" to the mapping when you set up inputs.
+
+[source,java]
+----
+joy.getAxis(mapping.getValue().substring(8) + playerId).assignAxis(null, mapping.getKey());
+----
+====
+
+[TIP]
+====
+Most games with joystick support let you play the game with either keyboard or joystick, letting you switch on the fly. To accomplish this, you may want to store keyboard/mouse bindings in different maps to prevent one from overriding the other. This would involve creating a KeyActionRemapper class and a JoyActionRemapper class, but most of the logic should still be the same.
+====
+
+[TIP]
+====
+Don't forget to save the data in getMappings() to the settings file!
+====
