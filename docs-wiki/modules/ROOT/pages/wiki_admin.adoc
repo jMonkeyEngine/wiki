@@ -98,7 +98,10 @@ When it's time to cut a new version for the wiki, the process is as follows.
 
 IMPORTANT: A component module is a module that has an `antora.yml` file. A named module lives inside a component module. The version in the `antora.yml` file controls the version for the component module i.e. the wiki, not the version in the `wiki-playbook.yml`.
 
-. We do not want the Antora cache to be versioned so you need to first remove the cache from the `Commit Packages` command in the main.yml workflow, located in the `.github/workflows` directory.
+We do not want the Antora cache to be versioned so you need to either remove the cache from the master branch before creating the new version branch or delete it after creating the new version branch.
+
+.How to remove first
+. From the `Commit Packages` command in the main.yml workflow, located in the `.github/workflows` directory, remove the cache part from the `add:` line.
 +
 ```
 # Commits these files to root if and only if there are changes.
@@ -106,7 +109,7 @@ add: "package-lock.json package.json ./.cache/antora/*"
 ```
 . Next, delete the `.cache` folder.
 . Stage, commit and push your changes to the repository.
-. Create a new branch that matches the *current version* of the wiki. If master is currently targeting 3.2 for example, that would mean the branch name would be v3.2.
+. Create a new branch that matches the *current version* of the wiki. If master is currently targeting 3.4 for example, that would mean the branch name would be v3.3.
 . Push the branch to the repository.
 . On the `master` branch, edit these files:
 .. Add the newly created branch to the `branches:` array in wiki-playbook.yml.
@@ -116,7 +119,7 @@ add: "package-lock.json package.json ./.cache/antora/*"
 content:
   sources:
   - url: https://github.com/jMonkeyEngine/wiki.git
-    branches: [HEAD, v3.2]
+    branches: [HEAD, 3.3, v3.2]
 ```
 .. Increment the version of any antora.yml file. At the time of this writing, there were two:
 +
@@ -125,7 +128,7 @@ content:
 ```
 name: docs
 title: JME
-version: '3.3'
+version: '3.4'
 ```
 and
 
@@ -133,7 +136,7 @@ and
 ```
 name: docs-wiki
 title: Wiki Contribution
-version: '3.3'
+version: '3.4'
 ```
 
 NOTE: The version value is enclosed in a set of single quote marks (') because it starts with a number. As was mentioned earlier, the versioning is controlled by the antora.yml file, not the playbook, so they do not have to match.
@@ -142,6 +145,67 @@ NOTE: The version value is enclosed in a set of single quote marks (') because i
 . Edit any links found in the `README.adoc`, located in the root of the repository, that are versioned, so they match the version value you just set in the `antora.yml` file.
 . Add `./.cache/antora/*` back to the  `Commit Packages` command to rebuild the cache.
 . Stage, commit and push the changes to the repository.
+. Navigate to the Docsearch config repo and update the search script.
++
+https://github.com/algolia/docsearch-configs
+
+.. From the main page, click the btn:[Go to file] button and Enter `jmonkeyengine` into the search line.
+
+.. Edit the version line to point to the new version used in the `Antora.yml` file. In this example, search is targeting v3.3.
++
+--
+.Old jmonkeyengine.json
+[source, .json]
+----
+{
+  "index_name": "jmonkeyengine",
+  "start_urls": [
+    {
+      "url": "https://wiki.jmonkeyengine.org/docs/(?P<version>.*?)/",
+      "variables": {
+        "version": [
+          "3.3"
+        ]
+      }
+    }
+  ],
+
+  ...
+}
+----
+
+and the master branch `Antora.yml` file is using v3.4.
+
+.Antora.yml
+[source, yml]
+----
+ name: docs
+ title: JME
+ version: '3.4'
+
+...
+----
+
+.Updated jmonkeyengine.json
+[source, .json]
+----
+{
+  "index_name": "jmonkeyengine",
+  "start_urls": [
+    {
+      "url": "https://wiki.jmonkeyengine.org/docs/(?P<version>.*?)/",
+      "variables": {
+        "version": [
+          "3.4"
+        ]
+      }
+    }
+  ],
+
+  ...
+}
+----
+--
 
 Things to know about versions and component modules.
 
