@@ -307,10 +307,14 @@ A component module is a module that has an <code>antora.yml</code> file. A named
 </tr>
 </table>
 </div>
+<div class="paragraph">
+<p>We do not want the Antora cache to be versioned so you need to either remove the cache from the master branch before creating the new version branch or delete it after creating the new version branch.</p>
+</div>
 <div class="olist arabic">
+<div class="title">How to remove first</div>
 <ol class="arabic">
 <li>
-<p>We do not want the Antora cache to be versioned so you need to first remove the cache from the <code>Commit Packages</code> command in the main.yml workflow, located in the <code>.github/workflows</code> directory.</p>
+<p>From the <code>Commit Packages</code> command in the main.yml workflow, located in the <code>.github/workflows</code> directory, remove the cache part from the <code>add:</code> line.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code># Commits these files to root if and only if there are changes.
@@ -325,7 +329,7 @@ add: "package-lock.json package.json ./.cache/antora/*"</code></pre>
 <p>Stage, commit and push your changes to the repository.</p>
 </li>
 <li>
-<p>Create a new branch that matches the <strong>current version</strong> of the wiki. If master is currently targeting 3.2 for example, that would mean the branch name would be v3.2.</p>
+<p>Create a new branch that matches the <strong>current version</strong> of the wiki. If master is currently targeting 3.4 for example, that would mean the branch name would be v3.3.</p>
 </li>
 <li>
 <p>Push the branch to the repository.</p>
@@ -342,7 +346,7 @@ add: "package-lock.json package.json ./.cache/antora/*"</code></pre>
 <pre class="highlightjs highlight"><code>content:
   sources:
   - url: https://github.com/jMonkeyEngine/wiki.git
-    branches: [HEAD, v3.2]</code></pre>
+    branches: [HEAD, 3.3, v3.2]</code></pre>
 </div>
 </div>
 </li>
@@ -355,7 +359,7 @@ add: "package-lock.json package.json ./.cache/antora/*"</code></pre>
 <div class="content">
 <pre class="highlightjs highlight"><code>name: docs
 title: JME
-version: '3.3'</code></pre>
+version: '3.4'</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -366,7 +370,7 @@ version: '3.3'</code></pre>
 <div class="content">
 <pre class="highlightjs highlight"><code>name: docs-wiki
 title: Wiki Contribution
-version: '3.3'</code></pre>
+version: '3.4'</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -395,6 +399,79 @@ The version value is enclosed in a set of single quote marks (') because it star
 </li>
 <li>
 <p>Stage, commit and push the changes to the repository.</p>
+</li>
+<li>
+<p>Navigate to the Docsearch config repo and update the search script.</p>
+<div class="paragraph">
+<p><a href="https://github.com/algolia/docsearch-configs" class="bare">https://github.com/algolia/docsearch-configs</a></p>
+</div>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>From the main page, click the <b class="button">Go to file</b> button and Enter <code>jmonkeyengine</code> into the search line.</p>
+</li>
+<li>
+<p>Edit the version line to point to the new version used in the <code>Antora.yml</code> file. In this example, search is targeting v3.3.</p>
+<div class="openblock">
+<div class="content">
+<div class="listingblock">
+<div class="title">Old jmonkeyengine.json</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-.json hljs" data-lang=".json">{
+  "index_name": "jmonkeyengine",
+  "start_urls": [
+    {
+      "url": "https://wiki.jmonkeyengine.org/docs/(?P&lt;version&gt;.*?)/",
+      "variables": {
+        "version": [
+          "3.3"
+        ]
+      }
+    }
+  ],
+
+  ...
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and the master branch <code>Antora.yml</code> file is using v3.4.</p>
+</div>
+<div class="listingblock">
+<div class="title">Antora.yml</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yml hljs" data-lang="yml"> name: docs
+ title: JME
+ version: '3.4'
+
+...</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Updated jmonkeyengine.json</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-.json hljs" data-lang=".json">{
+  "index_name": "jmonkeyengine",
+  "start_urls": [
+    {
+      "url": "https://wiki.jmonkeyengine.org/docs/(?P&lt;version&gt;.*?)/",
+      "variables": {
+        "version": [
+          "3.4"
+        ]
+      }
+    }
+  ],
+
+  ...
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</li>
+</ol>
+</div>
 </li>
 </ol>
 </div>
