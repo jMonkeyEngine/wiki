@@ -1,0 +1,150 @@
+= Joystick Reference
+:revnumber: 1.0
+:revdate: 2021/04/15
+:keywords: gamepad, joystick, controller, xbox, playstation, nintendo, steam, input, documentation, cheat, sheet, reference
+
+==== Buttons
+[cols="4", options="header"]
+|===
+a|Name
+a|Location
+a|Access Method
+a|Logical ID
+
+a|Top Action Button (Y/Triangle/X)
+a|image:input/BUTTON_0.png[BUTTON_0.png,width="",height=""]
+a|joystick.getButton(JoystickButton.BUTTON_0)
+a|0
+
+a|Right Action Button (B/Circle/A)
+a|image:input/BUTTON_1.png[BUTTON_1.png,width="",height=""]
+a|joystick.getButton(JoystickButton.BUTTON_1)
+a|1
+
+a|Bottom Action Button (A/Cross/B)
+a|image:input/BUTTON_2.png[BUTTON_2.png,width="",height=""]
+a|joystick.getButton(JoystickButton.BUTTON_2)
+a|2
+
+a|Left Action Button (X/Square/Y)
+a|image:input/BUTTON_3.png[BUTTON_3.png,width="",height=""]
+a|joystick.getButton(JoystickButton.BUTTON_3)
+a|3
+
+a|Left Bumper (L1)
+a|image:input/BUTTON_4.png[BUTTON_4.png,width="",height=""]
+a|joystick.getButton(JoystickButton.BUTTON_4)
+a|4
+
+a|Right Bumper (R1)
+a|image:input/BUTTON_5.png[BUTTON_5.png,width="",height=""]
+a|joystick.getButton(JoystickButton.BUTTON_5)
+a|5
+
+a|Left Trigger (L2) ^1^
+a|image:input/BUTTON_6.png[BUTTON_6.png,width="",height=""]
+a|joystick.getButton(JoystickButton.BUTTON_6)
+a|6
+
+a|Right Trigger (R2) ^1^
+a|image:input/BUTTON_7.png[BUTTON_7.png,width="",height=""]
+a|joystick.getButton(JoystickButton.BUTTON_7)
+a|7
+
+a|Select
+a|image:input/BUTTON_8.png[BUTTON_8.png,width="",height=""]
+a|joystick.getButton(JoystickButton.BUTTON_8)
+a|8
+
+a|Start
+a|image:input/BUTTON_9.png[BUTTON_9.png,width="",height=""]
+a|joystick.getButton(JoystickButton.BUTTON_9)
+a|9
+
+a|Left Analog Button (L3)
+a|image:input/BUTTON_10.png[BUTTON_10.png,width="",height=""]
+a|joystick.getButton(JoystickButton.BUTTON_10)
+a|10
+
+a|Right Analog Button (R3)
+a|image:input/BUTTON_11.png[BUTTON_11.png,width="",height=""]
+a|joystick.getButton(JoystickButton.BUTTON_11)
+a|11
+
+a|DPad Left ^2^
+a|image:input/BUTTON_12.png[BUTTON_12.png,width="",height=""]
+a|joystick.getButton("12")
+a|12
+
+a|Dpad Right ^2^
+a|image:input/BUTTON_13.png[BUTTON_13.png,width="",height=""]
+a|joystick.getButton("13")
+a|13
+
+a|Dpad Down ^2^
+a|image:input/BUTTON_14.png[BUTTON_14.png,width="",height=""]
+a|joystick.getButton("14")
+a|14
+
+a|Dpad Up ^2^
+a|image:input/BUTTON_15.png[BUTTON_15.png,width="",height=""]
+a|joystick.getButton("15")
+a|15
+|===
+
+==== Axes
+[cols="4", options="header"]
+|===
+a|Name
+a|Location
+a|Access Method
+a|Logical ID
+
+a|Left Analog Horizontal
+a|image:input/X_AXIS.png[X_AXIS.png,width="",height=""]
+a|joystick.getAxis(JoystickAxis.X_AXIS), joystick.getXAxis()
+a|x
+
+a|Left Analog Vertical
+a|image:input/Y_AXIS.png[Y_AXIS.png,width="",height=""]
+a|joystick.getAxis(JoystickAxis.Y_AXIS), joystick.getYAxis()
+a|y
+
+a|Right Analog Horizontal
+a|image:input/Z_AXIS.png[Z_AXIS.png,width="",height=""]
+a|joystick.getAxis(JoystickAxis.Z_AXIS)
+a|z
+
+a|Right Analog Vertical
+a|image:input/Z_ROTATION.png[Z_ROTATION.png,width="",height=""]
+a|joystick.getAxis(JoystickAxis.Z_ROTATION)
+a|rz
+
+a|Left Trigger ^1^,^3^
+a|image:input/BUTTON_6.png[LEFT_TRIGGER.png,width="",height=""]
+a|joystick.getAxis(JoystickAxis.LEFT_TRIGGER)
+a|rx
+
+a|Right Trigger ^1^,^3^
+a|image:input/BUTTON_7.png[RIGHT_TRIGGER.png,width="",height=""]
+a|joystick.getAxis(JoystickAxis.RIGHT_TRIGGER)
+a|ry
+
+a|Dpad Horizontal ^2^
+a|image:input/BUTTON_12.png[BUTTON_12.png,width="",height=""] image:input/BUTTON_13.png[BUTTON_13.png,width="",height=""]
+a|joystick.getAxis(JoystickAxis.POV_X)
+a|pov_x
+
+a|Dpad Vertical ^2^
+a|image:input/BUTTON_14.png[BUTTON_14.png,width="",height=""] image:input/BUTTON_15.png[BUTTON_15.png,width="",height=""]
+a|joystick.getAxis(JoystickAxis.POV_Y)
+a|pov_y
+|===
+
+====== Notes
+
+^1^ Some controllers (Xbox-type joysticks in particular) will often set the triggers as axes. In this case, the 6th and 7th buttons are skipped. In either case, it is wise to map both BUTTON_6/BUTTON_7 and LEFT_TRIGGER/RIGHT_TRIGGER, just to be safe.
+
+^2^ While the default handler is for this to be an axis, some controllers sees the DPAD as four buttons. There is no official mappings for this case, but Mark's calibrator sets it to be left, right, down, up, so we use that. In either case, it is wise to map both buttons and axes, just to be safe.
+
+^3^ On occasion, some joysticks will set the triggers to map to a single axis, with one trigger handling negative values and the other handling positive values (pressing both will cancel out and be 0). A partial workaround is to use the compatibility mappings to set this axis to its own logical ID and to assign actions to its positive and negative parts in addition to what is generally done in ^1^.
