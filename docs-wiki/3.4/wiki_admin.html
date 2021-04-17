@@ -317,41 +317,16 @@ class="page unresolved"&gt;this list&lt;/a&gt;.&lt;/p&gt;</code></pre>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>We do not want the Antora cache to be versioned so you need to either remove the cache from the master branch before creating the new version branch or delete it after creating the new version branch.</p>
-<div class="paragraph">
-<p><strong>How to remove first:</strong></p>
-</div>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p>From the <code>Commit Packages</code> command in the main.yml workflow, located in the <code>.github/workflows</code> directory, remove the cache part from the <code>add:</code> line.</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code># Commits these files to root if and only if there are changes.
-add: "package-lock.json package.json ./.cache/antora/*"</code></pre>
-</div>
-</div>
+<p>Create and checkout a new branch that matches the <strong>current version</strong> of the wiki. If the current version (HEAD) is targeting version 3.3 in the <code>antora.yml</code> for example, you would name the new branch <code>v3.3</code>. Thereby preserving the current master branch content.</p>
 </li>
 <li>
-<p>Next, delete the <code>.cache</code> folder.</p>
-</li>
-<li>
-<p>Stage, commit and push your changes to the repository.</p>
-</li>
-</ol>
-</div>
-</li>
-<li>
-<p>Create a new branch that matches the <strong>current version</strong> of the wiki. If the current version (HEAD) is targeting version 3.3 in the <code>antora.yml</code> for example, and you are creating a new version, you would name the new branch v3.3. Thereby preserving the current master branch content.</p>
-</li>
-<li>
-<p>If you didn&#8217;t remove the cache during step one, delete it from the newly created branch.</p>
+<p>We do not want the Antora <code>.cache</code> to be versioned so you need to delete it from the new version branch.</p>
 </li>
 <li>
 <p>Push the branch to the repository.</p>
 </li>
 <li>
-<p>On the <code>master</code> branch, edit these files:</p>
+<p>Switch to the <code>master</code> branch and edit these files:</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
@@ -408,9 +383,6 @@ The version value is enclosed in a set of single quote marks (') because it star
 <p>Edit any links found in the <code>README.adoc</code>, located in the root of the repository, that are versioned, so they match the version value you just set in the <code>antora.yml</code> file.</p>
 </li>
 <li>
-<p>Add <code>./.cache/antora/*</code> back to the  <code>Commit Packages</code> command to rebuild the cache if you removed it in the first step.</p>
-</li>
-<li>
 <p>Stage, commit and push your changes to the repository.</p>
 </li>
 </ol>
@@ -421,7 +393,7 @@ The version value is enclosed in a set of single quote marks (') because it star
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Navigate to the Docsearch config repo and update the search script.</p>
+<p>Navigate to the Algolia <code>docsearch-config</code> repo and update the search script.</p>
 <div class="paragraph">
 <p><a href="https://github.com/algolia/docsearch-configs" class="bare">https://github.com/algolia/docsearch-configs</a></p>
 </div>
