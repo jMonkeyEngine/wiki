@@ -105,22 +105,10 @@ Branch version names should only target major/minor releases, not the patch of a
 
 When it's time to cut a new version for the wiki, the process is as follows.
 
-. We do not want the Antora cache to be versioned so you need to either remove the cache from the master branch before creating the new version branch or delete it after creating the new version branch.
-+
-*How to remove first:*
-
-.. From the `Commit Packages` command in the main.yml workflow, located in the `.github/workflows` directory, remove the cache part from the `add:` line.
-+
-```
-# Commits these files to root if and only if there are changes.
-add: "package-lock.json package.json ./.cache/antora/*"
-```
-.. Next, delete the `.cache` folder.
-.. Stage, commit and push your changes to the repository.
-. Create a new branch that matches the *current version* of the wiki. If the current version (HEAD) is targeting version 3.3 in the `antora.yml` for example, and you are creating a new version, you would name the new branch v3.3. Thereby preserving the current master branch content.
-. If you didn't remove the cache during step one, delete it from the newly created branch.
+. Create and checkout a new branch that matches the *current version* of the wiki. If the current version (HEAD) is targeting version 3.3 in the `antora.yml` for example, you would name the new branch `v3.3`. Thereby preserving the current master branch content.
+. We do not want the Antora `.cache` to be versioned so you need to delete it from the new version branch.
 . Push the branch to the repository.
-. On the `master` branch, edit these files:
+. Switch to the `master` branch and edit these files:
 .. Add the newly created branch to the `branches:` array in `wiki-playbook.yml`.
 +
 .wiki-playbook.yml
@@ -150,12 +138,11 @@ NOTE: The version value is enclosed in a set of single quote marks (') because i
 --
 
 . Edit any links found in the `README.adoc`, located in the root of the repository, that are versioned, so they match the version value you just set in the `antora.yml` file.
-. Add `./.cache/antora/*` back to the  `Commit Packages` command to rebuild the cache if you removed it in the first step.
 . Stage, commit and push your changes to the repository.
 
 The wiki versioning is now complete but you will need to update the docsearch repo to reflect the changes so that search works properly.
 
-. Navigate to the Docsearch config repo and update the search script.
+. Navigate to the Algolia `docsearch-config` repo and update the search script.
 +
 https://github.com/algolia/docsearch-configs
 . From the main page, click the btn:[Go to file] button and Enter `jmonkeyengine` into the search line.
