@@ -50,6 +50,8 @@ GitHub provides an easy way to determine whether CI is failing.
 Browse to https://github.com/jMonkeyEngine/jmonkeyengine/commits/master
 and look for colored icons to the right of the dates of recent push commits.
 
+image::github/colored_icons.png[colored_icons.png]
+
 * A green checkmark indicates a successful CI run.
 * An amber disc indicates a CI run in progress.
 * A red X indicates a failed CI run.
@@ -65,6 +67,8 @@ by clicking on the "Re-run jobs" button on the summary page of the run.
 To reach the summary page,
 browse to https://github.com/jMonkeyEngine/jmonkeyengine/actions
 and select on the failed run from the displayed list.
+
+image::github/rerun.png[rerun.png]
 
 Breakage (persistent CI failures) of the "master" branch
 should be addressed promptly.
@@ -117,13 +121,13 @@ The release process start with the creation of a Git tag.
 *Do not* use the `git push` command for this purpose!
 Use GitHub's web interface instead:
 
-Browse to https://github.com/jMonkeyEngine/jmonkeyengine/releases
-and click on the "Draft a new release" button.
-
-Next, fill out the new-release web form,
+Browse to https://github.com/jMonkeyEngine/jmonkeyengine/releases/new
+and fill out the new-release web form,
 paying special attention to the target branch.
 The target branch defaults to "master",
 but more often you'll want to specify a release branch as the target.
+
+image::github/new_release.png[new_release.png]
 
 For the tag version, specify "v" followed by the version name.
 This determines the name of the Git tag that will be created.
@@ -155,13 +159,15 @@ Discord provides an easy way to verify that the run has begun.
   "[jMonkeyEngine/jmonkeyengine] New release published".
   This indicates that a run has started, not that it's complete!
 
+image::release_published.png[release_published.png]
+
 You can monitor its progress in the "github-builds" channel,
 where you will see job messages from the GitHub bot,
 such as "[jmonkeyengine] Build natives for android success".
 Each job message is linked to the GitHub webpage for that job.
 
 From any GitHub job page, select the "Summary" link
-to see a graphical summary of the entire run.
+to see a graphical summary of the run which contains the job.
 
 == Results of the Release Run
 
@@ -184,11 +190,15 @@ Browse to https://oss.sonatype.org/[the Nexus Repository Manager].
 
 Select the "Log In" link in the upper right corner of the page.
 
+image::sonatype/login.png[login.png]
+
 Type your SonaType credentials into the dialog box
 and click on the "Log In" button.
 
 Under "Build Promotion" on the left sidebar,
 select "Staging Repositories".
+
+image::sonatype/sidebar.png[sidebar.png]
 
 If you don't see a freshly updated repo named "orgjmonkeyengine",
 click on the "Refresh" button occasionally until its record appears.
