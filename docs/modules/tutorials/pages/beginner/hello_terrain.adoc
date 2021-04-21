@@ -123,7 +123,7 @@ image::beginner/terrain-from-float-array.png[terrain-from-float-array.png,width=
 
 Important things to note:
 
-*  Low values (e.g. 0 or 50) are valeys.
+*  Low values (e.g. 0 or 50) are valleys.
 *  High values (e.g. 200, 255) are hills.
 *  The heightmap only specifies a few points, and the engine interpolates the rest. Interpolation is more efficient than creating a model with several millions vertices.
 
@@ -163,7 +163,7 @@ Here is how you create the heightmap object in your jME code:
 
 .  Create a Texture object.
 .  Load your prepared heightmap image into the texture object.
-.  Create an AbstractHeightmap object from an ImageBasedHeightMap. +
+.  Create an AbstractHeightMap object from an ImageBasedHeightMap. +
 It requires an image from a JME Texture.
 .  Load the heightmap.
 
@@ -191,7 +191,7 @@ The jMonkeyEngine SDK comes with a xref:sdk:terrain_editor.adoc[TerrainEditor pl
 ====
 
 
-Splat textures are based on the `Terrain.j3md` material defintion. If you open the Terrain.j3md file, and look in the Material Parameters section, you see that you have several texture layers to paint on: `Tex1`, `Tex2`, `Tex3`, etc.
+Splat textures are based on the `Terrain.j3md` material definition. If you open the Terrain.j3md file, and look in the Material Parameters section, you see that you have several texture layers to paint on: `Tex1`, `Tex2`, `Tex3`, etc.
 
 Before you can start painting, you have to make a few decisions:
 
@@ -271,7 +271,7 @@ Use `setWrap(WrapMode.Repeat)` to make the small texture fill the wide area. If 
 
 Internally, the generated terrain mesh is broken down into tiles and blocks. This is an optimization to make culling easier. You do not need to worry about '`tiles`' and '`blocks`' too much, just use recommended values for now – 64 is a good start.
 
-Let's assume you want to generate a 512x512 terrain. You already have created the heightmap object. Here are the steps that you perform everytime you create a new terrain.
+Let's assume you want to generate a 512x512 terrain. You already have created the heightmap object. Here are the steps that you perform every time you create a new terrain.
 
 Create a TerrainQuad with the following arguments:
 

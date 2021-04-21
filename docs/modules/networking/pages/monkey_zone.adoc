@@ -23,7 +23,7 @@ The project design follows best practices that make it possible to edit maps, ve
 
 == Implementation
 
-MonkeyZone is a multi-player game with a physics simulation. Both, clients and server, run the physics simulation. The clients send input data from the player group to the server, where they control the entities, and also broadcast to the clients. Additionally, the server sends regular syncronization data for all objects in the game to prevent drifting.
+MonkeyZone is a multi-player game with a physics simulation. Both, clients and server, run the physics simulation. The clients send input data from the player group to the server, where they control the entities, and also broadcast to the clients. Additionally, the server sends regular synchronization data for all objects in the game to prevent drifting.
 When a human user or an AI performs an action (presses a button), the actual logic is done on the server. The results are broadcast as data messages to the entities. When the entity is controlled by an AI, the actual AI code (that determines where the entity should move, and when it should perform an action) is executed on the client.
 ++
 _The way MonkeyZone is implemented is just one of the many possible ways to do a game like this in jME. Some things might be done more efficiently, some might be done in another way completely. MonkeyZone tries to do things the way that are most appropriate to implement the game at hand and it shows nicely how jME3 and the standard Java +++<abbr title="Application Programming Interface">API</abbr>+++ can make game development easier and faster. Also note that the way MonkeyZone is designed is not scalable to a MMO style game, it will only work in a FPS style environment where the whole game world can be loaded at once._
@@ -31,7 +31,7 @@ _The way MonkeyZone is implemented is just one of the many possible ways to do a
 
 === Terminology
 
-The game uses certain terms that might be familiar to you but maybe used in another way, so heres a quick rundown on the terms being used.
+The game uses certain terms that might be familiar to you but maybe used in another way, so here's a quick rundown on the terms being used.
 
 *  Player –	Logical human or AI player that can enter entities and generally act, only exists as PlayerData "`database`" with an id.
 *  Entity –	Spatial with UserData, a world object like character, vehicle, box or factory. The base form is defined only by a String pointing to the j3o which already has all userdata like hitpoints, speed etc.
@@ -53,13 +53,13 @@ xref:core:scene/control/custom_controls.adoc[Controls] are used extensively in M
 
 ==== ...As entity capabilities
 
-Controls attached to Spatials are generally used like an "`array of capabilities`" that the entity posesses. So when an entity has a VehicleControl its expected to be a vehicle, when its got a CharacterControl its expected to be a character.
+Controls attached to Spatials are generally used like an "`array of capabilities`" that the entity possesses. So when an entity has a VehicleControl its expected to be a vehicle, when its got a CharacterControl its expected to be a character.
 Other Controls work completely on their own, like CharacterAnimControl which just uses the CharacterControl of the entity to check if the character is running, jumping etc. and then animates the entity if it has an AnimControl.
 
 
 ==== ... to abstract
 
-Furthermore theres special interfaces for Controls that allow abstraction of different Controls into one base interface. For example ManualControl and AutonomousControl are interfaces for controls that manage the movement of a spatial in a generalized way. This way AI code and e.g. the UserInputControl only have to check for a valid AutonomousControl or ManualControl on the spatial to control and move it. The details of the movement are handled by classes like ManualVehicleControl and AutonomousCharacterControl.
+Furthermore there are special interfaces for Controls that allow abstraction of different Controls into one base interface. For example ManualControl and AutonomousControl are interfaces for controls that manage the movement of a spatial in a generalized way. This way AI code and e.g. the UserInputControl only have to check for a valid AutonomousControl or ManualControl on the spatial to control and move it. The details of the movement are handled by classes like ManualVehicleControl and AutonomousCharacterControl.
 
 
 ==== ... for AI functions
@@ -74,7 +74,7 @@ MonkeyZone includes simple AI functions based on a command queue.
 
 ==== Commands
 
-To implement autonomous AI players MonkeyZone uses a system of Commands that are managed by a CommandControl that is attached to each AI player entity controlled by the user. This CommandControl manages a list of Commands that are executed based on priority. For example theres a MoveCommand, a FollowCommand and an AttackCommand, Commands can however implement more complete behavior than that, e.g. the complete logic for a scavenging entity.
+To implement autonomous AI players MonkeyZone uses a system of Commands that are managed by a CommandControl that is attached to each AI player entity controlled by the user. This CommandControl manages a list of Commands that are executed based on priority. For example there's a MoveCommand, a FollowCommand and an AttackCommand, Commands can however implement more complete behavior than that, e.g. the complete logic for a scavenging entity.
 
 *  Press the WASD keys and use the mouse to move
 *  press space to jump

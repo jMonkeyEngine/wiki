@@ -98,7 +98,7 @@ All that is not between [] is mandatory.
 **  *ShaderLangAndVersion* : follows the same syntax than the shader declaration in the j3md file : GLSL&lt;version&gt;, version being 100 for glsl 1.0 , 130 for glsl 1.3, 150 for glsl 1.5 and so on. Note that this is the *minimum* glsl version this shader supports
 **  *ShaderPath* the path to the shader code file (relative to the asset folder)
 
-*  +++<u>Documentation</u>+++ : the documentation block. This is mandatory and I really recommend filling this if you want to contribute your shader nodes. This documentation will be read buy the SDK and presented to users willing to add this node to their material definitions. This should contain a brief description of the node and a description for each input and ouput.
+*  +++<u>Documentation</u>+++ : the documentation block. This is mandatory and I really recommend filling this if you want to contribute your shader nodes. This documentation will be read buy the SDK and presented to users willing to add this node to their material definitions. This should contain a brief description of the node and a description for each input and output.
 **  *@input* can be use to prefix an input name so the sdk recognize it and format it accordingly. the syntax id @input &lt;inputName&gt; &lt;description&gt;.
 **  *@output* can be use to prefix an output name so the sdk recognize it and format it accordingly. the syntax id @output &lt;inputName&gt; &lt;description&gt;
 
@@ -112,7 +112,7 @@ All that is not between [] is mandatory.
 
 [NOTE]
 ====
-If you use the same name for an input and an ouput, the generator will consider them as the SAME variable so they should be of the same glsl type.
+If you use the same name for an input and an output, the generator will consider them as the SAME variable so they should be of the same glsl type.
 ====
 
 
@@ -176,8 +176,8 @@ _Example_
 
 ----
 
-This declares a float array with the size depending on the value of the NumberOfElement material parameter. +
-NumberOfElement *HAS* to be declared in the material definition as a material parameter. It will be mapped to a define and used in the shader.
+This declares a float array with the size depending on the value of the NumberOfElements material parameter. +
+NumberOfElements *HAS* to be declared in the material definition as a material parameter. It will be mapped to a define and used in the shader.
 
 [NOTE]
 ====
@@ -255,7 +255,7 @@ For example, let's say we have a Color and ColorMap material parameter, this con
 
 *  +++<u>InputMapping</u>+++ the wiring of the inputs of this node, coming from previous node's outputs or from built in glsl inputs.
 **  *InputVariableName* : the name of the variable to map as declared in the definition.
-**  *Swizzle* : Swizling for the preceding variable. More information on glsl swizzling on this page link:https://www.khronos.org/opengl/wiki/GLSL_Type[https://www.khronos.org/opengl/wiki/GLSL_Type].
+**  *Swizzle* : Swizzling for the preceding variable. More information on glsl swizzling on this page link:https://www.khronos.org/opengl/wiki/GLSL_Type[https://www.khronos.org/opengl/wiki/GLSL_Type].
 **  *NameSpace* : The generator will use variable name space to avoid collision between variable names. Name space can be one of these values :
 ***  *MatParam* : the following variable is a Material Parameter declared in the MaterialParameters block of the materialDefinition.
 ***  *WorldParam* : the following variable is a World Parameter declared in the WorldParameters block of the current technique block. World parameters can be one of those declared in this file : link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/java/com/jme3/shader/UniformBinding.java[https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/java/com/jme3/shader/UniformBinding.java]
@@ -266,7 +266,7 @@ For example, let's say we have a Color and ColorMap material parameter, this con
 **  *VarName* : the name of the variable to assign to the input. This variable must be known in name space declared before.
 **  *MappingCondition* : Follows the same rules as the activation condition for the shaderNode, this mapping will be embed in a #ifdef statement n the resulting shader.
 
-*  +++<u>OutputMapping</u>+++ : This block is optional, as mapping of output will be done in input mapping block of following shaderNodes, ecept if you want to output a value to the Global output of the shader.
+*  +++<u>OutputMapping</u>+++ : This block is optional, as mapping of output will be done in input mapping block of following shaderNodes, except if you want to output a value to the Global output of the shader.
 **  *NameSpace* : the name space of the output to assign, this can only be "`Global`" here.
 **  *VarName* : the name of a global output (can be anything, just be aware that 2 different names result in 2 different outputs).
 **  *OutputVariable* : Must be an output of the current node's definition.
@@ -338,7 +338,7 @@ ShaderNodesDefinitions {
         Shader GLSL100: Common/MatDefs/ShaderNodes/Common/commonVert.vert
         Documentation {
             This Node is responsible for computing vertex position in projection space.
-            It also can pass texture coordinates 1 & 2, and vertexColor to the frgment shader as varying (or inputs for glsl >=1.3)
+            It also can pass texture coordinates 1 & 2, and vertexColor to the fragment shader as varying (or inputs for glsl >=1.3)
             @input modelPosition the vertex position in model space (usually assigned with Attr.inPosition or Global.position)
             @input worldViewProjectionMatrix the World View Projection Matrix transforms model space to projection space.
             @input texCoord1 The first texture coordinates of the vertex (usually assigned with Attr.inTexCoord)
@@ -389,7 +389,7 @@ As you can see all the inputs and outputs are not used. That's because most of t
 *+++<u>CommonVert input mapping</u>+++* +
 Here we have the most basic yet mandatory thing in a vertex shader, computing vertex position in projection space. For this we have 2 mappings :
 
-*  *worldViewProjectionMatrix = WorldParam.WorldViewProjectionMatrix* : the input parameter worldViewProjectionMatrix is assigned with the WorldViewProjectionMatrix World parameter declared in the WorlParameters block of the technique.
+*  *worldViewProjectionMatrix = WorldParam.WorldViewProjectionMatrix* : the input parameter worldViewProjectionMatrix is assigned with the WorldViewProjectionMatrix World parameter declared in the WorldParameters block of the technique.
 *  *modelPosition = Global.position.xyz* : the modelPosition (understand the vertex position in the model coordinate space) is assigned with the Global position variable.
 
 
@@ -411,7 +411,7 @@ Also note the swizzle of the Global.position variable. ModelPosition is a vec3 a
 
 *+++<u>CommonVert output mapping</u>+++* +
 
-*  *Global.position = projPosition* : The result of the multiplication of the worldViewProjectionMatrix and the modelPosition is assigned to the Globale position.
+*  *Global.position = projPosition* : The result of the multiplication of the worldViewProjectionMatrix and the modelPosition is assigned to the Global position.
 
 
 [TIP]
@@ -477,13 +477,13 @@ In a very complex material def this variable could already have been assigned wi
 
 [TIP]
 ====
-Note that the Global.color variable will be assigned to gl_FragColor (glsl < 1.5) or declared as a Global ouput of the shader (glsl >= 1.5).
+Note that the Global.color variable will be assigned to gl_FragColor (glsl < 1.5) or declared as a Global output of the shader (glsl >= 1.5).
 ====
 
 
 [TIP]
 ====
-Also note that in case several Global variables are declared, the generator will assign them gl_FragData[i](glsl < 1.5) i being the order the variable has been found in the material def. For glsl >= 1.5 the veriable will just all be declared as shader output in the order they've been found in the declaration.
+Also note that in case several Global variables are declared, the generator will assign them gl_FragData[i](glsl < 1.5) i being the order the variable has been found in the material def. For glsl >= 1.5 the variable will just all be declared as shader output in the order they've been found in the declaration.
 ====
 
 
@@ -560,7 +560,7 @@ Same as for the Vertex shader. Note that the color1 is not declared, because it'
 
 [IMPORTANT]
 ====
-As a rule of thumb you should not assign a value to an input. Inputs are likely to be material paramters or outputs from other shaders and modifying them may cause unexpected behavior, even failure in your resulting shader.
+As a rule of thumb you should not assign a value to an input. Inputs are likely to be material parameters or outputs from other shaders and modifying them may cause unexpected behavior, even failure in your resulting shader.
 ====
 
 
