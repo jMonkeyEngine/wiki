@@ -19,8 +19,8 @@ All incoming pull requests should be integrated to "master".
 
 The other branches in the repo fall into 2 categories:
 
-. release branches, used to develop stable releases, and
-. development branches,
+. _release branches_, used to develop stable releases, and
+. _development branches_,
   used to develop features or fixes that involve multiple commits.
 
 Release branch names, such as "v3.2" and "v3.3", refer to release numbers.
@@ -33,7 +33,7 @@ workflow to run at GitHub Actions.
 The workflow is defined by
 https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/.github/workflows/main.yml[the "main.yml" script].
 It performs clean builds of the Engine
-across a matrix of 4 operating systems and 2 javadoc versions.
+across a matrix of 4 operating systems and 2 Java versions.
 It also performs a clean build of the merged javadoc.
 
 Any failure of the CI workflow causes notifications to be sent.
@@ -118,7 +118,7 @@ never from "master".
 
 == Initiating a New Release
 
-The release process start with the creation of a Git tag.
+The release process starts with the creation of a Git tag.
 *Do not* use the `git push` command for this purpose!
 Use GitHub's web interface instead:
 
@@ -155,7 +155,7 @@ Discord provides an easy way to verify that the run has begun.
 (A Discord client is not required.)
 
 * Log in to your Discord account.
-* Select the "github-builds" channel on the "JMonkeyEngine Community" server.
+* Select the "github-builds" channel on the "jMonkeyEngine Community" server.
 * Look for a recent message from the "GitHub" bot saying
   "[jMonkeyEngine/jmonkeyengine] New release published".
   This indicates that a run has started, not that it's complete!
@@ -174,10 +174,10 @@ image::github/summary.png[summary.png]
 
 == Results of the Release Run
 
-The release run automatically deploys various build products:
+A successful release run automatically deploys various build products:
 
 * It deploys the merged javadoc to https://javadoc.jmonkeyengine.org/
-* It deploys the test chooser's executable (as a ZIP file)
+* It deploys the test chooser's executable (a ZIP file)
   as an asset listed under the release description at GitHub Releases.
 * It also "stages" the signed Maven artifacts to Sonatype, as a "repository".
   However, staging to Sonatype does not make the artifacts publicly visible.
@@ -191,12 +191,12 @@ https://central.sonatype.org/publish/release/
 
 Browse to https://oss.sonatype.org/[the Nexus Repository Manager].
 
-Select the "Log In" link in the upper right corner of the page.
+Select the "Log in" link in the upper right corner of the page.
 
 image::sonatype/login.png[login.png]
 
 Type your Sonatype credentials into the dialog box
-and click on the "Log In" button.
+and click on the "Log In" button below.
 
 image::sonatype/login_dialog.png[login_dialog.png]
 
@@ -220,10 +220,12 @@ select the "Content" tab to browse the contents of newly staged repo.
 image::sonatype/content.png[content.png]
 
 When satisfied that the staged repo is 100% complete,
-click on the "Close" button to begin the automated validation process.
+click on the "Close" button and then the "Confirm" button
+to begin the automated validation process.
 
 image::sonatype/close.png[close.png]
 
+Click on the "Refresh" button again.
 In the bottom half of the page,
 select the "Progress" tab to watch the progress.
 Click on the "Refresh" button occasionally
@@ -231,7 +233,8 @@ until a "Repository closed" message appears in the progress.
 
 image::sonatype/repo_closed.png[repo_closed.png]
 
-To begin the synching process, click on the "Release" button.
+To begin the synching process,
+click on the "Release" button and then the "Confirm" button.
 The process usually takes about 20 minutes.
 I don't know a good way to monitor this process.
 To detect completion, browse to
