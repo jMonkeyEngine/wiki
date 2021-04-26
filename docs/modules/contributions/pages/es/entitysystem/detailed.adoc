@@ -13,7 +13,7 @@ This wiki is dedicated to who want to do research about Entity System.
 
 You should 've read a brief introduction here: xref:es/entitysystem/introduction.adoc[entitysystem:introduction]
 
-And if you still have some concerning you are in the right place!
+And if you still have some concerns you are in the right place!
 
 
 [IMPORTANT]
@@ -27,8 +27,8 @@ This wiki is a collection of known sources, authors from internet and our forum.
 
 'Cause:
 
-.  You may read famous T-machine article about entity systems in mmorpg.
-.  You may come from Unity, UDK, or other engine used it
+.  You may read famous T-machine article about entity systems in MMORPGs.
+.  You may come from Unity, UDK, or another engine that used it
 .  You may come from Database and web world
 .  You read a lot of articles, forums and try few projects with dramatic debates
 
@@ -38,12 +38,12 @@ But:
 .  You doubt ES concept, find its impossible to do ES right
 .  You want to learn more
 
-I hope this page will help you 30% the way to reach the destination. It's the place where we concern about the design wisdoms of ES, and consider its detailed implementation in Java, eventually integrate in JME3 for a real-time game.
+I hope this page will help you 30% the way to reach the destination. It's the place where we concern about the design wisdom of ES, and consider its detailed implementation in Java, eventually integrate in JME3 for a real-time game.
 
 
 [IMPORTANT]
 ====
-Before you start, I also want to mention that there are fews implementation of ES in JME3, after read this page, you can judge the design of each one arcodingly and choose one. Also read the interviews with each authors about their approaches!
+Before you start, I also want to mention that there are few implementations of ES in JME3, after read this page, you can judge the design of each one accordingly and choose one. Also read the interviews with each authors about their approaches!
 ====
 
 
@@ -68,13 +68,13 @@ Before you start, I also want to mention that there are fews implementation of E
 
 Entity System in turn is the Core and fundamental and most obvious implementation design of COP (Component oriented programming) in real-time application scale!!!
 
-In fact the implementation detail of Entity system is various, some may resembling database core, some may have troubles with OOP incompatibility, some may appear to get all the good of Functional language…
+In fact the implementation details of Entity systems vary, some may resemble database core, some may have troubles with OOP incompatibility, some may appear to get all the good of Functional language…
 
 but note that Entity System really stand on its own terminology on this single page:
 
 [WARNING]
 ====
-We are talking about the ES within COP, but implemented by an pure OOP like Java.
+We are talking about the ES within COP, but implemented by a pure OOP like Java.
 
 ====
 
@@ -119,7 +119,7 @@ _Examples for Components can be:
 
 Components are *added* to the Entities.
 
-There can *only exists one component* of the same class for one entity at the same time.
+There can *only exist one component* of the same class for one entity at the same time.
 
 As you can see *Entities are made flexible up of different Components*. _You need your Armored Robot?_ No Problem, you only need to combine the right components. Besides you are able to remove/change/add components during the game +++<strike>which is a huge benefit of Entity Systems.</strike>+++
 
@@ -155,13 +155,13 @@ from Data oriented architecture:
 Short explanation
 
 .  Decoupling : each piece can work together without aware of each other.
-.  Resuable : can be easily bring to use again somewhere else
-.  Primitive unit : each piece from a simplest form which contain, fullfil it self.
+.  Reusable : can be easily bring to use again somewhere else
+.  Primitive unit : each piece from a simplest form which contains, fulfills itself.
 .  Data who decide: data decide each and every result, activities of the software
 .  Everything is Data: all piece in the software system is Data
 .  Repository existence: exist a place to keep all the data, the one door to reach them
 .  Homogeneous data : data is treat the same
-.  Regular workload : software that run at regular rate, kind of ballance trade off between performance and complexity
+.  Regular workload : software that run at regular rate, kind of balance trade off between performance and complexity
 .  Simple dataflow: the flow of the data is easy to watch, inspect, start stop, manipulate. As the root reason for regular workload!
 
 
@@ -174,7 +174,7 @@ Ideas similarities here actually is resulted from with decades of history of rev
 
 [IMPORTANT]
 ====
-Here is some terms will be mentioned below but ussually have misunderstaned or misplaced because of their confusioness. Try to do another research to make sure you understand clearly all the terms first!
+Here are some terms that will be mentioned below but usually have misunderstood or misplaced because of their confusions. Try to do another research to make sure you understand clearly all the terms first!
 ====
 
 
@@ -190,7 +190,7 @@ Here is a short one to help you get start quickly : xref:es/entitysystem/terms.a
 == What is NOT an ES ?
 
 From more 'open' perspective the core elements can be viewed as, but remember the name as a noun can be mislead:
-_This resulted as a dicussion of @pspeed and toolforger, eventually is form a skeptical question, it's really interesting by how we all see this problem confused at first!!_
+_This resulted as a discussion of @pspeed and toolforger, eventually is form a skeptical question, it's really interesting by how we all see this problem confused at first!!_
 
 ]
 Entity -> ID. It just binds the components together, in the sense that there is one function that creates a bunch of components with the same ID, and one function to destroy all components for an ID. An entity is the set of objects that have the same ID, entities don’t exist as coherent objects inside the code.
@@ -202,7 +202,7 @@ System -> Processor. A function that operates on a slice of components.
 This often result in mislead skepticism about the design. So get back to read it carefully one more time and some gotchas and practical wisdom below.
 
 
-== Gotchas & Practical wisdoms
+== Gotchas & Practical wisdom
 
 
 [TIP]
@@ -228,17 +228,17 @@ Entity should just be interpreted as a bunch of its Component. GameObject or any
 
 === Has ~ Is?
 
-From software designer POV, Relationship in COP is a sensitive topic; by nature, Component is against (or overide) Relation.
+From software designer POV, Relationship in COP is a sensitive topic; by nature, Component is against (or override) Relation.
 
-The deception '`Has`' relationship between Entity and its Component actually represent everything in various meaning from the literature '`Is`' , or literature '`Has`'.. to '`related to`'. BUT keep in mind, this is blury and its almost always implemented as indirect acess, not like a property in an object but envolve processing-lookup under the curtain! So you may find this difficult to extract and detect these different from your tranditional OOP software design!
+The deception '`Has`' relationship between Entity and its Component actually represent everything in various meaning from the literature '`Is`' , or literature '`Has`'.. to '`related to`'. BUT keep in mind, this is blurry and it's almost always implemented as indirect access, not like a property in an object but involves processing-lookup under the curtain! So you may find this difficult to extract and detect these different from your traditional OOP software design!
 
 
 === Some insights
 
-This is the place to share the "`real`" world difficuties when working with ES, here in JME3 or in other engines. In Practical wisdoms will raise some known solutions for them. This section may revive some part of the Cons or known issues sections but practically.
+This is the place to share the "`real`" world difficulties when working with ES, here in JME3 or in other engines. In Practical Wisdom, we will raise some known solutions for them. This section may revive some part of the Cons or known issues sections but practically.
 
 
-=== Practical wisdoms
+=== Practical wisdom
 
 
 == ES done right
@@ -248,22 +248,22 @@ Because this topic is so debatable, there is no solid candidate for ES done righ
 
 === Why debatable [Short]?
 
-Because apply to each game, the scenarios and usecases are vary difference. Situation changes, a design which should be right can be a failure!  You may see the point.
+Because apply to each game, the scenarios and usecases are very different. Situation changes, a design which should be right can be a failure!  You may see the point.
 
-This topic start flame in almost every dicussions I've come through, someone should be like OOP versus COP, ES is not for all,..etc. At first, the debate should focus into a specific scope, specific genre. Here (this page) we still arrange the statements like general scope. But later in the interviews you can see some "`real`" applications and implementations.
+This topic start flame in almost every discussions I've come through, someone should be like OOP versus COP, ES is not for all,..etc. At first, the debate should focus into a specific scope, specific genre. Here (this page) we still arrange the statements like general scope. But later in the interviews you can see some "`real`" applications and implementations.
 
 
 ==== Should be?
 
-Theoricaly an Java ES done right should be:
+Theoretically a Java ES done right should be:
 
 .  Pure data : very debatable
 ..  – Mutable : as bean with setter and getter
-..  – Immutate : as bean with getter, should be replace if changed.
+..  – Immutable : as bean with getter, should be replaced if changed.
 
-.  Multi-threading, concurency enable : very debatable
-..  – As my experience, pure data or not is not clear contract to multi-threading success. Consider other things happen outside of ES scope, so it not an solid waranty that those component will not be touched by any other thread.
-..  – Also if there is a contract that no other thread touching those data, in Java style via synchonization or other paradigm like actor… multi-threading also consider success but just more complicated!
+.  Multi-threading, concurrency enable : very debatable
+..  – As my experience, pure data or not is not clear contract to multi-threading success. Consider other things happen outside of ES scope, so it not an solid warranty that those component will not be touched by any other thread.
+..  – Also if there is a contract that no other thread touching those data, in Java style via synchronization or other paradigm like actor… multi-threading also consider success but just more complicated!
 
 .  Communication: very debatable
 ..  – Event messaging enable
@@ -272,26 +272,26 @@ Theoricaly an Java ES done right should be:
 .  Is database (and other kind of persistent) friendly
 ..  – Save to XML?
 ..  – Send over network?
-..  – Change sets are resembling Databse concept, what about tranactions?
+..  – Change sets are resembling Database concept, what about transactions?
 
-.  Is enterprise friendly (expanable/ extensible/ modulizable)
+.  Is enterprise friendly (expandable/ extensible/ modularizable)
 ..  – Spring, as lazy loaded, injected?
 
 .  Script possibilities
 ..  – Can be script, non trivial work in pure data!
 ..  – Can be use with other JVM language than java like groovy, or scala, jython?
 
-.  Restrictions and limitation
+.  Restrictions and limitations
 ..  – No dynamic Java object methods in Component ? What about Entities and Systems ( Processors)
-..  – An overal way to manage and config Systems, freely chose? How to hook to its routine?
+..  – An overall way to manage and config Systems, freely chose? How to hook to its routine?
 
-.  Depedencies
-..  – The separation of components are clear, as no dependencies at all. Hard cored, scripted or injected will break the overal contract!
-..  – The separation of Entities. What about depedencies of entities? Ex: parent/ child relationship in JME spatial. How the framework handle that?
+.  Dependencies
+..  – The separation of components are clear, as no dependencies at all. Hard cored, scripted or injected will break the overall contract!
+..  – The separation of Entities. What about dependencies of entities? Ex: parent/ child relationship in JME spatial. How the framework handle that?
 ..  – The separation of Systems. Ex: any contract about that?
 
 
-Detailed explaination : xref:es/entitysystem/points.adoc[points]
+Detailed explanation : xref:es/entitysystem/points.adoc[points]
 
 
 == Design
@@ -331,7 +331,7 @@ This is a short checklist that help you open your mind before going to design an
 
 .  Mainly to handles/ manage your data and entities.
 .  Usually in MMO where BLOB happen.
-.  Batch/ cache processing enviroment, device. GPU, others.
+.  Batch/ cache processing environment, device, GPU, others.
 
 
 === Why not?
@@ -380,7 +380,7 @@ A lot of good things come if done "`right`"!
 .  Communication made simple
 .  What you see is what you have → composing
 .  Reusable with prefab
-.  Batch / Concurent processing/caching as in modern CPU, GPU
+.  Batch / Concurrent processing/caching as in modern CPU, GPU
 .  … ten more
 
 //link:http://piemaster.net/2011/07/entity-component-primer/[http://piemaster.net/2011/07/entity-component-primer/]
@@ -396,19 +396,19 @@ A lot of good things come if done "`right`"!
 
 
 .  No OOP: COP Done "`right`" means forget about almost all OOP things: Pure data, Class become Type, no inheritance, encapsulation…etc , no best of both world!
-.  Spliting dilemma: Same with OOP Classify problem: How to split, how to change the data when you change the splits?
-. Duplicated component: Same root as confusion in component spliting but, this problem about how can we made a more than one component of a kind per object entity… Ex: Car with 4 wheels, the component will be a 1stWheel, 2ndWheel, or a single list of WheelComponent… ?
+.  Splitting dilemma: Same with OOP Classify problem: How to split, how to change the data when you change the splits?
+.  Duplicated component: Same root as confusion in component splitting but, this problem about how can we made a more than one component of a kind per object entity… Ex: Car with 4 wheels, the component will be a 1stWheel, 2ndWheel, or a single list of WheelComponent… ?
 .  Data resampling problem in game, data such as textures, text, 3d models everything … should be crafted: made, converted again to suite with existing data model – that’s the component in the ES.
-.  Mindset change problem: One will have to re-code a fews time to implement an ES, in initial, half ass and full level.
+.  Mindset change problem: One will have to re-code a few times to implement an ES, in initial, half ass and full level.
 .  Flat table problem: Because ES is a big table by nature, with component set is a row. It’s as efficient even less than a big table, which form the flat table problem as seen in many indexed base database. Tree, Graph and other data structure will almost immediately break the ES contract!!
 .  Observation problem: As update beat over listening method, ES restrict the observation methods a lot.
-.  Sercurity problem : No encapsulation, kind of no private POJO mean no java power in protecting data, a lot of security holes! ES implementations and COP forget all about sercurity danger as Component contracted to be processed by Processor but not hiding its content.
-.  Scale : In theory, ES should scale well..!!! But read this carefully or mislead it, enterprise system need much more than just a way to orginize your data!!!
+.  Security problem : No encapsulation, kind of no private POJO mean no java power in protecting data, a lot of security holes! ES implementations and COP forget all about security danger as Component contracted to be processed by Processor but not hiding its content.
+.  Scale : In theory, ES should scale well..!!! But read this carefully or mislead it, enterprise system need much more than just a way to organize your data!!!
 
 ////
 [TIP]
 ====
-Because a lot of people find interests about the down side of ES, I've listed them carefully here xref:jme3/contributions/entitysystem/detailed/cons.adoc[cons]. After knowing the acceptable solutions from the authors, I will remove or marked the solved problem! [Peace! :p]
+Because a lot of people find interests about the downside of ES, I've listed them carefully here xref:jme3/contributions/entitysystem/detailed/cons.adoc[cons]. After knowing the acceptable solutions from the authors, I will remove or marked the solved problem! [Peace! :p]
 ====
 ////
 
@@ -417,21 +417,21 @@ Because a lot of people find interests about the down side of ES, I've listed th
 
 [WARNING]
 ====
-Of course, ES has its mising features!!!!
+Of course, ES has its missing features!!!!
 ====
 
 
-But for some reason its design's consider good for real=time application like a "`common`" video Game, or "`common`" simmulation; especially common in MMO world.
+But for some reason its designs are considered good for real-time application like a "`common`" video Game, or "`common`" simulation; especially common in MMO world.
 
-Here is a short of '`why`' answers from a software architecture designer view, explain based on its borrowed ideas: [This is very different from various source you've read, because it's not embeded any implementation details!!!]
+Here is a short of '`why`' answers from a software architecture designer view, explain based on its borrowed ideas: [This is very different from various sources you've read, because it's not embedded any implementation details!!!]
 
 .  Decoupling : each piece can work together without aware of each other.
-.  Resuable : can be easily bring to use again somewhere else.
-.  Composable : each piece can work together
+.  Reusable : can be easily put to use again somewhere else.
+.  Composable : pieces can work together
 
 have fundamental relationship with decoupling.
 
-.  Primitive unit : each piece from a simplest form which contain, fullfil it self.
+.  Primitive unit : each piece from a simplest form which contains, fulfills itself.
 
 have fundamental relationship with decoupling.
 
@@ -454,10 +454,10 @@ have fundamental relationship with decoupling.
 ——————————————————————————————
 
 .  Homogeneous data : data is treat the same
-.  Regular workload : software that run at regular rate, kind of ballance trade off between performance and complexity
+.  Regular workload : software that run at regular rate, kind of balance trade off between performance and complexity
 .  Simple dataflow: the flow of the data is easy to watch, inspect, start stop, manipulate. As the root reason for regular workload!
 
-(*) These lead to a lot of simple but efficient algorithm to get high performance in runtime for a software such like a "`common`" video game, which run in console, GPU, CPU which envolve and share the same model with cache and batch intructions, an a certain hearbeat…Notice the bottleneck of CPU-GPU and between different processing unit, platform is the most headache of Game designer for decade is ease with the regular workload; let the game run smoothly and stable, result into nice visual representation..
+(*) These lead to a lot of simple but efficient algorithm to get high performance in runtime for a software such like a "`common`" video game, which run in console, GPU, CPU which involve and share the same model with cache and batch instructions, an a certain heartbeat…Notice the bottleneck of CPU-GPU and between different processing unit, platform is the most headache of Game designer for decade is ease with the regular workload; let the game run smoothly and stable, result into nice visual representation..
 
 
 === ES consider bad design in …?
@@ -475,38 +475,38 @@ It is a bad design choice where:
 
 Even if done right, the ES also have it underlying issues which noticed by its authors, (that means annoying things)!
 
-*Why this section havs things from the Cons section but consider differrently?*
+*Why this section has things from the Cons section but consider differently?*
 
 
-In Cons section descible problem should be concerned, likely to be done wrong, or the limit of the design they can be solve in implementations or not is not important!
+The Cons section describes problems should be concerned, likely to be done wrong, or the limit of the design they can be solved in implementations or not is not important!
 
 
 
-Known issue is the problem persist in even the well designed; or persist due to the underlying infrastructure, application, programming language, etc!!
+Known issue means the problem persists in even the well designed; or persist due to the underlying infrastructure, application, programming language, etc!!
 
 
 
 ==== Communication:
 
-Happen in non pure data solution, when Components don’t function independently of each other. Some means of communication is necessary
+Happens in non pure data solution, when Components don’t function independently of each other. Some means of communication is necessary.
 
 * Two approaches (both viable):
 ** Direct communication using dynamic cast and function calls
 ** Indirect communication using message passing
 
-In pure data solution, by not query or just loop through interested component at one update cycle, the Processor eases out the need of other communication, but in complex scenario, such as combine with outter event handling such as Network, where message passing is nature, the problem still persist!
+In pure data solution, by not query or just loop through interested component at one update cycle, the Processor eases out the need of other communication, but in complex scenario, such as combine with outer event handling such as Network, where message passing is nature, the problem still persist!
 
-//as decribled in reference [6]
+//as describled in reference [6]
 //Read: link:http://acmantwerp.acm.org/wp-content/uploads/2010/10/componentbasedprogramming.pdf[http://acmantwerp.acm.org/wp-content/uploads/2010/10/componentbasedprogramming.pdf]
 
 
 ==== Script
 
-The "`script problem`" happen by the same reason with the "`communication problem`" mixed with "`pure`" data or "`not`" problem. When an component is hard to inspect, its outter relationship hard to define and its property is rejected to change, how can you script it?
+The "`script problem`" happens for the same reason with the "`communication problem`" mixed with "`pure`" data or "`not`" problem. When a component is hard to inspect, its outer relationship hard to define and its property is rejected to change, how can you script it?
 
 Read: link:http://blog.gemserk.com/2011/11/13/scripting-with-artemis/[http://blog.gemserk.com/2011/11/13/scripting-with-artemis/]
 
-Nearly one end up back to half ass solution, not a pure data ES if their really need scripting in.
+Nearly one end up back to half-assed solution, not a pure data ES if their really need scripting in.
 
 
 ==== Arbitrary Routine and Query
@@ -521,7 +521,7 @@ link:https://hub.jmonkeyengine.org/t/in-range-detection-with-lots-of-entities/26
 
 +++<u>@atomix POV:</u>+++
 
-As said, as a long term java developer and also an artist. I can not see a strong, confident reason why we should switch over to COP at the moment.
+As said, as a long term Java developer and also an artist. I can not see a strong, confident reason why we should switch over to COP at the moment.
 
 BLOB is not a problem with a carefully designed software, same as hard as split your components… Deep inheritance even multi inheritance problem can not be reached in an indie project, and even it reached, maintain it always easier than redesign a 3D model to change the export pipeline!!!
 
@@ -529,11 +529,11 @@ Also the tangled wires between inheritance form the nature of programming and ma
 
 *BUT* They have IDE support, profiler, proved technologies, lot more… We talking about a no IDE support paradigm with plain text editor, table and some black magic, tell me more about the company will approve your plan?
 
-Some alternate solution may solve almost your design goal when you likely to use an ES:
+Some alternative solutions may solve almost your design goals when you are likely to use an ES:
 
-.  Smart bean framework : try Spring, EJB. For Enterprise, if you've known EJB and Spring, you will not bet in home grown ES, dont you?
+.  Smart bean framework : try Spring, EJB. For Enterprise, if you've known EJB and Spring, you will not bet in home grown ES, don't you?
 .  Actor framework: try AKKA
-.  If you see java as a failure, try Scala’s trail …
+.  If you see Java as a failure, try Scala’s trail …
 
 
 [WARNING]
@@ -554,10 +554,10 @@ So, my last advice is: If you are not doing MMO *Take a look in other alternativ
 I think this should be in another page or even in a book! :p
 ====
 
-This chapter dedicated to people still who really want to *switch to this new paradigm* after all the warning and awarenesses.
+This chapter dedicated to people still who really want to *switch to this new paradigm* after all the warnings and awarenesses.
 So this chapter will mainly answer the BIG question:
 
-*What should be change to adapt to this new paradigm?*
+*What should be changed to adapt to this new paradigm?*
 
 
 === What will we face
@@ -624,16 +624,16 @@ Post: link:https://hub.jmonkeyengine.org/t/entitymonkey-a-simple-entity-system-f
 Interview:
 
 
-=== Implementation, and scope of each projects:
+=== Implementation and scope of each project:
 
-The comparasions will focus in these below points, follow with the scope, status of each projects
+The comparisons will focus in these below points, follow with the scope, status of each projects
 
 .  Initial philosophy
 .  Pure data or not?
-.  Multi-threading, concurency enable or not?
+.  Multi-threading, concurrency enable or not?
 .  Communication: Event messaging enable or not?
 .  Is database (and other kind of persistent) friendly or not?
-.  Is enterprise friendly (expanable/ extensible/ modulizable) or not?
+.  Is enterprise friendly (expandable/ extensible/ modulizable) or not?
 .  Script possibilities?
 .  Restrictions and limitation
 .  Dependencies
@@ -644,7 +644,7 @@ The comparasions will focus in these below points, follow with the scope, status
 
 [IMPORTANT]
 ====
-The Comparasion table is in Google doc: Help me fill it!!!!
+The comparison table is in Google Docs: Help me fill it!!!!
 ====
 
 
@@ -682,7 +682,7 @@ link:http://gamesfromwithin.com/data-oriented-design[http://gamesfromwithin.com/
 //pass:[[6]] link:http://acmantwerp.acm.org/wp-content/uploads/2010/10/componentbasedprogramming.pdf[http://acmantwerp.acm.org/wp-content/uploads/2010/10/componentbasedprogramming.pdf]
 
 
-*Link to other entitiy system approaches in its own wikidot!*
+*Link to other entity system approaches in its own wikidot!*
 
 pass:[[8]] link:http://entity-systems.wikidot.com/es-approaches[http://entity-systems.wikidot.com/es-approaches]
 
