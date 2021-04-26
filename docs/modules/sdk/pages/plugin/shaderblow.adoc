@@ -40,7 +40,7 @@ Or you can use the forum threads of shaders.
 
 == ColorScale Filter
 
-The ColorScale filter applys a color to the render image. You can use this filter to tint the render according to one particular color without change any material (underwater scene, night scene, fire scene) or to achieve fade-in/fade-out effect.
+The ColorScale filter applies a color to the render image. You can use this filter to tint the render according to one particular color without change any material (underwater scene, night scene, fire scene) or to achieve fade-in/fade-out effect.
 
 Features:
 
@@ -123,14 +123,14 @@ Old Film filter simulate the effect of a classic looking film effect.
 Features:
 
 *  Allow to set the *filter's color*. Default is sepia (ColorRGBA(112f / 255f, 66f / 255f, 20f / 255f, 1.0f)).
-*  Allow to set the *color's density*. Default is 0.7. Shader clamps this value between 0 to 1. The color image gets grayscale when color's densite is set to 0.
+*  Allow to set the *color's density*. Default is 0.7. Shader clamps this value between 0 to 1. The color image gets grayscale when color's density is set to 0.
 *  Allow to set the *noise's density*. Default is 0.4. Shader clamps this value between 0 to 1.
 *  Allow to set the *scratches' density*. Default is 0.3. Shader clamps this value between 0 to 1.
 *  Allow to set the *vignetting's diameter*. Default is 0.9. Shader clamps this value between 0 to 1.4. Vignetting effect is made using two circles. The inner circle represents the region untouched by vignetting. The region between the inner and outer circle represent the area where vignetting starts to take place, which is a gradual fade to black from the inner to outer ring. Any part of the frame outside of the outer ring would be completely black.
 
 [NOTE]
 ====
-I chose to clamp this value inside the frag shader code instead of using java code because I thought this way is faster (better from preformace point of view). You can clamp this values using java code if you want.
+I chose to clamp this value inside the frag shader code instead of using java code because I thought this way is faster (better from performace point of view). You can clamp this value using Java code if you want.
 ====
 
 [cols="2",caption=]
@@ -213,7 +213,7 @@ The Dissolve Shader uses a simple grey scale image as an animated mask to hide a
 
 The shader incrementally clamps off the colour value, dark to light, and uses that for a masking texture to discard pixels.
 It is currently capped for convenience at 255 frames of animation and is only using one colour channel.
-In simple terms, in starts by only discarding the darkest parts of the texture map, then the slightly lighter parts, then the slightly lighter again and again until it eventually cant get any lighter (white), at which point the proccess is complete.
+In simple terms, in starts by only discarding the darkest parts of the texture map, then the slightly lighter parts, then the slightly lighter again and again until it eventually can't get any lighter (white), at which point the process is complete.
 
 [cols="2"]
 |===
@@ -227,10 +227,10 @@ Starting at the top left we have: simple linear dissolve, organic dissolve and p
 And bottom row: organic growth, texture masking, organic burn.
 Mask texture maps on the second image.
 
-The test is occolating the dissolve amount between 0 and 1. It demonstrates 6 different uses for the shader, all running at the same speed. The top row are straight forward dissolves. The bottom row shows 3 potential applications:
+The test is oscillating the dissolve amount between 0 and 1. It demonstrates 6 different uses for the shader, all running at the same speed. The top row are straight forward dissolves. The bottom row shows 3 potential applications:
 
 .  Organic Growth (bottom left) over a mesh, this could work both animating rapidly for a fast grow effect, or set to a fixed value e.g. set to 0.5f is "`50% covered in growth`";
-.  Texture Masking (bottom middle) , I see this is probably where the most practical applications will come from. The demonstration shows a poorely photoshoped clean street, peices of garbage are then scattered around dependant on the dissolve amount, this would work best with a fixed value eg set to .75 is "`75% dirty`". Texture Masking could be also be used for:
+.  Texture Masking (bottom middle) , I see this is probably where the most practical applications will come from. The demonstration shows a poorly photoshopped clean street, pieces of garbage are then scattered around dependant on the dissolve amount, this would work best with a fixed value eg set to .75 is "`75% dirty`". Texture Masking could be also be used for:
 ..  paint damage on a car;
 ..  lacerations on a character;
 ..  the blood shot eye effect that creeps in from the sides of the screen when you’ve taken too much damage in a modern FPS.
@@ -303,7 +303,7 @@ Features:
 .  Allow to set animation speed.
 .  Allow to set mask texture in order to set particle shape.
 .  Allow to set particle color.
-.  Allow to set fog color. Fog color is applyed to the material using for color's alpha value as fog distance factor.
+.  Allow to set fog color. Fog color is applied to the material using for color's alpha value as fog distance factor.
 
 [cols="2"]
 |===
@@ -337,7 +337,7 @@ image:plugin/fakeobject.png[fakeobject.png,width="100",height=""]
 
 [IMPORTANT]
 ====
-Remenber to set the queue bucket to transparent for the spatial.
+Remember to set the queue bucket to transparent for the spatial.
 ====
 
 [source,java]
@@ -373,7 +373,7 @@ final Quad quad = new Quad(3, 3); // Create an spatial. A plane in this case
 final Geometry geom = new Geometry("Particle", quad);
 geom.setMaterial(mat); // Assign the material to the spatial
 TangentBinormalGenerator.generate(geom);
-geom.setQueueBucket(Bucket.Transparent); // Remenber to set the queue bucket to transparent for the spatial
+geom.setQueueBucket(Bucket.Transparent); // Remember to set the queue bucket to transparent for the spatial
 ----
 
 To get green/yellow/blue fog (not transparency):
@@ -397,7 +397,7 @@ link:https://hub.jmonkeyengine.org/t/fakeparticleblow-shader/16443[Forum thread]
 == Forceshield Shader
 
 Forcefield shader adds shield effect to a spatial.
-The spatial will be a sphere most of the cases, but box or oval should be possible to use. Only problem is that it has to be higher-poly because distace is calculated from vertex.
+The spatial will be a sphere most of the cases, but box or oval should be possible to use. Only problem is that it has to be higher-poly because distance is calculated from vertex.
 
 Hits are registred as contact point position using this control and effect animation is based on distance from contact point and time.
 Max number of hits displayed is 4.
@@ -438,7 +438,7 @@ If you experience problems, try higher polygon object.
 // Create spatial to be the shield
 final Sphere sphere = new Sphere(30, 30, 1.2f);
 final Geometry shield = new Geometry("forceshield", sphere);
-shield.setQueueBucket(Bucket.Transparent); // Remenber to set the queue bucket to transparent for the spatial
+shield.setQueueBucket(Bucket.Transparent); // Remember to set the queue bucket to transparent for the spatial
 
 // Create ForceShieldControl
 this.forceShieldControl = new ForceShieldControl(this.assetManager, 0.5f);

@@ -30,7 +30,7 @@ The GameDev.net article describes how those effects are achieved, but the main i
 
 == How Did We Implement it in jME3?
 
-jME3 default behavior is to use a forward rendering process, so there is no position buffer rendered that we can take advantage of. But while rendering the main scene to a frame buffer in the FilterPostPorcessor, we can write the hardware depth buffer to a texture, with nearly no additional cost.
+jME3 default behavior is to use a forward rendering process, so there is no position buffer rendered that we can take advantage of. But while rendering the main scene to a frame buffer in the FilterPostProcessor, we can write the hardware depth buffer to a texture, with nearly no additional cost.
 
 There are several ways of reconstructing the world space position of a pixel from the depth buffer. The computational cost is higher than just fetching the position from a position buffer, but the bandwidth and the memory required is a lot lower.
 
@@ -198,7 +198,7 @@ a|Default
 
 a|water.setCenter(Vector3f.ZERO); +
 water.setRadius(260);
-a|Limit the water filter to a semisphere with the given center and radius. Use this for lakes and smaller bodies of water. Skip this for oceans.
+a|Limit the water filter to a hemisphere with the given center and radius. Use this for lakes and smaller bodies of water. Skip this for oceans.
 a|unused
 
 a|water.setShoreHardness(1.0f);
@@ -265,7 +265,7 @@ a|The lower the value, the less reflection can be seen on water. This is a const
 a|0.3f
 
 a|water.setRefractionStrength(-0.1)
-a|This value modifies the current Fresnel term. If you want to weaken reflections use bigger value. If you want to empasize them, use a value smaller than 0.
+a|This value modifies the current Fresnel term. If you want to weaken reflections use bigger value. If you want to emphasize them, use a value smaller than 0.
 a|0.0f
 
 a|water.setReflectionMapSize(256)
