@@ -246,7 +246,7 @@
     <a class="nav-link" href="../../tutorials/how-to/java/logging.html">Logging</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../tutorials/how-to/java/read_graphic_card_capabilites.html">Read Graphics Capabilites</a>
+    <a class="nav-link" href="../../tutorials/how-to/java/read_graphic_card_capabilites.html">Read Graphics Capabilities</a>
   </li>
 </ul>
   </li>
@@ -370,9 +370,6 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../animation/animation.html">Animation-Old</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../anim/animation.html">Animation-New</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../cinematic/cinematics.html">Cinematics (cutscenes, fake destruction physics)</a>
@@ -1188,7 +1185,7 @@ The global structure should look like this :</p>
 </div>
 </li>
 <li>
-<p><u>Documentation</u> : the documentation block. This is mandatory and I really recommend filling this if you want to contribute your shader nodes. This documentation will be read buy the SDK and presented to users willing to add this node to their material definitions. This should contain a brief description of the node and a description for each input and ouput.</p>
+<p><u>Documentation</u> : the documentation block. This is mandatory and I really recommend filling this if you want to contribute your shader nodes. This documentation will be read buy the SDK and presented to users willing to add this node to their material definitions. This should contain a brief description of the node and a description for each input and output.</p>
 <div class="ulist">
 <ul>
 <li>
@@ -1236,7 +1233,7 @@ The global structure should look like this :</p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>If you use the same name for an input and an ouput, the generator will consider them as the SAME variable so they should be of the same glsl type.</p>
+<p>If you use the same name for an input and an output, the generator will consider them as the SAME variable so they should be of the same glsl type.</p>
 </div>
 </td>
 </tr>
@@ -1301,8 +1298,8 @@ The size can be dynamic and driven by a material parameter. GLSL does not suppor
 </div>
 </div>
 <div class="paragraph">
-<p>This declares a float array with the size depending on the value of the NumberOfElement material parameter.<br>
-NumberOfElement <strong>HAS</strong> to be declared in the material definition as a material parameter. It will be mapped to a define and used in the shader.</p>
+<p>This declares a float array with the size depending on the value of the NumberOfElements material parameter.<br>
+NumberOfElements <strong>HAS</strong> to be declared in the material definition as a material parameter. It will be mapped to a define and used in the shader.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1427,7 +1424,7 @@ Here is how a ShaderNode declaration should look :</p>
 <p><strong>InputVariableName</strong> : the name of the variable to map as declared in the definition.</p>
 </li>
 <li>
-<p><strong>Swizzle</strong> : Swizling for the preceding variable. More information on glsl swizzling on this page <a href="https://www.khronos.org/opengl/wiki/GLSL_Type">https://www.khronos.org/opengl/wiki/GLSL_Type</a>.</p>
+<p><strong>Swizzle</strong> : Swizzling for the preceding variable. More information on glsl swizzling on this page <a href="https://www.khronos.org/opengl/wiki/GLSL_Type">https://www.khronos.org/opengl/wiki/GLSL_Type</a>.</p>
 </li>
 <li>
 <p><strong>NameSpace</strong> : The generator will use variable name space to avoid collision between variable names. Name space can be one of these values :</p>
@@ -1461,7 +1458,7 @@ Here is how a ShaderNode declaration should look :</p>
 </div>
 </li>
 <li>
-<p><u>OutputMapping</u> : This block is optional, as mapping of output will be done in input mapping block of following shaderNodes, ecept if you want to output a value to the Global output of the shader.</p>
+<p><u>OutputMapping</u> : This block is optional, as mapping of output will be done in input mapping block of following shaderNodes, except if you want to output a value to the Global output of the shader.</p>
 <div class="ulist">
 <ul>
 <li>
@@ -1555,7 +1552,7 @@ Here is the definition content (Common/MatDefs/ShaderNodes/Common/CommonVert.j3s
         Shader GLSL100: Common/MatDefs/ShaderNodes/Common/commonVert.vert
         Documentation {
             This Node is responsible for computing vertex position in projection space.
-            It also can pass texture coordinates 1 &amp; 2, and vertexColor to the frgment shader as varying (or inputs for glsl &gt;=1.3)
+            It also can pass texture coordinates 1 &amp; 2, and vertexColor to the fragment shader as varying (or inputs for glsl &gt;=1.3)
             @input modelPosition the vertex position in model space (usually assigned with Attr.inPosition or Global.position)
             @input worldViewProjectionMatrix the World View Projection Matrix transforms model space to projection space.
             @input texCoord1 The first texture coordinates of the vertex (usually assigned with Attr.inTexCoord)
@@ -1617,7 +1614,7 @@ Here we have the most basic yet mandatory thing in a vertex shader, computing ve
 <div class="ulist">
 <ul>
 <li>
-<p><strong>worldViewProjectionMatrix = WorldParam.WorldViewProjectionMatrix</strong> : the input parameter worldViewProjectionMatrix is assigned with the WorldViewProjectionMatrix World parameter declared in the WorlParameters block of the technique.</p>
+<p><strong>worldViewProjectionMatrix = WorldParam.WorldViewProjectionMatrix</strong> : the input parameter worldViewProjectionMatrix is assigned with the WorldViewProjectionMatrix World parameter declared in the WorldParameters block of the technique.</p>
 </li>
 <li>
 <p><strong>modelPosition = Global.position.xyz</strong> : the modelPosition (understand the vertex position in the model coordinate space) is assigned with the Global position variable.</p>
@@ -1663,7 +1660,7 @@ Here we have the most basic yet mandatory thing in a vertex shader, computing ve
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Global.position = projPosition</strong> : The result of the multiplication of the worldViewProjectionMatrix and the modelPosition is assigned to the Globale position.</p>
+<p><strong>Global.position = projPosition</strong> : The result of the multiplication of the worldViewProjectionMatrix and the modelPosition is assigned to the Global position.</p>
 </li>
 </ul>
 </div>
@@ -1765,7 +1762,7 @@ All inputs are mapped here :</p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Note that the Global.color variable will be assigned to gl_FragColor (glsl &lt; 1.5) or declared as a Global ouput of the shader (glsl &gt;= 1.5).</p>
+<p>Note that the Global.color variable will be assigned to gl_FragColor (glsl &lt; 1.5) or declared as a Global output of the shader (glsl &gt;= 1.5).</p>
 </div>
 </td>
 </tr>
@@ -1779,7 +1776,7 @@ All inputs are mapped here :</p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Also note that in case several Global variables are declared, the generator will assign them gl_FragData[i](glsl &lt; 1.5) i being the order the variable has been found in the material def. For glsl &gt;= 1.5 the veriable will just all be declared as shader output in the order they&#8217;ve been found in the declaration.</p>
+<p>Also note that in case several Global variables are declared, the generator will assign them gl_FragData[i](glsl &lt; 1.5) i being the order the variable has been found in the material def. For glsl &gt;= 1.5 the variable will just all be declared as shader output in the order they&#8217;ve been found in the declaration.</p>
 </div>
 </td>
 </tr>
@@ -1872,7 +1869,7 @@ void main(){
 </td>
 <td class="content">
 <div class="paragraph">
-<p>As a rule of thumb you should not assign a value to an input. Inputs are likely to be material paramters or outputs from other shaders and modifying them may cause unexpected behavior, even failure in your resulting shader.</p>
+<p>As a rule of thumb you should not assign a value to an input. Inputs are likely to be material parameters or outputs from other shaders and modifying them may cause unexpected behavior, even failure in your resulting shader.</p>
 </div>
 </td>
 </tr>

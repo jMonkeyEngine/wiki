@@ -247,7 +247,7 @@
     <a class="nav-link" href="../tutorials/how-to/java/logging.html">Logging</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../tutorials/how-to/java/read_graphic_card_capabilites.html">Read Graphics Capabilites</a>
+    <a class="nav-link" href="../tutorials/how-to/java/read_graphic_card_capabilites.html">Read Graphics Capabilities</a>
   </li>
 </ul>
   </li>
@@ -371,9 +371,6 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../core/animation/animation.html">Animation-Old</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../core/anim/animation.html">Animation-New</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../core/cinematic/cinematics.html">Cinematics (cutscenes, fake destruction physics)</a>
@@ -1078,7 +1075,7 @@
 <p>You can use the PhysicsTickListener interface and register with the physics space and use the preTick() method to be sure that you actually apply the force in the right moment.</p>
 </li>
 <li>
-<p>Reading values from the physics objects in the update loop should always yield correct values but they might not change over several fames due to the same reason.</p>
+<p>Reading values from the physics objects in the update loop should always yield correct values but they might not change over several frames due to the same reason.</p>
 </li>
 </ul>
 </div>
@@ -1252,7 +1249,7 @@
 <h2 id="create-a-collisionshape"><a class="anchor" href="#create-a-collisionshape"></a>Create a CollisionShape</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>A CollisionShape is a simplified shape for which physics are easier to calculate than for the true shape of the model. This simplication approach speeds up the simulation greatly.</p>
+<p>A CollisionShape is a simplified shape for which physics are easier to calculate than for the true shape of the model. This simplification approach speeds up the simulation greatly.</p>
 </div>
 <div class="paragraph">
 <p>Before you can create a Physics Control, you must create a CollisionShape from the <code>com.jme3.bullet.collision.shapes</code> package. (Read the tip under &#8220;Physics Controls Code Samples&#8221; on how to use default CollisionShapes for Boxes and Spheres.)</p>
@@ -1440,7 +1437,7 @@ Disc-shaped objects like wheels, plates.</p>
 <p>setScale(new Vector3f(2f,2f,2f))</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>You can change the scale of collisionshapes (whether it be, Simple or Mesh). You cannot change the scale of a CompoundCollisionShape however. A sphere collision shape, will change its radius based on the X component of the vector passed in. You must scale a collision shape before attaching it to the physicsSpace, or you must readd it to the physicsSpace each time the scale changes.</p>
+<p>You can change the scale of collisionshapes (whether it be, Simple or Mesh). You cannot change the scale of a CompoundCollisionShape however. A sphere collision shape, will change its radius based on the X component of the vector passed in. You must scale a collision shape before attaching it to the physicsSpace, or you must re-add it to the physicsSpace each time the scale changes.</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Scale a player in the Y axis by 2:<br>
@@ -1592,7 +1589,7 @@ bulletAppState.setDebugEnabled(true);</code></pre>
 <p>The most commonly used PhysicsControl. You can use it for dynamic objects (solid objects that freely affected by collisions, forces, or gravity), for static objects (solid but not affected by any forces), or kinematic objects (remote-controlled solid objects).</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Impacting projectiles, moving obstacles like crates, rolling and bouncing balls, elevators, flying aircaft or space ships.<br>
+<p>Impacting projectiles, moving obstacles like crates, rolling and bouncing balls, elevators, flying aircraft or space ships.<br>
 Solid immobile floors, walls, static obstacles.</p>
 </div></div></td>
 </tr>
@@ -2425,7 +2422,7 @@ removeCollideWithGroup(COLLISION_GROUP_01)</p>
 <strong>Solution:</strong> A huge static city or terrain model should never be loaded as one huge mesh. Divide the scene into multiple physics objects, with each its own CollisionShape. Choose the most simple CollisionShape possible; use mesh-accurate shapes only for the few cases where precision is more important than speed. For example, you can use the very fast <code>PlaneCollisionShape</code> for flat streets, floors and the outside edge of the scene, if you keep these pieces separate.</p>
 </li>
 <li>
-<p><strong>Eject?</strong> If you have physical nodes jittering wildy and being ejected for no apparent reason, it means you have created an impossible state – solid objects overlapping. This can happen when you position solid spatials too close to other solid spatials, e.g. when moving them with setLocalTranslation().<br>
+<p><strong>Eject?</strong> If you have physical nodes jittering wildly and being ejected for no apparent reason, it means you have created an impossible state – solid objects overlapping. This can happen when you position solid spatials too close to other solid spatials, e.g. when moving them with setLocalTranslation().<br>
 <strong>Solution:</strong> Use the debug mode to make CollisionShapes visible and verify that CollisionShapes do not overlap.</p>
 </li>
 </ul>
@@ -2439,10 +2436,10 @@ removeCollideWithGroup(COLLISION_GROUP_01)</p>
 <ul>
 <li>
 <p><strong>Buggy?</strong> If you get weird behaviour, such as physical nodes passing through one another, or getting stuck for no reason.<br>
-<strong>Solution:</strong> Look at the physics space accessors and change the acuracy and other parameters.</p>
+<strong>Solution:</strong> Look at the physics space accessors and change the accuracy and other parameters.</p>
 </li>
 <li>
-<p><strong>Need more interactivity?</strong> You can actively <em>control</em> a physical game by triggering forces. You may also want to be able <em>respond</em> to collisions, e.g. by substracting health, awarding points, or by playing a sound.<br>
+<p><strong>Need more interactivity?</strong> You can actively <em>control</em> a physical game by triggering forces. You may also want to be able <em>respond</em> to collisions, e.g. by subtracting health, awarding points, or by playing a sound.<br>
 <strong>Solution:</strong> To specify how the game responds to collisions, you use <a href="collision/physics_listeners.html" class="page">Physics Listeners</a>.</p>
 </li>
 </ul>

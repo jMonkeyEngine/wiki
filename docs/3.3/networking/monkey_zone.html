@@ -247,7 +247,7 @@
     <a class="nav-link" href="../tutorials/how-to/java/logging.html">Logging</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../tutorials/how-to/java/read_graphic_card_capabilites.html">Read Graphics Capabilites</a>
+    <a class="nav-link" href="../tutorials/how-to/java/read_graphic_card_capabilites.html">Read Graphics Capabilities</a>
   </li>
 </ul>
   </li>
@@ -371,9 +371,6 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../core/animation/animation.html">Animation-Old</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../core/anim/animation.html">Animation-New</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../core/cinematic/cinematics.html">Cinematics (cutscenes, fake destruction physics)</a>
@@ -1056,7 +1053,7 @@ The project design follows best practices that make it possible to edit maps, ve
 <h2 id="implementation"><a class="anchor" href="#implementation"></a>Implementation</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>MonkeyZone is a multi-player game with a physics simulation. Both, clients and server, run the physics simulation. The clients send input data from the player group to the server, where they control the entities, and also broadcast to the clients. Additionally, the server sends regular syncronization data for all objects in the game to prevent drifting.
+<p>MonkeyZone is a multi-player game with a physics simulation. Both, clients and server, run the physics simulation. The clients send input data from the player group to the server, where they control the entities, and also broadcast to the clients. Additionally, the server sends regular synchronization data for all objects in the game to prevent drifting.
 When a human user or an AI performs an action (presses a button), the actual logic is done on the server. The results are broadcast as data messages to the entities. When the entity is controlled by an AI, the actual AI code (that determines where the entity should move, and when it should perform an action) is executed on the client.
 
 _The way MonkeyZone is implemented is just one of the many possible ways to do a game like this in jME. Some things might be done more efficiently, some might be done in another way completely. MonkeyZone tries to do things the way that are most appropriate to implement the game at hand and it shows nicely how jME3 and the standard Java &lt;abbr title="Application Programming Interface"&gt;API&lt;/abbr&gt;++ can make game development easier and faster. Also note that the way MonkeyZone is designed is not scalable to a MMO style game, it will only work in a FPS style environment where the whole game world can be loaded at once._</p>
@@ -1064,7 +1061,7 @@ _The way MonkeyZone is implemented is just one of the many possible ways to do a
 <div class="sect2">
 <h3 id="terminology"><a class="anchor" href="#terminology"></a>Terminology</h3>
 <div class="paragraph">
-<p>The game uses certain terms that might be familiar to you but maybe used in another way, so heres a quick rundown on the terms being used.</p>
+<p>The game uses certain terms that might be familiar to you but maybe used in another way, so here&#8217;s a quick rundown on the terms being used.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1101,14 +1098,14 @@ The gameplay is largely controlled by the ServerGameManager which does gameplay 
 <div class="sect3">
 <h4 id="as-entity-capabilities"><a class="anchor" href="#as-entity-capabilities"></a>&#8230;&#8203;As entity capabilities</h4>
 <div class="paragraph">
-<p>Controls attached to Spatials are generally used like an &#8220;array of capabilities&#8221; that the entity posesses. So when an entity has a VehicleControl its expected to be a vehicle, when its got a CharacterControl its expected to be a character.
+<p>Controls attached to Spatials are generally used like an &#8220;array of capabilities&#8221; that the entity possesses. So when an entity has a VehicleControl its expected to be a vehicle, when its got a CharacterControl its expected to be a character.
 Other Controls work completely on their own, like CharacterAnimControl which just uses the CharacterControl of the entity to check if the character is running, jumping etc. and then animates the entity if it has an AnimControl.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="to-abstract"><a class="anchor" href="#to-abstract"></a>&#8230;&#8203; to abstract</h4>
 <div class="paragraph">
-<p>Furthermore theres special interfaces for Controls that allow abstraction of different Controls into one base interface. For example ManualControl and AutonomousControl are interfaces for controls that manage the movement of a spatial in a generalized way. This way AI code and e.g. the UserInputControl only have to check for a valid AutonomousControl or ManualControl on the spatial to control and move it. The details of the movement are handled by classes like ManualVehicleControl and AutonomousCharacterControl.</p>
+<p>Furthermore there are special interfaces for Controls that allow abstraction of different Controls into one base interface. For example ManualControl and AutonomousControl are interfaces for controls that manage the movement of a spatial in a generalized way. This way AI code and e.g. the UserInputControl only have to check for a valid AutonomousControl or ManualControl on the spatial to control and move it. The details of the movement are handled by classes like ManualVehicleControl and AutonomousCharacterControl.</p>
 </div>
 </div>
 <div class="sect3">
@@ -1126,7 +1123,7 @@ Other Controls work completely on their own, like CharacterAnimControl which jus
 <div class="sect3">
 <h4 id="commands"><a class="anchor" href="#commands"></a>Commands</h4>
 <div class="paragraph">
-<p>To implement autonomous AI players MonkeyZone uses a system of Commands that are managed by a CommandControl that is attached to each AI player entity controlled by the user. This CommandControl manages a list of Commands that are executed based on priority. For example theres a MoveCommand, a FollowCommand and an AttackCommand, Commands can however implement more complete behavior than that, e.g. the complete logic for a scavenging entity.</p>
+<p>To implement autonomous AI players MonkeyZone uses a system of Commands that are managed by a CommandControl that is attached to each AI player entity controlled by the user. This CommandControl manages a list of Commands that are executed based on priority. For example there&#8217;s a MoveCommand, a FollowCommand and an AttackCommand, Commands can however implement more complete behavior than that, e.g. the complete logic for a scavenging entity.</p>
 </div>
 <div class="ulist">
 <ul>

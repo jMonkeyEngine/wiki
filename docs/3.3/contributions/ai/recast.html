@@ -246,7 +246,7 @@
     <a class="nav-link" href="../../tutorials/how-to/java/logging.html">Logging</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../tutorials/how-to/java/read_graphic_card_capabilites.html">Read Graphics Capabilites</a>
+    <a class="nav-link" href="../../tutorials/how-to/java/read_graphic_card_capabilites.html">Read Graphics Capabilities</a>
   </li>
 </ul>
   </li>
@@ -370,9 +370,6 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../../core/animation/animation.html">Animation-Old</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../../core/anim/animation.html">Animation-New</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../../core/cinematic/cinematics.html">Cinematics (cutscenes, fake destruction physics)</a>
@@ -1148,7 +1145,7 @@ if (!RecastBuilder.erodeWalkableArea(context, config.getWalkableRadius(), compac
 }
 
 // Partition the heightfield so that we can use simple algorithm later to triangulate the walkable areas.
-// There are 3 martitioning methods, each with some pros and cons:
+// There are 3 partitioning methods, each with some pros and cons:
 // 1) Watershed partitioning
 //   - the classic Recast partitioning
 //   - creates the nicest tessellation
@@ -1157,8 +1154,8 @@ if (!RecastBuilder.erodeWalkableArea(context, config.getWalkableRadius(), compac
 //   - the are some corner cases where this method creates produces holes and overlaps
 //      - holes may appear when a small obstacles is close to large open area (triangulation can handle this)
 //      - overlaps may occur if you have narrow spiral corridors (i.e stairs), this make triangulation to fail
-//   * generally the best choice if you precompute the nacmesh, use this if you have large open areas
-// 2) Monotone partioning
+//   * generally the best choice if you precompute the navmesh, use this if you have large open areas
+// 2) Monotone partitioning
 //   - fastest
 //   - partitions the heightfield into regions without holes and overlaps (guaranteed)
 //   - creates long thin polygons, which sometimes causes paths with detours
