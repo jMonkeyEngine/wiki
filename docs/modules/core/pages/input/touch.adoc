@@ -1,0 +1,124 @@
+= Touch Input
+:revnumber: 1.0
+:revdate: 2021/04/16
+:keywords: touch, input, documentation
+
+Touch input has always been an interesting topic, straddling both standard input and the GUI.
+
+====== Prerequesites:
+
+<<core:gui/nifty-gui.adoc#creating-jme3-user-interfaces-with-nifty-gui,GUI Introduction>>
+
+You don't specifically need to use the Nifty GUI. However, being familiar with at least one GUI library is helpful.
+
+== Touch Actions
+
+With other input methods, you obtain an input generator, assign a mapping to it, and then add that mapping to either an action listener for discrete input events or an analog listener for continuous events (sometimes both!) Touch events, on the other hand, work differently. There are no discrete input elements for a touch screen, only gestures. As such, gathering input will work differently.
+
+Assigning mappings works mostly the same. Instead of using a `KeyTrigger` or such, you use a `TouchTrigger`.
+
+[source,java]
+----
+getInputManager().addMapping("moveLeft", new TouchTrigger(TouchInput.ALL));
+getInputManager().addMapping("moveRight", new TouchTrigger(TouchInput.ALL));
+getInputManager().addMapping("jump", new TouchTrigger(TouchInput.ALL));
+getInputManager().addMapping("flashlight", new TouchTrigger(TouchInput.ALL));
+----
+
+This maps the various actions to the touchscreen in general. The parameter for `TouchTrigger` specifies which "touchscreen" button to use, such as the home button, back button, volume up button, etc. With the exception of `KEYCODE_BACK`, these generally aren't useful, so we just use `TouchInput.ALL` to make the trigger work for regular touches in general.
+
+The actual listener, however, is different. Touch inputs won't work with the regular `ActionListener` or `AnalogListener`. Instead, mappings that have touch triggers need to be added to a special `TouchListener` for those to work.
+
+[source,java]
+----
+TouchListener touchListener = new TouchListener() {
+
+  @Override
+  public void onTouch(String name, TouchEvent event, float tpf) {
+    // All touchscreen-based logic goes here
+  }
+};
+
+// When you are adding the action and analog listers, add the touch listener as
+// follows:
+getInputManager().addListener(analogListener, "moveLeft", "moveRight");
+getInputManager().addListener(actionListener, "jump", "flashlight");
+getInputManager().addListener(touchListener, "moveLeft", "moveRight", "jump", "flashlight");
+
+// Later, when removing your listeners, be sure to remove the touch listener too
+getInputManager().removeListener(analogListener);
+getInputManager().removeListener(actionListener);
+getInputManager().removeListener(touchListener);
+----
+
+While traditional key, joystick, and mouse inputs that may be mapped to our actions will trigger the callbacks in analogListener and actionListener, any touchscreen inputs will instead trigger the callback in touchListener.
+
+=== TouchEvent Guide
+
+Of course, in the example as it stands, doing anything with the screen will trigger all of the actions that touchListener is listening for. To limit things, we need to specify some logic that determines whether any given input is deemed "acceptable." To do this, we use the `event` parameter in the same way we would use `isPressed` in action listeners and `value` in analog listeners. The difference is that using the touch event is a bit more complicated. Rather than either a discrete or continuous value, we can access information on finger position, how many fingers are touching the screen, how far the finger moved since the last event, etc. Details are below:
+
+==== `getType()`
+
+This method reports the type of event that triggered. This is reported by the system, and can report a variety of gestures, given the OS support. However, the most important types are `DOWN`, `MOVE`, and `UP`. These three events report when a finger first touched the screen, when the finger is moving, and when the finger lifted off the screen. With these types, you can accomplish 90% of what you need to do.
+
+With that said, the other events can definitely shortcut the process for well-known gestures, and using those can be helpful for integrating into the existing device experience. Just keep in mind that anything beyond the three specified depend highly on the platform, and may not be supported on all devices.
+
+[NOTE]
+====
+A single interaction from the user can generate multiple touch events, each with a different type. Quickly tapping the screen can generate a `DOWN` event and an `UP` event, but it can also generate a `TAP` event in between them. Moving your finger can generate a `DOWN` event, a series of `MOVE` events, and then an `UP` event. However, it can also generate one or more `FLING` events if the conditions are right. Keep this in mind when supporting some of the other touch types.
+====
+
+==== `getPointerId()`
+
+Unlike with a mouse, there can be multiple fingers on the screen at the same time. Unlike joysticks, we can't necessarily tell which finger is which. What this method does is attempt to identify different fingers based on the order they touched the screen. The first finger to touch the screen is finger 0, while the second is finger 1. If finger 0 leaves the screen, finger 1 will still keep its ID. If another finger then touches the screen, _that_ finger will take on the ID 0.
+
+This method is primarily useful in determining whether or not several consecutive events come from the same finger or not. When tracking a finger, you can usually use the `DOWN` event to start tracking. Every other event with the same pointer ID will all correspond to that same finger. Once the `UP` event is generated, you can stop tracking.
+
+==== `getX()` and `getY()`
+
+These methods report on the current position of the finger generating this event, from (0, 0) in the bottom-left corner of the screen to (screenWidth, screenHeight) in the top right. As the finger moves around the screen, each new event will have new x and y values to reflect its current position.
+
+These values are most useful for limiting the area an event takes affect in. For example, if you wanted to limit an event to the bottom-right quadrent of the screen, you can perform a check like this:
+
+[source,java]
+----
+if (event.getY() >= 0 && event.getY() < getCamera().getHeight() / 2 && event.getX() >= getCamera().getWidth() / 2 && event.getX() < getCamera().getWidth()) {
+}
+----
+
+==== `getDeltaX()` and `getDeltaY()`
+If a finger is moving, these values report how far the finger moves over the last tick and in which direction.
+
+[TIP]
+====
+As always, be sure to multiply these motion values by `tpf` to ensure that the value isn't affected by the framerate.
+====
+
+==== `getPressure()`
+Some devices that report how firmly a finger is pressed down on the touchscreen. This parameter can report this firmness.
+
+[WARNING]
+====
+This parameter is highly dependent on the hardware capabilities of the touchscreen, and isn't widely available. This parameter can be nice for allowing users to fine-tine actions, but don't make critical functions rely on `getPressure()`.
+====
+
+== Using
+
+There are several types of traditional input styles that we can
+
+[source,java]
+----
+@Override
+public void onTouch(String name, TouchEvent event, float tpf) {
+  switch (name) {
+  case "action1":
+    // We always start by making sure that
+    if (event.getX() < getCamera().getWidth())
+    break;
+  case "action2":
+    break;
+  case "action2":
+    break;
+  }
+}
+----
