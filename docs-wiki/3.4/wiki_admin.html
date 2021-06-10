@@ -156,7 +156,29 @@
 <h2 id="wiki"><a class="anchor" href="#wiki"></a>Wiki</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The wiki repository has a workflow that will be triggered when any push is made to the repository or whenever the user interface issues a new release. Every build, all pages are deleted and re-created. The workflow will cache the user interface under the <code><span class="menuseq"><b class="menu">cache</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">antora</b></span></code> directory if there are any changes. This cache allows the build process to run offline.</p>
+<p>The wiki repository has a workflow that will be triggered when any push is made to the repository or whenever the user interface issues a new release. Every build, all pages are deleted and re-created. The workflow will cache the user interface under the <code><span class="menuseq"><b class="menu">cache</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">antora</b></span></code> directory if there are any changes and the cache and the folder has been added to the commit command.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yml hljs" data-lang="yml">  # Detects any updates to package-lock.json and package.json and commits the
+  # files to root.
+  # see:
+  # https://github.com/marketplace/actions/add-commit?version=v4.1.0
+  # for use options.
+  - name: Commit Packages
+    uses: EndBug/add-and-commit@v4
+    with:
+      author_name: mitm001
+      author_email: mitm001@users.noreply.github.com
+      message: "Commit files for CI workflow"
+      # Commits these files to root if and only if there are changes.
+      add: "package-lock.json package.json ./.cache/antora/*"
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This cache allows the build process to run offline.</p>
 </div>
 <div class="paragraph">
 <p>The workflow can be configured to update the <code>package-lock</code> and <code>package.json</code> files by editing the <code>Install node</code> command, just as if you were running this from a local repo.</p>
