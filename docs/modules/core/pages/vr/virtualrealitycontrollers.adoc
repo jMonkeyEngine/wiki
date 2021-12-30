@@ -1,0 +1,113 @@
+= Virtual Reality Controllers
+:revnumber: 1.0
+:revdate: 2021/12/29
+
+Having successfully seen a VR cube in the xref:vr/virtualreality.adoc[Virtual reality hello world] you'll want to put your hands in the world so you can start interacting. 
+
+== Where are we, what are we pointing at
+
+Be aware that the controllers positions and rotations are in world coordinates, not relative to the camera
+
+To get the number of controllers you'll want
+
+    vrAppState.getVRinput().getTrackedControllerCount(); //very likely to be 2, but don't assume it will be
+
+To get the position of a controller:
+
+    vrAppState.getVRinput().getFinalObserverPosition(i);
+	
+To get the orientation of the controller:
+
+	vrAppState.getVRinput().getFinalObserverRotation(i)
+	
+It is also possible to get the controller pose, which is a combination of position and rotation.
+
+== Buttons
+
+Its possible to get the button press states with the following method
+
+    VRInputAPI vrInput = vrAppState.getVRinput();
+    boolean grip = vrInput.isButtonDown(i, VRInputType.ViveGripButton); //<--Don't worry about the way it says "Vive", anything that supports SteamVR/OpenVR will work with this
+
+The above assumes you are using SteamVR/OpenVR (aka set your settings as `settings.put(VRConstants.SETTING_VRAPI, VRConstants.SETTING_VRAPI_OPENVR_LWJGL_VALUE)` )
+
+== Sample Application
+
+[source,java]
+----
+public class Main extends SimpleApplication{
+
+    public static void main(String[] args) {
+        AppSettings settings = new AppSettings(true);
+        settings.put(VRConstants.SETTING_VRAPI, VRConstants.SETTING_VRAPI_OPENVR_LWJGL_VALUE);
+
+
+        VREnvironment env = new VREnvironment(settings);
+        env.setSeatedExperience(true);
+
+        env.initialize();
+
+        if (env.isInitialized()){
+            VRAppState vrAppState = new VRAppState(settings, env);
+            Main app = new Main(vrAppState);
+            app.setLostFocusBehavior(LostFocusBehavior.Disabled);
+            app.setSettings(settings);
+            app.setShowSettings(false);
+            app.start();
+        }
+    }
+
+    public Main(AppState... appStates) {
+        super(appStates);
+    }
+
+    @Override
+    public void simpleInitApp() {
+        Box b = new Box(1, 1, 1);
+        Geometry geom = new Geometry("Box", b);
+
+        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+        mat.setColor("Color", ColorRGBA.Blue);
+        geom.setMaterial(mat);
+
+        rootNode.attachChild(geom);
+    }
+
+    List<Geometry> handGeometries = new ArrayList<>();
+
+    @Override
+    public void simpleUpdate(float tpf) {
+        VRAppState vrAppState = getStateManager().getState(VRAppState.class);
+        int numberOfControllers = vrAppState.getVRinput().getTrackedControllerCount(); //almost certainly 2, one for each hand
+
+        //build as many geometries as hands, as markers for the demo
+        while(handGeometries.size()<numberOfControllers){
+            Box b = new Box(0.1f, 0.1f, 0.1f);
+            Geometry handMarker = new Geometry("hand", b);
+            Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+            mat.setColor("Color", ColorRGBA.Red);
+            handMarker.setMaterial(mat);
+            rootNode.attachChild(handMarker);
+            handGeometries.add(handMarker);
+        }
+
+        VRInputAPI vrInput = vrAppState.getVRinput();
+        for(int i=0;i<numberOfControllers;i++){
+            if (vrInput.isInputDeviceTracking(i)){ //might not be active currently, avoid NPE if that's the case
+                Vector3f position = vrInput.getFinalObserverPosition(i);
+                Quaternion rotation = vrInput.getFinalObserverRotation(i);
+                Geometry geometry = handGeometries.get(i);
+                geometry.setLocalTranslation(position);
+                geometry.setLocalRotation(rotation);
+                boolean grip = vrInput.isButtonDown(i, VRInputType.ViveGripButton); //<--Don't worry about the way it says "Vive", anything that supports SteamVR/OpenVR will work with this
+
+                if (grip){
+                    geometry.getMaterial().setColor("Color", ColorRGBA.Green);
+                }else{
+                    geometry.getMaterial().setColor("Color", ColorRGBA.Red);
+                }
+            }
+        }
+    }
+}
+----
