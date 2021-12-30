@@ -31,6 +31,13 @@ Its possible to get the button press states with the following method
 
 The above assumes you are using SteamVR/OpenVR (aka set your settings as `settings.put(VRConstants.SETTING_VRAPI, VRConstants.SETTING_VRAPI_OPENVR_LWJGL_VALUE)` )
 
+== Feedback
+
+Its possible to make the controllers rumble
+
+    VRInputAPI vrInput = vrAppState.getVRinput();
+    vrInput.triggerHapticPulse(i, 0.3f);
+
 == Sample Application
 
 [source,java]
@@ -41,14 +48,13 @@ public class Main extends SimpleApplication{
         AppSettings settings = new AppSettings(true);
         settings.put(VRConstants.SETTING_VRAPI, VRConstants.SETTING_VRAPI_OPENVR_LWJGL_VALUE);
 
-
         VREnvironment env = new VREnvironment(settings);
-        env.setSeatedExperience(true);
 
         env.initialize();
 
         if (env.isInitialized()){
             VRAppState vrAppState = new VRAppState(settings, env);
+
             Main app = new Main(vrAppState);
             app.setLostFocusBehavior(LostFocusBehavior.Disabled);
             app.setSettings(settings);
@@ -80,7 +86,7 @@ public class Main extends SimpleApplication{
         VRAppState vrAppState = getStateManager().getState(VRAppState.class);
         int numberOfControllers = vrAppState.getVRinput().getTrackedControllerCount(); //almost certainly 2, one for each hand
 
-        //build as many geometries as hands, as markers for the demo
+        //build as many geometries as hands, as markers for the demo (Will only tigger on first loop or if number of controllers changes)
         while(handGeometries.size()<numberOfControllers){
             Box b = new Box(0.1f, 0.1f, 0.1f);
             Geometry handMarker = new Geometry("hand", b);
@@ -96,6 +102,7 @@ public class Main extends SimpleApplication{
             if (vrInput.isInputDeviceTracking(i)){ //might not be active currently, avoid NPE if that's the case
                 Vector3f position = vrInput.getFinalObserverPosition(i);
                 Quaternion rotation = vrInput.getFinalObserverRotation(i);
+
                 Geometry geometry = handGeometries.get(i);
                 geometry.setLocalTranslation(position);
                 geometry.setLocalRotation(rotation);
@@ -105,6 +112,11 @@ public class Main extends SimpleApplication{
                     geometry.getMaterial().setColor("Color", ColorRGBA.Green);
                 }else{
                     geometry.getMaterial().setColor("Color", ColorRGBA.Red);
+                }
+
+                boolean trigger = vrInput.wasButtonPressedSinceLastCall(i, VRInputType.ViveTriggerAxis);
+                if (trigger){
+                    vrInput.triggerHapticPulse(i, 0.3f);
                 }
             }
         }
