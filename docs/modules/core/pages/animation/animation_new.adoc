@@ -1,0 +1,79 @@
+= Animation in jME3
+:revnumber: 2.1
+:revdate: 2020/07/24
+
+
+In 3D games, you do not only load static 3D models, you also want to be able to trigger animations in the model from the Java code.
+
+
+== Requirements
+
+JME3 only loads and plays animated models, it does not create them.
+
+What is required for an animated model? (<<tutorials:concepts/terminology.adoc#animation,See also: Animation terminology>>
+
+.  For each model, you have to segment the model into a skeleton (*bone rigging*).
+.  For each motion, you have to specify how the animation distorts parts of the model (*skinning*).
+.  For each animation, you have to specify a series of snapshots of how the bones are positioned (*keyframes*).
+.  One model can contain several animations. You give every animation a name when you save it in the mesh editor.
+
+Unless you download free models, or buy them from a 3D artist, you must create your animated models in an *external mesh editor* (for example, Blender) yourself.
+
+*  <<ROOT:getting-started/features.adoc#supported-external-file-types,Supported External File Types>>
+*  xref:tutorials:how-to/modeling/blender/blender.adoc[Creating assets in Blender3D]
+*  link:http://www.youtube.com/watch?v=IDHMWsu_PqA[Video: Creating Worlds with Instances in Blender]
+
+What is required in your JME3-based Java class?
+
+*  One AnimationComposer per animated model.
+*  As many Layer per Composer as you need to play your animations. In simple cases one layer is enough to play animations for the whole model, sometimes you need two or more layers per model to play gestures and motions in parallel.
+
+
+== Code Samples
+*  link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/1296eb25a6f42d2c42a3b0427904dac40d8d4017/jme3-examples/src/main/java/jme3test/model/anim/TestAnimSerialization.java
+*  link:https://github.com/jMonkeyEngine/jmonkeyengine/blob/1296eb25a6f42d2c42a3b0427904dac40d8d4017/jme3-examples/src/main/java/jme3test/model/anim/TestAttachmentsNode.java#L96
+
+== Controlling Animations
+
+
+=== The AnimComposer
+A model should get an AnimComposer automatically when you convert your model to j3o. At the same time animations will be created and accessible in the AnimComposer.
+Animations will be named the same they were in your editor.
+
+==== Playing animations
+[source,java]
+----
+  AnimComposer animComposer = animatedModel.getControl(AnimComposer.class);
+  animComposer.setCurrentAction("Walk");  
+  ...
+
+----
+When you tell the AnimComposer to play the animation it will be looped by default. If you want it to only play an animation once, you can do the following:
+
+[source,java]
+----
+  Action walk = animComposer.action("Walk");
+  Tween doneTween = Tweens.callMethod(animComposer, "setCurrentAction", "Idle");
+  Action walkOnce = animComposer.actionSequence("WalkOnce", walk, doneTween);
+  animComposer.setCurrentAction("WalkOnce");   
+----
+
+==== Playing animation on part of body
+If you want to play an animation on part of the body, you need to create layers in the AnimComposer. You do this with the help of a SkinningControl, which should
+also have been created if your imported model had an armature.
+
+[source,java]
+----
+  SkinningControl sc = animatedModel.getControl(SkinningControl.class);
+  animComposer.makeLayer("UpperBody", ArmatureMask.createMask(sc.getArmature(), "Spine"));
+  animComposer.makeLayer("LowerBody", ArmatureMask.createMask(sc.getArmature(), "Hips"));
+  // Play the animation
+  animComposer.setCurrentAction("Walk", "UpperBody");
+----
+
+== Further reading:
+Some forum topics that contain more information on the animation system:
+
+*  link:https://hub.jmonkeyengine.org/t/animation-action-is-complete/44577/2
+*  link:https://hub.jmonkeyengine.org/t/a-tip-for-animation-blending/44617/11
+
