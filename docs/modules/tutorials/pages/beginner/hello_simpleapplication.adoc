@@ -1,6 +1,6 @@
 = jMonkeyEngine 3 Tutorial (1) - Hello SimpleApplication
-:revnumber: 2.0
-:revdate: 2020/07/24
+:revnumber: 3.0
+:revdate: 2022/03/22
 :keywords: beginner, intro, documentation, init, simpleapplication, basegame
 
 
@@ -31,35 +31,14 @@ If you have questions, read more about xref:sdk:project_creation.adoc[Project Cr
 We recommend to go through the steps yourself, as described in the tutorials. Alternatively, you can create a project based on the xref:sdk:sample_code.adoc[JmeTests] template in the jMonkeyEngine SDK. It will create a project that already contains the `jme3test.helloworld` samples (and many others). For example, you can use the JmeTests project to verify whether you got the solution right.
 ====
 
-
-
-== Extend SimpleApplication
-
-For this tutorial, you need a jme3test.helloworld package in your project, with the file HelloJME3.java in it.
-
-In the jMonkeyEngine SDK:
-
-.  In the `Source Packages` node of your project, btn:[RMB] select the "`mygame`" package.
-..  Choose: `menu:Refactor[Rename]`
-..  Enter the New Name: `jme3test.helloworld`
-..  Click btn:[Refactor] when ready.
-.  In the newly refactored package, btn:[RMB] select the `Main.java` class.
-..   Choose: `menu:Refactor[Rename]`
-..  Enter the New Name: `HelloJME3`
-..  Click btn:[Refactor] when ready.
-
-You follow this same basic procedure for the remaining tutorials.
-
-TIP: The remaining tutorials all use the same `jme3test.helloworld` package. Just refactor the "`Main.java`" class name to the tutorial examples class name rather than creating a new project for each.
-
 == Code Sample
 
-Replace the contents of the HelloJME3.java file with the following code.
+Main.java contains the following example code.
 
 [source,java]
 ----
 
-package jme3test.helloworld;
+package mygame;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.material.Material;
@@ -70,10 +49,10 @@ import com.jme3.math.ColorRGBA;
 /** Sample 1 - how to get started with the most simple JME 3 application.
  * Display a blue 3D cube and view from all sides by
  * moving the mouse and pressing the WASD keys. */
-public class HelloJME3 extends SimpleApplication {
+public class Main extends SimpleApplication {
 
     public static void main(String[] args){
-        HelloJME3 app = new HelloJME3();
+        Main app = new Main();
         app.start(); // start the game
     }
 
@@ -90,7 +69,7 @@ public class HelloJME3 extends SimpleApplication {
 }
 ----
 
-btn:[RMB] select the `HelloJME3` class and choose `Run`. If a jME3 settings dialog pops up, confirm the default settings.
+btn:[RMB] select the `Main` class and choose `Run`. If a jME3 settings dialog pops up, confirm the default settings.
 
 .  You should see a simple window displaying a 3D cube.
 .  Press the kbd:[W] kbd:[A] kbd:[S] kbd:[D] keys and move the mouse to navigate around.
@@ -107,12 +86,12 @@ The code above has initialized the scene, and started the application.
 
 === Start the SimpleApplication
 
-Look at the first line. Your HelloJME3.java class extends `com.jme3.app.SimpleApplication`.
+Look at the first line. Your Main.java class extends `com.jme3.app.SimpleApplication`.
 
 [source,java]
 ----
 
-public class HelloJME3 extends SimpleApplication {
+public class Main extends SimpleApplication {
   // your code...
 }
 
@@ -129,7 +108,7 @@ You start every JME3 game from the main() method, as every standard Java applica
 ----
 
     public static void main(String[] args){
-        HelloJME3 app = new HelloJME3(); // instantiate the game
+        Main app = new Main(); // instantiate the game
         app.start();                     // start the game!
     }
 
@@ -215,73 +194,6 @@ A typical JME3 game has the following initialization process:
 
 **  Define your own additional keys and mouse click actions.
 **  *Examples:* Click to shoot, press kbd:[Space] to jump, …
-
-
-
-== The Future of SimpleApplication
-
-
-There are plans to change SimpleApplication. Sometime back it was decided that we should really re-factor the Application class. SimpleApplication especially is a mess of "`magic`" protected fields that on the one hand makes it really easy to slam some simple one-class application together, but on the other hand does new users no favors because they have no idea where 'cam' and 'assetManager' come from. Unfortunately, lots of code refers to Application and it's tough to change... especially the app states.
-
-So, we hatched a plan to convert the Application class to an interface. This would give us some freedom to iterate on a new set of application base classes. You can read about the changes link:https://hub.jmonkeyengine.org/t/jmonkeyengine-3-1-alpha-4-released/35478[here]. As said before we are envisioning a better design that is not enforced today, but that is already usable.
-
-If you look at SimpleApplication default constructor you will understand how it works.
-
-[source,java]
-----
-public SimpleApplication() {   
-    this(new StatsAppState(), new FlyCamAppState(), new AudioListenerState(), new DebugKeysAppState());}
-----
-
-Basically the application is injected upon construction with the default AppStates. Let's look at the second constructor.
-
-[source,java]
-----
-public SimpleApplication( AppState... initialStates ) {   
-    super(initialStates);
-}
-----
-
-It allows you to specify what AppState you want for your application. So SimpleApplication is handy for test projects (I very often use it as is) but I recommend for a full blown-game to use it like this:
-
-[source,java]
-----
-public class MyGame extends SimpleApplication {
-
-    public MyGame(){
-         super(new MyCustomState(), new AnotherState(), ....);
-    }
-
-    public static void main(String[] args) {
-        MyGame app = new MyGame();
-        app.start();
-    }
-
-}
-----
-
-Then have all logic implemented in xref:core:app/state/application_states.adoc[AppStates] and your SimpleApplication will never change much, except when you want to add a bootstrap AppState (or maybe you can have an AppState that manages AppStates...), SimpleApplication is just the list of states you are using.
-
-In future versions, all the code in SimpleApplication will be refactored in AppStates (InputHandlingState, RenderAppState, whatever) and you will decide what you want to use. However, for legacy sake we kept the code as is for now.
-
-If you follow this recommendation, when the changes are finalized, you will only need to do a few things different from now to make your old apps work and to create new ones.
-
-..  Extend BaseApplication rather than SimpleApplication when creating new apps.
-..  Update your existing apps by changing SimpleApplication to BaseApplication in your main class.
-..  Change any references you have made to SimpleApplication's protected fields.
-+
---
-For example, rather than turning off the FlyCam() like so,
-[source, java]
-----
-flyCam.setEnabled(false);
-----
-
-You would just leave the statement `new FlyCamAppState()` out of the constructor instead.
---
-
-SimpleApplication will be around for some time as it will take time for people to migrate to BaseApplication, but AppStates make life easier anyway so you may as well start using them.
-
 
 == Conclusion
 
