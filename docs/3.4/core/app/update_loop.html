@@ -8,7 +8,7 @@
     <link rel="prev" href="../system/appsettings.html">
     <link rel="next" href="state/application_states.html">
     <meta name="keywords" content="basegame, control, input, init, keyinput, loop, states, state">
-    <meta name="generator" content="Antora 2.3.3">
+    <meta name="generator" content="Antora 3.0.1">
     <link rel="stylesheet" href="../../../../_/css/site.css">
 <meta property="og:image" content="https://wiki.jmonkeyengine.org/_/img/iconx128.png">
 <meta property="og:description" content="Main Update Loop">
@@ -947,7 +947,7 @@
     <li class="component is-current">
       <span class="title">JME</span>
       <ul class="versions">
-        <li class="version is-current is-latest">
+        <li class="version is-current">
           <a href="../../documentation.html">3.4</a>
         </li>
         <li class="version">
@@ -961,7 +961,7 @@
     <li class="component">
       <span class="title">Wiki Contribution</span>
       <ul class="versions">
-        <li class="version is-latest">
+        <li class="version">
           <a href="../../../../docs-wiki/3.4/wiki_contributor.html">3.4</a>
         </li>
       </ul>
@@ -969,7 +969,7 @@
     <li class="component">
       <span class="title">Wiki UI</span>
       <ul class="versions">
-        <li class="version is-latest">
+        <li class="version">
           <a href="../../../../wiki-ui/index.html">master</a>
         </li>
       </ul>
@@ -1005,7 +1005,7 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Extending your application from <a href="simpleapplication.html" class="page">com.jme3.app.SimpleApplication</a> provides you with an update loop. This is where you implement your game logic (game mechanics).</p>
+<p>Extending your application from <a href="simpleapplication.html" class="xref page">com.jme3.app.SimpleApplication</a> provides you with an update loop. This is where you implement your game logic (game mechanics).</p>
 </div>
 <div class="paragraph">
 <p>Some usage examples: Here you remote-control NPCs (computer controlled characters), generate game events, and respond to user input.</p>
@@ -1023,20 +1023,20 @@
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>Input listeners respond to mouse clicks and keyboard presses – <a href="../input/input_handling.html" class="page">Input handling</a></p>
+<p>Input listeners respond to mouse clicks and keyboard presses – <a href="../input/input_handling.html" class="xref page">Input handling</a></p>
 </li>
 <li>
 <p>Update game state:</p>
 <div class="olist lowerroman">
 <ol class="lowerroman" type="i">
 <li>
-<p>Update overall game state – Execute <a href="state/application_states.html" class="page">Application States</a></p>
+<p>Update overall game state – Execute <a href="state/application_states.html" class="xref page">Application States</a></p>
 </li>
 <li>
 <p>User code update – Execute <code>simpleUpdate()</code> method</p>
 </li>
 <li>
-<p>Logical update of entities – Execute <a href="../scene/control/custom_controls.html" class="page">Custom Controls</a></p>
+<p>Logical update of entities – Execute <a href="../scene/control/custom_controls.html" class="xref page">Custom Controls</a></p>
 </li>
 </ol>
 </div>
@@ -1046,7 +1046,7 @@
 <div class="olist lowerroman">
 <ol class="lowerroman" type="i">
 <li>
-<p><a href="state/application_states.html" class="page">Application States</a> rendering.</p>
+<p><a href="state/application_states.html" class="xref page">Application States</a> rendering.</p>
 </li>
 <li>
 <p>Scene rendering.</p>
@@ -1075,7 +1075,7 @@ The jME window closes and the loop ends.</p>
 <h2 id="usage"><a class="anchor" href="#usage"></a>Usage</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In a trivial <a href="simpleapplication.html" class="page">SimpleApplication</a> (such as a <a href="../../tutorials/beginner/beginner.html" class="page">Hello World tutorial</a>), all code is either in the <code>simpleInitApp()</code> (initialization) or <code>simpleUpdate()</code> (behaviour) method – or in a helper method/class that is called from one of these two. This trivial approach will make your main class very long, hard to read, and hard to maintain. You don&#8217;t need to load the whole scene at once, and you don&#8217;t need to run all conditionals tests all the time.</p>
+<p>In a trivial <a href="simpleapplication.html" class="xref page">SimpleApplication</a> (such as a <a href="../../tutorials/beginner/beginner.html" class="xref page">Hello World tutorial</a>), all code is either in the <code>simpleInitApp()</code> (initialization) or <code>simpleUpdate()</code> (behaviour) method – or in a helper method/class that is called from one of these two. This trivial approach will make your main class very long, hard to read, and hard to maintain. You don&#8217;t need to load the whole scene at once, and you don&#8217;t need to run all conditionals tests all the time.</p>
 </div>
 <div class="paragraph">
 <p>It&#8217;s a best practice to modularize your game mechanics and spread out initialization and update loop code over several Java objects:</p>
@@ -1083,11 +1083,11 @@ The jME window closes and the loop ends.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Move modular code blocks from the <code>simpleInitApp()</code> method into <a href="state/application_states.html" class="page">AppStates</a>. Attach AppStates to initialize custom subsets of &#8220;one&#8221; dungeon, and detach it when the player exits this &#8220;dungeon&#8221;.<br>
+<p>Move modular code blocks from the <code>simpleInitApp()</code> method into <a href="state/application_states.html" class="xref page">AppStates</a>. Attach AppStates to initialize custom subsets of &#8220;one&#8221; dungeon, and detach it when the player exits this &#8220;dungeon&#8221;.<br>
 Examples: Weather/sky audio and visuals, physics collision shapes, sub-rootnodes of individual dungeons including dungeon NPCs, etc.</p>
 </li>
 <li>
-<p>Move modular code blocks from the <code>simpleUpdate()</code> method into the update loops of <a href="../scene/control/custom_controls.html" class="page">Custom Controls</a> to control individual entity behavior (NPCs), and into the update method of <a href="state/application_states.html" class="page">AppStates</a> to control world events.<br>
+<p>Move modular code blocks from the <code>simpleUpdate()</code> method into the update loops of <a href="../scene/control/custom_controls.html" class="xref page">Custom Controls</a> to control individual entity behavior (NPCs), and into the update method of <a href="state/application_states.html" class="xref page">AppStates</a> to control world events.<br>
 Examples: Weather behaviour, light behaviour, physics behaviour, individual NPC behaviour, trap behaviour, etc.</p>
 </li>
 </ul>

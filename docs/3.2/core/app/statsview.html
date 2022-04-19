@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Optimizing Your Game Using Statistics :: jMonkeyEngine Docs</title>
     <link rel="canonical" href="https://wiki.jmonkeyengine.org/docs/3.4/core/app/statsview.html">
-    <meta name="generator" content="Antora 2.3.3">
+    <meta name="generator" content="Antora 3.0.1">
     <link rel="stylesheet" href="../../../../_/css/site.css">
 <meta property="og:image" content="https://wiki.jmonkeyengine.org/_/img/iconx128.png">
 <meta property="og:description" content="Optimizing Your Game Using Statistics">
@@ -950,7 +950,7 @@
     <li class="component is-current">
       <span class="title">JME</span>
       <ul class="versions">
-        <li class="version is-latest">
+        <li class="version">
           <a href="../../../3.4/documentation.html">3.4</a>
         </li>
         <li class="version">
@@ -964,7 +964,7 @@
     <li class="component">
       <span class="title">Wiki Contribution</span>
       <ul class="versions">
-        <li class="version is-latest">
+        <li class="version">
           <a href="../../../../docs-wiki/3.4/wiki_contributor.html">3.4</a>
         </li>
       </ul>
@@ -972,7 +972,7 @@
     <li class="component">
       <span class="title">Wiki UI</span>
       <ul class="versions">
-        <li class="version is-latest">
+        <li class="version">
           <a href="../../../../wiki-ui/index.html">master</a>
         </li>
       </ul>
@@ -1019,7 +1019,7 @@ Below the StatsView is the FpsView that displays the frames that jMonkeyEngine c
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code>FrameBuffers (M) = 2
+<pre class="highlightjs highlight"><code class="language-none hljs">FrameBuffers (M) = 2
 FrameBuffers (F) = 2
 FrameBuffers (S) = 2
 Textures (M) = 7
@@ -1143,10 +1143,10 @@ setDisplayStatView(false);  // to hide the statistics</code></pre>
 <p>FrameBuffers: If you don&#8217;t use any post-processing effects (FilterPostProcessor), this count should be zero. The more effects you use, the more FrameBuffers are in use. If this value is high while others are normal, and your game is sluggish, you can speed up the application by using fewer post-processing effects.</p>
 </li>
 <li>
-<p>The Object Count (Batch Count) is a very important value that indicates how many geometries were rendered in the last frame. In general, if you keep the object count around 100-200, your game will be fast and responsive. If the count is permanently higher, hand-code rules that detach remote objects, or optimize a complex multi-material scene using: <code>GeometryBatchFactory.optimize(complexNode, true);</code> or a <a href="../jme3tools/optimize/texture_atlas.html" class="page">Texture Atlas</a>.</p>
+<p>The Object Count (Batch Count) is a very important value that indicates how many geometries were rendered in the last frame. In general, if you keep the object count around 100-200, your game will be fast and responsive. If the count is permanently higher, hand-code rules that detach remote objects, or optimize a complex multi-material scene using: <code>GeometryBatchFactory.optimize(complexNode, true);</code> or a <a href="../jme3tools/optimize/texture_atlas.html" class="xref page">Texture Atlas</a>.</p>
 </li>
 <li>
-<p>Triangle Counts. If your game is sluggish and triangle (polygon) count is high, then you are rendering too many, too detailed meshes. Tell your graphic designers to create models with lower polygon counts, or use a <a href="../scene/control/level_of_detail.html" class="page">Level of Detail</a> (LOD) optimization. The limit is around 100'000 vertices for a scene, considering that the slowest currently used graphic cards cannot handle anything beyond that.</p>
+<p>Triangle Counts. If your game is sluggish and triangle (polygon) count is high, then you are rendering too many, too detailed meshes. Tell your graphic designers to create models with lower polygon counts, or use a <a href="../scene/control/level_of_detail.html" class="xref page">Level of Detail</a> (LOD) optimization. The limit is around 100'000 vertices for a scene, considering that the slowest currently used graphic cards cannot handle anything beyond that.</p>
 </li>
 <li>
 <p>Are any counts constantly increasing right before the game slows down or runs out of memory? Check whether you are accidentally adding objects in a loop, instead of only once.</p>
@@ -1159,7 +1159,7 @@ setDisplayStatView(false);  // to hide the statistics</code></pre>
 <p>Example: In a test scene made up of boxes, you&#8217;d expect a vertex:triangle:object ratio of 8:12:1.</p>
 </li>
 <li>
-<p>Terrains, models and spheres have higher counts, depending on their size and <a href="../scene/control/level_of_detail.html" class="page">Level of Detail</a> (LOD). A high-poly model looks pretty in Blender, but you must find a lower-poly, low-LOD compromise if you want several large objects in one scene!</p>
+<p>Terrains, models and spheres have higher counts, depending on their size and <a href="../scene/control/level_of_detail.html" class="xref page">Level of Detail</a> (LOD). A high-poly model looks pretty in Blender, but you must find a lower-poly, low-LOD compromise if you want several large objects in one scene!</p>
 </li>
 </ul>
 </div>

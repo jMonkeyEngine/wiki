@@ -7,7 +7,7 @@
     <link rel="canonical" href="https://wiki.jmonkeyengine.org/docs/3.4/contributions/tools/charts.html">
     <link rel="prev" href="navigation.html">
     <link rel="next" href="../projects/rise_of_mutants_project.html">
-    <meta name="generator" content="Antora 2.3.3">
+    <meta name="generator" content="Antora 3.0.1">
     <link rel="stylesheet" href="../../../../_/css/site.css">
 <meta property="og:image" content="https://wiki.jmonkeyengine.org/_/img/iconx128.png">
 <meta property="og:description" content="JME 3 Tutorial - Visualizing 3D Charts">
@@ -952,7 +952,7 @@
     <li class="component is-current">
       <span class="title">JME</span>
       <ul class="versions">
-        <li class="version is-latest">
+        <li class="version">
           <a href="../../../3.4/documentation.html">3.4</a>
         </li>
         <li class="version">
@@ -966,7 +966,7 @@
     <li class="component">
       <span class="title">Wiki Contribution</span>
       <ul class="versions">
-        <li class="version is-latest">
+        <li class="version">
           <a href="../../../../docs-wiki/3.4/wiki_contributor.html">3.4</a>
         </li>
       </ul>
@@ -974,7 +974,7 @@
     <li class="component">
       <span class="title">Wiki UI</span>
       <ul class="versions">
-        <li class="version is-latest">
+        <li class="version">
           <a href="../../../../wiki-ui/index.html">master</a>
         </li>
       </ul>
@@ -1011,7 +1011,7 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Previous: <a href="navigation.html" class="page">Navigation</a></p>
+<p>Previous: <a href="navigation.html" class="xref page">Navigation</a></p>
 </div>
 <div class="paragraph">
 <p>In this tutorial we will have a look at creating a simple 3D cartography application that allows you to display 3D charts at different zoom levels.</p>
@@ -1022,10 +1022,10 @@
 <div class="ulist">
 <ul>
 <li>
-<p>About the <a href="navigation.html" class="page">Navigation package</a>.</p>
+<p>About the <a href="navigation.html" class="xref page">Navigation package</a>.</p>
 </li>
 <li>
-<p>How to create a <a href="../../tutorials/beginner/hello_terrain.html" class="page">3D landscape</a> using image-based heightmaps.</p>
+<p>How to create a <a href="../../tutorials/beginner/hello_terrain.html" class="xref page">3D landscape</a> using image-based heightmaps.</p>
 </li>
 </ul>
 </div>
@@ -1044,7 +1044,7 @@
 <h2 id="displaying-your-first-chart"><a class="anchor" href="#displaying-your-first-chart"></a>Displaying your first chart</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Let&#8217;s think about how we are going to get JME to display our terrain. The easiest way is to use JME&#8217;s`ImageBasedHeightMap`. Recall from the <a href="../../tutorials/beginner/hello_terrain.html" class="page">Hello Terrain</a> tutorial that these are grayscale images which JME uses to create a terrain quad. So, in order to display a chart, we need an image of a (two-dimensional) mercator projection (such as the one depicted below), which we then load using:</p>
+<p>Let&#8217;s think about how we are going to get JME to display our terrain. The easiest way is to use JME&#8217;s`ImageBasedHeightMap`. Recall from the <a href="../../tutorials/beginner/hello_terrain.html" class="xref page">Hello Terrain</a> tutorial that these are grayscale images which JME uses to create a terrain quad. So, in order to display a chart, we need an image of a (two-dimensional) mercator projection (such as the one depicted below), which we then load using:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1059,10 +1059,10 @@ applyDefaultTexture();</code></pre>
 <p><span class="image"><img src="../_images/tools/globe.png" alt="A 256x256 mercator projection of planet earth." width="" height=""></span></p>
 </div>
 <div class="paragraph">
-<p>In essence, 3D chart visualization is achieved by converting the polygons composing planet earth&#8217;s landmass into float matrices whereby each value within the matrix represents a specific terrain height. For example, given a terrain of 100 x 100 world units, we construct a heightmap by creating a 100 x 100 matrix. Each cell within the matrix corresponds to a terrain coordinate; each cell’s value to that coordinate’s desired height. But you already knew that, so where&#8217;s the tricky part? Well, when visualizing a chart an accurate projection requires a translation of latitude/longitude coordinates into their equivalent world unit (x,y,z) counterparts. This translation however is not a straight forward mapping of one coordinate system into the other due to the distortion arising from projecting an oblate spheroid onto a flat surface (see my previous wiki article <a href="navigation.html" class="page">here</a>). This means that if one would adhere to a linear scale, the Mercator projection would distort the size and shape of objects as the object distances itself from the equator, eventually resulting in infinite scaling as the pole is reached. So the first task at hand, is to construct accurate 2D projections of planet earth which we can then use as heightmaps. We can achieve this using the jme3.tools.navigation package and co-ordinate sets available at <a href="https://maps.ngdc.noaa.gov/viewers/geophysics/">noaa.gov</a>.</p>
+<p>In essence, 3D chart visualization is achieved by converting the polygons composing planet earth&#8217;s landmass into float matrices whereby each value within the matrix represents a specific terrain height. For example, given a terrain of 100 x 100 world units, we construct a heightmap by creating a 100 x 100 matrix. Each cell within the matrix corresponds to a terrain coordinate; each cell’s value to that coordinate’s desired height. But you already knew that, so where&#8217;s the tricky part? Well, when visualizing a chart an accurate projection requires a translation of latitude/longitude coordinates into their equivalent world unit (x,y,z) counterparts. This translation however is not a straight forward mapping of one coordinate system into the other due to the distortion arising from projecting an oblate spheroid onto a flat surface (see my previous wiki article <a href="navigation.html" class="xref page">here</a>). This means that if one would adhere to a linear scale, the Mercator projection would distort the size and shape of objects as the object distances itself from the equator, eventually resulting in infinite scaling as the pole is reached. So the first task at hand, is to construct accurate 2D projections of planet earth which we can then use as heightmaps. We can achieve this using the jme3.tools.navigation package and co-ordinate sets available at <a href="https://maps.ngdc.noaa.gov/viewers/geophysics/">noaa.gov</a>.</p>
 </div>
 <div class="paragraph">
-<p>As <a href="navigation.html" class="page">previously discussed</a>, the distortion in latitude is derived by using the difference in meridional parts between the chart’s centre and the current position as a baseline; through converting the difference to world units by dividing it by the number of world units contained within one minute, a latitude’s y-coordinate can be obtained. Calculating a position’s x-coordinate is somewhat easier as the distortion only applies to latitude, not longitude. Therefore x merely equals the sum or difference between itself and the viewport’s centre coordinate, depending on the relative location of the position itself and the chart’s centre. Despite being able to convert between the two coordinate systems, slight precision problems remain once the chart projection is scaled down past a level of 6 meters. This is caused by the pixel referencing system of modern displays being integer based; once the ratio of minutes to pixels exceeds the aforementioned threshold, slight inaccuracies are introduced into the display. However this is of little relevance to most GIS (such as Debrief) as a) the inaccuracies are a matter of meters (or even centimetres) and b) it is impossible to notice this variation as GPS exposes a much higher inaccuracy (between 10 - 100 meters).</p>
+<p>As <a href="navigation.html" class="xref page">previously discussed</a>, the distortion in latitude is derived by using the difference in meridional parts between the chart’s centre and the current position as a baseline; through converting the difference to world units by dividing it by the number of world units contained within one minute, a latitude’s y-coordinate can be obtained. Calculating a position’s x-coordinate is somewhat easier as the distortion only applies to latitude, not longitude. Therefore x merely equals the sum or difference between itself and the viewport’s centre coordinate, depending on the relative location of the position itself and the chart’s centre. Despite being able to convert between the two coordinate systems, slight precision problems remain once the chart projection is scaled down past a level of 6 meters. This is caused by the pixel referencing system of modern displays being integer based; once the ratio of minutes to pixels exceeds the aforementioned threshold, slight inaccuracies are introduced into the display. However this is of little relevance to most GIS (such as Debrief) as a) the inaccuracies are a matter of meters (or even centimetres) and b) it is impossible to notice this variation as GPS exposes a much higher inaccuracy (between 10 - 100 meters).</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -1327,7 +1327,7 @@ applyDefaultTexture();</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code>51.79188150756147+-8.25435369629442
+<pre class="highlightjs highlight"><code class="language-none hljs">51.79188150756147+-8.25435369629442
 51.79184641740534+-8.254357553715453
 51.79182071886024+-8.254353833180712
 51.79181370477922+-8.254312317813477
@@ -1364,7 +1364,7 @@ Essentially, this algorithm can be summarized as follows:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code>Constructor ( files ):
+<pre class="highlightjs highlight"><code class="language-none hljs">Constructor ( files ):
    for each file in files
       for each line in file
          if line == -1
