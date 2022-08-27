@@ -1014,9 +1014,8 @@ import com.jme3.input.controls.AnalogListener;
 import com.jme3.input.controls.KeyTrigger;
 import com.jme3.input.controls.MouseButtonTrigger;
 
-/**
- * Sample 5 - how to map keys and mousebuttons to actions
- */
+/** Sample 5 - how to map keys and mouse buttons to actions */
+
 public class HelloInput extends SimpleApplication {
 
     public static void main(String[] args) {
@@ -1024,8 +1023,8 @@ public class HelloInput extends SimpleApplication {
         app.start();
     }
 
-    protected Geometry player;
-    private boolean isRunning = true;
+    private Geometry player;
+    private Boolean isRunning = true;
 
     @Override
     public void simpleInitApp() {
@@ -1038,23 +1037,22 @@ public class HelloInput extends SimpleApplication {
         initKeys(); // load my custom keybinding
     }
 
-    /**
-     * Custom Keybinding: Map named actions to inputs.
-     */
+    /** Custom Keybinding: Map named actions to inputs. */
     private void initKeys() {
-        // You can map one or several inputs to one named action
+        /* You can map one or several inputs to one named mapping. */
         inputManager.addMapping("Pause",  new KeyTrigger(KeyInput.KEY_P));
         inputManager.addMapping("Left",   new KeyTrigger(KeyInput.KEY_J));
         inputManager.addMapping("Right",  new KeyTrigger(KeyInput.KEY_K));
         inputManager.addMapping("Rotate", new KeyTrigger(KeyInput.KEY_SPACE),
                                           new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
-        // Add the names to the action listener.
+        /* Add the named mappings to the action listeners. */
         inputManager.addListener(actionListener, "Pause");
         inputManager.addListener(analogListener, "Left", "Right", "Rotate");
 
     }
 
-    private final ActionListener actionListener = new ActionListener() {
+  /** Use this listener for KeyDown/KeyUp events */
+    final private ActionListener actionListener = new ActionListener() {
         @Override
         public void onAction(String name, boolean keyPressed, float tpf) {
             if (name.equals("Pause") &amp;&amp; !keyPressed) {
@@ -1063,20 +1061,19 @@ public class HelloInput extends SimpleApplication {
         }
     };
 
-    private final AnalogListener analogListener = new AnalogListener() {
+  /** Use this listener for continuous events */
+    final private AnalogListener analogListener = new AnalogListener() {
         @Override
         public void onAnalog(String name, float value, float tpf) {
             if (isRunning) {
                 if (name.equals("Rotate")) {
-                    player.rotate(0, value * speed, 0);
+                    player.rotate(0, value, 0);
                 }
                 if (name.equals("Right")) {
-                    Vector3f v = player.getLocalTranslation();
-                    player.setLocalTranslation(v.x + value * speed, v.y, v.z);
+                    player.move((new Vector3f(value, 0,0)) );
                 }
                 if (name.equals("Left")) {
-                    Vector3f v = player.getLocalTranslation();
-                    player.setLocalTranslation(v.x - value * speed, v.y, v.z);
+                    player.move(new Vector3f(-value, 0,0));
                 }
             } else {
                 System.out.println("Press P to unpause.");
@@ -1161,7 +1158,7 @@ public class HelloInput extends SimpleApplication {
 <p>You map the <code>Pause</code>, <code>Left</code>, <code>Right</code> mappings to the P, J, K keys, respectively.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    // You can map one or several inputs to one named action
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    /* You can map one or several inputs to one named mapping. */
     inputManager.addMapping("Pause",  new KeyTrigger(KeyInput.KEY_P));
     inputManager.addMapping("Left",   new KeyTrigger(KeyInput.KEY_J));
     inputManager.addMapping("Right",  new KeyTrigger(KeyInput.KEY_K));
@@ -1184,7 +1181,7 @@ public class HelloInput extends SimpleApplication {
 <p>You register the movement actions to the AnalogListener, because they are gradual actions.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    // Add the names to the action listener.
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    /* Add the named mappings to the action listeners. */
     inputManager.addListener(actionListener,"Pause");
     inputManager.addListener(analogListener,"Left", "Right", "Rotate");</code></pre>
 </div>
@@ -1227,7 +1224,8 @@ public class HelloInput extends SimpleApplication {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    private final ActionListener actionListener = new ActionListener() {
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">  /** Use this listener for KeyDown/KeyUp events */
+    final private ActionListener actionListener = new ActionListener() {
         @Override
         public void onAction(String name, boolean keyPressed, float tpf) {
             if (name.equals("Pause") &amp;&amp; !keyPressed) {
@@ -1236,20 +1234,19 @@ public class HelloInput extends SimpleApplication {
         }
     };
 
-    private final AnalogListener analogListener = new AnalogListener() {
+  /** Use this listener for continuous events */
+    final private AnalogListener analogListener = new AnalogListener() {
         @Override
         public void onAnalog(String name, float value, float tpf) {
             if (isRunning) {
                 if (name.equals("Rotate")) {
-                    player.rotate(0, value * speed, 0);
+                    player.rotate(0, value, 0);
                 }
                 if (name.equals("Right")) {
-                    Vector3f v = player.getLocalTranslation();
-                    player.setLocalTranslation(v.x + value * speed, v.y, v.z);
+                    player.move((new Vector3f(value, 0,0)) );
                 }
                 if (name.equals("Left")) {
-                    Vector3f v = player.getLocalTranslation();
-                    player.setLocalTranslation(v.x - value * speed, v.y, v.z);
+                    player.move(new Vector3f(-value, 0,0));
                 }
             } else {
                 System.out.println("Press P to unpause.");
@@ -1279,15 +1276,13 @@ public class HelloInput extends SimpleApplication {
     public void onAnalog(String name, float value, float tpf) {
         if (isRunning) {
             if (name.equals("Rotate")) {
-                player.rotate(0, value * speed, 0);
+                player.rotate(0, value, 0);
             }
             if (name.equals("Right")) {
-                Vector3f v = player.getLocalTranslation();
-                player.setLocalTranslation(v.x + value * speed, v.y, v.z);
+                player.move((new Vector3f(value, 0,0)) );
             }
             if (name.equals("Left")) {
-                Vector3f v = player.getLocalTranslation();
-                player.setLocalTranslation(v.x - value * speed, v.y, v.z);
+                player.move(new Vector3f(-value, 0,0));
             }
         } else {
             System.out.println("Press P to unpause.");
