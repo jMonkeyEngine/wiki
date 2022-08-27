@@ -1078,16 +1078,13 @@ public class HelloPhysics extends SimpleApplication {
   private BulletAppState bulletAppState;
 
   /** Prepare Materials */
-  Material wall_mat;
-  Material stone_mat;
-  Material floor_mat;
+  private Material wall_mat;
+  private Material stone_mat;
+  private Material floor_mat;
 
-  /** Prepare geometries and physical nodes for bricks and cannon balls. */
-  private RigidBodyControl    brick_phy;
+  /** Prepare geometries for bricks and cannonballs. */
   private static final Box    box;
-  private RigidBodyControl    ball_phy;
   private static final Sphere sphere;
-  private RigidBodyControl    floor_phy;
   private static final Box    floor;
 
   /** dimensions used for bricks and wall */
@@ -1112,27 +1109,31 @@ public class HelloPhysics extends SimpleApplication {
     /** Set up Physics Game */
     bulletAppState = new BulletAppState();
     stateManager.attach(bulletAppState);
-    //bulletAppState.getPhysicsSpace().enableDebug(assetManager);
 
     /** Configure cam to look at scene */
     cam.setLocation(new Vector3f(0, 4f, 6f));
     cam.lookAt(new Vector3f(2, 2, 0), Vector3f.UNIT_Y);
-    /** Add InputManager action: Left click triggers shooting. */
-    inputManager.addMapping("shoot",
-            new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
-    inputManager.addListener(actionListener, "shoot");
-    /** Initialize the scene, materials, and physics space */
+    /** Initialize the scene, materials, inputs, and physics space */
+    initInputs();
     initMaterials();
     initWall();
     initFloor();
     initCrossHairs();
   }
 
+    /** Add InputManager action: Left click triggers shooting. */
+    private void initInputs() {
+     inputManager.addMapping("shoot",
+              new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
+     inputManager.addListener(actionListener, "shoot");
+  }
+
   /**
    * Every time the shoot action is triggered, a new cannon ball is produced.
    * The ball is set up to fly from the camera position in the camera direction.
    */
-  private ActionListener actionListener = new ActionListener() {
+  final private ActionListener actionListener = new ActionListener() {
+  @Override
     public void onAction(String name, boolean keyPressed, float tpf) {
       if (name.equals("shoot") &amp;&amp; !keyPressed) {
         makeCannonBall();
@@ -1169,42 +1170,42 @@ public class HelloPhysics extends SimpleApplication {
     floor_geo.setLocalTranslation(0, -0.1f, 0);
     this.rootNode.attachChild(floor_geo);
     /* Make the floor physical with mass 0.0f! */
-    floor_phy = new RigidBodyControl(0.0f);
+    RigidBodyControl floor_phy = new RigidBodyControl(0.0f);
     floor_geo.addControl(floor_phy);
     bulletAppState.getPhysicsSpace().add(floor_phy);
   }
 
   /** This loop builds a wall out of individual bricks. */
   public void initWall() {
-    float startpt = brickLength / 4;
+    float startX = brickLength / 4;
     float height = 0;
     for (int j = 0; j &lt; 15; j++) {
       for (int i = 0; i &lt; 6; i++) {
         Vector3f vt =
-         new Vector3f(i * brickLength * 2 + startpt, brickHeight + height, 0);
+         new Vector3f(i * brickLength * 2 + startX, brickHeight + height, 0);
         makeBrick(vt);
       }
-      startpt = -startpt;
+      startX = -startX;
       height += 2 * brickHeight;
     }
   }
 
-  /** This method creates one individual physical brick. */
-  public void makeBrick(Vector3f loc) {
+  /** Creates one physical brick. */
+  private void makeBrick(Vector3f loc) {
     /** Create a brick geometry and attach to scene graph. */
     Geometry brick_geo = new Geometry("brick", box);
     brick_geo.setMaterial(wall_mat);
     rootNode.attachChild(brick_geo);
     /** Position the brick geometry  */
     brick_geo.setLocalTranslation(loc);
-    /** Make brick physical with a mass &gt; 0.0f. */
-    brick_phy = new RigidBodyControl(2f);
+    /* Make brick physical with a mass &gt; 0. */
+    RigidBodyControl brick_phy = new RigidBodyControl(2f);
     /** Add physical brick to physics space. */
     brick_geo.addControl(brick_phy);
     bulletAppState.getPhysicsSpace().add(brick_phy);
   }
 
-  /** This method creates one individual physical cannon ball.
+  /** Creates one physical cannonball.
    * By default, the ball is accelerated and flies
    * from the camera position in the camera direction.*/
    public void makeCannonBall() {
@@ -1214,25 +1215,25 @@ public class HelloPhysics extends SimpleApplication {
     rootNode.attachChild(ball_geo);
     /** Position the cannon ball  */
     ball_geo.setLocalTranslation(cam.getLocation());
-    /** Make the ball physcial with a mass &gt; 0.0f */
-    ball_phy = new RigidBodyControl(1f);
+    /* Make the ball physical with a mass &gt; 0.0f */
+    RigidBodyControl ball_phy = new RigidBodyControl(1f);
     /** Add physical ball to physics space. */
     ball_geo.addControl(ball_phy);
     bulletAppState.getPhysicsSpace().add(ball_phy);
-    /** Accelerate the physcial ball to shoot it. */
+    /* Accelerate the physical ball to shoot it. */
     ball_phy.setLinearVelocity(cam.getDirection().mult(25));
   }
 
   /** A plus sign used as crosshairs to help the player with aiming.*/
   protected void initCrossHairs() {
-    guiNode.detachAllChildren();
-    guiFont = assetManager.loadFont("Interface/Fonts/Default.fnt");
-    BitmapText ch = new BitmapText(guiFont, false);
+    setDisplayStatView(false);
+    //guiFont = assetManager.loadFont("Interface/Fonts/Default.fnt");
+    BitmapText ch = new BitmapText(guiFont);
     ch.setSize(guiFont.getCharSet().getRenderedSize() * 2);
     ch.setText("+");        // fake crosshairs :)
     ch.setLocalTranslation( // center
-      settings.getWidth() / 2 - guiFont.getCharSet().getRenderedSize() / 3 * 2,
-      settings.getHeight() / 2 + ch.getLineHeight() / 2, 0);
+      settings.getWidth() / 2,
+      settings.getHeight() / 2, 0);
     guiNode.attachChild(ch);
   }
 }</code></pre>
@@ -1281,7 +1282,7 @@ public class HelloPhysics extends SimpleApplication {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">  /** Prepare geometries and physical nodes for bricks and cannon balls. */
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">  /** Prepare geometries for bricks and cannonballs. */
   private static final Box    box;
   private static final Sphere sphere;
   private static final Box    floor;
@@ -1306,15 +1307,7 @@ public class HelloPhysics extends SimpleApplication {
 <div class="sect2">
 <h3 id="rigidbodycontrol-brick"><a class="anchor" href="#rigidbodycontrol-brick"></a>RigidBodyControl: Brick</h3>
 <div class="paragraph">
-<p>We want to create brick Geometries from those boxes. For each Geometry with physical properties, you create a RigidBodyControl.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">  private RigidBodyControl brick_phy;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The custom <code>makeBrick(loc)</code> methods creates individual bricks at the location <code>loc</code>. A brick has the following properties:</p>
+<p>We want to create brick Geometries from those boxes. The custom <code>makeBrick(loc)</code> methods creates individual bricks at the location <code>loc</code>. A brick has the following properties:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1322,21 +1315,21 @@ public class HelloPhysics extends SimpleApplication {
 <p>It has a visible Geometry <code>brick_geo</code> (Box Shape Geometry).</p>
 </li>
 <li>
-<p>It has physical properties <code>brick_phy</code> (RigidBodyControl)</p>
+<p>It has physical properties <code>brick_phy</code> (RigidBodyControl). Since this is a Geometry with physical properties you create a RigidBodyControl.</p>
 </li>
 </ul>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">  public void makeBrick(Vector3f loc) {
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">  private void makeBrick(Vector3f loc) {
     /** Create a brick geometry and attach to scene graph. */
     Geometry brick_geo = new Geometry("brick", box);
     brick_geo.setMaterial(wall_mat);
     rootNode.attachChild(brick_geo);
     /** Position the brick geometry  */
     brick_geo.setLocalTranslation(loc);
-    /** Make brick physical with a mass &gt; 0.0f. */
-    brick_phy = new RigidBodyControl(2f);
+    /* Make brick physical with a mass &gt; 0. */
+    RigidBodyControl brick_phy = new RigidBodyControl(2f);
     /** Add physical brick to physics space. */
     brick_geo.addControl(brick_phy);
     bulletAppState.getPhysicsSpace().add(brick_phy);
@@ -1409,12 +1402,12 @@ public class HelloPhysics extends SimpleApplication {
     rootNode.attachChild(ball_geo);
     /** Position the cannon ball  */
     ball_geo.setLocalTranslation(cam.getLocation());
-    /** Make the ball physcial with a mass &gt; 0.0f */
-    ball_phy = new RigidBodyControl(1f);
+    /* Make the ball physical with a mass &gt; 0.0f */
+    RigidBodyControl ball_phy = new RigidBodyControl(1f);
     /** Add physical ball to physics space. */
     ball_geo.addControl(ball_phy);
     bulletAppState.getPhysicsSpace().add(ball_phy);
-    /** Accelerate the physcial ball to shoot it. */
+    /* Accelerate the physical ball to shoot it. */
     ball_phy.setLinearVelocity(cam.getDirection().mult(25));</code></pre>
 </div>
 </div>
@@ -1488,7 +1481,7 @@ As before, you write a custom <code>initFloor()</code> method that creates a fla
     floor_geo.setLocalTranslation(0, -0.1f, 0);
     this.rootNode.attachChild(floor_geo);
     /* Make the floor physical with mass 0.0f! */
-    floor_phy = new RigidBodyControl(0.0f);
+    RigidBodyControl floor_phy = new RigidBodyControl(0.0f);
     floor_geo.addControl(floor_phy);
     bulletAppState.getPhysicsSpace().add(floor_phy);
   }</code></pre>
@@ -1586,7 +1579,8 @@ As before, you write a custom <code>initFloor()</code> method that creates a fla
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    private ActionListener actionListener = new ActionListener() {
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    final private ActionListener actionListener = new ActionListener() {
+    @Override
         public void onAction(String name, boolean keyPressed, float tpf) {
             if (name.equals("shoot") &amp;&amp; !keyPressed) {
                 makeCannonBall();
