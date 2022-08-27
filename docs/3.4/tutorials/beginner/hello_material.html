@@ -1046,10 +1046,8 @@ public class HelloMaterial extends SimpleApplication {
     Box cube1Mesh = new Box( 1f,1f,1f);
     Geometry cube1Geo = new Geometry("My Textured Box", cube1Mesh);
     cube1Geo.setLocalTranslation(new Vector3f(-3f,1.1f,0f));
-    Material cube1Mat = new Material(assetManager,
-        "Common/MatDefs/Misc/Unshaded.j3md");
-    Texture cube1Tex = assetManager.loadTexture(
-        "Interface/Logo/Monkey.jpg");
+    Material cube1Mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+    Texture cube1Tex = assetManager.loadTexture("Interface/Logo/Monkey.jpg");
     cube1Mat.setTexture("ColorMap", cube1Tex);
     cube1Geo.setMaterial(cube1Mat);
     rootNode.attachChild(cube1Geo);
@@ -1057,31 +1055,27 @@ public class HelloMaterial extends SimpleApplication {
     /** A translucent/transparent texture, similar to a window frame. */
     Box cube2Mesh = new Box( 1f,1f,0.01f);
     Geometry cube2Geo = new Geometry("window frame", cube2Mesh);
-    Material cube2Mat = new Material(assetManager,
-        "Common/MatDefs/Misc/Unshaded.j3md");
-    cube2Mat.setTexture("ColorMap",
-        assetManager.loadTexture("Textures/ColoredTex/Monkey.png"));
-    cube2Mat.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
+    Material cube2Mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+    cube2Mat.setTexture("ColorMap", assetManager.loadTexture("Textures/ColoredTex/Monkey.png"));
+    cube2Mat.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);  // activate transparency
     cube2Geo.setQueueBucket(Bucket.Transparent);
     cube2Geo.setMaterial(cube2Mat);
     rootNode.attachChild(cube2Geo);
 
-    /** A bumpy rock with a shiny light effect.*/
+    /* A bumpy rock with a shiny light effect. To make bumpy objects you must create a NormalMap. */
     Sphere sphereMesh = new Sphere(32,32, 2f);
     Geometry sphereGeo = new Geometry("Shiny rock", sphereMesh);
     sphereMesh.setTextureMode(Sphere.TextureMode.Projected); // better quality on spheres
     TangentBinormalGenerator.generate(sphereMesh);           // for lighting effect
-    Material sphereMat = new Material(assetManager,
-        "Common/MatDefs/Light/Lighting.j3md");
-    sphereMat.setTexture("DiffuseMap",
-        assetManager.loadTexture("Textures/Terrain/Pond/Pond.jpg"));
-    sphereMat.setTexture("NormalMap",
-        assetManager.loadTexture("Textures/Terrain/Pond/Pond_normal.png"));
+    Material sphereMat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
+    sphereMat.setTexture("DiffuseMap", assetManager.loadTexture("Textures/Terrain/Pond/Pond.jpg"));
+    sphereMat.setTexture("NormalMap", assetManager.loadTexture("Textures/Terrain/Pond/Pond_normal.png"));
     sphereMat.setBoolean("UseMaterialColors",true);
     sphereMat.setColor("Diffuse",ColorRGBA.White);
     sphereMat.setColor("Specular",ColorRGBA.White);
     sphereMat.setFloat("Shininess", 64f);  // [0,128]
     sphereGeo.setMaterial(sphereMat);
+    //sphereGeo.setMaterial((Material) assetManager.loadMaterial("Materials/MyCustomMaterial.j3m"));
     sphereGeo.setLocalTranslation(0,2,-2); // Move it a bit
     sphereGeo.rotate(1.6f, 0, 0);          // Rotate it a bit
     rootNode.attachChild(sphereGeo);
@@ -1126,10 +1120,8 @@ public class HelloMaterial extends SimpleApplication {
     Box cube1Mesh = new Box( 1f,1f,1f);
     Geometry cube1Geo = new Geometry("My Textured Box", cube1Mesh);
     cube1Geo.setLocalTranslation(new Vector3f(-3f,1.1f,0f));
-    Material cube1Mat = new Material(assetManager,
-        "Common/MatDefs/Misc/Unshaded.j3md");
-    Texture cube1Tex = assetManager.loadTexture(
-        "Interface/Logo/Monkey.jpg");
+    Material cube1Mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+    Texture cube1Tex = assetManager.loadTexture("Interface/Logo/Monkey.jpg");
     cube1Mat.setTexture("ColorMap", cube1Tex);
     cube1Geo.setMaterial(cube1Mat);
     rootNode.attachChild(cube1Geo);</code></pre>
@@ -1187,12 +1179,10 @@ This bucket ensures that the transparent object is drawn on top of objects behin
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    /** A translucent/transparent texture, similar to a window frame. */
     Box cube2Mesh = new Box( 1f,1f,0.01f);
     Geometry cube2Geo = new Geometry("window frame", cube2Mesh);
-    Material cube2Mat = new Material(assetManager,
-    "Common/MatDefs/Misc/Unshaded.j3md");
-    cube2Mat.setTexture("ColorMap",
-        assetManager.loadTexture("Textures/ColoredTex/Monkey.png"));
-    cube2Mat.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);  // !
-    cube2Geo.setQueueBucket(Bucket.Transparent);                        // !
+    Material cube2Mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+    cube2Mat.setTexture("ColorMap", assetManager.loadTexture("Textures/ColoredTex/Monkey.png"));
+    cube2Mat.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);  // activate transparency
+    cube2Geo.setQueueBucket(Bucket.Transparent);
     cube2Geo.setMaterial(cube2Mat);
     rootNode.attachChild(cube2Geo);</code></pre>
 </div>
@@ -1291,8 +1281,7 @@ This bucket ensures that the transparent object is drawn on top of objects behin
 <p>Create a material based on the <code>Lighting.j3md</code> default material.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    Material sphereMat = new Material(assetManager,
-        "Common/MatDefs/Light/Lighting.j3md");</code></pre>
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    Material sphereMat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");</code></pre>
 </div>
 </div>
 <div class="olist loweralpha">
@@ -1306,8 +1295,7 @@ This bucket ensures that the transparent object is drawn on top of objects behin
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    sphereMat.setTexture("DiffuseMap",
-        assetManager.loadTexture("Textures/Terrain/Pond/Pond.jpg"));</code></pre>
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    sphereMat.setTexture("DiffuseMap", assetManager.loadTexture("Textures/Terrain/Pond/Pond.jpg"));</code></pre>
 </div>
 </div>
 </li>
@@ -1320,8 +1308,7 @@ This bucket ensures that the transparent object is drawn on top of objects behin
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    sphereMat.setTexture("NormalMap",
-        assetManager.loadTexture("Textures/Terrain/Pond/Pond_normal.png"));</code></pre>
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    sphereMat.setTexture("NormalMap", assetManager.loadTexture("Textures/Terrain/Pond/Pond_normal.png"));</code></pre>
 </div>
 </div>
 </li>
@@ -1501,8 +1488,7 @@ Shininess : Float</p>
 <p>Below this line, add the following line:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">sphereGeo.setMaterial((Material) assetManager.loadMaterial(
-    "Materials/MyCustomMaterial.j3m"));</code></pre>
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    sphereGeo.setMaterial((Material) assetManager.loadMaterial("Materials/MyCustomMaterial.j3m"));</code></pre>
 </div>
 </div>
 </li>
