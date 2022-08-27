@@ -1065,8 +1065,8 @@ public class HelloPicking extends SimpleApplication {
     inputManager.addListener(actionListener, "Shoot");
   }
   /** Defining the "Shoot" action: Determine what was hit and how to respond. */
-  private ActionListener actionListener = new ActionListener() {
-
+  final private ActionListener actionListener = new ActionListener() {
+    @Override
     public void onAction(String name, boolean keyPressed, float tpf) {
       if (name.equals("Shoot") &amp;&amp; !keyPressed) {
         // 1. Reset results list.
@@ -1074,8 +1074,6 @@ public class HelloPicking extends SimpleApplication {
         // 2. Aim the ray from cam loc to cam direction.
         Ray ray = new Ray(cam.getLocation(), cam.getDirection());
         // 3. Collect intersections between Ray and Shootables in results list.
-        // DO NOT check collision with the root node, or else ALL collisions will hit the
-        // skybox! Always make a separate node for objects you want to collide with.
         shootables.collideWith(ray, results);
         // 4. Print the results
         System.out.println("----- Collisions? " + results.size() + "-----");
@@ -1103,7 +1101,7 @@ public class HelloPicking extends SimpleApplication {
   };
 
   /** A cube object for target practice */
-  protected Geometry makeCube(String name, float x, float y, float z) {
+  private Geometry makeCube(String name, float x, float y, float z) {
     Box box = new Box(1, 1, 1);
     Geometry cube = new Geometry(name, box);
     cube.setLocalTranslation(x, y, z);
@@ -1114,7 +1112,7 @@ public class HelloPicking extends SimpleApplication {
   }
 
   /** A floor to show that the "shot" can go through several objects. */
-  protected Geometry makeFloor() {
+  private Geometry makeFloor() {
     Box box = new Box(15, .2f, 15);
     Geometry floor = new Geometry("the Floor", box);
     floor.setLocalTranslation(0, -4, -5);
@@ -1125,7 +1123,7 @@ public class HelloPicking extends SimpleApplication {
   }
 
   /** A red ball that marks the last spot that was "hit" by the "shot". */
-  protected void initMark() {
+  private void initMark() {
     Sphere sphere = new Sphere(30, 30, 0.2f);
     mark = new Geometry("BOOM!", sphere);
     Material mark_mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
@@ -1134,19 +1132,18 @@ public class HelloPicking extends SimpleApplication {
   }
 
   /** A centred plus sign to help the player aim. */
-  protected void initCrossHairs() {
+  private void initCrossHairs() {
     setDisplayStatView(false);
     guiFont = assetManager.loadFont("Interface/Fonts/Default.fnt");
-    BitmapText ch = new BitmapText(guiFont, false);
+    BitmapText ch = new BitmapText(guiFont);
     ch.setSize(guiFont.getCharSet().getRenderedSize() * 2);
     ch.setText("+"); // crosshairs
     ch.setLocalTranslation( // center
-      settings.getWidth() / 2 - ch.getLineWidth()/2,
-      settings.getHeight() / 2 + ch.getLineHeight()/2, 0);
+    settings.getWidth() / 2 - ch.getLineWidth()/2, settings.getHeight() / 2 + ch.getLineHeight()/2, 0);
     guiNode.attachChild(ch);
   }
 
-  protected Spatial makeCharacter() {
+  private Spatial makeCharacter() {
     // load a character from jme3test-test-data
     Spatial golem = assetManager.loadModel("Models/Oto/Oto.mesh.xml");
     golem.scale(0.5f);
@@ -1327,7 +1324,7 @@ public class HelloPicking extends SimpleApplication {
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">  /** Defining the "Shoot" action: Determine what was hit and how to respond. */
-  private ActionListener actionListener = new ActionListener() {
+  final private ActionListener actionListener = new ActionListener() {
     @Override
     public void onAction(String name, boolean keyPressed, float tpf) {
       if (name.equals("Shoot") &amp;&amp; !keyPressed) {
