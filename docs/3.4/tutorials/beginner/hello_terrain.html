@@ -1019,7 +1019,6 @@
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.material.Material;
-import com.jme3.renderer.Camera;
 import com.jme3.terrain.geomipmap.TerrainLodControl;
 import com.jme3.terrain.heightmap.AbstractHeightMap;
 import com.jme3.terrain.geomipmap.TerrainQuad;
@@ -1028,15 +1027,10 @@ import com.jme3.terrain.heightmap.HillHeightMap; // for exercise 2
 import com.jme3.terrain.heightmap.ImageBasedHeightMap;
 import com.jme3.texture.Texture;
 import com.jme3.texture.Texture.WrapMode;
-import java.util.ArrayList;
-import java.util.List;
 
 /** Sample 10 - How to create fast-rendering terrains from heightmaps,
 and how to use texture splatting to make the terrain look good.  */
 public class HelloTerrain extends SimpleApplication {
-
-  private TerrainQuad terrain;
-  Material mat_terrain;
 
   public static void main(String[] args) {
     HelloTerrain app = new HelloTerrain();
@@ -1048,7 +1042,7 @@ public class HelloTerrain extends SimpleApplication {
     flyCam.setMoveSpeed(50);
 
     /** 1. Create terrain material and load four textures into it. */
-    mat_terrain = new Material(assetManager,
+    Material mat_terrain = new Material(assetManager,
             "Common/MatDefs/Terrain/Terrain.j3md");
 
     /** 1.1) Add ALPHA map (for red-blue-green coded splat textures) */
@@ -1076,11 +1070,21 @@ public class HelloTerrain extends SimpleApplication {
     mat_terrain.setTexture("Tex3", rock);
     mat_terrain.setFloat("Tex3Scale", 128f);
 
-    /** 2. Create the height map */
+    /* 2.a Create a custom height map from an image */
     AbstractHeightMap heightmap = null;
     Texture heightMapImage = assetManager.loadTexture(
             "Textures/Terrain/splat/mountains512.png");
     heightmap = new ImageBasedHeightMap(heightMapImage.getImage());
+
+    /* 2.b Create a random height map */
+//      HillHeightMap heightmap = null;
+//      HillHeightMap.NORMALIZE_RANGE = 100;
+//      try {
+//          heightmap = new HillHeightMap(513, 1000, 50, 100, (byte) 3);
+//      } catch (Exception ex) {
+//          ex.printStackTrace();
+//      }
+
     heightmap.load();
 
     /** 3. We have prepared material and heightmap.
@@ -1092,7 +1096,7 @@ public class HelloTerrain extends SimpleApplication {
      * 3.5) We supply the prepared heightmap itself.
      */
     int patchSize = 65;
-    terrain = new TerrainQuad("my terrain", patchSize, 513, heightmap.getHeightMap());
+    TerrainQuad terrain = new TerrainQuad("my terrain", patchSize, 513, heightmap.getHeightMap());
 
     /** 4. We give the terrain its material, position &amp; scale it, and attach it. */
     terrain.setMaterial(mat_terrain);
@@ -1102,6 +1106,7 @@ public class HelloTerrain extends SimpleApplication {
 
     /** 5. The LOD (level of detail) depends on were the camera is: */
     TerrainLodControl control = new TerrainLodControl(terrain, getCamera());
+    control.setLodCalculator( new DistanceLodCalculator(patchSize, 2.7f) ); // patch size, and a multiplier
     terrain.addControl(control);
   }
 }</code></pre>
@@ -1340,8 +1345,8 @@ It requires an image from a JME Texture.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">mat_terrain.setTexture("Alpha",
-    assetManager.loadTexture("Textures/Terrain/splat/alphamap.png"));</code></pre>
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">mat_terrain.setTexture("Alpha", assetManager.loadTexture(
+          "Textures/Terrain/splat/alphamap.png"));</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1442,9 +1447,9 @@ It requires an image from a JME Texture.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">terrain = new TerrainQuad(
+<pre class="highlightjs highlight"><code class="language-none hljs">TerrainQuad terrain = new TerrainQuad(
   "my terrain",               // name
-  65,                         // tile size
+  patchSize,                  // tile size
   513,                        // block size
   heightmap.getHeightMap());  // heightmap</code></pre>
 </div>
@@ -1501,6 +1506,7 @@ It requires an image from a JME Texture.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    TerrainLodControl control = new TerrainLodControl(terrain, getCamera());
+    control.setLodCalculator( new DistanceLodCalculator(patchSize, 2.7f) ); // patch size, and a multiplier
     terrain.addControl(control);</code></pre>
 </div>
 </div>
