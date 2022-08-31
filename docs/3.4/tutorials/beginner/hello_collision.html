@@ -1021,7 +1021,7 @@ src/</code></pre>
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package jme3test.helloworld;
 
 import com.jme3.app.SimpleApplication;
-import com.jme3.asset.plugins.ZipLocator;
+import com.jme3.asset.plugins.HttpZipLocator;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.collision.shapes.CapsuleCollisionShape;
 import com.jme3.bullet.collision.shapes.CollisionShape;
@@ -1035,7 +1035,6 @@ import com.jme3.light.AmbientLight;
 import com.jme3.light.DirectionalLight;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
-import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 
 /**
@@ -1046,28 +1045,25 @@ import com.jme3.scene.Spatial;
 public class HelloCollision extends SimpleApplication
         implements ActionListener {
 
-  private Spatial sceneModel;
-  private BulletAppState bulletAppState;
-  private RigidBodyControl landscape;
   private CharacterControl player;
-  private Vector3f walkDirection = new Vector3f();
+  final private Vector3f walkDirection = new Vector3f();
   private boolean left = false, right = false, up = false, down = false;
 
   //Temporary vectors used on each frame.
-  //They here to avoid instanciating new vectors on each frame
-  private Vector3f camDir = new Vector3f();
-  private Vector3f camLeft = new Vector3f();
+  //They here to avoid instantiating new vectors on each frame
+  final private Vector3f camDir = new Vector3f();
+  final private Vector3f camLeft = new Vector3f();
 
   public static void main(String[] args) {
     HelloCollision app = new HelloCollision();
     app.start();
   }
 
+  @Override
   public void simpleInitApp() {
     /** Set up Physics */
-    bulletAppState = new BulletAppState();
+    BulletAppState bulletAppState = new BulletAppState();
     stateManager.attach(bulletAppState);
-    //bulletAppState.setDebugEnabled(true);
 
     // We re-use the flyby camera for rotation, while positioning is handled by physics
     viewPort.setBackgroundColor(new ColorRGBA(0.7f, 0.8f, 1f, 1f));
@@ -1076,28 +1072,31 @@ public class HelloCollision extends SimpleApplication
     setUpLight();
 
     // We load the scene from the zip file and adjust its size.
-    assetManager.registerLocator("town.zip", ZipLocator.class);
-    sceneModel = assetManager.loadModel("main.scene");
+    assetManager.registerLocator(
+                    "https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/jmonkeyengine/town.zip",
+                    HttpZipLocator.class);
+    Spatial sceneModel = assetManager.loadModel("main.scene");
     sceneModel.setLocalScale(2f);
 
     // We set up collision detection for the scene by creating a
     // compound collision shape and a static RigidBodyControl with mass zero.
     CollisionShape sceneShape =
             CollisionShapeFactory.createMeshShape(sceneModel);
-    landscape = new RigidBodyControl(sceneShape, 0);
+    RigidBodyControl landscape = new RigidBodyControl(sceneShape, 0);
     sceneModel.addControl(landscape);
 
-    /**
-     * We set up collision detection for the player by creating
-     * a capsule collision shape and a CharacterControl.
-     * The CharacterControl offers extra settings for
-     * size, stepheight, jumping, falling, and gravity.
-     * We also put the player in its starting position.
-     */
+    // We set up collision detection for the player by creating
+    // a capsule collision shape and a CharacterControl.
+    // The CharacterControl offers extra settings for
+    // size, step height, jumping, falling, and gravity.
+    // We also put the player in its starting position.
+
     CapsuleCollisionShape capsuleShape = new CapsuleCollisionShape(1.5f, 6f, 1);
     player = new CharacterControl(capsuleShape, 0.05f);
     player.setJumpSpeed(20);
     player.setFallSpeed(30);
+    player.setGravity(30);
+    player.setPhysicsLocation(new Vector3f(0, 10, 0));
 
     // We attach the scene and the player to the rootnode and the physics space,
     // to make them appear in the game world.
@@ -1105,11 +1104,6 @@ public class HelloCollision extends SimpleApplication
     bulletAppState.getPhysicsSpace().add(landscape);
     bulletAppState.getPhysicsSpace().add(player);
 
-    // You can change the gravity of individual physics objects before or after
-    //they are added to the PhysicsSpace, but it must be set before MOVING the
-    //physics location.
-    player.setGravity(new Vector3f(0,-30f,0));
-    player.setPhysicsLocation(new Vector3f(0, 10, 0));
   }
 
   private void setUpLight() {
@@ -1141,17 +1135,18 @@ public class HelloCollision extends SimpleApplication
 
   /** These are our custom actions triggered by key presses.
    * We do not walk yet, we just keep track of the direction the user pressed. */
-  public void onAction(String binding, boolean isPressed, float tpf) {
+   @Override
+  public void onAction(String binding, boolean value, float tpf) {
     if (binding.equals("Left")) {
-      left = isPressed;
+      if (value) { left = true; } else { left = false; }
     } else if (binding.equals("Right")) {
-      right= isPressed;
+      if (value) { right = true; } else { right = false; }
     } else if (binding.equals("Up")) {
-      up = isPressed;
+      if (value) { up = true; } else { up = false; }
     } else if (binding.equals("Down")) {
-      down = isPressed;
+      if (value) { down = true; } else { down = false; }
     } else if (binding.equals("Jump")) {
-      if (isPressed) { player.jump(new Vector3f(0,20f,0));}
+      player.jump();
     }
   }
 
@@ -1207,17 +1202,14 @@ public class HelloCollision extends SimpleApplication
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">  private Spatial sceneModel;
-  private BulletAppState bulletAppState;
-  private RigidBodyControl landscape;
-  private CharacterControl player;
-  private Vector3f walkDirection = new Vector3f();
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">  private CharacterControl player;
+  final private Vector3f walkDirection = new Vector3f();
   private boolean left = false, right = false, up = false, down = false;
 
   //Temporary vectors used on each frame.
-  //They here to avoid instanciating new vectors on each frame
-  private Vector3f camDir = new Vector3f();
-  private Vector3f camLeft = new Vector3f();</code></pre>
+  //They here to avoid instantiating new vectors on each frame
+  final private Vector3f camDir = new Vector3f();
+  final private Vector3f camLeft = new Vector3f();</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1225,15 +1217,6 @@ public class HelloCollision extends SimpleApplication
 </div>
 <div class="ulist">
 <ul>
-<li>
-<p>The BulletAppState gives this SimpleApplication access to physics features (such as collision detection) supplied by jME3&#8217;s Bullet integration</p>
-</li>
-<li>
-<p>The Spatial sceneModel is for loading an OgreXML model of a town.</p>
-</li>
-<li>
-<p>You need a RigidBodyControl to make the town model solid.</p>
-</li>
 <li>
 <p>The (invisible) first-person player is represented by a CharacterControl object.</p>
 </li>
@@ -1289,38 +1272,40 @@ public class HelloCollision extends SimpleApplication
 <p>For a detailed description of the separate jar files see <a href="../../getting-started/jme3_source_structure.html#structure-of-jmonkeyengine3-jars" class="xref page">this list</a>.</p>
 </div>
 <div class="paragraph">
-<p>How you initialize each is the same, only the methods used for manipulating objects is different. The first thing you do in every physics game is create a BulletAppState object. It gives you access to the jME3 Bullet integration which handles physical forces and collisions.</p>
+<p>How you initialize each is the same, only the methods used for manipulating objects is different. The first thing you do in every physics game is create a BulletAppState object. It gives your Simple Application access to the jME3 Bullet integration which handles physical forces and collisions.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    bulletAppState = new BulletAppState();
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    BulletAppState bulletAppState = new BulletAppState();
     stateManager.attach(bulletAppState);</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>For the scene, you load the <code>sceneModel</code> from a zip file, and adjust the size.</p>
+<p>For the scene, you load the Spatial <code>sceneModel</code> from a zip file, and adjust the size.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    assetManager.registerLocator("town.zip", ZipLocator.class);
-    sceneModel = assetManager.loadModel("main.scene");
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    assetManager.registerLocator(
+                    "https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/jmonkeyengine/town.zip",
+                    HttpZipLocator.class);
+    Spatial sceneModel = assetManager.loadModel("main.scene");
     sceneModel.setLocalScale(2f);</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The file <code>town.zip</code> is included as a sample model in the JME3 sources – you can <a href="https://wiki.jmonkeyengine.org/Scenes/Town/town.zip">Download the town.zip</a>. (Optionally, use any OgreXML scene of your own.) For this sample, place the zip file in the application&#8217;s top level directory (that is, next to src/, assets/, build.xml).</p>
+<p>The file <code>town.zip</code> is an OgreXML model of a town and is included as a sample model in the JME3 sources – you can <a href="https://wiki.jmonkeyengine.org/Scenes/Town/town.zip">Download the town.zip</a>. (Optionally, use any OgreXML scene of your own.) For this sample, place the zip file in the application&#8217;s top level directory (that is, next to src/, assets/, build.xml).</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    CollisionShape sceneShape =
       CollisionShapeFactory.createMeshShape((Node) sceneModel);
-    landscape = new RigidBodyControl(sceneShape, 0);
+    RigidBodyControl landscape = new RigidBodyControl(sceneShape, 0);
     sceneModel.addControl(landscape);
     rootNode.attachChild(sceneModel);</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>To use collision detection, you add a RigidBodyControl to the <code>sceneModel</code> Spatial. The RigidBodyControl for a complex model takes two arguments: A Collision Shape, and the object&#8217;s mass.</p>
+<p>To make the town model solid and use collision detection, you add a RigidBodyControl to the <code>sceneModel</code> Spatial. The RigidBodyControl for a complex model takes two arguments: A Collision Shape, and the object&#8217;s mass.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1410,7 +1395,7 @@ public class HelloCollision extends SimpleApplication
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    player.setJumpSpeed(20);
     player.setFallSpeed(30);
-    player.setGravity(new Vector3f(0,-30f,0));</code></pre>
+    player.setGravity(30);</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1437,7 +1422,7 @@ but gravity must be set BEFORE moving the physics location.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">player.setGravity(new Vector3f(0,-30f,0));
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">player.setGravity(30);
 player.setPhysicsLocation(new Vector3f(0, 10, 0));</code></pre>
 </div>
 </div>
@@ -1507,17 +1492,18 @@ player.setPhysicsLocation(new Vector3f(0, 10, 0));</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">  public void onAction(String binding, boolean isPressed, float tpf) {
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Override
+  public void onAction(String binding, boolean value, float tpf) {
     if (binding.equals("Left")) {
-      left = isPressed;
+      if (value) { left = true; } else { left = false; }
     } else if (binding.equals("Right")) {
-      right= isPressed;
+      if (value) { right = true; } else { right = false; }
     } else if (binding.equals("Up")) {
-      up = isPressed;
+      if (value) { up = true; } else { up = false; }
     } else if (binding.equals("Down")) {
-      down = isPressed;
+      if (value) { down = true; } else { down = false; }
     } else if (binding.equals("Jump")) {
-      if (isPressed) { player.jump(new Vector3f(0,20f,0));}
+      player.jump();
     }
   }</code></pre>
 </div>
