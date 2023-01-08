@@ -1396,6 +1396,25 @@ until a "Repository closed" message appears in the progress.</p>
 </div>
 </div>
 <div class="paragraph">
+<p>Once the repository is closed, its artifacts become publicly
+visble at SonaType, but they aren&#8217;t yet synched
+to Maven Central.
+This is your last opportunity to test the proposed release,
+using (for example)</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">repositories {
+    maven { url 'https://s01.oss.sonatype.org/content/groups/staging' }
+    mavenCentral()
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If the staged artifacts don&#8217;t work for some reason, drop them,
+address the issue(s), and start over with a new release name.</p>
+</div>
+<div class="paragraph">
 <p>To begin the synching process,
 click on the "Release" button and then the "Confirm" button.
 The process usually takes about 20 minutes.
