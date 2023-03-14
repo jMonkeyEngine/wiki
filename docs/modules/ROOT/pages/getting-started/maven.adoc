@@ -51,7 +51,7 @@ repositories {
     mavenCentral()
 }
 
-def jme3 = [v:'3.4.0-stable', g:'org.jmonkeyengine']
+def jme3 = [v:'3.5.2-stable', g:'org.jmonkeyengine']
 dependencies {
     implementation "${jme3.g}:jme3-core:${jme3.v}"
     runtimeOnly "${jme3.g}:jme3-desktop:${jme3.v}"
@@ -65,7 +65,7 @@ dependencies {
 ----
   <properties>
     <jme3_g>org.jmonkeyengine</jme3_g>
-    <jme3_v>3.4.0-stable</jme3_v>
+    <jme3_v>3.5.2-stable</jme3_v>
   </properties>
 
   <repositories>
@@ -94,3 +94,56 @@ dependencies {
     </dependency>
   </dependencies>
 ----
+
+== Snapshots
+
+Typically, you will want to develop against the latest stable version of the engine. For testing
+purposes, snapshot builds are generated and updated every time that changes are commited to the
+master branch.
+
+You can add the snapshot repository to your build files, and set the version to the snapshot build:
+
+
+=== Gradle
+
+[source,groovy]
+----
+repositories {
+    mavenCentral()
+    maven {url 'https://s01.oss.sonatype.org/content/repositories/snapshots/'}
+}
+
+/*
+* Gradle defaults to cacheing artifacts for 24 hours. This entry makes sure that
+* you are always using the absolute latest snapshot, but it does mean that the engine
+* gets downloaded on every build.
+*/
+configurations.all {
+   resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
+
+def jme3 = [v:'3.7.0-SNAPSHOT', g:'org.jmonkeyengine']
+----
+
+=== Maven
+
+[source,xml]
+----
+  <properties>
+    <jme3_g>org.jmonkeyengine</jme3_g>
+    <jme3_v>3.7.0-SNAPSHOT</jme3_v>
+  </properties>
+  
+  <repositories>
+    <repository>
+      <id>mvnrepository</id>
+      <url>https://repo1.maven.org/maven2/</url>
+    </repository>
+    <repository>
+      <id>snapshots</id>
+      <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
+    </repository>
+  </repositories>
+----
+
+
