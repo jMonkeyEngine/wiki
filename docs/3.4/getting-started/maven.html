@@ -1099,7 +1099,7 @@
     mavenCentral()
 }
 
-def jme3 = [v:'3.4.0-stable', g:'org.jmonkeyengine']
+def jme3 = [v:'3.5.2-stable', g:'org.jmonkeyengine']
 dependencies {
     implementation "${jme3.g}:jme3-core:${jme3.v}"
     runtimeOnly "${jme3.g}:jme3-desktop:${jme3.v}"
@@ -1116,7 +1116,7 @@ dependencies {
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">  &lt;properties&gt;
     &lt;jme3_g&gt;org.jmonkeyengine&lt;/jme3_g&gt;
-    &lt;jme3_v&gt;3.4.0-stable&lt;/jme3_v&gt;
+    &lt;jme3_v&gt;3.5.2-stable&lt;/jme3_v&gt;
   &lt;/properties&gt;
 
   &lt;repositories&gt;
@@ -1144,6 +1144,63 @@ dependencies {
       &lt;version&gt;${jme3_v}&lt;/version&gt;
     &lt;/dependency&gt;
   &lt;/dependencies&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="snapshots"><a class="anchor" href="#snapshots"></a>Snapshots</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Typically, you will want to develop against the latest stable version of the engine. For testing
+purposes, snapshot builds are generated and updated every time that changes are commited to the
+master branch.</p>
+</div>
+<div class="paragraph">
+<p>You can add the snapshot repository to your build files, and set the version to the snapshot build:</p>
+</div>
+<div class="sect2">
+<h3 id="gradle-2"><a class="anchor" href="#gradle-2"></a>Gradle</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">repositories {
+    mavenCentral()
+    maven {url 'https://s01.oss.sonatype.org/content/repositories/snapshots/'}
+}
+
+/*
+* Gradle defaults to cacheing artifacts for 24 hours. This entry makes sure that
+* you are always using the absolute latest snapshot, but it does mean that the engine
+* gets downloaded on every build.
+*/
+configurations.all {
+   resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
+
+def jme3 = [v:'3.7.0-SNAPSHOT', g:'org.jmonkeyengine']</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="maven-2"><a class="anchor" href="#maven-2"></a>Maven</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">  &lt;properties&gt;
+    &lt;jme3_g&gt;org.jmonkeyengine&lt;/jme3_g&gt;
+    &lt;jme3_v&gt;3.7.0-SNAPSHOT&lt;/jme3_v&gt;
+  &lt;/properties&gt;
+
+  &lt;repositories&gt;
+    &lt;repository&gt;
+      &lt;id&gt;mvnrepository&lt;/id&gt;
+      &lt;url&gt;https://repo1.maven.org/maven2/&lt;/url&gt;
+    &lt;/repository&gt;
+    &lt;repository&gt;
+      &lt;id&gt;snapshots&lt;/id&gt;
+      &lt;url&gt;https://s01.oss.sonatype.org/content/repositories/snapshots/&lt;/url&gt;
+    &lt;/repository&gt;
+  &lt;/repositories&gt;</code></pre>
+</div>
 </div>
 </div>
 </div>
