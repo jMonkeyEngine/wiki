@@ -2,11 +2,11 @@
 
 There are two conventions for normal maps:
 
-* OpenGL (known as OpenGL-Style)
-* DirectX (known as DirectX-Style)
+* OpenGL (known as OpenGL-Style or Y+)
+* DirectX (known as DirectX-Style or Y-)
 
-The difference between OpenGL style and DirectX style is the Y value (green channel) is flipped, so OpenGL uses Y+ and DirectX is Y-.
-This can cause shading to not look quite right if a shader tries to use OpenGL convention on a normal map designed for DirectX.
+The difference between OpenGL style and DirectX style is the Y value (green channel) is flipped: OpenGL uses Y+ and DirectX uses Y-.
+This can cause shading on models to not look quite right if a material tries to use the OpenGL convention on a normal map designed for DirectX.
 
 Luckily, JME supports both OpenGL and DirectX conventions by using a `NormalType` parameter in the Lighting and PBRLighting material
 definitions. The parameter can be set to either 1 (to use OpenGL) or -1 (to use DirectX).
@@ -14,8 +14,8 @@ By default, JME uses the DirectX convention (NormalType is -1).
 
 ### Using NormalType
 
-If you're using Lighting.j3md or PBRLighting.j3md for your materials, you can use the NormalType parameter to set
-which normal map convention your normal maps are using.
+If you're using Lighting.j3md or PBRLighting.j3md for your materials, you can set the NormalType parameter to indicate
+which normal map convention materials should use on your normal maps.
 
 ```java
 Material mat = new Material(assetManager,
@@ -23,32 +23,12 @@ Material mat = new Material(assetManager,
 mat.setInt("NormalType", 1); //set the type to OpenGL
 ```
 
+TIP: If you're loading a model which already contains a material, you do not have to set the normal type on the material. Jme will do this automatically for you.
+
 ### Which Convention are My Normal Maps?
 
-If you know what software created your normal map, then you can tell which convention the map uses. Here are the default
-conventions of some common 3D programs:
-
-[cols="2"]
-|===
-<a| Software
-<a| Convention
-a| Blender
-a| OpenGL
-a| Maya
-a| OpenGL
-a| 3ds Max
-a| DirectX
-a| JMonkeyEngine
-a| DirectX
-a| Unity3D
-a| OpenGL
-a| Unreal Engine
-a| DirectX
-
-|===
-
-If your normal map was created by Blender, then it will conform to the OpenGL convention. On the other hand, if it was
-created by 3ds Max, the normal map conforms to the DirectX convention.
+There is no easy way to determine that. Sometimes the name of the texture itself might contain a clue determining its type. For example, "Material0_NormalMapY+.png" has Y+ in the name, so it is likely an OpenGL-type normal map.
+If the name doesn't give any clue, the next step is to research the tool used to generate the normal map or look at where the normal map was downloaded from. Authors may indicate which normal map convention they used in their release notes.
 
 ### Troubleshooting Normal Maps
 
