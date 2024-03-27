@@ -6,7 +6,7 @@
     <title>Virtual Reality :: jMonkeyEngine Docs</title>
     <link rel="canonical" href="https://wiki.jmonkeyengine.org/docs/3.4/core/vr/virtualreality.html">
     <link rel="prev" href="../ui/hud.html">
-    <link rel="next" href="virtualrealitycontrollers.html">
+    <link rel="next" href="legacyOpenVr.html">
     <meta name="generator" content="Antora 3.0.1">
     <link rel="stylesheet" href="../../../../_/css/site.css">
 <meta property="og:image" content="https://wiki.jmonkeyengine.org/_/img/iconx128.png">
@@ -525,7 +525,10 @@
     <a class="nav-link" href="virtualreality.html">Virtual Reality</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="virtualrealitycontrollers.html">Virtual Reality Controllers</a>
+    <a class="nav-link" href="legacyOpenVr.html">Virtual Reality Legacy Support</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="virtualrealitycontrollers.html">Virtual Reality Legacy Controller Support</a>
   </li>
 </ul>
   </li>
@@ -995,145 +998,12 @@
   <div class="content">
 <article class="doc">
 <h1 class="page">Virtual Reality</h1>
-<div id="preamble">
-<div class="sectionbody">
-<div class="paragraph">
-<p>Please see this <a href="https://hub.jmonkeyengine.org/t/official-vr-module/37830/67">forum post</a> for additional information on JME Official VR module.</p>
-</div>
-</div>
-</div>
 <div class="sect1">
 <h2 id="introduction"><a class="anchor" href="#introduction"></a>Introduction</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>jMonkeyEngine 3 supports several VR specifications. The most modern of those is OpenVR, which is currently a widely supported standard. However, vendors are beginning to move towards OpenXR as a fully open cross-platform standard. OpenXR is available with jMonkeyEngine via <a href="../../contributions/vr/topic_contributions_vr.html" class="xref page">user contributed virtual reality libraries</a>.</p>
-</div>
-<div class="paragraph">
-<p>The known supported systems are:</p>
-</div>
-<div class="paragraph">
-<p>HTC Vive and systems supporting SteamVR/OpenVR</p>
-</div>
-<div class="paragraph">
-<p>Native Oculus Rift support (and through SteamVR)</p>
-</div>
-<div class="paragraph">
-<p>Oculus Quest 2 (through SteamVR with Virtual Desktop)</p>
-</div>
-<div class="paragraph">
-<p>Razer HDK and systems supporting OSVR</p>
-</div>
-<div class="paragraph">
-<p>Google Cardboard / GoogleVR</p>
-</div>
-<div class="paragraph">
-<p>Two implementations exist for OpenVR. A community maintained JNA based binding and LWJGL&#8217;s JNI based.</p>
-</div>
-<div class="paragraph">
-<p>To use the JNA based bindings, put:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>settings.put(VRConstants.SETTING_VRAPI, VRConstants.SETTING_VRAPI_OPENVR_VALUE);</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>in your settings. To use LWJGL, instead put:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>settings.put(VRConstants.SETTING_VRAPI, VRConstants.SETTING_VRAPI_OPENVR_LWJGL_VALUE);</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Note that the LWJGL bindings require LWJGL3 (jme3-lwjgl3) to be used.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="required-dependencies"><a class="anchor" href="#required-dependencies"></a>Required dependencies</h2>
-<div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p>org.jmonkeyengine:jme3-core</p>
-</li>
-<li>
-<p>org.jmonkeyengine:jme3-lwjgl3</p>
-</li>
-<li>
-<p>org.jmonkeyengine:jme3-vr</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="sample-application"><a class="anchor" href="#sample-application"></a>Sample Application</h2>
-<div class="sectionbody">
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class Main extends SimpleApplication {
-
-    public static void main(String[] args) {
-        AppSettings settings = new AppSettings(true);
-        settings.put(VRConstants.SETTING_VRAPI, VRConstants.SETTING_VRAPI_OPENVR_LWJGL_VALUE);
-        settings.put(VRConstants.SETTING_ENABLE_MIRROR_WINDOW, true);
-
-        VREnvironment env = new VREnvironment(settings);
-        env.initialize();
-
-    	// Checking if the VR environment is well initialized
-    	// (access to the underlying VR system is effective, VR devices are detected).
-    	if (env.isInitialized()){
-            VRAppState vrAppState = new VRAppState(settings, env);
-            vrAppState.setMirrorWindowSize(1024, 800);
-            Main app = new Main(vrAppState);
-            app.setLostFocusBehavior(LostFocusBehavior.Disabled);
-            app.setSettings(settings);
-            app.setShowSettings(false);
-            app.start();
-        }
-    }
-
-    public Main(AppState... appStates) {
-        super(appStates);
-    }
-
-    @Override
-    public void simpleInitApp() {
-        Box b = new Box(1, 1, 1);
-        Geometry geom = new Geometry("Box", b);
-
-        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-        mat.setColor("Color", ColorRGBA.Blue);
-        geom.setMaterial(mat);
-
-        rootNode.attachChild(geom);
-    }
-
-    @Override
-    public void simpleUpdate(float tpf) {
-        //TODO: add update code
-    }
-
-    @Override
-    public void simpleRender(RenderManager rm) {
-        //TODO: add render code
-    }
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Project source: <a href="https://github.com/neph1/VRSampleApplication" class="bare">https://github.com/neph1/VRSampleApplication</a></p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="google-cardboard-vr-sdk-1-0-integration"><a class="anchor" href="#google-cardboard-vr-sdk-1-0-integration"></a>Google Cardboard VR SDK 1.0 integration</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>gvr-android-jme (<a href="https://github.com/nordfalk/gvr-android-jme" class="bare">https://github.com/nordfalk/gvr-android-jme</a>)</p>
+<p>Virtual reality is well-supported in jMonkeyEngine 3. The VR support is provided by <a href="../../contributions/vr/topic_contributions_vr.html" class="xref page">user contributed virtual reality libraries</a>, for
+example <a href="../../contributions/contributions.html#tamarin-openxr" class="xref page">Tamarin OpenXR</a>.</p>
 </div>
 </div>
 </div>
@@ -1141,14 +1011,13 @@
 <h2 id="legacy"><a class="anchor" href="#legacy"></a>Legacy</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The following projects are not up to date, but may provide functionality not found in the other packages.
-Google Cardboard up to version 0.6: <a href="https://github.com/neph1/jme-cardboard" class="bare">https://github.com/neph1/jme-cardboard</a></p>
+<p>OpenVr support (and other old virtual reality standards) are documented at <a href="legacyOpenVr.html" class="xref page">Virtual Reality Legacy support</a> but will be removed in a future release.</p>
 </div>
 </div>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="../ui/hud.html">Head-Up Display (HUD)</a></span>
-  <span class="next"><a href="virtualrealitycontrollers.html">Virtual Reality Controllers</a></span>
+  <span class="next"><a href="legacyOpenVr.html">Virtual Reality Legacy Support</a></span>
 </nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
