@@ -5,7 +5,7 @@
 :keywords: beginner, intro, animation, documentation, keyinput, input, node, model
 
 
-This tutorial shows how to add an animation controller and channels, and how to respond to user input by triggering an animation in a loaded model.
+This tutorial shows how to add an animation controller and how to respond to user input by triggering an animation in a loaded model.
 
 image::beginner/beginner-animation.png[beginner-animation.png,width="",height="",align="center"]
 
@@ -34,7 +34,7 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 
 /** Sample 7 - how to load an OgreXML model and play an animation,
- * using channels, a controller, and an AnimEventListener. */
+ * using AnimComposer */
 public class HelloAnimation extends SimpleApplication{
 
     private AnimComposer control;
@@ -59,14 +59,14 @@ public class HelloAnimation extends SimpleApplication{
         control = player.getControl(AnimComposer.class);
         control.setCurrentAction("stand");
 
-            /* Compose an animation action named "halt"
-       that transitions from "Walk" to "stand" in half a second. */
+        /* Compose an animation action named "halt"
+        that transitions from "Walk" to "stand" in half a second. */
         BlendSpace quickBlend = new LinearBlendSpace(0f, 0.5f);
         Action halt = control.actionBlended("halt", quickBlend, "stand", "Walk");
         halt.setLength(0.5);
 
         /* Compose an animation action named "advance"
-       that walks for one cycle, then halts, then invokes onAdvanceDone(). */
+        that walks for one cycle, then halts, then invokes onAdvanceDone(). */
         Action walk = control.action("Walk");
         Tween doneTween = Tweens.callMethod(this, "onAdvanceDone");
         advance = control.actionSequence("advance", walk, halt, doneTween);
@@ -237,9 +237,8 @@ There are ambient animations like animals or trees that you may want to trigger 
 
 ----
 
-To use the input controller, you need to implement the actionListener by testing for each action by name, then set the channel to the corresponding animation to run.
 
-*  By default the animation will loop, there is an overloaded `setCurrentAction` method that allows you to set the loop mode.
+*  By default, the animation will loop, there is an overloaded `setCurrentAction` method that allows you to set the loop mode.
 *  If needed, use Action::setSpeed to set the speed of this animation.
 *  Optionally, use AnimComposer::.setTime to Fast-forward or rewind to a certain moment in time of this animation.
 
