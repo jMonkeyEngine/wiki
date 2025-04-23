@@ -1,9 +1,9 @@
-= Render Pipeline
+= Render Pipelines
 :revnumber: 1.0
 :revdate: 2025/04/22
 :keywords: rendering, viewport, pipeline
 
-Since JMonkeyEngine 3.8.0, ViewPorts are rendered using render pipelines. Before, the RenderManager was entirely responsible for processing each ViewPort's scenes and rendering their geometries. Only basic forward rendering could really be used without great difficulty, so render pipelines were introduced to allow developers to implement whatever rendering techniques their game demanded.
+Since JMonkeyEngine 3.8, ViewPorts are rendered using render pipelines. Before, the RenderManager was entirely responsible for processing each ViewPort's scenes and rendering their geometries. Only basic forward rendering could really be used without great difficulty, so render pipelines were introduced to allow developers to implement whatever rendering techniques their game demands.
 
 The sky is the limit with render pipelines, however, because they control every aspect of rendering a ViewPort (including SceneProcessors and profiling), a great deal goes into implementing a pipeline.
 
@@ -90,6 +90,7 @@ public class MyPipeline implements RenderPipeline<MyPipelineContext> {
         // Does the actual rendering of the ViewPort.
     }
 
+    @Override
     public void endRenderFrame(RenderManager rm) {
         // Called after all rendering is complete in a frame in
         // which this pipeline rendered a ViewPort.
@@ -98,7 +99,28 @@ public class MyPipeline implements RenderPipeline<MyPipelineContext> {
 }
 ----
 
-Fully implementing `pipelineRender` is beyond the scope of this article, but suffice it to say `pipelineRender` is where the actual rendering of the ViewPort occurs, and it is usually quite involved. A full RenderPipeline implementation for forward rendering can be viewed https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/java/com/jme3/renderer/pipeline/ForwardPipeline.java[here]. The other methods have more to do with how RenderManager manages the pipeline for rendering.
+The `pipelineRender` method can get quite complicated, as rendering is a complicated process. Fortunately, the pipeline system imposes little to no restriction on what pipelines actually do during rendering. Here is a quick `renderPipeline` implementation to get started with:
+
+[source,java]
+----
+@Override
+public void pipelineRender(RenderManager rm, MyPipelineContext context, ViewPort vp, float tpf) {
+    // render each geometry in all viewport scenes
+    for (Spatial scene : viewPort.getScenes()) {
+        scene.depthFirstTraversal(s -> {
+            if (s instanceof Geometry) {
+                rm.renderGeometry((Geometry)s);
+            }
+        });
+    }
+    // reset clip rect
+    rm.getRenderer().clearClipRect();
+}
+----
+
+As previously mentioned, there is very little restriction over what `pipelineRender` does, so following the above example is not required. In fact, JMonkeyEngine's default renderer, https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/jme3-core/src/main/java/com/jme3/renderer/pipeline/ForwardPipeline.java[ForwardPipeline], looks vastly different.
+
+=== Fetching Contexts to Use
 
 Since pipelines often depend on global objects (as stated before), the RenderPipeline interface has a generic specifying the type of context to be expected (set as MyPipelineContext in the example above), and the interface provides the `fetchPipelineContext` method to select the context to use during rendering. The context returned by `fetchPipelineContext` will then be passed to `pipelineRender` to actually be used.
 
@@ -113,18 +135,18 @@ public MyPipelineContext fetchPipelineContext(RenderManager rm) {
 }
 ----
 
-If the RenderPipeline doesn't happen to require any global objects, and thus no particular PipelineContext implementation, simply returning `rm.getDefaultContext()` is usually best. Do not return null.
+Even if a RenderPipeline does not need to use a PipelineContext, it is still required that `fetchPipelineContext` return a non-null context. For such cases, returning `rm.getDefaultContext()` is acceptable.
 
 == Usage
 
-In order to actually get a RenderPipeline to render a ViewPort, simply assign the pipeline to the ViewPort.
+In order to get a RenderPipeline to render a ViewPort, simply assign the pipeline to the ViewPort. When the rendering step occurs, the RenderManager uses each ViewPort's assigned pipeline to render the ViewPort.
 
 [source,java,opts=novalidate]
 ----
 viewPort.setPipeline(new MyRenderPipeline());
 ----
 
-Note that RenderPipelines are designed to be able to render multiple ViewPorts at once, so the following is also valid:
+Note that RenderPipelines (unless otherwise specified) can be assigned to multiple ViewPorts at once.
 
 [source,java,opts=novalidate]
 ----
@@ -137,7 +159,5 @@ If no pipeline is assigned to a ViewPort, the RenderManager uses a default pipel
 
 [source,java,opts=novalidate]
 ----
-renderManager.setDefaultPipeline(new MyRenderPipeline());
+renderManager.setPipeline(new MyRenderPipeline());
 ----
-
-As mentioned before, PipelineContexts intended on being used must be registered with the RenderManager before they can be used.
