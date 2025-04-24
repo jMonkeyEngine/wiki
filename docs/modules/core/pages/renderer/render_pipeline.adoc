@@ -105,8 +105,13 @@ The `pipelineRender` method can get quite complicated, as rendering is a complic
 ----
 @Override
 public void pipelineRender(RenderManager rm, MyPipelineContext context, ViewPort vp, float tpf) {
+    // apply viewport to rendering context
+    rm.getRenderer().setFrameBuffer(vp.getOutputFrameBuffer());
+    rm.getRenderer().clearBuffers(true, true, true);
+    rm.getRenderer().setBackgroundColor(vp.getBackgroundColor());
+    rm.setCamera(vp.getCamer(), false);
     // render each geometry in all viewport scenes
-    for (Spatial scene : viewPort.getScenes()) {
+    for (Spatial scene : vp.getScenes()) {
         scene.depthFirstTraversal(s -> {
             if (s instanceof Geometry) {
                 rm.renderGeometry((Geometry)s);
