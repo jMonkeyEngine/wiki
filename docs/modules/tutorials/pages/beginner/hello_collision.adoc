@@ -35,7 +35,7 @@ Place town.zip in the root directory of your JME3 project. Here is the code:
 package jme3test.helloworld;
 
 import com.jme3.app.SimpleApplication;
-import com.jme3.asset.plugins.ZipLocator;
+import com.jme3.asset.plugins.HttpZipLocator;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.collision.shapes.CapsuleCollisionShape;
 import com.jme3.bullet.collision.shapes.CollisionShape;
@@ -49,7 +49,6 @@ import com.jme3.light.AmbientLight;
 import com.jme3.light.DirectionalLight;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
-import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 
 /**
@@ -60,28 +59,25 @@ import com.jme3.scene.Spatial;
 public class HelloCollision extends SimpleApplication
         implements ActionListener {
 
-  private Spatial sceneModel;
-  private BulletAppState bulletAppState;
-  private RigidBodyControl landscape;
   private CharacterControl player;
-  private Vector3f walkDirection = new Vector3f();
+  final private Vector3f walkDirection = new Vector3f();
   private boolean left = false, right = false, up = false, down = false;
 
   //Temporary vectors used on each frame.
-  //They here to avoid instanciating new vectors on each frame
-  private Vector3f camDir = new Vector3f();
-  private Vector3f camLeft = new Vector3f();
+  //They here to avoid instantiating new vectors on each frame
+  final private Vector3f camDir = new Vector3f();
+  final private Vector3f camLeft = new Vector3f();
 
   public static void main(String[] args) {
     HelloCollision app = new HelloCollision();
     app.start();
   }
-
+  
+  @Override
   public void simpleInitApp() {
     /** Set up Physics */
-    bulletAppState = new BulletAppState();
+    BulletAppState bulletAppState = new BulletAppState();
     stateManager.attach(bulletAppState);
-    //bulletAppState.setDebugEnabled(true);
 
     // We re-use the flyby camera for rotation, while positioning is handled by physics
     viewPort.setBackgroundColor(new ColorRGBA(0.7f, 0.8f, 1f, 1f));
@@ -90,40 +86,38 @@ public class HelloCollision extends SimpleApplication
     setUpLight();
 
     // We load the scene from the zip file and adjust its size.
-    assetManager.registerLocator("town.zip", ZipLocator.class);
-    sceneModel = assetManager.loadModel("main.scene");
+    assetManager.registerLocator(
+                    "https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/jmonkeyengine/town.zip",
+                    HttpZipLocator.class);
+    Spatial sceneModel = assetManager.loadModel("main.scene");
     sceneModel.setLocalScale(2f);
 
     // We set up collision detection for the scene by creating a
     // compound collision shape and a static RigidBodyControl with mass zero.
     CollisionShape sceneShape =
             CollisionShapeFactory.createMeshShape(sceneModel);
-    landscape = new RigidBodyControl(sceneShape, 0);
+    RigidBodyControl landscape = new RigidBodyControl(sceneShape, 0);
     sceneModel.addControl(landscape);
-
-    /**
-     * We set up collision detection for the player by creating
-     * a capsule collision shape and a CharacterControl.
-     * The CharacterControl offers extra settings for
-     * size, stepheight, jumping, falling, and gravity.
-     * We also put the player in its starting position.
-     */
+    
+    // We set up collision detection for the player by creating
+    // a capsule collision shape and a CharacterControl.
+    // The CharacterControl offers extra settings for
+    // size, step height, jumping, falling, and gravity.
+    // We also put the player in its starting position.
+    
     CapsuleCollisionShape capsuleShape = new CapsuleCollisionShape(1.5f, 6f, 1);
     player = new CharacterControl(capsuleShape, 0.05f);
     player.setJumpSpeed(20);
     player.setFallSpeed(30);
+    player.setGravity(30);
+    player.setPhysicsLocation(new Vector3f(0, 10, 0));
 
     // We attach the scene and the player to the rootnode and the physics space,
     // to make them appear in the game world.
     rootNode.attachChild(sceneModel);
     bulletAppState.getPhysicsSpace().add(landscape);
     bulletAppState.getPhysicsSpace().add(player);
-
-    // You can change the gravity of individual physics objects before or after
-    //they are added to the PhysicsSpace, but it must be set before MOVING the
-    //physics location.
-    player.setGravity(new Vector3f(0,-30f,0));
-    player.setPhysicsLocation(new Vector3f(0, 10, 0));
+    
   }
 
   private void setUpLight() {
@@ -155,17 +149,18 @@ public class HelloCollision extends SimpleApplication
 
   /** These are our custom actions triggered by key presses.
    * We do not walk yet, we just keep track of the direction the user pressed. */
-  public void onAction(String binding, boolean isPressed, float tpf) {
+   @Override
+  public void onAction(String binding, boolean value, float tpf) {
     if (binding.equals("Left")) {
-      left = isPressed;
+      if (value) { left = true; } else { left = false; }
     } else if (binding.equals("Right")) {
-      right= isPressed;
+      if (value) { right = true; } else { right = false; }
     } else if (binding.equals("Up")) {
-      up = isPressed;
+      if (value) { up = true; } else { up = false; }
     } else if (binding.equals("Down")) {
-      down = isPressed;
+      if (value) { down = true; } else { down = false; }
     } else if (binding.equals("Jump")) {
-      if (isPressed) { player.jump(new Vector3f(0,20f,0));}
+      player.jump();
     }
   }
 
@@ -218,25 +213,19 @@ You already know that SimpleApplication is the base class for all jME3 games. Yo
 [source,java]
 ----
 
-  private Spatial sceneModel;
-  private BulletAppState bulletAppState;
-  private RigidBodyControl landscape;
   private CharacterControl player;
-  private Vector3f walkDirection = new Vector3f();
+  final private Vector3f walkDirection = new Vector3f();
   private boolean left = false, right = false, up = false, down = false;
 
   //Temporary vectors used on each frame.
-  //They here to avoid instanciating new vectors on each frame
-  private Vector3f camDir = new Vector3f();
-  private Vector3f camLeft = new Vector3f();
+  //They here to avoid instantiating new vectors on each frame
+  final private Vector3f camDir = new Vector3f();
+  final private Vector3f camLeft = new Vector3f();
 
 ----
 
 You initialize a few private fields:
 
-*  The BulletAppState gives this SimpleApplication access to physics features (such as collision detection) supplied by jME3's Bullet integration
-*  The Spatial sceneModel is for loading an OgreXML model of a town.
-*  You need a RigidBodyControl to make the town model solid.
 *  The (invisible) first-person player is represented by a CharacterControl object.
 *  The fields `walkDirection` and the four Booleans are used for physics-controlled navigation.
 *  camDir and camLeft are temporary vectors used later when computing the walkingDirection from the cam position and rotation
@@ -270,41 +259,43 @@ Currently, jMonkeyEngine has two versions of link:https://pybullet.org/wordpress
 
 include::ROOT:partial$source-structure-link.adoc[]
 
-How you initialize each is the same, only the methods used for manipulating objects is different. The first thing you do in every physics game is create a BulletAppState object. It gives you access to the jME3 Bullet integration which handles physical forces and collisions.
+How you initialize each is the same, only the methods used for manipulating objects is different. The first thing you do in every physics game is create a BulletAppState object. It gives your Simple Application access to the jME3 Bullet integration which handles physical forces and collisions.
 
 [source,java]
 ----
 
-    bulletAppState = new BulletAppState();
+    BulletAppState bulletAppState = new BulletAppState();
     stateManager.attach(bulletAppState);
 
 ----
 
-For the scene, you load the `sceneModel` from a zip file, and adjust the size.
+For the scene, you load the Spatial `sceneModel` from a zip file, and adjust the size.
 
 [source,java]
 ----
 
-    assetManager.registerLocator("town.zip", ZipLocator.class);
-    sceneModel = assetManager.loadModel("main.scene");
+    assetManager.registerLocator(
+                    "https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/jmonkeyengine/town.zip",
+                    HttpZipLocator.class);
+    Spatial sceneModel = assetManager.loadModel("main.scene");
     sceneModel.setLocalScale(2f);
 
 ----
 
-The file `town.zip` is included as a sample model in the JME3 sources – you can link:https://wiki.jmonkeyengine.org/Scenes/Town/town.zip[Download the town.zip]. (Optionally, use any OgreXML scene of your own.) For this sample, place the zip file in the application's top level directory (that is, next to src/, assets/, build.xml).
+The file `town.zip` is an OgreXML model of a town and is included as a sample model in the JME3 sources – you can link:https://wiki.jmonkeyengine.org/Scenes/Town/town.zip[Download the town.zip]. (Optionally, use any OgreXML scene of your own.) For this sample, place the zip file in the application's top level directory (that is, next to src/, assets/, build.xml).
 
 [source,java]
 ----
 
     CollisionShape sceneShape =
       CollisionShapeFactory.createMeshShape((Node) sceneModel);
-    landscape = new RigidBodyControl(sceneShape, 0);
+    RigidBodyControl landscape = new RigidBodyControl(sceneShape, 0);
     sceneModel.addControl(landscape);
     rootNode.attachChild(sceneModel);
 
 ----
 
-To use collision detection, you add a RigidBodyControl to the `sceneModel` Spatial. The RigidBodyControl for a complex model takes two arguments: A Collision Shape, and the object's mass.
+To make the town model solid and use collision detection, you add a RigidBodyControl to the `sceneModel` Spatial. The RigidBodyControl for a complex model takes two arguments: A Collision Shape, and the object's mass.
 
 *  JME3 offers a `CollisionShapeFactory` that precalculates a mesh-accurate collision shape for a Spatial. You choose to generate a `CompoundCollisionShape` (which has MeshCollisionShapes as its children) because this type of collision shape is optimal for immobile objects, such as terrain, houses, and whole shooter levels.
 *  You set the mass to zero since a scene is static and its mass is irrelevant.
@@ -363,7 +354,7 @@ Now you use the CollisionShape to create a `CharacterControl` that represents th
 
     player.setJumpSpeed(20);
     player.setFallSpeed(30);
-    player.setGravity(new Vector3f(0,-30f,0));
+    player.setGravity(30);
 
 ----
 
@@ -385,7 +376,7 @@ but gravity must be set BEFORE moving the physics location.
 
 [source, java]
 ----
-player.setGravity(new Vector3f(0,-30f,0));
+player.setGravity(30);
 player.setPhysicsLocation(new Vector3f(0, 10, 0));
 ----
 
@@ -447,18 +438,18 @@ Remember that this class implements the `ActionListener` interface, so you can c
 
 [source,java]
 ----
-
-  public void onAction(String binding, boolean isPressed, float tpf) {
+@Override
+  public void onAction(String binding, boolean value, float tpf) {
     if (binding.equals("Left")) {
-      left = isPressed;
+      if (value) { left = true; } else { left = false; }
     } else if (binding.equals("Right")) {
-      right= isPressed;
+      if (value) { right = true; } else { right = false; }
     } else if (binding.equals("Up")) {
-      up = isPressed;
+      if (value) { up = true; } else { up = false; }
     } else if (binding.equals("Down")) {
-      down = isPressed;
+      if (value) { down = true; } else { down = false; }
     } else if (binding.equals("Jump")) {
-      if (isPressed) { player.jump(new Vector3f(0,20f,0));}
+      player.jump();
     }
   }
 ----

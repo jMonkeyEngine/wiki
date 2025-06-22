@@ -33,7 +33,7 @@ workflow to run at GitHub Actions.
 The workflow is defined by
 https://github.com/jMonkeyEngine/jmonkeyengine/blob/master/.github/workflows/main.yml[the "main.yml" script].
 It performs clean builds of the Engine
-across a matrix of 4 operating systems and 2 Java versions.
+across a matrix of 3 operating systems and 3 Java versions.
 It also performs a clean build of the merged javadoc.
 
 Any failure of the CI workflow causes notifications to be sent.
@@ -232,6 +232,23 @@ Click on the "Refresh" button occasionally
 until a "Repository closed" message appears in the progress.
 
 image::sonatype/repo_closed.png[repo_closed.png]
+
+Once the repository is closed, its artifacts become publicly
+visble at SonaType, but they aren't yet synched
+to Maven Central.
+This is your last opportunity to test the proposed release,
+using (for example)
+
+[source,groovy]
+----
+repositories {
+    maven { url 'https://s01.oss.sonatype.org/content/groups/staging' }
+    mavenCentral()
+}
+----
+
+If the staged artifacts don't work for some reason, drop them,
+address the issue(s), and start over with a new release name.
 
 To begin the synching process,
 click on the "Release" button and then the "Confirm" button.
