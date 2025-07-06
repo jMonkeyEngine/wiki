@@ -130,16 +130,18 @@ but more often you'll want to specify a release branch as the target.
 
 image::github/new_release.png[new_release.png]
 
-For the tag version, specify "v" followed by the version name.
+For the tag version, specify "v" followed by the version name
+and select "Create new tag on publish".
 This determines the name of the Git tag that will be created.
 
 For the release title, specify "jMonkeyEngine " followed by the version name.
 This field can be added or edited later.
 
-For the description, write something brief.
+For the description, write something brief
+or click on the "Generate release notes" button.
 Like the title, this field can be added or edited later.
 
-For an alpha or beta release, tick the "This is a pre-release" checkbox.
+For an alpha or beta release, tick the "Set as a pre-release" checkbox.
 This helps ensure that naive users are steered toward a stable release.
 
 CAUTION: Double-check the target branch before proceeding. Then triple-check it!
@@ -156,7 +158,7 @@ Discord provides an easy way to verify that the run has begun.
 
 * Log in to your Discord account.
 * Select the "github-builds" channel on the "jMonkeyEngine Community" server.
-* Look for a recent message from the "GitHub" bot saying
+* Look for a recent message from the "GitHub" app saying
   "[jMonkeyEngine/jmonkeyengine] New release published".
   This indicates that a run has started, not that it's complete!
 
@@ -180,86 +182,54 @@ A successful release run automatically deploys various build products:
 * It deploys the test chooser's executable (a ZIP file)
   as an asset listed under the release description at GitHub Releases.
 * It also "stages" the signed Maven artifacts to Sonatype, as a "repository".
-  However, staging to Sonatype does not make the artifacts publicly visible.
+  However, staging to Sonatype does not publish the artifacts to Maven Central.
   For that to happen,
   the staging repository must be closed and synched.
 
 == Managing Repos at Sonatype
 
 The official instructions are available from
-https://central.sonatype.org/publish/release/
+https://central.sonatype.org/publish/publish-portal-ossrh-staging-api/
 
-Browse to https://s01.oss.sonatype.org/[the Nexus Repository Manager].
+Browse to https://central.sonatype.com/[the Maven Central Repository site].
 
-Select the "Log in" link in the upper right corner of the page.
+Select the "Sign In" link in the upper right corner of the page.
 
 image::sonatype/login.png[login.png]
 
-Type your Sonatype credentials into the dialog box
-and click on the "Log In" button below.
+Type your Sonatype credentials into the text boxes
+and click on the "Continue" button below.
 
 image::sonatype/login_dialog.png[login_dialog.png]
 
-Under "Build Promotion" on the left sidebar,
-select "Staging Repositories".
+Select the "Publish" link in the upper right corner of the page.
 
 image::sonatype/sidebar.png[sidebar.png]
 
-If you don't see a freshly updated repo named "orgjmonkeyengine",
-click on the "Refresh" button occasionally until its record appears.
+If you don't see a freshly staged "org.jmonkeyengine" deployment
+on the left side of the page,
+click on the "Refresh" button occasionally until its record appears
+and its status changes to "VALIDATED".
 
-image::sonatype/refresh.png[refresh.png]
-
-Select the newly staged repo by ticking the checkbox to the left of its record.
+Select the newly staged deployment.
 
 image::sonatype/select_repo.png[select_repo.png]
 
-In the bottom half of the page,
-select the "Content" tab to browse the contents of newly staged repo.
+Scroll down until you see the "Component Files" heading
+on the right side of the page and
+browse the contents of newly staged deployment.
 
-image::sonatype/content.png[content.png]
-
-When satisfied that the staged repo is 100% complete,
-click on the "Close" button and then the "Confirm" button
-to begin the automated validation process.
+When you're satisfied the deployment is correct and complete,
+click on the "Publish" button to start the publication process.
 
 image::sonatype/close.png[close.png]
 
-Click on the "Refresh" button again.
-In the bottom half of the page,
-select the "Activity" tab to watch the progress.
-Click on the "Refresh" button occasionally
-until a "Repository closed" message appears in the progress.
-
-image::sonatype/repo_closed.png[repo_closed.png]
-
-Once the repository is closed, its artifacts become publicly
-visble at SonaType, but they aren't yet synched
-to Maven Central.
-This is your last opportunity to test the proposed release,
-using (for example)
-
-[source,groovy]
-----
-repositories {
-    maven { url 'https://s01.oss.sonatype.org/content/groups/staging' }
-    mavenCentral()
-}
-----
-
-If the staged artifacts don't work for some reason, drop them,
-address the issue(s), and start over with a new release name.
-
-To begin the synching process,
-click on the "Release" button and then the "Confirm" button.
-The process usually takes about 20 minutes.
-I don't know a good way to monitor this process.
-To detect completion, browse to
-https://repo1.maven.org/maven2/org/jmonkeyengine/jme3-core/
-and refresh the web browser until the new folder appears.
+The deployment's status should immediately change to "PUBLISHING".
+When it changes to "PUBLISHED", the process is complete.
+This usually takes about 10 minutes.
 
 Allow an additional hour or two for the new release to show up
-on https://search.maven.org[Maven Central Repository Search].
+at https://central.sonatype.com/artifact/org.jmonkeyengine/jme3-core/versions[Maven Central Repository Search].
 
 == Follow-up Tasks
 
