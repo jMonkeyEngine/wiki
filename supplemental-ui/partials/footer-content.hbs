@@ -10,7 +10,7 @@ var search = docsearch({
   indexName: '{{env.ALGOLIA_IDX_NAME}}',
   inputSelector: '#search-input',
   autocompleteOptions: { hint: false, keyboardShortcuts: ['s'] },
-  algoliaOptions: { hitsPerPage: 10 }
+  algoliaOptions: { hitsPerPage: 10, facetFilters: ['version:{{page.version}}'] }
 }).autocomplete
 search.on('autocomplete:closed', function () { search.autocomplete.setVal() })
 function focusSearchInput () { document.querySelector('#search-input').focus() }
