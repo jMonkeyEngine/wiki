@@ -1125,12 +1125,18 @@ Entity Systems aim to make your project more clear and dynamic.</p>
 </footer>
 <span hidden data-pagefind-filter="version:3.8"></span>
 <script type="module">
-  import { PagefindUI } from '/_pagefind/pagefind-ui.js';
-  new PagefindUI({
-    element: '#search',
-    showImages: false,
-    filters: { version: '3.8' },
-  });
+  import * as PagefindUIExport from '/_pagefind/pagefind-ui.js';
+
+  const PagefindUI = PagefindUIExport?.PagefindUI || PagefindUIExport?.default || PagefindUIExport;
+  if (PagefindUI) {
+    new PagefindUI({
+      element: '#search',
+      showImages: false,
+      filters: { version: '3.8' },
+    });
+  } else {
+    console.error('Pagefind UI export not found');
+  }
 </script>
 <script src="../../../../../_/js/site.js"></script>
 <script async src="../../../../../_/js/vendor/highlight.js"></script>

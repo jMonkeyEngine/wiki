@@ -114,12 +114,18 @@ If you typed the URL of this page manually, please double check that you entered
 </footer>
 <span hidden data-pagefind-filter="version:"></span>
 <script type="module">
-  import { PagefindUI } from '/_pagefind/pagefind-ui.js';
-  new PagefindUI({
-    element: '#search',
-    showImages: false,
-    filters: { version: '' },
-  });
+  import * as PagefindUIExport from '/_pagefind/pagefind-ui.js';
+
+  const PagefindUI = PagefindUIExport?.PagefindUI || PagefindUIExport?.default || PagefindUIExport;
+  if (PagefindUI) {
+    new PagefindUI({
+      element: '#search',
+      showImages: false,
+      filters: { version: '' },
+    });
+  } else {
+    console.error('Pagefind UI export not found');
+  }
 </script>
 <script src="/_/js/site.js"></script>
 <script async src="/_/js/vendor/highlight.js"></script>
