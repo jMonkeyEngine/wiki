@@ -14,7 +14,6 @@
 <meta property="og:description" content="jMonkeyEngine 3 Tutorial (6) - Hello Materials">
 <meta property="og:title" content="jMonkeyEngine Docs">
 <link rel="stylesheet" href="../../../../_/css/site-extra.css">
-<link rel="stylesheet" href="/_pagefind/pagefind-ui.css">
 <link rel="icon" href="../../../../_/img/favicon.ico" type="image/x-icon">
   </head>
   <body class="article">
@@ -1624,22 +1623,90 @@ Shininess : Float</p>
   <p>Copyright 2020 jMonkeyEngine Wiki Contributors. Licensed BSD-3.</p>
 </footer>
 <span hidden data-pagefind-filter="version:3.8"></span>
-<script src="/_pagefind/pagefind-ui.js"></script>
-<script>
-  new window.PagefindUI({
-    element: '#search',
-    showImages: false,
-    showEmptyFilters: false,
-    resetStyles: false,
-    filters: {
-      version: ['3.8'],
-    },
-    pagefind_options: {
-      filters: {
-        version: ['3.8'],
-      },
-    },
-  });
+<script type="module">
+  const currentVersion = '3.8';
+  const expectedPath = `/docs/${currentVersion}/`;
+  const root = document.querySelector('#search');
+
+  if (!root) {
+    console.error('Search root not found');
+  } else {
+    root.innerHTML = `
+      <input type="search" class="wiki-search-input" placeholder="Search docs" aria-label="Search docs" />
+      <div class="wiki-search-results" hidden></div>
+    `;
+
+    const input = root.querySelector('.wiki-search-input');
+    const panel = root.querySelector('.wiki-search-results');
+
+    const pagefind = await import('/_pagefind/pagefind.js');
+
+    function clearResults() {
+      panel.innerHTML = '';
+      panel.hidden = true;
+    }
+
+    function renderItems(items) {
+      if (!items.length) {
+        panel.innerHTML = '<p class="wiki-search-empty">No results in this version.</p>';
+        panel.hidden = false;
+        return;
+      }
+
+      const html = items
+        .map((item) => `
+          <article class="wiki-search-item">
+            <a class="wiki-search-link" href="${item.url}">${item.meta?.title || item.url}</a>
+            <p class="wiki-search-excerpt">${item.excerpt || ''}</p>
+          </article>
+        `)
+        .join('');
+
+      panel.innerHTML = html;
+      panel.hidden = false;
+    }
+
+    async function search(term) {
+      const query = term.trim();
+      if (!query) {
+        clearResults();
+        return;
+      }
+
+      const response = await pagefind.search(query, {
+        filters: {
+          version: currentVersion,
+        },
+      });
+
+      const loaded = await Promise.all(response.results.slice(0, 20).map((r) => r.data()));
+      const strict = loaded.filter((item) => {
+        try {
+          return new URL(item.url, window.location.origin).pathname.includes(expectedPath);
+        } catch (e) {
+          return (item.url || '').includes(expectedPath);
+        }
+      });
+
+      renderItems(strict.slice(0, 8));
+    }
+
+    let timer;
+    input.addEventListener('input', () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        search(input.value).catch((err) => {
+          console.error('Search failed', err);
+          panel.innerHTML = '<p class="wiki-search-empty">Search unavailable.</p>';
+          panel.hidden = false;
+        });
+      }, 160);
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!root.contains(event.target)) clearResults();
+    });
+  }
 </script>
 <script src="../../../../_/js/site.js"></script>
 <script async src="../../../../_/js/vendor/highlight.js"></script>
