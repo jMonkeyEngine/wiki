@@ -57,12 +57,12 @@ a|Get PhysicsCollisionObject number i.
 == Physics Tick Listener
 
 The jBullet Physics implementation is stepped at a constant 60 physics ticks per second frame rate.
-Applying forces or checking for overlaps only has an effect right at a physics update cycle, which is not every frame. If you do physics interactions at arbitrary spots in the simpleUpdate() loop, calls will be dropped at irregular intervals, because they happen out of cycle.
+Applying impulses or checking for overlaps only has an effect right at a physics update cycle, which is not every frame. If you do physics interactions at arbitrary spots in the simpleUpdate() loop, calls will be dropped at irregular intervals, because they happen out of cycle.
 
 
 === When (Not) to Use Tick Listener?
 
-When you write game mechanics that apply forces, you must implement a tick listener (com.jme3.bullet.PhysicsTickListener) for it. The tick listener makes certain the forces are not dropped, but applied in time for the next physics tick.
+When you write game mechanics that apply impulses, you must implement a tick listener (com.jme3.bullet.PhysicsTickListener) for it. The tick listener makes certain the impulses are applied in time for the next physics tick.
 
 Also, when you check for overlaps of two physical objects using a GhostControl, you cannot just go `ghost.getOverLappingObjects()` somewhere outside the update loop. You have to make certain 1 physics tick has passed before the overlapping objects list is filled with data. Again, the PhysicsTickListener does the timing for you.
 
@@ -81,10 +81,10 @@ public class MyCustomControl
 
 When you implement the interface, you have to implement `physicsTick()` and `preTick()` methods.
 
-*  `prePhysicsTick(PhysicsSpace space, float tpf)` is called before each step, here you apply forces (change the state).
+*  `prePhysicsTick(PhysicsSpace space, float tpf)` is called before each step, here you apply impulses (change the state).
 *  `physicsTick(PhysicsSpace space, float tpf)` is called after each step, here you poll the results (get the current state).
 
-The tpf value is time per frame in seconds. You can use it as a factor to time actions so they run equally on slow and fast machines.
+The tpf argument is simulation step in seconds, not the time between frames.
 
 [source,java]
 ----
