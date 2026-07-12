@@ -1115,12 +1115,12 @@ getPhysicsSpace().add(ghost);</code></pre>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The jBullet Physics implementation is stepped at a constant 60 physics ticks per second frame rate.
-Applying forces or checking for overlaps only has an effect right at a physics update cycle, which is not every frame. If you do physics interactions at arbitrary spots in the simpleUpdate() loop, calls will be dropped at irregular intervals, because they happen out of cycle.</p>
+Applying impulses or checking for overlaps only has an effect right at a physics update cycle, which is not every frame. If you do physics interactions at arbitrary spots in the simpleUpdate() loop, calls will be dropped at irregular intervals, because they happen out of cycle.</p>
 </div>
 <div class="sect2">
 <h3 id="when-not-to-use-tick-listener"><a class="anchor" href="#when-not-to-use-tick-listener"></a>When (Not) to Use Tick Listener?</h3>
 <div class="paragraph">
-<p>When you write game mechanics that apply forces, you must implement a tick listener (com.jme3.bullet.PhysicsTickListener) for it. The tick listener makes certain the forces are not dropped, but applied in time for the next physics tick.</p>
+<p>When you write game mechanics that apply impulses, you must implement a tick listener (com.jme3.bullet.PhysicsTickListener) for it. The tick listener makes certain the impulses are applied in time for the next physics tick.</p>
 </div>
 <div class="paragraph">
 <p>Also, when you check for overlaps of two physical objects using a GhostControl, you cannot just go <code>ghost.getOverLappingObjects()</code> somewhere outside the update loop. You have to make certain 1 physics tick has passed before the overlapping objects list is filled with data. Again, the PhysicsTickListener does the timing for you.</p>
@@ -1146,7 +1146,7 @@ Applying forces or checking for overlaps only has an effect right at a physics u
 <div class="ulist">
 <ul>
 <li>
-<p><code>prePhysicsTick(PhysicsSpace space, float tpf)</code> is called before each step, here you apply forces (change the state).</p>
+<p><code>prePhysicsTick(PhysicsSpace space, float tpf)</code> is called before each step, here you apply impulses (change the state).</p>
 </li>
 <li>
 <p><code>physicsTick(PhysicsSpace space, float tpf)</code> is called after each step, here you poll the results (get the current state).</p>
@@ -1154,7 +1154,7 @@ Applying forces or checking for overlaps only has an effect right at a physics u
 </ul>
 </div>
 <div class="paragraph">
-<p>The tpf value is time per frame in seconds. You can use it as a factor to time actions so they run equally on slow and fast machines.</p>
+<p>The tpf argument is simulation step in seconds, not the time between frames.</p>
 </div>
 <div class="listingblock">
 <div class="content">
